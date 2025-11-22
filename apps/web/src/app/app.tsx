@@ -1,4 +1,8 @@
+import { useAuth } from "@clerk/clerk-react"
+import { RouterProvider } from "@tanstack/react-router"
+
 import { AppProvider } from "./providers"
+import { router } from "./router"
 
 export function App() {
     return (
@@ -9,5 +13,12 @@ export function App() {
 }
 
 function EntryPoint() {
-    return <h1 className="text-3xl font-bold text-blue-500 underline">Hello world!</h1>
+    const auth = useAuth()
+
+    return (
+        <RouterProvider
+            router={router}
+            context={{ auth }}
+        />
+    )
 }
