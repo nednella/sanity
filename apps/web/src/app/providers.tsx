@@ -1,3 +1,4 @@
+import { ThemeProvider } from "@/lib/theme/theme-provider"
 import { SanityClerkProvider } from "@/providers/clerk-provider"
 
 interface Props {
@@ -5,5 +6,10 @@ interface Props {
 }
 
 export function AppProvider({ children }: Readonly<Props>) {
-    return <SanityClerkProvider>{children}</SanityClerkProvider>
+    return (
+        <SanityClerkProvider>
+            {children}
+            <ThemeProvider />
+        </SanityClerkProvider>
+    )
 }
