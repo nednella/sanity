@@ -1,7 +1,8 @@
 import { Outlet, createFileRoute } from "@tanstack/react-router"
 
-import { Header } from "@/components/header/header"
-import { HeaderSpacer } from "@/components/header/header-spacer"
+import { Content } from "@/components/content"
+import { Navbar } from "@/components/header/navbar"
+import { Page } from "@/components/page"
 
 export const Route = createFileRoute("/(public)")({
     component: PublicLayout
@@ -9,10 +10,11 @@ export const Route = createFileRoute("/(public)")({
 
 function PublicLayout() {
     return (
-        <div className="flex min-h-screen flex-col">
-            <Header />
-            <HeaderSpacer />
-            <Outlet />
-        </div>
+        <Page>
+            <Navbar />
+            <Content>
+                <Outlet />
+            </Content>
+        </Page>
     )
 }
