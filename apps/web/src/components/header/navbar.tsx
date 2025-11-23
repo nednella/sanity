@@ -19,12 +19,9 @@ export function Navbar() {
                     onClick={() => {}}
                 />
                 {/* logo */}
-                <Link
-                    to="/"
-                    className="hidden md:block md:w-32"
-                >
-                    Sanity
-                </Link>
+                <div className="hidden md:block md:w-32">
+                    <Link to="/">Sanity</Link>
+                </div>
                 {/* nav */}
                 <nav className="hidden md:flex md:flex-1 md:justify-center md:gap-8">
                     {options.map((link) => (
