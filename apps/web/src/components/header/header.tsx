@@ -2,7 +2,7 @@ import { SignedIn, SignedOut } from "@clerk/clerk-react"
 import { Link } from "@tanstack/react-router"
 import { Menu } from "lucide-react"
 
-import { AccountButton } from "../account/account-button"
+import { AccountButton } from "../auth/account-button"
 import { LoginButton } from "../auth/login-button"
 import { options } from "./header-navigation.config"
 
