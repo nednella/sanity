@@ -4,14 +4,14 @@ import { Menu } from "lucide-react"
 
 import { AccountButton } from "../auth/account-button"
 import { LoginButton } from "../auth/login-button"
-import { options } from "./header-navigation.config"
+import { options } from "./navbar.config"
 
-export function Header() {
+export function Navbar() {
     return (
         <header className="fixed z-50 w-full md:top-4 md:right-8 md:left-8 md:w-auto">
             <div
-                className="mx-auto flex h-16 max-w-7xl items-center justify-between bg-green-500/90 px-6 py-2
-                    md:rounded-md md:px-2"
+                className="bg-background/98 mx-auto flex h-16 max-w-7xl items-center justify-between px-6 py-2
+                    md:rounded-md"
             >
                 {/* mobile menu */}
                 <Menu
