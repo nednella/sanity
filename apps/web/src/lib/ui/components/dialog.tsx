@@ -55,6 +55,32 @@ function DialogOverlay({ className, ...props }: React.ComponentProps<typeof Dial
     )
 }
 
+function UnstyledDialogContent({
+    className,
+    children,
+    ...props
+}: React.ComponentProps<typeof DialogPrimitive.Content> & {
+    showCloseButton?: boolean
+}) {
+    return (
+        <DialogPortal data-slot="dialog-portal">
+            <DialogOverlay />
+            <DialogPrimitive.Content
+                data-slot="dialog-content"
+                className={cn(
+                    `data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0
+                    data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 fixed
+                    top-[50%] left-[50%] z-50 translate-x-[-50%] translate-y-[-50%] duration-200`,
+                    className
+                )}
+                {...props}
+            >
+                {children}
+            </DialogPrimitive.Content>
+        </DialogPortal>
+    )
+}
+
 function DialogContent({
     className,
     children,
@@ -140,6 +166,7 @@ function DialogDescription({ className, ...props }: React.ComponentProps<typeof 
 export {
     Dialog,
     DialogClose,
+    UnstyledDialogContent,
     DialogContent,
     DialogDescription,
     DialogFooter,
