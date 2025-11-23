@@ -18,7 +18,10 @@ export function SanityClerkProvider({ children }: Readonly<Props>) {
         <ClerkProvider
             publishableKey={CLERK_PUBLISHABLE_KEY}
             appearance={{
-                theme: shadcn
+                theme: shadcn,
+                elements: {
+                    cardBox: "shadow-none"
+                }
             }}
         >
             {children}
