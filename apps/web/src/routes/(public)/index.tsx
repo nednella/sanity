@@ -1,6 +1,7 @@
 import { useUser } from "@clerk/clerk-react"
 import { createFileRoute } from "@tanstack/react-router"
 
+import { BackgroundGradient } from "@/components/landing/background-gradient"
 import { Cta } from "@/components/landing/cta"
 import { Hero } from "@/components/landing/hero"
 import { Highlights } from "@/components/landing/highlights"
@@ -16,6 +17,7 @@ function IndexPage() {
 
     return (
         <>
+            <BackgroundGradient />
             <Hero />
             <Stats />
             <Highlights />
