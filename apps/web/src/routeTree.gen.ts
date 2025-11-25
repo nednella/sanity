@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as publicLayoutRouteImport } from './routes/(public)/_layout'
 import { Route as publicIndexRouteImport } from './routes/(public)/index'
+import { Route as publicAboutRouteImport } from './routes/(public)/about'
 
 const publicLayoutRoute = publicLayoutRouteImport.update({
   id: '/(public)',
@@ -21,24 +22,32 @@ const publicIndexRoute = publicIndexRouteImport.update({
   path: '/',
   getParentRoute: () => publicLayoutRoute,
 } as any)
+const publicAboutRoute = publicAboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => publicLayoutRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
+  '/about': typeof publicAboutRoute
   '/': typeof publicIndexRoute
 }
 export interface FileRoutesByTo {
+  '/about': typeof publicAboutRoute
   '/': typeof publicIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/(public)': typeof publicLayoutRouteWithChildren
+  '/(public)/about': typeof publicAboutRoute
   '/(public)/': typeof publicIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/about' | '/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/(public)' | '/(public)/'
+  to: '/about' | '/'
+  id: '__root__' | '/(public)' | '/(public)/about' | '/(public)/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -61,14 +70,23 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof publicIndexRouteImport
       parentRoute: typeof publicLayoutRoute
     }
+    '/(public)/about': {
+      id: '/(public)/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof publicAboutRouteImport
+      parentRoute: typeof publicLayoutRoute
+    }
   }
 }
 
 interface publicLayoutRouteChildren {
+  publicAboutRoute: typeof publicAboutRoute
   publicIndexRoute: typeof publicIndexRoute
 }
 
 const publicLayoutRouteChildren: publicLayoutRouteChildren = {
+  publicAboutRoute: publicAboutRoute,
   publicIndexRoute: publicIndexRoute,
 }
 

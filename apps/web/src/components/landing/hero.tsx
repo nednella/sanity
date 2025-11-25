@@ -17,7 +17,7 @@ export function Hero() {
                 className="container mx-auto"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ duration: 1, delay: 0.2 }}
+                transition={{ duration: 1, delay: 0.1 }}
             >
                 <div className="text-center">
                     <h1 className="mb-6 text-4xl leading-tight font-bold text-balance">{headingPrimary}</h1>
@@ -43,7 +43,7 @@ export function Hero() {
                             variant="outline"
                             className="w-64 rounded-full px-8 sm:w-fit"
                         >
-                            <Link to="/">{buttonMore}</Link>
+                            <Link to="/about">{buttonMore}</Link>
                         </Button>
                     </div>
                 </div>

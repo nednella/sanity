@@ -3,7 +3,7 @@ import { linkOptions } from "@tanstack/react-router"
 const options = linkOptions([
     {
         label: "About us",
-        to: "/"
+        to: "/about"
     },
     {
         label: "Members",
