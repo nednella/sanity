@@ -6,7 +6,6 @@ export function Cta() {
     return (
         <section className="mx-auto max-w-3xl py-32 text-center">
             <div className="relative">
-                <div className="absolute inset-0 bg-linear-to-r from-cyan-500/20 to-blue-500/20 blur-3xl" />
                 <div className="relative rounded-3xl border border-slate-800 bg-slate-900/80 p-12 backdrop-blur-sm">
                     <h2 className="mb-6 text-slate-200">Ready to Join?</h2>
                     <p className="mb-8 text-lg text-slate-400">
