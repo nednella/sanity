@@ -17,7 +17,12 @@ export function Navbar() {
             >
                 {/* logo */}
                 <div className="hidden md:block">
-                    <Link to="/">Sanity</Link>
+                    <Link
+                        to="/"
+                        className="font-bold"
+                    >
+                        Sanity
+                    </Link>
                 </div>
 
                 {/* mobile menu toggle */}
