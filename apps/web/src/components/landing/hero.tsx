@@ -3,12 +3,8 @@ import { ArrowRight } from "lucide-react"
 import { motion } from "motion/react"
 
 import { Button } from "@/lib/ui/components/button"
-
-const headingPrimary = "Welcome to Sanity"
-const headingSecondary = "<tagline>"
-
-const buttonDiscord = "Join our Discord"
-const buttonMore = "Learn More"
+import { H1 } from "@/lib/ui/components/typography/h1"
+import { Lead } from "@/lib/ui/components/typography/lead"
 
 export function Hero() {
     return (
@@ -20,8 +16,8 @@ export function Hero() {
                 transition={{ duration: 1, delay: 0.1 }}
             >
                 <div className="text-center">
-                    <h1 className="mb-6 text-4xl leading-tight font-bold text-balance">{headingPrimary}</h1>
-                    <p className="text-muted-foreground mb-6 text-lg leading-relaxed">{headingSecondary}</p>
+                    <H1 className="mb-6">Welcome to Sanity</H1>
+                    <Lead className="mb-6 text-lg">tagline</Lead>
                     <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
                         <Button
                             asChild
@@ -33,7 +29,7 @@ export function Hero() {
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
-                                <span>{buttonDiscord}</span>
+                                Join our Discord
                                 <ArrowRight className="ml-2 size-5 transition-transform group-hover:translate-x-1" />
                             </a>
                         </Button>
@@ -43,7 +39,7 @@ export function Hero() {
                             variant="outline"
                             className="w-64 rounded-full px-8 sm:w-fit"
                         >
-                            <Link to="/about">{buttonMore}</Link>
+                            <Link to="/about">Learn More</Link>
                         </Button>
                     </div>
                 </div>
