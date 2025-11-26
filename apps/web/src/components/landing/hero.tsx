@@ -30,7 +30,7 @@ export function Hero() {
                                 rel="noopener noreferrer"
                             >
                                 Join our Discord
-                                <ArrowRight className="ml-2 size-5 transition-transform group-hover:translate-x-1" />
+                                <ArrowRight className="ml-2 size-4 transition-transform group-hover:translate-x-1" />
                             </a>
                         </Button>
                         <Button
