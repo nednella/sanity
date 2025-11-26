@@ -1,10 +1,11 @@
 import { MessageCircle } from "lucide-react"
 
 import { Button } from "@/lib/ui/components/button"
+import { Container } from "@/lib/ui/components/container"
 
 export function Cta() {
     return (
-        <section className="mx-auto max-w-3xl py-32 text-center">
+        <Container className="max-w-3xl py-32 text-center">
             <div className="relative">
                 <div className="relative rounded-3xl border border-slate-800 bg-slate-900/80 p-12 backdrop-blur-sm">
                     <h2 className="mb-6 text-slate-200">Ready to Join?</h2>
@@ -50,6 +51,6 @@ export function Cta() {
                     </div>
                 </div>
             </div>
-        </section>
+        </Container>
     )
 }

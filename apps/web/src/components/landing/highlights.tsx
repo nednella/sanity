@@ -1,6 +1,8 @@
 import { Link } from "@tanstack/react-router"
 import { ArrowRight, Crown, type LucideIcon, Timer, Trophy, Users } from "lucide-react"
 
+import { Container } from "@/lib/ui/components/container"
+
 type Highlight = {
     title: string
     description: string
@@ -56,7 +58,7 @@ const highlights: Highlight[] = [
 
 export function Highlights() {
     return (
-        <section className="container mx-auto py-32 text-center">
+        <Container className="py-32 text-center">
             <div className="mb-20">
                 <h2 className="mb-4 text-slate-200">What We Offer</h2>
                 <p className="mx-auto max-w-2xl text-slate-400">
@@ -99,6 +101,6 @@ export function Highlights() {
                     </Link>
                 ))}
             </div>
-        </section>
+        </Container>
     )
 }

@@ -1,5 +1,7 @@
 import { Crown, type LucideIcon, Timer, Trophy, Users } from "lucide-react"
 
+import { Container } from "@/lib/ui/components/container"
+
 type Stat = {
     icon: LucideIcon
     label: string
@@ -15,7 +17,7 @@ const stats: Stat[] = [
 
 export function Stats() {
     return (
-        <div className="container mx-auto py-32 text-center">
+        <Container className="py-32 text-center">
             <div className="mb-20">
                 <h2 className="mb-4 text-slate-200">What We Offer</h2>
                 <p className="mx-auto max-w-2xl text-slate-400">
@@ -43,6 +45,6 @@ export function Stats() {
                     </div>
                 ))}
             </div>
-        </div>
+        </Container>
     )
 }
