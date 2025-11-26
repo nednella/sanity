@@ -7,7 +7,7 @@ interface Props {
 
 export function H1({ className, children }: Readonly<Props>) {
     return (
-        <h1 className={cn("scroll-m-20 text-center text-3xl font-extrabold tracking-tight text-balance", className)}>
+        <h1 className={cn("scroll-m-20 text-center text-4xl font-bold tracking-tight text-balance", className)}>
             {children}
         </h1>
     )
