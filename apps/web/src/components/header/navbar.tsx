@@ -2,6 +2,8 @@ import { SignedIn, SignedOut } from "@clerk/clerk-react"
 import { Link } from "@tanstack/react-router"
 import { Menu } from "lucide-react"
 
+import { Button } from "@/lib/ui/components/button"
+
 import { AccountButton } from "../auth/account-button"
 import { LoginButton } from "../auth/login-button"
 import { options } from "./navbar.config"
@@ -22,12 +24,19 @@ export function Navbar() {
                 {/* nav */}
                 <nav className="hidden md:flex md:flex-1 md:justify-center md:gap-8">
                     {options.map((link) => (
-                        <Link
+                        <Button
                             key={link.label}
-                            to={link.to}
+                            asChild
+                            variant="ghost"
                         >
-                            {link.label}
-                        </Link>
+                            <Link
+                                to={link.to}
+                                activeProps={{ className: "text-foreground" }}
+                                inactiveProps={{ className: "text-muted-foreground" }}
+                            >
+                                {link.label}
+                            </Link>
+                        </Button>
                     ))}
                 </nav>
                 {/* auth */}
