@@ -17,7 +17,7 @@ export function Hero() {
             >
                 <div className="text-center">
                     <H1 className="mb-6">Welcome to Sanity</H1>
-                    <Lead className="mb-6 text-lg">[tagline]</Lead>
+                    <Lead className="mb-6 text-lg">an Old School RuneScape PvM clan</Lead>
                     <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
                         <Button
                             asChild
