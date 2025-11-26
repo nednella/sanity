@@ -10,19 +10,24 @@ import { options } from "./navbar.config"
 
 export function Navbar() {
     return (
-        <header className="bg-background/80 fixed z-50 w-full backdrop-blur-sm">
-            <div className="mx-auto flex h-24 max-w-7xl items-center justify-between px-6 py-2 md:rounded-md">
-                {/* mobile menu */}
+        <header className="fixed inset-x-0 z-50 md:top-4 md:right-4 md:left-4">
+            <div
+                className="bg-background mx-auto grid h-16 max-w-7xl grid-cols-[1fr_1fr] items-center px-6 shadow-md
+                    md:grid-cols-[1fr_auto_1fr] md:rounded-lg md:border"
+            >
+                {/* logo */}
+                <div className="hidden md:block">
+                    <Link to="/">Sanity</Link>
+                </div>
+
+                {/* mobile menu toggle */}
                 <Menu
                     className="md:hidden"
                     onClick={() => {}}
                 />
-                {/* logo */}
-                <div className="hidden md:block md:w-32">
-                    <Link to="/">Sanity</Link>
-                </div>
-                {/* nav */}
-                <nav className="hidden md:flex md:flex-1 md:justify-center md:gap-8">
+
+                {/* nav links */}
+                <nav className="hidden md:flex md:gap-8">
                     {options.map((link) => (
                         <Button
                             key={link.label}
@@ -39,8 +44,9 @@ export function Navbar() {
                         </Button>
                     ))}
                 </nav>
+
                 {/* auth */}
-                <div className="flex md:w-32 md:justify-end">
+                <div className="flex justify-end">
                     <SignedOut>
                         <LoginButton />
                     </SignedOut>
