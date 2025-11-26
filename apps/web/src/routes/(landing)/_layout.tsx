@@ -4,7 +4,7 @@ import { Content } from "@/components/content"
 import { Navbar } from "@/components/header/navbar"
 import { Page } from "@/components/page"
 
-export const Route = createFileRoute("/(public)")({
+export const Route = createFileRoute("/(landing)")({
     component: PublicLayout
 })
 

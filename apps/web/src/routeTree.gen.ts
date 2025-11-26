@@ -9,93 +9,93 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as publicLayoutRouteImport } from './routes/(public)/_layout'
-import { Route as publicIndexRouteImport } from './routes/(public)/index'
-import { Route as publicAboutRouteImport } from './routes/(public)/about'
+import { Route as landingLayoutRouteImport } from './routes/(landing)/_layout'
+import { Route as landingIndexRouteImport } from './routes/(landing)/index'
+import { Route as landingAboutRouteImport } from './routes/(landing)/about'
 
-const publicLayoutRoute = publicLayoutRouteImport.update({
-  id: '/(public)',
+const landingLayoutRoute = landingLayoutRouteImport.update({
+  id: '/(landing)',
   getParentRoute: () => rootRouteImport,
 } as any)
-const publicIndexRoute = publicIndexRouteImport.update({
+const landingIndexRoute = landingIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => publicLayoutRoute,
+  getParentRoute: () => landingLayoutRoute,
 } as any)
-const publicAboutRoute = publicAboutRouteImport.update({
+const landingAboutRoute = landingAboutRouteImport.update({
   id: '/about',
   path: '/about',
-  getParentRoute: () => publicLayoutRoute,
+  getParentRoute: () => landingLayoutRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/about': typeof publicAboutRoute
-  '/': typeof publicIndexRoute
+  '/about': typeof landingAboutRoute
+  '/': typeof landingIndexRoute
 }
 export interface FileRoutesByTo {
-  '/about': typeof publicAboutRoute
-  '/': typeof publicIndexRoute
+  '/about': typeof landingAboutRoute
+  '/': typeof landingIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/(public)': typeof publicLayoutRouteWithChildren
-  '/(public)/about': typeof publicAboutRoute
-  '/(public)/': typeof publicIndexRoute
+  '/(landing)': typeof landingLayoutRouteWithChildren
+  '/(landing)/about': typeof landingAboutRoute
+  '/(landing)/': typeof landingIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths: '/about' | '/'
   fileRoutesByTo: FileRoutesByTo
   to: '/about' | '/'
-  id: '__root__' | '/(public)' | '/(public)/about' | '/(public)/'
+  id: '__root__' | '/(landing)' | '/(landing)/about' | '/(landing)/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  publicLayoutRoute: typeof publicLayoutRouteWithChildren
+  landingLayoutRoute: typeof landingLayoutRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/(public)': {
-      id: '/(public)'
+    '/(landing)': {
+      id: '/(landing)'
       path: ''
       fullPath: ''
-      preLoaderRoute: typeof publicLayoutRouteImport
+      preLoaderRoute: typeof landingLayoutRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/(public)/': {
-      id: '/(public)/'
+    '/(landing)/': {
+      id: '/(landing)/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof publicIndexRouteImport
-      parentRoute: typeof publicLayoutRoute
+      preLoaderRoute: typeof landingIndexRouteImport
+      parentRoute: typeof landingLayoutRoute
     }
-    '/(public)/about': {
-      id: '/(public)/about'
+    '/(landing)/about': {
+      id: '/(landing)/about'
       path: '/about'
       fullPath: '/about'
-      preLoaderRoute: typeof publicAboutRouteImport
-      parentRoute: typeof publicLayoutRoute
+      preLoaderRoute: typeof landingAboutRouteImport
+      parentRoute: typeof landingLayoutRoute
     }
   }
 }
 
-interface publicLayoutRouteChildren {
-  publicAboutRoute: typeof publicAboutRoute
-  publicIndexRoute: typeof publicIndexRoute
+interface landingLayoutRouteChildren {
+  landingAboutRoute: typeof landingAboutRoute
+  landingIndexRoute: typeof landingIndexRoute
 }
 
-const publicLayoutRouteChildren: publicLayoutRouteChildren = {
-  publicAboutRoute: publicAboutRoute,
-  publicIndexRoute: publicIndexRoute,
+const landingLayoutRouteChildren: landingLayoutRouteChildren = {
+  landingAboutRoute: landingAboutRoute,
+  landingIndexRoute: landingIndexRoute,
 }
 
-const publicLayoutRouteWithChildren = publicLayoutRoute._addFileChildren(
-  publicLayoutRouteChildren,
+const landingLayoutRouteWithChildren = landingLayoutRoute._addFileChildren(
+  landingLayoutRouteChildren,
 )
 
 const rootRouteChildren: RootRouteChildren = {
-  publicLayoutRoute: publicLayoutRouteWithChildren,
+  landingLayoutRoute: landingLayoutRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
