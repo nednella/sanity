@@ -6,6 +6,7 @@ import { Button } from "@/lib/ui/components/button"
 
 import { AccountButton } from "../auth/account-button"
 import { LoginButton } from "../auth/login-button"
+import { ThemeToggle } from "../theme/theme-toggle"
 import { options } from "./navbar.config"
 
 export function Navbar() {
@@ -51,7 +52,8 @@ export function Navbar() {
                 </nav>
 
                 {/* auth */}
-                <div className="flex justify-end">
+                <div className="flex justify-end gap-4">
+                    <ThemeToggle />
                     <SignedOut>
                         <LoginButton />
                     </SignedOut>
