@@ -1,5 +1,5 @@
 import { ThemeProvider } from "@/lib/theme/theme-provider"
-import { SanityClerkProvider } from "@/providers/clerk-provider"
+import { AuthProvider } from "@/providers/auth-provider"
 
 interface Props {
     children: React.ReactNode
@@ -7,9 +7,9 @@ interface Props {
 
 export function AppProvider({ children }: Readonly<Props>) {
     return (
-        <SanityClerkProvider>
+        <AuthProvider>
             {children}
             <ThemeProvider />
-        </SanityClerkProvider>
+        </AuthProvider>
     )
 }
