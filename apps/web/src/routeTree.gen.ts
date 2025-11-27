@@ -10,17 +10,17 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as appLayoutRouteImport } from './routes/(app)/_layout'
-import { Route as appauthLayoutRouteImport } from './routes/(app)/(auth)/_layout'
+import { Route as appauthenticatedLayoutRouteImport } from './routes/(app)/(authenticated)/_layout'
 import { Route as apppublicIndexRouteImport } from './routes/(app)/(public)/index'
 import { Route as apppublicAboutRouteImport } from './routes/(app)/(public)/about'
-import { Route as appauthAuthenticatedRouteImport } from './routes/(app)/(auth)/authenticated'
+import { Route as appauthenticatedAuthenticatedRouteImport } from './routes/(app)/(authenticated)/authenticated'
 
 const appLayoutRoute = appLayoutRouteImport.update({
   id: '/(app)',
   getParentRoute: () => rootRouteImport,
 } as any)
-const appauthLayoutRoute = appauthLayoutRouteImport.update({
-  id: '/(auth)',
+const appauthenticatedLayoutRoute = appauthenticatedLayoutRouteImport.update({
+  id: '/(authenticated)',
   getParentRoute: () => appLayoutRoute,
 } as any)
 const apppublicIndexRoute = apppublicIndexRouteImport.update({
@@ -33,27 +33,28 @@ const apppublicAboutRoute = apppublicAboutRouteImport.update({
   path: '/about',
   getParentRoute: () => appLayoutRoute,
 } as any)
-const appauthAuthenticatedRoute = appauthAuthenticatedRouteImport.update({
-  id: '/authenticated',
-  path: '/authenticated',
-  getParentRoute: () => appauthLayoutRoute,
-} as any)
+const appauthenticatedAuthenticatedRoute =
+  appauthenticatedAuthenticatedRouteImport.update({
+    id: '/authenticated',
+    path: '/authenticated',
+    getParentRoute: () => appauthenticatedLayoutRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
-  '/authenticated': typeof appauthAuthenticatedRoute
+  '/authenticated': typeof appauthenticatedAuthenticatedRoute
   '/about': typeof apppublicAboutRoute
   '/': typeof apppublicIndexRoute
 }
 export interface FileRoutesByTo {
-  '/authenticated': typeof appauthAuthenticatedRoute
+  '/authenticated': typeof appauthenticatedAuthenticatedRoute
   '/about': typeof apppublicAboutRoute
   '/': typeof apppublicIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/(app)': typeof appLayoutRouteWithChildren
-  '/(app)/(auth)': typeof appauthLayoutRouteWithChildren
-  '/(app)/(auth)/authenticated': typeof appauthAuthenticatedRoute
+  '/(app)/(authenticated)': typeof appauthenticatedLayoutRouteWithChildren
+  '/(app)/(authenticated)/authenticated': typeof appauthenticatedAuthenticatedRoute
   '/(app)/(public)/about': typeof apppublicAboutRoute
   '/(app)/(public)/': typeof apppublicIndexRoute
 }
@@ -65,8 +66,8 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/(app)'
-    | '/(app)/(auth)'
-    | '/(app)/(auth)/authenticated'
+    | '/(app)/(authenticated)'
+    | '/(app)/(authenticated)/authenticated'
     | '/(app)/(public)/about'
     | '/(app)/(public)/'
   fileRoutesById: FileRoutesById
@@ -84,11 +85,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof appLayoutRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/(app)/(auth)': {
-      id: '/(app)/(auth)'
+    '/(app)/(authenticated)': {
+      id: '/(app)/(authenticated)'
       path: ''
       fullPath: ''
-      preLoaderRoute: typeof appauthLayoutRouteImport
+      preLoaderRoute: typeof appauthenticatedLayoutRouteImport
       parentRoute: typeof appLayoutRoute
     }
     '/(app)/(public)/': {
@@ -105,36 +106,38 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof apppublicAboutRouteImport
       parentRoute: typeof appLayoutRoute
     }
-    '/(app)/(auth)/authenticated': {
-      id: '/(app)/(auth)/authenticated'
+    '/(app)/(authenticated)/authenticated': {
+      id: '/(app)/(authenticated)/authenticated'
       path: '/authenticated'
       fullPath: '/authenticated'
-      preLoaderRoute: typeof appauthAuthenticatedRouteImport
-      parentRoute: typeof appauthLayoutRoute
+      preLoaderRoute: typeof appauthenticatedAuthenticatedRouteImport
+      parentRoute: typeof appauthenticatedLayoutRoute
     }
   }
 }
 
-interface appauthLayoutRouteChildren {
-  appauthAuthenticatedRoute: typeof appauthAuthenticatedRoute
+interface appauthenticatedLayoutRouteChildren {
+  appauthenticatedAuthenticatedRoute: typeof appauthenticatedAuthenticatedRoute
 }
 
-const appauthLayoutRouteChildren: appauthLayoutRouteChildren = {
-  appauthAuthenticatedRoute: appauthAuthenticatedRoute,
-}
+const appauthenticatedLayoutRouteChildren: appauthenticatedLayoutRouteChildren =
+  {
+    appauthenticatedAuthenticatedRoute: appauthenticatedAuthenticatedRoute,
+  }
 
-const appauthLayoutRouteWithChildren = appauthLayoutRoute._addFileChildren(
-  appauthLayoutRouteChildren,
-)
+const appauthenticatedLayoutRouteWithChildren =
+  appauthenticatedLayoutRoute._addFileChildren(
+    appauthenticatedLayoutRouteChildren,
+  )
 
 interface appLayoutRouteChildren {
-  appauthLayoutRoute: typeof appauthLayoutRouteWithChildren
+  appauthenticatedLayoutRoute: typeof appauthenticatedLayoutRouteWithChildren
   apppublicAboutRoute: typeof apppublicAboutRoute
   apppublicIndexRoute: typeof apppublicIndexRoute
 }
 
 const appLayoutRouteChildren: appLayoutRouteChildren = {
-  appauthLayoutRoute: appauthLayoutRouteWithChildren,
+  appauthenticatedLayoutRoute: appauthenticatedLayoutRouteWithChildren,
   apppublicAboutRoute: apppublicAboutRoute,
   apppublicIndexRoute: apppublicIndexRoute,
 }
