@@ -4,7 +4,7 @@ import { Navbar } from "@/components/header/navbar"
 import { Content } from "@/components/layout/content"
 import { Page } from "@/components/layout/page"
 
-export const Route = createFileRoute("/_app")({
+export const Route = createFileRoute("/(app)")({
     component: AppLayout
 })
 

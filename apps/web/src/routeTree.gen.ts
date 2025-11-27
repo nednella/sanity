@@ -9,53 +9,53 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as AppRouteImport } from './routes/_app'
-import { Route as AppauthLayoutRouteImport } from './routes/_app/(auth)/_layout'
-import { Route as ApppublicIndexRouteImport } from './routes/_app/(public)/index'
-import { Route as ApppublicAboutRouteImport } from './routes/_app/(public)/about'
-import { Route as AppauthAuthenticatedRouteImport } from './routes/_app/(auth)/authenticated'
+import { Route as appLayoutRouteImport } from './routes/(app)/_layout'
+import { Route as appauthLayoutRouteImport } from './routes/(app)/(auth)/_layout'
+import { Route as apppublicIndexRouteImport } from './routes/(app)/(public)/index'
+import { Route as apppublicAboutRouteImport } from './routes/(app)/(public)/about'
+import { Route as appauthAuthenticatedRouteImport } from './routes/(app)/(auth)/authenticated'
 
-const AppRoute = AppRouteImport.update({
-  id: '/_app',
+const appLayoutRoute = appLayoutRouteImport.update({
+  id: '/(app)',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AppauthLayoutRoute = AppauthLayoutRouteImport.update({
+const appauthLayoutRoute = appauthLayoutRouteImport.update({
   id: '/(auth)',
-  getParentRoute: () => AppRoute,
+  getParentRoute: () => appLayoutRoute,
 } as any)
-const ApppublicIndexRoute = ApppublicIndexRouteImport.update({
+const apppublicIndexRoute = apppublicIndexRouteImport.update({
   id: '/(public)/',
   path: '/',
-  getParentRoute: () => AppRoute,
+  getParentRoute: () => appLayoutRoute,
 } as any)
-const ApppublicAboutRoute = ApppublicAboutRouteImport.update({
+const apppublicAboutRoute = apppublicAboutRouteImport.update({
   id: '/(public)/about',
   path: '/about',
-  getParentRoute: () => AppRoute,
+  getParentRoute: () => appLayoutRoute,
 } as any)
-const AppauthAuthenticatedRoute = AppauthAuthenticatedRouteImport.update({
+const appauthAuthenticatedRoute = appauthAuthenticatedRouteImport.update({
   id: '/authenticated',
   path: '/authenticated',
-  getParentRoute: () => AppauthLayoutRoute,
+  getParentRoute: () => appauthLayoutRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/authenticated': typeof AppauthAuthenticatedRoute
-  '/about': typeof ApppublicAboutRoute
-  '/': typeof ApppublicIndexRoute
+  '/authenticated': typeof appauthAuthenticatedRoute
+  '/about': typeof apppublicAboutRoute
+  '/': typeof apppublicIndexRoute
 }
 export interface FileRoutesByTo {
-  '/authenticated': typeof AppauthAuthenticatedRoute
-  '/about': typeof ApppublicAboutRoute
-  '/': typeof ApppublicIndexRoute
+  '/authenticated': typeof appauthAuthenticatedRoute
+  '/about': typeof apppublicAboutRoute
+  '/': typeof apppublicIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/_app': typeof AppRouteWithChildren
-  '/_app/(auth)': typeof AppauthLayoutRouteWithChildren
-  '/_app/(auth)/authenticated': typeof AppauthAuthenticatedRoute
-  '/_app/(public)/about': typeof ApppublicAboutRoute
-  '/_app/(public)/': typeof ApppublicIndexRoute
+  '/(app)': typeof appLayoutRouteWithChildren
+  '/(app)/(auth)': typeof appauthLayoutRouteWithChildren
+  '/(app)/(auth)/authenticated': typeof appauthAuthenticatedRoute
+  '/(app)/(public)/about': typeof apppublicAboutRoute
+  '/(app)/(public)/': typeof apppublicIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -64,85 +64,87 @@ export interface FileRouteTypes {
   to: '/authenticated' | '/about' | '/'
   id:
     | '__root__'
-    | '/_app'
-    | '/_app/(auth)'
-    | '/_app/(auth)/authenticated'
-    | '/_app/(public)/about'
-    | '/_app/(public)/'
+    | '/(app)'
+    | '/(app)/(auth)'
+    | '/(app)/(auth)/authenticated'
+    | '/(app)/(public)/about'
+    | '/(app)/(public)/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  AppRoute: typeof AppRouteWithChildren
+  appLayoutRoute: typeof appLayoutRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/_app': {
-      id: '/_app'
+    '/(app)': {
+      id: '/(app)'
       path: ''
       fullPath: ''
-      preLoaderRoute: typeof AppRouteImport
+      preLoaderRoute: typeof appLayoutRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_app/(auth)': {
-      id: '/_app/(auth)'
+    '/(app)/(auth)': {
+      id: '/(app)/(auth)'
       path: ''
       fullPath: ''
-      preLoaderRoute: typeof AppauthLayoutRouteImport
-      parentRoute: typeof AppRoute
+      preLoaderRoute: typeof appauthLayoutRouteImport
+      parentRoute: typeof appLayoutRoute
     }
-    '/_app/(public)/': {
-      id: '/_app/(public)/'
+    '/(app)/(public)/': {
+      id: '/(app)/(public)/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof ApppublicIndexRouteImport
-      parentRoute: typeof AppRoute
+      preLoaderRoute: typeof apppublicIndexRouteImport
+      parentRoute: typeof appLayoutRoute
     }
-    '/_app/(public)/about': {
-      id: '/_app/(public)/about'
+    '/(app)/(public)/about': {
+      id: '/(app)/(public)/about'
       path: '/about'
       fullPath: '/about'
-      preLoaderRoute: typeof ApppublicAboutRouteImport
-      parentRoute: typeof AppRoute
+      preLoaderRoute: typeof apppublicAboutRouteImport
+      parentRoute: typeof appLayoutRoute
     }
-    '/_app/(auth)/authenticated': {
-      id: '/_app/(auth)/authenticated'
+    '/(app)/(auth)/authenticated': {
+      id: '/(app)/(auth)/authenticated'
       path: '/authenticated'
       fullPath: '/authenticated'
-      preLoaderRoute: typeof AppauthAuthenticatedRouteImport
-      parentRoute: typeof AppauthLayoutRoute
+      preLoaderRoute: typeof appauthAuthenticatedRouteImport
+      parentRoute: typeof appauthLayoutRoute
     }
   }
 }
 
-interface AppauthLayoutRouteChildren {
-  AppauthAuthenticatedRoute: typeof AppauthAuthenticatedRoute
+interface appauthLayoutRouteChildren {
+  appauthAuthenticatedRoute: typeof appauthAuthenticatedRoute
 }
 
-const AppauthLayoutRouteChildren: AppauthLayoutRouteChildren = {
-  AppauthAuthenticatedRoute: AppauthAuthenticatedRoute,
+const appauthLayoutRouteChildren: appauthLayoutRouteChildren = {
+  appauthAuthenticatedRoute: appauthAuthenticatedRoute,
 }
 
-const AppauthLayoutRouteWithChildren = AppauthLayoutRoute._addFileChildren(
-  AppauthLayoutRouteChildren,
+const appauthLayoutRouteWithChildren = appauthLayoutRoute._addFileChildren(
+  appauthLayoutRouteChildren,
 )
 
-interface AppRouteChildren {
-  AppauthLayoutRoute: typeof AppauthLayoutRouteWithChildren
-  ApppublicAboutRoute: typeof ApppublicAboutRoute
-  ApppublicIndexRoute: typeof ApppublicIndexRoute
+interface appLayoutRouteChildren {
+  appauthLayoutRoute: typeof appauthLayoutRouteWithChildren
+  apppublicAboutRoute: typeof apppublicAboutRoute
+  apppublicIndexRoute: typeof apppublicIndexRoute
 }
 
-const AppRouteChildren: AppRouteChildren = {
-  AppauthLayoutRoute: AppauthLayoutRouteWithChildren,
-  ApppublicAboutRoute: ApppublicAboutRoute,
-  ApppublicIndexRoute: ApppublicIndexRoute,
+const appLayoutRouteChildren: appLayoutRouteChildren = {
+  appauthLayoutRoute: appauthLayoutRouteWithChildren,
+  apppublicAboutRoute: apppublicAboutRoute,
+  apppublicIndexRoute: apppublicIndexRoute,
 }
 
-const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
+const appLayoutRouteWithChildren = appLayoutRoute._addFileChildren(
+  appLayoutRouteChildren,
+)
 
 const rootRouteChildren: RootRouteChildren = {
-  AppRoute: AppRouteWithChildren,
+  appLayoutRoute: appLayoutRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
