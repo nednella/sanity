@@ -5,13 +5,12 @@ import { Container } from "@/lib/ui/components/container"
 
 export function Cta() {
     return (
-        <Container className="max-w-3xl py-32 text-center">
-            <div className="relative">
-                <div className="relative rounded-3xl border border-slate-800 bg-slate-900/80 p-12 backdrop-blur-sm">
-                    <h2 className="mb-6 text-slate-200">Ready to Join?</h2>
-                    <p className="mb-8 text-lg text-slate-400">
-                        Connect with our community on Discord and Twitter. Stay updated with events, competitions, and
-                        clan announcements.
+        <Container className="max-w-3xl pt-24 pb-48 text-center">
+            <div className="mx-auto max-w-4xl text-center transition-all duration-1000">
+                <div className="bg-accent/50 border-border rounded-3xl border p-12">
+                    <h2 className="text-foreground mb-6 text-3xl md:text-5xl">Get Started</h2>
+                    <p className="text-muted-foreground mb-8 text-lg">
+                        Join our Discord community to connect with members and learn more
                     </p>
 
                     <div className="flex flex-col justify-center gap-4 sm:flex-row">
@@ -22,9 +21,9 @@ export function Cta() {
                         >
                             <Button
                                 size="lg"
-                                className="bg-[#5865F2] px-8 text-white hover:bg-[#4752C4]"
+                                className="w-full gap-2 px-8 md:w-fit"
                             >
-                                <MessageCircle className="mr-2 size-5" />
+                                <MessageCircle className="size-4" />
                                 Join Discord
                             </Button>
                         </a>
@@ -36,10 +35,10 @@ export function Cta() {
                             <Button
                                 size="lg"
                                 variant="outline"
-                                className="border-slate-700 px-8 text-slate-300 hover:bg-slate-800"
+                                className="w-full gap-2 px-8 md:w-fit"
                             >
                                 <svg
-                                    className="mr-2 size-5"
+                                    className="size-4"
                                     fill="currentColor"
                                     viewBox="0 0 24 24"
                                 >

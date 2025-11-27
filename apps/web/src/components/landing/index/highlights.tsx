@@ -58,48 +58,43 @@ const highlights: Highlight[] = [
 
 export function Highlights() {
     return (
-        <Container className="py-32 text-center">
-            <div className="mb-20">
-                <h2 className="mb-4 text-slate-200">What We Offer</h2>
-                <p className="mx-auto max-w-2xl text-slate-400">
-                    Experience competitive PVM with comprehensive tracking, rankings, and a thriving community
-                </p>
-            </div>
+        <Container className="py-24 text-center">
+            <div className="mx-auto max-w-7xl">
+                <div className="mb-16 text-center transition-all duration-1000">
+                    <h2 className="text-foreground mb-4 text-3xl md:text-5xl">Highlights</h2>
+                    <p className="text-muted-foreground mx-auto max-w-2xl">
+                        [Placeholder: Brief description of what makes Sanity unique]
+                    </p>
+                </div>
 
-            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-                {highlights.map((hl) => (
-                    <Link
-                        key={hl.title}
-                        to={hl.link}
-                        className="group relative overflow-hidden rounded-2xl border border-slate-800 bg-slate-900/50
-                            p-8 backdrop-blur-sm transition-all hover:border-slate-700"
-                    >
-                        <div
-                            className={`absolute inset-0 bg-linear-to-br ${hl.gradient} opacity-0 transition-opacity
-                            group-hover:opacity-5`}
-                        />
+                <div className="grid gap-6 transition-all delay-200 duration-1000 md:grid-cols-2 lg:grid-cols-3">
+                    {highlights.map((hl) => (
+                        <Link
+                            key={hl.title}
+                            to={hl.link}
+                            className="group bg-background border-border hover:border-foreground/20 relative mx-auto
+                                max-w-md rounded-2xl border p-6 transition-all"
+                        >
+                            <div className="mb-4">
+                                <div className="bg-accent inline-flex rounded-lg p-2">
+                                    <hl.icon className="text-foreground size-5" />
+                                </div>
+                            </div>
 
-                        <div className="relative z-10">
+                            <h3 className="text-foreground mb-2">{hl.title}</h3>
+
+                            <p className="text-muted-foreground mb-4 text-sm">{hl.description}</p>
+
                             <div
-                                className={`inline-flex rounded-xl bg-linear-to-br p-3 ${hl.gradient} bg-opacity-10
-                                mb-6`}
+                                className="text-foreground/70 group-hover:text-foreground flex items-center text-sm
+                                    transition-colors"
                             >
-                                <hl.icon className="size-6 text-cyan-400" />
+                                <span>View</span>
+                                <ArrowRight className="ml-2 size-4 transition-transform group-hover:translate-x-1" />
                             </div>
-
-                            <h3 className="mb-3 text-xl text-slate-200 transition-colors group-hover:text-white">
-                                {hl.title}
-                            </h3>
-
-                            <p className="mb-4 text-slate-400">{hl.description}</p>
-
-                            <div className="flex items-center text-cyan-400 transition-colors group-hover:text-cyan-300">
-                                <span className="text-sm">Explore</span>
-                                <ArrowRight className="ml-2 size-4 transition-transform group-hover:translate-x-2" />
-                            </div>
-                        </div>
-                    </Link>
-                ))}
+                        </Link>
+                    ))}
+                </div>
             </div>
         </Container>
     )
