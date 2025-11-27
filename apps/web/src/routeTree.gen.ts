@@ -10,12 +10,17 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as AppRouteImport } from './routes/_app'
+import { Route as AppauthLayoutRouteImport } from './routes/_app/(auth)/_layout'
 import { Route as ApppublicIndexRouteImport } from './routes/_app/(public)/index'
 import { Route as ApppublicAboutRouteImport } from './routes/_app/(public)/about'
 
 const AppRoute = AppRouteImport.update({
   id: '/_app',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AppauthLayoutRoute = AppauthLayoutRouteImport.update({
+  id: '/(auth)',
+  getParentRoute: () => AppRoute,
 } as any)
 const ApppublicIndexRoute = ApppublicIndexRouteImport.update({
   id: '/(public)/',
@@ -39,6 +44,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_app': typeof AppRouteWithChildren
+  '/_app/(auth)': typeof AppauthLayoutRoute
   '/_app/(public)/about': typeof ApppublicAboutRoute
   '/_app/(public)/': typeof ApppublicIndexRoute
 }
@@ -47,7 +53,12 @@ export interface FileRouteTypes {
   fullPaths: '/about' | '/'
   fileRoutesByTo: FileRoutesByTo
   to: '/about' | '/'
-  id: '__root__' | '/_app' | '/_app/(public)/about' | '/_app/(public)/'
+  id:
+    | '__root__'
+    | '/_app'
+    | '/_app/(auth)'
+    | '/_app/(public)/about'
+    | '/_app/(public)/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -62,6 +73,13 @@ declare module '@tanstack/react-router' {
       fullPath: ''
       preLoaderRoute: typeof AppRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_app/(auth)': {
+      id: '/_app/(auth)'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AppauthLayoutRouteImport
+      parentRoute: typeof AppRoute
     }
     '/_app/(public)/': {
       id: '/_app/(public)/'
@@ -81,11 +99,13 @@ declare module '@tanstack/react-router' {
 }
 
 interface AppRouteChildren {
+  AppauthLayoutRoute: typeof AppauthLayoutRoute
   ApppublicAboutRoute: typeof ApppublicAboutRoute
   ApppublicIndexRoute: typeof ApppublicIndexRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
+  AppauthLayoutRoute: AppauthLayoutRoute,
   ApppublicAboutRoute: ApppublicAboutRoute,
   ApppublicIndexRoute: ApppublicIndexRoute,
 }
