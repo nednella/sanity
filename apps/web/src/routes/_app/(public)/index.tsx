@@ -7,7 +7,7 @@ import { Hero } from "@/components/landing/index/hero"
 import { Highlights } from "@/components/landing/index/highlights"
 import { Stats } from "@/components/landing/index/stats"
 
-export const Route = createFileRoute("/(landing)/")({
+export const Route = createFileRoute("/_app/(public)/")({
     component: IndexPage
 })
 

@@ -4,11 +4,11 @@ import { Content } from "@/components/content"
 import { Navbar } from "@/components/header/navbar"
 import { Page } from "@/components/page"
 
-export const Route = createFileRoute("/(landing)")({
-    component: PublicLayout
+export const Route = createFileRoute("/_app")({
+    component: AppLayout
 })
 
-function PublicLayout() {
+function AppLayout() {
     return (
         <Page>
             <Navbar />
