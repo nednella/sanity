@@ -52,8 +52,8 @@ export function Navbar() {
                         ))}
                     </nav>
 
-                    {/* auth */}
-                    <div className="flex justify-end gap-4">
+                    {/* buttons */}
+                    <div className="flex items-center justify-end gap-4">
                         <ThemeToggle />
                         <SignedOut>
                             <LoginButton />
