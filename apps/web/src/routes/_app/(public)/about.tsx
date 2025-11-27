@@ -12,7 +12,7 @@ function AboutPage() {
         <>
             <NavbarSpacer />
             <Container>
-                <div>Hello "/_app/(public)/about"!</div>
+                <div>About page.</div>
             </Container>
         </>
     )
