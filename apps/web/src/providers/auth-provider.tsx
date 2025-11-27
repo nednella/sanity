@@ -13,7 +13,7 @@ interface Props {
     children: React.ReactNode
 }
 
-export function SanityClerkProvider({ children }: Readonly<Props>) {
+export function AuthProvider({ children }: Readonly<Props>) {
     return (
         <ClerkProvider
             publishableKey={CLERK_PUBLISHABLE_KEY}
