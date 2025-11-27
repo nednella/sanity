@@ -7,11 +7,11 @@ const options = linkOptions([
     },
     {
         label: "Members",
-        to: "/"
+        to: "/about"
     },
     {
-        label: "Socials",
-        to: "/"
+        label: "Authenticated",
+        to: "/authenticated"
     }
 ])
 
