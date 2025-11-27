@@ -1,4 +1,3 @@
-import { useUser } from "@clerk/clerk-react"
 import { createFileRoute } from "@tanstack/react-router"
 
 import { BackgroundGradient } from "@/components/landing/index/background-gradient"
@@ -7,14 +6,11 @@ import { Hero } from "@/components/landing/index/hero"
 import { Highlights } from "@/components/landing/index/highlights"
 import { Stats } from "@/components/landing/index/stats"
 
-export const Route = createFileRoute("/(landing)/")({
+export const Route = createFileRoute("/(app)/(public)/")({
     component: IndexPage
 })
 
 function IndexPage() {
-    const user = useUser()
-    console.log(user)
-
     return (
         <>
             <BackgroundGradient />

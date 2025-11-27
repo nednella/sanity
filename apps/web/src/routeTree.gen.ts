@@ -9,93 +9,142 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as landingLayoutRouteImport } from './routes/(landing)/_layout'
-import { Route as landingIndexRouteImport } from './routes/(landing)/index'
-import { Route as landingAboutRouteImport } from './routes/(landing)/about'
+import { Route as appLayoutRouteImport } from './routes/(app)/_layout'
+import { Route as appauthLayoutRouteImport } from './routes/(app)/(auth)/_layout'
+import { Route as apppublicIndexRouteImport } from './routes/(app)/(public)/index'
+import { Route as apppublicAboutRouteImport } from './routes/(app)/(public)/about'
+import { Route as appauthAuthenticatedRouteImport } from './routes/(app)/(auth)/authenticated'
 
-const landingLayoutRoute = landingLayoutRouteImport.update({
-  id: '/(landing)',
+const appLayoutRoute = appLayoutRouteImport.update({
+  id: '/(app)',
   getParentRoute: () => rootRouteImport,
 } as any)
-const landingIndexRoute = landingIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => landingLayoutRoute,
+const appauthLayoutRoute = appauthLayoutRouteImport.update({
+  id: '/(auth)',
+  getParentRoute: () => appLayoutRoute,
 } as any)
-const landingAboutRoute = landingAboutRouteImport.update({
-  id: '/about',
+const apppublicIndexRoute = apppublicIndexRouteImport.update({
+  id: '/(public)/',
+  path: '/',
+  getParentRoute: () => appLayoutRoute,
+} as any)
+const apppublicAboutRoute = apppublicAboutRouteImport.update({
+  id: '/(public)/about',
   path: '/about',
-  getParentRoute: () => landingLayoutRoute,
+  getParentRoute: () => appLayoutRoute,
+} as any)
+const appauthAuthenticatedRoute = appauthAuthenticatedRouteImport.update({
+  id: '/authenticated',
+  path: '/authenticated',
+  getParentRoute: () => appauthLayoutRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/about': typeof landingAboutRoute
-  '/': typeof landingIndexRoute
+  '/authenticated': typeof appauthAuthenticatedRoute
+  '/about': typeof apppublicAboutRoute
+  '/': typeof apppublicIndexRoute
 }
 export interface FileRoutesByTo {
-  '/about': typeof landingAboutRoute
-  '/': typeof landingIndexRoute
+  '/authenticated': typeof appauthAuthenticatedRoute
+  '/about': typeof apppublicAboutRoute
+  '/': typeof apppublicIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/(landing)': typeof landingLayoutRouteWithChildren
-  '/(landing)/about': typeof landingAboutRoute
-  '/(landing)/': typeof landingIndexRoute
+  '/(app)': typeof appLayoutRouteWithChildren
+  '/(app)/(auth)': typeof appauthLayoutRouteWithChildren
+  '/(app)/(auth)/authenticated': typeof appauthAuthenticatedRoute
+  '/(app)/(public)/about': typeof apppublicAboutRoute
+  '/(app)/(public)/': typeof apppublicIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/about' | '/'
+  fullPaths: '/authenticated' | '/about' | '/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/about' | '/'
-  id: '__root__' | '/(landing)' | '/(landing)/about' | '/(landing)/'
+  to: '/authenticated' | '/about' | '/'
+  id:
+    | '__root__'
+    | '/(app)'
+    | '/(app)/(auth)'
+    | '/(app)/(auth)/authenticated'
+    | '/(app)/(public)/about'
+    | '/(app)/(public)/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  landingLayoutRoute: typeof landingLayoutRouteWithChildren
+  appLayoutRoute: typeof appLayoutRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/(landing)': {
-      id: '/(landing)'
+    '/(app)': {
+      id: '/(app)'
       path: ''
       fullPath: ''
-      preLoaderRoute: typeof landingLayoutRouteImport
+      preLoaderRoute: typeof appLayoutRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/(landing)/': {
-      id: '/(landing)/'
+    '/(app)/(auth)': {
+      id: '/(app)/(auth)'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof appauthLayoutRouteImport
+      parentRoute: typeof appLayoutRoute
+    }
+    '/(app)/(public)/': {
+      id: '/(app)/(public)/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof landingIndexRouteImport
-      parentRoute: typeof landingLayoutRoute
+      preLoaderRoute: typeof apppublicIndexRouteImport
+      parentRoute: typeof appLayoutRoute
     }
-    '/(landing)/about': {
-      id: '/(landing)/about'
+    '/(app)/(public)/about': {
+      id: '/(app)/(public)/about'
       path: '/about'
       fullPath: '/about'
-      preLoaderRoute: typeof landingAboutRouteImport
-      parentRoute: typeof landingLayoutRoute
+      preLoaderRoute: typeof apppublicAboutRouteImport
+      parentRoute: typeof appLayoutRoute
+    }
+    '/(app)/(auth)/authenticated': {
+      id: '/(app)/(auth)/authenticated'
+      path: '/authenticated'
+      fullPath: '/authenticated'
+      preLoaderRoute: typeof appauthAuthenticatedRouteImport
+      parentRoute: typeof appauthLayoutRoute
     }
   }
 }
 
-interface landingLayoutRouteChildren {
-  landingAboutRoute: typeof landingAboutRoute
-  landingIndexRoute: typeof landingIndexRoute
+interface appauthLayoutRouteChildren {
+  appauthAuthenticatedRoute: typeof appauthAuthenticatedRoute
 }
 
-const landingLayoutRouteChildren: landingLayoutRouteChildren = {
-  landingAboutRoute: landingAboutRoute,
-  landingIndexRoute: landingIndexRoute,
+const appauthLayoutRouteChildren: appauthLayoutRouteChildren = {
+  appauthAuthenticatedRoute: appauthAuthenticatedRoute,
 }
 
-const landingLayoutRouteWithChildren = landingLayoutRoute._addFileChildren(
-  landingLayoutRouteChildren,
+const appauthLayoutRouteWithChildren = appauthLayoutRoute._addFileChildren(
+  appauthLayoutRouteChildren,
+)
+
+interface appLayoutRouteChildren {
+  appauthLayoutRoute: typeof appauthLayoutRouteWithChildren
+  apppublicAboutRoute: typeof apppublicAboutRoute
+  apppublicIndexRoute: typeof apppublicIndexRoute
+}
+
+const appLayoutRouteChildren: appLayoutRouteChildren = {
+  appauthLayoutRoute: appauthLayoutRouteWithChildren,
+  apppublicAboutRoute: apppublicAboutRoute,
+  apppublicIndexRoute: apppublicIndexRoute,
+}
+
+const appLayoutRouteWithChildren = appLayoutRoute._addFileChildren(
+  appLayoutRouteChildren,
 )
 
 const rootRouteChildren: RootRouteChildren = {
-  landingLayoutRoute: landingLayoutRouteWithChildren,
+  appLayoutRoute: appLayoutRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
