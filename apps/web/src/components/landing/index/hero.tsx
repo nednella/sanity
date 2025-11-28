@@ -17,13 +17,15 @@ export function Hero() {
                 transition={{ duration: 1, delay: 0.1 }}
             >
                 <div className="text-center">
-                    <H1 className="mb-6">Welcome to Sanity</H1>
-                    <Lead className="mb-6 text-lg">an Old School RuneScape PvM clan</Lead>
-                    <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+                    <H1 className="mb-8">Welcome to Sanity</H1>
+                    <Lead className="mb-8 px-4 text-lg">
+                        an elite Old School RuneScape PvM clan hosting some of the best players in the game.
+                    </Lead>
+                    <div className="flex flex-col justify-center gap-4 px-4 sm:flex-row sm:items-center">
                         <Button
                             asChild
                             size="lg"
-                            className="group w-64 rounded-full px-8! sm:w-fit"
+                            className="group mx-auto w-full max-w-80 rounded-full px-8! transition-all sm:mx-0 sm:w-fit"
                         >
                             <a
                                 href="https://discord.gg/sanity"
@@ -39,7 +41,7 @@ export function Hero() {
                             asChild
                             size="lg"
                             variant="outline"
-                            className="w-64 rounded-full px-8 sm:w-fit"
+                            className="mx-auto w-full max-w-80 rounded-full px-8 sm:mx-0 sm:w-fit"
                         >
                             <Link to="/about">Learn More</Link>
                         </Button>
