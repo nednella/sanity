@@ -13,11 +13,12 @@ export const Route = createFileRoute("/(app)/(public)/")({
 function IndexPage() {
     return (
         <>
-            <BackgroundGradient />
             <Hero />
-            <Stats />
-            <Highlights />
-            <Cta />
+            <BackgroundGradient>
+                <Stats />
+                <Highlights />
+                <Cta />
+            </BackgroundGradient>
         </>
     )
 }
