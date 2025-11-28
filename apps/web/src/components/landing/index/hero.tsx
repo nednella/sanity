@@ -18,7 +18,7 @@ export function Hero() {
             >
                 <H1 className="mb-4">Welcome to Sanity</H1>
                 <Lead className="mb-8 px-4 text-lg">
-                    an elite Old School RuneScape PvM clan hosting some of the best players in the game.
+                    an elite Old School RuneScape PvM clan home to some of the best players in the game.
                 </Lead>
                 <div className="flex flex-col justify-center gap-4 px-4 sm:flex-row sm:items-center">
                     <Button
