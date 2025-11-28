@@ -60,20 +60,20 @@ export function Highlights() {
     return (
         <Container className="py-24 text-center">
             <div className="mx-auto max-w-7xl">
-                <div className="mb-16 text-center transition-all duration-1000">
+                <div className="mb-16 text-center">
                     <h2 className="text-foreground mb-4 text-3xl md:text-5xl">Highlights</h2>
                     <p className="text-muted-foreground mx-auto max-w-2xl">
                         [Placeholder: Brief description of what makes Sanity unique]
                     </p>
                 </div>
 
-                <div className="grid gap-6 transition-all delay-200 duration-1000 md:grid-cols-2 lg:grid-cols-3">
+                <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                     {highlights.map((hl) => (
                         <Link
                             key={hl.title}
                             to={hl.link}
                             className="group bg-background border-border hover:border-foreground/20 relative mx-auto
-                                max-w-md rounded-2xl border p-6 transition-all"
+                                max-w-md rounded-2xl border p-6"
                         >
                             <div className="mb-4">
                                 <div className="bg-accent inline-flex rounded-lg p-2">
@@ -85,10 +85,7 @@ export function Highlights() {
 
                             <p className="text-muted-foreground mb-4 text-sm">{hl.description}</p>
 
-                            <div
-                                className="text-foreground/70 group-hover:text-foreground flex items-center text-sm
-                                    transition-colors"
-                            >
+                            <div className="text-foreground/70 group-hover:text-foreground flex items-center text-sm">
                                 <span>View</span>
                                 <ArrowRight className="ml-2 size-4 transition-transform group-hover:translate-x-1" />
                             </div>

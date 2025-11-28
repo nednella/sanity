@@ -18,7 +18,7 @@ const stats: Stat[] = [
 export function Stats() {
     return (
         <Container className="py-24 text-center">
-            <div className="mx-auto max-w-4xl transition-all duration-1000">
+            <div className="mx-auto max-w-4xl">
                 <div className="grid grid-cols-2 gap-6 md:grid-cols-4 md:gap-8">
                     {stats.map((stat) => (
                         <div
