@@ -47,8 +47,8 @@ export function Hero() {
                         <Link to="/about">Learn More</Link>
                     </Button>
                 </div>
+                <ScrollIndicator />
             </motion.div>
-            <ScrollIndicator />
         </section>
     )
 }
