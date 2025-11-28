@@ -13,9 +13,9 @@ type Stat = {
 
 const stats: Stat[] = [
     { icon: Users, label: "Active Members", value: "250+" },
+    { icon: Timer, label: "World Record Times", value: "15+" },
     { icon: Gauge, label: "Total Clan EHB", value: "550k+" },
-    { icon: HandCoins, label: "Total Loot Value", value: "1000b+" },
-    { icon: Timer, label: "World Record Times", value: "15+" }
+    { icon: HandCoins, label: "Total Loot Value", value: "1000b+" }
 ]
 
 export function Stats() {
