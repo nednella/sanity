@@ -17,7 +17,8 @@ export function Cta() {
                             asChild
                             size="lg"
                             variant="custom"
-                            className="gap-2 rounded-full bg-[#5865F2] px-8! text-white hover:opacity-90 md:w-fit"
+                            className="gap-2 rounded-full bg-[#5865F2] px-8! text-white transition-all hover:opacity-90
+                                md:w-fit"
                         >
                             <a
                                 href="https://discord.gg/sanity"
