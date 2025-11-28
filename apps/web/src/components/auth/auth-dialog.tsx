@@ -1,6 +1,7 @@
 import { SignIn } from "@clerk/clerk-react"
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden"
 
-import { Dialog, UnstyledDialogContent } from "@/lib/ui/components/dialog"
+import { Dialog, DialogTitle, UnstyledDialogContent } from "@/lib/ui/components/dialog"
 import { useAuthDialog } from "@/stores/auth-dialog.store"
 
 export function LoginDialog() {
@@ -17,7 +18,11 @@ export function LoginDialog() {
             open={isOpen}
             onOpenChange={onOpenChange}
         >
-            <UnstyledDialogContent>
+            <UnstyledDialogContent aria-describedby={undefined}>
+                <VisuallyHidden>
+                    <DialogTitle>Login</DialogTitle>
+                </VisuallyHidden>
+
                 <SignIn />
             </UnstyledDialogContent>
         </Dialog>
