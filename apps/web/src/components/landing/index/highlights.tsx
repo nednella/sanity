@@ -58,10 +58,11 @@ const highlights: Highlight[] = [
 ]
 
 export function Highlights() {
+    // TODO: add subheading text
     return (
         <Container className="py-24 text-center">
             <H3 className="mb-1">Membership Perks</H3>
-            <Lead className="text-md mb-12">[subheading]</Lead>
+            <Lead className="text-md mb-12">[TODO: subheading]</Lead>
             <div className="grid gap-4 md:grid-cols-2 md:gap-6 lg:grid-cols-3">
                 {highlights.map((hl) => (
                     <Link
