@@ -23,7 +23,7 @@ export function Stats() {
         <Container className="max-w-3xl py-24 text-center">
             <H3 className="mb-1">Clan Stats</H3>
             <Lead className="text-md mb-8">Our community at a glance</Lead>
-            <div className="grid grid-cols-2 gap-6 md:grid-cols-4 md:gap-8">
+            <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
                 {stats.map((stat) => (
                     <div
                         key={stat.label}

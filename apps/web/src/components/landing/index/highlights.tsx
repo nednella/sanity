@@ -59,7 +59,7 @@ export function Highlights() {
         <Container className="py-24 text-center">
             <H3 className="mb-1">Membership Perks</H3>
             <Lead className="text-md mb-12">[Placeholder: Brief description of what makes Sanity unique]</Lead>
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-4 md:grid-cols-2 md:gap-6 lg:grid-cols-3">
                 {highlights.map((hl) => (
                     <Link
                         key={hl.title}
