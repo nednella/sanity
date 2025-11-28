@@ -7,6 +7,8 @@ import { Button } from "@/lib/ui/components/button"
 import { H1 } from "@/lib/ui/components/typography/h1"
 import { Lead } from "@/lib/ui/components/typography/lead"
 
+import { ScrollIndicator } from "./scroll-indicator"
+
 export function Hero() {
     return (
         <section className="bg-background flex min-h-screen items-center justify-center">
@@ -46,6 +48,7 @@ export function Hero() {
                     </Button>
                 </div>
             </motion.div>
+            <ScrollIndicator />
         </section>
     )
 }
