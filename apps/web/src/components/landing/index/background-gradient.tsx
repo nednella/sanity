@@ -1,3 +1,13 @@
-export function BackgroundGradient() {
-    return <div className="to-background fixed inset-0 z-[-1] bg-linear-to-b from-cyan-500/20" />
+type Props = React.ComponentPropsWithoutRef<"div">
+
+export function BackgroundGradient({ children, ...props }: Readonly<Props>) {
+    return (
+        <div
+            className="relative"
+            {...props}
+        >
+            <div className="from-background absolute inset-0 z-[-1] bg-linear-to-b to-cyan-500/40" />
+            {children}
+        </div>
+    )
 }
