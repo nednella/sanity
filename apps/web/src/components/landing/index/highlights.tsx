@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router"
 import { ArrowRight, BookOpen, CalendarDays, Crown, HandCoins, type LucideIcon, Medal, Timer } from "lucide-react"
+import { motion } from "motion/react"
 
 import { Container } from "@/lib/ui/components/container"
 import { H3 } from "@/lib/ui/components/typography/h3"
@@ -61,28 +62,35 @@ export function Highlights() {
     // TODO: add subheading text
     return (
         <Container className="py-24 text-center">
-            <H3 className="mb-1">Membership Perks</H3>
-            <Lead className="text-md mb-12">[TODO: subheading]</Lead>
-            <div className="grid gap-4 md:grid-cols-2 md:gap-6 lg:grid-cols-3">
-                {highlights.map((hl) => (
-                    <Link
-                        key={hl.title}
-                        to={hl.to}
-                        className="group bg-background hover:border-foreground/20 flex max-w-md flex-col rounded-2xl
-                            border p-6 transition-all"
-                    >
-                        <div className="bg-accent mb-4 inline-flex self-center rounded-xl border p-3">
-                            <hl.icon className="text-foreground size-5" />
-                        </div>
-                        <Large className="mb-2">{hl.title}</Large>
-                        <Muted className="mb-4">{hl.description}</Muted>
-                        <div className="text-foreground/80 group-hover:text-foreground mt-auto flex items-center">
-                            <Small>View</Small>
-                            <ArrowRight className="ml-2 size-4 transition-transform group-hover:translate-x-1" />
-                        </div>
-                    </Link>
-                ))}
-            </div>
+            <motion.div
+                viewport={{ once: true }}
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{ duration: 1, delay: 0.1 }}
+            >
+                <H3 className="mb-1">Membership Perks</H3>
+                <Lead className="text-md mb-12">[TODO: subheading]</Lead>
+                <div className="grid gap-4 md:grid-cols-2 md:gap-6 lg:grid-cols-3">
+                    {highlights.map((hl) => (
+                        <Link
+                            key={hl.title}
+                            to={hl.to}
+                            className="group bg-background hover:border-foreground/20 flex max-w-md flex-col rounded-2xl
+                                border p-6 transition-all"
+                        >
+                            <div className="bg-accent mb-4 inline-flex self-center rounded-xl border p-3">
+                                <hl.icon className="text-foreground size-5" />
+                            </div>
+                            <Large className="mb-2">{hl.title}</Large>
+                            <Muted className="mb-4">{hl.description}</Muted>
+                            <div className="text-foreground/80 group-hover:text-foreground mt-auto flex items-center">
+                                <Small>View</Small>
+                                <ArrowRight className="ml-2 size-4 transition-transform group-hover:translate-x-1" />
+                            </div>
+                        </Link>
+                    ))}
+                </div>
+            </motion.div>
         </Container>
     )
 }
