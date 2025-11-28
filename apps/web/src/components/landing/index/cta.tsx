@@ -10,8 +10,8 @@ export function Cta() {
         <Container className="max-w-3xl pt-24 pb-48 text-center">
             <div className="mx-auto max-w-4xl text-center">
                 <div className="bg-background rounded-3xl border p-12">
-                    <H3 className="mb-6">Get Involved</H3>
-                    <Lead className="mb-6 text-lg">Join our community to connect with members and learn more</Lead>
+                    <H3 className="mb-2">Get Involved</H3>
+                    <Lead className="mb-8 text-lg">Join our community to connect with members and learn more.</Lead>
                     <div className="flex flex-col justify-center gap-4 sm:flex-row">
                         <Button
                             asChild
