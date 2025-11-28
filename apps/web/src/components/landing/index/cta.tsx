@@ -31,15 +31,15 @@ export function Cta() {
                         <Button
                             asChild
                             size="lg"
-                            variant="custom"
-                            className="gap-2 rounded-full bg-black px-8! text-white hover:opacity-90 md:w-fit"
+                            variant="outline"
+                            className="gap-2 rounded-full px-8! transition-none hover:opacity-90 md:w-fit"
                         >
                             <a
                                 href="https://twitter.com/sanityosrs"
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
-                                <TwitterLogo className="size-4 fill-white" />
+                                <TwitterLogo className="fill-text-foreground size-4" />
                                 <span>Follow on X</span>
                             </a>
                         </Button>
