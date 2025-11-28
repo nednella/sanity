@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router"
-import { ExternalLink } from "lucide-react"
+import { ArrowRight } from "lucide-react"
 import { motion } from "motion/react"
 
 import { DiscordLogo } from "@/components/logos/discord-logo"
@@ -33,7 +33,7 @@ export function Hero() {
                         >
                             <DiscordLogo className="fill-primary-foreground mr-2 size-4" />
                             <span>Join our Discord</span>
-                            <ExternalLink className="ml-2 size-4 transition-transform group-hover:translate-x-1" />
+                            <ArrowRight className="ml-2 size-4 transition-transform group-hover:translate-x-1" />
                         </a>
                     </Button>
                     <Button

@@ -17,29 +17,29 @@ export function Cta() {
                             asChild
                             size="lg"
                             variant="custom"
-                            className="gap-2 rounded-full bg-[#5865F2] px-8! text-white hover:opacity-90 md:w-fit"
+                            className="rounded-full bg-[#5865F2] px-8! text-white hover:opacity-90 md:w-fit"
                         >
                             <a
                                 href="https://discord.gg/sanity"
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
-                                <DiscordLogo className="size-4 fill-white" />
-                                <span>Join Discord</span>
+                                <DiscordLogo className="mr-2 size-4 fill-white" />
+                                <span>Join our Discord</span>
                             </a>
                         </Button>
                         <Button
                             asChild
                             size="lg"
                             variant="outline"
-                            className="gap-2 rounded-full px-8! transition-none hover:opacity-90 md:w-fit"
+                            className="rounded-full px-8! transition-none hover:opacity-90 md:w-fit"
                         >
                             <a
                                 href="https://twitter.com/sanityosrs"
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
-                                <TwitterLogo className="fill-text-foreground size-4" />
+                                <TwitterLogo className="fill-text-foreground mr-2 size-4" />
                                 <span>Follow on X</span>
                             </a>
                         </Button>
