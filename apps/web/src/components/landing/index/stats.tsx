@@ -25,8 +25,14 @@ export function Stats() {
             <Lead className="text-md mb-8">Our community at a glance</Lead>
             <div className="grid grid-cols-2 gap-6 md:grid-cols-4 md:gap-8">
                 {stats.map((stat) => (
-                    <div key={stat.label}>
-                        <div className="bg-background border-border mb-4 inline-flex rounded-xl border p-3">
+                    <div
+                        key={stat.label}
+                        className="group"
+                    >
+                        <div
+                            className="bg-background group-hover:border-foreground/20 mb-4 inline-flex rounded-xl border
+                                p-3 transition-all"
+                        >
                             <stat.icon className="text-foreground size-6" />
                         </div>
                         <H3 className="mb-1">{stat.value}</H3>
