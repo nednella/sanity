@@ -2,7 +2,7 @@ import { linkOptions } from "@tanstack/react-router"
 
 const options = linkOptions([
     {
-        label: "About us",
+        label: "About",
         to: "/about"
     },
     {
