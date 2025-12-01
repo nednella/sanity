@@ -15,7 +15,7 @@ export function Navbar() {
             <div className="mx-auto max-w-7xl md:px-4">
                 <div
                     className="bg-background grid h-16 grid-cols-[1fr_1fr] items-center px-6 shadow-md
-                        md:grid-cols-[1fr_auto_1fr] md:rounded-lg md:border"
+                        md:grid-cols-[1fr_auto_1fr] md:rounded-2xl md:border"
                 >
                     {/* logo */}
                     <div className="hidden md:block">
