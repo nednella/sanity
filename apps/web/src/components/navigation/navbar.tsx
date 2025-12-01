@@ -18,11 +18,11 @@ import { options } from "./navbar.config"
 
 export function Navbar() {
     return (
-        <header className="fixed inset-x-0 z-50 md:top-4 md:right-4 md:left-4">
-            <div className="mx-auto max-w-7xl md:px-4">
+        <header className="fixed inset-x-0 z-50">
+            <div className="mx-auto max-w-7xl lg:px-4 lg:pt-4">
                 <div
-                    className="bg-background grid h-16 grid-cols-[1fr_auto_1fr] items-center px-6 shadow-md
-                        md:rounded-2xl md:border"
+                    className="bg-background flex h-16 items-center justify-between px-6 shadow-md lg:grid
+                        lg:grid-cols-[1fr_auto_1fr] lg:rounded-2xl lg:border"
                 >
                     {/* mobile menu toggle */}
                     <Menu
@@ -39,7 +39,7 @@ export function Navbar() {
                     </Link>
 
                     {/* nav links */}
-                    <nav className="hidden md:flex md:gap-8">
+                    <nav className="hidden lg:flex lg:gap-8">
                         {options.map((link) => (
                             <Button
                                 key={link.label}
