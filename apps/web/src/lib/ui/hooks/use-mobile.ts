@@ -1,6 +1,6 @@
 import React from "react"
 
-const MOBILE_BREAKPOINT = 768
+const MOBILE_BREAKPOINT = 1024
 const MAX_WIDTH_MQ = globalThis.matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`)
 
 const onMaxWidthChange = (callback: () => void) => {

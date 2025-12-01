@@ -1,3 +1,3 @@
 export function NavbarSpacer() {
-    return <div className="h-16 md:h-24" />
+    return <div className="h-16 lg:h-24" />
 }
