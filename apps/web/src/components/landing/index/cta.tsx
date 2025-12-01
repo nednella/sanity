@@ -47,7 +47,7 @@ export function Cta() {
                                 rel="noopener noreferrer"
                             >
                                 <TwitterLogo className="fill-text-foreground mr-2 size-4" />
-                                <span>Follow on X</span>
+                                <span>Follow us on X</span>
                             </a>
                         </Button>
                     </div>
