@@ -14,24 +14,22 @@ export function Navbar() {
         <header className="fixed inset-x-0 z-50 md:top-4 md:right-4 md:left-4">
             <div className="mx-auto max-w-7xl md:px-4">
                 <div
-                    className="bg-background grid h-16 grid-cols-[1fr_1fr] items-center px-6 shadow-md
-                        md:grid-cols-[1fr_auto_1fr] md:rounded-2xl md:border"
+                    className="bg-background grid h-16 grid-cols-[1fr_auto_1fr] items-center px-6 shadow-md
+                        md:rounded-2xl md:border"
                 >
-                    {/* logo */}
-                    <div className="hidden md:block">
-                        <Link
-                            to="/"
-                            className="font-bold"
-                        >
-                            Sanity
-                        </Link>
-                    </div>
-
                     {/* mobile menu toggle */}
                     <Menu
                         className="md:hidden"
                         onClick={() => {}}
                     />
+
+                    {/* logo */}
+                    <Link
+                        to="/"
+                        className="font-bold"
+                    >
+                        Sanity
+                    </Link>
 
                     {/* nav links */}
                     <nav className="hidden md:flex md:gap-8">
