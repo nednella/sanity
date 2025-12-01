@@ -9,6 +9,13 @@ import { LoginButton } from "../auth/login-button"
 import { ThemeToggle } from "../theme/theme-toggle"
 import { options } from "./navbar.config"
 
+/**
+ * TODO
+ *
+ * 1. Add desktop hover links
+ * 2. Add mobile/tablet sidebar navigation with nested links to replace hover links
+ */
+
 export function Navbar() {
     return (
         <header className="fixed inset-x-0 z-50 md:top-4 md:right-4 md:left-4">
