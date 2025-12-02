@@ -22,7 +22,7 @@ export function Navbar() {
                 >
                     <Link
                         to="/"
-                        className="font-bold"
+                        className="w-fit font-bold"
                     >
                         Sanity
                     </Link>
