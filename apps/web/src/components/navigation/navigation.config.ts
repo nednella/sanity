@@ -21,17 +21,17 @@ const aboutLinks = linkOptions([
 const memberLinks = linkOptions([
     {
         title: "Placeholder",
-        to: "/about",
+        to: "/",
         description: "Placeholder"
     },
     {
         title: "Placeholder",
-        to: "/about",
+        to: "/",
         description: "Placeholder"
     },
     {
         title: "Placeholder",
-        to: "/about",
+        to: "/",
         description: "Placeholder"
     }
 ])
