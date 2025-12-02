@@ -1,4 +1,4 @@
-import { Link, linkOptions } from "@tanstack/react-router"
+import { Link } from "@tanstack/react-router"
 
 import {
     NavigationMenu,
@@ -11,41 +11,7 @@ import {
 import { Small } from "@/lib/ui/components/typography/small"
 import { useIsMobile } from "@/lib/ui/hooks/use-mobile"
 
-const aboutLinks = linkOptions([
-    {
-        title: "Background",
-        to: "/about",
-        description: "Learn more about us"
-    },
-    {
-        title: "Requirements",
-        to: "/about",
-        description: "Find out what it takes to join"
-    },
-    {
-        title: "Ranking System",
-        to: "/about",
-        description: "How we progress our members"
-    }
-])
-
-const memberLinks = linkOptions([
-    {
-        title: "Placeholder",
-        to: "/about",
-        description: "Placeholder"
-    },
-    {
-        title: "Placeholder",
-        to: "/about",
-        description: "Placeholder"
-    },
-    {
-        title: "Placeholder",
-        to: "/about",
-        description: "Placeholder"
-    }
-])
+import { aboutLinks, memberLinks } from "./navigation.config"
 
 export function DesktopNavigation() {
     const isMobile = useIsMobile()
