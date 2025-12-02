@@ -1,8 +1,9 @@
 import { Outlet, createFileRoute } from "@tanstack/react-router"
 
-import { Navbar } from "@/components/header/navbar"
 import { Content } from "@/components/layout/content"
-import { Page } from "@/components/layout/page"
+import { MobileSidebar } from "@/components/navigation/mobile-sidebar"
+import { Navbar } from "@/components/navigation/navbar"
+import { SidebarProvider } from "@/lib/ui/components/sidebar"
 
 export const Route = createFileRoute("/(app)")({
     component: AppLayout
@@ -10,11 +11,12 @@ export const Route = createFileRoute("/(app)")({
 
 function AppLayout() {
     return (
-        <Page>
+        <SidebarProvider className="flex-col">
             <Navbar />
+            <MobileSidebar />
             <Content>
                 <Outlet />
             </Content>
-        </Page>
+        </SidebarProvider>
     )
 }

@@ -75,8 +75,8 @@ export function Highlights() {
                         <Link
                             key={hl.title}
                             to={hl.to}
-                            className="group bg-background hover:border-foreground/20 flex max-w-md flex-col rounded-2xl
-                                border p-6 transition-all"
+                            className="group bg-background hover:border-foreground/20 mx-auto flex max-w-md flex-col
+                                rounded-2xl border p-6 transition-all"
                         >
                             <div className="bg-accent mb-4 inline-flex self-center rounded-xl border p-3">
                                 <hl.icon className="text-foreground size-5" />
