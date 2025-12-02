@@ -7,7 +7,7 @@ type Props = React.ComponentPropsWithoutRef<"section">
 export function Container({ className, ...props }: Readonly<Props>) {
     return (
         <section
-            className={cn("container mx-auto max-w-7xl px-4", className)}
+            className={cn("mx-auto max-w-7xl px-12", className)}
             {...props}
         />
     )
