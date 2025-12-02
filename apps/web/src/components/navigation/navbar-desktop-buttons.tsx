@@ -12,7 +12,7 @@ export function DesktopButtons() {
                 <LoginButton />
             </SignedOut>
             <SignedIn>
-                <AccountButton />
+                <AccountButton variant="avatar" />
             </SignedIn>
         </div>
     )
