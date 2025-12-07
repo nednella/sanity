@@ -27,12 +27,18 @@ export function MobileSidebar() {
 
     return (
         <Sidebar>
-            <SidebarHeader className="p-4 text-center">
-                <span className="font-bold">Sanity</span>
+            <SidebarHeader className="h-16 border-b p-4">
+                <Link
+                    to="/"
+                    className="text-foreground hover:text-foreground/80 flex items-center justify-center text-lg
+                        font-bold transition-colors"
+                >
+                    Sanity
+                </Link>
             </SidebarHeader>
-            <SidebarContent>
+            <SidebarContent className="px-2 py-6">
                 <SidebarGroup>
-                    <SidebarGroupLabel className="font-bold">About</SidebarGroupLabel>
+                    <SidebarGroupLabel className="font-semibold tracking-wider uppercase">About</SidebarGroupLabel>
                     <SidebarGroupContent>
                         <SidebarMenu>
                             {aboutLinks.map((link) => (
@@ -40,12 +46,13 @@ export function MobileSidebar() {
                                     <SidebarMenuButton
                                         asChild
                                         tooltip={link.title}
+                                        className="rounded-lg px-4"
                                     >
                                         <Link
                                             to={link.to}
                                             inactiveProps={{ className: "text-muted-foreground" }}
                                         >
-                                            <span>{link.title}</span>
+                                            <span className="font-medium">{link.title}</span>
                                         </Link>
                                     </SidebarMenuButton>
                                 </SidebarMenuItem>
@@ -54,27 +61,30 @@ export function MobileSidebar() {
                     </SidebarGroupContent>
                 </SidebarGroup>
                 <SidebarGroup>
-                    <SidebarGroupLabel className="font-bold">Members</SidebarGroupLabel>
+                    <SidebarGroupLabel className="font-semibold tracking-wider uppercase">Members</SidebarGroupLabel>
                     <SidebarGroupContent>
-                        {memberLinks.map((link) => (
-                            <SidebarMenuItem key={link.title}>
-                                <SidebarMenuButton
-                                    asChild
-                                    tooltip={link.title}
-                                >
-                                    <Link
-                                        to={link.to}
-                                        inactiveProps={{ className: "text-muted-foreground" }}
+                        <SidebarMenu>
+                            {memberLinks.map((link) => (
+                                <SidebarMenuItem key={link.title}>
+                                    <SidebarMenuButton
+                                        asChild
+                                        tooltip={link.title}
+                                        className="rounded-lg px-4"
                                     >
-                                        <span>{link.title}</span>
-                                    </Link>
-                                </SidebarMenuButton>
-                            </SidebarMenuItem>
-                        ))}
+                                        <Link
+                                            to={link.to}
+                                            inactiveProps={{ className: "text-muted-foreground" }}
+                                        >
+                                            <span className="font-medium">{link.title}</span>
+                                        </Link>
+                                    </SidebarMenuButton>
+                                </SidebarMenuItem>
+                            ))}
+                        </SidebarMenu>
                     </SidebarGroupContent>
                 </SidebarGroup>
             </SidebarContent>
-            <SidebarFooter>
+            <SidebarFooter className="p-4">
                 <SignedOut>
                     <LoginButton />
                 </SignedOut>
