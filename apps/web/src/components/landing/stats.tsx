@@ -29,7 +29,7 @@ export function Stats() {
                 transition={{ duration: 0.6, ease: "easeOut" }}
             >
                 <H3 className="mb-2 text-3xl">Clan Statistics</H3>
-                <Lead className="mb-12 text-lg">Our community at a glance.</Lead>
+                <Lead className="mb-12 text-lg">our community at a glance.</Lead>
                 <div className="mx-auto grid max-w-sm grid-cols-2 gap-8 md:max-w-none md:grid-cols-4">
                     {stats.map((stat, index) => (
                         <motion.div

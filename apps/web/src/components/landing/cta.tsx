@@ -21,8 +21,8 @@ export function Cta() {
                     className="bg-background hover:border-foreground/20 rounded-3xl border p-12 transition-all
                         duration-300 hover:shadow-lg sm:p-16"
                 >
-                    <H3 className="mb-2 text-3xl">Think You're Ready to Join?</H3>
-                    <Lead className="mb-8 text-lg">Join our community, connect with members and learn more.</Lead>
+                    <H3 className="mb-2 text-3xl">Interested in Joining?</H3>
+                    <Lead className="mb-8 text-lg">join our community, connect with members and learn more.</Lead>
                     <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
                         <Button
                             asChild

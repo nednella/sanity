@@ -32,7 +32,7 @@ export function Hero() {
                         transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
                     >
                         <Muted className="mx-auto mb-12 max-w-xl text-base sm:text-lg">
-                            An elite Old School RuneScape PvM clan home to some of the best players in the game.
+                            an elite Old School RuneScape PvM clan home to some of the best players in the game.
                         </Muted>
                     </motion.div>
 
