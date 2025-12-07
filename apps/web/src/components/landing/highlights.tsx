@@ -59,35 +59,40 @@ const highlights: Highlight[] = [
 ]
 
 export function Highlights() {
-    // TODO: add subheading text
     return (
         <Container className="py-24 text-center">
             <motion.div
-                viewport={{ once: true }}
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                transition={{ duration: 1, delay: 0.1 }}
+                viewport={{ once: true, margin: "-100px" }}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
             >
-                <H3 className="mb-1">Membership Perks</H3>
-                <Lead className="text-md mb-12">[TODO: subheading]</Lead>
-                <div className="grid gap-4 md:grid-cols-2 md:gap-6 lg:grid-cols-3">
-                    {highlights.map((hl) => (
-                        <Link
+                <H3 className="mb-2 text-3xl">Membership Perks</H3>
+                <Lead className="text-lg mb-12">Discover what makes Sanity one of the premier PvM clans in Old School RuneScape.</Lead>
+                <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                    {highlights.map((hl, index) => (
+                        <motion.div
                             key={hl.title}
-                            to={hl.to}
-                            className="group bg-background hover:border-foreground/20 mx-auto flex max-w-md flex-col
-                                rounded-2xl border p-6 transition-all"
+                            viewport={{ once: true }}
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.5, delay: index * 0.1 }}
                         >
-                            <div className="bg-accent mb-4 inline-flex self-center rounded-xl border p-3">
-                                <hl.icon className="text-foreground size-5" />
-                            </div>
-                            <Large className="mb-2">{hl.title}</Large>
-                            <Muted className="mb-4">{hl.description}</Muted>
-                            <div className="text-foreground/80 group-hover:text-foreground mt-auto flex items-center">
-                                <Small>View</Small>
-                                <ArrowRight className="ml-2 size-4 transition-transform group-hover:translate-x-1" />
-                            </div>
-                        </Link>
+                            <Link
+                                to={hl.to}
+                                className="group bg-background hover:border-foreground/20 hover:shadow-lg mx-auto flex h-full max-w-md flex-col rounded-2xl border p-6 transition-all duration-300"
+                            >
+                                <div className="bg-accent hover:bg-accent/80 mb-4 inline-flex self-center rounded-xl border p-3 transition-colors">
+                                    <hl.icon className="text-foreground size-5 transition-transform group-hover:scale-110" />
+                                </div>
+                                <Large className="mb-2">{hl.title}</Large>
+                                <Muted className="mb-4 text-sm leading-relaxed">{hl.description}</Muted>
+                                <div className="text-muted-foreground group-hover:text-foreground mt-auto flex items-center justify-center transition-colors">
+                                    <Small className="font-medium">Learn more</Small>
+                                    <ArrowRight className="ml-2 size-4 transition-transform group-hover:translate-x-1" />
+                                </div>
+                            </Link>
+                        </motion.div>
                     ))}
                 </div>
             </motion.div>

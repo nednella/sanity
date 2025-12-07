@@ -1,3 +1,4 @@
+import { ArrowRight } from "lucide-react"
 import { motion } from "motion/react"
 
 import { DiscordLogo } from "@/components/logos/discord-logo"
@@ -9,22 +10,22 @@ import { Lead } from "@/lib/ui/components/typography/lead"
 
 export function Cta() {
     return (
-        <Container className="max-w-3xl pt-24 pb-48 text-center">
+        <Container className="max-w-4xl pt-24 pb-48 text-center">
             <motion.div
-                viewport={{ once: true }}
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                transition={{ duration: 1, delay: 0.1 }}
+                viewport={{ once: true, margin: "-100px" }}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
             >
-                <div className="bg-background hover:border-foreground/20 rounded-2xl border p-12">
-                    <H3 className="mb-1">Get Involved</H3>
-                    <Lead className="text-md mb-8">Join our community to connect with members and learn more.</Lead>
-                    <div className="flex flex-col justify-center gap-4 sm:flex-row">
+                <div className="bg-background hover:border-foreground/20 hover:shadow-lg rounded-3xl border p-12 transition-all duration-300 sm:p-16">
+                    <H3 className="mb-2 text-3xl">Think You're Ready to Join?</H3>
+                    <Lead className="text-lg mb-8">Join our community, connect with members and learn more.</Lead>
+                    <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
                         <Button
                             asChild
                             size="lg"
                             variant="custom"
-                            className="rounded-full bg-[#5865F2] px-8! text-white hover:opacity-90 md:w-fit"
+                            className="group w-full rounded-full bg-[#5865F2] px-8 shadow-lg text-white hover:bg-[#4752C4] hover:shadow-xl sm:w-auto"
                         >
                             <a
                                 href="https://discord.gg/sanity"
@@ -33,21 +34,23 @@ export function Cta() {
                             >
                                 <DiscordLogo className="mr-2 size-4 fill-white" />
                                 <span>Join our Discord</span>
+                                <ArrowRight className="ml-2 size-4 transition-transform group-hover:translate-x-1" />
                             </a>
                         </Button>
                         <Button
                             asChild
                             size="lg"
                             variant="outline"
-                            className="rounded-full px-8! transition-none hover:opacity-90 md:w-fit"
+                            className="group w-full rounded-full transition-none px-8 hover:bg-accent sm:w-auto"
                         >
                             <a
                                 href="https://twitter.com/sanityosrs"
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
-                                <TwitterLogo className="fill-text-foreground mr-2 size-4" />
+                                <TwitterLogo className="mr-2 size-4 fill-foreground" />
                                 <span>Follow us on X</span>
+                                <ArrowRight className="ml-2 size-4 transition-transform group-hover:translate-x-1" />
                             </a>
                         </Button>
                     </div>

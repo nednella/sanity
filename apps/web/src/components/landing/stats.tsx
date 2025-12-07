@@ -21,30 +21,33 @@ const stats: Stat[] = [
 
 export function Stats() {
     return (
-        <Container className="max-w-3xl py-24 text-center">
+        <Container className="max-w-5xl py-24 text-center">
             <motion.div
-                viewport={{ once: true }}
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                transition={{ duration: 1, delay: 0.1 }}
+                viewport={{ once: true, margin: "-100px" }}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
             >
-                <H3 className="mb-1">Clan Stats</H3>
-                <Lead className="text-md mb-8">Our community at a glance.</Lead>
-                <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
-                    {stats.map((stat) => (
-                        <div
+                <H3 className="mb-2 text-3xl">Clan Statistics</H3>
+                <Lead className="mb-12 text-lg">
+                    Our community at a glance.
+                </Lead>
+                <div className="grid grid-cols-2 gap-6 md:grid-cols-4">
+                    {stats.map((stat, index) => (
+                        <motion.div
                             key={stat.label}
+                            viewport={{ once: true }}
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.5, delay: index * 0.1 }}
                             className="group"
                         >
-                            <div
-                                className="bg-background group-hover:border-foreground/20 mb-4 inline-flex rounded-xl
-                                    border p-3 transition-all"
-                            >
-                                <stat.icon className="text-foreground size-6" />
+                            <div className="bg-background hover:border-foreground/30 hover:shadow-md mb-4 inline-flex rounded-2xl border p-4 transition-all duration-300">
+                                <stat.icon className="text-foreground size-6 transition-transform group-hover:scale-110" />
                             </div>
                             <H3 className="mb-1">{stat.value}</H3>
                             <Muted>{stat.label}</Muted>
-                        </div>
+                        </motion.div>
                     ))}
                 </div>
             </motion.div>
