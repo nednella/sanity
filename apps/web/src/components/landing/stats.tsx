@@ -21,7 +21,7 @@ const stats: Stat[] = [
 
 export function Stats() {
     return (
-        <Container className="max-w-5xl py-24 text-center">
+        <Container className="max-w-md py-24 text-center sm:max-w-2xl md:max-w-3xl lg:max-w-5xl">
             <motion.div
                 viewport={{ once: true, margin: "-100px" }}
                 initial={{ opacity: 0, y: 30 }}
@@ -29,10 +29,8 @@ export function Stats() {
                 transition={{ duration: 0.6, ease: "easeOut" }}
             >
                 <H3 className="mb-2 text-3xl">Clan Statistics</H3>
-                <Lead className="mb-12 text-lg">
-                    Our community at a glance.
-                </Lead>
-                <div className="grid grid-cols-2 gap-6 md:grid-cols-4">
+                <Lead className="mb-12 text-lg">Our community at a glance.</Lead>
+                <div className="mx-auto grid max-w-sm grid-cols-2 gap-8 md:max-w-none md:grid-cols-4">
                     {stats.map((stat, index) => (
                         <motion.div
                             key={stat.label}
@@ -42,7 +40,10 @@ export function Stats() {
                             transition={{ duration: 0.5, delay: index * 0.1 }}
                             className="group"
                         >
-                            <div className="bg-background hover:border-foreground/30 hover:shadow-md mb-4 inline-flex rounded-2xl border p-4 transition-all duration-300">
+                            <div
+                                className="bg-background hover:border-foreground/30 mb-4 inline-flex rounded-2xl border
+                                    p-4 transition-all duration-300 hover:shadow-md"
+                            >
                                 <stat.icon className="text-foreground size-6 transition-transform group-hover:scale-110" />
                             </div>
                             <H3 className="mb-1">{stat.value}</H3>

@@ -25,17 +25,17 @@ export function Hero() {
                     >
                         <H1 className="mb-6 text-5xl sm:text-6xl md:text-7xl">Welcome to Sanity</H1>
                     </motion.div>
-                    
+
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
                     >
                         <Muted className="mx-auto mb-12 max-w-xl text-base sm:text-lg">
-                        An elite Old School RuneScape PvM clan home to some of the best players in the game.
+                            An elite Old School RuneScape PvM clan home to some of the best players in the game.
                         </Muted>
                     </motion.div>
-                    
+
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -45,14 +45,15 @@ export function Hero() {
                         <Button
                             asChild
                             size="lg"
-                            className="group w-full max-w-xs rounded-full px-8 shadow-lg transition-all hover:shadow-xl sm:w-auto"
+                            className="group w-full max-w-xs rounded-full px-8 shadow-lg transition-all hover:shadow-xl
+                                sm:w-auto"
                         >
                             <a
                                 href="https://discord.gg/sanity"
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
-                                <DiscordLogo className="mr-2 size-4 fill-primary-foreground" />
+                                <DiscordLogo className="fill-primary-foreground mr-2 size-4" />
                                 <span>Join our Discord</span>
                                 <ArrowRight className="ml-2 size-4 transition-transform group-hover:translate-x-1" />
                             </a>
@@ -61,13 +62,13 @@ export function Hero() {
                             asChild
                             size="lg"
                             variant="outline"
-                            className="w-full max-w-xs rounded-full px-8 transition-all hover:bg-accent sm:w-auto"
+                            className="hover:bg-accent w-full max-w-xs rounded-full px-8 transition-all sm:w-auto"
                         >
                             <Link to="/about">Learn More</Link>
                         </Button>
                     </motion.div>
                 </motion.div>
-                
+
                 <ScrollIndicator />
             </div>
         </section>

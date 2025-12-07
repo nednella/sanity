@@ -68,8 +68,10 @@ export function Highlights() {
                 transition={{ duration: 0.6, ease: "easeOut" }}
             >
                 <H3 className="mb-2 text-3xl">Membership Perks</H3>
-                <Lead className="text-lg mb-12">Discover what makes Sanity one of the premier PvM clans in Old School RuneScape.</Lead>
-                <div className="grid gap-4 lg:gap-6 md:grid-cols-2 lg:grid-cols-3">
+                <Lead className="mb-12 text-lg">
+                    Discover what makes Sanity one of the premier PvM clans in Old School RuneScape.
+                </Lead>
+                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 lg:gap-6">
                     {highlights.map((hl, index) => (
                         <motion.div
                             key={hl.title}
@@ -80,14 +82,23 @@ export function Highlights() {
                         >
                             <Link
                                 to={hl.to}
-                                className="group bg-background hover:border-foreground/20 hover:shadow-lg mx-auto flex h-full max-w-md flex-col rounded-2xl border p-6 transition-all duration-300"
+                                className="group bg-background hover:border-foreground/20 mx-auto flex h-full max-w-md
+                                    flex-col rounded-2xl border p-6 transition-all duration-300 hover:shadow-lg"
                             >
-                                <div className="bg-accent hover:bg-accent/80 mb-4 inline-flex self-center rounded-xl border p-3 transition-colors">
-                                    <hl.icon className="text-foreground size-5 transition-transform group-hover:scale-110" />
+                                <div
+                                    className="bg-accent hover:bg-accent/80 mb-4 inline-flex self-center rounded-xl
+                                        border p-3 transition-colors"
+                                >
+                                    <hl.icon
+                                        className="text-foreground size-5 transition-transform group-hover:scale-110"
+                                    />
                                 </div>
                                 <Large className="mb-2">{hl.title}</Large>
                                 <Muted className="mb-4 text-sm leading-relaxed">{hl.description}</Muted>
-                                <div className="text-muted-foreground group-hover:text-foreground mt-auto flex items-center justify-center transition-colors">
+                                <div
+                                    className="text-muted-foreground group-hover:text-foreground mt-auto flex
+                                        items-center justify-center transition-colors"
+                                >
                                     <Small className="font-medium">Learn more</Small>
                                     <ArrowRight className="ml-2 size-4 transition-transform group-hover:translate-x-1" />
                                 </div>

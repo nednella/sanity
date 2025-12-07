@@ -17,15 +17,19 @@ export function Cta() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, ease: "easeOut" }}
             >
-                <div className="bg-background hover:border-foreground/20 hover:shadow-lg rounded-3xl border p-12 transition-all duration-300 sm:p-16">
+                <div
+                    className="bg-background hover:border-foreground/20 rounded-3xl border p-12 transition-all
+                        duration-300 hover:shadow-lg sm:p-16"
+                >
                     <H3 className="mb-2 text-3xl">Think You're Ready to Join?</H3>
-                    <Lead className="text-lg mb-8">Join our community, connect with members and learn more.</Lead>
+                    <Lead className="mb-8 text-lg">Join our community, connect with members and learn more.</Lead>
                     <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
                         <Button
                             asChild
                             size="lg"
                             variant="custom"
-                            className="group w-full rounded-full bg-[#5865F2] px-8 shadow-lg text-white hover:bg-[#4752C4] hover:shadow-xl sm:w-auto"
+                            className="group w-full rounded-full bg-[#5865F2] px-8 text-white shadow-lg
+                                hover:bg-[#4752C4] hover:shadow-xl sm:w-auto"
                         >
                             <a
                                 href="https://discord.gg/sanity"
@@ -41,14 +45,14 @@ export function Cta() {
                             asChild
                             size="lg"
                             variant="outline"
-                            className="group w-full rounded-full transition-none px-8 hover:bg-accent sm:w-auto"
+                            className="group hover:bg-accent w-full rounded-full px-8 transition-none sm:w-auto"
                         >
                             <a
                                 href="https://twitter.com/sanityosrs"
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
-                                <TwitterLogo className="mr-2 size-4 fill-foreground" />
+                                <TwitterLogo className="fill-foreground mr-2 size-4" />
                                 <span>Follow us on X</span>
                                 <ArrowRight className="ml-2 size-4 transition-transform group-hover:translate-x-1" />
                             </a>
