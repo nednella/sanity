@@ -69,7 +69,7 @@ export function Highlights() {
             >
                 <H3 className="mb-2 text-3xl">Membership Perks</H3>
                 <Lead className="text-lg mb-12">Discover what makes Sanity one of the premier PvM clans in Old School RuneScape.</Lead>
-                <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                <div className="grid gap-4 lg:gap-6 md:grid-cols-2 lg:grid-cols-3">
                     {highlights.map((hl, index) => (
                         <motion.div
                             key={hl.title}
