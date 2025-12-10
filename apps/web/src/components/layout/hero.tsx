@@ -2,11 +2,10 @@ import React from "react"
 
 import { motion } from "motion/react"
 
+import { Section } from "@/lib/ui/components/section"
 import { H1 } from "@/lib/ui/components/typography/h1"
 import { Lead } from "@/lib/ui/components/typography/lead"
 import { cn } from "@/lib/ui/utils.ts"
-
-import { Section } from "../../lib/ui/components/section"
 
 const containerVariants = {
     hidden: { opacity: 0 },

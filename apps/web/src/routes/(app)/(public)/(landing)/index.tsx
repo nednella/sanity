@@ -3,10 +3,10 @@ import { ArrowRight } from "lucide-react"
 
 import { BackgroundGradient } from "@/components/landing/background-gradient"
 import { Cta } from "@/components/landing/cta"
-import { Hero } from "@/components/landing/hero"
 import { Highlights } from "@/components/landing/highlights"
 import { ScrollIndicator } from "@/components/landing/scroll-indicator"
 import { Stats } from "@/components/landing/stats"
+import { Hero } from "@/components/layout/hero"
 import { DiscordLogo } from "@/components/logos/discord-logo"
 import { Button } from "@/lib/ui/components/button"
 
