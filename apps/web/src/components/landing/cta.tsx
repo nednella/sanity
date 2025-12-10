@@ -4,13 +4,13 @@ import { motion } from "motion/react"
 import { DiscordLogo } from "@/components/logos/discord-logo"
 import { TwitterLogo } from "@/components/logos/twitter-logo"
 import { Button } from "@/lib/ui/components/button"
-import { Container } from "@/lib/ui/components/container"
+import { Section } from "@/lib/ui/components/section"
 import { H3 } from "@/lib/ui/components/typography/h3"
 import { Lead } from "@/lib/ui/components/typography/lead"
 
 export function Cta() {
     return (
-        <Container className="max-w-4xl pt-24 pb-48 text-center">
+        <Section className="max-w-4xl pt-24 pb-48 text-center">
             <motion.div
                 viewport={{ once: true, margin: "-100px" }}
                 initial={{ opacity: 0, y: 30 }}
@@ -60,6 +60,6 @@ export function Cta() {
                     </div>
                 </div>
             </motion.div>
-        </Container>
+        </Section>
     )
 }

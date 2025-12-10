@@ -1,7 +1,7 @@
 import { Gauge, HandCoins, type LucideIcon, Timer, Users } from "lucide-react"
 import { motion } from "motion/react"
 
-import { Container } from "@/lib/ui/components/container"
+import { Section } from "@/lib/ui/components/section"
 import { H3 } from "@/lib/ui/components/typography/h3"
 import { Lead } from "@/lib/ui/components/typography/lead"
 import { Muted } from "@/lib/ui/components/typography/muted"
@@ -21,7 +21,7 @@ const stats: Stat[] = [
 
 export function Stats() {
     return (
-        <Container className="max-w-md py-24 text-center sm:max-w-2xl md:max-w-3xl lg:max-w-5xl">
+        <Section className="max-w-md py-24 text-center sm:max-w-2xl md:max-w-3xl lg:max-w-5xl">
             <motion.div
                 viewport={{ once: true, margin: "-100px" }}
                 initial={{ opacity: 0, y: 30 }}
@@ -52,6 +52,6 @@ export function Stats() {
                     ))}
                 </div>
             </motion.div>
-        </Container>
+        </Section>
     )
 }

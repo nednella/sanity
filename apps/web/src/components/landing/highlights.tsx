@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router"
 import { ArrowRight, BookOpen, CalendarDays, Crown, HandCoins, type LucideIcon, Medal, Timer } from "lucide-react"
 import { motion } from "motion/react"
 
-import { Container } from "@/lib/ui/components/container"
+import { Section } from "@/lib/ui/components/section"
 import { H3 } from "@/lib/ui/components/typography/h3"
 import { Large } from "@/lib/ui/components/typography/large"
 import { Lead } from "@/lib/ui/components/typography/lead"
@@ -60,7 +60,7 @@ const highlights: Highlight[] = [
 
 export function Highlights() {
     return (
-        <Container className="py-24 text-center">
+        <Section className="py-24 text-center">
             <motion.div
                 viewport={{ once: true, margin: "-100px" }}
                 initial={{ opacity: 0, y: 30 }}
@@ -105,6 +105,6 @@ export function Highlights() {
                     ))}
                 </div>
             </motion.div>
-        </Container>
+        </Section>
     )
 }
