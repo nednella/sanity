@@ -20,7 +20,7 @@ const stats: Stat[] = [
 
 export function Stats() {
     return (
-        <Section className="mb-48 max-w-4xl text-center">
+        <Section className="mb-48 max-w-4xl pt-48 text-center">
             <motion.div
                 viewport={{ once: true }}
                 initial={{ opacity: 0 }}
