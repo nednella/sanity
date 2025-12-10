@@ -6,7 +6,7 @@ import { ThemeToggle } from "../theme/theme-toggle"
 
 export function DesktopButtons() {
     return (
-        <div className="hidden items-center justify-end gap-4 lg:flex">
+        <div className="hidden items-center justify-end gap-2 lg:flex">
             <ThemeToggle />
             <SignedOut>
                 <LoginButton />
