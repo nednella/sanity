@@ -8,7 +8,7 @@ import { Section } from "@/lib/ui/components/section"
 import { H3 } from "@/lib/ui/components/typography/h3"
 import { Lead } from "@/lib/ui/components/typography/lead"
 
-export function Cta() {
+export function CallToAction() {
     return (
         <Section className="max-w-4xl pt-24 pb-48 text-center">
             <motion.div

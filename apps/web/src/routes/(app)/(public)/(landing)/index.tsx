@@ -2,7 +2,7 @@ import { Link, createFileRoute } from "@tanstack/react-router"
 import { ArrowRight } from "lucide-react"
 
 import { BackgroundGradient } from "@/components/landing/background-gradient"
-import { Cta } from "@/components/landing/cta"
+import { CallToAction } from "@/components/landing/call-to-action"
 import { Highlights } from "@/components/landing/highlights"
 import { ScrollIndicator } from "@/components/landing/scroll-indicator"
 import { Stats } from "@/components/landing/stats"
@@ -51,7 +51,7 @@ function IndexPage() {
             <BackgroundGradient>
                 <Stats />
                 <Highlights />
-                <Cta />
+                <CallToAction />
             </BackgroundGradient>
         </>
     )
