@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router"
 
 import { NavbarSpacer } from "@/components/navigation/navbar-spacer"
-import { Container } from "@/lib/ui/components/container"
+import { Section } from "@/lib/ui/components/section"
 
 export const Route = createFileRoute("/(app)/(public)/about")({
     component: AboutPage
@@ -11,9 +11,9 @@ function AboutPage() {
     return (
         <>
             <NavbarSpacer />
-            <Container>
+            <Section>
                 <div>About page.</div>
-            </Container>
+            </Section>
         </>
     )
 }
