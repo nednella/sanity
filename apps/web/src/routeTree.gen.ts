@@ -15,6 +15,7 @@ import { Route as appauthenticatedAuthenticatedRouteImport } from './routes/(app
 import { Route as apppubliclandingIndexRouteImport } from './routes/(app)/(public)/(landing)/index'
 import { Route as apppubliclandingRequirementsRouteImport } from './routes/(app)/(public)/(landing)/requirements'
 import { Route as apppubliclandingRanksRouteImport } from './routes/(app)/(public)/(landing)/ranks'
+import { Route as apppubliclandingAchievementDiaryRouteImport } from './routes/(app)/(public)/(landing)/achievement-diary'
 import { Route as apppubliclandingAboutRouteImport } from './routes/(app)/(public)/(landing)/about'
 
 const appLayoutRoute = appLayoutRouteImport.update({
@@ -47,6 +48,12 @@ const apppubliclandingRanksRoute = apppubliclandingRanksRouteImport.update({
   path: '/ranks',
   getParentRoute: () => appLayoutRoute,
 } as any)
+const apppubliclandingAchievementDiaryRoute =
+  apppubliclandingAchievementDiaryRouteImport.update({
+    id: '/(public)/(landing)/achievement-diary',
+    path: '/achievement-diary',
+    getParentRoute: () => appLayoutRoute,
+  } as any)
 const apppubliclandingAboutRoute = apppubliclandingAboutRouteImport.update({
   id: '/(public)/(landing)/about',
   path: '/about',
@@ -56,6 +63,7 @@ const apppubliclandingAboutRoute = apppubliclandingAboutRouteImport.update({
 export interface FileRoutesByFullPath {
   '/authenticated': typeof appauthenticatedAuthenticatedRoute
   '/about': typeof apppubliclandingAboutRoute
+  '/achievement-diary': typeof apppubliclandingAchievementDiaryRoute
   '/ranks': typeof apppubliclandingRanksRoute
   '/requirements': typeof apppubliclandingRequirementsRoute
   '/': typeof apppubliclandingIndexRoute
@@ -63,6 +71,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/authenticated': typeof appauthenticatedAuthenticatedRoute
   '/about': typeof apppubliclandingAboutRoute
+  '/achievement-diary': typeof apppubliclandingAchievementDiaryRoute
   '/ranks': typeof apppubliclandingRanksRoute
   '/requirements': typeof apppubliclandingRequirementsRoute
   '/': typeof apppubliclandingIndexRoute
@@ -73,21 +82,35 @@ export interface FileRoutesById {
   '/(app)/(authenticated)': typeof appauthenticatedLayoutRouteWithChildren
   '/(app)/(authenticated)/authenticated': typeof appauthenticatedAuthenticatedRoute
   '/(app)/(public)/(landing)/about': typeof apppubliclandingAboutRoute
+  '/(app)/(public)/(landing)/achievement-diary': typeof apppubliclandingAchievementDiaryRoute
   '/(app)/(public)/(landing)/ranks': typeof apppubliclandingRanksRoute
   '/(app)/(public)/(landing)/requirements': typeof apppubliclandingRequirementsRoute
   '/(app)/(public)/(landing)/': typeof apppubliclandingIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/authenticated' | '/about' | '/ranks' | '/requirements' | '/'
+  fullPaths:
+    | '/authenticated'
+    | '/about'
+    | '/achievement-diary'
+    | '/ranks'
+    | '/requirements'
+    | '/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/authenticated' | '/about' | '/ranks' | '/requirements' | '/'
+  to:
+    | '/authenticated'
+    | '/about'
+    | '/achievement-diary'
+    | '/ranks'
+    | '/requirements'
+    | '/'
   id:
     | '__root__'
     | '/(app)'
     | '/(app)/(authenticated)'
     | '/(app)/(authenticated)/authenticated'
     | '/(app)/(public)/(landing)/about'
+    | '/(app)/(public)/(landing)/achievement-diary'
     | '/(app)/(public)/(landing)/ranks'
     | '/(app)/(public)/(landing)/requirements'
     | '/(app)/(public)/(landing)/'
@@ -141,6 +164,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof apppubliclandingRanksRouteImport
       parentRoute: typeof appLayoutRoute
     }
+    '/(app)/(public)/(landing)/achievement-diary': {
+      id: '/(app)/(public)/(landing)/achievement-diary'
+      path: '/achievement-diary'
+      fullPath: '/achievement-diary'
+      preLoaderRoute: typeof apppubliclandingAchievementDiaryRouteImport
+      parentRoute: typeof appLayoutRoute
+    }
     '/(app)/(public)/(landing)/about': {
       id: '/(app)/(public)/(landing)/about'
       path: '/about'
@@ -168,6 +198,7 @@ const appauthenticatedLayoutRouteWithChildren =
 interface appLayoutRouteChildren {
   appauthenticatedLayoutRoute: typeof appauthenticatedLayoutRouteWithChildren
   apppubliclandingAboutRoute: typeof apppubliclandingAboutRoute
+  apppubliclandingAchievementDiaryRoute: typeof apppubliclandingAchievementDiaryRoute
   apppubliclandingRanksRoute: typeof apppubliclandingRanksRoute
   apppubliclandingRequirementsRoute: typeof apppubliclandingRequirementsRoute
   apppubliclandingIndexRoute: typeof apppubliclandingIndexRoute
@@ -176,6 +207,7 @@ interface appLayoutRouteChildren {
 const appLayoutRouteChildren: appLayoutRouteChildren = {
   appauthenticatedLayoutRoute: appauthenticatedLayoutRouteWithChildren,
   apppubliclandingAboutRoute: apppubliclandingAboutRoute,
+  apppubliclandingAchievementDiaryRoute: apppubliclandingAchievementDiaryRoute,
   apppubliclandingRanksRoute: apppubliclandingRanksRoute,
   apppubliclandingRequirementsRoute: apppubliclandingRequirementsRoute,
   apppubliclandingIndexRoute: apppubliclandingIndexRoute,
