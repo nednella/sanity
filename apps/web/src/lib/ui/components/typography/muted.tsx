@@ -1,10 +1,14 @@
 import { cn } from "@/lib/ui/utils"
 
-interface Props {
-    className?: string
-    children: React.ReactNode
-}
+type Props = React.ComponentPropsWithRef<"p">
 
-export function Muted({ className, children }: Readonly<Props>) {
-    return <p className={cn("text-muted-foreground text-sm", className)}>{children}</p>
+export function Muted({ ref, className, children }: Readonly<Props>) {
+    return (
+        <p
+            ref={ref}
+            className={cn("text-muted-foreground text-sm", className)}
+        >
+            {children}
+        </p>
+    )
 }

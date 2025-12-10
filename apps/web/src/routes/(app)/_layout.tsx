@@ -1,6 +1,5 @@
 import { Outlet, createFileRoute } from "@tanstack/react-router"
 
-import { Content } from "@/components/layout/content"
 import { MobileSidebar } from "@/components/navigation/mobile-sidebar"
 import { Navbar } from "@/components/navigation/navbar"
 import { SidebarProvider } from "@/lib/ui/components/sidebar"
@@ -14,9 +13,9 @@ function AppLayout() {
         <SidebarProvider className="flex-col">
             <Navbar />
             <MobileSidebar />
-            <Content>
+            <main className="flex-1 overflow-y-auto">
                 <Outlet />
-            </Content>
+            </main>
         </SidebarProvider>
     )
 }

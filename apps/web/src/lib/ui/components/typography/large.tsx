@@ -1,10 +1,14 @@
 import { cn } from "@/lib/ui/utils"
 
-interface Props {
-    className?: string
-    children: React.ReactNode
-}
+type Props = React.ComponentPropsWithRef<"div">
 
-export function Large({ className, children }: Readonly<Props>) {
-    return <div className={cn("text-lg font-semibold", className)}>{children}</div>
+export function Large({ ref, className, children }: Readonly<Props>) {
+    return (
+        <div
+            ref={ref}
+            className={cn("text-lg font-semibold", className)}
+        >
+            {children}
+        </div>
+    )
 }

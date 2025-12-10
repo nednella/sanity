@@ -1,10 +1,14 @@
 import { cn } from "@/lib/ui/utils"
 
-interface Props {
-    className?: string
-    children: React.ReactNode
-}
+type Props = React.ComponentPropsWithRef<"small">
 
-export function Small({ className, children }: Readonly<Props>) {
-    return <small className={cn("text-sm leading-none font-medium", className)}>{children}</small>
+export function Small({ ref, className, children }: Readonly<Props>) {
+    return (
+        <small
+            ref={ref}
+            className={cn("text-sm leading-none font-medium", className)}
+        >
+            {children}
+        </small>
+    )
 }

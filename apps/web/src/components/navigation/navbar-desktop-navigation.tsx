@@ -25,7 +25,7 @@ export function DesktopNavigation() {
                 <NavigationMenuItem>
                     <NavigationMenuTrigger>About</NavigationMenuTrigger>
                     <NavigationMenuContent>
-                        <ul className="flex w-fit min-w-50 flex-col gap-1">
+                        <ul className="flex w-fit min-w-70 flex-col gap-1 p-2">
                             {aboutLinks.map((link) => (
                                 <ListItem
                                     key={link.title}
@@ -41,7 +41,7 @@ export function DesktopNavigation() {
                 <NavigationMenuItem>
                     <NavigationMenuTrigger>Members</NavigationMenuTrigger>
                     <NavigationMenuContent>
-                        <ul className="flex w-fit min-w-50 flex-col gap-1">
+                        <ul className="flex w-fit min-w-70 flex-col gap-1 p-2">
                             {memberLinks.map((link) => (
                                 <ListItem
                                     key={link.title}
