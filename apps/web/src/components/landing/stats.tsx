@@ -3,7 +3,6 @@ import { motion } from "motion/react"
 
 import { Section } from "@/lib/ui/components/section"
 import { H3 } from "@/lib/ui/components/typography/h3"
-import { Lead } from "@/lib/ui/components/typography/lead"
 import { Muted } from "@/lib/ui/components/typography/muted"
 
 type Stat = {
@@ -21,15 +20,15 @@ const stats: Stat[] = [
 
 export function Stats() {
     return (
-        <Section className="max-w-3xl py-24 text-center">
+        <Section className="mb-48 max-w-4xl text-center">
             <motion.div
                 viewport={{ once: true }}
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 transition={{ duration: 1, delay: 0.1 }}
             >
-                <H3 className="mb-1">Clan Stats</H3>
-                <Lead className="text-md mb-8">Our community at a glance.</Lead>
+                <H3 className="mb-2">Clan Stats</H3>
+                <Muted className="mb-8 text-lg">our community at a glance.</Muted>
                 <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
                     {stats.map((stat) => (
                         <div
@@ -37,10 +36,10 @@ export function Stats() {
                             className="group"
                         >
                             <div
-                                className="bg-background group-hover:border-foreground/20 mb-4 inline-flex rounded-xl
-                                    border p-3 transition-all"
+                                className="bg-background hover:border-foreground/30 mb-4 inline-flex rounded-2xl border
+                                    p-4 transition-all duration-300 hover:shadow-md"
                             >
-                                <stat.icon className="text-foreground size-6" />
+                                <stat.icon className="text-foreground size-6 transition-transform group-hover:scale-110" />
                             </div>
                             <H3 className="mb-1">{stat.value}</H3>
                             <Muted>{stat.label}</Muted>
