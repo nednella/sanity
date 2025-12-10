@@ -4,14 +4,6 @@ import { DesktopButtons } from "./navbar-desktop-buttons"
 import { DesktopNavigation } from "./navbar-desktop-navigation"
 import { MobileButtons } from "./navbar-mobile-buttons"
 
-/**
- * TODO
- *
- * 2. Add mobile/tablet sidebar navigation with nested links to replace hover links
- * 3. Remove this comment block
- * 4. merge feature as mobile navigation
- */
-
 export function Navbar() {
     return (
         <header className="fixed inset-x-0 z-50">
