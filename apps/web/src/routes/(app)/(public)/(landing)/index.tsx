@@ -17,7 +17,7 @@ export const Route = createFileRoute("/(app)/(public)/(landing)/")({
 function IndexPage() {
     return (
         <>
-            <div className="flex min-h-screen items-center justify-center overflow-hidden">
+            <div className="relative flex min-h-screen items-center justify-center overflow-hidden">
                 <Hero
                     title="Welcome to Sanity"
                     description="an elite Old School RuneScape PvM clan home to some of the best players in the game."
