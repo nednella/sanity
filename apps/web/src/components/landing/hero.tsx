@@ -51,7 +51,7 @@ export function Hero({ title, description, className, children }: Readonly<HeroP
             </MotionH1>
             <MotionLead
                 variants={itemVariants}
-                className={cn(children && "mb-12")}
+                className={cn("text-xl", children && "mb-12")}
             >
                 {description}
             </MotionLead>

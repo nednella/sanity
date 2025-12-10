@@ -11,7 +11,7 @@ export function NotFound() {
             <div className="container mx-auto">
                 <div className="text-center">
                     <H1 className="mb-6">Page not found</H1>
-                    <Lead className="mb-6 text-lg">we can't seem to find the page you are looking for</Lead>
+                    <Lead className="mb-6 text-xl">we can't seem to find the page you are looking for</Lead>
                     <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
                         <Button
                             asChild

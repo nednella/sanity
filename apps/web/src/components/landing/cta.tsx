@@ -22,7 +22,7 @@ export function Cta() {
                         duration-300 hover:shadow-lg sm:p-16"
                 >
                     <H3 className="mb-2 text-3xl">Interested in Joining?</H3>
-                    <Lead className="mb-8 text-lg">join our community, connect with members and learn more.</Lead>
+                    <Lead className="mb-8">join our community, connect with members and learn more.</Lead>
                     <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
                         <Button
                             asChild
