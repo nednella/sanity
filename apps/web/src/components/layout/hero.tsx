@@ -26,6 +26,7 @@ type HeroProps = {
     title: string
     description: string
     className?: string
+    animated?: boolean
     children?: React.ReactNode
 }
 
@@ -33,30 +34,30 @@ const MotionSection = motion.create(Section)
 const MotionH1 = motion.create(H1)
 const MotionLead = motion.create(Lead)
 
-export function Hero({ title, description, className, children }: Readonly<HeroProps>) {
+export function Hero({ title, description, className, animated = true, children }: Readonly<HeroProps>) {
     return (
         <MotionSection
             className={cn("relative text-center", className)}
-            variants={containerVariants}
+            variants={animated ? containerVariants : undefined}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
         >
             <MotionH1
-                variants={itemVariants}
+                variants={animated ? itemVariants : undefined}
                 className="mb-4"
             >
                 {title}
             </MotionH1>
             <MotionLead
-                variants={itemVariants}
+                variants={animated ? itemVariants : undefined}
                 className={cn("text-xl", children && "mb-12")}
             >
                 {description}
             </MotionLead>
             <motion.div
                 className="flex flex-col items-center justify-center gap-4 sm:flex-row"
-                variants={itemVariants}
+                variants={animated ? itemVariants : undefined}
             >
                 {children}
             </motion.div>
