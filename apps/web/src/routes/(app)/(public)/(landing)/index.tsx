@@ -25,8 +25,7 @@ function IndexPage() {
                     <Button
                         asChild
                         size="lg"
-                        className="group w-full max-w-xs rounded-full px-8! shadow-lg transition-all hover:shadow-xl
-                            sm:w-auto"
+                        className="group w-full max-w-xs rounded-full px-8! shadow-lg transition-all sm:w-auto"
                     >
                         <a
                             href="https://discord.gg/sanity"
@@ -42,7 +41,7 @@ function IndexPage() {
                         asChild
                         size="lg"
                         variant="outline"
-                        className="hover:bg-accent w-full max-w-xs rounded-full px-8 transition-all sm:w-auto"
+                        className="w-full max-w-xs rounded-full px-8! transition-all sm:w-auto"
                     >
                         <Link to="/about">Learn More</Link>
                     </Button>

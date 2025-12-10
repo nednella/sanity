@@ -28,8 +28,8 @@ export function Cta() {
                             asChild
                             size="lg"
                             variant="custom"
-                            className="group w-full rounded-full bg-[#5865F2] px-8 text-white shadow-lg
-                                hover:bg-[#4752C4] hover:shadow-xl sm:w-auto"
+                            className="group w-full rounded-full bg-[#5865F2] px-8! text-white shadow-lg
+                                hover:bg-[#4752C4] sm:w-auto"
                         >
                             <a
                                 href="https://discord.gg/sanity"
@@ -45,7 +45,7 @@ export function Cta() {
                             asChild
                             size="lg"
                             variant="outline"
-                            className="group hover:bg-accent w-full rounded-full px-8 transition-none sm:w-auto"
+                            className="w-full rounded-full px-8! transition-none sm:w-auto"
                         >
                             <a
                                 href="https://twitter.com/sanityosrs"
