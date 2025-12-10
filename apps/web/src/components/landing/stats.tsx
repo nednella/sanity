@@ -29,7 +29,7 @@ export function Stats() {
             >
                 <H3 className="mb-2">Clan Stats</H3>
                 <Muted className="mb-8 text-lg">our community at a glance.</Muted>
-                <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
+                <div className="mx-auto grid max-w-sm grid-cols-2 gap-8 md:max-w-none md:grid-cols-4">
                     {stats.map((stat) => (
                         <div
                             key={stat.label}
