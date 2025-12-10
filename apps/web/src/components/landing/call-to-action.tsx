@@ -7,7 +7,7 @@ import { Section } from "@/lib/ui/components/section"
 import { H3 } from "@/lib/ui/components/typography/h3"
 import { Lead } from "@/lib/ui/components/typography/lead"
 
-export function Cta() {
+export function CallToAction() {
     return (
         <Section className="max-w-3xl pt-24 pb-48 text-center">
             <motion.div
@@ -18,7 +18,7 @@ export function Cta() {
             >
                 <div className="bg-background hover:border-foreground/20 rounded-2xl border p-12">
                     <H3 className="mb-1">Get Involved</H3>
-                    <Lead className="text-md mb-8">Join our community to connect with members and learn more.</Lead>
+                    <Lead className="text-md mb-8">join our community to connect with members and learn more.</Lead>
                     <div className="flex flex-col justify-center gap-4 sm:flex-row">
                         <Button
                             asChild
