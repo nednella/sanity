@@ -1,13 +1,13 @@
 import { cn } from "@/lib/ui/utils"
 
-interface Props {
-    className?: string
-    children: React.ReactNode
-}
+type Props = React.ComponentPropsWithRef<"h1">
 
-export function H1({ className, children }: Readonly<Props>) {
+export function H1({ ref, className, children }: Readonly<Props>) {
     return (
-        <h1 className={cn("scroll-m-20 text-center text-4xl font-bold tracking-tight text-balance", className)}>
+        <h1
+            ref={ref}
+            className={cn("scroll-m-20 text-center text-4xl font-bold tracking-tight text-balance", className)}
+        >
             {children}
         </h1>
     )
