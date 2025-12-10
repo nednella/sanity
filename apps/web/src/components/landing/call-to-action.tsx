@@ -25,7 +25,7 @@ export function CallToAction() {
                             asChild
                             size="lg"
                             variant="custom"
-                            className="group rounded-full bg-[#5865F2] px-8! text-white hover:opacity-90 md:w-fit"
+                            className="group rounded-full bg-[#5865F2] px-8! text-white hover:opacity-90 md:w-auto"
                         >
                             <a
                                 href="https://discord.gg/sanity"
@@ -41,7 +41,7 @@ export function CallToAction() {
                             asChild
                             size="lg"
                             variant="outline"
-                            className="group rounded-full px-8! transition-none hover:opacity-90 md:w-fit"
+                            className="group rounded-full px-8! transition-none md:w-auto"
                         >
                             <a
                                 href="https://twitter.com/sanityosrs"
