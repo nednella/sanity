@@ -2,31 +2,12 @@ import { Link } from "@tanstack/react-router"
 import { ArrowRight, BookOpen, CalendarDays, Crown, HandCoins, type LucideIcon, Medal, Timer } from "lucide-react"
 import { motion } from "motion/react"
 
+import { ItemGrid } from "@/components/layout/item-grid"
 import { Section } from "@/lib/ui/components/section"
 import { H3 } from "@/lib/ui/components/typography/h3"
 import { Large } from "@/lib/ui/components/typography/large"
 import { Muted } from "@/lib/ui/components/typography/muted"
 import { Small } from "@/lib/ui/components/typography/small"
-
-const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-        opacity: 1,
-        transition: {
-            staggerChildren: 0.05
-        }
-    }
-}
-
-const itemVariants = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 1, transition: { duration: 1 } }
-}
-
-const MSection = motion.create(Section)
-const MH3 = motion.create(H3)
-const MMuted = motion.create(Muted)
-const MLink = motion.create(Link)
 
 type Highlight = {
     icon: LucideIcon
@@ -77,6 +58,26 @@ const highlights: Highlight[] = [
     }
 ]
 
+const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+        opacity: 1,
+        transition: {
+            staggerChildren: 0.05
+        }
+    }
+}
+
+const itemVariants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1, transition: { duration: 1 } }
+}
+
+const MSection = motion.create(Section)
+const MH3 = motion.create(H3)
+const MMuted = motion.create(Muted)
+const MLink = motion.create(Link)
+
 export function Highlights() {
     return (
         <MSection
@@ -98,7 +99,10 @@ export function Highlights() {
             >
                 discover what makes Sanity one of the premier PvM clans in Old School RuneScape.
             </MMuted>
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 lg:gap-6">
+            <ItemGrid
+                cols="sm:grid-cols-2 lg:grid-cols-3"
+                className="lg:gap-6"
+            >
                 {highlights.map((hl) => (
                     <MLink
                         variants={itemVariants}
@@ -124,7 +128,7 @@ export function Highlights() {
                         </div>
                     </MLink>
                 ))}
-            </div>
+            </ItemGrid>
         </MSection>
     )
 }
