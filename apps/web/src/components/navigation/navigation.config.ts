@@ -8,13 +8,13 @@ const aboutLinks = linkOptions([
     },
     {
         title: "Requirements",
-        to: "/about",
+        to: "/requirements",
         description: "Find out what it takes to join"
     },
     {
-        title: "Ranking System",
-        to: "/about",
-        description: "How we progress our members"
+        title: "Achievement Diary",
+        to: "/achievement-diary",
+        description: "Take a look at how we grade content"
     }
 ])
 
