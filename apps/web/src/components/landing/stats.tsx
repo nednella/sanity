@@ -18,20 +18,51 @@ const stats: Stat[] = [
     { icon: HandCoins, label: "Total Loot Value", value: "1.4t+" }
 ]
 
+const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+        opacity: 1,
+        transition: {
+            staggerChildren: 0.05
+        }
+    }
+}
+
+const itemVariants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1, transition: { duration: 1 } }
+}
+
+const MSection = motion.create(Section)
+const MH3 = motion.create(H3)
+const MMuted = motion.create(Muted)
+
 export function Stats() {
     return (
-        <Section className="mb-48 max-w-4xl pt-48 text-center">
-            <motion.div
-                viewport={{ once: true }}
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                transition={{ duration: 1, delay: 0.1 }}
-            >
-                <H3 className="mb-2">Clan Stats</H3>
-                <Muted className="mb-8 text-lg">our community at a glance.</Muted>
+        <MSection
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="mb-48 max-w-4xl pt-48 text-center"
+        >
+            <>
+                <MH3
+                    variants={itemVariants}
+                    className="mb-2"
+                >
+                    Clan Stats
+                </MH3>
+                <MMuted
+                    variants={itemVariants}
+                    className="mb-8 text-lg"
+                >
+                    our community at a glance.
+                </MMuted>
                 <div className="mx-auto grid max-w-sm grid-cols-2 gap-8 md:max-w-none md:grid-cols-4">
                     {stats.map((stat) => (
-                        <div
+                        <motion.div
+                            variants={itemVariants}
                             key={stat.label}
                             className="group"
                         >
@@ -43,10 +74,10 @@ export function Stats() {
                             </div>
                             <H3 className="mb-1">{stat.value}</H3>
                             <Muted>{stat.label}</Muted>
-                        </div>
+                        </motion.div>
                     ))}
                 </div>
-            </motion.div>
-        </Section>
+            </>
+        </MSection>
     )
 }
