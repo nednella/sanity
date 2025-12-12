@@ -7,7 +7,7 @@ import { useLocation, useNavigate, useSearch } from "@tanstack/react-router"
 import { Dialog, DialogTitle, UnstyledDialogContent } from "@/lib/ui/components/dialog"
 
 export function AuthDialog() {
-    const { isSignedIn } = useUser()
+    const { isLoaded, isSignedIn } = useUser()
     const navigate = useNavigate()
     const location = useLocation()
     const { auth } = useSearch({ from: "__root__" })
@@ -22,7 +22,7 @@ export function AuthDialog() {
     }, [isOpen, isSignedIn, currentLocation, navigate])
 
     // eslint-disable-next-line unicorn/no-null
-    if (isOpen && isSignedIn) return null // prevent dialog flashes when authenticated
+    if (!isLoaded || (isOpen && isSignedIn)) return null // prevent mounting before context load or when already authenticated
 
     return (
         <Dialog
