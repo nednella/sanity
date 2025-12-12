@@ -1,13 +1,17 @@
+import { useLocation, useNavigate } from "@tanstack/react-router"
+
 import { Button } from "@/lib/ui/components/button"
-import { useAuthDialog } from "@/stores/auth-dialog.store"
 
 export function LoginButton() {
-    const { onOpen: openAuthDialog } = useAuthDialog()
+    const navigate = useNavigate()
+    const location = useLocation()
+
+    const currentLocation = location.pathname
 
     return (
         <Button
             className="min-w-24 rounded-full"
-            onClick={() => openAuthDialog()}
+            onClick={() => navigate({ to: currentLocation, search: { auth: "login" } })}
         >
             Login
         </Button>

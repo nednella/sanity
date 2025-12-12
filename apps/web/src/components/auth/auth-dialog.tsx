@@ -1,29 +1,46 @@
-import { SignIn } from "@clerk/clerk-react"
+import { useEffect } from "react"
+
+import { SignIn, useUser } from "@clerk/clerk-react"
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden"
+import { useLocation, useNavigate, useSearch } from "@tanstack/react-router"
 
 import { Dialog, DialogTitle, UnstyledDialogContent } from "@/lib/ui/components/dialog"
-import { useAuthDialog } from "@/stores/auth-dialog.store"
 
-export function LoginDialog() {
-    const { isOpen, onClose } = useAuthDialog()
+export function AuthDialog() {
+    const { isSignedIn } = useUser()
+    const navigate = useNavigate()
+    const location = useLocation()
+    const { auth } = useSearch({ from: "__root__" })
 
-    const onOpenChange = (open: boolean) => {
-        if (!open) {
-            onClose()
+    const isOpen = auth === "login"
+    const currentLocation = location.pathname
+
+    useEffect(() => {
+        if (isOpen && isSignedIn) {
+            navigate({ to: currentLocation, search: { auth: undefined } }) // clean the URL when authenticated
         }
-    }
+    }, [isOpen, isSignedIn, currentLocation, navigate])
+
+    // eslint-disable-next-line unicorn/no-null
+    if (isOpen && isSignedIn) return null // prevent dialog flashes when authenticated
 
     return (
         <Dialog
             open={isOpen}
-            onOpenChange={onOpenChange}
+            onOpenChange={(open) => {
+                if (!open) {
+                    navigate({ to: currentLocation, search: { auth: undefined } })
+                }
+            }}
         >
             <UnstyledDialogContent aria-describedby={undefined}>
                 <VisuallyHidden>
                     <DialogTitle>Login</DialogTitle>
                 </VisuallyHidden>
-
-                <SignIn />
+                <SignIn
+                    forceRedirectUrl={currentLocation}
+                    signUpForceRedirectUrl={currentLocation}
+                />
             </UnstyledDialogContent>
         </Dialog>
     )
