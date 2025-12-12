@@ -40,6 +40,7 @@ export function AuthDialog() {
                 <SignIn
                     forceRedirectUrl={currentLocation}
                     signUpForceRedirectUrl={currentLocation}
+                    appearance={{ elements: { footerAction: { display: "none" } } }}
                 />
             </UnstyledDialogContent>
         </Dialog>
