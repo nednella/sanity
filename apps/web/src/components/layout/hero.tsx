@@ -52,7 +52,7 @@ export function Hero({ title, description, className, reduceMotion = false, chil
                 </MH1>
                 <MLead
                     variants={reduceMotion ? undefined : itemVariants}
-                    className={cn(children && "mb-12")}
+                    className={cn("text-2xl", children && "mb-12")}
                 >
                     {description}
                 </MLead>
