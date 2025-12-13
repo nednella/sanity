@@ -36,7 +36,7 @@ function LabelledSeparator({
             data-slot="separator"
             decorative={decorative}
             className={cn(
-                `before:bg-border after:bg-border relative flex items-center gap-2 before:h-px before:flex-1 after:h-px
+                `before:bg-border after:bg-border relative flex items-center gap-4 before:h-px before:flex-1 after:h-px
                 after:flex-1`,
                 className
             )}

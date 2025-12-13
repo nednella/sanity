@@ -1,8 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router"
 
-import { Container } from "@/components/layout/container"
+import { ApplicationProcess } from "@/components/landing/application-process"
+import { CallToAction } from "@/components/landing/call-to-action"
+import { ExperienceRequirements } from "@/components/landing/experience-requirements"
+import { GearRequirements } from "@/components/landing/gear-requirements"
 import { Hero } from "@/components/layout/hero"
-import { Section } from "@/components/layout/section"
 import { NavbarSpacer } from "@/components/navigation/navbar-spacer"
 
 export const Route = createFileRoute("/(app)/(public)/requirements")({
@@ -15,14 +17,13 @@ function RequirementsPage() {
             <NavbarSpacer />
             <Hero
                 title="Clan Requirements"
-                description="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Temporibus labore, illum ex, reprehenderit pariatur doloremque, sint mollitia qui officia quas expedita debitis sapiente! Facilis perferendis laborum non repellat nihil eveniet."
+                description="find out what it takes to join us."
                 className="pt-36 pb-24"
             />
-            <Section>
-                <Container>
-                    <span>Requirements page.</span>
-                </Container>
-            </Section>
+            <GearRequirements />
+            <ExperienceRequirements />
+            <ApplicationProcess />
+            <CallToAction />
         </>
     )
 }
