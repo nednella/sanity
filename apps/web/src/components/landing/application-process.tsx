@@ -58,7 +58,7 @@ const steps: Step[] = [
     {
         number: 4,
         title: "Full Membership",
-        description: "If we're satisfied with your trial period, you'll be granted full membership."
+        description: "If we're satisfied with your trial period, you'll be granted full membership!"
     }
 ]
 
