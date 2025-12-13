@@ -9,7 +9,7 @@ const aboutLinks = linkOptions([
     {
         title: "Requirements",
         to: "/requirements",
-        description: "Find out what it takes to join"
+        description: "Find out what it takes to join us"
     },
     {
         title: "Achievement Diary",
