@@ -1,8 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router"
 
+import { Container } from "@/components/layout/container"
 import { Hero } from "@/components/layout/hero"
+import { Section } from "@/components/layout/section"
 import { NavbarSpacer } from "@/components/navigation/navbar-spacer"
-import { Section } from "@/lib/ui/components/section"
 
 export const Route = createFileRoute("/(app)/(public)/about")({
     component: AboutPage
@@ -15,10 +16,12 @@ function AboutPage() {
             <Hero
                 title="Clan Background"
                 description="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Temporibus labore, illum ex, reprehenderit pariatur doloremque, sint mollitia qui officia quas expedita debitis sapiente! Facilis perferendis laborum non repellat nihil eveniet."
-                className="mt-36 mb-24"
+                className="pt-36 pb-24"
             />
             <Section>
-                <div>About page.</div>
+                <Container>
+                    <span>About page.</span>
+                </Container>
             </Section>
         </>
     )

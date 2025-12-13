@@ -1,8 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router"
 
+import { Container } from "@/components/layout/container"
 import { Hero } from "@/components/layout/hero"
+import { Section } from "@/components/layout/section"
 import { NavbarSpacer } from "@/components/navigation/navbar-spacer"
-import { Section } from "@/lib/ui/components/section"
 
 export const Route = createFileRoute("/(app)/(public)/achievement-diary")({
     component: AchievementDiaryPage
@@ -18,7 +19,9 @@ function AchievementDiaryPage() {
                 className="mt-36 mb-24"
             />
             <Section>
-                <div>Achievement diary page.</div>
+                <Container>
+                    <span>Achievement diary page.</span>
+                </Container>
             </Section>
         </>
     )

@@ -1,8 +1,9 @@
 import { Gauge, HandCoins, type LucideIcon, Timer, Users } from "lucide-react"
 import { motion } from "motion/react"
 
+import { Container } from "@/components/layout/container"
 import { ItemGrid } from "@/components/layout/item-grid"
-import { Section } from "@/lib/ui/components/section"
+import { Section } from "@/components/layout/section"
 import { H3 } from "@/lib/ui/components/typography/h3"
 import { Muted } from "@/lib/ui/components/typography/muted"
 
@@ -34,52 +35,54 @@ const itemVariants = {
     visible: { opacity: 1, transition: { duration: 1 } }
 }
 
-const MSection = motion.create(Section)
+const MContainer = motion.create(Container)
 const MH3 = motion.create(H3)
 const MMuted = motion.create(Muted)
 
 export function Stats() {
     return (
-        <MSection
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="mb-48 max-w-4xl pt-48 text-center"
-        >
-            <MH3
-                variants={itemVariants}
-                className="mb-2"
+        <Section className="py-48">
+            <MContainer
+                variants={containerVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                className="text-center lg:max-w-4xl"
             >
-                Clan Stats
-            </MH3>
-            <MMuted
-                variants={itemVariants}
-                className="mb-8 text-lg"
-            >
-                our community at a glance.
-            </MMuted>
-            <ItemGrid
-                cols="grid-cols-2 md:grid-cols-4"
-                className="mx-auto max-w-sm gap-8 md:max-w-none"
-            >
-                {stats.map((stat) => (
-                    <motion.div
-                        variants={itemVariants}
-                        key={stat.label}
-                        className="group"
-                    >
-                        <div
-                            className="bg-background hover:border-foreground/30 mb-4 inline-flex rounded-2xl border p-4
-                                transition-all duration-300 hover:shadow-md"
+                <MH3
+                    variants={itemVariants}
+                    className="mb-2"
+                >
+                    Clan Stats
+                </MH3>
+                <MMuted
+                    variants={itemVariants}
+                    className="mb-8 text-lg"
+                >
+                    our community at a glance.
+                </MMuted>
+                <ItemGrid
+                    cols="grid-cols-2 md:grid-cols-4"
+                    className="mx-auto max-w-sm gap-8 md:max-w-none"
+                >
+                    {stats.map((stat) => (
+                        <motion.div
+                            variants={itemVariants}
+                            key={stat.label}
+                            className="group"
                         >
-                            <stat.icon className="text-foreground size-6 transition-transform group-hover:scale-110" />
-                        </div>
-                        <H3 className="mb-1">{stat.value}</H3>
-                        <Muted>{stat.label}</Muted>
-                    </motion.div>
-                ))}
-            </ItemGrid>
-        </MSection>
+                            <div
+                                className="bg-background hover:border-foreground/30 mb-4 inline-flex rounded-2xl border
+                                    p-4 transition-all duration-300 hover:shadow-md"
+                            >
+                                <stat.icon className="text-foreground size-6 transition-transform group-hover:scale-110" />
+                            </div>
+                            <H3 className="mb-1">{stat.value}</H3>
+                            <Muted>{stat.label}</Muted>
+                        </motion.div>
+                    ))}
+                </ItemGrid>
+            </MContainer>
+        </Section>
     )
 }

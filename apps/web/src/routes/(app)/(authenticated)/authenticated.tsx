@@ -1,7 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router"
 
+import { Container } from "@/components/layout/container"
+import { Section } from "@/components/layout/section"
 import { NavbarSpacer } from "@/components/navigation/navbar-spacer"
-import { Section } from "@/lib/ui/components/section"
 
 export const Route = createFileRoute("/(app)/(authenticated)/authenticated")({
     component: AuthenticatedPage
@@ -12,7 +13,9 @@ function AuthenticatedPage() {
         <>
             <NavbarSpacer />
             <Section>
-                <div>Authenticated page.</div>
+                <Container>
+                    <span>Authenticated page.</span>
+                </Container>
             </Section>
         </>
     )

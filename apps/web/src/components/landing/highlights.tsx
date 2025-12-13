@@ -2,8 +2,9 @@ import { Link } from "@tanstack/react-router"
 import { ArrowRight, BookOpen, CalendarDays, Crown, HandCoins, type LucideIcon, Medal, Timer } from "lucide-react"
 import { motion } from "motion/react"
 
+import { Container } from "@/components/layout/container"
 import { ItemGrid } from "@/components/layout/item-grid"
-import { Section } from "@/lib/ui/components/section"
+import { Section } from "@/components/layout/section"
 import { H3 } from "@/lib/ui/components/typography/h3"
 import { Large } from "@/lib/ui/components/typography/large"
 import { Muted } from "@/lib/ui/components/typography/muted"
@@ -73,62 +74,64 @@ const itemVariants = {
     visible: { opacity: 1, transition: { duration: 1 } }
 }
 
-const MSection = motion.create(Section)
+const MContainer = motion.create(Container)
 const MH3 = motion.create(H3)
 const MMuted = motion.create(Muted)
 const MLink = motion.create(Link)
 
 export function Highlights() {
     return (
-        <MSection
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="mb-48 text-center"
-        >
-            <MH3
-                variants={itemVariants}
-                className="mb-2"
+        <Section className="pb-48">
+            <MContainer
+                variants={containerVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                className="text-center xl:max-w-7xl"
             >
-                Membership Perks
-            </MH3>
-            <MMuted
-                variants={itemVariants}
-                className="mb-8 text-lg"
-            >
-                discover what makes Sanity one of the premier PvM clans in Old School RuneScape.
-            </MMuted>
-            <ItemGrid
-                cols="sm:grid-cols-2 lg:grid-cols-3"
-                className="lg:gap-6"
-            >
-                {highlights.map((hl) => (
-                    <MLink
-                        variants={itemVariants}
-                        key={hl.title}
-                        to={hl.to}
-                        className="group bg-background hover:border-foreground/20 mx-auto flex h-full max-w-md flex-col
-                            rounded-2xl border p-6 transition-all duration-300 hover:shadow-lg"
-                    >
-                        <div
-                            className="bg-accent hover:bg-accent/80 mb-4 inline-flex self-center rounded-xl border p-3
-                                transition-colors"
+                <MH3
+                    variants={itemVariants}
+                    className="mb-2"
+                >
+                    Membership Perks
+                </MH3>
+                <MMuted
+                    variants={itemVariants}
+                    className="mb-8 text-lg"
+                >
+                    discover what makes Sanity one of the premier PvM clans in Old School RuneScape.
+                </MMuted>
+                <ItemGrid
+                    cols="sm:grid-cols-2 lg:grid-cols-3"
+                    className="lg:gap-6"
+                >
+                    {highlights.map((hl) => (
+                        <MLink
+                            variants={itemVariants}
+                            key={hl.title}
+                            to={hl.to}
+                            className="group bg-background hover:border-foreground/20 mx-auto flex h-full max-w-md
+                                flex-col rounded-2xl border p-6 transition-all duration-300 hover:shadow-lg"
                         >
-                            <hl.icon className="text-foreground size-5 transition-transform group-hover:scale-110" />
-                        </div>
-                        <Large className="mb-2">{hl.title}</Large>
-                        <Muted className="mb-4">{hl.description}</Muted>
-                        <div
-                            className="text-muted-foreground group-hover:text-foreground mt-auto flex items-center
-                                justify-center transition-colors"
-                        >
-                            <Small>Learn more</Small>
-                            <ArrowRight className="ml-2 size-4 transition-transform group-hover:translate-x-1" />
-                        </div>
-                    </MLink>
-                ))}
-            </ItemGrid>
-        </MSection>
+                            <div
+                                className="bg-accent hover:bg-accent/80 mb-4 inline-flex self-center rounded-xl border
+                                    p-3 transition-colors"
+                            >
+                                <hl.icon className="text-foreground size-5 transition-transform group-hover:scale-110" />
+                            </div>
+                            <Large className="mb-2">{hl.title}</Large>
+                            <Muted className="mb-4">{hl.description}</Muted>
+                            <div
+                                className="text-muted-foreground group-hover:text-foreground mt-auto flex items-center
+                                    justify-center transition-colors"
+                            >
+                                <Small>Learn more</Small>
+                                <ArrowRight className="ml-2 size-4 transition-transform group-hover:translate-x-1" />
+                            </div>
+                        </MLink>
+                    ))}
+                </ItemGrid>
+            </MContainer>
+        </Section>
     )
 }
