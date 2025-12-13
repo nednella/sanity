@@ -14,11 +14,14 @@
 
 @theme inline {
     --breakpoint-xs: 32rem;
+    --container-8xl: 96rem;
 
     --radius-sm: calc(var(--radius) - 4px);
     --radius-md: calc(var(--radius) - 2px);
     --radius-lg: var(--radius);
     --radius-xl: calc(var(--radius) + 4px);
+
+    --w-8xl: var(--container-8xl);
 
     --color-background: var(--background);
     --color-foreground: var(--foreground);
