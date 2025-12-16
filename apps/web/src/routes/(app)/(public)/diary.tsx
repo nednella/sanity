@@ -5,7 +5,7 @@ import { Hero } from "@/components/layout/hero"
 import { Section } from "@/components/layout/section"
 import { NavbarSpacer } from "@/components/navigation/navbar-spacer"
 
-export const Route = createFileRoute("/(app)/(public)/achievement-diary")({
+export const Route = createFileRoute("/(app)/(public)/diary")({
     component: AchievementDiaryPage
 })
 

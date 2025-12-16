@@ -13,7 +13,7 @@ const aboutLinks = linkOptions([
     },
     {
         title: "Achievement Diary",
-        to: "/achievement-diary",
+        to: "/diary",
         description: "Take a look at how we grade content"
     }
 ])
