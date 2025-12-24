@@ -10,6 +10,7 @@ export function NotFound() {
             <Hero
                 title="Page not found"
                 description="we can't seem to find the page you are looking for."
+                reduceMotion
             >
                 <Button
                     asChild
