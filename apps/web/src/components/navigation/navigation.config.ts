@@ -2,7 +2,7 @@ import { linkOptions } from "@tanstack/react-router"
 
 const aboutLinks = linkOptions([
     {
-        title: "Background",
+        title: "About",
         to: "/about",
         description: "Learn more about us"
     },
