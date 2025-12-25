@@ -51,6 +51,7 @@ const community: Stat[] = [
     { label: "Total Loot Value", value: "1.4t+" }
 ]
 
+// TODO: images
 const officials: Official[] = [
     {
         avatarSrc: "",
@@ -146,6 +147,7 @@ function AboutPage() {
             {/* about */}
             <Section className="pb-24">
                 <Container>
+                    {/* TODO: images */}
                     <TextWithImage
                         title="About us"
                         imageSrc=""
@@ -173,6 +175,7 @@ function AboutPage() {
             {/* community */}
             <Section className="pb-24">
                 <Container>
+                    {/* TODO: images */}
                     <TextWithImage
                         title="Our community"
                         imageSrc=""
