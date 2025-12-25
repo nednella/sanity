@@ -1,61 +1,22 @@
 import { ArrowRight } from "lucide-react"
-import { motion } from "motion/react"
 
+import { Container } from "@/components/layout/container"
 import { Section } from "@/components/layout/section"
 import { DiscordLogo } from "@/components/logos/discord-logo"
 import { TwitterLogo } from "@/components/logos/twitter-logo"
 import { Button } from "@/lib/ui/components/button"
+import { Card } from "@/lib/ui/components/card"
 import { H3 } from "@/lib/ui/components/typography/h3"
 import { Muted } from "@/lib/ui/components/typography/muted"
-
-import { Container } from "../layout/container"
-
-const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-        opacity: 1,
-        transition: {
-            staggerChildren: 0.05
-        }
-    }
-}
-
-const itemVariants = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 1, transition: { duration: 1 } }
-}
-
-const MH3 = motion.create(H3)
-const MMuted = motion.create(Muted)
 
 export function CallToAction() {
     return (
         <Section className="pb-48">
             <Container className="text-center lg:max-w-4xl">
-                <motion.div
-                    variants={containerVariants}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true }}
-                    className="bg-background hover:border-foreground/20 rounded-3xl border p-12 transition-all
-                        duration-300 hover:shadow-lg"
-                >
-                    <MH3
-                        variants={itemVariants}
-                        className="mb-2"
-                    >
-                        Get Involved
-                    </MH3>
-                    <MMuted
-                        variants={itemVariants}
-                        className="mb-8 text-lg"
-                    >
-                        join our community, connect with members and learn more.
-                    </MMuted>
-                    <motion.div
-                        variants={itemVariants}
-                        className="flex flex-col justify-center gap-4 sm:flex-row"
-                    >
+                <Card className="hover:border-foreground/20 p-12 transition-all hover:shadow-md">
+                    <H3 className="mb-2">Get Involved</H3>
+                    <Muted className="mb-8 text-lg">join our community, connect with members and learn more</Muted>
+                    <div className="flex flex-col justify-center gap-4 sm:flex-row">
                         <Button
                             asChild
                             size="lg"
@@ -88,8 +49,8 @@ export function CallToAction() {
                                 <ArrowRight className="ml-2 size-4 transition-transform group-hover:translate-x-1" />
                             </a>
                         </Button>
-                    </motion.div>
-                </motion.div>
+                    </div>
+                </Card>
             </Container>
         </Section>
     )
