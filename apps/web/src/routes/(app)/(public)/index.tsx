@@ -1,11 +1,6 @@
 import { Link, createFileRoute } from "@tanstack/react-router"
 import { ArrowRight } from "lucide-react"
 
-import { BackgroundGradient } from "@/components/landing/background-gradient"
-import { CallToAction } from "@/components/landing/call-to-action"
-import { Highlights } from "@/components/landing/highlights"
-import { ScrollIndicator } from "@/components/landing/scroll-indicator"
-import { Stats } from "@/components/landing/stats"
 import { Hero } from "@/components/layout/hero"
 import { DiscordLogo } from "@/components/logos/discord-logo"
 import { Button } from "@/lib/ui/components/button"
@@ -45,13 +40,7 @@ function IndexPage() {
                 >
                     <Link to="/about">Learn More</Link>
                 </Button>
-                <ScrollIndicator />
             </Hero>
-            <BackgroundGradient>
-                <Stats />
-                <Highlights />
-                <CallToAction />
-            </BackgroundGradient>
         </>
     )
 }
