@@ -4,7 +4,7 @@ import { ApplicationProcess } from "@/components/landing/application-process"
 import { CallToAction } from "@/components/landing/call-to-action"
 import { ExperienceRequirements } from "@/components/landing/experience-requirements"
 import { GearRequirements } from "@/components/landing/gear-requirements"
-import { Hero } from "@/components/layout/hero"
+import { Hero } from "@/components/landing/hero"
 import { NavbarSpacer } from "@/components/navigation/navbar-spacer"
 
 export const Route = createFileRoute("/(app)/(public)/requirements")({

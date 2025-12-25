@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router"
 
-import { Hero } from "@/components/layout/hero"
+import { Hero } from "@/components/landing/hero"
 import { Button } from "@/lib/ui/components/button"
 
 export function NotFound() {

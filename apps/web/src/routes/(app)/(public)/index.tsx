@@ -1,7 +1,7 @@
 import { Link, createFileRoute } from "@tanstack/react-router"
 import { ArrowRight } from "lucide-react"
 
-import { Hero } from "@/components/layout/hero"
+import { Hero } from "@/components/landing/hero"
 import { DiscordLogo } from "@/components/logos/discord-logo"
 import { Button } from "@/lib/ui/components/button"
 
