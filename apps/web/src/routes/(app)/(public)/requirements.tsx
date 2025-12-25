@@ -17,7 +17,7 @@ function RequirementsPage() {
             <NavbarSpacer />
             <Hero
                 title="Clan Requirements"
-                description="find out what it takes to join us."
+                description="find out what it takes to join our community"
                 className="pt-36 pb-24"
                 reduceMotion
             />

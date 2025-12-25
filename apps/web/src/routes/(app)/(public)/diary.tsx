@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router"
 
+import { Hero } from "@/components/landing/hero"
 import { Container } from "@/components/layout/container"
-import { Hero } from "@/components/layout/hero"
 import { Section } from "@/components/layout/section"
 import { NavbarSpacer } from "@/components/navigation/navbar-spacer"
 
@@ -15,8 +15,9 @@ function AchievementDiaryPage() {
             <NavbarSpacer />
             <Hero
                 title="Achievement Diary"
-                description="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Temporibus labore, illum ex, reprehenderit pariatur doloremque, sint mollitia qui officia quas expedita debitis sapiente! Facilis perferendis laborum non repellat nihil eveniet."
+                description="for those looking to push themselves beyond the in-game achievements"
                 className="pt-36 pb-24"
+                reduceMotion
             />
             <Section>
                 <Container>

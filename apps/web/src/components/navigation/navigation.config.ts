@@ -4,17 +4,17 @@ const aboutLinks = linkOptions([
     {
         title: "About",
         to: "/about",
-        description: "Learn more about us"
+        description: "learn more about who we are"
     },
     {
         title: "Requirements",
         to: "/requirements",
-        description: "Find out what it takes to join us"
+        description: "find out what it takes to join our community"
     },
     {
         title: "Achievement Diary",
         to: "/diary",
-        description: "Take a look at how we grade content"
+        description: "for those looking to push themselves beyond the in-game achievements"
     }
 ])
 
