@@ -214,7 +214,7 @@ function AboutPage() {
                                 {/* TODO: link to member profile */}
                                 <Link
                                     to="/"
-                                    className="flex flex-col items-center p-4 text-center"
+                                    className="flex flex-col items-center p-4 text-center lg:p-6"
                                 >
                                     {/* TODO: avatar image */}
                                     <div className="bg-muted mb-4 size-20 rounded-full" />
@@ -246,7 +246,7 @@ function AboutPage() {
                             >
                                 <Link
                                     to={item.to}
-                                    className="flex flex-col items-center p-4 text-center"
+                                    className="flex flex-col items-center p-4 text-center lg:p-6"
                                 >
                                     <div
                                         className="bg-accent hover:bg-accent/80 mb-4 inline-flex self-center rounded-xl
