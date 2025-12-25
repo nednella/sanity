@@ -154,7 +154,7 @@ function AboutPage() {
                         imageAlt=""
                     >
                         <P>
-                            Founded in 2025 by Castiyel and Adam R Pro, Sanity is an ex-warring clan turned PvM with an
+                            Founded in 2015 by Castiyel and Adam R Pro, Sanity is an ex-warring clan turned PvM with an
                             active and tight-knit community within Old School RuneScape.
                         </P>
                         <ItemGrid
