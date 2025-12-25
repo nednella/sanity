@@ -19,6 +19,7 @@ function RequirementsPage() {
                 title="Clan Requirements"
                 description="find out what it takes to join us."
                 className="pt-36 pb-24"
+                reduceMotion
             />
             <GearRequirements />
             <ExperienceRequirements />

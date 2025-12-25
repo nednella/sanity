@@ -1,5 +1,3 @@
-import { motion } from "motion/react"
-
 import { Container } from "@/components/layout/container"
 import { Section } from "@/components/layout/section"
 import { LabelledSeparator, Separator } from "@/lib/ui/components/separator"
@@ -7,25 +5,6 @@ import { H3 } from "@/lib/ui/components/typography/h3"
 import { Muted } from "@/lib/ui/components/typography/muted"
 
 import { ItemGrid } from "../layout/item-grid"
-
-const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-        opacity: 1,
-        transition: {
-            staggerChildren: 0.1
-        }
-    }
-}
-
-const itemVariants = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 1, transition: { duration: 0.5 } }
-}
-
-const MContainer = motion.create(Container)
-const MH3 = motion.create(H3)
-const MMuted = motion.create(Muted)
 
 type Experience = {
     name: string
@@ -59,29 +38,15 @@ const experienceRequirements: Experience[] = [
 export function ExperienceRequirements() {
     return (
         <Section className="pb-48">
-            <MContainer
-                variants={containerVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                className="text-center xl:max-w-5xl"
-            >
+            <Container className="text-center xl:max-w-5xl">
                 <Separator className="mb-24" />
-                <MH3
-                    variants={itemVariants}
-                    className="mb-2"
-                >
-                    Expected Experience
-                </MH3>
-                <MMuted
-                    variants={itemVariants}
-                    className="mb-8 text-lg"
-                >
+                <H3 className="mb-2">Expected Experience</H3>
+                <Muted className="mb-8 text-lg">
                     we also maintain a minimum expected competency to participate in group-based content with our
                     members — we give you the option of applying with a minimum amount of raids experience, or
                     completion of various master tier diary times for those who might be lacking in volume but show
                     exceptional ability.
-                </MMuted>
+                </Muted>
                 <ItemGrid
                     cols="md:grid-cols-[1fr_max-content_1fr]"
                     className="gap-8"
@@ -110,8 +75,7 @@ export function ExperienceRequirements() {
                     </LabelledSeparator>
 
                     <Container className="flex flex-col items-center gap-4">
-                        <motion.div
-                            variants={itemVariants}
+                        <div
                             className="bg-background hover:border-foreground/20 flex size-20 items-center justify-center
                                 rounded-full border transition-all duration-300 hover:shadow-md"
                         >
@@ -120,16 +84,13 @@ export function ExperienceRequirements() {
                             >
                                 <span className="text-3xl">📖</span>
                             </div>
-                        </motion.div>
-                        <MMuted
-                            variants={itemVariants}
-                            className="max-w-xs font-medium"
-                        >
+                        </div>
+                        <Muted className="max-w-xs font-medium">
                             Submit four Sanity master diary times from at least two different categories
-                        </MMuted>
+                        </Muted>
                     </Container>
                 </ItemGrid>
-            </MContainer>
+            </Container>
         </Section>
     )
 }
@@ -142,15 +103,10 @@ function ExperienceCard({ item }: Readonly<ExperienceCardProps>) {
     const imagePath = `/requirements/raids/${item.fileName}.webp`
 
     return (
-        <motion.div
-            variants={itemVariants}
-            className="flex max-w-36 flex-col items-center"
-        >
+        <div className="flex max-w-36 flex-col items-center">
             <div
-                // className="group flex aspect-square max-w-64 items-center justify-center overflow-hidden rounded-2xl
-                //     border p-3 shadow-md transition-all hover:scale-110 hover:shadow-xl lg:p-6"
                 className="bg-muted hover:border-foreground/20 mb-2 flex aspect-square max-w-24 items-center
-                    justify-center overflow-hidden rounded-2xl border p-4 transition-all duration-300 hover:shadow-md"
+                    justify-center overflow-hidden rounded-2xl border p-4 transition-all hover:shadow-md"
             >
                 <img
                     src={imagePath}
@@ -169,6 +125,6 @@ function ExperienceCard({ item }: Readonly<ExperienceCardProps>) {
             <Muted className="font-medium">
                 {item.killCount} {item.name}
             </Muted>
-        </motion.div>
+        </div>
     )
 }
