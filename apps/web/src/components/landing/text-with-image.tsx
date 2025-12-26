@@ -1,5 +1,6 @@
 import React from "react"
 
+import { ItemGrid } from "@/components/layout/item-grid"
 import { H3 } from "@/lib/ui/components/typography/h3"
 import { cn } from "@/lib/ui/utils.ts"
 
@@ -31,7 +32,10 @@ export function TextWithImage({
     )
 
     return (
-        <div className={cn("grid gap-8 lg:grid-cols-2 lg:items-center", className)}>
+        <ItemGrid
+            cols="lg:grid-cols-2"
+            className={cn("gap-8 lg:items-center", className)}
+        >
             {flipContent ? (
                 <>
                     <div className="order-2 lg:order-1">{imageElement}</div>
@@ -49,6 +53,6 @@ export function TextWithImage({
                     <div>{imageElement}</div>
                 </>
             )}
-        </div>
+        </ItemGrid>
     )
 }
