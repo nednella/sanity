@@ -45,7 +45,7 @@ export function ExperienceRequirements() {
                     we also maintain a minimum expected competency to participate in group-based content with our
                     members — we give you the option of applying with a minimum amount of raids experience, or
                     completion of various master tier diary times for those who might be lacking in volume but show
-                    exceptional ability.
+                    exceptional ability
                 </Muted>
                 <ItemGrid
                     cols="md:grid-cols-[1fr_max-content_1fr]"

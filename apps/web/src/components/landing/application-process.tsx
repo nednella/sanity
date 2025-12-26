@@ -43,7 +43,7 @@ export function ApplicationProcess() {
             <Container className="lg:max-w-4xl">
                 <H3 className="mb-2 text-center">Application Process</H3>
                 <Muted className="mb-8 text-center text-lg">
-                    if you meet our requirements, here's what you can expect on your way to becoming a member.
+                    if you meet our requirements, here's what you can expect on your way to becoming a member
                 </Muted>
                 <ItemGrid className="gap-8">
                     {steps.map((step) => (

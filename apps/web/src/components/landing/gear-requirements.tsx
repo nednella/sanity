@@ -112,7 +112,7 @@ export function GearRequirements() {
                 <H3 className="mb-2">Gear Checklist</H3>
                 <Muted className="mb-8 text-lg">
                     we maintain a minimum gear requirement in line with the current best-in-slot items for all active
-                    clan members, so you should ensure you meet the following checklist before you consider applying.
+                    clan members, so you should ensure you meet the following checklist before you consider applying
                 </Muted>
                 <ItemGrid cols="grid-cols-3 xs:grid-cols-4 sm:grid-cols-5">
                     {items.map((item, index) => (
