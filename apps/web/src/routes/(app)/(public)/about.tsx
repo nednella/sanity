@@ -1,4 +1,4 @@
-import { Link, createFileRoute } from "@tanstack/react-router"
+import { Link, createFileRoute, linkOptions } from "@tanstack/react-router"
 import { BookOpen, CalendarDays, Crown, HandCoins, type LucideIcon, Medal, Timer } from "lucide-react"
 
 import { CallToAction } from "@/components/landing/call-to-action"
@@ -23,20 +23,6 @@ type Stat = {
     value: string
 }
 
-type Official = {
-    avatarSrc: string
-    roleSrc: string
-    name: string
-    role: string
-}
-
-type Highlight = {
-    icon: LucideIcon
-    title: string
-    description: string
-    to: string
-}
-
 const about: Stat[] = [
     { label: "Established", value: "2015" },
     { label: "Active Members", value: "300+" },
@@ -50,6 +36,13 @@ const community: Stat[] = [
     { label: "Total Clan EHB", value: "550k+" },
     { label: "Total Loot Value", value: "1.4t+" }
 ]
+
+type Official = {
+    avatarSrc: string
+    roleSrc: string
+    name: string
+    role: string
+}
 
 // TODO: images
 const officials: Official[] = [
@@ -91,47 +84,46 @@ const officials: Official[] = [
     }
 ]
 
-const highlights: Highlight[] = [
+const highlights = linkOptions([
     {
+        to: "/diary",
         icon: BookOpen,
         title: "Achievement Diary",
-        description:
-            "Compare your speedrunning times against our tracked content and work towards diary completionist.",
-        to: "/diary-times"
+        description: "compare your speedrunning times against our tracked content and work towards diary completionist"
     },
     {
+        to: "/members/submissions/pb",
         icon: Timer,
         title: "Personal Bests",
         description:
-            "Submit your fastest completion times for tracked content and compare against our clan leaderboards.",
-        to: "/submitted-pbs"
+            "submit your fastest completion times for tracked content and compare against our clan leaderboards"
     },
     {
+        to: "/members/submissions/loot",
         icon: HandCoins,
         title: "Loot Tracking",
-        description: "Submit your loot to gain membership points and progress through the ranks.",
-        to: "/submitted-loot"
+        description: "submit your loot to gain membership points and progress through the ranks"
     },
     {
+        to: "/ranks",
         icon: Crown,
         title: "Clan Rankings",
         description:
-            "Climb through the ranks from Member to Master by engaging with the community and gaining clan points.",
-        to: "/ranks"
+            "climb through the ranks from Member to Master by engaging with the community and gaining clan points"
     },
     {
+        to: "/members/leaderboard",
         icon: Medal,
         title: "Member Leaderboards",
-        description: "View detailed stats, compare achievements, and track your progression against the best.",
-        to: "/members"
+        description: "view detailed stats, compare achievements, and track your progression against the best"
     },
     {
+        to: "/events",
         icon: CalendarDays,
         title: "Community Events",
-        description: "Participate in regular clan competitions, group raids, and special challenges.",
-        to: "/about"
+        description: "participate in regular clan competitions, group raids, and special challenges"
     }
-]
+])
 
 function AboutPage() {
     return (
