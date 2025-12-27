@@ -12,6 +12,8 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as appLayoutRouteImport } from './routes/(app)/_layout'
 import { Route as appauthenticatedLayoutRouteImport } from './routes/(app)/(authenticated)/_layout'
 import { Route as apppublicIndexRouteImport } from './routes/(app)/(public)/index'
+import { Route as apppublicRequirementsRouteImport } from './routes/(app)/(public)/requirements'
+import { Route as apppublicDiaryRouteImport } from './routes/(app)/(public)/diary'
 import { Route as apppublicAboutRouteImport } from './routes/(app)/(public)/about'
 import { Route as appauthenticatedAuthenticatedRouteImport } from './routes/(app)/(authenticated)/authenticated'
 
@@ -26,6 +28,16 @@ const appauthenticatedLayoutRoute = appauthenticatedLayoutRouteImport.update({
 const apppublicIndexRoute = apppublicIndexRouteImport.update({
   id: '/(public)/',
   path: '/',
+  getParentRoute: () => appLayoutRoute,
+} as any)
+const apppublicRequirementsRoute = apppublicRequirementsRouteImport.update({
+  id: '/(public)/requirements',
+  path: '/requirements',
+  getParentRoute: () => appLayoutRoute,
+} as any)
+const apppublicDiaryRoute = apppublicDiaryRouteImport.update({
+  id: '/(public)/diary',
+  path: '/diary',
   getParentRoute: () => appLayoutRoute,
 } as any)
 const apppublicAboutRoute = apppublicAboutRouteImport.update({
@@ -43,11 +55,15 @@ const appauthenticatedAuthenticatedRoute =
 export interface FileRoutesByFullPath {
   '/authenticated': typeof appauthenticatedAuthenticatedRoute
   '/about': typeof apppublicAboutRoute
+  '/diary': typeof apppublicDiaryRoute
+  '/requirements': typeof apppublicRequirementsRoute
   '/': typeof apppublicIndexRoute
 }
 export interface FileRoutesByTo {
   '/authenticated': typeof appauthenticatedAuthenticatedRoute
   '/about': typeof apppublicAboutRoute
+  '/diary': typeof apppublicDiaryRoute
+  '/requirements': typeof apppublicRequirementsRoute
   '/': typeof apppublicIndexRoute
 }
 export interface FileRoutesById {
@@ -56,19 +72,23 @@ export interface FileRoutesById {
   '/(app)/(authenticated)': typeof appauthenticatedLayoutRouteWithChildren
   '/(app)/(authenticated)/authenticated': typeof appauthenticatedAuthenticatedRoute
   '/(app)/(public)/about': typeof apppublicAboutRoute
+  '/(app)/(public)/diary': typeof apppublicDiaryRoute
+  '/(app)/(public)/requirements': typeof apppublicRequirementsRoute
   '/(app)/(public)/': typeof apppublicIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/authenticated' | '/about' | '/'
+  fullPaths: '/authenticated' | '/about' | '/diary' | '/requirements' | '/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/authenticated' | '/about' | '/'
+  to: '/authenticated' | '/about' | '/diary' | '/requirements' | '/'
   id:
     | '__root__'
     | '/(app)'
     | '/(app)/(authenticated)'
     | '/(app)/(authenticated)/authenticated'
     | '/(app)/(public)/about'
+    | '/(app)/(public)/diary'
+    | '/(app)/(public)/requirements'
     | '/(app)/(public)/'
   fileRoutesById: FileRoutesById
 }
@@ -97,6 +117,20 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof apppublicIndexRouteImport
+      parentRoute: typeof appLayoutRoute
+    }
+    '/(app)/(public)/requirements': {
+      id: '/(app)/(public)/requirements'
+      path: '/requirements'
+      fullPath: '/requirements'
+      preLoaderRoute: typeof apppublicRequirementsRouteImport
+      parentRoute: typeof appLayoutRoute
+    }
+    '/(app)/(public)/diary': {
+      id: '/(app)/(public)/diary'
+      path: '/diary'
+      fullPath: '/diary'
+      preLoaderRoute: typeof apppublicDiaryRouteImport
       parentRoute: typeof appLayoutRoute
     }
     '/(app)/(public)/about': {
@@ -133,12 +167,16 @@ const appauthenticatedLayoutRouteWithChildren =
 interface appLayoutRouteChildren {
   appauthenticatedLayoutRoute: typeof appauthenticatedLayoutRouteWithChildren
   apppublicAboutRoute: typeof apppublicAboutRoute
+  apppublicDiaryRoute: typeof apppublicDiaryRoute
+  apppublicRequirementsRoute: typeof apppublicRequirementsRoute
   apppublicIndexRoute: typeof apppublicIndexRoute
 }
 
 const appLayoutRouteChildren: appLayoutRouteChildren = {
   appauthenticatedLayoutRoute: appauthenticatedLayoutRouteWithChildren,
   apppublicAboutRoute: apppublicAboutRoute,
+  apppublicDiaryRoute: apppublicDiaryRoute,
+  apppublicRequirementsRoute: apppublicRequirementsRoute,
   apppublicIndexRoute: apppublicIndexRoute,
 }
 

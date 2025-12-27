@@ -1,28 +1,21 @@
 import { ArrowRight } from "lucide-react"
-import { motion } from "motion/react"
 
+import { Container } from "@/components/layout/container"
+import { Section } from "@/components/layout/section"
 import { DiscordLogo } from "@/components/logos/discord-logo"
 import { TwitterLogo } from "@/components/logos/twitter-logo"
 import { Button } from "@/lib/ui/components/button"
-import { Section } from "@/lib/ui/components/section"
+import { Card } from "@/lib/ui/components/card"
 import { H3 } from "@/lib/ui/components/typography/h3"
 import { Muted } from "@/lib/ui/components/typography/muted"
 
 export function CallToAction() {
     return (
-        <Section className="max-w-4xl pb-48 text-center">
-            <motion.div
-                viewport={{ once: true }}
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                transition={{ duration: 1, delay: 0.1 }}
-            >
-                <div
-                    className="bg-background hover:border-foreground/20 rounded-3xl border p-12 transition-all
-                        duration-300 hover:shadow-lg"
-                >
+        <Section className="pb-48">
+            <Container className="text-center lg:max-w-4xl">
+                <Card className="hover:border-foreground/20 p-12 transition-all hover:shadow-md">
                     <H3 className="mb-2">Get Involved</H3>
-                    <Muted className="mb-8 text-lg">join our community, connect with members and learn more.</Muted>
+                    <Muted className="mb-8 text-lg">join our community, connect with members and learn more</Muted>
                     <div className="flex flex-col justify-center gap-4 sm:flex-row">
                         <Button
                             asChild
@@ -44,7 +37,7 @@ export function CallToAction() {
                             asChild
                             size="lg"
                             variant="outline"
-                            className="rounded-full px-8! transition-none"
+                            className="group rounded-full px-8! transition-none"
                         >
                             <a
                                 href="https://twitter.com/sanityosrs"
@@ -57,8 +50,8 @@ export function CallToAction() {
                             </a>
                         </Button>
                     </div>
-                </div>
-            </motion.div>
+                </Card>
+            </Container>
         </Section>
     )
 }

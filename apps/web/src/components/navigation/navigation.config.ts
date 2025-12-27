@@ -2,36 +2,36 @@ import { linkOptions } from "@tanstack/react-router"
 
 const aboutLinks = linkOptions([
     {
-        title: "Background",
         to: "/about",
-        description: "Learn more about us"
+        title: "About",
+        description: "learn more about who we are"
     },
     {
+        to: "/requirements",
         title: "Requirements",
-        to: "/about",
-        description: "Find out what it takes to join"
+        description: "find out what it takes to join our community"
     },
     {
-        title: "Ranking System",
-        to: "/about",
-        description: "How we progress our members"
+        to: "/diary",
+        title: "Achievement Diary",
+        description: "for those looking to push themselves beyond the in-game achievements"
     }
 ])
 
 const memberLinks = linkOptions([
     {
-        title: "Placeholder",
         to: "/",
+        title: "Placeholder",
         description: "Placeholder"
     },
     {
-        title: "Placeholder",
         to: "/",
+        title: "Placeholder",
         description: "Placeholder"
     },
     {
-        title: "Placeholder",
         to: "/",
+        title: "Placeholder",
         description: "Placeholder"
     }
 ])

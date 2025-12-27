@@ -9,7 +9,7 @@ export function MobileButtons() {
     const { toggleSidebar } = useSidebar()
 
     return (
-        <div className="flex items-center gap-4 lg:hidden">
+        <div className="flex items-center gap-2 lg:hidden">
             <ThemeToggle />
             <Button
                 size="icon"

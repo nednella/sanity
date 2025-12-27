@@ -23,7 +23,7 @@ export function DesktopNavigation() {
         >
             <NavigationMenuList>
                 <NavigationMenuItem>
-                    <NavigationMenuTrigger>About</NavigationMenuTrigger>
+                    <NavigationMenuTrigger>Info</NavigationMenuTrigger>
                     <NavigationMenuContent>
                         <ul className="flex w-fit min-w-70 flex-col gap-1 p-2">
                             {aboutLinks.map((link) => (
