@@ -92,33 +92,33 @@ const highlights = linkOptions([
         description: "compare your speedrunning times against our tracked content and work towards diary completionist"
     },
     {
-        to: "/members/submissions/pb",
+        to: "/",
         icon: Timer,
         title: "Personal Bests",
         description:
             "submit your fastest completion times for tracked content and compare against our clan leaderboards"
     },
     {
-        to: "/members/submissions/loot",
+        to: "/",
         icon: HandCoins,
         title: "Loot Tracking",
         description: "submit your loot to gain membership points and progress through the ranks"
     },
     {
-        to: "/ranks",
+        to: "/",
         icon: Crown,
         title: "Clan Rankings",
         description:
             "climb through the ranks from Member to Master by engaging with the community and gaining clan points"
     },
     {
-        to: "/members/leaderboard",
+        to: "/",
         icon: Medal,
         title: "Member Leaderboards",
         description: "view detailed stats, compare achievements, and track your progression against the best"
     },
     {
-        to: "/events",
+        to: "/",
         icon: CalendarDays,
         title: "Community Events",
         description: "participate in regular clan competitions, group raids, and special challenges"
