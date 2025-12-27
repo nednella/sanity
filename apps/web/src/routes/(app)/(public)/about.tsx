@@ -1,5 +1,5 @@
 import { Link, createFileRoute, linkOptions } from "@tanstack/react-router"
-import { BookOpen, CalendarDays, Crown, HandCoins, type LucideIcon, Medal, Timer } from "lucide-react"
+import { BookOpen, CalendarDays, Crown, HandCoins, Medal, Timer } from "lucide-react"
 
 import { CallToAction } from "@/components/landing/call-to-action"
 import { Hero } from "@/components/landing/hero"
