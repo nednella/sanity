@@ -1,6 +1,7 @@
 import { Link, createFileRoute } from "@tanstack/react-router"
 import { ArrowRight } from "lucide-react"
 
+import { BackgroundContent } from "@/components/landing/background-content"
 import { Hero } from "@/components/landing/hero"
 import { DiscordLogo } from "@/components/logos/discord-logo"
 import { Button } from "@/lib/ui/components/button"
@@ -12,6 +13,7 @@ export const Route = createFileRoute("/(app)/(public)/")({
 function IndexPage() {
     return (
         <>
+            <BackgroundContent />
             <Hero
                 title="Welcome to Sanity"
                 description="an elite Old School RuneScape PvM clan home to some of the best players in the game"
