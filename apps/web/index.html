@@ -59,6 +59,23 @@
         src="//code.tidio.co/oeyqorxujrt6lbhv02bjdizychlm4yeo.js"
         async
     ></script>
+    <script type="text/javascript">
+        ;(function () {
+            function onTidioChatApiReady() {
+                // Code after chat loaded
+                Upscope("getWatchLink", function (link) {
+                    tidioChatApi.setContactProperties({
+                        screen_share: link
+                    })
+                })
+            }
+            if (window.tidioChatApi) {
+                window.tidioChatApi.on("ready", onTidioChatApiReady)
+            } else {
+                document.addEventListener("tidioChat-ready", onTidioChatApiReady)
+            }
+        })()
+    </script>
     <body>
         <div id="root"></div>
         <script
