@@ -5,9 +5,15 @@ type Config = {
   databaseUrl: string;
 };
 
+const required = (name: string): string => {
+  const value = process.env[name];
+  if (!value) throw new Error(`missing environment variable: ${name}`);
+  return value;
+};
+
 export const config: Config = {
-  host: process.env.HOST ?? "localhost",
-  port: Number(process.env.PORT ?? 3000),
-  logLevel: process.env.LOG_LEVEL ?? "info",
-  databaseUrl: process.env.DATABASE_URL ?? ""
+  host: required("HOST"),
+  port: Number(required("PORT")),
+  logLevel: required("LOG_LEVEL"),
+  databaseUrl: required("DATABASE_URL")
 };
