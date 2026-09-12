@@ -7,7 +7,12 @@ import { routes } from "./routes.js";
 const { logLevel } = config;
 
 export const buildApp = () => {
-  const app = Fastify({ logger: { level: logLevel } });
+  const app = Fastify({
+    logger: {
+      level: logLevel,
+      transport: { target: "pino-pretty" }
+    }
+  });
 
   app.setValidatorCompiler(validatorCompiler);
   app.setSerializerCompiler(serializerCompiler);
