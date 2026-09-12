@@ -47,6 +47,8 @@ export default defineConfig([
           }
         }
       ],
+      // see: https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-null.md
+      "unicorn/no-null": "off",
       // TypeScript already errors on unresolved imports, see: https://github.com/un-ts/eslint-plugin-import-x/blob/master/docs/rules/no-unresolved.md#when-not-to-use-it
       "import/no-unresolved": "off",
       // disable default exporting, see: https://github.com/un-ts/eslint-plugin-import-x/blob/master/docs/rules/no-default-export.md
