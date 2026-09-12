@@ -17,7 +17,7 @@ export const buildApp = () => {
   app.setValidatorCompiler(validatorCompiler);
   app.setSerializerCompiler(serializerCompiler);
 
-  app.register(routes);
+  app.register(routes, { prefix: "/v1" });
 
   return app;
 };
