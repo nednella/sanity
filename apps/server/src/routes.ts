@@ -1,5 +1,7 @@
 import type { FastifyPluginAsync } from "fastify";
 
+import { healthRoutes } from "./modules/health/handler.js";
+
 export const routes: FastifyPluginAsync = async (app) => {
-  app.get("/health", async () => ({ status: "ok" }));
+  app.register(healthRoutes, { prefix: "/health" });
 };

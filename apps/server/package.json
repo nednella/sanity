@@ -15,7 +15,9 @@
   "dependencies": {
     "drizzle-orm": "^0.45.2",
     "fastify": "^5.12.4",
-    "postgres": "^3.4.9"
+    "fastify-type-provider-zod": "^7.0.0",
+    "postgres": "^3.4.9",
+    "zod": "^4.6.2"
   },
   "devDependencies": {
     "@types/node": "^24.13.4",
