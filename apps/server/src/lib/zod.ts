@@ -15,3 +15,8 @@ export const pagination = z.object({
 export const booleanString = z.enum(["true", "false"]).transform((value) => value === "true");
 
 export const notFound = z.object({ message: z.string() });
+
+export const memberRef = z.object({
+  id: bigIntString,
+  displayName: z.string()
+});
