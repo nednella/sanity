@@ -2,3 +2,4 @@ dist
 pnpm-lock.yaml
 
 apps/server/db/migrations
+apps/web/src/routeTree.gen.ts

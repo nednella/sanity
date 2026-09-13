@@ -9,7 +9,7 @@ import globals from "globals";
 import ts from "typescript-eslint";
 
 export default defineConfig([
-  globalIgnores(["**/dist"]),
+  globalIgnores(["**/dist", "apps/web/src/routeTree.gen.ts"]),
   {
     files: ["**/*.{ts,tsx}"],
     extends: [
@@ -62,6 +62,13 @@ export default defineConfig([
     extends: [eslintPluginReactHooks.configs.flat.recommended, eslintPluginReactRefresh.configs.vite],
     languageOptions: {
       globals: globals.browser
+    }
+  },
+  {
+    files: ["apps/web/src/routes/**/*.tsx"],
+    rules: {
+      // the router plugin splits route components into their own modules, which handle fast refresh, see: https://tanstack.com/router/latest/docs/framework/react/guide/automatic-code-splitting
+      "react-refresh/only-export-components": "off"
     }
   },
   {
