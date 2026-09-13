@@ -1,5 +1,5 @@
 {
-  "plugins": ["@trivago/prettier-plugin-sort-imports"],
+  "plugins": ["@trivago/prettier-plugin-sort-imports", "prettier-plugin-tailwindcss"],
   "tabWidth": 2,
   "semi": true,
   "bracketSpacing": true,
@@ -10,5 +10,6 @@
   "printWidth": 120,
   "importOrder": ["<THIRD_PARTY_MODULES>", "^@sanity/(.*)$", "^[./]"],
   "importOrderSeparation": true,
-  "importOrderSortSpecifiers": true
+  "importOrderSortSpecifiers": true,
+  "tailwindStylesheet": "./apps/web/src/main.css"
 }
