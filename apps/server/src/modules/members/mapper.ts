@@ -47,6 +47,7 @@ export const toMember = (
     displayName: womPlayer.displayName,
     type: womPlayer.type,
     build: womPlayer.build,
+    totalLevel: womPlayer.totalLevel,
     totalExp: womPlayer.totalExp,
     totalEhp: womPlayer.totalEhp,
     totalEhb: womPlayer.totalEhb,

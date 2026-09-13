@@ -15,7 +15,7 @@ for (const { player, data } of entries) {
   const memberId = memberFor(player);
   if (memberId === undefined || linked.has(memberId)) continue;
   linked.add(memberId);
-  players.push({ memberId, player });
+  players.push({ memberId, player, snapshot: data });
   snapshots.push(data);
 }
 

@@ -1,0 +1,1 @@
+ALTER TABLE "wom_players" ADD COLUMN "total_level" smallint;

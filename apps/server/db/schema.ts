@@ -213,6 +213,7 @@ export const womPlayers = pgTable("wom_players", {
   displayName: text().notNull(),
   type: text().notNull(),
   build: text().notNull(),
+  totalLevel: smallint(),
   totalExp: bigint({ mode: "number" }).notNull(),
   totalEhp: doublePrecision().notNull(),
   totalEhb: doublePrecision().notNull(),

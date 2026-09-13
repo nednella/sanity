@@ -46,14 +46,15 @@ export const loadMemberMatcher = async () => {
   return (player: WomPlayer) => byPlayerId.get(player.id) ?? byRsn.get(normalise(player.username));
 };
 
-export const savePlayers = async (players: { memberId: bigint; player: WomPlayer }[]) => {
-  const rows = players.map(({ memberId, player }) => ({
+export const savePlayers = async (players: { memberId: bigint; player: WomPlayer; snapshot: WomSnapshot }[]) => {
+  const rows = players.map(({ memberId, player, snapshot }) => ({
     womPlayerId: player.id,
     memberId,
     username: player.username,
     displayName: player.displayName,
     type: player.type,
     build: player.build,
+    totalLevel: snapshot.data.skills.overall!.level,
     totalExp: player.exp,
     totalEhp: player.ehp,
     totalEhb: player.ehb,
@@ -71,6 +72,7 @@ export const savePlayers = async (players: { memberId: bigint; player: WomPlayer
         displayName: sql`excluded.display_name`,
         type: sql`excluded.type`,
         build: sql`excluded.build`,
+        totalLevel: sql`excluded.total_level`,
         totalExp: sql`excluded.total_exp`,
         totalEhp: sql`excluded.total_ehp`,
         totalEhb: sql`excluded.total_ehb`,

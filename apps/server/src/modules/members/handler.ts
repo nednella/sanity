@@ -45,6 +45,7 @@ const womPlayer = z.object({
   displayName: z.string(),
   type: z.string(),
   build: z.string(),
+  totalLevel: z.number().nullable(),
   totalExp: z.number(),
   totalEhp: z.number(),
   totalEhb: z.number(),
