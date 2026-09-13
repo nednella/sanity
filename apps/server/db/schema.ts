@@ -3,6 +3,7 @@ import {
   boolean,
   char,
   date,
+  doublePrecision,
   index,
   integer,
   interval,
@@ -11,7 +12,8 @@ import {
   primaryKey,
   smallint,
   text,
-  timestamp
+  timestamp,
+  unique
 } from "drizzle-orm/pg-core";
 
 export const ranks = pgTable("ranks", {
@@ -199,4 +201,78 @@ export const personalBestParticipants = pgTable(
       .references(() => members.id)
   },
   (table) => [primaryKey({ columns: [table.personalBestId, table.memberId] }), index().on(table.memberId)]
+);
+
+export const womPlayers = pgTable("wom_players", {
+  womPlayerId: integer().primaryKey(),
+  memberId: bigint({ mode: "bigint" })
+    .notNull()
+    .unique("wom_players_member_id_unique")
+    .references(() => members.id, { onDelete: "cascade" }),
+  username: text().notNull(),
+  displayName: text().notNull(),
+  type: text().notNull(),
+  build: text().notNull(),
+  totalExp: bigint({ mode: "number" }).notNull(),
+  totalEhp: doublePrecision().notNull(),
+  totalEhb: doublePrecision().notNull(),
+  registeredAt: timestamp({ withTimezone: true }).notNull(),
+  updatedAt: timestamp({ withTimezone: true })
+});
+
+export const womSnapshots = pgTable(
+  "wom_snapshots",
+  {
+    id: integer().generatedAlwaysAsIdentity().primaryKey(),
+    womPlayerId: integer()
+      .notNull()
+      .references(() => womPlayers.womPlayerId, { onDelete: "cascade" }),
+    totalExp: bigint({ mode: "number" }).notNull(),
+    totalEhp: doublePrecision(),
+    totalEhb: doublePrecision(),
+    createdAt: timestamp({ withTimezone: true }).notNull()
+  },
+  (table) => [unique("wom_snapshots_wom_player_id_created_at_unique").on(table.womPlayerId, table.createdAt)]
+);
+
+export const womSnapshotSkills = pgTable(
+  "wom_snapshot_skills",
+  {
+    womSnapshotId: integer()
+      .notNull()
+      .references(() => womSnapshots.id, { onDelete: "cascade" }),
+    skill: text().notNull(),
+    experience: bigint({ mode: "number" }).notNull(),
+    level: smallint().notNull(),
+    rank: integer(),
+    ehp: doublePrecision().notNull()
+  },
+  (table) => [primaryKey({ columns: [table.womSnapshotId, table.skill] })]
+);
+
+export const womSnapshotBosses = pgTable(
+  "wom_snapshot_bosses",
+  {
+    womSnapshotId: integer()
+      .notNull()
+      .references(() => womSnapshots.id, { onDelete: "cascade" }),
+    boss: text().notNull(),
+    kills: integer().notNull(),
+    rank: integer(),
+    ehb: doublePrecision().notNull()
+  },
+  (table) => [primaryKey({ columns: [table.womSnapshotId, table.boss] })]
+);
+
+export const womSnapshotActivities = pgTable(
+  "wom_snapshot_activities",
+  {
+    womSnapshotId: integer()
+      .notNull()
+      .references(() => womSnapshots.id, { onDelete: "cascade" }),
+    activity: text().notNull(),
+    score: integer().notNull(),
+    rank: integer()
+  },
+  (table) => [primaryKey({ columns: [table.womSnapshotId, table.activity] })]
 );
