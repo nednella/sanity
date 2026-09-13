@@ -3,6 +3,7 @@ type Config = {
   port: number;
   logLevel: string;
   databaseUrl: string;
+  womGroupId: string;
 };
 
 const required = (name: string): string => {
@@ -15,5 +16,6 @@ export const config: Config = {
   host: required("HOST"),
   port: Number(required("PORT")),
   logLevel: required("LOG_LEVEL"),
-  databaseUrl: required("DATABASE_URL")
+  databaseUrl: required("DATABASE_URL"),
+  womGroupId: required("WOM_GROUP_ID")
 };
