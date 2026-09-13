@@ -2,6 +2,8 @@ import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import { z } from "zod";
 
 import { bigIntString, booleanString, notFound, pagination } from "../../lib/zod.js";
+import { contentFilters, rankedPersonalBest, top } from "../personal-bests/schemas.js";
+import { getMemberPersonalBests } from "../personal-bests/service.js";
 import { getMemberProfile, getMembers } from "./service.js";
 
 const rank = z.object({
@@ -118,6 +120,14 @@ const memberFilters = z.object({
   active: booleanString.default(true)
 });
 
+const params = z.object({
+  id: bigIntString
+});
+
+const memberPersonalBestFilters = z.object({
+  top: top.optional()
+});
+
 export const memberRoutes: FastifyPluginAsyncZod = async (app) => {
   app.get(
     "/",
@@ -134,7 +144,7 @@ export const memberRoutes: FastifyPluginAsyncZod = async (app) => {
     "/:id",
     {
       schema: {
-        params: z.object({ id: bigIntString }),
+        params,
         response: { 200: memberProfile, 404: notFound }
       }
     },
@@ -142,5 +152,17 @@ export const memberRoutes: FastifyPluginAsyncZod = async (app) => {
       const profile = await getMemberProfile(req.params.id);
       return profile ?? res.code(404).send({ message: "member not found" });
     }
+  );
+
+  app.get(
+    "/:id/personal-bests",
+    {
+      schema: {
+        params,
+        querystring: z.object({ ...pagination.shape, ...memberPersonalBestFilters.shape, ...contentFilters.shape }),
+        response: { 200: z.array(rankedPersonalBest) }
+      }
+    },
+    async (req) => getMemberPersonalBests(req.params.id, req.query)
   );
 };
