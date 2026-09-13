@@ -4,10 +4,10 @@ import postgres from "postgres";
 import { config } from "../config.js";
 import * as schema from "./schema.js";
 
-const { databaseUrl } = config;
+export const client = postgres(config.databaseUrl);
 
 export const db = drizzle({
-  client: postgres(databaseUrl),
+  client,
   schema,
   casing: "snake_case"
 });
