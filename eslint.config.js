@@ -1,6 +1,8 @@
 import js from "@eslint/js";
 import eslintConfigPrettier from "eslint-config-prettier";
 import eslintPluginImportX from "eslint-plugin-import-x";
+import eslintPluginReactHooks from "eslint-plugin-react-hooks";
+import eslintPluginReactRefresh from "eslint-plugin-react-refresh";
 import eslintPluginUnicorn from "eslint-plugin-unicorn";
 import { defineConfig, globalIgnores } from "eslint/config";
 import globals from "globals";
@@ -9,7 +11,7 @@ import ts from "typescript-eslint";
 export default defineConfig([
   globalIgnores(["**/dist"]),
   {
-    files: ["**/*.ts"],
+    files: ["**/*.{ts,tsx}"],
     extends: [
       js.configs.recommended,
       ts.configs.recommended,
@@ -53,6 +55,13 @@ export default defineConfig([
       "import/no-unresolved": "off",
       // disable default exporting, see: https://github.com/un-ts/eslint-plugin-import-x/blob/master/docs/rules/no-default-export.md
       "import/no-default-export": "error"
+    }
+  },
+  {
+    files: ["apps/web/**/*.{ts,tsx}"],
+    extends: [eslintPluginReactHooks.configs.flat.recommended, eslintPluginReactRefresh.configs.vite],
+    languageOptions: {
+      globals: globals.browser
     }
   },
   {
