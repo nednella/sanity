@@ -1,6 +1,7 @@
 import { z } from "zod";
 
-import { memberRef } from "../../lib/zod.js";
+import { isoDate } from "../../codecs.js";
+import { memberRef } from "../../common.js";
 
 const content = z.object({
   id: z.number(),
@@ -14,7 +15,7 @@ export const personalBest = z.object({
   scale: z.number(),
   timeSeconds: z.number(),
   imageUrl: z.string().nullable(),
-  submittedAt: z.date().nullable(),
+  submittedAt: isoDate.nullable(),
   submittedBy: memberRef,
   team: z.array(memberRef)
 });
@@ -24,11 +25,4 @@ export const rankedPersonalBest = z.object({
   id: personalBest.shape.id,
   position: z.number(),
   ...personalBest.omit({ id: true }).shape
-});
-
-export const top = z.coerce.number().int().min(1).max(10);
-
-export const contentFilters = z.object({
-  contentId: z.coerce.number().int().positive().optional(),
-  scale: z.coerce.number().int().positive().optional()
 });
