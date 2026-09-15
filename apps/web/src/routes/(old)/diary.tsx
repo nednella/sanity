@@ -13,7 +13,7 @@ import { Large } from "@/lib/ui/typography/large.js";
 import { Muted } from "@/lib/ui/typography/muted.js";
 import { P } from "@/lib/ui/typography/p.js";
 
-export const Route = createFileRoute("/(public)/diary")({
+export const Route = createFileRoute("/(old)/diary")({
   component: AchievementDiaryPage
 });
 

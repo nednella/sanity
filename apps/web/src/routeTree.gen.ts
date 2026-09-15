@@ -10,13 +10,28 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as authLayoutRouteImport } from './routes/(auth)/_layout'
+import { Route as oldAboutRouteImport } from './routes/(old)/about'
+import { Route as oldDiaryRouteImport } from './routes/(old)/diary'
+import { Route as oldRequirementsRouteImport } from './routes/(old)/requirements'
 import { Route as publicIndexRouteImport } from './routes/(public)/index'
-import { Route as publicAboutRouteImport } from './routes/(public)/about'
-import { Route as publicDiaryRouteImport } from './routes/(public)/diary'
-import { Route as publicRequirementsRouteImport } from './routes/(public)/requirements'
 
 const authLayoutRoute = authLayoutRouteImport.update({
   id: '/(auth)',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const oldAboutRoute = oldAboutRouteImport.update({
+  id: '/(old)/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const oldDiaryRoute = oldDiaryRouteImport.update({
+  id: '/(old)/diary',
+  path: '/diary',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const oldRequirementsRoute = oldRequirementsRouteImport.update({
+  id: '/(old)/requirements',
+  path: '/requirements',
   getParentRoute: () => rootRouteImport,
 } as any)
 const publicIndexRoute = publicIndexRouteImport.update({
@@ -24,40 +39,25 @@ const publicIndexRoute = publicIndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const publicAboutRoute = publicAboutRouteImport.update({
-  id: '/(public)/about',
-  path: '/about',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const publicDiaryRoute = publicDiaryRouteImport.update({
-  id: '/(public)/diary',
-  path: '/diary',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const publicRequirementsRoute = publicRequirementsRouteImport.update({
-  id: '/(public)/requirements',
-  path: '/requirements',
-  getParentRoute: () => rootRouteImport,
-} as any)
 
 export interface FileRoutesByFullPath {
-  '/about': typeof publicAboutRoute
-  '/diary': typeof publicDiaryRoute
-  '/requirements': typeof publicRequirementsRoute
+  '/about': typeof oldAboutRoute
+  '/diary': typeof oldDiaryRoute
+  '/requirements': typeof oldRequirementsRoute
   '/': typeof publicIndexRoute
 }
 export interface FileRoutesByTo {
-  '/about': typeof publicAboutRoute
-  '/diary': typeof publicDiaryRoute
-  '/requirements': typeof publicRequirementsRoute
+  '/about': typeof oldAboutRoute
+  '/diary': typeof oldDiaryRoute
+  '/requirements': typeof oldRequirementsRoute
   '/': typeof publicIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/(auth)': typeof authLayoutRoute
-  '/(public)/about': typeof publicAboutRoute
-  '/(public)/diary': typeof publicDiaryRoute
-  '/(public)/requirements': typeof publicRequirementsRoute
+  '/(old)/about': typeof oldAboutRoute
+  '/(old)/diary': typeof oldDiaryRoute
+  '/(old)/requirements': typeof oldRequirementsRoute
   '/(public)/': typeof publicIndexRoute
 }
 export interface FileRouteTypes {
@@ -68,17 +68,17 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/(auth)'
-    | '/(public)/about'
-    | '/(public)/diary'
-    | '/(public)/requirements'
+    | '/(old)/about'
+    | '/(old)/diary'
+    | '/(old)/requirements'
     | '/(public)/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   authLayoutRoute: typeof authLayoutRoute
-  publicAboutRoute: typeof publicAboutRoute
-  publicDiaryRoute: typeof publicDiaryRoute
-  publicRequirementsRoute: typeof publicRequirementsRoute
+  oldAboutRoute: typeof oldAboutRoute
+  oldDiaryRoute: typeof oldDiaryRoute
+  oldRequirementsRoute: typeof oldRequirementsRoute
   publicIndexRoute: typeof publicIndexRoute
 }
 
@@ -91,6 +91,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof authLayoutRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/(old)/about': {
+      id: '/(old)/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof oldAboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(old)/diary': {
+      id: '/(old)/diary'
+      path: '/diary'
+      fullPath: '/diary'
+      preLoaderRoute: typeof oldDiaryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(old)/requirements': {
+      id: '/(old)/requirements'
+      path: '/requirements'
+      fullPath: '/requirements'
+      preLoaderRoute: typeof oldRequirementsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/(public)/': {
       id: '/(public)/'
       path: '/'
@@ -98,35 +119,14 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof publicIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/(public)/about': {
-      id: '/(public)/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof publicAboutRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/(public)/diary': {
-      id: '/(public)/diary'
-      path: '/diary'
-      fullPath: '/diary'
-      preLoaderRoute: typeof publicDiaryRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/(public)/requirements': {
-      id: '/(public)/requirements'
-      path: '/requirements'
-      fullPath: '/requirements'
-      preLoaderRoute: typeof publicRequirementsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   authLayoutRoute: authLayoutRoute,
-  publicAboutRoute: publicAboutRoute,
-  publicDiaryRoute: publicDiaryRoute,
-  publicRequirementsRoute: publicRequirementsRoute,
+  oldAboutRoute: oldAboutRoute,
+  oldDiaryRoute: oldDiaryRoute,
+  oldRequirementsRoute: oldRequirementsRoute,
   publicIndexRoute: publicIndexRoute,
 }
 export const routeTree = rootRouteImport

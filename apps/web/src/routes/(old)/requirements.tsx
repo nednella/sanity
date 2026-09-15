@@ -7,7 +7,7 @@ import { GearRequirements } from "@/components/landing/gear-requirements.js";
 import { Hero } from "@/components/landing/hero.js";
 import { NavbarSpacer } from "@/components/navigation/navbar-spacer.js";
 
-export const Route = createFileRoute("/(public)/requirements")({
+export const Route = createFileRoute("/(old)/requirements")({
   component: RequirementsPage
 });
 
