@@ -1,10 +1,11 @@
+import cors from "@fastify/cors";
 import Fastify from "fastify";
 import { serializerCompiler, validatorCompiler } from "fastify-type-provider-zod";
 
 import { config } from "../config.js";
 import { routes } from "./routes.js";
 
-const { logLevel } = config;
+const { logLevel, corsOrigin } = config;
 
 export const buildApp = () => {
   const app = Fastify({
@@ -13,6 +14,8 @@ export const buildApp = () => {
       transport: { target: "pino-pretty" }
     }
   });
+
+  app.register(cors, { origin: corsOrigin });
 
   app.setValidatorCompiler(validatorCompiler);
   app.setSerializerCompiler(serializerCompiler);
