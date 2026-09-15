@@ -3,7 +3,11 @@ import { Monitor, Moon, Sun } from "lucide-react";
 import { useThemeStore } from "@/lib/theme/theme.store.js";
 import { Button } from "@/lib/ui/button.js";
 
-export function ThemeToggle() {
+type ThemeToggleProps = {
+  className?: string;
+};
+
+export function ThemeToggle({ className }: Readonly<ThemeToggleProps>) {
   const { theme: activeTheme, setTheme } = useThemeStore();
 
   const cycleTheme = () => {
@@ -22,7 +26,7 @@ export function ThemeToggle() {
     <Button
       size="icon"
       variant="ghost"
-      className="rounded-full"
+      className={className}
       onClick={cycleTheme}
     >
       {getThemeIcon()}
