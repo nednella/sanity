@@ -9,50 +9,125 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteImport } from './routes/index'
+import { Route as authLayoutRouteImport } from './routes/(auth)/_layout'
+import { Route as publicIndexRouteImport } from './routes/(public)/index'
+import { Route as publicAboutRouteImport } from './routes/(public)/about'
+import { Route as publicDiaryRouteImport } from './routes/(public)/diary'
+import { Route as publicRequirementsRouteImport } from './routes/(public)/requirements'
 
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
+const authLayoutRoute = authLayoutRouteImport.update({
+  id: '/(auth)',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const publicIndexRoute = publicIndexRouteImport.update({
+  id: '/(public)/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const publicAboutRoute = publicAboutRouteImport.update({
+  id: '/(public)/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const publicDiaryRoute = publicDiaryRouteImport.update({
+  id: '/(public)/diary',
+  path: '/diary',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const publicRequirementsRoute = publicRequirementsRouteImport.update({
+  id: '/(public)/requirements',
+  path: '/requirements',
   getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
+  '/about': typeof publicAboutRoute
+  '/diary': typeof publicDiaryRoute
+  '/requirements': typeof publicRequirementsRoute
+  '/': typeof publicIndexRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
+  '/about': typeof publicAboutRoute
+  '/diary': typeof publicDiaryRoute
+  '/requirements': typeof publicRequirementsRoute
+  '/': typeof publicIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
+  '/(auth)': typeof authLayoutRoute
+  '/(public)/about': typeof publicAboutRoute
+  '/(public)/diary': typeof publicDiaryRoute
+  '/(public)/requirements': typeof publicRequirementsRoute
+  '/(public)/': typeof publicIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/about' | '/diary' | '/requirements' | '/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/about' | '/diary' | '/requirements' | '/'
+  id:
+    | '__root__'
+    | '/(auth)'
+    | '/(public)/about'
+    | '/(public)/diary'
+    | '/(public)/requirements'
+    | '/(public)/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
+  authLayoutRoute: typeof authLayoutRoute
+  publicAboutRoute: typeof publicAboutRoute
+  publicDiaryRoute: typeof publicDiaryRoute
+  publicRequirementsRoute: typeof publicRequirementsRoute
+  publicIndexRoute: typeof publicIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
+    '/(auth)': {
+      id: '/(auth)'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof authLayoutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(public)/': {
+      id: '/(public)/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+      preLoaderRoute: typeof publicIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(public)/about': {
+      id: '/(public)/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof publicAboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(public)/diary': {
+      id: '/(public)/diary'
+      path: '/diary'
+      fullPath: '/diary'
+      preLoaderRoute: typeof publicDiaryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(public)/requirements': {
+      id: '/(public)/requirements'
+      path: '/requirements'
+      fullPath: '/requirements'
+      preLoaderRoute: typeof publicRequirementsRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
+  authLayoutRoute: authLayoutRoute,
+  publicAboutRoute: publicAboutRoute,
+  publicDiaryRoute: publicDiaryRoute,
+  publicRequirementsRoute: publicRequirementsRoute,
+  publicIndexRoute: publicIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

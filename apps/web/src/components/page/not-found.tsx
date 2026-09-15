@@ -1,17 +1,26 @@
 import { Link } from "@tanstack/react-router";
 
+import { Hero } from "@/components/landing/hero.js";
+import { Button } from "@/lib/ui/button.js";
+
 export function NotFound() {
+  // TODO: add logo
+  // TODO: add go back button
   return (
-    <main className="hero min-h-screen">
-      <div className="hero-content flex-col text-center">
-        <h1 className="text-5xl font-bold">Page not found</h1>
-        <Link
-          to="/"
-          className="btn btn-primary"
+    <div className="flex min-h-screen items-center justify-center overflow-hidden">
+      <Hero
+        title="Page not found"
+        description="we can't seem to find the page you are looking for"
+        reduceMotion
+      >
+        <Button
+          asChild
+          size="lg"
+          className="w-64 rounded-full px-8 sm:w-fit"
         >
-          Go back home
-        </Link>
-      </div>
-    </main>
+          <Link to="/">Go back home</Link>
+        </Button>
+      </Hero>
+    </div>
   );
 }

@@ -45,7 +45,9 @@ export default defineConfig([
             Req: true,
             req: true,
             Res: true,
-            res: true
+            res: true,
+            Application: true,
+            application: true
           }
         }
       ],
