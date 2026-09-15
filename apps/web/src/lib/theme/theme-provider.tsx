@@ -1,0 +1,28 @@
+import { useLayoutEffect } from "react";
+
+import { useThemeStore } from "@/lib/theme/theme.store.js";
+import { applyTheme, onSystemThemeChange } from "@/lib/theme/utils.js";
+
+/**
+ * This provider should be nested within the provider tree next to the application's entry point.
+ */
+export function ThemeProvider() {
+  const { theme } = useThemeStore();
+
+  /**
+   * Applies the new theme to the DOM as soon as it's updated,
+   * and if set to system, appends an event listener for OS theme
+   * preference changes.
+   *
+   * The listener is removed on any re-render when the deps change.
+   */
+  useLayoutEffect(() => {
+    applyTheme(theme);
+
+    if (theme !== "system") return;
+    const unsubscribe = onSystemThemeChange(() => applyTheme("system"));
+    return unsubscribe;
+  }, [theme]);
+
+  return null;
+}
