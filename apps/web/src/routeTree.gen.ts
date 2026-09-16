@@ -21,6 +21,7 @@ import { Route as siteWikiDiaryRouteImport } from './routes/(site)/wiki/diary'
 import { Route as siteWikiFaqRouteImport } from './routes/(site)/wiki/faq'
 import { Route as siteWikiRanksRouteImport } from './routes/(site)/wiki/ranks'
 import { Route as siteWikiRequirementsRouteImport } from './routes/(site)/wiki/requirements'
+import { Route as siteWikiArticleDiscussionRouteImport } from './routes/(site)/wiki/$article/discussion'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -81,6 +82,12 @@ const siteWikiRequirementsRoute = siteWikiRequirementsRouteImport.update({
   path: '/wiki/requirements',
   getParentRoute: () => siteLayoutRoute,
 } as any)
+const siteWikiArticleDiscussionRoute =
+  siteWikiArticleDiscussionRouteImport.update({
+    id: '/wiki/$article/discussion',
+    path: '/wiki/$article/discussion',
+    getParentRoute: () => siteLayoutRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -94,6 +101,7 @@ export interface FileRoutesByFullPath {
   '/wiki/ranks': typeof siteWikiRanksRoute
   '/wiki/requirements': typeof siteWikiRequirementsRoute
   '/wiki/': typeof siteWikiIndexRoute
+  '/wiki/$article/discussion': typeof siteWikiArticleDiscussionRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -107,6 +115,7 @@ export interface FileRoutesByTo {
   '/wiki/ranks': typeof siteWikiRanksRoute
   '/wiki/requirements': typeof siteWikiRequirementsRoute
   '/wiki': typeof siteWikiIndexRoute
+  '/wiki/$article/discussion': typeof siteWikiArticleDiscussionRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -122,6 +131,7 @@ export interface FileRoutesById {
   '/(site)/wiki/ranks': typeof siteWikiRanksRoute
   '/(site)/wiki/requirements': typeof siteWikiRequirementsRoute
   '/(site)/wiki/': typeof siteWikiIndexRoute
+  '/(site)/wiki/$article/discussion': typeof siteWikiArticleDiscussionRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -137,6 +147,7 @@ export interface FileRouteTypes {
     | '/wiki/ranks'
     | '/wiki/requirements'
     | '/wiki/'
+    | '/wiki/$article/discussion'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -150,6 +161,7 @@ export interface FileRouteTypes {
     | '/wiki/ranks'
     | '/wiki/requirements'
     | '/wiki'
+    | '/wiki/$article/discussion'
   id:
     | '__root__'
     | '/'
@@ -164,6 +176,7 @@ export interface FileRouteTypes {
     | '/(site)/wiki/ranks'
     | '/(site)/wiki/requirements'
     | '/(site)/wiki/'
+    | '/(site)/wiki/$article/discussion'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -260,6 +273,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof siteWikiRequirementsRouteImport
       parentRoute: typeof siteLayoutRoute
     }
+    '/(site)/wiki/$article/discussion': {
+      id: '/(site)/wiki/$article/discussion'
+      path: '/wiki/$article/discussion'
+      fullPath: '/wiki/$article/discussion'
+      preLoaderRoute: typeof siteWikiArticleDiscussionRouteImport
+      parentRoute: typeof siteLayoutRoute
+    }
   }
 }
 
@@ -271,6 +291,7 @@ interface siteLayoutRouteChildren {
   siteWikiRanksRoute: typeof siteWikiRanksRoute
   siteWikiRequirementsRoute: typeof siteWikiRequirementsRoute
   siteWikiIndexRoute: typeof siteWikiIndexRoute
+  siteWikiArticleDiscussionRoute: typeof siteWikiArticleDiscussionRoute
 }
 
 const siteLayoutRouteChildren: siteLayoutRouteChildren = {
@@ -281,6 +302,7 @@ const siteLayoutRouteChildren: siteLayoutRouteChildren = {
   siteWikiRanksRoute: siteWikiRanksRoute,
   siteWikiRequirementsRoute: siteWikiRequirementsRoute,
   siteWikiIndexRoute: siteWikiIndexRoute,
+  siteWikiArticleDiscussionRoute: siteWikiArticleDiscussionRoute,
 }
 
 const siteLayoutRouteWithChildren = siteLayoutRoute._addFileChildren(
