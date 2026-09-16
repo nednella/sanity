@@ -2,8 +2,8 @@ import { Link } from "@tanstack/react-router";
 
 import { DiscordLogo } from "@/components/logos/discord-logo.js";
 import { ExternalLink } from "@/components/navigation/external-link.js";
-import { navigationGroups } from "@/components/navigation/navigation.config.js";
 import { DISCORD_URL } from "@/lib/links.js";
+import { navigationGroups } from "@/lib/navigation/config.js";
 import { Button } from "@/lib/ui/button.js";
 
 export function SiteSidebar() {

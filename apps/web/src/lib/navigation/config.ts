@@ -1,6 +1,6 @@
 import { linkOptions } from "@tanstack/react-router";
 
-const wiki = linkOptions([
+export const wikiLinks = linkOptions([
   {
     to: "/wiki/about",
     title: "About"
@@ -26,6 +26,6 @@ const wiki = linkOptions([
 export const navigationGroups = [
   {
     label: "Wiki",
-    links: wiki
+    links: wikiLinks
   }
 ];
