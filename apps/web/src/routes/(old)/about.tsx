@@ -7,7 +7,7 @@ import { TextWithImage } from "@/components/landing/text-with-image.js";
 import { Container } from "@/components/layout/container.js";
 import { ItemGrid } from "@/components/layout/item-grid.js";
 import { Section } from "@/components/layout/section.js";
-import { NavbarSpacer } from "@/components/navigation/navbar-spacer.js";
+import { HeaderSpacer } from "@/components/site/header-spacer.js";
 import { Card } from "@/lib/ui/card.js";
 import { H3 } from "@/lib/ui/typography/h3.js";
 import { Large } from "@/lib/ui/typography/large.js";
@@ -126,7 +126,7 @@ const highlights = linkOptions([
 function AboutPage() {
   return (
     <>
-      <NavbarSpacer />
+      <HeaderSpacer />
       <Hero
         title="Clan Background"
         description="learn more about who we are"

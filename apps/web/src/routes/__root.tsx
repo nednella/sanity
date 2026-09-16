@@ -3,7 +3,6 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Outlet, createRootRouteWithContext } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 
-import { Navbar } from "@/components/navigation/navbar.js";
 import { NotFound } from "@/components/page/not-found.js";
 
 interface RouterContext {
@@ -18,10 +17,9 @@ export const Route = createRootRouteWithContext<RouterContext>()({
 function RootLayout() {
   return (
     <>
-      <Navbar />
-      <main className="isolate">
+      <div className="isolate">
         <Outlet />
-      </main>
+      </div>
       <ReactQueryDevtools buttonPosition="bottom-left" />
       <TanStackRouterDevtools position="bottom-right" />
     </>

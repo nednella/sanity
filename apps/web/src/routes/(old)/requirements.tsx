@@ -5,7 +5,7 @@ import { CallToAction } from "@/components/landing/call-to-action.js";
 import { ExperienceRequirements } from "@/components/landing/experience-requirements.js";
 import { GearRequirements } from "@/components/landing/gear-requirements.js";
 import { Hero } from "@/components/landing/hero.js";
-import { NavbarSpacer } from "@/components/navigation/navbar-spacer.js";
+import { HeaderSpacer } from "@/components/site/header-spacer.js";
 
 export const Route = createFileRoute("/(old)/requirements")({
   component: RequirementsPage
@@ -14,7 +14,7 @@ export const Route = createFileRoute("/(old)/requirements")({
 function RequirementsPage() {
   return (
     <>
-      <NavbarSpacer />
+      <HeaderSpacer />
       <Hero
         title="Clan Requirements"
         description="find out what it takes to join our community"
