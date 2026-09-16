@@ -15,6 +15,7 @@ import { Route as oldAboutRouteImport } from './routes/(old)/about'
 import { Route as oldDiaryRouteImport } from './routes/(old)/diary'
 import { Route as oldRequirementsRouteImport } from './routes/(old)/requirements'
 import { Route as siteLoginRouteImport } from './routes/(site)/login'
+import { Route as siteWikiLayoutRouteImport } from './routes/(site)/wiki/_layout'
 import { Route as siteWikiIndexRouteImport } from './routes/(site)/wiki/index'
 import { Route as siteWikiAboutRouteImport } from './routes/(site)/wiki/about'
 import { Route as siteWikiDiaryRouteImport } from './routes/(site)/wiki/diary'
@@ -52,45 +53,51 @@ const siteLoginRoute = siteLoginRouteImport.update({
   path: '/login',
   getParentRoute: () => siteLayoutRoute,
 } as any)
-const siteWikiIndexRoute = siteWikiIndexRouteImport.update({
-  id: '/wiki/',
-  path: '/wiki/',
+const siteWikiLayoutRoute = siteWikiLayoutRouteImport.update({
+  id: '/wiki',
+  path: '/wiki',
   getParentRoute: () => siteLayoutRoute,
+} as any)
+const siteWikiIndexRoute = siteWikiIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => siteWikiLayoutRoute,
 } as any)
 const siteWikiAboutRoute = siteWikiAboutRouteImport.update({
-  id: '/wiki/about',
-  path: '/wiki/about',
-  getParentRoute: () => siteLayoutRoute,
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => siteWikiLayoutRoute,
 } as any)
 const siteWikiDiaryRoute = siteWikiDiaryRouteImport.update({
-  id: '/wiki/diary',
-  path: '/wiki/diary',
-  getParentRoute: () => siteLayoutRoute,
+  id: '/diary',
+  path: '/diary',
+  getParentRoute: () => siteWikiLayoutRoute,
 } as any)
 const siteWikiFaqRoute = siteWikiFaqRouteImport.update({
-  id: '/wiki/faq',
-  path: '/wiki/faq',
-  getParentRoute: () => siteLayoutRoute,
+  id: '/faq',
+  path: '/faq',
+  getParentRoute: () => siteWikiLayoutRoute,
 } as any)
 const siteWikiRanksRoute = siteWikiRanksRouteImport.update({
-  id: '/wiki/ranks',
-  path: '/wiki/ranks',
-  getParentRoute: () => siteLayoutRoute,
+  id: '/ranks',
+  path: '/ranks',
+  getParentRoute: () => siteWikiLayoutRoute,
 } as any)
 const siteWikiRequirementsRoute = siteWikiRequirementsRouteImport.update({
-  id: '/wiki/requirements',
-  path: '/wiki/requirements',
-  getParentRoute: () => siteLayoutRoute,
+  id: '/requirements',
+  path: '/requirements',
+  getParentRoute: () => siteWikiLayoutRoute,
 } as any)
 const siteWikiArticleDiscussionRoute =
   siteWikiArticleDiscussionRouteImport.update({
-    id: '/wiki/$article/discussion',
-    path: '/wiki/$article/discussion',
-    getParentRoute: () => siteLayoutRoute,
+    id: '/$article/discussion',
+    path: '/$article/discussion',
+    getParentRoute: () => siteWikiLayoutRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/wiki': typeof siteWikiLayoutRouteWithChildren
   '/about': typeof oldAboutRoute
   '/diary': typeof oldDiaryRoute
   '/requirements': typeof oldRequirementsRoute
@@ -121,6 +128,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/(site)': typeof siteLayoutRouteWithChildren
+  '/(site)/wiki': typeof siteWikiLayoutRouteWithChildren
   '/(old)/about': typeof oldAboutRoute
   '/(old)/diary': typeof oldDiaryRoute
   '/(old)/requirements': typeof oldRequirementsRoute
@@ -137,6 +145,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/wiki'
     | '/about'
     | '/diary'
     | '/requirements'
@@ -166,6 +175,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/(site)'
+    | '/(site)/wiki'
     | '/(old)/about'
     | '/(old)/diary'
     | '/(old)/requirements'
@@ -231,60 +241,66 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof siteLoginRouteImport
       parentRoute: typeof siteLayoutRoute
     }
+    '/(site)/wiki': {
+      id: '/(site)/wiki'
+      path: '/wiki'
+      fullPath: '/wiki'
+      preLoaderRoute: typeof siteWikiLayoutRouteImport
+      parentRoute: typeof siteLayoutRoute
+    }
     '/(site)/wiki/': {
       id: '/(site)/wiki/'
-      path: '/wiki'
+      path: '/'
       fullPath: '/wiki/'
       preLoaderRoute: typeof siteWikiIndexRouteImport
-      parentRoute: typeof siteLayoutRoute
+      parentRoute: typeof siteWikiLayoutRoute
     }
     '/(site)/wiki/about': {
       id: '/(site)/wiki/about'
-      path: '/wiki/about'
+      path: '/about'
       fullPath: '/wiki/about'
       preLoaderRoute: typeof siteWikiAboutRouteImport
-      parentRoute: typeof siteLayoutRoute
+      parentRoute: typeof siteWikiLayoutRoute
     }
     '/(site)/wiki/diary': {
       id: '/(site)/wiki/diary'
-      path: '/wiki/diary'
+      path: '/diary'
       fullPath: '/wiki/diary'
       preLoaderRoute: typeof siteWikiDiaryRouteImport
-      parentRoute: typeof siteLayoutRoute
+      parentRoute: typeof siteWikiLayoutRoute
     }
     '/(site)/wiki/faq': {
       id: '/(site)/wiki/faq'
-      path: '/wiki/faq'
+      path: '/faq'
       fullPath: '/wiki/faq'
       preLoaderRoute: typeof siteWikiFaqRouteImport
-      parentRoute: typeof siteLayoutRoute
+      parentRoute: typeof siteWikiLayoutRoute
     }
     '/(site)/wiki/ranks': {
       id: '/(site)/wiki/ranks'
-      path: '/wiki/ranks'
+      path: '/ranks'
       fullPath: '/wiki/ranks'
       preLoaderRoute: typeof siteWikiRanksRouteImport
-      parentRoute: typeof siteLayoutRoute
+      parentRoute: typeof siteWikiLayoutRoute
     }
     '/(site)/wiki/requirements': {
       id: '/(site)/wiki/requirements'
-      path: '/wiki/requirements'
+      path: '/requirements'
       fullPath: '/wiki/requirements'
       preLoaderRoute: typeof siteWikiRequirementsRouteImport
-      parentRoute: typeof siteLayoutRoute
+      parentRoute: typeof siteWikiLayoutRoute
     }
     '/(site)/wiki/$article/discussion': {
       id: '/(site)/wiki/$article/discussion'
-      path: '/wiki/$article/discussion'
+      path: '/$article/discussion'
       fullPath: '/wiki/$article/discussion'
       preLoaderRoute: typeof siteWikiArticleDiscussionRouteImport
-      parentRoute: typeof siteLayoutRoute
+      parentRoute: typeof siteWikiLayoutRoute
     }
   }
 }
 
-interface siteLayoutRouteChildren {
-  siteLoginRoute: typeof siteLoginRoute
+interface siteWikiLayoutRouteChildren {
   siteWikiAboutRoute: typeof siteWikiAboutRoute
   siteWikiDiaryRoute: typeof siteWikiDiaryRoute
   siteWikiFaqRoute: typeof siteWikiFaqRoute
@@ -294,8 +310,7 @@ interface siteLayoutRouteChildren {
   siteWikiArticleDiscussionRoute: typeof siteWikiArticleDiscussionRoute
 }
 
-const siteLayoutRouteChildren: siteLayoutRouteChildren = {
-  siteLoginRoute: siteLoginRoute,
+const siteWikiLayoutRouteChildren: siteWikiLayoutRouteChildren = {
   siteWikiAboutRoute: siteWikiAboutRoute,
   siteWikiDiaryRoute: siteWikiDiaryRoute,
   siteWikiFaqRoute: siteWikiFaqRoute,
@@ -303,6 +318,20 @@ const siteLayoutRouteChildren: siteLayoutRouteChildren = {
   siteWikiRequirementsRoute: siteWikiRequirementsRoute,
   siteWikiIndexRoute: siteWikiIndexRoute,
   siteWikiArticleDiscussionRoute: siteWikiArticleDiscussionRoute,
+}
+
+const siteWikiLayoutRouteWithChildren = siteWikiLayoutRoute._addFileChildren(
+  siteWikiLayoutRouteChildren,
+)
+
+interface siteLayoutRouteChildren {
+  siteWikiLayoutRoute: typeof siteWikiLayoutRouteWithChildren
+  siteLoginRoute: typeof siteLoginRoute
+}
+
+const siteLayoutRouteChildren: siteLayoutRouteChildren = {
+  siteWikiLayoutRoute: siteWikiLayoutRouteWithChildren,
+  siteLoginRoute: siteLoginRoute,
 }
 
 const siteLayoutRouteWithChildren = siteLayoutRoute._addFileChildren(
