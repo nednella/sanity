@@ -9,12 +9,11 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as authLayoutRouteImport } from './routes/(auth)/_layout'
+import { Route as IndexRouteImport } from './routes/index'
 import { Route as siteLayoutRouteImport } from './routes/(site)/_layout'
 import { Route as oldAboutRouteImport } from './routes/(old)/about'
 import { Route as oldDiaryRouteImport } from './routes/(old)/diary'
 import { Route as oldRequirementsRouteImport } from './routes/(old)/requirements'
-import { Route as publicIndexRouteImport } from './routes/(public)/index'
 import { Route as siteLoginRouteImport } from './routes/(site)/login'
 import { Route as siteWikiIndexRouteImport } from './routes/(site)/wiki/index'
 import { Route as siteWikiAboutRouteImport } from './routes/(site)/wiki/about'
@@ -23,8 +22,9 @@ import { Route as siteWikiFaqRouteImport } from './routes/(site)/wiki/faq'
 import { Route as siteWikiRanksRouteImport } from './routes/(site)/wiki/ranks'
 import { Route as siteWikiRequirementsRouteImport } from './routes/(site)/wiki/requirements'
 
-const authLayoutRoute = authLayoutRouteImport.update({
-  id: '/(auth)',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const siteLayoutRoute = siteLayoutRouteImport.update({
@@ -44,11 +44,6 @@ const oldDiaryRoute = oldDiaryRouteImport.update({
 const oldRequirementsRoute = oldRequirementsRouteImport.update({
   id: '/(old)/requirements',
   path: '/requirements',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const publicIndexRoute = publicIndexRouteImport.update({
-  id: '/(public)/',
-  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const siteLoginRoute = siteLoginRouteImport.update({
@@ -88,11 +83,11 @@ const siteWikiRequirementsRoute = siteWikiRequirementsRouteImport.update({
 } as any)
 
 export interface FileRoutesByFullPath {
+  '/': typeof IndexRoute
   '/about': typeof oldAboutRoute
   '/diary': typeof oldDiaryRoute
   '/requirements': typeof oldRequirementsRoute
   '/login': typeof siteLoginRoute
-  '/': typeof publicIndexRoute
   '/wiki/about': typeof siteWikiAboutRoute
   '/wiki/diary': typeof siteWikiDiaryRoute
   '/wiki/faq': typeof siteWikiFaqRoute
@@ -101,11 +96,11 @@ export interface FileRoutesByFullPath {
   '/wiki/': typeof siteWikiIndexRoute
 }
 export interface FileRoutesByTo {
+  '/': typeof IndexRoute
   '/about': typeof oldAboutRoute
   '/diary': typeof oldDiaryRoute
   '/requirements': typeof oldRequirementsRoute
   '/login': typeof siteLoginRoute
-  '/': typeof publicIndexRoute
   '/wiki/about': typeof siteWikiAboutRoute
   '/wiki/diary': typeof siteWikiDiaryRoute
   '/wiki/faq': typeof siteWikiFaqRoute
@@ -115,13 +110,12 @@ export interface FileRoutesByTo {
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/(auth)': typeof authLayoutRoute
+  '/': typeof IndexRoute
   '/(site)': typeof siteLayoutRouteWithChildren
   '/(old)/about': typeof oldAboutRoute
   '/(old)/diary': typeof oldDiaryRoute
   '/(old)/requirements': typeof oldRequirementsRoute
   '/(site)/login': typeof siteLoginRoute
-  '/(public)/': typeof publicIndexRoute
   '/(site)/wiki/about': typeof siteWikiAboutRoute
   '/(site)/wiki/diary': typeof siteWikiDiaryRoute
   '/(site)/wiki/faq': typeof siteWikiFaqRoute
@@ -132,11 +126,11 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
+    | '/'
     | '/about'
     | '/diary'
     | '/requirements'
     | '/login'
-    | '/'
     | '/wiki/about'
     | '/wiki/diary'
     | '/wiki/faq'
@@ -145,11 +139,11 @@ export interface FileRouteTypes {
     | '/wiki/'
   fileRoutesByTo: FileRoutesByTo
   to:
+    | '/'
     | '/about'
     | '/diary'
     | '/requirements'
     | '/login'
-    | '/'
     | '/wiki/about'
     | '/wiki/diary'
     | '/wiki/faq'
@@ -158,13 +152,12 @@ export interface FileRouteTypes {
     | '/wiki'
   id:
     | '__root__'
-    | '/(auth)'
+    | '/'
     | '/(site)'
     | '/(old)/about'
     | '/(old)/diary'
     | '/(old)/requirements'
     | '/(site)/login'
-    | '/(public)/'
     | '/(site)/wiki/about'
     | '/(site)/wiki/diary'
     | '/(site)/wiki/faq'
@@ -174,21 +167,20 @@ export interface FileRouteTypes {
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  authLayoutRoute: typeof authLayoutRoute
+  IndexRoute: typeof IndexRoute
   siteLayoutRoute: typeof siteLayoutRouteWithChildren
   oldAboutRoute: typeof oldAboutRoute
   oldDiaryRoute: typeof oldDiaryRoute
   oldRequirementsRoute: typeof oldRequirementsRoute
-  publicIndexRoute: typeof publicIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/(auth)': {
-      id: '/(auth)'
-      path: ''
-      fullPath: ''
-      preLoaderRoute: typeof authLayoutRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/(site)': {
@@ -217,13 +209,6 @@ declare module '@tanstack/react-router' {
       path: '/requirements'
       fullPath: '/requirements'
       preLoaderRoute: typeof oldRequirementsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/(public)/': {
-      id: '/(public)/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof publicIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/(site)/login': {
@@ -303,12 +288,11 @@ const siteLayoutRouteWithChildren = siteLayoutRoute._addFileChildren(
 )
 
 const rootRouteChildren: RootRouteChildren = {
-  authLayoutRoute: authLayoutRoute,
+  IndexRoute: IndexRoute,
   siteLayoutRoute: siteLayoutRouteWithChildren,
   oldAboutRoute: oldAboutRoute,
   oldDiaryRoute: oldDiaryRoute,
   oldRequirementsRoute: oldRequirementsRoute,
-  publicIndexRoute: publicIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
