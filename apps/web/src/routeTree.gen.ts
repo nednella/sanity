@@ -14,6 +14,7 @@ import { Route as oldAboutRouteImport } from './routes/(old)/about'
 import { Route as oldDiaryRouteImport } from './routes/(old)/diary'
 import { Route as oldRequirementsRouteImport } from './routes/(old)/requirements'
 import { Route as publicIndexRouteImport } from './routes/(public)/index'
+import { Route as siteLoginRouteImport } from './routes/(site)/login'
 import { Route as siteWikiIndexRouteImport } from './routes/(site)/wiki/index'
 import { Route as siteWikiAboutRouteImport } from './routes/(site)/wiki/about'
 import { Route as siteWikiDiaryRouteImport } from './routes/(site)/wiki/diary'
@@ -43,6 +44,11 @@ const oldRequirementsRoute = oldRequirementsRouteImport.update({
 const publicIndexRoute = publicIndexRouteImport.update({
   id: '/(public)/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const siteLoginRoute = siteLoginRouteImport.update({
+  id: '/(site)/login',
+  path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const siteWikiIndexRoute = siteWikiIndexRouteImport.update({
@@ -80,6 +86,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof oldAboutRoute
   '/diary': typeof oldDiaryRoute
   '/requirements': typeof oldRequirementsRoute
+  '/login': typeof siteLoginRoute
   '/': typeof publicIndexRoute
   '/wiki/about': typeof siteWikiAboutRoute
   '/wiki/diary': typeof siteWikiDiaryRoute
@@ -92,6 +99,7 @@ export interface FileRoutesByTo {
   '/about': typeof oldAboutRoute
   '/diary': typeof oldDiaryRoute
   '/requirements': typeof oldRequirementsRoute
+  '/login': typeof siteLoginRoute
   '/': typeof publicIndexRoute
   '/wiki/about': typeof siteWikiAboutRoute
   '/wiki/diary': typeof siteWikiDiaryRoute
@@ -106,6 +114,7 @@ export interface FileRoutesById {
   '/(old)/about': typeof oldAboutRoute
   '/(old)/diary': typeof oldDiaryRoute
   '/(old)/requirements': typeof oldRequirementsRoute
+  '/(site)/login': typeof siteLoginRoute
   '/(public)/': typeof publicIndexRoute
   '/(site)/wiki/about': typeof siteWikiAboutRoute
   '/(site)/wiki/diary': typeof siteWikiDiaryRoute
@@ -120,6 +129,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/diary'
     | '/requirements'
+    | '/login'
     | '/'
     | '/wiki/about'
     | '/wiki/diary'
@@ -132,6 +142,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/diary'
     | '/requirements'
+    | '/login'
     | '/'
     | '/wiki/about'
     | '/wiki/diary'
@@ -145,6 +156,7 @@ export interface FileRouteTypes {
     | '/(old)/about'
     | '/(old)/diary'
     | '/(old)/requirements'
+    | '/(site)/login'
     | '/(public)/'
     | '/(site)/wiki/about'
     | '/(site)/wiki/diary'
@@ -159,6 +171,7 @@ export interface RootRouteChildren {
   oldAboutRoute: typeof oldAboutRoute
   oldDiaryRoute: typeof oldDiaryRoute
   oldRequirementsRoute: typeof oldRequirementsRoute
+  siteLoginRoute: typeof siteLoginRoute
   publicIndexRoute: typeof publicIndexRoute
   siteWikiAboutRoute: typeof siteWikiAboutRoute
   siteWikiDiaryRoute: typeof siteWikiDiaryRoute
@@ -203,6 +216,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof publicIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(site)/login': {
+      id: '/(site)/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof siteLoginRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/(site)/wiki/': {
@@ -255,6 +275,7 @@ const rootRouteChildren: RootRouteChildren = {
   oldAboutRoute: oldAboutRoute,
   oldDiaryRoute: oldDiaryRoute,
   oldRequirementsRoute: oldRequirementsRoute,
+  siteLoginRoute: siteLoginRoute,
   publicIndexRoute: publicIndexRoute,
   siteWikiAboutRoute: siteWikiAboutRoute,
   siteWikiDiaryRoute: siteWikiDiaryRoute,
