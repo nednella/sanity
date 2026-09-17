@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { createColumnHelper } from "@tanstack/react-table";
 
-import { NationalityLabel } from "@/components/members/nationality-label.js";
+import { NationalityFlag } from "@/components/members/nationality-flag.js";
 import type { DataTableFeatures } from "@/components/table/table-features.js";
 import type { Member } from "@/lib/api/query/members.js";
 import { DASH, formatDate, formatNumber } from "@/utils/format.js";
@@ -32,7 +32,7 @@ export const memberColumns = columnHelper.columns([
             >
               {displayName}
             </Link>
-            {nationality && <NationalityLabel value={nationality} />}
+            {nationality && <NationalityFlag value={nationality} />}
           </span>
           {rsnLine && <span className="text-xs text-base-content/60">{rsnLine}</span>}
         </div>
