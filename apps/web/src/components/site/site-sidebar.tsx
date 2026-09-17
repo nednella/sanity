@@ -41,6 +41,10 @@ export function SiteSidebar() {
                   <Link
                     to={link.to}
                     activeProps={{ className: "menu-active" }}
+                    activeOptions={{
+                      exact: true,
+                      includeSearch: false
+                    }}
                   >
                     {link.title}
                   </Link>
