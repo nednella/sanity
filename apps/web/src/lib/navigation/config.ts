@@ -23,9 +23,20 @@ export const wikiLinks = linkOptions([
   }
 ]);
 
+export const clanLinks = linkOptions([
+  {
+    to: "/members",
+    title: "Members"
+  }
+]);
+
 export const navigationGroups = [
   {
     label: "Wiki",
     links: wikiLinks
+  },
+  {
+    label: "Clan",
+    links: clanLinks
   }
 ];

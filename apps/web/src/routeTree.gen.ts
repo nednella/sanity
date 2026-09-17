@@ -16,6 +16,8 @@ import { Route as oldDiaryRouteImport } from './routes/(old)/diary'
 import { Route as oldRequirementsRouteImport } from './routes/(old)/requirements'
 import { Route as siteLoginRouteImport } from './routes/(site)/login'
 import { Route as siteWikiLayoutRouteImport } from './routes/(site)/wiki/_layout'
+import { Route as siteMembersIndexRouteImport } from './routes/(site)/members/index'
+import { Route as siteMembersMemberIdRouteImport } from './routes/(site)/members/$memberId'
 import { Route as siteWikiIndexRouteImport } from './routes/(site)/wiki/index'
 import { Route as siteWikiAboutRouteImport } from './routes/(site)/wiki/about'
 import { Route as siteWikiDiaryRouteImport } from './routes/(site)/wiki/diary'
@@ -56,6 +58,16 @@ const siteLoginRoute = siteLoginRouteImport.update({
 const siteWikiLayoutRoute = siteWikiLayoutRouteImport.update({
   id: '/wiki',
   path: '/wiki',
+  getParentRoute: () => siteLayoutRoute,
+} as any)
+const siteMembersIndexRoute = siteMembersIndexRouteImport.update({
+  id: '/members/',
+  path: '/members/',
+  getParentRoute: () => siteLayoutRoute,
+} as any)
+const siteMembersMemberIdRoute = siteMembersMemberIdRouteImport.update({
+  id: '/members/$memberId',
+  path: '/members/$memberId',
   getParentRoute: () => siteLayoutRoute,
 } as any)
 const siteWikiIndexRoute = siteWikiIndexRouteImport.update({
@@ -102,11 +114,13 @@ export interface FileRoutesByFullPath {
   '/diary': typeof oldDiaryRoute
   '/requirements': typeof oldRequirementsRoute
   '/login': typeof siteLoginRoute
+  '/members/$memberId': typeof siteMembersMemberIdRoute
   '/wiki/about': typeof siteWikiAboutRoute
   '/wiki/diary': typeof siteWikiDiaryRoute
   '/wiki/faq': typeof siteWikiFaqRoute
   '/wiki/ranks': typeof siteWikiRanksRoute
   '/wiki/requirements': typeof siteWikiRequirementsRoute
+  '/members/': typeof siteMembersIndexRoute
   '/wiki/': typeof siteWikiIndexRoute
   '/wiki/$article/discussion': typeof siteWikiArticleDiscussionRoute
 }
@@ -116,11 +130,13 @@ export interface FileRoutesByTo {
   '/diary': typeof oldDiaryRoute
   '/requirements': typeof oldRequirementsRoute
   '/login': typeof siteLoginRoute
+  '/members/$memberId': typeof siteMembersMemberIdRoute
   '/wiki/about': typeof siteWikiAboutRoute
   '/wiki/diary': typeof siteWikiDiaryRoute
   '/wiki/faq': typeof siteWikiFaqRoute
   '/wiki/ranks': typeof siteWikiRanksRoute
   '/wiki/requirements': typeof siteWikiRequirementsRoute
+  '/members': typeof siteMembersIndexRoute
   '/wiki': typeof siteWikiIndexRoute
   '/wiki/$article/discussion': typeof siteWikiArticleDiscussionRoute
 }
@@ -133,11 +149,13 @@ export interface FileRoutesById {
   '/(old)/diary': typeof oldDiaryRoute
   '/(old)/requirements': typeof oldRequirementsRoute
   '/(site)/login': typeof siteLoginRoute
+  '/(site)/members/$memberId': typeof siteMembersMemberIdRoute
   '/(site)/wiki/about': typeof siteWikiAboutRoute
   '/(site)/wiki/diary': typeof siteWikiDiaryRoute
   '/(site)/wiki/faq': typeof siteWikiFaqRoute
   '/(site)/wiki/ranks': typeof siteWikiRanksRoute
   '/(site)/wiki/requirements': typeof siteWikiRequirementsRoute
+  '/(site)/members/': typeof siteMembersIndexRoute
   '/(site)/wiki/': typeof siteWikiIndexRoute
   '/(site)/wiki/$article/discussion': typeof siteWikiArticleDiscussionRoute
 }
@@ -150,11 +168,13 @@ export interface FileRouteTypes {
     | '/diary'
     | '/requirements'
     | '/login'
+    | '/members/$memberId'
     | '/wiki/about'
     | '/wiki/diary'
     | '/wiki/faq'
     | '/wiki/ranks'
     | '/wiki/requirements'
+    | '/members/'
     | '/wiki/'
     | '/wiki/$article/discussion'
   fileRoutesByTo: FileRoutesByTo
@@ -164,11 +184,13 @@ export interface FileRouteTypes {
     | '/diary'
     | '/requirements'
     | '/login'
+    | '/members/$memberId'
     | '/wiki/about'
     | '/wiki/diary'
     | '/wiki/faq'
     | '/wiki/ranks'
     | '/wiki/requirements'
+    | '/members'
     | '/wiki'
     | '/wiki/$article/discussion'
   id:
@@ -180,11 +202,13 @@ export interface FileRouteTypes {
     | '/(old)/diary'
     | '/(old)/requirements'
     | '/(site)/login'
+    | '/(site)/members/$memberId'
     | '/(site)/wiki/about'
     | '/(site)/wiki/diary'
     | '/(site)/wiki/faq'
     | '/(site)/wiki/ranks'
     | '/(site)/wiki/requirements'
+    | '/(site)/members/'
     | '/(site)/wiki/'
     | '/(site)/wiki/$article/discussion'
   fileRoutesById: FileRoutesById
@@ -246,6 +270,20 @@ declare module '@tanstack/react-router' {
       path: '/wiki'
       fullPath: '/wiki'
       preLoaderRoute: typeof siteWikiLayoutRouteImport
+      parentRoute: typeof siteLayoutRoute
+    }
+    '/(site)/members/': {
+      id: '/(site)/members/'
+      path: '/members'
+      fullPath: '/members/'
+      preLoaderRoute: typeof siteMembersIndexRouteImport
+      parentRoute: typeof siteLayoutRoute
+    }
+    '/(site)/members/$memberId': {
+      id: '/(site)/members/$memberId'
+      path: '/members/$memberId'
+      fullPath: '/members/$memberId'
+      preLoaderRoute: typeof siteMembersMemberIdRouteImport
       parentRoute: typeof siteLayoutRoute
     }
     '/(site)/wiki/': {
@@ -327,11 +365,15 @@ const siteWikiLayoutRouteWithChildren = siteWikiLayoutRoute._addFileChildren(
 interface siteLayoutRouteChildren {
   siteWikiLayoutRoute: typeof siteWikiLayoutRouteWithChildren
   siteLoginRoute: typeof siteLoginRoute
+  siteMembersMemberIdRoute: typeof siteMembersMemberIdRoute
+  siteMembersIndexRoute: typeof siteMembersIndexRoute
 }
 
 const siteLayoutRouteChildren: siteLayoutRouteChildren = {
   siteWikiLayoutRoute: siteWikiLayoutRouteWithChildren,
   siteLoginRoute: siteLoginRoute,
+  siteMembersMemberIdRoute: siteMembersMemberIdRoute,
+  siteMembersIndexRoute: siteMembersIndexRoute,
 }
 
 const siteLayoutRouteWithChildren = siteLayoutRoute._addFileChildren(
