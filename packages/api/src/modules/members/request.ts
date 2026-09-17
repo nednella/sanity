@@ -5,6 +5,24 @@ import { top } from "../personal-bests/request.js";
 
 export const memberParams = z.object({ id: bigIntString });
 
-export const memberFilters = z.object({ active: booleanString.default(true) });
+export const memberFilters = z.object({ active: booleanString.optional() });
+
+export const memberSort = z.enum([
+  "clanPoints",
+  "diaryPoints",
+  "displayName",
+  "joinedAt",
+  "masterDiaries",
+  "rank",
+  "totalEhb",
+  "totalEhp",
+  "totalExp",
+  "totalLevel"
+]);
+
+export const memberSortFilters = z.object({
+  sort: memberSort.default("clanPoints"),
+  order: z.enum(["asc", "desc"]).default("desc")
+});
 
 export const memberPersonalBestFilters = z.object({ top: top.optional() });

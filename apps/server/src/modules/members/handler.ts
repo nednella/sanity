@@ -1,6 +1,6 @@
 import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 
-import { contract } from "@sanity/api";
+import { contract, toPage } from "@sanity/api";
 
 import { getMemberPersonalBests } from "../personal-bests/service.js";
 import { getMemberProfile, getMembers } from "./service.js";
@@ -8,7 +8,11 @@ import { getMemberProfile, getMembers } from "./service.js";
 export const memberRoutes: FastifyPluginAsyncZod = async (app) => {
   app.route({
     ...contract.routes.members.list,
-    handler: async (req) => getMembers(req.query)
+    handler: async (req) => {
+      const { limit, offset } = req.query;
+      const { items, total } = await getMembers(req.query);
+      return { items, page: toPage({ limit, offset, total }) };
+    }
   });
 
   app.route({

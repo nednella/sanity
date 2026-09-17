@@ -6,6 +6,7 @@ import { rankRoutes } from "./modules/ranks/routes.js";
 import { submissionRoutes } from "./modules/submissions/routes.js";
 
 export { toPage } from "./common.js";
+export { memberSort } from "./modules/members/request.js";
 export type { Route } from "./route.js";
 
 export const contract = {

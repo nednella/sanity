@@ -1,10 +1,10 @@
 import { z } from "zod";
 
-import { notFound, pagination } from "../../common.js";
+import { notFound, paginated, pagination } from "../../common.js";
 import { route } from "../../route.js";
 import { contentFilters } from "../personal-bests/request.js";
 import { rankedPersonalBest } from "../personal-bests/response.js";
-import { memberFilters, memberParams, memberPersonalBestFilters } from "./request.js";
+import { memberFilters, memberParams, memberPersonalBestFilters, memberSortFilters } from "./request.js";
 import { member, memberProfile } from "./response.js";
 
 export const memberRoutes = {
@@ -14,9 +14,10 @@ export const memberRoutes = {
     schema: {
       querystring: z.object({
         ...pagination.shape,
-        ...memberFilters.shape
+        ...memberFilters.shape,
+        ...memberSortFilters.shape
       }),
-      response: { 200: z.array(member) }
+      response: { 200: paginated(member) }
     }
   }),
   get: route({
