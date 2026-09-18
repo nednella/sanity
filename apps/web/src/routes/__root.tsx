@@ -5,7 +5,7 @@ import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 
 import { NotFound } from "@/components/page/not-found.js";
 
-interface RouterContext {
+export interface RouterContext {
   queryClient: QueryClient;
 }
 

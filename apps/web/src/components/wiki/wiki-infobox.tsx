@@ -1,8 +1,8 @@
 import { wikiAsideWidth } from "@/components/wiki/styles.js";
-import type { WikiInfoboxData } from "@/components/wiki/wiki-article.js";
+import type { WikiInfobox } from "@/components/wiki/types.js";
 import { cn } from "@/lib/ui/utils.js";
 
-export function WikiInfobox({ title, image, caption, rows }: Readonly<WikiInfoboxData>) {
+export function WikiInfobox({ title, image, caption, rows }: Readonly<WikiInfobox>) {
   return (
     <aside
       aria-label={`${title} infobox`}

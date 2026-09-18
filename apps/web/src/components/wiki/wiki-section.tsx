@@ -1,6 +1,6 @@
 import { ChevronDown } from "lucide-react";
 
-import type { WikiSectionData, WikiSubsectionData } from "@/components/wiki/wiki-article.js";
+import type { WikiSection, WikiSubsection } from "@/components/wiki/types.js";
 import { cn } from "@/lib/ui/utils.js";
 
 type CollapsibleProps = {
@@ -33,7 +33,7 @@ function Collapsible({ id, title, level: Heading, children }: Readonly<Collapsib
   );
 }
 
-function WikiSubsection({ id, title, content }: Readonly<WikiSubsectionData>) {
+function WikiSubsection({ id, title, content }: Readonly<WikiSubsection>) {
   return (
     <div className="mt-8 flow-root">
       <Collapsible
@@ -47,7 +47,7 @@ function WikiSubsection({ id, title, content }: Readonly<WikiSubsectionData>) {
   );
 }
 
-export function WikiSection({ section }: Readonly<{ section: WikiSectionData }>) {
+export function WikiSection({ section }: Readonly<{ section: WikiSection }>) {
   return (
     <section className="mb-10 flow-root">
       <Collapsible

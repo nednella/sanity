@@ -1,13 +1,6 @@
-import { createFileRoute } from "@tanstack/react-router";
+import type { WikiArticle } from "@/components/wiki/types.js";
 
-import type { WikiArticleProps } from "@/components/wiki/wiki-article.js";
-import { WikiArticle } from "@/components/wiki/wiki-article.js";
-
-export const Route = createFileRoute("/(site)/wiki/faq")({
-  component: FaqPage
-});
-
-const article: WikiArticleProps = {
+export const faq: WikiArticle = {
   title: "FAQ",
   infobox: {
     title: "FAQ",
@@ -35,7 +28,3 @@ const article: WikiArticleProps = {
     }
   ]
 };
-
-function FaqPage() {
-  return <WikiArticle {...article} />;
-}

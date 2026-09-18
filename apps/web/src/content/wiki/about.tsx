@@ -1,16 +1,9 @@
-import { createFileRoute } from "@tanstack/react-router";
+import type { WikiArticle } from "@/components/wiki/types.js";
 
-import type { WikiArticleProps } from "@/components/wiki/wiki-article.js";
-import { WikiArticle } from "@/components/wiki/wiki-article.js";
-
-export const Route = createFileRoute("/(site)/wiki/diary")({
-  component: AchievementDiaryPage
-});
-
-const article: WikiArticleProps = {
-  title: "Achievement Diary",
+export const about: WikiArticle = {
+  title: "Sanity",
   infobox: {
-    title: "Achievement Diary",
+    title: "Sanity",
     rows: [
       {
         label: "Placeholder",
@@ -34,17 +27,20 @@ const article: WikiArticleProps = {
       )
     },
     {
-      id: "tiers",
-      title: "Tiers",
+      id: "history",
+      title: "History",
       content: (
         <p>
           Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
         </p>
       )
+    },
+    {
+      id: "community",
+      title: "Community",
+      content: (
+        <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+      )
     }
   ]
 };
-
-function AchievementDiaryPage() {
-  return <WikiArticle {...article} />;
-}

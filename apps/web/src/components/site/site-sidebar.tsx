@@ -7,23 +7,28 @@ import { Button } from "@/lib/ui/button.js";
 
 const wikiLinks = linkOptions([
   {
-    to: "/wiki/about",
+    to: "/wiki/$article",
+    params: { article: "about" },
     title: "About"
   },
   {
-    to: "/wiki/ranks",
+    to: "/wiki/$article",
+    params: { article: "ranks" },
     title: "Ranks"
   },
   {
-    to: "/wiki/requirements",
+    to: "/wiki/$article",
+    params: { article: "requirements" },
     title: "Requirements"
   },
   {
-    to: "/wiki/diary",
+    to: "/wiki/$article",
+    params: { article: "diary" },
     title: "Achievement Diary"
   },
   {
-    to: "/wiki/faq",
+    to: "/wiki/$article",
+    params: { article: "faq" },
     title: "FAQ"
   }
 ]);
@@ -76,17 +81,17 @@ export function SiteSidebar() {
               {group.label}
             </h2>
             <ul className="menu w-full p-0 text-[0.95rem]">
-              {group.links.map((link) => (
-                <li key={link.to}>
+              {group.links.map(({ title, ...link }) => (
+                <li key={title}>
                   <Link
-                    to={link.to}
+                    {...link}
                     activeProps={{ className: "menu-active" }}
                     activeOptions={{
                       exact: true,
                       includeSearch: false
                     }}
                   >
-                    {link.title}
+                    {title}
                   </Link>
                 </li>
               ))}

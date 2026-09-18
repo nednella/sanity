@@ -1,16 +1,9 @@
-import { createFileRoute } from "@tanstack/react-router";
+import type { WikiArticle } from "@/components/wiki/types.js";
 
-import type { WikiArticleProps } from "@/components/wiki/wiki-article.js";
-import { WikiArticle } from "@/components/wiki/wiki-article.js";
-
-export const Route = createFileRoute("/(site)/wiki/requirements")({
-  component: RequirementsPage
-});
-
-const article: WikiArticleProps = {
-  title: "Requirements",
+export const diary: WikiArticle = {
+  title: "Achievement Diary",
   infobox: {
-    title: "Requirements",
+    title: "Achievement Diary",
     rows: [
       {
         label: "Placeholder",
@@ -34,8 +27,8 @@ const article: WikiArticleProps = {
       )
     },
     {
-      id: "how-to-join",
-      title: "How to join",
+      id: "tiers",
+      title: "Tiers",
       content: (
         <p>
           Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
@@ -44,7 +37,3 @@ const article: WikiArticleProps = {
     }
   ]
 };
-
-function RequirementsPage() {
-  return <WikiArticle {...article} />;
-}

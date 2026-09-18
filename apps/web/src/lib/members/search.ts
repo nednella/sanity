@@ -1,3 +1,5 @@
+import type { SearchSchemaInput } from "@tanstack/react-router";
+
 import { memberSort } from "@sanity/api";
 
 import type { MemberSort, MemberStatus } from "@/lib/api/query/members.js";
@@ -22,7 +24,7 @@ export type MembersSearch = {
   status: MemberStatus;
 };
 
-export const validateMembersSearch = (search: Record<string, unknown>): MembersSearch => ({
+export const validateMembersSearch = (search: Record<string, unknown> & SearchSchemaInput): MembersSearch => ({
   limit: toLimit(search.limit, PAGE_SIZES, DEFAULT_LIMIT),
   offset: toOffset(search.offset),
   order: toOrder(search.order),
