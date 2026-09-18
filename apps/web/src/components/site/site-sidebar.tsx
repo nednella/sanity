@@ -1,10 +1,50 @@
-import { Link } from "@tanstack/react-router";
+import { Link, linkOptions } from "@tanstack/react-router";
 
 import { DiscordLogo } from "@/components/logos/discord-logo.js";
 import { ExternalLink } from "@/components/navigation/external-link.js";
 import { DISCORD_URL } from "@/lib/links.js";
-import { navigationGroups } from "@/lib/navigation/config.js";
 import { Button } from "@/lib/ui/button.js";
+
+const wikiLinks = linkOptions([
+  {
+    to: "/wiki/about",
+    title: "About"
+  },
+  {
+    to: "/wiki/ranks",
+    title: "Ranks"
+  },
+  {
+    to: "/wiki/requirements",
+    title: "Requirements"
+  },
+  {
+    to: "/wiki/diary",
+    title: "Achievement Diary"
+  },
+  {
+    to: "/wiki/faq",
+    title: "FAQ"
+  }
+]);
+
+const clanLinks = linkOptions([
+  {
+    to: "/members",
+    title: "Members"
+  }
+]);
+
+const navigationGroups = [
+  {
+    label: "Wiki",
+    links: wikiLinks
+  },
+  {
+    label: "Clan",
+    links: clanLinks
+  }
+];
 
 export function SiteSidebar() {
   return (
