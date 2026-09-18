@@ -1,4 +1,4 @@
-import { cn } from "@/lib/ui/utils.js";
+import { cn } from "@/lib/ui/utils";
 
 type CardProps = React.ComponentProps<"div">;
 

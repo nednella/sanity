@@ -1,10 +1,10 @@
 import { motion } from "motion/react";
 
-import { Container } from "@/components/layout/container.js";
-import { Section } from "@/components/layout/section.js";
-import { H1 } from "@/lib/ui/typography/h1.js";
-import { Lead } from "@/lib/ui/typography/lead.js";
-import { cn } from "@/lib/ui/utils.js";
+import { Container } from "@/components/layout/container";
+import { Section } from "@/components/layout/section";
+import { H1 } from "@/lib/ui/typography/h1";
+import { Lead } from "@/lib/ui/typography/lead";
+import { cn } from "@/lib/ui/utils";
 
 const containerVariants = {
   hidden: { opacity: 0 },

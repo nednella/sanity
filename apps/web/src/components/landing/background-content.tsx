@@ -1,6 +1,6 @@
-import { useThemeStore } from "@/lib/theme/theme.store.js";
-import { resolveTheme } from "@/lib/theme/utils.js";
-import { cn } from "@/lib/ui/utils.js";
+import { useThemeStore } from "@/lib/theme/theme.store";
+import { resolveTheme } from "@/lib/theme/utils";
+import { cn } from "@/lib/ui/utils";
 
 export function BackgroundContent() {
   const { theme } = useThemeStore();

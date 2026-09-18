@@ -1,6 +1,6 @@
 import { useId } from "react";
 
-import { cn } from "@/lib/ui/utils.js";
+import { cn } from "@/lib/ui/utils";
 
 const alignments = {
   center: "dropdown-center",

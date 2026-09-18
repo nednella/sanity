@@ -1,7 +1,7 @@
 import { useLayoutEffect } from "react";
 
-import { useThemeStore } from "@/lib/theme/theme.store.js";
-import { applyTheme, onSystemThemeChange } from "@/lib/theme/utils.js";
+import { useThemeStore } from "@/lib/theme/theme.store";
+import { applyTheme, onSystemThemeChange } from "@/lib/theme/utils";
 
 /**
  * This provider should be nested within the provider tree next to the application's entry point.

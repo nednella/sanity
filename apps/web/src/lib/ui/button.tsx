@@ -1,6 +1,6 @@
 import { cloneElement, isValidElement } from "react";
 
-import { cn } from "@/lib/ui/utils.js";
+import { cn } from "@/lib/ui/utils";
 
 const variants = {
   default: "btn-primary",

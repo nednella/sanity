@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 
-import { Hero } from "@/components/landing/hero.js";
-import { Button } from "@/lib/ui/button.js";
+import { Hero } from "@/components/landing/hero";
+import { Button } from "@/lib/ui/button";
 
 export function NotFound() {
   // TODO: add logo

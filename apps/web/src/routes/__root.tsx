@@ -3,7 +3,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Outlet, createRootRouteWithContext } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 
-import { NotFound } from "@/components/page/not-found.js";
+import { NotFound } from "@/components/page/not-found";
 
 export interface RouterContext {
   queryClient: QueryClient;

@@ -1,8 +1,8 @@
-import { Container } from "@/components/layout/container.js";
-import { ItemGrid } from "@/components/layout/item-grid.js";
-import { Section } from "@/components/layout/section.js";
-import { H3 } from "@/lib/ui/typography/h3.js";
-import { Muted } from "@/lib/ui/typography/muted.js";
+import { Container } from "@/components/layout/container";
+import { ItemGrid } from "@/components/layout/item-grid";
+import { Section } from "@/components/layout/section";
+import { H3 } from "@/lib/ui/typography/h3";
+import { Muted } from "@/lib/ui/typography/muted";
 
 type Item = {
   fileName: string;

@@ -1,10 +1,10 @@
 import { Link } from "@tanstack/react-router";
 import { createColumnHelper } from "@tanstack/react-table";
 
-import { NationalityFlag } from "@/components/members/nationality-flag.js";
-import type { DataTableFeatures } from "@/components/table/table-features.js";
-import type { Member } from "@/lib/api/query/members.js";
-import { DASH, formatDate, formatNumber } from "@/utils/format.js";
+import { NationalityFlag } from "@/components/members/nationality-flag";
+import type { DataTableFeatures } from "@/components/table/table-features";
+import type { Member } from "@/lib/api/query/members";
+import { DASH, formatDate, formatNumber } from "@/utils/format";
 
 const columnHelper = createColumnHelper<DataTableFeatures, Member>();
 

@@ -1,6 +1,6 @@
 import type React from "react";
 
-import { cn } from "@/lib/ui/utils.js";
+import { cn } from "@/lib/ui/utils";
 
 type ItemGridProps = React.ComponentPropsWithRef<"div"> & {
   cols?: string; // default grid behaviour is equal to grid-cols-1

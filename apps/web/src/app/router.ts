@@ -1,7 +1,7 @@
 import { createRouter } from "@tanstack/react-router";
 
-import { queryClient } from "@/lib/api/query-client.js";
-import { routeTree } from "@/routeTree.gen.js";
+import { queryClient } from "@/lib/api/query-client";
+import { routeTree } from "@/routeTree.gen";
 
 declare module "@tanstack/react-router" {
   interface Register {

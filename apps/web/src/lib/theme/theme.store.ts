@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-import type { Theme } from "./types.js";
+import type { Theme } from "./types";
 
 type ThemeState = {
   theme: Theme;

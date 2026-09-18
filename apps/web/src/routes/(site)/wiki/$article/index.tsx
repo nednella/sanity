@@ -1,7 +1,7 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
 
-import { WikiArticle } from "@/components/wiki/wiki-article.js";
-import { wikiArticles } from "@/content/wiki/index.js";
+import { WikiArticle } from "@/components/wiki/wiki-article";
+import { wikiArticles } from "@/content/wiki/index";
 
 export const Route = createFileRoute("/(site)/wiki/$article/")({
   component: WikiArticlePage,

@@ -1,7 +1,7 @@
 import { QueryClientProvider } from "@tanstack/react-query";
 
-import { queryClient } from "@/lib/api/query-client.js";
-import { ThemeProvider } from "@/lib/theme/theme-provider.js";
+import { queryClient } from "@/lib/api/query-client";
+import { ThemeProvider } from "@/lib/theme/theme-provider";
 
 interface Props {
   children: React.ReactNode;

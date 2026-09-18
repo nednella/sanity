@@ -1,8 +1,8 @@
 import type { ReactTable, RowData } from "@tanstack/react-table";
 import { Columns3 } from "lucide-react";
 
-import type { DataTableFeatures } from "@/components/table/table-features.js";
-import { Dropdown } from "@/lib/ui/dropdown.js";
+import type { DataTableFeatures } from "@/components/table/table-features";
+import { Dropdown } from "@/lib/ui/dropdown";
 
 type DataTableColumnToggleProps<TData extends RowData> = {
   table: ReactTable<DataTableFeatures, TData>;

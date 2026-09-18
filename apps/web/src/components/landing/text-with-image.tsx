@@ -1,8 +1,8 @@
 import React from "react";
 
-import { ItemGrid } from "@/components/layout/item-grid.js";
-import { H3 } from "@/lib/ui/typography/h3.js";
-import { cn } from "@/lib/ui/utils.js";
+import { ItemGrid } from "@/components/layout/item-grid";
+import { H3 } from "@/lib/ui/typography/h3";
+import { cn } from "@/lib/ui/utils";
 
 type Props = {
   title: string;

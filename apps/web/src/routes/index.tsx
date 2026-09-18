@@ -1,13 +1,13 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
 
-import { BackgroundContent } from "@/components/landing/background-content.js";
-import { Hero } from "@/components/landing/hero.js";
-import { DiscordLogo } from "@/components/logos/discord-logo.js";
-import { ExternalLink } from "@/components/navigation/external-link.js";
-import { ThemeToggle } from "@/components/theme/theme-toggle.js";
-import { DISCORD_URL } from "@/lib/links.js";
-import { Button } from "@/lib/ui/button.js";
-import { cn } from "@/lib/ui/utils.js";
+import { BackgroundContent } from "@/components/landing/background-content";
+import { Hero } from "@/components/landing/hero";
+import { DiscordLogo } from "@/components/logos/discord-logo";
+import { ExternalLink } from "@/components/navigation/external-link";
+import { ThemeToggle } from "@/components/theme/theme-toggle";
+import { DISCORD_URL } from "@/lib/links";
+import { Button } from "@/lib/ui/button";
+import { cn } from "@/lib/ui/utils";
 
 export const Route = createFileRoute("/")({
   component: IndexPage

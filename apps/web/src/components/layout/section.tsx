@@ -1,6 +1,6 @@
 import React from "react";
 
-import { cn } from "@/lib/ui/utils.js";
+import { cn } from "@/lib/ui/utils";
 
 type Props = React.ComponentPropsWithoutRef<"section">;
 

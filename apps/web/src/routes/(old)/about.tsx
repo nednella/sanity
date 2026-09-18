@@ -1,18 +1,18 @@
 import { Link, createFileRoute, linkOptions } from "@tanstack/react-router";
 import { BookOpen, CalendarDays, Crown, HandCoins, Medal, Timer } from "lucide-react";
 
-import { CallToAction } from "@/components/landing/call-to-action.js";
-import { Hero } from "@/components/landing/hero.js";
-import { TextWithImage } from "@/components/landing/text-with-image.js";
-import { Container } from "@/components/layout/container.js";
-import { ItemGrid } from "@/components/layout/item-grid.js";
-import { Section } from "@/components/layout/section.js";
-import { HeaderSpacer } from "@/components/site/header-spacer.js";
-import { Card } from "@/lib/ui/card.js";
-import { H3 } from "@/lib/ui/typography/h3.js";
-import { Large } from "@/lib/ui/typography/large.js";
-import { Muted } from "@/lib/ui/typography/muted.js";
-import { P } from "@/lib/ui/typography/p.js";
+import { CallToAction } from "@/components/landing/call-to-action";
+import { Hero } from "@/components/landing/hero";
+import { TextWithImage } from "@/components/landing/text-with-image";
+import { Container } from "@/components/layout/container";
+import { ItemGrid } from "@/components/layout/item-grid";
+import { Section } from "@/components/layout/section";
+import { HeaderSpacer } from "@/components/site/header-spacer";
+import { Card } from "@/lib/ui/card";
+import { H3 } from "@/lib/ui/typography/h3";
+import { Large } from "@/lib/ui/typography/large";
+import { Muted } from "@/lib/ui/typography/muted";
+import { P } from "@/lib/ui/typography/p";
 
 export const Route = createFileRoute("/(old)/about")({
   component: AboutPage

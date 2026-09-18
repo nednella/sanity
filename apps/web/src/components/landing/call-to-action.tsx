@@ -1,13 +1,13 @@
 import { ArrowRight } from "lucide-react";
 
-import { Container } from "@/components/layout/container.js";
-import { Section } from "@/components/layout/section.js";
-import { DiscordLogo } from "@/components/logos/discord-logo.js";
-import { TwitterLogo } from "@/components/logos/twitter-logo.js";
-import { Button } from "@/lib/ui/button.js";
-import { Card } from "@/lib/ui/card.js";
-import { H3 } from "@/lib/ui/typography/h3.js";
-import { Muted } from "@/lib/ui/typography/muted.js";
+import { Container } from "@/components/layout/container";
+import { Section } from "@/components/layout/section";
+import { DiscordLogo } from "@/components/logos/discord-logo";
+import { TwitterLogo } from "@/components/logos/twitter-logo";
+import { Button } from "@/lib/ui/button";
+import { Card } from "@/lib/ui/card";
+import { H3 } from "@/lib/ui/typography/h3";
+import { Muted } from "@/lib/ui/typography/muted";
 
 export function CallToAction() {
   return (

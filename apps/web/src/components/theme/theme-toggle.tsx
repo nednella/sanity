@@ -1,7 +1,7 @@
 import { Monitor, Moon, Sun } from "lucide-react";
 
-import { useThemeStore } from "@/lib/theme/theme.store.js";
-import { Button } from "@/lib/ui/button.js";
+import { useThemeStore } from "@/lib/theme/theme.store";
+import { Button } from "@/lib/ui/button";
 
 type ThemeToggleProps = {
   className?: string;

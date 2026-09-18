@@ -1,7 +1,7 @@
 import { Outlet, createFileRoute } from "@tanstack/react-router";
 
-import { SiteHeader } from "@/components/site/site-header.js";
-import { SiteSidebar } from "@/components/site/site-sidebar.js";
+import { SiteHeader } from "@/components/site/site-header";
+import { SiteSidebar } from "@/components/site/site-sidebar";
 
 export const Route = createFileRoute("/(site)")({
   component: SiteLayout

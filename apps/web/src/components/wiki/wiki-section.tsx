@@ -1,7 +1,7 @@
 import { ChevronDown } from "lucide-react";
 
-import type { WikiSection, WikiSubsection } from "@/components/wiki/types.js";
-import { cn } from "@/lib/ui/utils.js";
+import type { WikiSection, WikiSubsection } from "@/components/wiki/types";
+import { cn } from "@/lib/ui/utils";
 
 type CollapsibleProps = {
   id: string;

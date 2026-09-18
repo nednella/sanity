@@ -1,5 +1,5 @@
-import { wikiAsideWidth } from "@/components/wiki/styles.js";
-import { cn } from "@/lib/ui/utils.js";
+import { wikiAsideWidth } from "@/components/wiki/styles";
+import { cn } from "@/lib/ui/utils";
 
 const alignments = {
   left: `lg:float-left lg:clear-left lg:mr-6 ${wikiAsideWidth}`,

@@ -2,9 +2,9 @@ import type { SearchSchemaInput } from "@tanstack/react-router";
 
 import { memberSort } from "@sanity/api";
 
-import type { MemberSort, MemberStatus } from "@/lib/api/query/members.js";
-import { toActive } from "@/lib/api/query/members.js";
-import { toLimit, toOffset, toOrder, toSort } from "@/lib/table/search.js";
+import type { MemberSort, MemberStatus } from "@/lib/api/query/members";
+import { toActive } from "@/lib/api/query/members";
+import { toLimit, toOffset, toOrder, toSort } from "@/lib/table/search";
 
 const DEFAULT_LIMIT = 50;
 const DEFAULT_SORT: MemberSort = "clanPoints";

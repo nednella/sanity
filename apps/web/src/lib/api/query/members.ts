@@ -2,7 +2,7 @@ import { keepPreviousData, queryOptions } from "@tanstack/react-query";
 
 import { memberSort } from "@sanity/api";
 
-import { api } from "@/lib/api/client.js";
+import { api } from "@/lib/api/client";
 
 export type MemberSort = (typeof memberSort.options)[number];
 

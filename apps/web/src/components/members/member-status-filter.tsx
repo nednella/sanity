@@ -1,7 +1,7 @@
 import { Users } from "lucide-react";
 
-import type { MemberStatus } from "@/lib/api/query/members.js";
-import { Dropdown } from "@/lib/ui/dropdown.js";
+import type { MemberStatus } from "@/lib/api/query/members";
+import { Dropdown } from "@/lib/ui/dropdown";
 
 type MemberStatusFilterProps = {
   status: MemberStatus;

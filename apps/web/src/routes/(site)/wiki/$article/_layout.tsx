@@ -1,6 +1,6 @@
 import { Outlet, createFileRoute } from "@tanstack/react-router";
 
-import { WikiTabStrip } from "@/components/wiki/wiki-tab-strip.js";
+import { WikiTabStrip } from "@/components/wiki/wiki-tab-strip";
 
 export const Route = createFileRoute("/(site)/wiki/$article")({
   component: WikiArticleLayout

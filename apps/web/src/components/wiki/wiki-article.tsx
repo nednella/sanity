@@ -1,7 +1,7 @@
-import type { WikiArticle as WikiArticleData } from "@/components/wiki/types.js";
-import { WikiInfobox } from "@/components/wiki/wiki-infobox.js";
-import { WikiSection } from "@/components/wiki/wiki-section.js";
-import { Muted } from "@/lib/ui/typography/muted.js";
+import type { WikiArticle as WikiArticleData } from "@/components/wiki/types";
+import { WikiInfobox } from "@/components/wiki/wiki-infobox";
+import { WikiSection } from "@/components/wiki/wiki-section";
+import { Muted } from "@/lib/ui/typography/muted";
 
 export function WikiArticle({ title, sections, infobox }: Readonly<WikiArticleData>) {
   return (

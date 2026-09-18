@@ -1,10 +1,10 @@
-import { Container } from "@/components/layout/container.js";
-import { Section } from "@/components/layout/section.js";
-import { LabelledSeparator, Separator } from "@/lib/ui/separator.js";
-import { H3 } from "@/lib/ui/typography/h3.js";
-import { Muted } from "@/lib/ui/typography/muted.js";
+import { Container } from "@/components/layout/container";
+import { Section } from "@/components/layout/section";
+import { LabelledSeparator, Separator } from "@/lib/ui/separator";
+import { H3 } from "@/lib/ui/typography/h3";
+import { Muted } from "@/lib/ui/typography/muted";
 
-import { ItemGrid } from "../layout/item-grid.js";
+import { ItemGrid } from "../layout/item-grid";
 
 type Experience = {
   name: string;

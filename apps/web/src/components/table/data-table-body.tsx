@@ -1,7 +1,7 @@
 import type { ReactTable, RowData } from "@tanstack/react-table";
 
-import type { DataTableFeatures } from "@/components/table/table-features.js";
-import { cn } from "@/lib/ui/utils.js";
+import type { DataTableFeatures } from "@/components/table/table-features";
+import { cn } from "@/lib/ui/utils";
 
 const SKELETON_ROW_COUNT = 10;
 

@@ -1,7 +1,7 @@
 import type { ReactTable, RowData } from "@tanstack/react-table";
 import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from "lucide-react";
 
-import type { DataTableFeatures } from "@/components/table/table-features.js";
+import type { DataTableFeatures } from "@/components/table/table-features";
 
 type DataTablePaginationProps<TData extends RowData> = {
   pageSizeOptions: number[];

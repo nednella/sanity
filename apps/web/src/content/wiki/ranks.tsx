@@ -1,4 +1,4 @@
-import type { WikiArticle } from "@/components/wiki/types.js";
+import type { WikiArticle } from "@/components/wiki/types";
 
 export const ranks: WikiArticle = {
   title: "Ranks",

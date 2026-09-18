@@ -1,5 +1,5 @@
 import { createClient } from "@sanity/api";
 
-import { config } from "../../../config.js";
+import { config } from "../../../config";
 
 export const api = createClient(config.apiUrl);

@@ -1,8 +1,8 @@
 import type { Header, ReactTable, RowData } from "@tanstack/react-table";
 import { ArrowUp } from "lucide-react";
 
-import type { DataTableFeatures } from "@/components/table/table-features.js";
-import { cn } from "@/lib/ui/utils.js";
+import type { DataTableFeatures } from "@/components/table/table-features";
+import { cn } from "@/lib/ui/utils";
 
 const toAriaSort = (canSort: boolean, sorted: false | "asc" | "desc") => {
   if (!canSort) return;

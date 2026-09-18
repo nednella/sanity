@@ -1,6 +1,6 @@
 import { useImperativeHandle, useRef } from "react";
 
-import { cn } from "@/lib/ui/utils.js";
+import { cn } from "@/lib/ui/utils";
 
 export type DialogHandle = {
   close: () => void;

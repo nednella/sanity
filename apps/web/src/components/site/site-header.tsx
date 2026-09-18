@@ -1,8 +1,8 @@
 import { Link } from "@tanstack/react-router";
 import { Menu } from "lucide-react";
 
-import { ThemeToggle } from "@/components/theme/theme-toggle.js";
-import { Button } from "@/lib/ui/button.js";
+import { ThemeToggle } from "@/components/theme/theme-toggle";
+import { Button } from "@/lib/ui/button";
 
 type SiteHeaderProps = {
   drawerId: string;

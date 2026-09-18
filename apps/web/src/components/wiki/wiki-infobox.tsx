@@ -1,6 +1,6 @@
-import { wikiAsideWidth } from "@/components/wiki/styles.js";
-import type { WikiInfobox } from "@/components/wiki/types.js";
-import { cn } from "@/lib/ui/utils.js";
+import { wikiAsideWidth } from "@/components/wiki/styles";
+import type { WikiInfobox } from "@/components/wiki/types";
+import { cn } from "@/lib/ui/utils";
 
 export function WikiInfobox({ title, image, caption, rows }: Readonly<WikiInfobox>) {
   return (

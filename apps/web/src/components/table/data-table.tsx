@@ -10,11 +10,11 @@ import type {
 import { useTable } from "@tanstack/react-table";
 import type { ReactNode } from "react";
 
-import { DataTableBody } from "@/components/table/data-table-body.js";
-import { DataTableHeader } from "@/components/table/data-table-header.js";
-import { DataTablePagination } from "@/components/table/data-table-pagination.js";
-import type { DataTableFeatures } from "@/components/table/table-features.js";
-import { dataTableFeatures } from "@/components/table/table-features.js";
+import { DataTableBody } from "@/components/table/data-table-body";
+import { DataTableHeader } from "@/components/table/data-table-header";
+import { DataTablePagination } from "@/components/table/data-table-pagination";
+import type { DataTableFeatures } from "@/components/table/table-features";
+import { dataTableFeatures } from "@/components/table/table-features";
 
 const DEFAULT_PAGE_SIZE_OPTIONS = [50, 100, 200];
 
