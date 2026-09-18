@@ -2,17 +2,16 @@
   "compilerOptions": {
     "target": "ES2024",
     "lib": ["ES2024"],
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
+    "skipLibCheck": true,
+
     "verbatimModuleSyntax": true,
     "isolatedModules": true,
+    "noEmit": true,
+
+    /* Linting */
     "strict": true,
     "noUncheckedIndexedAccess": true,
     "noImplicitOverride": true,
-    "noFallthroughCasesInSwitch": true,
-    "skipLibCheck": true,
-    "declaration": true,
-    "declarationMap": true,
-    "sourceMap": true
+    "noFallthroughCasesInSwitch": true
   }
 }
