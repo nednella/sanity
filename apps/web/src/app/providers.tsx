@@ -1,4 +1,5 @@
 import { QueryClientProvider } from "@tanstack/react-query";
+import { Toaster } from "sonner";
 
 import { queryClient } from "@/lib/api/query-client";
 import { ThemeProvider } from "@/lib/theme/theme-provider";
@@ -12,6 +13,7 @@ export function AppProvider({ children }: Readonly<Props>) {
     <QueryClientProvider client={queryClient}>
       {children}
       <ThemeProvider />
+      <Toaster position="top-center" />
     </QueryClientProvider>
   );
 }
