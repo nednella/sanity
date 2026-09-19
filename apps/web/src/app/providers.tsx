@@ -1,8 +1,6 @@
-import { QueryClientProvider } from "@tanstack/react-query";
-import { Toaster } from "sonner";
-
-import { queryClient } from "@/lib/api/query-client";
 import { ThemeProvider } from "@/lib/theme/theme-provider";
+import { ApiProvider } from "@/providers/query-client-provider";
+import { ToastProvider } from "@/providers/sonner-provider";
 
 interface Props {
   children: React.ReactNode;
@@ -10,10 +8,10 @@ interface Props {
 
 export function AppProvider({ children }: Readonly<Props>) {
   return (
-    <QueryClientProvider client={queryClient}>
+    <ApiProvider>
       {children}
       <ThemeProvider />
-      <Toaster position="top-center" />
-    </QueryClientProvider>
+      <ToastProvider />
+    </ApiProvider>
   );
 }
