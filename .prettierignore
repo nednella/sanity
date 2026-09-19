@@ -5,3 +5,4 @@ apps/server/db/migrations
 apps/web/src/routeTree.gen.ts
 .claude/skills
 apps/server/openapi.json
+packages/api/src/v1.d.ts

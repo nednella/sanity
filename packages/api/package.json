@@ -4,15 +4,18 @@
   "private": true,
   "type": "module",
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./v1": "./src/v1.d.ts"
   },
   "scripts": {
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "openapi": "openapi-typescript ../../apps/server/openapi.json -o src/v1.d.ts"
   },
   "dependencies": {
     "zod": "catalog:"
   },
   "devDependencies": {
+    "openapi-typescript": "^7.13.0",
     "typescript": "~6.0.3"
   }
 }

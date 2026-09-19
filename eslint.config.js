@@ -9,7 +9,7 @@ import globals from "globals";
 import ts from "typescript-eslint";
 
 export default defineConfig([
-  globalIgnores(["**/dist", "apps/web/src/routeTree.gen.ts"]),
+  globalIgnores(["**/dist", "apps/web/src/routeTree.gen.ts", "packages/api/src/v1.d.ts"]),
   {
     files: ["**/*.{ts,tsx}"],
     extends: [
