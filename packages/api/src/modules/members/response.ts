@@ -111,3 +111,9 @@ export const memberProfile = z.object({
   progression,
   wom: womPlayer.extend({ latestSnapshot: snapshot.nullable() }).nullable()
 });
+
+export type Activity = z.output<typeof activity>;
+export type Boss = z.output<typeof boss>;
+export type Member = z.output<typeof member>;
+export type MemberProfile = z.output<typeof memberProfile>;
+export type Skill = z.output<typeof skill>;

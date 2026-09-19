@@ -1,9 +1,10 @@
 import type { SearchSchemaInput } from "@tanstack/react-router";
 
 import { memberSort } from "@sanity/api";
+import type { MemberSort } from "@sanity/api";
 
-import type { MemberSort, MemberStatus } from "@/lib/api/query/members";
-import { toActive } from "@/lib/api/query/members";
+import type { MemberStatus } from "@/lib/members/status";
+import { toActive } from "@/lib/members/status";
 import { toLimit, toOffset, toOrder, toSort } from "@/lib/table/search";
 
 const DEFAULT_LIMIT = 50;

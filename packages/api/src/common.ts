@@ -31,3 +31,5 @@ export const memberRef = z.object({
   id: bigIntString,
   displayName: z.string()
 });
+
+export type Page = z.output<typeof page>;

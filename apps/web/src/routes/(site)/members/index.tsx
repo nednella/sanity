@@ -3,13 +3,15 @@ import { createFileRoute } from "@tanstack/react-router";
 import type { OnChangeFn, PaginationState, SortingState } from "@tanstack/react-table";
 import { functionalUpdate } from "@tanstack/react-table";
 
+import type { Member, MemberSort } from "@sanity/api";
+
 import { MemberStatusFilter } from "@/components/members/member-status-filter";
 import { defaultColumnVisibility, memberColumns } from "@/components/members/member-table";
 import { DataTable } from "@/components/table/data-table";
 import { DataTableColumnToggle } from "@/components/table/data-table-column-toggle";
-import type { Member, MemberSort, MemberStatus } from "@/lib/api/query/members";
 import { membersQuery } from "@/lib/api/query/members";
 import { toMembersQueryParams, validateMembersSearch } from "@/lib/members/search";
+import type { MemberStatus } from "@/lib/members/status";
 import { fromPaginationState, fromSortingState, toPaginationState, toSortingState } from "@/lib/table/search";
 import { Muted } from "@/lib/ui/typography/muted";
 

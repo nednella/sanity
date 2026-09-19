@@ -4,7 +4,7 @@ import { notFound, paginated, pagination } from "../../common.js";
 import { route } from "../../route.js";
 import { contentFilters } from "../personal-bests/request.js";
 import { rankedPersonalBest } from "../personal-bests/response.js";
-import { memberFilters, memberParams, memberPersonalBestFilters, memberSortFilters } from "./request.js";
+import { memberListQuery, memberParams, memberPersonalBestFilters } from "./request.js";
 import { member, memberProfile } from "./response.js";
 
 export const memberRoutes = {
@@ -12,11 +12,7 @@ export const memberRoutes = {
     method: "GET",
     url: "/members",
     schema: {
-      querystring: z.object({
-        ...pagination.shape,
-        ...memberFilters.shape,
-        ...memberSortFilters.shape
-      }),
+      querystring: memberListQuery,
       response: { 200: paginated(member) }
     }
   }),

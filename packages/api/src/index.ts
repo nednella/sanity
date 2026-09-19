@@ -6,7 +6,10 @@ import { rankRoutes } from "./modules/ranks/routes.js";
 import { submissionRoutes } from "./modules/submissions/routes.js";
 
 export { toPage } from "./common.js";
+export type { Page } from "./common.js";
 export { memberSort } from "./modules/members/request.js";
+export type { MemberListQuery, MemberSort } from "./modules/members/request.js";
+export type { Activity, Boss, Member, MemberProfile, Skill } from "./modules/members/response.js";
 export type { Route } from "./route.js";
 
 export const contract = {

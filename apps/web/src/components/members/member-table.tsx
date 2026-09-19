@@ -1,9 +1,10 @@
 import { Link } from "@tanstack/react-router";
 import { createColumnHelper } from "@tanstack/react-table";
 
+import type { Member } from "@sanity/api";
+
 import { NationalityFlag } from "@/components/members/nationality-flag";
 import type { DataTableFeatures } from "@/components/table/table-features";
-import type { Member } from "@/lib/api/query/members";
 import { DASH, formatDate, formatNumber } from "@/utils/format";
 
 const columnHelper = createColumnHelper<DataTableFeatures, Member>();
