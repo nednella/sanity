@@ -1,6 +1,9 @@
 import cors from "@fastify/cors";
+import swagger from "@fastify/swagger";
 import Fastify from "fastify";
-import { serializerCompiler, validatorCompiler } from "fastify-type-provider-zod";
+import { createJsonSchemaTransform, serializerCompiler, validatorCompiler } from "fastify-type-provider-zod";
+
+import { jsonSchemaOverride } from "@sanity/api";
 
 import { config } from "../config.js";
 import { routes } from "./routes.js";
@@ -16,6 +19,11 @@ export const buildApp = () => {
   });
 
   app.register(cors, { origin: corsOrigin });
+
+  app.register(swagger, {
+    openapi: { info: { title: "Sanity API", version: "1.0.0" } },
+    transform: createJsonSchemaTransform({ zodToJsonConfig: { override: jsonSchemaOverride } })
+  });
 
   app.setValidatorCompiler(validatorCompiler);
   app.setSerializerCompiler(serializerCompiler);

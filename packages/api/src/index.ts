@@ -6,6 +6,7 @@ import { rankRoutes } from "./modules/ranks/routes.js";
 import { submissionRoutes } from "./modules/submissions/routes.js";
 
 export { toPage } from "./common.js";
+export { jsonSchemaOverride } from "./codecs.js";
 export type { Page } from "./common.js";
 export { memberSort } from "./modules/members/request.js";
 export type { MemberListQuery, MemberSort } from "./modules/members/request.js";

@@ -1,0 +1,1551 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Sanity API",
+    "version": "1.0.0"
+  },
+  "components": {
+    "schemas": {}
+  },
+  "paths": {
+    "/v1/health": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "ok"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "status"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/members": {
+      "get": {
+        "parameters": [
+          {
+            "schema": {
+              "default": 50,
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 200
+            },
+            "in": "query",
+            "name": "limit",
+            "required": false
+          },
+          {
+            "schema": {
+              "default": 0,
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "in": "query",
+            "name": "offset",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "true",
+                "false"
+              ]
+            },
+            "in": "query",
+            "name": "active",
+            "required": false
+          },
+          {
+            "schema": {
+              "default": "clanPoints",
+              "type": "string",
+              "enum": [
+                "clanPoints",
+                "diaryPoints",
+                "displayName",
+                "joinedAt",
+                "masterDiaries",
+                "rank",
+                "totalEhb",
+                "totalEhp",
+                "totalExp",
+                "totalLevel"
+              ]
+            },
+            "in": "query",
+            "name": "sort",
+            "required": false
+          },
+          {
+            "schema": {
+              "default": "desc",
+              "type": "string",
+              "enum": [
+                "asc",
+                "desc"
+              ]
+            },
+            "in": "query",
+            "name": "order",
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "pattern": "^\\d+$"
+                          },
+                          "displayName": {
+                            "type": "string"
+                          },
+                          "nationality": {
+                            "type": "string"
+                          },
+                          "discord": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "pattern": "^\\d+$"
+                              },
+                              "avatarUrl": {
+                                "nullable": true,
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "avatarUrl"
+                            ],
+                            "additionalProperties": false
+                          },
+                          "rsn": {
+                            "type": "object",
+                            "properties": {
+                              "main": {
+                                "nullable": true,
+                                "type": "string"
+                              },
+                              "alt": {
+                                "nullable": true,
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "main",
+                              "alt"
+                            ],
+                            "additionalProperties": false
+                          },
+                          "membership": {
+                            "type": "object",
+                            "properties": {
+                              "active": {
+                                "type": "boolean"
+                              },
+                              "joinedAt": {
+                                "nullable": true,
+                                "type": "string",
+                                "format": "date-time"
+                              },
+                              "leftAt": {
+                                "nullable": true,
+                                "type": "string",
+                                "format": "date-time"
+                              },
+                              "rank": {
+                                "type": "object",
+                                "properties": {
+                                  "id": {
+                                    "type": "number"
+                                  },
+                                  "name": {
+                                    "type": "string"
+                                  },
+                                  "iconUrl": {
+                                    "nullable": true,
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "id",
+                                  "name",
+                                  "iconUrl"
+                                ],
+                                "additionalProperties": false
+                              },
+                              "points": {
+                                "type": "number"
+                              }
+                            },
+                            "required": [
+                              "active",
+                              "joinedAt",
+                              "leftAt",
+                              "rank",
+                              "points"
+                            ],
+                            "additionalProperties": false
+                          },
+                          "diary": {
+                            "type": "object",
+                            "properties": {
+                              "points": {
+                                "type": "number"
+                              },
+                              "masterDiaries": {
+                                "type": "number"
+                              },
+                              "claimedTier": {
+                                "nullable": true,
+                                "type": "object",
+                                "properties": {
+                                  "id": {
+                                    "type": "number"
+                                  },
+                                  "name": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "id",
+                                  "name"
+                                ],
+                                "additionalProperties": false
+                              }
+                            },
+                            "required": [
+                              "points",
+                              "masterDiaries",
+                              "claimedTier"
+                            ],
+                            "additionalProperties": false
+                          },
+                          "wom": {
+                            "nullable": true,
+                            "type": "object",
+                            "properties": {
+                              "playerId": {
+                                "type": "number"
+                              },
+                              "username": {
+                                "type": "string"
+                              },
+                              "displayName": {
+                                "type": "string"
+                              },
+                              "type": {
+                                "type": "string"
+                              },
+                              "build": {
+                                "type": "string"
+                              },
+                              "totalLevel": {
+                                "nullable": true,
+                                "type": "number"
+                              },
+                              "totalExp": {
+                                "type": "number"
+                              },
+                              "totalEhp": {
+                                "type": "number"
+                              },
+                              "totalEhb": {
+                                "type": "number"
+                              },
+                              "updatedAt": {
+                                "nullable": true,
+                                "type": "string",
+                                "format": "date-time"
+                              }
+                            },
+                            "required": [
+                              "playerId",
+                              "username",
+                              "displayName",
+                              "type",
+                              "build",
+                              "totalLevel",
+                              "totalExp",
+                              "totalEhp",
+                              "totalEhb",
+                              "updatedAt"
+                            ],
+                            "additionalProperties": false
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "displayName",
+                          "nationality",
+                          "discord",
+                          "rsn",
+                          "membership",
+                          "diary",
+                          "wom"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
+                    "page": {
+                      "type": "object",
+                      "properties": {
+                        "limit": {
+                          "type": "integer",
+                          "minimum": -9007199254740991,
+                          "maximum": 9007199254740991
+                        },
+                        "offset": {
+                          "type": "integer",
+                          "minimum": -9007199254740991,
+                          "maximum": 9007199254740991
+                        },
+                        "total": {
+                          "type": "integer",
+                          "minimum": -9007199254740991,
+                          "maximum": 9007199254740991
+                        },
+                        "hasNext": {
+                          "type": "boolean"
+                        },
+                        "hasPrevious": {
+                          "type": "boolean"
+                        }
+                      },
+                      "required": [
+                        "limit",
+                        "offset",
+                        "total",
+                        "hasNext",
+                        "hasPrevious"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "items",
+                    "page"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/members/{id}": {
+      "get": {
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d+$"
+            },
+            "in": "path",
+            "name": "id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "pattern": "^\\d+$"
+                    },
+                    "displayName": {
+                      "type": "string"
+                    },
+                    "nationality": {
+                      "type": "string"
+                    },
+                    "discord": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "pattern": "^\\d+$"
+                        },
+                        "avatarUrl": {
+                          "nullable": true,
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "avatarUrl"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "rsn": {
+                      "type": "object",
+                      "properties": {
+                        "main": {
+                          "nullable": true,
+                          "type": "string"
+                        },
+                        "alt": {
+                          "nullable": true,
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "main",
+                        "alt"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "membership": {
+                      "type": "object",
+                      "properties": {
+                        "active": {
+                          "type": "boolean"
+                        },
+                        "joinedAt": {
+                          "nullable": true,
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "leftAt": {
+                          "nullable": true,
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "rank": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "number"
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "iconUrl": {
+                              "nullable": true,
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "name",
+                            "iconUrl"
+                          ],
+                          "additionalProperties": false
+                        },
+                        "points": {
+                          "type": "number"
+                        }
+                      },
+                      "required": [
+                        "active",
+                        "joinedAt",
+                        "leftAt",
+                        "rank",
+                        "points"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "diary": {
+                      "type": "object",
+                      "properties": {
+                        "points": {
+                          "type": "number"
+                        },
+                        "masterDiaries": {
+                          "type": "number"
+                        },
+                        "claimedTier": {
+                          "nullable": true,
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "number"
+                            },
+                            "name": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "name"
+                          ],
+                          "additionalProperties": false
+                        }
+                      },
+                      "required": [
+                        "points",
+                        "masterDiaries",
+                        "claimedTier"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "progression": {
+                      "type": "object",
+                      "properties": {
+                        "eligibleRank": {
+                          "nullable": true,
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "number"
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "iconUrl": {
+                              "nullable": true,
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "name",
+                            "iconUrl"
+                          ],
+                          "additionalProperties": false
+                        },
+                        "nextRank": {
+                          "type": "object",
+                          "properties": {
+                            "points": {
+                              "nullable": true,
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "number"
+                                },
+                                "name": {
+                                  "type": "string"
+                                },
+                                "iconUrl": {
+                                  "nullable": true,
+                                  "type": "string"
+                                },
+                                "requirements": {
+                                  "type": "object",
+                                  "properties": {
+                                    "clanPoints": {
+                                      "type": "number"
+                                    },
+                                    "diaryPoints": {
+                                      "type": "number"
+                                    },
+                                    "masterDiaries": {
+                                      "type": "number"
+                                    }
+                                  },
+                                  "required": [
+                                    "clanPoints",
+                                    "diaryPoints",
+                                    "masterDiaries"
+                                  ],
+                                  "additionalProperties": false
+                                }
+                              },
+                              "required": [
+                                "id",
+                                "name",
+                                "iconUrl",
+                                "requirements"
+                              ],
+                              "additionalProperties": false
+                            },
+                            "diary": {
+                              "nullable": true,
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "number"
+                                },
+                                "name": {
+                                  "type": "string"
+                                },
+                                "iconUrl": {
+                                  "nullable": true,
+                                  "type": "string"
+                                },
+                                "requirements": {
+                                  "type": "object",
+                                  "properties": {
+                                    "clanPoints": {
+                                      "type": "number"
+                                    },
+                                    "diaryPoints": {
+                                      "type": "number"
+                                    },
+                                    "masterDiaries": {
+                                      "type": "number"
+                                    }
+                                  },
+                                  "required": [
+                                    "clanPoints",
+                                    "diaryPoints",
+                                    "masterDiaries"
+                                  ],
+                                  "additionalProperties": false
+                                }
+                              },
+                              "required": [
+                                "id",
+                                "name",
+                                "iconUrl",
+                                "requirements"
+                              ],
+                              "additionalProperties": false
+                            }
+                          },
+                          "required": [
+                            "points",
+                            "diary"
+                          ],
+                          "additionalProperties": false
+                        }
+                      },
+                      "required": [
+                        "eligibleRank",
+                        "nextRank"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "wom": {
+                      "nullable": true,
+                      "type": "object",
+                      "properties": {
+                        "playerId": {
+                          "type": "number"
+                        },
+                        "username": {
+                          "type": "string"
+                        },
+                        "displayName": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string"
+                        },
+                        "build": {
+                          "type": "string"
+                        },
+                        "totalLevel": {
+                          "nullable": true,
+                          "type": "number"
+                        },
+                        "totalExp": {
+                          "type": "number"
+                        },
+                        "totalEhp": {
+                          "type": "number"
+                        },
+                        "totalEhb": {
+                          "type": "number"
+                        },
+                        "updatedAt": {
+                          "nullable": true,
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "latestSnapshot": {
+                          "nullable": true,
+                          "type": "object",
+                          "properties": {
+                            "createdAt": {
+                              "type": "string",
+                              "format": "date-time"
+                            },
+                            "skills": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "skill": {
+                                    "type": "string"
+                                  },
+                                  "experience": {
+                                    "type": "number"
+                                  },
+                                  "level": {
+                                    "type": "number"
+                                  },
+                                  "rank": {
+                                    "nullable": true,
+                                    "type": "number"
+                                  },
+                                  "ehp": {
+                                    "type": "number"
+                                  }
+                                },
+                                "required": [
+                                  "skill",
+                                  "experience",
+                                  "level",
+                                  "rank",
+                                  "ehp"
+                                ],
+                                "additionalProperties": false
+                              }
+                            },
+                            "bosses": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "boss": {
+                                    "type": "string"
+                                  },
+                                  "kills": {
+                                    "type": "number"
+                                  },
+                                  "rank": {
+                                    "nullable": true,
+                                    "type": "number"
+                                  },
+                                  "ehb": {
+                                    "type": "number"
+                                  }
+                                },
+                                "required": [
+                                  "boss",
+                                  "kills",
+                                  "rank",
+                                  "ehb"
+                                ],
+                                "additionalProperties": false
+                              }
+                            },
+                            "activities": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "activity": {
+                                    "type": "string"
+                                  },
+                                  "score": {
+                                    "type": "number"
+                                  },
+                                  "rank": {
+                                    "nullable": true,
+                                    "type": "number"
+                                  }
+                                },
+                                "required": [
+                                  "activity",
+                                  "score",
+                                  "rank"
+                                ],
+                                "additionalProperties": false
+                              }
+                            }
+                          },
+                          "required": [
+                            "createdAt",
+                            "skills",
+                            "bosses",
+                            "activities"
+                          ],
+                          "additionalProperties": false
+                        }
+                      },
+                      "required": [
+                        "playerId",
+                        "username",
+                        "displayName",
+                        "type",
+                        "build",
+                        "totalLevel",
+                        "totalExp",
+                        "totalEhp",
+                        "totalEhb",
+                        "updatedAt",
+                        "latestSnapshot"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "displayName",
+                    "nationality",
+                    "discord",
+                    "rsn",
+                    "membership",
+                    "diary",
+                    "progression",
+                    "wom"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "message"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/members/{id}/personal-bests": {
+      "get": {
+        "parameters": [
+          {
+            "schema": {
+              "default": 50,
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 200
+            },
+            "in": "query",
+            "name": "limit",
+            "required": false
+          },
+          {
+            "schema": {
+              "default": 0,
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "in": "query",
+            "name": "offset",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10
+            },
+            "in": "query",
+            "name": "top",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "exclusiveMinimum": true,
+              "maximum": 9007199254740991
+            },
+            "in": "query",
+            "name": "contentId",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "exclusiveMinimum": true,
+              "maximum": 9007199254740991
+            },
+            "in": "query",
+            "name": "scale",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d+$"
+            },
+            "in": "path",
+            "name": "id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "number"
+                      },
+                      "position": {
+                        "type": "number"
+                      },
+                      "content": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "number"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "imageUrl": {
+                            "nullable": true,
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "name",
+                          "imageUrl"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "scale": {
+                        "type": "number"
+                      },
+                      "timeSeconds": {
+                        "type": "number"
+                      },
+                      "imageUrl": {
+                        "nullable": true,
+                        "type": "string"
+                      },
+                      "submittedAt": {
+                        "nullable": true,
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "submittedBy": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "pattern": "^\\d+$"
+                          },
+                          "displayName": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "displayName"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "team": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "pattern": "^\\d+$"
+                            },
+                            "displayName": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "displayName"
+                          ],
+                          "additionalProperties": false
+                        }
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "position",
+                      "content",
+                      "scale",
+                      "timeSeconds",
+                      "imageUrl",
+                      "submittedAt",
+                      "submittedBy",
+                      "team"
+                    ],
+                    "additionalProperties": false
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/personal-bests": {
+      "get": {
+        "parameters": [
+          {
+            "schema": {
+              "default": 50,
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 200
+            },
+            "in": "query",
+            "name": "limit",
+            "required": false
+          },
+          {
+            "schema": {
+              "default": 0,
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "in": "query",
+            "name": "offset",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "exclusiveMinimum": true,
+              "maximum": 9007199254740991
+            },
+            "in": "query",
+            "name": "contentId",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "exclusiveMinimum": true,
+              "maximum": 9007199254740991
+            },
+            "in": "query",
+            "name": "scale",
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "number"
+                      },
+                      "content": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "number"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "imageUrl": {
+                            "nullable": true,
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "name",
+                          "imageUrl"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "scale": {
+                        "type": "number"
+                      },
+                      "timeSeconds": {
+                        "type": "number"
+                      },
+                      "imageUrl": {
+                        "nullable": true,
+                        "type": "string"
+                      },
+                      "submittedAt": {
+                        "nullable": true,
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "submittedBy": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "pattern": "^\\d+$"
+                          },
+                          "displayName": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "displayName"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "team": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "pattern": "^\\d+$"
+                            },
+                            "displayName": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "displayName"
+                          ],
+                          "additionalProperties": false
+                        }
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "content",
+                      "scale",
+                      "timeSeconds",
+                      "imageUrl",
+                      "submittedAt",
+                      "submittedBy",
+                      "team"
+                    ],
+                    "additionalProperties": false
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/personal-bests/records": {
+      "get": {
+        "parameters": [
+          {
+            "schema": {
+              "default": 1,
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10
+            },
+            "in": "query",
+            "name": "top",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "exclusiveMinimum": true,
+              "maximum": 9007199254740991
+            },
+            "in": "query",
+            "name": "contentId",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "exclusiveMinimum": true,
+              "maximum": 9007199254740991
+            },
+            "in": "query",
+            "name": "scale",
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "number"
+                      },
+                      "position": {
+                        "type": "number"
+                      },
+                      "content": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "number"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "imageUrl": {
+                            "nullable": true,
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "name",
+                          "imageUrl"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "scale": {
+                        "type": "number"
+                      },
+                      "timeSeconds": {
+                        "type": "number"
+                      },
+                      "imageUrl": {
+                        "nullable": true,
+                        "type": "string"
+                      },
+                      "submittedAt": {
+                        "nullable": true,
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "submittedBy": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "pattern": "^\\d+$"
+                          },
+                          "displayName": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "displayName"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "team": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "pattern": "^\\d+$"
+                            },
+                            "displayName": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "displayName"
+                          ],
+                          "additionalProperties": false
+                        }
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "position",
+                      "content",
+                      "scale",
+                      "timeSeconds",
+                      "imageUrl",
+                      "submittedAt",
+                      "submittedBy",
+                      "team"
+                    ],
+                    "additionalProperties": false
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/ranks": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "number"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "iconUrl": {
+                        "nullable": true,
+                        "type": "string"
+                      },
+                      "discordRoleId": {
+                        "nullable": true,
+                        "type": "string",
+                        "pattern": "^\\d+$"
+                      },
+                      "requirements": {
+                        "type": "object",
+                        "properties": {
+                          "clanPoints": {
+                            "type": "number"
+                          },
+                          "diaryPoints": {
+                            "type": "number"
+                          },
+                          "masterDiaries": {
+                            "type": "number"
+                          },
+                          "maintenancePoints": {
+                            "type": "number"
+                          }
+                        },
+                        "required": [
+                          "clanPoints",
+                          "diaryPoints",
+                          "masterDiaries",
+                          "maintenancePoints"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "name",
+                      "iconUrl",
+                      "discordRoleId",
+                      "requirements"
+                    ],
+                    "additionalProperties": false
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/submissions": {
+      "get": {
+        "parameters": [
+          {
+            "schema": {
+              "default": 50,
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 200
+            },
+            "in": "query",
+            "name": "limit",
+            "required": false
+          },
+          {
+            "schema": {
+              "default": 0,
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "in": "query",
+            "name": "offset",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d+$"
+            },
+            "in": "query",
+            "name": "memberId",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "bingo",
+                "leagues"
+              ]
+            },
+            "in": "query",
+            "name": "event",
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "number"
+                      },
+                      "item": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "nullable": true,
+                            "type": "number"
+                          },
+                          "name": {
+                            "nullable": true,
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "name"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "valueMillions": {
+                        "nullable": true,
+                        "type": "number"
+                      },
+                      "event": {
+                        "nullable": true,
+                        "type": "string",
+                        "enum": [
+                          "bingo",
+                          "leagues"
+                        ]
+                      },
+                      "imageUrl": {
+                        "nullable": true,
+                        "type": "string"
+                      },
+                      "discordMessageUrl": {
+                        "nullable": true,
+                        "type": "string"
+                      },
+                      "submittedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "submittedBy": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "pattern": "^\\d+$"
+                          },
+                          "displayName": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "displayName"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "participants": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "pattern": "^\\d+$"
+                            },
+                            "displayName": {
+                              "type": "string"
+                            },
+                            "points": {
+                              "nullable": true,
+                              "type": "number"
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "displayName",
+                            "points"
+                          ],
+                          "additionalProperties": false
+                        }
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "item",
+                      "valueMillions",
+                      "event",
+                      "imageUrl",
+                      "discordMessageUrl",
+                      "submittedAt",
+                      "submittedBy",
+                      "participants"
+                    ],
+                    "additionalProperties": false
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
