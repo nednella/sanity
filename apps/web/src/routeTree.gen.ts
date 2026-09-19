@@ -11,9 +11,6 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as siteLayoutRouteImport } from './routes/(site)/_layout'
-import { Route as oldAboutRouteImport } from './routes/(old)/about'
-import { Route as oldDiaryRouteImport } from './routes/(old)/diary'
-import { Route as oldRequirementsRouteImport } from './routes/(old)/requirements'
 import { Route as siteLoginRouteImport } from './routes/(site)/login'
 import { Route as siteMembersIndexRouteImport } from './routes/(site)/members/index'
 import { Route as siteMembersMemberIdRouteImport } from './routes/(site)/members/$memberId'
@@ -29,21 +26,6 @@ const IndexRoute = IndexRouteImport.update({
 } as any)
 const siteLayoutRoute = siteLayoutRouteImport.update({
   id: '/(site)',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const oldAboutRoute = oldAboutRouteImport.update({
-  id: '/(old)/about',
-  path: '/about',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const oldDiaryRoute = oldDiaryRouteImport.update({
-  id: '/(old)/diary',
-  path: '/diary',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const oldRequirementsRoute = oldRequirementsRouteImport.update({
-  id: '/(old)/requirements',
-  path: '/requirements',
   getParentRoute: () => rootRouteImport,
 } as any)
 const siteLoginRoute = siteLoginRouteImport.update({
@@ -85,9 +67,6 @@ const siteWikiArticleDiscussionRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/about': typeof oldAboutRoute
-  '/diary': typeof oldDiaryRoute
-  '/requirements': typeof oldRequirementsRoute
   '/login': typeof siteLoginRoute
   '/wiki/$article': typeof siteWikiArticleLayoutRouteWithChildren
   '/members/$memberId': typeof siteMembersMemberIdRoute
@@ -98,9 +77,6 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/about': typeof oldAboutRoute
-  '/diary': typeof oldDiaryRoute
-  '/requirements': typeof oldRequirementsRoute
   '/login': typeof siteLoginRoute
   '/members/$memberId': typeof siteMembersMemberIdRoute
   '/members': typeof siteMembersIndexRoute
@@ -112,9 +88,6 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/(site)': typeof siteLayoutRouteWithChildren
-  '/(old)/about': typeof oldAboutRoute
-  '/(old)/diary': typeof oldDiaryRoute
-  '/(old)/requirements': typeof oldRequirementsRoute
   '/(site)/login': typeof siteLoginRoute
   '/(site)/wiki/$article': typeof siteWikiArticleLayoutRouteWithChildren
   '/(site)/members/$memberId': typeof siteMembersMemberIdRoute
@@ -127,9 +100,6 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/about'
-    | '/diary'
-    | '/requirements'
     | '/login'
     | '/wiki/$article'
     | '/members/$memberId'
@@ -140,9 +110,6 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/about'
-    | '/diary'
-    | '/requirements'
     | '/login'
     | '/members/$memberId'
     | '/members'
@@ -153,9 +120,6 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/(site)'
-    | '/(old)/about'
-    | '/(old)/diary'
-    | '/(old)/requirements'
     | '/(site)/login'
     | '/(site)/wiki/$article'
     | '/(site)/members/$memberId'
@@ -168,9 +132,6 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   siteLayoutRoute: typeof siteLayoutRouteWithChildren
-  oldAboutRoute: typeof oldAboutRoute
-  oldDiaryRoute: typeof oldDiaryRoute
-  oldRequirementsRoute: typeof oldRequirementsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -187,27 +148,6 @@ declare module '@tanstack/react-router' {
       path: ''
       fullPath: ''
       preLoaderRoute: typeof siteLayoutRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/(old)/about': {
-      id: '/(old)/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof oldAboutRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/(old)/diary': {
-      id: '/(old)/diary'
-      path: '/diary'
-      fullPath: '/diary'
-      preLoaderRoute: typeof oldDiaryRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/(old)/requirements': {
-      id: '/(old)/requirements'
-      path: '/requirements'
-      fullPath: '/requirements'
-      preLoaderRoute: typeof oldRequirementsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/(site)/login': {
@@ -300,9 +240,6 @@ const siteLayoutRouteWithChildren = siteLayoutRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   siteLayoutRoute: siteLayoutRouteWithChildren,
-  oldAboutRoute: oldAboutRoute,
-  oldDiaryRoute: oldDiaryRoute,
-  oldRequirementsRoute: oldRequirementsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
