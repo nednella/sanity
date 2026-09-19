@@ -23,6 +23,7 @@
     "zod": "catalog:"
   },
   "devDependencies": {
+    "@fastify/swagger": "^9.8.1",
     "@types/node": "^24.13.4",
     "drizzle-kit": "^0.31.10",
     "mysql2": "^3.24.4",
