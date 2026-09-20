@@ -1,36 +1,15 @@
 import { Outlet, createFileRoute } from "@tanstack/react-router";
 
-import { SiteHeader } from "@/components/site/site-header";
-import { SiteSidebar } from "@/components/site/site-sidebar";
+import { SiteLayout } from "@/components/layout/site-layout";
 
 export const Route = createFileRoute("/(site)")({
-  component: SiteLayout
+  component: Layout
 });
 
-const drawerId = "site-drawer";
-
-function SiteLayout() {
+function Layout() {
   return (
-    <div className="drawer lg:drawer-open">
-      <input
-        id={drawerId}
-        type="checkbox"
-        className="drawer-toggle"
-      />
-      <div className="drawer-content flex min-h-screen flex-col">
-        <SiteHeader drawerId={drawerId} />
-        <main className="flex-1 p-4 lg:p-6">
-          <Outlet />
-        </main>
-      </div>
-      <div className="drawer-side z-40">
-        <label
-          htmlFor={drawerId}
-          aria-label="Close sidebar"
-          className="drawer-overlay"
-        />
-        <SiteSidebar />
-      </div>
-    </div>
+    <SiteLayout>
+      <Outlet />
+    </SiteLayout>
   );
 }

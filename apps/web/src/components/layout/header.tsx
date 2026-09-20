@@ -4,11 +4,11 @@ import { Menu } from "lucide-react";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { Button } from "@/lib/ui/button";
 
-type SiteHeaderProps = {
+type HeaderProps = {
   drawerId: string;
 };
 
-export function SiteHeader({ drawerId }: Readonly<SiteHeaderProps>) {
+export function Header({ drawerId }: Readonly<HeaderProps>) {
   return (
     <header className="navbar sticky top-0 z-30 min-h-12 bg-base-100 px-4 py-1">
       <div className="navbar-start">
