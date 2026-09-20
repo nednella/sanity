@@ -1,10 +1,10 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
 
 import { BackgroundContent } from "@/components/landing/background-content";
-import { Hero } from "@/components/landing/hero";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { Button } from "@/lib/ui/button";
 import { ExternalLink } from "@/lib/ui/external-link";
+import { Hero } from "@/lib/ui/hero";
 import { DiscordLogo } from "@/lib/ui/logos";
 import { cn } from "@/lib/ui/utils";
 import { SANITY_DISCORD_URL } from "@/utils/links";
@@ -49,7 +49,7 @@ function Page() {
         title="Welcome to Sanity"
         description="an elite Old School RuneScape PvM clan home to some of the best players in the game"
         className="relative flex min-h-screen items-center justify-center overflow-hidden"
-        isOverMedia
+        overlay
       >
         <Button
           asChild

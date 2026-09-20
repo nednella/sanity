@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 
-import { Hero } from "@/components/landing/hero";
 import { Button } from "@/lib/ui/button";
+import { Hero } from "@/lib/ui/hero";
 
 export function NotFound() {
   // TODO: add logo
@@ -11,7 +11,6 @@ export function NotFound() {
       <Hero
         title="Page not found"
         description="we can't seem to find the page you are looking for"
-        reduceMotion
       >
         <Button
           asChild
