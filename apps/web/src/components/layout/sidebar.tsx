@@ -1,9 +1,9 @@
 import { Link, linkOptions } from "@tanstack/react-router";
 
-import { DiscordLogo } from "@/components/logos/discord-logo";
-import { ExternalLink } from "@/components/navigation/external-link";
 import { DISCORD_URL } from "@/lib/links";
 import { Button } from "@/lib/ui/button";
+import { ExternalLink } from "@/lib/ui/external-link";
+import { DiscordLogo } from "@/lib/ui/logos";
 
 const wikiLinks = linkOptions([
   {

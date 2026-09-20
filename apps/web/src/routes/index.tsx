@@ -2,11 +2,11 @@ import { Link, createFileRoute } from "@tanstack/react-router";
 
 import { BackgroundContent } from "@/components/landing/background-content";
 import { Hero } from "@/components/landing/hero";
-import { DiscordLogo } from "@/components/logos/discord-logo";
-import { ExternalLink } from "@/components/navigation/external-link";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { DISCORD_URL } from "@/lib/links";
 import { Button } from "@/lib/ui/button";
+import { ExternalLink } from "@/lib/ui/external-link";
+import { DiscordLogo } from "@/lib/ui/logos";
 import { cn } from "@/lib/ui/utils";
 
 export const Route = createFileRoute("/")({
