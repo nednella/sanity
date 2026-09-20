@@ -1,8 +1,6 @@
 import { osrsWikiImageUrl } from "@/utils/images";
 
-import type { listRanks } from "./repo";
-
-type RankRow = Awaited<ReturnType<typeof listRanks>>[number];
+import type { RankRow } from "./repository/list-ranks";
 
 export const toRankIconUrl = (inGameName: string | null) =>
   inGameName && osrsWikiImageUrl(`Clan_icon_-_${inGameName}.png`);

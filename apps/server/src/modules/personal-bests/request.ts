@@ -9,7 +9,7 @@ export const contentFilters = z.object({
   scale: z.coerce.number().int().positive().optional()
 });
 
-export const recordFilters = z.object({ top: top.default(1) });
+const recordFilters = z.object({ top: top.default(1) });
 
 export const personalBestListQuery = z.object({
   ...pagination.shape,

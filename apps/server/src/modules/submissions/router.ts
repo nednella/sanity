@@ -3,9 +3,9 @@ import { z } from "zod";
 
 import { submissionListQuery } from "./request";
 import { submission } from "./response";
-import { getSubmissions } from "./service";
+import { getSubmissions } from "./service/get-submissions";
 
-export const submissionRoutes: FastifyPluginAsyncZod = async (app) => {
+export const submissionsRouter: FastifyPluginAsyncZod = async (app) => {
   app.route({
     method: "GET",
     url: "/submissions",

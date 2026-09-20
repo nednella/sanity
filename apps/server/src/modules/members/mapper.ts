@@ -1,14 +1,9 @@
 import { toRankIconUrl } from "@/modules/ranks/mapper";
-import type { listRanks } from "@/modules/ranks/repo";
-import type { listDiaryProgress } from "@/modules/speedrun-diary/repo";
-import type { findLatestSnapshot } from "@/modules/wom/repo";
+import type { RankRow } from "@/modules/ranks/repository/list-ranks";
+import type { DiaryProgressRow } from "@/modules/speedrun-diary/repository/list-diary-progress";
+import type { SnapshotRows } from "@/modules/wom/repository/find-latest-snapshot";
 
-import type { listMembers } from "./repo";
-
-type MemberRow = Awaited<ReturnType<typeof listMembers>>[number];
-type DiaryProgress = Awaited<ReturnType<typeof listDiaryProgress>>[number];
-type RankRow = Awaited<ReturnType<typeof listRanks>>[number];
-type SnapshotRows = NonNullable<Awaited<ReturnType<typeof findLatestSnapshot>>>;
+import type { MemberRow } from "./repository/shared/select-members";
 
 // QUIT, RETIRED and TRIALIST ranks change by hand, so they have no next rank to work toward.
 const RANK_IDS_WITHOUT_PROGRESSION = new Set([-1, 0, 1]);
@@ -17,7 +12,7 @@ const toRankSummary = (rank: RankRow) => ({ id: rank.id, name: rank.name, iconUr
 
 export const toMember = (
   { member, discordAccount, rank, claimedDiaryTier, womPlayer }: MemberRow,
-  diaryProgress: DiaryProgress | undefined
+  diaryProgress: DiaryProgressRow | undefined
 ) => ({
   id: member.id,
   displayName: member.displayName,
@@ -110,7 +105,7 @@ const toSnapshot = ({ snapshot, skills, bosses, activities }: SnapshotRows) => (
 
 export const toMemberProfile = (
   row: MemberRow,
-  diaryProgress: DiaryProgress | undefined,
+  diaryProgress: DiaryProgressRow | undefined,
   ranks: RankRow[],
   latestSnapshot: SnapshotRows | undefined
 ) => {

@@ -1,15 +1,17 @@
 import type { SQL } from "drizzle-orm";
-import { asc, count, desc, eq, sql } from "drizzle-orm";
+import { asc, desc, eq, sql } from "drizzle-orm";
 import type { PgColumn } from "drizzle-orm/pg-core";
 
 import { db } from "@db/index";
 import { members, membersDiscordAccounts, ranks, speedrunDiaryTiers, womPlayers } from "@db/schema";
 
-import { diaryProgressCte } from "@/modules/speedrun-diary/repo";
+import { diaryProgressCte } from "@/modules/speedrun-diary/repository/diary-progress-cte";
 
-import type { MemberSort } from "./request";
+import type { MemberSort } from "../request";
+import { memberColumns } from "./shared/columns";
+import { isActive } from "./shared/filters";
 
-type ListOptions = {
+export type ListMembersOptions = {
   limit: number;
   offset: number;
   active?: boolean;
@@ -17,26 +19,7 @@ type ListOptions = {
   order: "asc" | "desc";
 };
 
-const isActive = (active: boolean | undefined) => (active === undefined ? undefined : eq(members.isActive, active));
-
-const memberColumns = {
-  member: members,
-  discordAccount: membersDiscordAccounts,
-  rank: ranks,
-  claimedDiaryTier: speedrunDiaryTiers,
-  womPlayer: womPlayers
-};
-
-const selectMembers = () =>
-  db
-    .select(memberColumns)
-    .from(members)
-    .innerJoin(membersDiscordAccounts, eq(membersDiscordAccounts.memberId, members.id))
-    .innerJoin(ranks, eq(ranks.id, members.rankId))
-    .leftJoin(speedrunDiaryTiers, eq(speedrunDiaryTiers.id, members.claimedDiaryTierId))
-    .leftJoin(womPlayers, eq(womPlayers.memberId, members.id));
-
-export const listMembers = ({ limit, offset, active, sort, order }: ListOptions) => {
+export const listMembers = ({ limit, offset, active, sort, order }: ListMembersOptions) => {
   const { bestTimes, reachedTiers, diaryProgress } = diaryProgressCte();
   const direction = order === "asc" ? asc : desc;
 
@@ -66,14 +49,4 @@ export const listMembers = ({ limit, offset, active, sort, order }: ListOptions)
     .orderBy(direction(sortColumns[sort]), members.id)
     .limit(limit)
     .offset(offset);
-};
-
-export const countMembers = async ({ active }: Pick<ListOptions, "active">) => {
-  const [row] = await db.select({ value: count() }).from(members).where(isActive(active));
-  return row?.value ?? 0;
-};
-
-export const findMember = async (id: bigint) => {
-  const [row] = await selectMembers().where(eq(members.id, id));
-  return row;
 };

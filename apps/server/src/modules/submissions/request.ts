@@ -5,7 +5,7 @@ import { pagination } from "@/schema/common";
 
 import { event } from "./response";
 
-export const submissionFilters = z.object({
+const submissionFilters = z.object({
   memberId: bigIntString.optional(),
   event: event.optional()
 });

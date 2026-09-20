@@ -1,8 +1,6 @@
-import type { listRecentPersonalBests, listRecords, listTeams } from "./repo";
-
-type PersonalBestRow = Awaited<ReturnType<typeof listRecentPersonalBests>>[number];
-type RankedPersonalBestRow = Awaited<ReturnType<typeof listRecords>>[number];
-type TeamRow = Awaited<ReturnType<typeof listTeams>>[number];
+import type { PersonalBestRow } from "./repository/list-recent-personal-bests";
+import type { RankedPersonalBestRow } from "./repository/list-records";
+import type { TeamRow } from "./repository/list-teams";
 
 export const toPersonalBest = (
   { personalBest, timeSeconds, content, submittedBy }: PersonalBestRow,

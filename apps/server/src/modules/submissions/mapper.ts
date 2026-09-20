@@ -1,7 +1,5 @@
-import type { listParticipants, listSubmissions } from "./repo";
-
-type SubmissionRow = Awaited<ReturnType<typeof listSubmissions>>[number];
-type ParticipantRow = Awaited<ReturnType<typeof listParticipants>>[number];
+import type { ParticipantRow } from "./repository/list-participants";
+import type { SubmissionRow } from "./repository/list-submissions";
 
 export const toSubmission = ({ submission, submittedBy }: SubmissionRow, participants: ParticipantRow[]) => ({
   id: submission.id,

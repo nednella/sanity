@@ -56,10 +56,3 @@ export const diaryProgressCte = (memberIds?: bigint[]) => {
 
   return { bestTimes, reachedTiers, diaryProgress };
 };
-
-export const listDiaryProgress = async (memberIds: bigint[]) => {
-  if (memberIds.length === 0) return [];
-
-  const { bestTimes, reachedTiers, diaryProgress } = diaryProgressCte(memberIds);
-  return db.with(bestTimes, reachedTiers, diaryProgress).select().from(diaryProgress);
-};

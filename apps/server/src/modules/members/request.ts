@@ -6,9 +6,9 @@ import { pagination } from "@/schema/common";
 
 export const memberParams = z.object({ id: bigIntString });
 
-export const memberFilters = z.object({ active: booleanString.optional() });
+const memberFilters = z.object({ active: booleanString.optional() });
 
-export const memberSort = z.enum([
+const memberSort = z.enum([
   "clanPoints",
   "diaryPoints",
   "displayName",
@@ -21,7 +21,7 @@ export const memberSort = z.enum([
   "totalLevel"
 ]);
 
-export const memberSortFilters = z.object({
+const memberSortFilters = z.object({
   sort: memberSort.default("clanPoints"),
   order: z.enum(["asc", "desc"]).default("desc")
 });

@@ -2,14 +2,15 @@ import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import { z } from "zod";
 
 import { rankedPersonalBest } from "@/modules/personal-bests/response";
-import { getMemberPersonalBests } from "@/modules/personal-bests/service";
+import { getMemberPersonalBests } from "@/modules/personal-bests/service/get-member-personal-bests";
 import { notFound, paginated, toPage } from "@/schema/common";
 
 import { memberListQuery, memberParams, memberPersonalBestsQuery } from "./request";
 import { member, memberProfile } from "./response";
-import { getMemberProfile, getMembers } from "./service";
+import { getMemberProfile } from "./service/get-member-profile";
+import { getMembers } from "./service/get-members";
 
-export const memberRoutes: FastifyPluginAsyncZod = async (app) => {
+export const membersRouter: FastifyPluginAsyncZod = async (app) => {
   app.route({
     method: "GET",
     url: "/members",

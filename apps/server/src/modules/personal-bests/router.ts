@@ -3,9 +3,10 @@ import { z } from "zod";
 
 import { personalBestListQuery, recordListQuery } from "./request";
 import { personalBest, rankedPersonalBest } from "./response";
-import { getRecentPersonalBests, getRecords } from "./service";
+import { getRecentPersonalBests } from "./service/get-recent-personal-bests";
+import { getRecords } from "./service/get-records";
 
-export const personalBestRoutes: FastifyPluginAsyncZod = async (app) => {
+export const personalBestsRouter: FastifyPluginAsyncZod = async (app) => {
   app.route({
     method: "GET",
     url: "/personal-bests",

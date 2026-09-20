@@ -1,9 +1,9 @@
 import { and, desc, eq, inArray } from "drizzle-orm";
 
 import { db } from "@db/index";
-import { members, points, submissionEvent, submissionParticipants, submissions } from "@db/schema";
+import { members, submissionEvent, submissionParticipants, submissions } from "@db/schema";
 
-type ListOptions = {
+export type ListSubmissionsOptions = {
   limit: number;
   offset: number;
   memberId?: bigint;
@@ -12,7 +12,7 @@ type ListOptions = {
 
 const isApproved = inArray(submissions.status, ["approved", "approved_missing_member"]);
 
-export const listSubmissions = ({ limit, offset, memberId, event }: ListOptions) => {
+export const listSubmissions = ({ limit, offset, memberId, event }: ListSubmissionsOptions) => {
   const isCredited = memberId
     ? inArray(
         submissions.id,
@@ -33,25 +33,4 @@ export const listSubmissions = ({ limit, offset, memberId, event }: ListOptions)
     .offset(offset);
 };
 
-export const listParticipants = async (submissionIds: number[]) => {
-  if (submissionIds.length === 0) return [];
-
-  return db
-    .select({
-      submissionId: submissionParticipants.submissionId,
-      id: members.id,
-      displayName: members.displayName,
-      points: points.value
-    })
-    .from(submissionParticipants)
-    .innerJoin(members, eq(members.id, submissionParticipants.memberId))
-    .leftJoin(
-      points,
-      and(
-        eq(points.submissionId, submissionParticipants.submissionId),
-        eq(points.memberId, submissionParticipants.memberId)
-      )
-    )
-    .where(inArray(submissionParticipants.submissionId, submissionIds))
-    .orderBy(desc(points.value));
-};
+export type SubmissionRow = Awaited<ReturnType<typeof listSubmissions>>[number];
