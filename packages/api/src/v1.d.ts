@@ -55,6 +55,7 @@ export interface paths {
                     limit?: number;
                     offset?: number;
                     active?: "true" | "false";
+                    search?: string;
                     sort?: components["schemas"]["MemberSortInput"];
                     order?: "asc" | "desc";
                 };

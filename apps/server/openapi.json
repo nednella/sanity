@@ -2014,6 +2014,15 @@
           },
           {
             "schema": {
+              "type": "string",
+              "maxLength": 50
+            },
+            "in": "query",
+            "name": "search",
+            "required": false
+          },
+          {
+            "schema": {
               "default": "clanPoints",
               "allOf": [
                 {

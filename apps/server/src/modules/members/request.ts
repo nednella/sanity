@@ -6,7 +6,10 @@ import { pagination } from "@/schema/common";
 
 export const memberParams = z.object({ id: bigIntString });
 
-const memberFilters = z.object({ active: booleanString.optional() });
+const memberFilters = z.object({
+  active: booleanString.optional(),
+  search: z.string().trim().max(50).optional()
+});
 
 const memberSort = z
   .enum([

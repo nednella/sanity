@@ -1,5 +1,5 @@
 import type { SQL } from "drizzle-orm";
-import { asc, desc, eq, sql } from "drizzle-orm";
+import { and, asc, desc, eq, sql } from "drizzle-orm";
 import type { PgColumn } from "drizzle-orm/pg-core";
 
 import { db } from "@db/index";
@@ -9,17 +9,18 @@ import { diaryProgressCte } from "@/modules/speedrun-diary/repository/diary-prog
 
 import type { MemberSort } from "../request";
 import { memberColumns } from "./shared/columns";
-import { isActive } from "./shared/filters";
+import { isActive, matchesSearch } from "./shared/filters";
 
 export type ListMembersOptions = {
   limit: number;
   offset: number;
   active?: boolean;
+  search?: string;
   sort: MemberSort;
   order: "asc" | "desc";
 };
 
-export const listMembers = ({ limit, offset, active, sort, order }: ListMembersOptions) => {
+export const listMembers = ({ limit, offset, active, search, sort, order }: ListMembersOptions) => {
   const { bestTimes, reachedTiers, diaryProgress } = diaryProgressCte();
   const direction = order === "asc" ? asc : desc;
 
@@ -45,7 +46,7 @@ export const listMembers = ({ limit, offset, active, sort, order }: ListMembersO
     .leftJoin(speedrunDiaryTiers, eq(speedrunDiaryTiers.id, members.claimedDiaryTierId))
     .leftJoin(womPlayers, eq(womPlayers.memberId, members.id))
     .leftJoin(diaryProgress, eq(diaryProgress.memberId, members.id))
-    .where(isActive(active))
+    .where(and(isActive(active), matchesSearch(search)))
     .orderBy(direction(sortColumns[sort]), members.id)
     .limit(limit)
     .offset(offset);
