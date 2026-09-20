@@ -1,10 +1,10 @@
-import { toOsrsWikiImageUrl } from "../../lib/osrs-wiki.js";
+import { osrsWikiImageUrl } from "../../utils/images.js";
 import type { listRanks } from "./repo.js";
 
 type RankRow = Awaited<ReturnType<typeof listRanks>>[number];
 
 export const toRankIconUrl = (inGameName: string | null) =>
-  inGameName && toOsrsWikiImageUrl(`Clan_icon_-_${inGameName}.png`);
+  inGameName && osrsWikiImageUrl(`Clan_icon_-_${inGameName}.png`);
 
 export const toRank = (row: RankRow) => ({
   id: row.id,
