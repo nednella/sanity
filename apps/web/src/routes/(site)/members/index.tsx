@@ -47,6 +47,11 @@ function MembersPage() {
         onRetry={() => refetch()}
         onRowClick={(member) => navigate({ to: "/members/$memberId", params: { memberId: member.id } })}
         rowCount={data?.page.total ?? 0}
+        search={{
+          onChange: (value) => replaceSearch({ offset: 0, search: value }),
+          placeholder: "Search by name or RSN",
+          value: search.search
+        }}
         toolbar={() => (
           <MemberStatusFilter
             status={search.status}

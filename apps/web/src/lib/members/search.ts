@@ -37,6 +37,7 @@ export type MembersSearch = {
   limit: number;
   offset: number;
   order: "asc" | "desc";
+  search: string;
   sort: MemberSort;
   status: MemberStatus;
 };
@@ -45,6 +46,7 @@ export const validateMembersSearch = (search: Record<string, unknown> & SearchSc
   limit: toLimit(search.limit, PAGE_SIZES, DEFAULT_LIMIT),
   offset: toOffset(search.offset),
   order: toOrder(search.order),
+  search: typeof search.search === "string" ? search.search : "",
   sort: toSort(search.sort, MEMBER_SORTS, DEFAULT_SORT),
   status: toStatus(search.status)
 });
@@ -54,5 +56,6 @@ export const toMembersQueryParams = (search: MembersSearch) => ({
   limit: search.limit,
   offset: search.offset,
   order: search.order,
+  search: search.search,
   sort: search.sort
 });
