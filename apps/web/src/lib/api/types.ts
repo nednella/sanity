@@ -1,4 +1,4 @@
-import type { components, paths } from "@sanity/api/v1";
+import type { components } from "@sanity/api/v1";
 
 type Schemas = components["schemas"];
 
@@ -13,9 +13,4 @@ export type PersonalBest = Schemas["PersonalBest"];
 export type RankedPersonalBest = Schemas["RankedPersonalBest"];
 export type Submission = Schemas["Submission"];
 export type Page = Schemas["Page"];
-
-// A querystring is decomposed into one parameter per property, so it has no component to reference.
-type MemberList = paths["/v1/members"]["get"];
-
-export type MemberListQuery = NonNullable<MemberList["parameters"]["query"]>;
-export type MemberSort = NonNullable<MemberListQuery["sort"]>;
+export type MemberSort = Schemas["MemberSort"];

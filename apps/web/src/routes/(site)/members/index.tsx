@@ -8,18 +8,20 @@ import { defaultColumnVisibility, memberColumns } from "@/components/members/mem
 import { DataTable } from "@/components/table/data-table";
 import { DataTableColumnToggle } from "@/components/table/data-table-column-toggle";
 import { api } from "@/lib/api/openapi-client";
-import type { Member, MemberListQuery, MemberSort } from "@/lib/api/types";
+import type { Member, MemberSort } from "@/lib/api/types";
+import type { MembersSearch } from "@/lib/members/search";
 import { toMembersQueryParams, validateMembersSearch } from "@/lib/members/search";
 import type { MemberStatus } from "@/lib/members/status";
 import { fromPaginationState, fromSortingState, toPaginationState, toSortingState } from "@/lib/table/search";
 import { Muted } from "@/lib/ui/typography/muted";
 
-const membersOptions = (query: MemberListQuery) => api.queryOptions("get", "/v1/members", { params: { query } });
+const membersOptions = (search: MembersSearch) =>
+  api.queryOptions("get", "/v1/members", { params: { query: toMembersQueryParams(search) } });
 
 export const Route = createFileRoute("/(site)/members/")({
   component: MembersPage,
   validateSearch: validateMembersSearch,
-  loaderDeps: ({ search }) => toMembersQueryParams(search),
+  loaderDeps: ({ search }) => search,
   loader: async ({ context, deps }) => {
     await context.queryClient.query({ ...membersOptions(deps), staleTime: "static" });
   }
@@ -32,7 +34,7 @@ function MembersPage() {
   const navigate = Route.useNavigate();
 
   const { data, error, isPending, refetch } = useQuery({
-    ...membersOptions(toMembersQueryParams(search)),
+    ...membersOptions(search),
     placeholderData: keepPreviousData
   });
 
