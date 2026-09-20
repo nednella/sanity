@@ -71,60 +71,8 @@ export interface paths {
                     };
                     content: {
                         "application/json": {
-                            items: {
-                                id: string;
-                                displayName: string;
-                                nationality: string;
-                                discord: {
-                                    id: string;
-                                    avatarUrl: string | null;
-                                };
-                                rsn: {
-                                    main: string | null;
-                                    alt: string | null;
-                                };
-                                membership: {
-                                    active: boolean;
-                                    /** Format: date-time */
-                                    joinedAt: string | null;
-                                    /** Format: date-time */
-                                    leftAt: string | null;
-                                    rank: {
-                                        id: number;
-                                        name: string;
-                                        iconUrl: string | null;
-                                    };
-                                    points: number;
-                                };
-                                diary: {
-                                    points: number;
-                                    masterDiaries: number;
-                                    claimedTier: {
-                                        id: number;
-                                        name: string;
-                                    } | null;
-                                };
-                                wom: {
-                                    playerId: number;
-                                    username: string;
-                                    displayName: string;
-                                    type: string;
-                                    build: string;
-                                    totalLevel: number | null;
-                                    totalExp: number;
-                                    totalEhp: number;
-                                    totalEhb: number;
-                                    /** Format: date-time */
-                                    updatedAt: string | null;
-                                } | null;
-                            }[];
-                            page: {
-                                limit: number;
-                                offset: number;
-                                total: number;
-                                hasNext: boolean;
-                                hasPrevious: boolean;
-                            };
+                            items: components["schemas"]["Member"][];
+                            page: components["schemas"]["Page"];
                         };
                     };
                 };
@@ -162,104 +110,7 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": {
-                            id: string;
-                            displayName: string;
-                            nationality: string;
-                            discord: {
-                                id: string;
-                                avatarUrl: string | null;
-                            };
-                            rsn: {
-                                main: string | null;
-                                alt: string | null;
-                            };
-                            membership: {
-                                active: boolean;
-                                /** Format: date-time */
-                                joinedAt: string | null;
-                                /** Format: date-time */
-                                leftAt: string | null;
-                                rank: {
-                                    id: number;
-                                    name: string;
-                                    iconUrl: string | null;
-                                };
-                                points: number;
-                            };
-                            diary: {
-                                points: number;
-                                masterDiaries: number;
-                                claimedTier: {
-                                    id: number;
-                                    name: string;
-                                } | null;
-                            };
-                            progression: {
-                                eligibleRank: {
-                                    id: number;
-                                    name: string;
-                                    iconUrl: string | null;
-                                } | null;
-                                nextRank: {
-                                    points: {
-                                        id: number;
-                                        name: string;
-                                        iconUrl: string | null;
-                                        requirements: {
-                                            clanPoints: number;
-                                            diaryPoints: number;
-                                            masterDiaries: number;
-                                        };
-                                    } | null;
-                                    diary: {
-                                        id: number;
-                                        name: string;
-                                        iconUrl: string | null;
-                                        requirements: {
-                                            clanPoints: number;
-                                            diaryPoints: number;
-                                            masterDiaries: number;
-                                        };
-                                    } | null;
-                                };
-                            };
-                            wom: {
-                                playerId: number;
-                                username: string;
-                                displayName: string;
-                                type: string;
-                                build: string;
-                                totalLevel: number | null;
-                                totalExp: number;
-                                totalEhp: number;
-                                totalEhb: number;
-                                /** Format: date-time */
-                                updatedAt: string | null;
-                                latestSnapshot: {
-                                    /** Format: date-time */
-                                    createdAt: string;
-                                    skills: {
-                                        skill: string;
-                                        experience: number;
-                                        level: number;
-                                        rank: number | null;
-                                        ehp: number;
-                                    }[];
-                                    bosses: {
-                                        boss: string;
-                                        kills: number;
-                                        rank: number | null;
-                                        ehb: number;
-                                    }[];
-                                    activities: {
-                                        activity: string;
-                                        score: number;
-                                        rank: number | null;
-                                    }[];
-                                } | null;
-                            } | null;
-                        };
+                        "application/json": components["schemas"]["MemberProfile"];
                     };
                 };
                 /** @description Default Response */
@@ -313,28 +164,7 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": {
-                            id: number;
-                            position: number;
-                            content: {
-                                id: number;
-                                name: string;
-                                imageUrl: string | null;
-                            };
-                            scale: number;
-                            timeSeconds: number;
-                            imageUrl: string | null;
-                            /** Format: date-time */
-                            submittedAt: string | null;
-                            submittedBy: {
-                                id: string;
-                                displayName: string;
-                            };
-                            team: {
-                                id: string;
-                                displayName: string;
-                            }[];
-                        }[];
+                        "application/json": components["schemas"]["RankedPersonalBest"][];
                     };
                 };
             };
@@ -374,27 +204,7 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": {
-                            id: number;
-                            content: {
-                                id: number;
-                                name: string;
-                                imageUrl: string | null;
-                            };
-                            scale: number;
-                            timeSeconds: number;
-                            imageUrl: string | null;
-                            /** Format: date-time */
-                            submittedAt: string | null;
-                            submittedBy: {
-                                id: string;
-                                displayName: string;
-                            };
-                            team: {
-                                id: string;
-                                displayName: string;
-                            }[];
-                        }[];
+                        "application/json": components["schemas"]["PersonalBest"][];
                     };
                 };
             };
@@ -433,28 +243,7 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": {
-                            id: number;
-                            position: number;
-                            content: {
-                                id: number;
-                                name: string;
-                                imageUrl: string | null;
-                            };
-                            scale: number;
-                            timeSeconds: number;
-                            imageUrl: string | null;
-                            /** Format: date-time */
-                            submittedAt: string | null;
-                            submittedBy: {
-                                id: string;
-                                displayName: string;
-                            };
-                            team: {
-                                id: string;
-                                displayName: string;
-                            }[];
-                        }[];
+                        "application/json": components["schemas"]["RankedPersonalBest"][];
                     };
                 };
             };
@@ -489,18 +278,7 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": {
-                            id: number;
-                            name: string;
-                            iconUrl: string | null;
-                            discordRoleId: string | null;
-                            requirements: {
-                                clanPoints: number;
-                                diaryPoints: number;
-                                masterDiaries: number;
-                                maintenancePoints: number;
-                            };
-                        }[];
+                        "application/json": components["schemas"]["Rank"][];
                     };
                 };
             };
@@ -540,29 +318,7 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": {
-                            id: number;
-                            item: {
-                                id: number | null;
-                                name: string | null;
-                            };
-                            valueMillions: number | null;
-                            /** @enum {string|null} */
-                            event: "bingo" | "leagues" | null;
-                            imageUrl: string | null;
-                            discordMessageUrl: string | null;
-                            /** Format: date-time */
-                            submittedAt: string;
-                            submittedBy: {
-                                id: string;
-                                displayName: string;
-                            };
-                            participants: {
-                                id: string;
-                                displayName: string;
-                                points: number | null;
-                            }[];
-                        }[];
+                        "application/json": components["schemas"]["Submission"][];
                     };
                 };
             };
@@ -578,7 +334,454 @@ export interface paths {
 }
 export type webhooks = Record<string, never>;
 export interface components {
-    schemas: never;
+    schemas: {
+        PageInput: {
+            limit: number;
+            offset: number;
+            total: number;
+            hasNext: boolean;
+            hasPrevious: boolean;
+        };
+        MemberRefInput: {
+            id: string;
+            displayName: string;
+        };
+        PersonalBestInput: {
+            id: number;
+            content: {
+                id: number;
+                name: string;
+                imageUrl: string | null;
+            };
+            scale: number;
+            timeSeconds: number;
+            imageUrl: string | null;
+            /** Format: date-time */
+            submittedAt: string | null;
+            submittedBy: components["schemas"]["MemberRefInput"];
+            team: components["schemas"]["MemberRefInput"][];
+        };
+        RankedPersonalBestInput: {
+            id: number;
+            position: number;
+            content: {
+                id: number;
+                name: string;
+                imageUrl: string | null;
+            };
+            scale: number;
+            timeSeconds: number;
+            imageUrl: string | null;
+            /** Format: date-time */
+            submittedAt: string | null;
+            submittedBy: components["schemas"]["MemberRefInput"];
+            team: components["schemas"]["MemberRefInput"][];
+        };
+        SkillInput: {
+            skill: string;
+            experience: number;
+            level: number;
+            rank: number | null;
+            ehp: number;
+        };
+        BossInput: {
+            boss: string;
+            kills: number;
+            rank: number | null;
+            ehb: number;
+        };
+        ActivityInput: {
+            activity: string;
+            score: number;
+            rank: number | null;
+        };
+        SnapshotInput: {
+            /** Format: date-time */
+            createdAt: string;
+            skills: components["schemas"]["SkillInput"][];
+            bosses: components["schemas"]["BossInput"][];
+            activities: components["schemas"]["ActivityInput"][];
+        };
+        MemberInput: {
+            id: string;
+            displayName: string;
+            nationality: string;
+            discord: {
+                id: string;
+                avatarUrl: string | null;
+            };
+            rsn: {
+                main: string | null;
+                alt: string | null;
+            };
+            membership: {
+                active: boolean;
+                /** Format: date-time */
+                joinedAt: string | null;
+                /** Format: date-time */
+                leftAt: string | null;
+                rank: {
+                    id: number;
+                    name: string;
+                    iconUrl: string | null;
+                };
+                points: number;
+            };
+            diary: {
+                points: number;
+                masterDiaries: number;
+                claimedTier: {
+                    id: number;
+                    name: string;
+                } | null;
+            };
+            wom: {
+                playerId: number;
+                username: string;
+                displayName: string;
+                type: string;
+                build: string;
+                totalLevel: number | null;
+                totalExp: number;
+                totalEhp: number;
+                totalEhb: number;
+                /** Format: date-time */
+                updatedAt: string | null;
+            } | null;
+        };
+        MemberProfileInput: {
+            id: string;
+            displayName: string;
+            nationality: string;
+            discord: {
+                id: string;
+                avatarUrl: string | null;
+            };
+            rsn: {
+                main: string | null;
+                alt: string | null;
+            };
+            membership: {
+                active: boolean;
+                /** Format: date-time */
+                joinedAt: string | null;
+                /** Format: date-time */
+                leftAt: string | null;
+                rank: {
+                    id: number;
+                    name: string;
+                    iconUrl: string | null;
+                };
+                points: number;
+            };
+            diary: {
+                points: number;
+                masterDiaries: number;
+                claimedTier: {
+                    id: number;
+                    name: string;
+                } | null;
+            };
+            progression: {
+                eligibleRank: {
+                    id: number;
+                    name: string;
+                    iconUrl: string | null;
+                } | null;
+                nextRank: {
+                    points: {
+                        id: number;
+                        name: string;
+                        iconUrl: string | null;
+                        requirements: {
+                            clanPoints: number;
+                            diaryPoints: number;
+                            masterDiaries: number;
+                        };
+                    } | null;
+                    diary: {
+                        id: number;
+                        name: string;
+                        iconUrl: string | null;
+                        requirements: {
+                            clanPoints: number;
+                            diaryPoints: number;
+                            masterDiaries: number;
+                        };
+                    } | null;
+                };
+            };
+            wom: {
+                playerId: number;
+                username: string;
+                displayName: string;
+                type: string;
+                build: string;
+                totalLevel: number | null;
+                totalExp: number;
+                totalEhp: number;
+                totalEhb: number;
+                /** Format: date-time */
+                updatedAt: string | null;
+                latestSnapshot: components["schemas"]["SnapshotInput"] | null;
+            } | null;
+        };
+        RankInput: {
+            id: number;
+            name: string;
+            iconUrl: string | null;
+            discordRoleId: string | null;
+            requirements: {
+                clanPoints: number;
+                diaryPoints: number;
+                masterDiaries: number;
+                maintenancePoints: number;
+            };
+        };
+        SubmissionInput: {
+            id: number;
+            item: {
+                id: number | null;
+                name: string | null;
+            };
+            valueMillions: number | null;
+            /** @enum {string|null} */
+            event: "bingo" | "leagues" | null;
+            imageUrl: string | null;
+            discordMessageUrl: string | null;
+            /** Format: date-time */
+            submittedAt: string;
+            submittedBy: components["schemas"]["MemberRefInput"];
+            participants: {
+                id: string;
+                displayName: string;
+                points: number | null;
+            }[];
+        };
+        Page: {
+            limit: number;
+            offset: number;
+            total: number;
+            hasNext: boolean;
+            hasPrevious: boolean;
+        };
+        MemberRef: {
+            id: string;
+            displayName: string;
+        };
+        PersonalBest: {
+            id: number;
+            content: {
+                id: number;
+                name: string;
+                imageUrl: string | null;
+            };
+            scale: number;
+            timeSeconds: number;
+            imageUrl: string | null;
+            /** Format: date-time */
+            submittedAt: string | null;
+            submittedBy: components["schemas"]["MemberRef"];
+            team: components["schemas"]["MemberRef"][];
+        };
+        RankedPersonalBest: {
+            id: number;
+            position: number;
+            content: {
+                id: number;
+                name: string;
+                imageUrl: string | null;
+            };
+            scale: number;
+            timeSeconds: number;
+            imageUrl: string | null;
+            /** Format: date-time */
+            submittedAt: string | null;
+            submittedBy: components["schemas"]["MemberRef"];
+            team: components["schemas"]["MemberRef"][];
+        };
+        Skill: {
+            skill: string;
+            experience: number;
+            level: number;
+            rank: number | null;
+            ehp: number;
+        };
+        Boss: {
+            boss: string;
+            kills: number;
+            rank: number | null;
+            ehb: number;
+        };
+        Activity: {
+            activity: string;
+            score: number;
+            rank: number | null;
+        };
+        Snapshot: {
+            /** Format: date-time */
+            createdAt: string;
+            skills: components["schemas"]["Skill"][];
+            bosses: components["schemas"]["Boss"][];
+            activities: components["schemas"]["Activity"][];
+        };
+        Member: {
+            id: string;
+            displayName: string;
+            nationality: string;
+            discord: {
+                id: string;
+                avatarUrl: string | null;
+            };
+            rsn: {
+                main: string | null;
+                alt: string | null;
+            };
+            membership: {
+                active: boolean;
+                /** Format: date-time */
+                joinedAt: string | null;
+                /** Format: date-time */
+                leftAt: string | null;
+                rank: {
+                    id: number;
+                    name: string;
+                    iconUrl: string | null;
+                };
+                points: number;
+            };
+            diary: {
+                points: number;
+                masterDiaries: number;
+                claimedTier: {
+                    id: number;
+                    name: string;
+                } | null;
+            };
+            wom: {
+                playerId: number;
+                username: string;
+                displayName: string;
+                type: string;
+                build: string;
+                totalLevel: number | null;
+                totalExp: number;
+                totalEhp: number;
+                totalEhb: number;
+                /** Format: date-time */
+                updatedAt: string | null;
+            } | null;
+        };
+        MemberProfile: {
+            id: string;
+            displayName: string;
+            nationality: string;
+            discord: {
+                id: string;
+                avatarUrl: string | null;
+            };
+            rsn: {
+                main: string | null;
+                alt: string | null;
+            };
+            membership: {
+                active: boolean;
+                /** Format: date-time */
+                joinedAt: string | null;
+                /** Format: date-time */
+                leftAt: string | null;
+                rank: {
+                    id: number;
+                    name: string;
+                    iconUrl: string | null;
+                };
+                points: number;
+            };
+            diary: {
+                points: number;
+                masterDiaries: number;
+                claimedTier: {
+                    id: number;
+                    name: string;
+                } | null;
+            };
+            progression: {
+                eligibleRank: {
+                    id: number;
+                    name: string;
+                    iconUrl: string | null;
+                } | null;
+                nextRank: {
+                    points: {
+                        id: number;
+                        name: string;
+                        iconUrl: string | null;
+                        requirements: {
+                            clanPoints: number;
+                            diaryPoints: number;
+                            masterDiaries: number;
+                        };
+                    } | null;
+                    diary: {
+                        id: number;
+                        name: string;
+                        iconUrl: string | null;
+                        requirements: {
+                            clanPoints: number;
+                            diaryPoints: number;
+                            masterDiaries: number;
+                        };
+                    } | null;
+                };
+            };
+            wom: {
+                playerId: number;
+                username: string;
+                displayName: string;
+                type: string;
+                build: string;
+                totalLevel: number | null;
+                totalExp: number;
+                totalEhp: number;
+                totalEhb: number;
+                /** Format: date-time */
+                updatedAt: string | null;
+                latestSnapshot: components["schemas"]["Snapshot"] | null;
+            } | null;
+        };
+        Rank: {
+            id: number;
+            name: string;
+            iconUrl: string | null;
+            discordRoleId: string | null;
+            requirements: {
+                clanPoints: number;
+                diaryPoints: number;
+                masterDiaries: number;
+                maintenancePoints: number;
+            };
+        };
+        Submission: {
+            id: number;
+            item: {
+                id: number | null;
+                name: string | null;
+            };
+            valueMillions: number | null;
+            /** @enum {string|null} */
+            event: "bingo" | "leagues" | null;
+            imageUrl: string | null;
+            discordMessageUrl: string | null;
+            /** Format: date-time */
+            submittedAt: string;
+            submittedBy: components["schemas"]["MemberRef"];
+            participants: {
+                id: string;
+                displayName: string;
+                points: number | null;
+            }[];
+        };
+    };
     responses: never;
     parameters: never;
     requestBodies: never;

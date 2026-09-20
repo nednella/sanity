@@ -9,10 +9,12 @@ const requirements = z.object({
   maintenancePoints: z.number()
 });
 
-export const rank = z.object({
-  id: z.number(),
-  name: z.string(),
-  iconUrl: z.string().nullable(),
-  discordRoleId: bigIntString.nullable(),
-  requirements
-});
+export const rank = z
+  .object({
+    id: z.number(),
+    name: z.string(),
+    iconUrl: z.string().nullable(),
+    discordRoleId: bigIntString.nullable(),
+    requirements
+  })
+  .register(z.globalRegistry, { id: "Rank" });

@@ -9,20 +9,24 @@ const content = z.object({
   imageUrl: z.string().nullable()
 });
 
-export const personalBest = z.object({
-  id: z.number(),
-  content,
-  scale: z.number(),
-  timeSeconds: z.number(),
-  imageUrl: z.string().nullable(),
-  submittedAt: isoDate.nullable(),
-  submittedBy: memberRef,
-  team: z.array(memberRef)
-});
+export const personalBest = z
+  .object({
+    id: z.number(),
+    content,
+    scale: z.number(),
+    timeSeconds: z.number(),
+    imageUrl: z.string().nullable(),
+    submittedAt: isoDate.nullable(),
+    submittedBy: memberRef,
+    team: z.array(memberRef)
+  })
+  .register(z.globalRegistry, { id: "PersonalBest" });
 
 // Built rather than extended, so position sits next to the id in the response.
-export const rankedPersonalBest = z.object({
-  id: personalBest.shape.id,
-  position: z.number(),
-  ...personalBest.omit({ id: true }).shape
-});
+export const rankedPersonalBest = z
+  .object({
+    id: personalBest.shape.id,
+    position: z.number(),
+    ...personalBest.omit({ id: true }).shape
+  })
+  .register(z.globalRegistry, { id: "RankedPersonalBest" });

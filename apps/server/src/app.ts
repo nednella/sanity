@@ -1,7 +1,12 @@
 import cors from "@fastify/cors";
 import swagger from "@fastify/swagger";
 import Fastify from "fastify";
-import { createJsonSchemaTransform, serializerCompiler, validatorCompiler } from "fastify-type-provider-zod";
+import {
+  createJsonSchemaTransform,
+  createJsonSchemaTransformObject,
+  serializerCompiler,
+  validatorCompiler
+} from "fastify-type-provider-zod";
 
 import { config } from "@config";
 
@@ -23,7 +28,8 @@ export const buildApp = () => {
 
   app.register(swagger, {
     openapi: { info: { title: "Sanity API", version: "1.0.0" } },
-    transform: createJsonSchemaTransform({ zodToJsonConfig: { override: jsonSchemaOverride } })
+    transform: createJsonSchemaTransform({ zodToJsonConfig: { override: jsonSchemaOverride } }),
+    transformObject: createJsonSchemaTransformObject({ zodToJsonConfig: { override: jsonSchemaOverride } })
   });
 
   app.setValidatorCompiler(validatorCompiler);

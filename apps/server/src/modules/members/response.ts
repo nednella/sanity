@@ -66,51 +66,63 @@ const progression = z.object({
   })
 });
 
-const skill = z.object({
-  skill: z.string(),
-  experience: z.number(),
-  level: z.number(),
-  rank: z.number().nullable(),
-  ehp: z.number()
-});
+const skill = z
+  .object({
+    skill: z.string(),
+    experience: z.number(),
+    level: z.number(),
+    rank: z.number().nullable(),
+    ehp: z.number()
+  })
+  .register(z.globalRegistry, { id: "Skill" });
 
-const boss = z.object({
-  boss: z.string(),
-  kills: z.number(),
-  rank: z.number().nullable(),
-  ehb: z.number()
-});
+const boss = z
+  .object({
+    boss: z.string(),
+    kills: z.number(),
+    rank: z.number().nullable(),
+    ehb: z.number()
+  })
+  .register(z.globalRegistry, { id: "Boss" });
 
-const activity = z.object({
-  activity: z.string(),
-  score: z.number(),
-  rank: z.number().nullable()
-});
+const activity = z
+  .object({
+    activity: z.string(),
+    score: z.number(),
+    rank: z.number().nullable()
+  })
+  .register(z.globalRegistry, { id: "Activity" });
 
-const snapshot = z.object({
-  createdAt: isoDate,
-  skills: z.array(skill),
-  bosses: z.array(boss),
-  activities: z.array(activity)
-});
+const snapshot = z
+  .object({
+    createdAt: isoDate,
+    skills: z.array(skill),
+    bosses: z.array(boss),
+    activities: z.array(activity)
+  })
+  .register(z.globalRegistry, { id: "Snapshot" });
 
-export const member = z.object({
-  id: bigIntString,
-  displayName: z.string(),
-  nationality: z.string(),
-  discord,
-  rsn,
-  membership,
-  diary,
-  wom: womPlayer.nullable()
-});
+export const member = z
+  .object({
+    id: bigIntString,
+    displayName: z.string(),
+    nationality: z.string(),
+    discord,
+    rsn,
+    membership,
+    diary,
+    wom: womPlayer.nullable()
+  })
+  .register(z.globalRegistry, { id: "Member" });
 
 // Built rather than extended, because extend() would put progression after wom in the response.
-export const memberProfile = z.object({
-  ...member.omit({ wom: true }).shape,
-  progression,
-  wom: womPlayer.extend({ latestSnapshot: snapshot.nullable() }).nullable()
-});
+export const memberProfile = z
+  .object({
+    ...member.omit({ wom: true }).shape,
+    progression,
+    wom: womPlayer.extend({ latestSnapshot: snapshot.nullable() }).nullable()
+  })
+  .register(z.globalRegistry, { id: "MemberProfile" });
 
 export type Activity = z.output<typeof activity>;
 export type Boss = z.output<typeof boss>;
