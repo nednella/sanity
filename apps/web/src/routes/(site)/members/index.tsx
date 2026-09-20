@@ -4,14 +4,10 @@ import { createFileRoute } from "@tanstack/react-router";
 import { MemberStatusFilter } from "@/components/members/member-status-filter";
 import { defaultColumnVisibility, memberColumns } from "@/components/members/member-table";
 import { DataTable } from "@/components/table/data-table";
-import { api } from "@/lib/api/openapi-client";
-import type { MembersSearch } from "@/lib/members/search";
-import { toMembersQueryParams, validateMembersSearch } from "@/lib/members/search";
+import { membersOptions } from "@/lib/api/queries/members";
+import { validateMembersSearch } from "@/lib/members/search";
 import { useTableSearch } from "@/lib/table/use-table-search";
 import { Muted } from "@/lib/ui/typography/muted";
-
-const membersOptions = (search: MembersSearch) =>
-  api.queryOptions("get", "/v1/members", { params: { query: toMembersQueryParams(search) } });
 
 export const Route = createFileRoute("/(site)/members/")({
   component: MembersPage,
