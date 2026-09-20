@@ -1,6 +1,7 @@
-import { listRanks } from "../ranks/repo";
-import { listDiaryProgress } from "../speedrun-diary/repo";
-import { findLatestSnapshot } from "../wom/repo";
+import { listRanks } from "@/modules/ranks/repo";
+import { listDiaryProgress } from "@/modules/speedrun-diary/repo";
+import { findLatestSnapshot } from "@/modules/wom/repo";
+
 import { toMember, toMemberProfile } from "./mapper";
 import { countMembers, findMember, listMembers } from "./repo";
 

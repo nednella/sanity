@@ -1,7 +1,6 @@
+import { db } from "@db/index";
+import { members, personalBestParticipants, personalBests, speedrunContent } from "@db/schema";
 import { type SQL, and, asc, desc, eq, inArray, lte, sql } from "drizzle-orm";
-
-import { db } from "../../../db/index";
-import { members, personalBestParticipants, personalBests, speedrunContent } from "../../../db/schema";
 
 type ContentFilters = {
   contentId?: number;

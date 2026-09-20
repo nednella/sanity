@@ -1,11 +1,12 @@
+import { config } from "@config";
 import cors from "@fastify/cors";
 import swagger from "@fastify/swagger";
 import Fastify from "fastify";
 import { createJsonSchemaTransform, serializerCompiler, validatorCompiler } from "fastify-type-provider-zod";
 
-import { config } from "../config";
+import { jsonSchemaOverride } from "@/schema/codecs";
+
 import { routes } from "./routes";
-import { jsonSchemaOverride } from "./schema/codecs";
 
 const { logLevel, corsOrigin } = config;
 

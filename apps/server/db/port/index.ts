@@ -1,8 +1,8 @@
+import { client, db } from "@db/index";
+import * as schema from "@db/schema";
 import { type InferInsertModel, sql } from "drizzle-orm";
 import { type PgTable } from "drizzle-orm/pg-core";
 
-import { client, db } from "../index";
-import * as schema from "../schema";
 import { readMembers, readRanks } from "./members";
 import {
   readPersonalBestParticipants,

@@ -1,9 +1,10 @@
 import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import { z } from "zod";
 
-import { notFound, paginated, toPage } from "../../schema/common";
-import { rankedPersonalBest } from "../personal-bests/response";
-import { getMemberPersonalBests } from "../personal-bests/service";
+import { rankedPersonalBest } from "@/modules/personal-bests/response";
+import { getMemberPersonalBests } from "@/modules/personal-bests/service";
+import { notFound, paginated, toPage } from "@/schema/common";
+
 import { memberListQuery, memberParams, memberPersonalBestsQuery } from "./request";
 import { member, memberProfile } from "./response";
 import { getMemberProfile, getMembers } from "./service";

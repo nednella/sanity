@@ -1,7 +1,6 @@
+import { db } from "@db/index";
+import { members, points, submissionEvent, submissionParticipants, submissions } from "@db/schema";
 import { and, desc, eq, inArray } from "drizzle-orm";
-
-import { db } from "../../../db/index";
-import { members, points, submissionEvent, submissionParticipants, submissions } from "../../../db/schema";
 
 type ListOptions = {
   limit: number;

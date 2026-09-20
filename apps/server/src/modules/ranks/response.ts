@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { bigIntString } from "../../schema/codecs";
+import { bigIntString } from "@/schema/codecs";
 
 const requirements = z.object({
   clanPoints: z.number(),

@@ -5,7 +5,13 @@
 
     /* Bundler mode */
     "module": "ESNext",
-    "moduleResolution": "Bundler"
+    "moduleResolution": "Bundler",
+
+    "paths": {
+      "@/*": ["./src/*"],
+      "@db/*": ["./db/*"],
+      "@config": ["./config.ts"]
+    }
   },
   "include": ["src", "db", "config.ts", "drizzle.config.ts"]
 }

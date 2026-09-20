@@ -1,6 +1,8 @@
-import { config } from "../../../config";
-import { client } from "../../../db/index";
-import { fetchGroupHiscores } from "../../integrations/wom";
+import { config } from "@config";
+import { client } from "@db/index";
+
+import { fetchGroupHiscores } from "@/integrations/wom";
+
 import { loadMemberMatcher, savePlayers, saveSnapshots } from "./repo";
 
 // History grows as Wise Old Man refreshes players between runs.

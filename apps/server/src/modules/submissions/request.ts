@@ -1,7 +1,8 @@
 import { z } from "zod";
 
-import { bigIntString } from "../../schema/codecs";
-import { pagination } from "../../schema/common";
+import { bigIntString } from "@/schema/codecs";
+import { pagination } from "@/schema/common";
+
 import { event } from "./response";
 
 export const submissionFilters = z.object({

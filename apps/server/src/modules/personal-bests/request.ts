@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { pagination } from "../../schema/common";
+import { pagination } from "@/schema/common";
 
 export const top = z.coerce.number().int().min(1).max(10);
 

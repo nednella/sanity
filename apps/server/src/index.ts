@@ -1,4 +1,5 @@
-import { config } from "../config";
+import { config } from "@config";
+
 import { buildApp } from "./app";
 
 const { host, port } = config;

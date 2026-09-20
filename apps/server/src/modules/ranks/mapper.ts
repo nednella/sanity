@@ -1,4 +1,5 @@
-import { osrsWikiImageUrl } from "../../utils/images";
+import { osrsWikiImageUrl } from "@/utils/images";
+
 import type { listRanks } from "./repo";
 
 type RankRow = Awaited<ReturnType<typeof listRanks>>[number];
