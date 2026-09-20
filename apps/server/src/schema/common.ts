@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { bigIntString } from "./codecs.js";
+import { bigIntString } from "./codecs";
 
 export const pagination = z.object({
   limit: z.coerce.number().int().min(1).max(200).default(50),

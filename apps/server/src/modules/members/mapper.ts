@@ -1,8 +1,8 @@
-import { toRankIconUrl } from "../ranks/mapper.js";
-import type { listRanks } from "../ranks/repo.js";
-import type { listDiaryProgress } from "../speedrun-diary/repo.js";
-import type { findLatestSnapshot } from "../wom/repo.js";
-import type { listMembers } from "./repo.js";
+import { toRankIconUrl } from "../ranks/mapper";
+import type { listRanks } from "../ranks/repo";
+import type { listDiaryProgress } from "../speedrun-diary/repo";
+import type { findLatestSnapshot } from "../wom/repo";
+import type { listMembers } from "./repo";
 
 type MemberRow = Awaited<ReturnType<typeof listMembers>>[number];
 type DiaryProgress = Awaited<ReturnType<typeof listDiaryProgress>>[number];

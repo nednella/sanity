@@ -1,4 +1,4 @@
-import type { listParticipants, listSubmissions } from "./repo.js";
+import type { listParticipants, listSubmissions } from "./repo";
 
 type SubmissionRow = Awaited<ReturnType<typeof listSubmissions>>[number];
 type ParticipantRow = Awaited<ReturnType<typeof listParticipants>>[number];

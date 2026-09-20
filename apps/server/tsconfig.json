@@ -3,9 +3,9 @@
   "compilerOptions": {
     "types": ["node"],
 
-    /* Node mode */
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext"
+    /* Bundler mode */
+    "module": "ESNext",
+    "moduleResolution": "Bundler"
   },
   "include": ["src", "db", "config.ts", "drizzle.config.ts"]
 }

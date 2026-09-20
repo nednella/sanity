@@ -1,9 +1,9 @@
 import { type InferInsertModel, sql } from "drizzle-orm";
 import { type PgTable } from "drizzle-orm/pg-core";
 
-import { client, db } from "../index.js";
-import * as schema from "../schema.js";
-import { readMembers, readRanks } from "./members.js";
+import { client, db } from "../index";
+import * as schema from "../schema";
+import { readMembers, readRanks } from "./members";
 import {
   readPersonalBestParticipants,
   readPersonalBests,
@@ -11,15 +11,15 @@ import {
   readSpeedrunDiaryRewards,
   readSpeedrunDiaryTiers,
   readSpeedrunDiaryTimes
-} from "./records.js";
-import { source } from "./source.js";
+} from "./records";
+import { source } from "./source";
 import {
   readItems,
   readPoints,
   readPointsTimelineEvents,
   readSubmissionParticipants,
   readSubmissions
-} from "./submissions.js";
+} from "./submissions";
 
 // Fills the new schema from a snapshot of the old database. Re-runnable: it
 // empties every table it fills first. Not a migration; migrations build the

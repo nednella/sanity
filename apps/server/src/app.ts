@@ -3,9 +3,9 @@ import swagger from "@fastify/swagger";
 import Fastify from "fastify";
 import { createJsonSchemaTransform, serializerCompiler, validatorCompiler } from "fastify-type-provider-zod";
 
-import { config } from "../config.js";
-import { routes } from "./routes.js";
-import { jsonSchemaOverride } from "./schema/codecs.js";
+import { config } from "../config";
+import { routes } from "./routes";
+import { jsonSchemaOverride } from "./schema/codecs";
 
 const { logLevel, corsOrigin } = config;
 

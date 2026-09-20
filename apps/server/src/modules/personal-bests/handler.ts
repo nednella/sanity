@@ -1,9 +1,9 @@
 import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import { z } from "zod";
 
-import { personalBestListQuery, recordListQuery } from "./request.js";
-import { personalBest, rankedPersonalBest } from "./response.js";
-import { getRecentPersonalBests, getRecords } from "./service.js";
+import { personalBestListQuery, recordListQuery } from "./request";
+import { personalBest, rankedPersonalBest } from "./response";
+import { getRecentPersonalBests, getRecords } from "./service";
 
 export const personalBestRoutes: FastifyPluginAsyncZod = async (app) => {
   app.route({

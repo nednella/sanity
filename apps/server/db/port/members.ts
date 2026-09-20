@@ -1,4 +1,4 @@
-import { blankToNull, dayToUtcMidnight, read, toBoolean } from "./source.js";
+import { blankToNull, dayToUtcMidnight, read, toBoolean } from "./source";
 
 type SourceRank = {
   id: number;

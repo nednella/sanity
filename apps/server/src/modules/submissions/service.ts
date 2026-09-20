@@ -1,5 +1,5 @@
-import { toSubmission } from "./mapper.js";
-import { listParticipants, listSubmissions } from "./repo.js";
+import { toSubmission } from "./mapper";
+import { listParticipants, listSubmissions } from "./repo";
 
 export const getSubmissions = async (options: Parameters<typeof listSubmissions>[0]) => {
   const rows = await listSubmissions(options);

@@ -1,7 +1,7 @@
 import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import { z } from "zod";
 
-import { pingDatabase } from "./repo.js";
+import { pingDatabase } from "./repo";
 
 export const healthRoutes: FastifyPluginAsyncZod = async (app) => {
   app.route({

@@ -1,8 +1,8 @@
-import { listRanks } from "../ranks/repo.js";
-import { listDiaryProgress } from "../speedrun-diary/repo.js";
-import { findLatestSnapshot } from "../wom/repo.js";
-import { toMember, toMemberProfile } from "./mapper.js";
-import { countMembers, findMember, listMembers } from "./repo.js";
+import { listRanks } from "../ranks/repo";
+import { listDiaryProgress } from "../speedrun-diary/repo";
+import { findLatestSnapshot } from "../wom/repo";
+import { toMember, toMemberProfile } from "./mapper";
+import { countMembers, findMember, listMembers } from "./repo";
 
 export const getMembers = async (options: Parameters<typeof listMembers>[0]) => {
   const [rows, total] = await Promise.all([listMembers(options), countMembers(options)]);

@@ -1,7 +1,7 @@
 import { z } from "zod";
 
-import { isoDate } from "../../schema/codecs.js";
-import { memberRef } from "../../schema/common.js";
+import { isoDate } from "../../schema/codecs";
+import { memberRef } from "../../schema/common";
 
 const content = z.object({
   id: z.number(),

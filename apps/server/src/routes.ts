@@ -1,10 +1,10 @@
 import type { FastifyPluginAsync } from "fastify";
 
-import { healthRoutes } from "./modules/health/handler.js";
-import { memberRoutes } from "./modules/members/handler.js";
-import { personalBestRoutes } from "./modules/personal-bests/handler.js";
-import { rankRoutes } from "./modules/ranks/handler.js";
-import { submissionRoutes } from "./modules/submissions/handler.js";
+import { healthRoutes } from "./modules/health/handler";
+import { memberRoutes } from "./modules/members/handler";
+import { personalBestRoutes } from "./modules/personal-bests/handler";
+import { rankRoutes } from "./modules/ranks/handler";
+import { submissionRoutes } from "./modules/submissions/handler";
 
 export const routes: FastifyPluginAsync = async (app) => {
   app.register(healthRoutes);

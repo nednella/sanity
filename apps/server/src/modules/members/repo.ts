@@ -2,10 +2,10 @@ import type { SQL } from "drizzle-orm";
 import { asc, count, desc, eq, sql } from "drizzle-orm";
 import type { PgColumn } from "drizzle-orm/pg-core";
 
-import { db } from "../../../db/index.js";
-import { members, membersDiscordAccounts, ranks, speedrunDiaryTiers, womPlayers } from "../../../db/schema.js";
-import { diaryProgressCte } from "../speedrun-diary/repo.js";
-import type { MemberSort } from "./request.js";
+import { db } from "../../../db/index";
+import { members, membersDiscordAccounts, ranks, speedrunDiaryTiers, womPlayers } from "../../../db/schema";
+import { diaryProgressCte } from "../speedrun-diary/repo";
+import type { MemberSort } from "./request";
 
 type ListOptions = {
   limit: number;

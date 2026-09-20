@@ -1,6 +1,6 @@
 import { desc, eq, isNotNull, sql } from "drizzle-orm";
 
-import { db } from "../../../db/index.js";
+import { db } from "../../../db/index";
 import {
   members,
   womPlayers,
@@ -8,8 +8,8 @@ import {
   womSnapshotBosses,
   womSnapshotSkills,
   womSnapshots
-} from "../../../db/schema.js";
-import type { WomPlayer, WomSnapshot } from "../../integrations/wom.js";
+} from "../../../db/schema";
+import type { WomPlayer, WomSnapshot } from "../../integrations/wom";
 
 // OSRS treats spaces, underscores and hyphens in a name as the same character.
 const normalise = (name: string) => name.toLowerCase().replaceAll(/[_-]/g, " ").trim();

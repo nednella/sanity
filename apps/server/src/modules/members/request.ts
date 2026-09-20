@@ -1,8 +1,8 @@
 import { z } from "zod";
 
-import { bigIntString, booleanString } from "../../schema/codecs.js";
-import { pagination } from "../../schema/common.js";
-import { contentFilters, top } from "../personal-bests/request.js";
+import { bigIntString, booleanString } from "../../schema/codecs";
+import { pagination } from "../../schema/common";
+import { contentFilters, top } from "../personal-bests/request";
 
 export const memberParams = z.object({ id: bigIntString });
 

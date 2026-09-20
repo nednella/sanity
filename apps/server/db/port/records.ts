@@ -1,4 +1,4 @@
-import { blankToNull, clockToInterval, read, toUtcInstant } from "./source.js";
+import { blankToNull, clockToInterval, read, toUtcInstant } from "./source";
 
 type MemberIds = Map<string, bigint>;
 

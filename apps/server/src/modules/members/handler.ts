@@ -1,12 +1,12 @@
 import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import { z } from "zod";
 
-import { notFound, paginated, toPage } from "../../schema/common.js";
-import { rankedPersonalBest } from "../personal-bests/response.js";
-import { getMemberPersonalBests } from "../personal-bests/service.js";
-import { memberListQuery, memberParams, memberPersonalBestsQuery } from "./request.js";
-import { member, memberProfile } from "./response.js";
-import { getMemberProfile, getMembers } from "./service.js";
+import { notFound, paginated, toPage } from "../../schema/common";
+import { rankedPersonalBest } from "../personal-bests/response";
+import { getMemberPersonalBests } from "../personal-bests/service";
+import { memberListQuery, memberParams, memberPersonalBestsQuery } from "./request";
+import { member, memberProfile } from "./response";
+import { getMemberProfile, getMembers } from "./service";
 
 export const memberRoutes: FastifyPluginAsyncZod = async (app) => {
   app.route({

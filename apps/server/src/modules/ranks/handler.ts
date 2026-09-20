@@ -1,9 +1,9 @@
 import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import { z } from "zod";
 
-import { toRank } from "./mapper.js";
-import { listRanks } from "./repo.js";
-import { rank } from "./response.js";
+import { toRank } from "./mapper";
+import { listRanks } from "./repo";
+import { rank } from "./response";
 
 export const rankRoutes: FastifyPluginAsyncZod = async (app) => {
   app.route({

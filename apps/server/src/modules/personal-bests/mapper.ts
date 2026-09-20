@@ -1,4 +1,4 @@
-import type { listRecentPersonalBests, listRecords, listTeams } from "./repo.js";
+import type { listRecentPersonalBests, listRecords, listTeams } from "./repo";
 
 type PersonalBestRow = Awaited<ReturnType<typeof listRecentPersonalBests>>[number];
 type RankedPersonalBestRow = Awaited<ReturnType<typeof listRecords>>[number];

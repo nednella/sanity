@@ -1,9 +1,9 @@
 import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import { z } from "zod";
 
-import { submissionListQuery } from "./request.js";
-import { submission } from "./response.js";
-import { getSubmissions } from "./service.js";
+import { submissionListQuery } from "./request";
+import { submission } from "./response";
+import { getSubmissions } from "./service";
 
 export const submissionRoutes: FastifyPluginAsyncZod = async (app) => {
   app.route({

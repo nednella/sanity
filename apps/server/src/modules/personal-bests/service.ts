@@ -1,5 +1,5 @@
-import { toPersonalBest, toRankedPersonalBest } from "./mapper.js";
-import { listMemberPersonalBests, listRecentPersonalBests, listRecords, listTeams } from "./repo.js";
+import { toPersonalBest, toRankedPersonalBest } from "./mapper";
+import { listMemberPersonalBests, listRecentPersonalBests, listRecords, listTeams } from "./repo";
 
 const listTeamsOf = async (rows: { personalBest: { id: number } }[]) => {
   const teams = await listTeams(rows.map((row) => row.personalBest.id));

@@ -1,7 +1,7 @@
-import { config } from "../../../config.js";
-import { client } from "../../../db/index.js";
-import { fetchGroupHiscores } from "../../integrations/wom.js";
-import { loadMemberMatcher, savePlayers, saveSnapshots } from "./repo.js";
+import { config } from "../../../config";
+import { client } from "../../../db/index";
+import { fetchGroupHiscores } from "../../integrations/wom";
+import { loadMemberMatcher, savePlayers, saveSnapshots } from "./repo";
 
 // History grows as Wise Old Man refreshes players between runs.
 const entries = await fetchGroupHiscores(config.womGroupId);
