@@ -185,6 +185,21 @@
           "team"
         ]
       },
+      "MemberSortInput": {
+        "type": "string",
+        "enum": [
+          "clanPoints",
+          "diaryPoints",
+          "displayName",
+          "joinedAt",
+          "masterDiaries",
+          "rank",
+          "totalEhb",
+          "totalEhp",
+          "totalExp",
+          "totalLevel"
+        ]
+      },
       "SkillInput": {
         "type": "object",
         "properties": {
@@ -1129,6 +1144,21 @@
         ],
         "additionalProperties": false
       },
+      "MemberSort": {
+        "type": "string",
+        "enum": [
+          "clanPoints",
+          "diaryPoints",
+          "displayName",
+          "joinedAt",
+          "masterDiaries",
+          "rank",
+          "totalEhb",
+          "totalEhp",
+          "totalExp",
+          "totalLevel"
+        ]
+      },
       "Skill": {
         "type": "object",
         "properties": {
@@ -1985,18 +2015,10 @@
           {
             "schema": {
               "default": "clanPoints",
-              "type": "string",
-              "enum": [
-                "clanPoints",
-                "diaryPoints",
-                "displayName",
-                "joinedAt",
-                "masterDiaries",
-                "rank",
-                "totalEhb",
-                "totalEhp",
-                "totalExp",
-                "totalLevel"
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/MemberSortInput"
+                }
               ]
             },
             "in": "query",

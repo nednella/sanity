@@ -8,18 +8,20 @@ export const memberParams = z.object({ id: bigIntString });
 
 const memberFilters = z.object({ active: booleanString.optional() });
 
-const memberSort = z.enum([
-  "clanPoints",
-  "diaryPoints",
-  "displayName",
-  "joinedAt",
-  "masterDiaries",
-  "rank",
-  "totalEhb",
-  "totalEhp",
-  "totalExp",
-  "totalLevel"
-]);
+const memberSort = z
+  .enum([
+    "clanPoints",
+    "diaryPoints",
+    "displayName",
+    "joinedAt",
+    "masterDiaries",
+    "rank",
+    "totalEhb",
+    "totalEhp",
+    "totalExp",
+    "totalLevel"
+  ])
+  .register(z.globalRegistry, { id: "MemberSort" });
 
 const memberSortFilters = z.object({
   sort: memberSort.default("clanPoints"),

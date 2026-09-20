@@ -55,7 +55,7 @@ export interface paths {
                     limit?: number;
                     offset?: number;
                     active?: "true" | "false";
-                    sort?: "clanPoints" | "diaryPoints" | "displayName" | "joinedAt" | "masterDiaries" | "rank" | "totalEhb" | "totalEhp" | "totalExp" | "totalLevel";
+                    sort?: components["schemas"]["MemberSortInput"];
                     order?: "asc" | "desc";
                 };
                 header?: never;
@@ -377,6 +377,8 @@ export interface components {
             submittedBy: components["schemas"]["MemberRefInput"];
             team: components["schemas"]["MemberRefInput"][];
         };
+        /** @enum {string} */
+        MemberSortInput: "clanPoints" | "diaryPoints" | "displayName" | "joinedAt" | "masterDiaries" | "rank" | "totalEhb" | "totalEhp" | "totalExp" | "totalLevel";
         SkillInput: {
             skill: string;
             experience: number;
@@ -600,6 +602,8 @@ export interface components {
             submittedBy: components["schemas"]["MemberRef"];
             team: components["schemas"]["MemberRef"][];
         };
+        /** @enum {string} */
+        MemberSort: "clanPoints" | "diaryPoints" | "displayName" | "joinedAt" | "masterDiaries" | "rank" | "totalEhb" | "totalEhp" | "totalExp" | "totalLevel";
         Skill: {
             skill: string;
             experience: number;
