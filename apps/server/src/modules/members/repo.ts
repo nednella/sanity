@@ -1,20 +1,11 @@
+import type { SQL } from "drizzle-orm";
 import { asc, count, desc, eq, sql } from "drizzle-orm";
+import type { PgColumn } from "drizzle-orm/pg-core";
 
 import { db } from "../../../db/index.js";
 import { members, membersDiscordAccounts, ranks, speedrunDiaryTiers, womPlayers } from "../../../db/schema.js";
 import { diaryProgressCte } from "../speedrun-diary/repo.js";
-
-export type MemberSort =
-  | "clanPoints"
-  | "diaryPoints"
-  | "displayName"
-  | "joinedAt"
-  | "masterDiaries"
-  | "rank"
-  | "totalEhb"
-  | "totalEhp"
-  | "totalExp"
-  | "totalLevel";
+import type { MemberSort } from "./request.js";
 
 type ListOptions = {
   limit: number;
@@ -47,7 +38,7 @@ export const listMembers = ({ limit, offset, active, sort, order }: ListOptions)
   const { bestTimes, reachedTiers, diaryProgress } = diaryProgressCte();
   const direction = order === "asc" ? asc : desc;
 
-  const sortColumns = {
+  const sortColumns: Record<MemberSort, PgColumn | SQL> = {
     clanPoints: members.clanPoints,
     diaryPoints: sql`coalesce(${diaryProgress.diaryPoints}, 0)`,
     displayName: members.displayName,
