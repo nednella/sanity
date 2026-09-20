@@ -10,12 +10,12 @@ import { Button } from "@/lib/ui/button";
 import { cn } from "@/lib/ui/utils";
 
 export const Route = createFileRoute("/")({
-  component: IndexPage
+  component: Page
 });
 
 const floatingButton = "rounded-none border-white/20 bg-black/40 text-white backdrop-blur-sm hover:bg-black/60";
 
-function IndexPage() {
+function Page() {
   return (
     <>
       <BackgroundContent />

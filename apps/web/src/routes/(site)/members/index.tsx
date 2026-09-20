@@ -10,7 +10,7 @@ import { useTableSearch } from "@/lib/table/use-table-search";
 import { Muted } from "@/lib/ui/typography/muted";
 
 export const Route = createFileRoute("/(site)/members/")({
-  component: MembersPage,
+  component: Page,
   validateSearch: validateMembersSearch,
   loaderDeps: ({ search }) => search,
   loader: async ({ context, deps }) => {
@@ -18,7 +18,7 @@ export const Route = createFileRoute("/(site)/members/")({
   }
 });
 
-function MembersPage() {
+function Page() {
   const search = Route.useSearch();
   const navigate = Route.useNavigate();
 

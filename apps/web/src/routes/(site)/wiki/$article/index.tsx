@@ -4,7 +4,7 @@ import { WikiArticle } from "@/components/wiki/wiki-article";
 import { wikiArticles } from "@/content/wiki/index";
 
 export const Route = createFileRoute("/(site)/wiki/$article/")({
-  component: WikiArticlePage,
+  component: Page,
   loader: ({ params }) => {
     const article = wikiArticles[params.article];
     if (!article) throw notFound();
@@ -12,7 +12,7 @@ export const Route = createFileRoute("/(site)/wiki/$article/")({
   }
 });
 
-function WikiArticlePage() {
+function Page() {
   const article = Route.useLoaderData();
 
   return <WikiArticle {...article} />;

@@ -3,10 +3,10 @@ import { Outlet, createFileRoute } from "@tanstack/react-router";
 import { WikiTabStrip } from "@/components/wiki/wiki-tab-strip";
 
 export const Route = createFileRoute("/(site)/wiki/$article")({
-  component: WikiArticleLayout
+  component: Layout
 });
 
-function WikiArticleLayout() {
+function Layout() {
   const { article } = Route.useParams();
 
   return (

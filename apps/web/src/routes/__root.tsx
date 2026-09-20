@@ -10,11 +10,11 @@ export interface RouterContext {
 }
 
 export const Route = createRootRouteWithContext<RouterContext>()({
-  component: RootLayout,
+  component: Layout,
   notFoundComponent: NotFound
 });
 
-function RootLayout() {
+function Layout() {
   return (
     <>
       <div className="isolate">
