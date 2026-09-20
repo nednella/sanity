@@ -3,10 +3,9 @@ import swagger from "@fastify/swagger";
 import Fastify from "fastify";
 import { createJsonSchemaTransform, serializerCompiler, validatorCompiler } from "fastify-type-provider-zod";
 
-import { jsonSchemaOverride } from "@sanity/api";
-
 import { config } from "../config.js";
 import { routes } from "./routes.js";
+import { jsonSchemaOverride } from "./schema/codecs.js";
 
 const { logLevel, corsOrigin } = config;
 

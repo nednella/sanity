@@ -1,12 +1,18 @@
 import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
+import { z } from "zod";
 
-import { contract } from "@sanity/api";
-
+import { submissionListQuery } from "./request.js";
+import { submission } from "./response.js";
 import { getSubmissions } from "./service.js";
 
 export const submissionRoutes: FastifyPluginAsyncZod = async (app) => {
   app.route({
-    ...contract.routes.submissions.list,
+    method: "GET",
+    url: "/submissions",
+    schema: {
+      querystring: submissionListQuery,
+      response: { 200: z.array(submission) }
+    },
     handler: async (req) => getSubmissions(req.query)
   });
 };

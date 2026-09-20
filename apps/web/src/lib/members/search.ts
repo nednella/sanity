@@ -1,11 +1,27 @@
 import type { SearchSchemaInput } from "@tanstack/react-router";
 
-import { memberSort } from "@sanity/api";
-
 import type { MemberSort } from "@/lib/api/types";
 import type { MemberStatus } from "@/lib/members/status";
 import { toActive } from "@/lib/members/status";
 import { toLimit, toOffset, toOrder, toSort } from "@/lib/table/search";
+
+// The generated union is the source of truth; this list is what validates a sort arriving in the
+// URL, and the assertion below fails to compile if the API grows one this list is missing.
+const MEMBER_SORTS = [
+  "clanPoints",
+  "diaryPoints",
+  "displayName",
+  "joinedAt",
+  "masterDiaries",
+  "rank",
+  "totalEhb",
+  "totalEhp",
+  "totalExp",
+  "totalLevel"
+] as const satisfies readonly MemberSort[];
+
+type Unlisted<T extends never> = T;
+export type UnlistedSort = Unlisted<Exclude<MemberSort, (typeof MEMBER_SORTS)[number]>>;
 
 const DEFAULT_LIMIT = 50;
 const DEFAULT_SORT: MemberSort = "clanPoints";
@@ -29,7 +45,7 @@ export const validateMembersSearch = (search: Record<string, unknown> & SearchSc
   limit: toLimit(search.limit, PAGE_SIZES, DEFAULT_LIMIT),
   offset: toOffset(search.offset),
   order: toOrder(search.order),
-  sort: toSort(search.sort, memberSort.options, DEFAULT_SORT),
+  sort: toSort(search.sort, MEMBER_SORTS, DEFAULT_SORT),
   status: toStatus(search.status)
 });
 

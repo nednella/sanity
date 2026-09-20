@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { bigIntString, isoDate } from "../../codecs.js";
+import { bigIntString, isoDate } from "../../schema/codecs.js";
 
 const rank = z.object({
   id: z.number(),
