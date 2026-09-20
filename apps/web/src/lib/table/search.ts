@@ -1,11 +1,11 @@
 import type { PaginationState, SortingState } from "@tanstack/react-table";
 
-type PageSearch = {
+export type PageSearch = {
   limit: number;
   offset: number;
 };
 
-type SortSearch<TSort extends string> = {
+export type SortSearch<TSort extends string> = {
   order: "asc" | "desc";
   sort: TSort;
 };

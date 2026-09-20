@@ -11,6 +11,7 @@ import { useTable } from "@tanstack/react-table";
 import type { ReactNode } from "react";
 
 import { DataTableBody } from "@/components/table/data-table-body";
+import { DataTableColumnToggle } from "@/components/table/data-table-column-toggle";
 import { DataTableHeader } from "@/components/table/data-table-header";
 import { DataTablePagination } from "@/components/table/data-table-pagination";
 import type { DataTableFeatures } from "@/components/table/table-features";
@@ -18,9 +19,12 @@ import { dataTableFeatures } from "@/components/table/table-features";
 
 const DEFAULT_PAGE_SIZE_OPTIONS = [50, 100, 200];
 
+// A stable reference, so a table waiting on its first page doesn't remount its rows.
+const NO_ROWS: never[] = [];
+
 type DataTableProps<TData extends RowData> = {
   columns: ColumnDef<DataTableFeatures, TData>[];
-  data: TData[];
+  data: TData[] | undefined;
   emptyMessage?: string;
   error?: Error | null;
   initialColumnVisibility?: ColumnVisibilityState;
@@ -38,7 +42,7 @@ type DataTableProps<TData extends RowData> = {
 
 export function DataTable<TData extends RowData>({
   columns,
-  data,
+  data = NO_ROWS,
   emptyMessage = "No results.",
   error = null,
   initialColumnVisibility = {},
@@ -71,10 +75,16 @@ export function DataTable<TData extends RowData>({
   });
 
   const columnCount = table.getVisibleLeafColumns().length;
+  const canToggleColumns = table.getAllLeafColumns().some((column) => column.getCanHide());
 
   return (
     <div className="flex flex-col gap-3">
-      {toolbar?.(table)}
+      {(toolbar || canToggleColumns) && (
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          {toolbar?.(table)}
+          {canToggleColumns && <DataTableColumnToggle table={table} />}
+        </div>
+      )}
 
       <div className="overflow-x-auto rounded-xs border border-base-300">
         <table className="table min-w-full">
