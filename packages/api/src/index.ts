@@ -1,4 +1,3 @@
-import { bindClient } from "./client.js";
 import { healthRoutes } from "./modules/health/routes.js";
 import { memberRoutes } from "./modules/members/routes.js";
 import { personalBestRoutes } from "./modules/personal-bests/routes.js";
@@ -22,5 +21,3 @@ export const contract = {
     submissions: submissionRoutes
   }
 };
-
-export const createClient = (apiUrl: string) => bindClient(apiUrl, contract.routes);

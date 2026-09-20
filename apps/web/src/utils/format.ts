@@ -8,7 +8,7 @@ export function formatNumber(value: number | null | undefined, fractionDigits = 
   });
 }
 
-export function formatDate(value: Date | null | undefined) {
+export function formatDate(value: string | null | undefined) {
   if (value == null) return DASH;
-  return value.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
+  return new Date(value).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
 }

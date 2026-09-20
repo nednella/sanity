@@ -1,10 +1,9 @@
 import { Link } from "@tanstack/react-router";
 import { createColumnHelper } from "@tanstack/react-table";
 
-import type { Member } from "@sanity/api";
-
 import { NationalityFlag } from "@/components/members/nationality-flag";
 import type { DataTableFeatures } from "@/components/table/table-features";
+import type { Member } from "@/lib/api/types";
 import { DASH, formatDate, formatNumber } from "@/utils/format";
 
 const columnHelper = createColumnHelper<DataTableFeatures, Member>();
@@ -28,7 +27,7 @@ export const memberColumns = columnHelper.columns([
           <span className="inline-flex items-center gap-2 font-medium">
             <Link
               to="/members/$memberId"
-              params={{ memberId: id.toString() }}
+              params={{ memberId: id }}
               className="link link-hover"
             >
               {displayName}

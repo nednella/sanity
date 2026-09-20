@@ -1,8 +1,8 @@
 import type { SearchSchemaInput } from "@tanstack/react-router";
 
 import { memberSort } from "@sanity/api";
-import type { MemberSort } from "@sanity/api";
 
+import type { MemberSort } from "@/lib/api/types";
 import type { MemberStatus } from "@/lib/members/status";
 import { toActive } from "@/lib/members/status";
 import { toLimit, toOffset, toOrder, toSort } from "@/lib/table/search";

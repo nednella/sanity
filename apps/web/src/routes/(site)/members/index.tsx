@@ -1,23 +1,28 @@
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import type { OnChangeFn, PaginationState, SortingState } from "@tanstack/react-table";
 import { functionalUpdate } from "@tanstack/react-table";
-
-import type { Member, MemberSort } from "@sanity/api";
 
 import { MemberStatusFilter } from "@/components/members/member-status-filter";
 import { defaultColumnVisibility, memberColumns } from "@/components/members/member-table";
 import { DataTable } from "@/components/table/data-table";
 import { DataTableColumnToggle } from "@/components/table/data-table-column-toggle";
-import { membersQuery } from "@/lib/api/query/members";
+import { api } from "@/lib/api/openapi-client";
+import type { Member, MemberListQuery, MemberSort } from "@/lib/api/types";
 import { toMembersQueryParams, validateMembersSearch } from "@/lib/members/search";
 import type { MemberStatus } from "@/lib/members/status";
 import { fromPaginationState, fromSortingState, toPaginationState, toSortingState } from "@/lib/table/search";
 import { Muted } from "@/lib/ui/typography/muted";
 
+const membersOptions = (query: MemberListQuery) => api.queryOptions("get", "/v1/members", { params: { query } });
+
 export const Route = createFileRoute("/(site)/members/")({
   component: MembersPage,
-  validateSearch: validateMembersSearch
+  validateSearch: validateMembersSearch,
+  loaderDeps: ({ search }) => toMembersQueryParams(search),
+  loader: async ({ context, deps }) => {
+    await context.queryClient.query({ ...membersOptions(deps), staleTime: "static" });
+  }
 });
 
 const EMPTY_MEMBERS: Member[] = [];
@@ -25,7 +30,11 @@ const EMPTY_MEMBERS: Member[] = [];
 function MembersPage() {
   const search = Route.useSearch();
   const navigate = Route.useNavigate();
-  const query = useQuery(membersQuery(toMembersQueryParams(search)));
+
+  const { data, error, isPending, refetch } = useQuery({
+    ...membersOptions(toMembersQueryParams(search)),
+    placeholderData: keepPreviousData
+  });
 
   const pagination = toPaginationState(search);
   const sorting = toSortingState(search);
@@ -73,13 +82,13 @@ function MembersPage() {
 
       <DataTable
         columns={memberColumns}
-        data={query.data?.items ?? EMPTY_MEMBERS}
+        data={data?.items ?? EMPTY_MEMBERS}
         emptyMessage="No members found."
-        error={query.error}
+        error={error}
         initialColumnVisibility={defaultColumnVisibility}
-        isLoading={query.isPending}
+        isLoading={isPending}
         onPaginationChange={onPaginationChange}
-        onRetry={() => query.refetch()}
+        onRetry={() => refetch()}
         onRowClick={(member) =>
           navigate({
             to: "/members/$memberId",
@@ -88,7 +97,7 @@ function MembersPage() {
         }
         onSortingChange={onSortingChange}
         pagination={pagination}
-        rowCount={query.data?.page.total ?? 0}
+        rowCount={data?.page.total ?? 0}
         sorting={sorting}
         toolbar={(table) => (
           <div className="flex flex-wrap items-center justify-between gap-3">
