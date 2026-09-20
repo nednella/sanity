@@ -1,4 +1,4 @@
-import { FLAG_CDN_URL } from "@/lib/links";
+import { FLAG_CDN_URL } from "@/utils/links";
 
 type NationalityFlagProps = {
   value: string;

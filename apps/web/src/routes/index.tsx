@@ -3,11 +3,11 @@ import { Link, createFileRoute } from "@tanstack/react-router";
 import { BackgroundContent } from "@/components/landing/background-content";
 import { Hero } from "@/components/landing/hero";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
-import { DISCORD_URL } from "@/lib/links";
 import { Button } from "@/lib/ui/button";
 import { ExternalLink } from "@/lib/ui/external-link";
 import { DiscordLogo } from "@/lib/ui/logos";
 import { cn } from "@/lib/ui/utils";
+import { SANITY_DISCORD_URL } from "@/utils/links";
 
 export const Route = createFileRoute("/")({
   component: Page
@@ -27,7 +27,7 @@ function Page() {
           className={floatingButton}
         >
           <ExternalLink
-            href={DISCORD_URL}
+            href={SANITY_DISCORD_URL}
             aria-label="Join our Discord"
           >
             <DiscordLogo className="size-4 fill-current" />

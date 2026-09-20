@@ -1,9 +1,9 @@
 import { Link, linkOptions } from "@tanstack/react-router";
 
-import { DISCORD_URL } from "@/lib/links";
 import { Button } from "@/lib/ui/button";
 import { ExternalLink } from "@/lib/ui/external-link";
 import { DiscordLogo } from "@/lib/ui/logos";
+import { SANITY_DISCORD_URL } from "@/utils/links";
 
 const wikiLinks = linkOptions([
   {
@@ -68,7 +68,7 @@ export function Sidebar() {
         asChild
         className="w-full"
       >
-        <ExternalLink href={DISCORD_URL}>
+        <ExternalLink href={SANITY_DISCORD_URL}>
           <DiscordLogo className="size-4 fill-current" />
           Chat on Discord
         </ExternalLink>
