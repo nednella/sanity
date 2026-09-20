@@ -1,8 +1,9 @@
-import { db } from "@db/index";
-import { members, membersDiscordAccounts, ranks, speedrunDiaryTiers, womPlayers } from "@db/schema";
 import type { SQL } from "drizzle-orm";
 import { asc, count, desc, eq, sql } from "drizzle-orm";
 import type { PgColumn } from "drizzle-orm/pg-core";
+
+import { db } from "@db/index";
+import { members, membersDiscordAccounts, ranks, speedrunDiaryTiers, womPlayers } from "@db/schema";
 
 import { diaryProgressCte } from "@/modules/speedrun-diary/repo";
 

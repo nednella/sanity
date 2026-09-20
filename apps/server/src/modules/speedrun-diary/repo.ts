@@ -1,6 +1,7 @@
+import { and, eq, inArray, lte, max, sql, sum } from "drizzle-orm";
+
 import { db } from "@db/index";
 import { personalBestParticipants, personalBests, speedrunDiaryTiers, speedrunDiaryTimes } from "@db/schema";
-import { and, eq, inArray, lte, max, sql, sum } from "drizzle-orm";
 
 // Diary progress is derived, never stored: each member's best approved time per diary earns every tier it
 // beats, so a changed threshold applies on the next read. Omitting memberIds computes it for every member,
