@@ -380,6 +380,11 @@ export interface components {
         };
         /** @enum {string} */
         MemberSortInput: "clanPoints" | "diaryPoints" | "displayName" | "joinedAt" | "masterDiaries" | "rank" | "totalEhb" | "totalEhp" | "totalExp" | "totalLevel";
+        ComputedInput: {
+            metric: string;
+            value: number;
+            rank: number | null;
+        };
         SkillInput: {
             skill: string;
             experience: number;
@@ -401,6 +406,7 @@ export interface components {
         SnapshotInput: {
             /** Format: date-time */
             createdAt: string;
+            computed: components["schemas"]["ComputedInput"][];
             skills: components["schemas"]["SkillInput"][];
             bosses: components["schemas"]["BossInput"][];
             activities: components["schemas"]["ActivityInput"][];
@@ -605,6 +611,11 @@ export interface components {
         };
         /** @enum {string} */
         MemberSort: "clanPoints" | "diaryPoints" | "displayName" | "joinedAt" | "masterDiaries" | "rank" | "totalEhb" | "totalEhp" | "totalExp" | "totalLevel";
+        Computed: {
+            metric: string;
+            value: number;
+            rank: number | null;
+        };
         Skill: {
             skill: string;
             experience: number;
@@ -626,6 +637,7 @@ export interface components {
         Snapshot: {
             /** Format: date-time */
             createdAt: string;
+            computed: components["schemas"]["Computed"][];
             skills: components["schemas"]["Skill"][];
             bosses: components["schemas"]["Boss"][];
             activities: components["schemas"]["Activity"][];

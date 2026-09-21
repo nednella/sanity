@@ -1,7 +1,13 @@
 import { desc, eq } from "drizzle-orm";
 
 import { db } from "@db/index";
-import { womSnapshotActivities, womSnapshotBosses, womSnapshotSkills, womSnapshots } from "@db/schema";
+import {
+  womSnapshotActivities,
+  womSnapshotBosses,
+  womSnapshotComputed,
+  womSnapshotSkills,
+  womSnapshots
+} from "@db/schema";
 
 export const findLatestSnapshot = async (womPlayerId: number) => {
   const [snapshot] = await db
@@ -11,6 +17,11 @@ export const findLatestSnapshot = async (womPlayerId: number) => {
     .orderBy(desc(womSnapshots.createdAt))
     .limit(1);
   if (!snapshot) return;
+
+  const computed = await db
+    .select()
+    .from(womSnapshotComputed)
+    .where(eq(womSnapshotComputed.womSnapshotId, snapshot.id));
 
   const skills = await db
     .select()
@@ -30,7 +41,7 @@ export const findLatestSnapshot = async (womPlayerId: number) => {
     .where(eq(womSnapshotActivities.womSnapshotId, snapshot.id))
     .orderBy(desc(womSnapshotActivities.score));
 
-  return { snapshot, skills, bosses, activities };
+  return { snapshot, computed, skills, bosses, activities };
 };
 
 export type SnapshotRows = NonNullable<Awaited<ReturnType<typeof findLatestSnapshot>>>;

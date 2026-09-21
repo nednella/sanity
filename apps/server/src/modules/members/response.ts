@@ -66,6 +66,14 @@ const progression = z.object({
   })
 });
 
+const computed = z
+  .object({
+    metric: z.string(),
+    value: z.number(),
+    rank: z.number().nullable()
+  })
+  .register(z.globalRegistry, { id: "Computed" });
+
 const skill = z
   .object({
     skill: z.string(),
@@ -96,6 +104,7 @@ const activity = z
 const snapshot = z
   .object({
     createdAt: isoDate,
+    computed: z.array(computed),
     skills: z.array(skill),
     bosses: z.array(boss),
     activities: z.array(activity)

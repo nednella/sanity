@@ -96,8 +96,9 @@ const toProgression = (currentRankId: number, ranks: RankRow[], standing: Standi
   };
 };
 
-const toSnapshot = ({ snapshot, skills, bosses, activities }: SnapshotRows) => ({
+const toSnapshot = ({ snapshot, computed, skills, bosses, activities }: SnapshotRows) => ({
   createdAt: snapshot.createdAt,
+  computed: computed.map(({ metric, value, rank }) => ({ metric, value, rank })),
   skills: skills.map(({ skill, experience, level, rank, ehp }) => ({ skill, experience, level, rank, ehp })),
   bosses: bosses.map(({ boss, kills, rank, ehb }) => ({ boss, kills, rank, ehb })),
   activities: activities.map(({ activity, score, rank }) => ({ activity, score, rank }))
