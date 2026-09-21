@@ -2,6 +2,7 @@ import { toRankIconUrl } from "@/modules/ranks/mapper";
 import type { RankRow } from "@/modules/ranks/repository/list-ranks";
 import type { DiaryProgressRow } from "@/modules/speedrun-diary/repository/list-diary-progress";
 import type { SnapshotRows } from "@/modules/wom/repository/find-latest-snapshot";
+import { sortActivities, sortBosses, sortComputed, sortSkills } from "@/utils/metrics";
 
 import type { MemberRow } from "./repository/shared/select-members";
 
@@ -102,10 +103,12 @@ const toProgression = (currentRankId: number, ranks: RankRow[], standing: Standi
 
 const toSnapshot = ({ snapshot, computed, skills, bosses, activities }: SnapshotRows) => ({
   createdAt: snapshot.createdAt,
-  computed: computed.map(({ metric, value, rank }) => ({ metric, value, rank })),
-  skills: skills.map(({ skill, experience, level, rank, ehp }) => ({ skill, experience, level, rank, ehp })),
-  bosses: bosses.map(({ boss, kills, rank, ehb }) => ({ boss, kills, rank, ehb })),
-  activities: activities.map(({ activity, score, rank }) => ({ activity, score, rank }))
+  computed: sortComputed(computed.map(({ metric, value, rank }) => ({ metric, value, rank }))),
+  skills: sortSkills(
+    skills.map(({ skill, experience, level, rank, ehp }) => ({ skill, experience, level, rank, ehp }))
+  ),
+  bosses: sortBosses(bosses.map(({ boss, kills, rank, ehb }) => ({ boss, kills, rank, ehb }))),
+  activities: sortActivities(activities.map(({ activity, score, rank }) => ({ activity, score, rank })))
 });
 
 export const toMemberProfile = (

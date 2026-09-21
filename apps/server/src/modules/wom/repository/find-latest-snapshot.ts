@@ -23,23 +23,14 @@ export const findLatestSnapshot = async (womPlayerId: number) => {
     .from(womSnapshotComputed)
     .where(eq(womSnapshotComputed.womSnapshotId, snapshot.id));
 
-  const skills = await db
-    .select()
-    .from(womSnapshotSkills)
-    .where(eq(womSnapshotSkills.womSnapshotId, snapshot.id))
-    .orderBy(desc(womSnapshotSkills.experience));
+  const skills = await db.select().from(womSnapshotSkills).where(eq(womSnapshotSkills.womSnapshotId, snapshot.id));
 
-  const bosses = await db
-    .select()
-    .from(womSnapshotBosses)
-    .where(eq(womSnapshotBosses.womSnapshotId, snapshot.id))
-    .orderBy(desc(womSnapshotBosses.kills));
+  const bosses = await db.select().from(womSnapshotBosses).where(eq(womSnapshotBosses.womSnapshotId, snapshot.id));
 
   const activities = await db
     .select()
     .from(womSnapshotActivities)
-    .where(eq(womSnapshotActivities.womSnapshotId, snapshot.id))
-    .orderBy(desc(womSnapshotActivities.score));
+    .where(eq(womSnapshotActivities.womSnapshotId, snapshot.id));
 
   return { snapshot, computed, skills, bosses, activities };
 };

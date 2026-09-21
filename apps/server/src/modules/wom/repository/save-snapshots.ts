@@ -37,7 +37,7 @@ export const saveSnapshots = (snapshots: WomSnapshot[]) =>
         .insert(womSnapshots)
         .values({
           womPlayerId: playerId,
-          createdAt: new Date(createdAt)
+          createdAt
         })
         .onConflictDoNothing()
         .returning({ id: womSnapshots.id });

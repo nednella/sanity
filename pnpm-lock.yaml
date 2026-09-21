@@ -234,6 +234,9 @@ importers:
       '@fastify/cors':
         specifier: ^11.3.0
         version: 11.3.0
+      '@wise-old-man/utils':
+        specifier: ^4.0.24
+        version: 4.0.24
       drizzle-orm:
         specifier: ^0.45.2
         version: 0.45.2(mysql2@3.24.4(@types/node@24.13.4))(postgres@3.4.9)
@@ -277,9 +280,6 @@ importers:
       '@sanity/api':
         specifier: workspace:*
         version: link:../../packages/api
-      '@sanity/osrs':
-        specifier: workspace:*
-        version: link:../../packages/osrs
       '@tanstack/react-query':
         specifier: ^5.102.8
         version: 5.102.8(react@19.3.0)
@@ -289,6 +289,9 @@ importers:
       '@tanstack/react-table':
         specifier: ^9.2.4
         version: 9.2.4(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
+      '@wise-old-man/utils':
+        specifier: ^4.0.24
+        version: 4.0.24
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
@@ -371,12 +374,6 @@ importers:
       openapi-typescript:
         specifier: ^7.13.0
         version: 7.13.0(typescript@6.0.3)
-      typescript:
-        specifier: ~6.0.3
-        version: 6.0.3
-
-  packages/osrs:
-    devDependencies:
       typescript:
         specifier: ~6.0.3
         version: 6.0.3
@@ -1712,6 +1709,9 @@ packages:
         optional: true
       oxc-transform-react:
         optional: true
+
+  '@wise-old-man/utils@4.0.24':
+    resolution: {integrity: sha512-Fypgtm8n/zrt2U53F4dR6cbDsyr+tZsH5eNCbP6UkxiYWWudx5CGqvfKR02cLS7l5eRAowe2y2pjRrNT+woSsw==}
 
   abstract-logging@2.0.1:
     resolution: {integrity: sha512-2BjRTZxTPvheOvGbBslFSYOUkr+SjPtOnrLP33f+VIWLzezQpZcqVg7ja3L4dBXmzzgwT+a029jRx5PCi3JuiA==}
@@ -4462,6 +4462,8 @@ snapshots:
     optionalDependencies:
       '@rolldown/plugin-babel': 0.2.4(@babel/core@7.29.7(supports-color@10.2.2))(rolldown@1.2.8)(vite@8.3.0(@types/node@24.13.4)(esbuild@0.28.2)(jiti@2.6.1)(tsx@4.23.13)(yaml@2.9.0))
       babel-plugin-react-compiler: 1.0.0
+
+  '@wise-old-man/utils@4.0.24': {}
 
   abstract-logging@2.0.1: {}
 
