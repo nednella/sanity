@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { Menu } from "lucide-react";
 
-import { ThemeToggle } from "@/components/theme/theme-toggle";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/lib/ui/button";
 
 type HeaderProps = {

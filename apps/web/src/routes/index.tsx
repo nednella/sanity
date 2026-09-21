@@ -1,7 +1,7 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
 
-import { BackgroundContent } from "@/components/landing/background-content";
-import { ThemeToggle } from "@/components/theme/theme-toggle";
+import { LandingContent } from "@/components/landing-content";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/lib/ui/button";
 import { ExternalLink } from "@/lib/ui/external-link";
 import { Hero } from "@/lib/ui/hero";
@@ -18,7 +18,7 @@ const floatingButton = "rounded-none border-white/20 bg-black/40 text-white back
 function Page() {
   return (
     <>
-      <BackgroundContent />
+      <LandingContent />
       <div className="fixed top-4 right-4 z-10 flex gap-2">
         <Button
           asChild

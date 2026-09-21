@@ -2,7 +2,7 @@ import { useThemeStore } from "@/lib/theme/theme.store";
 import { resolveTheme } from "@/lib/theme/utils";
 import { cn } from "@/lib/ui/utils";
 
-export function BackgroundContent() {
+export function LandingContent() {
   const { theme } = useThemeStore();
 
   return (
