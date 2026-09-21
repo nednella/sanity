@@ -16,6 +16,14 @@ type DataTableHeaderProps<TData extends RowData> = {
 };
 
 export function DataTableHeader<TData extends RowData>({ table }: Readonly<DataTableHeaderProps<TData>>) {
+  // Read sorting from the selected state rather than the column builders, which the React
+  // Compiler cannot see, so a sort change actually re-renders these cells.
+  const sortedOf = (columnId: string) => {
+    const sorted = table.state.sorting?.find((entry) => entry.id === columnId);
+    if (!sorted) return false;
+    return sorted.desc ? "desc" : "asc";
+  };
+
   return (
     <thead>
       {table.getHeaderGroups().map((headerGroup) => (
@@ -31,7 +39,7 @@ export function DataTableHeader<TData extends RowData>({ table }: Readonly<DataT
               <th
                 key={header.id}
                 scope="col"
-                aria-sort={toAriaSort(header.column.getCanSort(), header.column.getIsSorted())}
+                aria-sort={toAriaSort(header.column.getCanSort(), sortedOf(header.column.id))}
                 className={cn(
                   "whitespace-nowrap",
                   isAlignedRight && "text-right",
@@ -42,6 +50,7 @@ export function DataTableHeader<TData extends RowData>({ table }: Readonly<DataT
                 <HeaderCell
                   isAlignedRight={isAlignedRight}
                   header={header}
+                  sorted={sortedOf(header.column.id)}
                   table={table}
                 />
               </th>
@@ -56,15 +65,19 @@ export function DataTableHeader<TData extends RowData>({ table }: Readonly<DataT
 type HeaderCellProps<TData extends RowData> = {
   isAlignedRight: boolean;
   header: Header<DataTableFeatures, TData, unknown>;
+  sorted: false | "asc" | "desc";
   table: ReactTable<DataTableFeatures, TData>;
 };
 
-function HeaderCell<TData extends RowData>({ isAlignedRight, header, table }: Readonly<HeaderCellProps<TData>>) {
+function HeaderCell<TData extends RowData>({
+  isAlignedRight,
+  header,
+  sorted,
+  table
+}: Readonly<HeaderCellProps<TData>>) {
   if (header.isPlaceholder) return;
 
   if (!header.column.getCanSort()) return <table.FlexRender header={header} />;
-
-  const sorted = header.column.getIsSorted();
 
   return (
     <button
