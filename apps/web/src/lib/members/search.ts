@@ -24,7 +24,6 @@ type Unlisted<T extends never> = T;
 export type UnlistedSort = Unlisted<Exclude<MemberSort, (typeof MEMBER_SORTS)[number]>>;
 
 const DEFAULT_LIMIT = 50;
-const DEFAULT_SORT: MemberSort = "clanPoints";
 const PAGE_SIZES = [50, 100, 200];
 
 const toStatus = (value: unknown): MemberStatus => {
@@ -36,20 +35,25 @@ const toStatus = (value: unknown): MemberStatus => {
 export type MembersSearch = {
   limit: number;
   offset: number;
-  order: "asc" | "desc";
+  order?: "asc" | "desc";
   search: string;
-  sort: MemberSort;
+  sort?: MemberSort;
   status: MemberStatus;
 };
 
-export const validateMembersSearch = (search: Record<string, unknown> & SearchSchemaInput): MembersSearch => ({
-  limit: toLimit(search.limit, PAGE_SIZES, DEFAULT_LIMIT),
-  offset: toOffset(search.offset),
-  order: toOrder(search.order),
-  search: typeof search.search === "string" ? search.search : "",
-  sort: toSort(search.sort, MEMBER_SORTS, DEFAULT_SORT),
-  status: toStatus(search.status)
-});
+export const validateMembersSearch = (search: Record<string, unknown> & SearchSchemaInput): MembersSearch => {
+  // An order without a sort would sit in the URL doing nothing.
+  const sort = toSort(search.sort, MEMBER_SORTS);
+
+  return {
+    limit: toLimit(search.limit, PAGE_SIZES, DEFAULT_LIMIT),
+    offset: toOffset(search.offset),
+    order: sort && toOrder(search.order),
+    search: typeof search.search === "string" ? search.search : "",
+    sort,
+    status: toStatus(search.status)
+  };
+};
 
 export const toMembersQueryParams = (search: MembersSearch) => ({
   active: toActive(search.status),

@@ -31,7 +31,6 @@ type DataTableProps<TData extends RowData> = {
   columns: ColumnDef<DataTableFeatures, TData>[];
   data: TData[] | undefined;
   emptyMessage?: string;
-  enableSortingRemoval?: boolean;
   error?: Error | null;
   initialColumnVisibility?: ColumnVisibilityState;
   isLoading?: boolean;
@@ -56,7 +55,6 @@ export function DataTable<TData extends RowData>({
   columns,
   data = NO_ROWS,
   emptyMessage = "No results.",
-  enableSortingRemoval = false,
   error = null,
   initialColumnVisibility = {},
   isLoading = false,
@@ -79,7 +77,6 @@ export function DataTable<TData extends RowData>({
     {
       columns,
       data,
-      enableSortingRemoval,
       features: dataTableFeatures,
       initialState: {
         columnVisibility: initialColumnVisibility,

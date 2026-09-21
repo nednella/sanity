@@ -22,9 +22,13 @@ export function useTableSearch<TSearch extends PageSearch & SortSearch<string>>(
   const onPaginationChange: OnChangeFn<PaginationState> = (updater) =>
     replaceSearch(fromPaginationState(functionalUpdate(updater, pagination)) as Partial<TSearch>);
 
+  // Clearing a column's sort drops both params, rather than writing an empty one.
   const onSortingChange: OnChangeFn<SortingState> = (updater) => {
     const [next] = functionalUpdate(updater, sorting);
-    if (next) replaceSearch(fromSortingState<TSearch["sort"]>(next) as Partial<TSearch>);
+    const sort = next
+      ? fromSortingState<NonNullable<TSearch["sort"]>>(next)
+      : { offset: 0, order: undefined, sort: undefined };
+    replaceSearch(sort as Partial<TSearch>);
   };
 
   return { onPaginationChange, onSortingChange, pagination, replaceSearch, sorting };
