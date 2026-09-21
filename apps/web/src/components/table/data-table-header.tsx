@@ -1,5 +1,5 @@
 import type { Header, ReactTable, RowData } from "@tanstack/react-table";
-import { ArrowUp } from "lucide-react";
+import { ArrowDown, ArrowUp, ChevronsUpDown } from "lucide-react";
 
 import type { DataTableFeatures } from "@/components/table/table-features";
 import { cn } from "@/lib/ui/utils";
@@ -67,6 +67,12 @@ export function DataTableHeader<TData extends RowData>({
   );
 }
 
+function SortIcon({ sorted }: Readonly<{ sorted: false | "asc" | "desc" }>) {
+  if (!sorted) return <ChevronsUpDown className="size-3.5 shrink-0 text-base-content/30" />;
+  if (sorted === "asc") return <ArrowUp className="size-3.5 shrink-0" />;
+  return <ArrowDown className="size-3.5 shrink-0" />;
+}
+
 type HeaderCellProps<TData extends RowData> = {
   isAlignedRight: boolean;
   header: Header<DataTableFeatures, TData, unknown>;
@@ -93,13 +99,7 @@ function HeaderCell<TData extends RowData>({
       <span className="whitespace-nowrap">
         <table.FlexRender header={header} />
       </span>
-      <ArrowUp
-        className={cn(
-          "size-3.5 shrink-0 transition-transform",
-          sorted ? "text-base-content" : "text-base-content/30",
-          sorted === "desc" && "rotate-180"
-        )}
-      />
+      <SortIcon sorted={sorted} />
     </button>
   );
 }
