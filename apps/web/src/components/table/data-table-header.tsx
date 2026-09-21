@@ -12,10 +12,14 @@ const toAriaSort = (canSort: boolean, sorted: false | "asc" | "desc") => {
 };
 
 type DataTableHeaderProps<TData extends RowData> = {
+  stickyHeader?: boolean;
   table: ReactTable<DataTableFeatures, TData>;
 };
 
-export function DataTableHeader<TData extends RowData>({ table }: Readonly<DataTableHeaderProps<TData>>) {
+export function DataTableHeader<TData extends RowData>({
+  stickyHeader = false,
+  table
+}: Readonly<DataTableHeaderProps<TData>>) {
   // Read sorting from the selected state rather than the column builders, which the React
   // Compiler cannot see, so a sort change actually re-renders these cells.
   const sortedOf = (columnId: string) => {
@@ -43,7 +47,8 @@ export function DataTableHeader<TData extends RowData>({ table }: Readonly<DataT
                 className={cn(
                   "whitespace-nowrap",
                   isAlignedRight && "text-right",
-                  meta?.sticky && "sticky left-0 z-20 border-r border-base-content/5 bg-inherit"
+                  meta?.sticky && "sticky left-0 z-20 border-r border-base-content/5 bg-inherit",
+                  stickyHeader && "sticky top-12 z-20 bg-base-100"
                 )}
                 style={{ minWidth: meta?.minWidth && `${meta.minWidth}rem` }}
               >

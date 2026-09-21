@@ -18,6 +18,7 @@ import { DataTablePagination } from "@/components/table/data-table-pagination";
 import { DataTableSearch } from "@/components/table/data-table-search";
 import type { DataTableFeatures } from "@/components/table/table-features";
 import { dataTableFeatures } from "@/components/table/table-features";
+import { cn } from "@/lib/ui/utils";
 
 const DEFAULT_PAGE_SIZE_OPTIONS = [50, 100, 200];
 
@@ -45,6 +46,7 @@ type DataTableProps<TData extends RowData> = {
   search?: { onChange: (value: string) => void; placeholder?: string; value: string };
   rowCount?: number;
   sorting?: SortingState;
+  stickyHeader?: boolean;
   toolbar?: (table: ReactTable<DataTableFeatures, TData>) => ReactNode;
 };
 
@@ -66,6 +68,7 @@ export function DataTable<TData extends RowData>({
   rowCount,
   search,
   sorting,
+  stickyHeader = false,
   toolbar
 }: Readonly<DataTableProps<TData>>) {
   const isServerPagination = pagination !== undefined;
@@ -122,9 +125,12 @@ export function DataTable<TData extends RowData>({
         </div>
       )}
 
-      <div className="overflow-x-auto rounded-xs border border-base-300">
-        <table className="table min-w-full">
-          <DataTableHeader table={table} />
+      <div className={cn("rounded-xs border border-base-300", !stickyHeader && "overflow-x-auto")}>
+        <table className="table min-w-full [overflow-anchor:none]">
+          <DataTableHeader
+            table={table}
+            stickyHeader={stickyHeader}
+          />
           <tbody>
             <DataTableBody
               table={table}

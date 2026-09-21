@@ -87,7 +87,7 @@ export function DataTableBody<TData extends RowData>({
       key={row.id}
       tabIndex={onRowClick ? 0 : undefined}
       className={cn(
-        "bg-base-100 hover:bg-base-200",
+        "h-12 bg-base-100 hover:bg-base-200",
         onRowClick &&
           "cursor-pointer focus-visible:outline focus-visible:-outline-offset-2 focus-visible:outline-primary"
       )}
