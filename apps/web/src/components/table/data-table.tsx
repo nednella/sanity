@@ -41,6 +41,7 @@ type DataTableProps<TData extends RowData> = {
   onSortingChange?: OnChangeFn<SortingState>;
   pageSizeOptions?: number[];
   pagination?: PaginationState;
+  pinRow?: (row: TData) => boolean;
   search?: { onChange: (value: string) => void; placeholder?: string; value: string };
   rowCount?: number;
   sorting?: SortingState;
@@ -61,6 +62,7 @@ export function DataTable<TData extends RowData>({
   onSortingChange,
   pageSizeOptions = DEFAULT_PAGE_SIZE_OPTIONS,
   pagination,
+  pinRow,
   rowCount,
   search,
   sorting,
@@ -132,6 +134,7 @@ export function DataTable<TData extends RowData>({
               isLoading={isLoading}
               onRetry={onRetry}
               onRowClick={onRowClick}
+              pinRow={pinRow}
             />
           </tbody>
         </table>

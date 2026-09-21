@@ -12,6 +12,7 @@ type DataTableBodyProps<TData extends RowData> = {
   isLoading: boolean;
   onRetry?: () => void;
   onRowClick?: (row: TData) => void;
+  pinRow?: (row: TData) => boolean;
   table: ReactTable<DataTableFeatures, TData>;
 };
 
@@ -26,6 +27,7 @@ export function DataTableBody<TData extends RowData>({
   isLoading,
   onRetry,
   onRowClick,
+  pinRow,
   table
 }: Readonly<DataTableBodyProps<TData>>) {
   if (isLoading) {
@@ -63,8 +65,11 @@ export function DataTableBody<TData extends RowData>({
   }
 
   const rows = table.getRowModel().rows;
+  // Pinned rows keep the order they arrived in, so sorting a column can't reshuffle them.
+  const pinned = pinRow ? rows.filter((row) => pinRow(row.original)).toSorted((a, b) => a.index - b.index) : [];
+  const ordered = pinRow ? [...pinned, ...rows.filter((row) => !pinRow(row.original))] : rows;
 
-  if (rows.length === 0) {
+  if (ordered.length === 0) {
     return (
       <tr>
         <td
@@ -77,7 +82,7 @@ export function DataTableBody<TData extends RowData>({
     );
   }
 
-  return rows.map((row) => (
+  return ordered.map((row) => (
     <tr
       key={row.id}
       tabIndex={onRowClick ? 0 : undefined}
