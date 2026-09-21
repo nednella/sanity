@@ -37,9 +37,6 @@ export const saveSnapshots = (snapshots: WomSnapshot[]) =>
         .insert(womSnapshots)
         .values({
           womPlayerId: playerId,
-          totalExp: data.skills.overall!.experience,
-          totalEhp: known(data.computed.ehp.value),
-          totalEhb: known(data.computed.ehb.value),
           createdAt: new Date(createdAt)
         })
         .onConflictDoNothing()

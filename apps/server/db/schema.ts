@@ -228,9 +228,6 @@ export const womSnapshots = pgTable(
     womPlayerId: integer()
       .notNull()
       .references(() => womPlayers.womPlayerId, { onDelete: "cascade" }),
-    totalExp: bigint({ mode: "number" }).notNull(),
-    totalEhp: doublePrecision(),
-    totalEhb: doublePrecision(),
     createdAt: timestamp({ withTimezone: true }).notNull()
   },
   (table) => [unique("wom_snapshots_wom_player_id_created_at_unique").on(table.womPlayerId, table.createdAt)]
