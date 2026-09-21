@@ -16,7 +16,7 @@ export const memberColumns = columnHelper.columns([
     enableSorting: false,
     meta: {
       minWidth: 12,
-      sticky: true
+      pinned: true
     },
     cell: ({ row }) => {
       const { displayName, id, nationality, rsn } = row.original;

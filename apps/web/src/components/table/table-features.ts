@@ -12,7 +12,7 @@ export type DataTableColumnMeta = {
   align?: "left" | "right";
   minWidth?: number;
   numeric?: boolean;
-  sticky?: boolean;
+  pinned?: boolean;
 };
 
 export const dataTableFeatures = tableFeatures({

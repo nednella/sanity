@@ -18,7 +18,7 @@ import { DataTablePagination } from "@/components/table/data-table-pagination";
 import { DataTableSearch } from "@/components/table/data-table-search";
 import type { DataTableFeatures } from "@/components/table/table-features";
 import { dataTableFeatures } from "@/components/table/table-features";
-import { cn } from "@/lib/ui/utils";
+import { Table } from "@/lib/ui/table";
 
 const DEFAULT_PAGE_SIZE_OPTIONS = [50, 100, 200];
 
@@ -111,40 +111,41 @@ export function DataTable<TData extends RowData>({
 
   const columnCount = table.getVisibleLeafColumns().length;
   const canToggleColumns = table.getAllLeafColumns().some((column) => column.getCanHide());
-  const hasHeader = Boolean(search) || Boolean(toolbar) || canToggleColumns;
+  const hasToolbar = Boolean(search) || Boolean(toolbar) || canToggleColumns;
 
   return (
-    <div className="flex flex-col gap-3">
-      {hasHeader && (
-        <div className="flex flex-wrap items-center gap-3">
+    <Table.Shell>
+      {hasToolbar && (
+        <Table.Toolbar
+          actions={
+            <>
+              {toolbar?.(table)}
+              {canToggleColumns && <DataTableColumnToggle table={table} />}
+            </>
+          }
+        >
           {search && <DataTableSearch {...search} />}
-          <div className="flex flex-wrap items-center gap-3 md:ms-auto">
-            {toolbar?.(table)}
-            {canToggleColumns && <DataTableColumnToggle table={table} />}
-          </div>
-        </div>
+        </Table.Toolbar>
       )}
 
-      <div className={cn("rounded-xs border border-base-300", !stickyHeader && "overflow-x-auto")}>
-        <table className="table min-w-full [overflow-anchor:none]">
-          <DataTableHeader
+      <Table scroll={!stickyHeader}>
+        <DataTableHeader
+          table={table}
+          stickyHeader={stickyHeader}
+        />
+        <Table.Body>
+          <DataTableBody
             table={table}
-            stickyHeader={stickyHeader}
+            columnCount={columnCount}
+            emptyMessage={emptyMessage}
+            error={error}
+            isLoading={isLoading}
+            onRetry={onRetry}
+            onRowClick={onRowClick}
+            pinRow={pinRow}
           />
-          <tbody>
-            <DataTableBody
-              table={table}
-              columnCount={columnCount}
-              emptyMessage={emptyMessage}
-              error={error}
-              isLoading={isLoading}
-              onRetry={onRetry}
-              onRowClick={onRowClick}
-              pinRow={pinRow}
-            />
-          </tbody>
-        </table>
-      </div>
+        </Table.Body>
+      </Table>
 
       {isServerPagination && (
         <DataTablePagination
@@ -152,6 +153,6 @@ export function DataTable<TData extends RowData>({
           pageSizeOptions={pageSizeOptions}
         />
       )}
-    </div>
+    </Table.Shell>
   );
 }
