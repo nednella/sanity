@@ -6,11 +6,15 @@ export type WomPlayer = {
   displayName: string;
   type: string;
   build: string;
+  status: string;
   exp: number;
   ehp: number;
   ehb: number;
+  ttm: number;
+  tt200m: number;
   registeredAt: string;
   updatedAt: string | null;
+  lastChangedAt: string | null;
 };
 
 export type WomSnapshot = {

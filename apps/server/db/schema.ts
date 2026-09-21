@@ -213,12 +213,16 @@ export const womPlayers = pgTable("wom_players", {
   displayName: text().notNull(),
   type: text().notNull(),
   build: text().notNull(),
+  status: text(),
   totalLevel: smallint(),
   totalExp: bigint({ mode: "number" }).notNull(),
   totalEhp: doublePrecision().notNull(),
   totalEhb: doublePrecision().notNull(),
+  timeToMax: doublePrecision(),
+  timeTo200m: doublePrecision("time_to_200m"),
   registeredAt: timestamp({ withTimezone: true }).notNull(),
-  updatedAt: timestamp({ withTimezone: true })
+  updatedAt: timestamp({ withTimezone: true }),
+  lastChangedAt: timestamp({ withTimezone: true })
 });
 
 export const womSnapshots = pgTable(
