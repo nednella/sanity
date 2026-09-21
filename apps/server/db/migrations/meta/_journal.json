@@ -22,6 +22,13 @@
       "when": 1789314255242,
       "tag": "0002_lush_azazel",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1790024446536,
+      "tag": "0003_special_daimon_hellstrom",
+      "breakpoints": true
     }
   ]
 }

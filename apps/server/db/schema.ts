@@ -277,3 +277,16 @@ export const womSnapshotActivities = pgTable(
   },
   (table) => [primaryKey({ columns: [table.womSnapshotId, table.activity] })]
 );
+
+export const womSnapshotComputed = pgTable(
+  "wom_snapshot_computed",
+  {
+    womSnapshotId: integer()
+      .notNull()
+      .references(() => womSnapshots.id, { onDelete: "cascade" }),
+    metric: text().notNull(),
+    value: doublePrecision().notNull(),
+    rank: integer()
+  },
+  (table) => [primaryKey({ columns: [table.womSnapshotId, table.metric] })]
+);

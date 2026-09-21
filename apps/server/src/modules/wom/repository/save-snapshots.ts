@@ -1,5 +1,11 @@
 import { db } from "@db/index";
-import { womSnapshotActivities, womSnapshotBosses, womSnapshotSkills, womSnapshots } from "@db/schema";
+import {
+  womSnapshotActivities,
+  womSnapshotBosses,
+  womSnapshotComputed,
+  womSnapshotSkills,
+  womSnapshots
+} from "@db/schema";
 
 import type { WomSnapshot } from "@/integrations/wom";
 
@@ -7,7 +13,10 @@ import type { WomSnapshot } from "@/integrations/wom";
 // efficiency on snapshots older than its rates. Unknown counts are left out rather than stored as -1.
 const known = (value: number) => (value === -1 ? null : value);
 
-const breakdown = (womSnapshotId: number, { skills, bosses, activities }: WomSnapshot["data"]) => ({
+const breakdown = (womSnapshotId: number, { skills, bosses, activities, computed }: WomSnapshot["data"]) => ({
+  computed: Object.values(computed)
+    .filter(({ value }) => value !== -1)
+    .map(({ metric, rank, value }) => ({ womSnapshotId, metric, rank: known(rank), value })),
   skills: Object.values(skills)
     .filter(({ experience }) => experience !== -1)
     .map(({ metric, rank, ...values }) => ({ womSnapshotId, skill: metric, rank: known(rank), ...values })),
@@ -37,7 +46,8 @@ export const saveSnapshots = (snapshots: WomSnapshot[]) =>
         .returning({ id: womSnapshots.id });
       if (!snapshot) continue;
 
-      const { skills, bosses, activities } = breakdown(snapshot.id, data);
+      const { activities, bosses, computed, skills } = breakdown(snapshot.id, data);
+      if (computed.length > 0) await tx.insert(womSnapshotComputed).values(computed);
       if (skills.length > 0) await tx.insert(womSnapshotSkills).values(skills);
       if (bosses.length > 0) await tx.insert(womSnapshotBosses).values(bosses);
       if (activities.length > 0) await tx.insert(womSnapshotActivities).values(activities);
