@@ -43,11 +43,15 @@ export const toMember = (
     displayName: womPlayer.displayName,
     type: womPlayer.type,
     build: womPlayer.build,
+    status: womPlayer.status,
     totalLevel: womPlayer.totalLevel,
     totalExp: womPlayer.totalExp,
     totalEhp: womPlayer.totalEhp,
     totalEhb: womPlayer.totalEhb,
-    updatedAt: womPlayer.updatedAt
+    timeToMax: womPlayer.timeToMax,
+    timeTo200m: womPlayer.timeTo200m,
+    updatedAt: womPlayer.updatedAt,
+    lastChangedAt: womPlayer.lastChangedAt
   }
 });
 

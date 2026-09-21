@@ -450,12 +450,17 @@ export interface components {
                 displayName: string;
                 type: string;
                 build: string;
+                status: string | null;
                 totalLevel: number | null;
                 totalExp: number;
                 totalEhp: number;
                 totalEhb: number;
+                timeToMax: number | null;
+                timeTo200m: number | null;
                 /** Format: date-time */
                 updatedAt: string | null;
+                /** Format: date-time */
+                lastChangedAt: string | null;
             } | null;
         };
         MemberProfileInput: {
@@ -526,12 +531,17 @@ export interface components {
                 displayName: string;
                 type: string;
                 build: string;
+                status: string | null;
                 totalLevel: number | null;
                 totalExp: number;
                 totalEhp: number;
                 totalEhb: number;
+                timeToMax: number | null;
+                timeTo200m: number | null;
                 /** Format: date-time */
                 updatedAt: string | null;
+                /** Format: date-time */
+                lastChangedAt: string | null;
                 latestSnapshot: components["schemas"]["SnapshotInput"] | null;
             } | null;
         };
@@ -681,12 +691,17 @@ export interface components {
                 displayName: string;
                 type: string;
                 build: string;
+                status: string | null;
                 totalLevel: number | null;
                 totalExp: number;
                 totalEhp: number;
                 totalEhb: number;
+                timeToMax: number | null;
+                timeTo200m: number | null;
                 /** Format: date-time */
                 updatedAt: string | null;
+                /** Format: date-time */
+                lastChangedAt: string | null;
             } | null;
         };
         MemberProfile: {
@@ -757,12 +772,17 @@ export interface components {
                 displayName: string;
                 type: string;
                 build: string;
+                status: string | null;
                 totalLevel: number | null;
                 totalExp: number;
                 totalEhp: number;
                 totalEhb: number;
+                timeToMax: number | null;
+                timeTo200m: number | null;
                 /** Format: date-time */
                 updatedAt: string | null;
+                /** Format: date-time */
+                lastChangedAt: string | null;
                 latestSnapshot: components["schemas"]["Snapshot"] | null;
             } | null;
         };

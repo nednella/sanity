@@ -43,11 +43,15 @@ const womPlayer = z.object({
   displayName: z.string(),
   type: z.string(),
   build: z.string(),
+  status: z.string().nullable(),
   totalLevel: z.number().nullable(),
   totalExp: z.number(),
   totalEhp: z.number(),
   totalEhb: z.number(),
-  updatedAt: isoDate.nullable()
+  timeToMax: z.number().nullable(),
+  timeTo200m: z.number().nullable(),
+  updatedAt: isoDate.nullable(),
+  lastChangedAt: isoDate.nullable()
 });
 
 const nextRank = rank.extend({
