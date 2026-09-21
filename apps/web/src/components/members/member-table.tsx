@@ -1,14 +1,18 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { createColumnHelper } from "@tanstack/react-table";
 
+import { MemberStatusFilter } from "@/components/members/member-status-filter";
 import { NationalityFlag } from "@/components/members/nationality-flag";
+import { DataTable } from "@/components/table/data-table";
 import type { DataTableFeatures } from "@/components/table/table-features";
-import type { Member } from "@/lib/api/types";
+import type { Member, Page } from "@/lib/api/types";
+import type { MembersSearch } from "@/lib/members/search";
+import { useTableSearch } from "@/lib/table/use-table-search";
 import { DASH, formatDate, formatNumber } from "@/utils/format";
 
 const columnHelper = createColumnHelper<DataTableFeatures, Member>();
 
-export const memberColumns = columnHelper.columns([
+const columns = columnHelper.columns([
   columnHelper.accessor("displayName", {
     id: "displayName",
     header: "Name",
@@ -144,7 +148,46 @@ export const memberColumns = columnHelper.columns([
   })
 ]);
 
-export const defaultColumnVisibility = {
+const defaultColumnVisibility = {
   claimedTier: false,
   masterDiaries: false
 };
+
+type MemberTableProps = {
+  data: { items: Member[]; page: Page } | undefined;
+  error: Error | null;
+  isLoading: boolean;
+  onRetry: () => void;
+  search: MembersSearch;
+};
+
+export function MemberTable({ data, error, isLoading, onRetry, search }: Readonly<MemberTableProps>) {
+  const navigate = useNavigate();
+  const { replaceSearch, ...table } = useTableSearch(search);
+
+  return (
+    <DataTable
+      {...table}
+      columns={columns}
+      data={data?.items}
+      emptyMessage="No members found."
+      error={error}
+      initialColumnVisibility={defaultColumnVisibility}
+      isLoading={isLoading}
+      onRetry={onRetry}
+      onRowClick={(member) => navigate({ to: "/members/$memberId", params: { memberId: member.id } })}
+      rowCount={data?.page.total ?? 0}
+      search={{
+        onChange: (value) => replaceSearch({ offset: 0, search: value }),
+        placeholder: "Search by name or RSN",
+        value: search.search
+      }}
+      toolbar={
+        <MemberStatusFilter
+          status={search.status}
+          onChange={(status) => replaceSearch({ offset: 0, status })}
+        />
+      }
+    />
+  );
+}
