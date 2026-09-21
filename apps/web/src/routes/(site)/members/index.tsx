@@ -52,12 +52,12 @@ function Page() {
           placeholder: "Search by name or RSN",
           value: search.search
         }}
-        toolbar={() => (
+        toolbar={
           <MemberStatusFilter
             status={search.status}
             onChange={(status) => replaceSearch({ offset: 0, status })}
           />
-        )}
+        }
       />
     </div>
   );

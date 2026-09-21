@@ -11,13 +11,12 @@ import type {
 import { useTable } from "@tanstack/react-table";
 import type { ReactNode } from "react";
 
-import { DataTableBody } from "@/components/table/data-table-body";
 import { DataTableColumnToggle } from "@/components/table/data-table-column-toggle";
-import { DataTableHeader } from "@/components/table/data-table-header";
 import { DataTablePagination } from "@/components/table/data-table-pagination";
-import { DataTableSearch } from "@/components/table/data-table-search";
 import type { DataTableFeatures } from "@/components/table/table-features";
 import { dataTableFeatures } from "@/components/table/table-features";
+import { Button } from "@/lib/ui/button";
+import type { Sorted } from "@/lib/ui/table";
 import { Table } from "@/lib/ui/table";
 
 const DEFAULT_PAGE_SIZE_OPTIONS = [50, 100, 200];
@@ -43,13 +42,16 @@ type DataTableProps<TData extends RowData> = {
   pageSizeOptions?: number[];
   pagination?: PaginationState;
   pinRow?: (row: TData) => boolean;
-  search?: { onChange: (value: string) => void; placeholder?: string; value: string };
   rowCount?: number;
+  search?: { onChange: (value: string) => void; placeholder?: string; value: string };
   sorting?: SortingState;
   stickyHeader?: boolean;
-  toolbar?: (table: ReactTable<DataTableFeatures, TData>) => ReactNode;
+  toolbar?: ReactNode;
 };
 
+// Passing a state slice and its change handler is what hands that slice to the server; leaving both
+// out lets the table manage it. They stay conditional because an explicit `undefined` would wipe out
+// the handler the table defaults to.
 export function DataTable<TData extends RowData>({
   columns,
   data = NO_ROWS,
@@ -71,11 +73,8 @@ export function DataTable<TData extends RowData>({
   stickyHeader = false,
   toolbar
 }: Readonly<DataTableProps<TData>>) {
-  const isServerPagination = pagination !== undefined;
-  const isServerSorting = sorting !== undefined;
-
-  // The React Compiler cannot see state read through the table's builder methods, so the
-  // slices the header and body render from are selected explicitly to trigger re-renders.
+  // The React Compiler cannot see state read through the table's builder methods, so the slices the
+  // header and rows render from are selected explicitly to trigger re-renders.
   const table = useTable<DataTableFeatures, TData, TableState<DataTableFeatures>>(
     {
       columns,
@@ -84,19 +83,14 @@ export function DataTable<TData extends RowData>({
       features: dataTableFeatures,
       initialState: {
         columnVisibility: initialColumnVisibility,
-        pagination: {
-          pageIndex: 0,
-          pageSize: isServerPagination ? (pageSizeOptions[0] ?? 50) : UNPAGINATED_PAGE_SIZE
-        }
+        pagination: { pageIndex: 0, pageSize: pagination?.pageSize ?? UNPAGINATED_PAGE_SIZE }
       },
-      manualPagination: isServerPagination,
-      manualSorting: isServerSorting,
+      manualPagination: pagination !== undefined,
+      manualSorting: sorting !== undefined,
+      rowCount,
       sortDescFirst: false,
-      // An explicit `undefined` would wipe out the handler the table falls back to, and would pin
-      // that state slice to its initial value, so a slice the server doesn't drive is left out.
       ...(onPaginationChange && { onPaginationChange }),
       ...(onSortingChange && { onSortingChange }),
-      ...(rowCount !== undefined && { rowCount }),
       state: {
         ...(pagination && { pagination }),
         ...(sorting && { sorting })
@@ -109,45 +103,64 @@ export function DataTable<TData extends RowData>({
     })
   );
 
-  const columnCount = table.getVisibleLeafColumns().length;
+  const sortedOf = (columnId: string): Sorted => {
+    const entry = table.state.sorting?.find((sort) => sort.id === columnId);
+    return entry ? (entry.desc ? "desc" : "asc") : false;
+  };
+
   const canToggleColumns = table.getAllLeafColumns().some((column) => column.getCanHide());
-  const hasToolbar = Boolean(search) || Boolean(toolbar) || canToggleColumns;
 
   return (
     <Table.Shell>
-      {hasToolbar && (
+      {(search || toolbar || canToggleColumns) && (
         <Table.Toolbar
           actions={
             <>
-              {toolbar?.(table)}
+              {toolbar}
               {canToggleColumns && <DataTableColumnToggle table={table} />}
             </>
           }
         >
-          {search && <DataTableSearch {...search} />}
+          {search && <Table.Search {...search} />}
         </Table.Toolbar>
       )}
 
       <Table scroll={!stickyHeader}>
-        <DataTableHeader
-          table={table}
-          stickyHeader={stickyHeader}
-        />
+        <Table.Head>
+          {table.getHeaderGroups().map((headerGroup) => (
+            <Table.HeadRow key={headerGroup.id}>
+              {headerGroup.headers.map((header) => {
+                const sortable = header.column.getCanSort();
+
+                return (
+                  <Table.HeadCell
+                    key={header.id}
+                    layout={header.column.columnDef.meta}
+                    onSort={sortable ? header.column.getToggleSortingHandler() : undefined}
+                    sorted={sortable ? sortedOf(header.column.id) : undefined}
+                    sticky={stickyHeader}
+                  >
+                    <table.FlexRender header={header} />
+                  </Table.HeadCell>
+                );
+              })}
+            </Table.HeadRow>
+          ))}
+        </Table.Head>
         <Table.Body>
-          <DataTableBody
-            table={table}
-            columnCount={columnCount}
+          <Rows
             emptyMessage={emptyMessage}
             error={error}
             isLoading={isLoading}
             onRetry={onRetry}
             onRowClick={onRowClick}
             pinRow={pinRow}
+            table={table}
           />
         </Table.Body>
       </Table>
 
-      {isServerPagination && (
+      {pagination && (
         <DataTablePagination
           table={table}
           pageSizeOptions={pageSizeOptions}
@@ -155,4 +168,69 @@ export function DataTable<TData extends RowData>({
       )}
     </Table.Shell>
   );
+}
+
+type RowsProps<TData extends RowData> = {
+  emptyMessage: string;
+  error: Error | null;
+  isLoading: boolean;
+  onRetry?: () => void;
+  onRowClick?: (row: TData) => void;
+  pinRow?: (row: TData) => boolean;
+  table: ReactTable<DataTableFeatures, TData>;
+};
+
+function Rows<TData extends RowData>({
+  emptyMessage,
+  error,
+  isLoading,
+  onRetry,
+  onRowClick,
+  pinRow,
+  table
+}: Readonly<RowsProps<TData>>) {
+  const columnCount = table.getVisibleLeafColumns().length;
+
+  if (isLoading) return <Table.Skeleton columnCount={columnCount} />;
+
+  if (error) {
+    return (
+      <Table.Message colSpan={columnCount}>
+        <p>{error.message}</p>
+        {onRetry && (
+          <Button
+            size="sm"
+            variant="custom"
+            onClick={onRetry}
+          >
+            Retry
+          </Button>
+        )}
+      </Table.Message>
+    );
+  }
+
+  const rows = table.getRowModel().rows;
+  // Sorting only moves the loose rows. Pinned ones keep the order they arrived in, which row.index
+  // still holds after the sorted row model has reordered them.
+  const pinned = pinRow ? rows.filter((row) => pinRow(row.original)).toSorted((a, b) => a.index - b.index) : [];
+  const ordered = pinRow ? [...pinned, ...rows.filter((row) => !pinRow(row.original))] : rows;
+
+  if (ordered.length === 0) return <Table.Message colSpan={columnCount}>{emptyMessage}</Table.Message>;
+
+  return ordered.map((row) => (
+    <Table.Row
+      key={row.id}
+      onSelect={onRowClick && (() => onRowClick(row.original))}
+    >
+      {row.getVisibleCells().map((cell) => (
+        <Table.Cell
+          key={cell.id}
+          layout={cell.column.columnDef.meta}
+        >
+          <table.FlexRender cell={cell} />
+        </Table.Cell>
+      ))}
+    </Table.Row>
+  ));
 }

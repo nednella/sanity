@@ -1,17 +1,19 @@
-import { ArrowDown, ArrowUp, ChevronsUpDown } from "lucide-react";
+import { ArrowDown, ArrowUp, ChevronsUpDown, Search as SearchIcon, X } from "lucide-react";
+import { useEffect, useState } from "react";
 
 import { cn } from "@/lib/ui/utils";
 
 export type Sorted = false | "asc" | "desc";
 
-type CellLayout = {
+export type CellLayout = {
   align?: "left" | "right";
+  minWidth?: number;
   numeric?: boolean;
   // A pinned cell stays put while the table scrolls sideways.
   pinned?: boolean;
 };
 
-const layoutClasses = ({ align, numeric, pinned }: CellLayout) =>
+const layoutClasses = ({ align, numeric, pinned }: CellLayout = {}) =>
   cn(
     numeric && "tabular-nums",
     (numeric || align === "right") && "text-right",
@@ -67,33 +69,55 @@ function HeadRow({ className, ...props }: Readonly<React.ComponentPropsWithRef<"
   );
 }
 
-type HeadCellProps = CellLayout &
-  React.ComponentPropsWithRef<"th"> & {
-    minWidth?: number;
-    // Sticks to the top of the page, offset by the height of the site header.
-    sticky?: boolean;
-  };
+// Undefined means the column cannot be sorted at all, which is not the same as sortable and unsorted.
+const toAriaSort = (sorted: Sorted | undefined) => {
+  if (sorted === undefined) return;
+  if (!sorted) return "none";
+  return sorted === "asc" ? "ascending" : "descending";
+};
 
-function HeadCell({ align, className, minWidth, numeric, pinned, sticky, ...props }: Readonly<HeadCellProps>) {
+type HeadCellProps = React.ComponentPropsWithRef<"th"> & {
+  layout?: CellLayout;
+  // A cell with a handler sorts the column when clicked, and says which way it is sorted now.
+  onSort?: React.MouseEventHandler<HTMLButtonElement>;
+  sorted?: Sorted;
+  // Sticks to the top of the page, offset by the height of the site header.
+  sticky?: boolean;
+};
+
+function HeadCell({ children, className, layout, onSort, sorted, sticky, ...props }: Readonly<HeadCellProps>) {
   return (
     <th
       scope="col"
+      aria-sort={toAriaSort(sorted)}
       className={cn(
         "whitespace-nowrap",
-        layoutClasses({ align, numeric, pinned }),
-        pinned && "z-20",
+        layoutClasses(layout),
+        layout?.pinned && "z-20",
         sticky && "sticky top-12 z-20 bg-base-100",
         className
       )}
-      style={{ minWidth: minWidth && `${minWidth}rem` }}
+      style={{ minWidth: layout?.minWidth && `${layout.minWidth}rem` }}
       {...props}
-    />
+    >
+      {onSort ? (
+        <SortButton
+          onClick={onSort}
+          reverse={layout?.numeric}
+          sorted={sorted ?? false}
+        >
+          {children}
+        </SortButton>
+      ) : (
+        children
+      )}
+    </th>
   );
 }
 
 type SortButtonProps = {
   children: React.ReactNode;
-  onClick: React.MouseEventHandler<HTMLButtonElement> | undefined;
+  onClick: React.MouseEventHandler<HTMLButtonElement>;
   // A right-aligned column reads better with the icon on the left, beside the numbers.
   reverse?: boolean;
   sorted: Sorted;
@@ -161,16 +185,10 @@ function Row({ className, onSelect, ...props }: Readonly<RowProps>) {
   );
 }
 
-function Cell({
-  align,
-  className,
-  numeric,
-  pinned,
-  ...props
-}: Readonly<CellLayout & React.ComponentPropsWithRef<"td">>) {
+function Cell({ className, layout, ...props }: Readonly<{ layout?: CellLayout } & React.ComponentPropsWithRef<"td">>) {
   return (
     <td
-      className={cn(layoutClasses({ align, numeric, pinned }), pinned && "z-10", className)}
+      className={cn(layoutClasses(layout), layout?.pinned && "z-10", className)}
       {...props}
     />
   );
@@ -211,6 +229,58 @@ function Skeleton({ columnCount, rowCount = 10 }: Readonly<SkeletonProps>) {
   ));
 }
 
+const DEBOUNCE_MS = 300;
+
+type SearchProps = {
+  onChange: (value: string) => void;
+  placeholder?: string;
+  value: string;
+};
+
+// The value lives in the URL, but typing shouldn't navigate on every keystroke, so the input holds
+// its own state until the typing stops.
+function Search({ onChange, placeholder = "Search", value }: Readonly<SearchProps>) {
+  const [typed, setTyped] = useState(value);
+  const [committed, setCommitted] = useState(value);
+
+  // The URL owns the value, so adopt it when it changes elsewhere: a back navigation, or a filter
+  // that resets the search.
+  if (value !== committed) {
+    setCommitted(value);
+    setTyped(value);
+  }
+
+  useEffect(() => {
+    if (typed === value) return;
+
+    const timer = setTimeout(() => onChange(typed), DEBOUNCE_MS);
+    return () => clearTimeout(timer);
+  }, [onChange, typed, value]);
+
+  return (
+    <label className="input w-full max-w-64 rounded-xs input-sm">
+      <SearchIcon className="size-4 shrink-0 text-base-content/60" />
+      <input
+        type="search"
+        value={typed}
+        placeholder={placeholder}
+        className="[&::-webkit-search-cancel-button]:appearance-none"
+        onChange={(event) => setTyped(event.target.value)}
+      />
+      {typed && (
+        <button
+          type="button"
+          aria-label="Clear search"
+          className="cursor-pointer text-base-content/60 hover:text-base-content"
+          onClick={() => setTyped("")}
+        >
+          <X className="size-4" />
+        </button>
+      )}
+    </label>
+  );
+}
+
 Table.Body = Body;
 Table.Cell = Cell;
 Table.Head = Head;
@@ -218,7 +288,7 @@ Table.HeadCell = HeadCell;
 Table.HeadRow = HeadRow;
 Table.Message = Message;
 Table.Row = Row;
+Table.Search = Search;
 Table.Shell = Shell;
 Table.Skeleton = Skeleton;
-Table.SortButton = SortButton;
 Table.Toolbar = Toolbar;

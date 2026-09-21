@@ -8,12 +8,10 @@ import {
   tableFeatures
 } from "@tanstack/react-table";
 
-export type DataTableColumnMeta = {
-  align?: "left" | "right";
-  minWidth?: number;
-  numeric?: boolean;
-  pinned?: boolean;
-};
+import type { CellLayout } from "@/lib/ui/table";
+
+// The column meta is the cell layout, so a column declares once how its cells look.
+export type DataTableColumnMeta = CellLayout;
 
 export const dataTableFeatures = tableFeatures({
   columnMeta: metaHelper<DataTableColumnMeta>(),
