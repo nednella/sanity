@@ -3,7 +3,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Outlet, createRootRouteWithContext } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 
-import { NotFound } from "@/components/page/not-found";
+import { NotFound } from "@/components/not-found";
 
 export interface RouterContext {
   queryClient: QueryClient;
@@ -11,7 +11,7 @@ export interface RouterContext {
 
 export const Route = createRootRouteWithContext<RouterContext>()({
   component: Layout,
-  notFoundComponent: NotFound
+  notFoundComponent: () => <NotFound />
 });
 
 function Layout() {
