@@ -25,7 +25,8 @@ export function ErrorState({
       size="sm"
       title={title}
       description={description}
-      className="flex min-h-[50vh] items-center justify-center"
+      className="flex h-full items-center justify-center"
+      reducedMotion
     >
       <div className="flex flex-col items-center gap-8">
         <Button
