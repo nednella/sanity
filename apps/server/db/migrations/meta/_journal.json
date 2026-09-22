@@ -43,6 +43,13 @@
       "when": 1790027480950,
       "tag": "0005_complex_mordo",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1790105619604,
+      "tag": "0006_retired_rank_in_game_name",
+      "breakpoints": true
     }
   ]
 }
