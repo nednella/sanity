@@ -1,26 +1,26 @@
 import { FLAG_CDN_URL } from "@/utils/links";
 
 type NationalityFlagProps = {
-  value: string;
+  countryCode: string;
 };
 
-const isCountryCode = (value: string) => /^[a-z]{2}$/i.test(value);
+const isCountryCode = (countryCode: string) => /^[a-z]{2}$/i.test(countryCode);
 
-export function NationalityFlag({ value }: Readonly<NationalityFlagProps>) {
-  if (!isCountryCode(value)) return <span className="text-xs font-normal text-base-content/60">{value}</span>;
+export function NationalityFlag({ countryCode }: Readonly<NationalityFlagProps>) {
+  if (!isCountryCode(countryCode))
+    return <span className="text-xs font-normal text-base-content/60">{countryCode}</span>;
 
-  const code = value.toLowerCase();
+  const code = countryCode.toLowerCase();
 
   return (
     <img
-      src={`${FLAG_CDN_URL}/16x12/${code}.png`}
-      srcSet={`${FLAG_CDN_URL}/32x24/${code}.png 2x, ${FLAG_CDN_URL}/48x36/${code}.png 3x`}
+      src={`${FLAG_CDN_URL}/${code}.svg`}
       width={16}
       height={12}
-      alt={value.toUpperCase()}
-      title={value.toUpperCase()}
+      alt={countryCode.toUpperCase()}
+      title={countryCode.toUpperCase()}
       loading="lazy"
-      className="inline-block rounded-xs"
+      className="inline-block"
     />
   );
 }

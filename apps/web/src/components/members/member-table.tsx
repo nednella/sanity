@@ -36,7 +36,7 @@ const columns = columnHelper.columns([
             >
               {displayName}
             </Link>
-            {nationality && <NationalityFlag value={nationality} />}
+            {nationality && <NationalityFlag countryCode={nationality} />}
           </span>
           {rsnLine && <span className="text-xs text-base-content/60">{rsnLine}</span>}
         </div>
