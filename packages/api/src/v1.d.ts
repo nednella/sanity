@@ -380,6 +380,11 @@ export interface components {
         };
         /** @enum {string} */
         MemberSortInput: "clanPoints" | "diaryPoints" | "displayName" | "joinedAt" | "masterDiaries" | "rank" | "totalEhb" | "totalEhp" | "totalExp" | "totalLevel";
+        RankSummaryInput: {
+            id: number;
+            name: string;
+            iconUrl: string | null;
+        };
         ComputedInput: {
             metric: string;
             value: number;
@@ -429,11 +434,7 @@ export interface components {
                 joinedAt: string | null;
                 /** Format: date-time */
                 leftAt: string | null;
-                rank: {
-                    id: number;
-                    name: string;
-                    iconUrl: string | null;
-                };
+                rank: components["schemas"]["RankSummaryInput"];
                 points: number;
             };
             diary: {
@@ -481,11 +482,7 @@ export interface components {
                 joinedAt: string | null;
                 /** Format: date-time */
                 leftAt: string | null;
-                rank: {
-                    id: number;
-                    name: string;
-                    iconUrl: string | null;
-                };
+                rank: components["schemas"]["RankSummaryInput"];
                 points: number;
             };
             diary: {
@@ -497,11 +494,7 @@ export interface components {
                 } | null;
             };
             progression: {
-                eligibleRank: {
-                    id: number;
-                    name: string;
-                    iconUrl: string | null;
-                } | null;
+                eligibleRank: components["schemas"]["RankSummaryInput"] | null;
                 nextRank: {
                     points: {
                         id: number;
@@ -621,6 +614,11 @@ export interface components {
         };
         /** @enum {string} */
         MemberSort: "clanPoints" | "diaryPoints" | "displayName" | "joinedAt" | "masterDiaries" | "rank" | "totalEhb" | "totalEhp" | "totalExp" | "totalLevel";
+        RankSummary: {
+            id: number;
+            name: string;
+            iconUrl: string | null;
+        };
         Computed: {
             metric: string;
             value: number;
@@ -670,11 +668,7 @@ export interface components {
                 joinedAt: string | null;
                 /** Format: date-time */
                 leftAt: string | null;
-                rank: {
-                    id: number;
-                    name: string;
-                    iconUrl: string | null;
-                };
+                rank: components["schemas"]["RankSummary"];
                 points: number;
             };
             diary: {
@@ -722,11 +716,7 @@ export interface components {
                 joinedAt: string | null;
                 /** Format: date-time */
                 leftAt: string | null;
-                rank: {
-                    id: number;
-                    name: string;
-                    iconUrl: string | null;
-                };
+                rank: components["schemas"]["RankSummary"];
                 points: number;
             };
             diary: {
@@ -738,11 +728,7 @@ export interface components {
                 } | null;
             };
             progression: {
-                eligibleRank: {
-                    id: number;
-                    name: string;
-                    iconUrl: string | null;
-                } | null;
+                eligibleRank: components["schemas"]["RankSummary"] | null;
                 nextRank: {
                     points: {
                         id: number;

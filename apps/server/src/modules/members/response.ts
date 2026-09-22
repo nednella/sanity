@@ -2,11 +2,13 @@ import { z } from "zod";
 
 import { bigIntString, isoDate } from "@/schema/codecs";
 
-const rank = z.object({
-  id: z.number(),
-  name: z.string(),
-  iconUrl: z.string().nullable()
-});
+const rank = z
+  .object({
+    id: z.number(),
+    name: z.string(),
+    iconUrl: z.string().nullable()
+  })
+  .register(z.globalRegistry, { id: "RankSummary" });
 
 const discord = z.object({
   id: bigIntString,
