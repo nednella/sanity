@@ -4,3 +4,6 @@ import { toMembersQueryParams } from "@/lib/members/search";
 
 export const membersOptions = (search: MembersSearch) =>
   api.queryOptions("get", "/v1/members", { params: { query: toMembersQueryParams(search) } });
+
+export const memberProfileOptions = (memberId: string) =>
+  api.queryOptions("get", "/v1/members/{id}", { params: { path: { id: memberId } } });
