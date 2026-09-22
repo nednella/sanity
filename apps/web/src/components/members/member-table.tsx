@@ -10,6 +10,8 @@ import type { MembersSearch } from "@/lib/members/search";
 import { useTableSearch } from "@/lib/table/use-table-search";
 import { DASH, formatDate, formatNumber } from "@/utils/format";
 
+import { RankBadge } from "./profile/rank-badge";
+
 const columnHelper = createColumnHelper<DataTableFeatures, Member>();
 
 const columns = columnHelper.columns([
@@ -50,18 +52,7 @@ const columns = columnHelper.columns([
     enableSorting: false,
     cell: ({ getValue }) => {
       const rank = getValue();
-      return (
-        <span className="inline-flex items-center gap-2">
-          {rank.iconUrl && (
-            <img
-              src={rank.iconUrl}
-              alt=""
-              className="size-4"
-            />
-          )}
-          {rank.name}
-        </span>
-      );
+      return <RankBadge rank={rank} />;
     }
   }),
   columnHelper.accessor("membership.points", {
