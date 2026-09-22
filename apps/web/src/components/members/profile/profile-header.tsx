@@ -1,5 +1,5 @@
 import { ProfileDetails } from "@/components/members/profile/profile-details";
-import { RankBadge } from "@/components/members/profile/rank-badge";
+import { RankBadge } from "@/components/members/rank-badge";
 import type { MemberProfile } from "@/lib/api/types";
 import { Avatar } from "@/lib/ui/avatar";
 import { H1 } from "@/lib/ui/typography/h1";
