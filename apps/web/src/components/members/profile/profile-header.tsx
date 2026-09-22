@@ -1,3 +1,4 @@
+import { ProfileDetails } from "@/components/members/profile/profile-details";
 import { RankBadge } from "@/components/members/profile/rank-badge";
 import type { MemberProfile } from "@/lib/api/types";
 import { Avatar } from "@/lib/ui/avatar";
@@ -21,6 +22,7 @@ export function ProfileHeader({ profile }: Readonly<ProfileHeaderProps>) {
           <Muted>
             <RankBadge rank={membership.rank} />
           </Muted>
+          <ProfileDetails profile={profile} />
         </div>
       </div>
     </div>
