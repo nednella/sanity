@@ -133,7 +133,7 @@ export const memberProfile = z
   .object({
     ...member.omit({ wom: true }).shape,
     progression,
-    wom: womPlayer.extend({ latestSnapshot: snapshot.nullable() }).nullable()
+    wom: womPlayer.extend({ latestSnapshot: snapshot.optional() }).nullable()
   })
   .register(z.globalRegistry, { id: "MemberProfile" });
 

@@ -542,7 +542,7 @@ export interface components {
                 updatedAt: string | null;
                 /** Format: date-time */
                 lastChangedAt: string | null;
-                latestSnapshot: components["schemas"]["SnapshotInput"] | null;
+                latestSnapshot?: components["schemas"]["SnapshotInput"];
             } | null;
         };
         RankInput: {
@@ -783,7 +783,7 @@ export interface components {
                 updatedAt: string | null;
                 /** Format: date-time */
                 lastChangedAt: string | null;
-                latestSnapshot: components["schemas"]["Snapshot"] | null;
+                latestSnapshot?: components["schemas"]["Snapshot"];
             } | null;
         };
         Rank: {

@@ -126,6 +126,6 @@ export const toMemberProfile = (
       diaryPoints: member.diary.points,
       masterDiaries: member.diary.masterDiaries
     }),
-    wom: wom && { ...wom, latestSnapshot: latestSnapshot ? toSnapshot(latestSnapshot) : null }
+    wom: wom && { ...wom, latestSnapshot: latestSnapshot && toSnapshot(latestSnapshot) }
   };
 };
