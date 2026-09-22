@@ -17,7 +17,7 @@ export function NotFound({
       size="sm"
       title={title}
       description={description}
-      className="flex min-h-screen items-center justify-center"
+      className="flex h-full items-center justify-center"
       reducedMotion
     >
       <Button
