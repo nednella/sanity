@@ -11,17 +11,14 @@ const inactiveProps = {
   className: "border-transparent text-base-content/60 hover:text-base-content"
 };
 
-type WikiTabStripProps = {
+type WikiTabsProps = {
   article: string;
 };
 
-export function WikiTabStrip({ article }: Readonly<WikiTabStripProps>) {
+export function WikiTabs({ article }: Readonly<WikiTabsProps>) {
   return (
     <div className="flex flex-wrap items-end justify-between gap-3 border-b border-base-300">
-      <div
-        role="tablist"
-        className="flex"
-      >
+      <nav className="flex">
         <Link
           to="/wiki/$article"
           params={{ article }}
@@ -43,7 +40,7 @@ export function WikiTabStrip({ article }: Readonly<WikiTabStripProps>) {
         >
           Discussion
         </Link>
-      </div>
+      </nav>
 
       <label className="input -mb-px h-9 rounded-b-none border-base-300">
         <Search className="size-3.5 opacity-50" />

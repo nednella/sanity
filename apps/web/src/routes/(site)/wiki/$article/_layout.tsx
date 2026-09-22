@@ -1,6 +1,6 @@
 import { Outlet, createFileRoute } from "@tanstack/react-router";
 
-import { WikiTabStrip } from "@/components/wiki/wiki-tab-strip";
+import { WikiTabs } from "@/components/wiki/wiki-tabs";
 
 export const Route = createFileRoute("/(site)/wiki/$article")({
   component: Layout
@@ -11,7 +11,7 @@ function Layout() {
 
   return (
     <div className="w-full">
-      <WikiTabStrip article={article} />
+      <WikiTabs article={article} />
       <Outlet />
     </div>
   );
