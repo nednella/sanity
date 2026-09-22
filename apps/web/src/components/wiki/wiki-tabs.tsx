@@ -1,15 +1,6 @@
-import { Link } from "@tanstack/react-router";
 import { Search } from "lucide-react";
 
-const tab = "-mb-px border border-b-0 px-4 py-2 text-sm";
-
-const activeProps = {
-  className: "border-base-300 bg-base-100 font-semibold"
-};
-
-const inactiveProps = {
-  className: "border-transparent text-base-content/60 hover:text-base-content"
-};
+import { Tab, Tabs } from "@/lib/ui/tabs";
 
 type WikiTabsProps = {
   article: string;
@@ -17,39 +8,31 @@ type WikiTabsProps = {
 
 export function WikiTabs({ article }: Readonly<WikiTabsProps>) {
   return (
-    <div className="flex flex-wrap items-end justify-between gap-3 border-b border-base-300">
-      <nav className="flex">
-        <Link
-          to="/wiki/$article"
-          params={{ article }}
-          role="tab"
-          className={tab}
-          activeProps={activeProps}
-          inactiveProps={inactiveProps}
-          activeOptions={{ exact: true }}
-        >
-          Article
-        </Link>
-        <Link
-          to="/wiki/$article/discussion"
-          params={{ article }}
-          role="tab"
-          className={tab}
-          activeProps={activeProps}
-          inactiveProps={inactiveProps}
-        >
-          Discussion
-        </Link>
-      </nav>
-
-      <label className="input -mb-px h-9 rounded-b-none border-base-300">
-        <Search className="size-3.5 opacity-50" />
-        <input
-          type="search"
-          placeholder="Search the Sanity wiki"
-          aria-label="Search the Sanity wiki"
-        />
-      </label>
-    </div>
+    <Tabs
+      actions={
+        <label className="input -mb-px h-9 rounded-b-none border-base-300">
+          <Search className="size-3.5 opacity-50" />
+          <input
+            type="search"
+            placeholder="Search the Sanity wiki"
+            aria-label="Search the Sanity wiki"
+          />
+        </label>
+      }
+    >
+      <Tab
+        to="/wiki/$article"
+        params={{ article }}
+        activeOptions={{ exact: true }}
+      >
+        Article
+      </Tab>
+      <Tab
+        to="/wiki/$article/discussion"
+        params={{ article }}
+      >
+        Discussion
+      </Tab>
+    </Tabs>
   );
 }
