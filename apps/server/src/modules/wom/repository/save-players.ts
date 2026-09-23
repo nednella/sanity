@@ -5,25 +5,10 @@ import { womPlayers } from "@db/schema";
 
 import type { WomPlayer, WomSnapshot } from "@/integrations/wom";
 
-export const savePlayers = async (players: { memberId: bigint; player: WomPlayer; snapshot: WomSnapshot }[]) => {
-  const rows = players.map(({ memberId, player, snapshot }) => ({
-    womPlayerId: player.id,
-    memberId,
-    username: player.username,
-    displayName: player.displayName,
-    type: player.type,
-    build: player.build,
-    status: player.status,
-    totalLevel: snapshot.data.skills.overall.level,
-    totalExp: player.exp,
-    totalEhp: player.ehp,
-    totalEhb: player.ehb,
-    timeToMax: player.ttm,
-    timeTo200m: player.tt200m,
-    registeredAt: player.registeredAt,
-    updatedAt: player.updatedAt,
-    lastChangedAt: player.lastChangedAt
-  }));
+import { toPlayerRow } from "./shared/player-row";
+
+export const savePlayers = async (players: { memberId: bigint; player: WomPlayer; snapshot: WomSnapshot | null }[]) => {
+  const rows = players.map(({ memberId, player, snapshot }) => ({ memberId, ...toPlayerRow(player, snapshot) }));
 
   await db
     .insert(womPlayers)

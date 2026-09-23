@@ -5,6 +5,7 @@ import { membersRouter } from "@/modules/members/router";
 import { personalBestsRouter } from "@/modules/personal-bests/router";
 import { ranksRouter } from "@/modules/ranks/router";
 import { submissionsRouter } from "@/modules/submissions/router";
+import { womRouter } from "@/modules/wom/router";
 
 export const routes: FastifyPluginAsync = async (app) => {
   app.register(healthRouter);
@@ -12,4 +13,5 @@ export const routes: FastifyPluginAsync = async (app) => {
   app.register(personalBestsRouter);
   app.register(ranksRouter);
   app.register(submissionsRouter);
+  app.register(womRouter);
 };
