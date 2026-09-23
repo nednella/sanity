@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 
+import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
 import { Sidebar } from "@/components/layout/sidebar";
 
@@ -20,6 +21,7 @@ export function SiteLayout({ children }: Readonly<SiteLayoutProps>) {
       <div className="drawer-content flex min-h-screen flex-col">
         <Header drawerId={DRAWER_ID} />
         <main className="flex-1 px-4 lg:px-8">{children}</main>
+        <Footer />
       </div>
       <div className="drawer-side z-40">
         <label
