@@ -6,8 +6,11 @@ export type { PlayerResponse as WomPlayer, SnapshotResponse as WomSnapshot } fro
 
 const wom = new WOMClient({ apiKey: config.womApiKey, userAgent: config.womUserAgent });
 
-// Every group member's player and latest snapshot, in one request.
-export const fetchGroupHiscores = (groupId: string) => wom.groups.getGroupBulkHiscores(Number(groupId));
+/**
+ * Reads every member of the clan's Wise Old Man group in one request, each with the latest snapshot
+ * WOM holds for them. A player it doesn't track, or one outside the group, simply isn't in the list.
+ */
+export const womFetchGroupHiscores = (groupId: string) => wom.groups.getGroupBulkHiscores(Number(groupId));
 
 /**
  * Asks Wise Old Man to read the official OSRS hiscores again, and hands back the player
