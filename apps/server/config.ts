@@ -1,10 +1,12 @@
 type Config = {
   host: string;
   port: number;
-  logLevel: string;
   databaseUrl: string;
-  womGroupId: string;
   corsOrigin: string;
+  logLevel: string;
+  womGroupId: string;
+  womApiKey: string;
+  womUserAgent: string;
 };
 
 const required = (name: string): string => {
@@ -16,8 +18,10 @@ const required = (name: string): string => {
 export const config: Config = {
   host: required("HOST"),
   port: Number(required("PORT")),
-  logLevel: required("LOG_LEVEL"),
   databaseUrl: required("DATABASE_URL"),
+  corsOrigin: required("CORS_ORIGIN"),
+  logLevel: required("LOG_LEVEL"),
   womGroupId: required("WOM_GROUP_ID"),
-  corsOrigin: required("CORS_ORIGIN")
+  womApiKey: required("WOM_API_KEY"),
+  womUserAgent: required("WOM_USER_AGENT")
 };
