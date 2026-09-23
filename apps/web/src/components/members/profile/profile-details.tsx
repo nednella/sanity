@@ -14,7 +14,7 @@ export function ProfileDetails({ profile }: Readonly<ProfileDetailsProps>) {
   const details = [
     formatRsn(rsn),
     `Joined ${formatDate(membership.joinedAt)}`,
-    wom?.latestSnapshot && `Last snapshot ${formatRelativeDate(wom.latestSnapshot.createdAt)}`
+    wom?.updatedAt && `Last snapshot ${formatRelativeDate(wom.updatedAt)}`
   ].filter(Boolean);
 
   return (
