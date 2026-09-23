@@ -31,7 +31,7 @@ export function formatRelativeDate(value: string | null | undefined) {
     if (Math.abs(elapsed) >= ms) return formatter.format(Math.round(elapsed / ms), unit);
   }
 
-  return formatter.format(Math.round(elapsed / 1000), "second");
+  return "just now";
 }
 
 export function formatRsn({ main, alt }: { main: string | null; alt: string | null }) {
