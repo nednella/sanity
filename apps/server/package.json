@@ -10,9 +10,9 @@
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "db:studio": "drizzle-kit studio",
-    "db:port": "tsx --env-file-if-exists=.env db/port/index.ts",
-    "wom:sync": "tsx --env-file-if-exists=.env src/modules/wom/sync.ts",
-    "openapi": "tsx --env-file-if-exists=.env src/openapi.ts"
+    "db:port": "tsx --env-file-if-exists=.env scripts/port/index.ts",
+    "wom:sync": "tsx --env-file-if-exists=.env scripts/wom-group-sync.ts",
+    "openapi": "tsx --env-file-if-exists=.env scripts/openapi.ts"
   },
   "dependencies": {
     "@fastify/cors": "^11.3.0",

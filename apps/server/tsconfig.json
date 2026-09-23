@@ -13,5 +13,5 @@
       "@config": ["./config.ts"]
     }
   },
-  "include": ["src", "db", "config.ts", "drizzle.config.ts"]
+  "include": ["src", "db", "scripts", "config.ts", "drizzle.config.ts"]
 }
