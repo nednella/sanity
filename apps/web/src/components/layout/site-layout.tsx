@@ -19,7 +19,7 @@ export function SiteLayout({ children }: Readonly<SiteLayoutProps>) {
       />
       <div className="drawer-content flex min-h-screen flex-col">
         <Header drawerId={DRAWER_ID} />
-        <main className="flex-1 p-4 lg:p-6">{children}</main>
+        <main className="flex-1 px-4 lg:px-8">{children}</main>
       </div>
       <div className="drawer-side z-40">
         <label
