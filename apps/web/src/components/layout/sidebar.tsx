@@ -3,6 +3,9 @@ import { Link, linkOptions } from "@tanstack/react-router";
 import { Button } from "@/lib/ui/button";
 import { ExternalLink } from "@/lib/ui/external-link";
 import { DiscordLogo } from "@/lib/ui/logos";
+import { H2 } from "@/lib/ui/typography/h2";
+import { H4 } from "@/lib/ui/typography/h4";
+import { Overline } from "@/lib/ui/typography/overline";
 import { SANITY_DISCORD_URL } from "@/utils/links";
 
 const wikiLinks = linkOptions([
@@ -58,10 +61,8 @@ export function Sidebar() {
         to="/"
         className="block px-2 py-1"
       >
-        <span className="block text-xl font-black tracking-tight">Sanity</span>
-        <span className="block text-[0.65rem] font-medium tracking-widest text-base-content/50 uppercase">
-          The Sanity Wiki
-        </span>
+        <H2 className="font-black">Sanity</H2>
+        <Overline>The Sanity Wiki</Overline>
       </Link>
 
       <Button
@@ -77,9 +78,7 @@ export function Sidebar() {
       <nav className="flex flex-col gap-5">
         {navigationGroups.map((group) => (
           <div key={group.label}>
-            <h2 className="mb-1 px-2 text-sm font-semibold tracking-wide text-base-content/50 uppercase">
-              {group.label}
-            </h2>
+            <H4 className="mb-1 px-2">{group.label}</H4>
             <ul className="menu w-full p-0 text-[0.95rem]">
               {group.links.map(({ title, ...link }) => (
                 <li key={title}>

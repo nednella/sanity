@@ -1,5 +1,6 @@
 import { useImperativeHandle, useRef } from "react";
 
+import { H3 } from "@/lib/ui/typography/h3";
 import { cn } from "@/lib/ui/utils";
 
 export type DialogHandle = {
@@ -28,7 +29,7 @@ export function Dialog({ ref, title, children, className }: Readonly<DialogProps
       className="modal"
     >
       <div className={cn("modal-box rounded-xs border border-base-300", className)}>
-        <h2 className="text-lg font-bold">{title}</h2>
+        <H3>{title}</H3>
         <div className="py-4">{children}</div>
       </div>
       <form
