@@ -5,8 +5,8 @@ import { RankBadge } from "@/components/members/rank-badge";
 import { PanelEmptyMessage } from "@/components/panel";
 import type { MemberProfile } from "@/lib/api/types";
 import { Separator } from "@/lib/ui/separator";
-import { Muted } from "@/lib/ui/typography/muted";
 import { Overline } from "@/lib/ui/typography/overline";
+import { Small } from "@/lib/ui/typography/small";
 
 type NextRank = NonNullable<MemberProfile["progression"]["nextRank"]["points"]>;
 
@@ -82,9 +82,9 @@ function NextRankCard({ title, nextRank, standing }: Readonly<NextRankCardProps>
     <div className="flex flex-col gap-2">
       <div className="flex items-center justify-between">
         <span className="text-xs text-base-content/60">{title}</span>
-        <Muted className="text-base-content">
+        <Small>
           <RankBadge rank={nextRank} />
-        </Muted>
+        </Small>
       </div>
 
       {requirements.clanPoints > 0 && (
