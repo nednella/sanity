@@ -11,3 +11,7 @@ export function bossIconUrl(metric: string) {
 export function skillIconUrl(metric: string) {
   return iconUrl("skills", metric);
 }
+
+export function statIconUrl(stat: string) {
+  return iconUrl("stats", stat);
+}
