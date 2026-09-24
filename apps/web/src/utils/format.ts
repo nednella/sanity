@@ -1,10 +1,16 @@
 export const DASH = "—";
 
-export function formatNumber(value: number | null | undefined, fractionDigits = 0) {
+export function formatNumber(
+  value: number | null | undefined,
+  fractionDigits: number = 0,
+  notation: "compact" | "standard" = "standard"
+) {
   if (value == null) return DASH;
+
   return value.toLocaleString("en-GB", {
-    maximumFractionDigits: fractionDigits,
-    minimumFractionDigits: fractionDigits
+    notation,
+    maximumFractionDigits: notation === "compact" ? 1 : fractionDigits,
+    minimumFractionDigits: notation === "compact" ? 0 : fractionDigits
   });
 }
 
