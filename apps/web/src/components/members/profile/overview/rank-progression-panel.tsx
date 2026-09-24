@@ -29,7 +29,7 @@ export function RankProgressionPanel({ profile }: Readonly<RankProgressionPanelP
   return (
     <div className="flex flex-1 flex-col">
       {canRankUp ? (
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-6">
           <NextRankCard
             title="Next Rank (Clan Points)"
             nextRank={nextRank.points}
