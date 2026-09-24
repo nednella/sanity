@@ -28,7 +28,7 @@ export function WomSyncButton({ memberId, username }: Readonly<WomSyncButtonProp
       onClick={() => sync.mutate({ params: { path: { username } } })}
     >
       <RefreshCw className={cn("size-4", sync.isPending && "animate-spin")} />
-      Update
+      Sync
     </Button>
   );
 }
