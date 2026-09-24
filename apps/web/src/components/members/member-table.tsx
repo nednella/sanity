@@ -9,7 +9,9 @@ import type { DataTableFeatures } from "@/components/table/table-features";
 import type { Member, Page } from "@/lib/api/types";
 import type { MembersSearch } from "@/lib/members/search";
 import { useTableSearch } from "@/lib/table/use-table-search";
-import { DASH, formatDate, formatNumber } from "@/utils/format";
+import { DASH } from "@/utils/dash";
+import { formatDate } from "@/utils/dates";
+import { formatNumber } from "@/utils/numbers";
 
 const columnHelper = createColumnHelper<DataTableFeatures, Member>();
 

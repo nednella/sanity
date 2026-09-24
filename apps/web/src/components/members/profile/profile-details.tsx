@@ -2,7 +2,10 @@ import { Fragment } from "react";
 
 import type { MemberProfile } from "@/lib/api/types";
 import { Muted } from "@/lib/ui/typography/muted";
-import { formatDate, formatRelativeDate, formatRsn } from "@/utils/format";
+import { formatDate, formatRelativeDate } from "@/utils/dates";
+
+const formatRsn = ({ main, alt }: { main: string | null; alt: string | null }) =>
+  [main, alt].filter(Boolean).join(" / ");
 
 type ProfileDetailsProps = {
   profile: MemberProfile;
