@@ -1,6 +1,6 @@
 import { cn } from "@/lib/ui/utils";
 
-type SeparatorProps = React.ComponentProps<"div"> & {
+type SeparatorProps = React.ComponentProps<"hr"> & {
   orientation?: "horizontal" | "vertical";
 };
 
@@ -10,8 +10,7 @@ type LabelledSeparatorProps = React.ComponentProps<"div"> & {
 
 export function Separator({ className, orientation = "horizontal", ...props }: Readonly<SeparatorProps>) {
   return (
-    <div
-      role="separator"
+    <hr
       aria-orientation={orientation}
       className={cn("shrink-0 bg-base-300", orientation === "horizontal" ? "h-px w-full" : "h-full w-px", className)}
       {...props}
