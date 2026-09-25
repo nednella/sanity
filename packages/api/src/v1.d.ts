@@ -506,7 +506,11 @@ export interface components {
                 imageUrl: string | null;
             };
             scale: number;
-            timeSeconds: number | null;
+            pb: {
+                id: number;
+                timeSeconds: number;
+                imageUrl: string | null;
+            } | null;
             tier: {
                 id: number;
                 name: string;
@@ -760,7 +764,11 @@ export interface components {
                 imageUrl: string | null;
             };
             scale: number;
-            timeSeconds: number | null;
+            pb: {
+                id: number;
+                timeSeconds: number;
+                imageUrl: string | null;
+            } | null;
             tier: {
                 id: number;
                 name: string;

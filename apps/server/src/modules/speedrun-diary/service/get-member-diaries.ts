@@ -9,9 +9,9 @@ const keyOf = ({ contentId, scale }: { contentId: number; scale: number }) => `$
  * Every diary the clan tracks, whether or not the member has a time on it.
  */
 export const getMemberDiaries = async (memberId: bigint) => {
-  const [times, bestTimes] = await Promise.all([listDiaryTimes(), listMemberBestTimes(memberId)]);
+  const [times, personalBests] = await Promise.all([listDiaryTimes(), listMemberBestTimes(memberId)]);
 
-  const bestFor = new Map(bestTimes.map((row) => [keyOf(row), row.timeSeconds]));
+  const pbFor = new Map(personalBests.map((row) => [keyOf(row), row]));
   const thresholds = new Map<string, [DiaryTimeRow, ...DiaryTimeRow[]]>();
 
   for (const time of times) {
@@ -20,5 +20,5 @@ export const getMemberDiaries = async (memberId: bigint) => {
     thresholds.set(key, current ? [...current, time] : [time]);
   }
 
-  return [...thresholds].map(([key, rows]) => toMemberDiary(rows, bestFor.get(key) ?? null));
+  return [...thresholds].map(([key, rows]) => toMemberDiary(rows, pbFor.get(key)));
 };

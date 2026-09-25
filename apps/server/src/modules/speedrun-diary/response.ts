@@ -14,7 +14,13 @@ export const memberDiary = z
       imageUrl: z.string().nullable()
     }),
     scale: z.number(),
-    timeSeconds: z.number().nullable(),
+    pb: z
+      .object({
+        id: z.number(),
+        timeSeconds: z.number(),
+        imageUrl: z.string().nullable()
+      })
+      .nullable(),
     tier: tier.nullable(),
     nextTier: tier.extend({ timeSeconds: z.number() }).nullable()
   })

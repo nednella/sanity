@@ -211,9 +211,26 @@
           "scale": {
             "type": "number"
           },
-          "timeSeconds": {
+          "pb": {
             "nullable": true,
-            "type": "number"
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "number"
+              },
+              "timeSeconds": {
+                "type": "number"
+              },
+              "imageUrl": {
+                "nullable": true,
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "timeSeconds",
+              "imageUrl"
+            ]
           },
           "tier": {
             "nullable": true,
@@ -263,7 +280,7 @@
         "required": [
           "content",
           "scale",
-          "timeSeconds",
+          "pb",
           "tier",
           "nextTier"
         ]
@@ -1296,9 +1313,27 @@
           "scale": {
             "type": "number"
           },
-          "timeSeconds": {
+          "pb": {
             "nullable": true,
-            "type": "number"
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "number"
+              },
+              "timeSeconds": {
+                "type": "number"
+              },
+              "imageUrl": {
+                "nullable": true,
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "timeSeconds",
+              "imageUrl"
+            ],
+            "additionalProperties": false
           },
           "tier": {
             "nullable": true,
@@ -1350,7 +1385,7 @@
         "required": [
           "content",
           "scale",
-          "timeSeconds",
+          "pb",
           "tier",
           "nextTier"
         ],
