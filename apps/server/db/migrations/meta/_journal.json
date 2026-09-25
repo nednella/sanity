@@ -64,6 +64,13 @@
       "when": 1790297440193,
       "tag": "0008_deactivate_retired_speedrun_content",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1790300187375,
+      "tag": "0009_rename_speedrun_content_to_wom_metrics",
+      "breakpoints": true
     }
   ]
 }
