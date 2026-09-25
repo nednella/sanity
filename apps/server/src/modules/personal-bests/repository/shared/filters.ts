@@ -1,12 +1,18 @@
 import { and, eq, inArray } from "drizzle-orm";
 
 import { db } from "@db/index";
-import { personalBestParticipants, personalBests } from "@db/schema";
+import { personalBestParticipants, personalBests, speedrunContent } from "@db/schema";
 
 export type ContentFilters = {
   contentId?: number;
   scale?: number;
 };
+
+// Content the clan has stopped scoring keeps its submissions for history, but no read returns them.
+export const isActiveContent = inArray(
+  personalBests.contentId,
+  db.select({ id: speedrunContent.id }).from(speedrunContent).where(eq(speedrunContent.isActive, true))
+);
 
 // The old bot marks a run approved_missing_member when its team is short, usually because a teammate has since
 // left. It still counts as a personal best, but not as a clan record.

@@ -1,6 +1,6 @@
 import { and } from "drizzle-orm";
 
-import { type ContentFilters, isFor, isInTeamOf, isPersonalBest } from "./shared/filters";
+import { type ContentFilters, isActiveContent, isFor, isInTeamOf, isPersonalBest } from "./shared/filters";
 import { selectRanked } from "./shared/select-ranked";
 
 export type ListMemberPersonalBestsOptions = ContentFilters & {
@@ -13,6 +13,6 @@ export const listMemberPersonalBests = (
   memberId: bigint,
   { limit, offset, top, ...filters }: ListMemberPersonalBestsOptions
 ) =>
-  selectRanked(and(isPersonalBest, isInTeamOf(memberId), isFor(filters)), top)
+  selectRanked(and(isPersonalBest, isInTeamOf(memberId), isActiveContent, isFor(filters)), top)
     .limit(limit)
     .offset(offset);
