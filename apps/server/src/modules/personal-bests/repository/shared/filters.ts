@@ -1,10 +1,11 @@
-import { and, eq, inArray } from "drizzle-orm";
+import { and, eq, exists, inArray, sql } from "drizzle-orm";
 
 import { db } from "@db/index";
-import { personalBestParticipants, personalBests, speedrunContent } from "@db/schema";
+import { personalBestParticipants, personalBests, speedrunContent, speedrunDiaryTimes } from "@db/schema";
 
 export type ContentFilters = {
   contentId?: number;
+  diary?: boolean;
   scale?: number;
 };
 
@@ -30,8 +31,23 @@ export const isInTeamOf = (memberId: bigint) =>
       .where(eq(personalBestParticipants.memberId, memberId))
   );
 
-export const isFor = ({ contentId, scale }: ContentFilters) =>
+// The speedrun diary sets a time for each content and team size it rewards, so a run only counts toward it
+// when both match a row.
+const matchesDiaryTime = and(
+  eq(speedrunDiaryTimes.contentId, personalBests.contentId),
+  eq(speedrunDiaryTimes.scale, personalBests.scale)
+);
+
+const isDiaryContent = exists(
+  db
+    .select({ one: sql`1` })
+    .from(speedrunDiaryTimes)
+    .where(matchesDiaryTime)
+);
+
+export const isFor = ({ contentId, diary, scale }: ContentFilters) =>
   and(
     contentId === undefined ? undefined : eq(personalBests.contentId, contentId),
+    diary ? isDiaryContent : undefined,
     scale === undefined ? undefined : eq(personalBests.scale, scale)
   );

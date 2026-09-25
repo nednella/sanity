@@ -135,49 +135,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/v1/members/{id}/personal-bests": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: {
-            parameters: {
-                query?: {
-                    limit?: number;
-                    offset?: number;
-                    top?: number;
-                    contentId?: number;
-                    scale?: number;
-                };
-                header?: never;
-                path: {
-                    id: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Default Response */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["RankedPersonalBest"][];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/v1/personal-bests": {
         parameters: {
             query?: never;
@@ -191,6 +148,7 @@ export interface paths {
                     limit?: number;
                     offset?: number;
                     contentId?: number;
+                    diary?: "true" | "false";
                     scale?: number;
                 };
                 header?: never;
@@ -230,6 +188,7 @@ export interface paths {
                 query?: {
                     top?: number;
                     contentId?: number;
+                    diary?: "true" | "false";
                     scale?: number;
                 };
                 header?: never;
@@ -458,6 +417,26 @@ export interface components {
             submittedAt: string | null;
             submittedBy: components["schemas"]["MemberRefInput"];
             team: components["schemas"]["MemberRefInput"][];
+        };
+        MemberDiaryInput: {
+            content: {
+                id: number;
+                name: string;
+                imageUrl: string | null;
+            };
+            scale: number;
+            timeSeconds: number | null;
+            tier: {
+                id: number;
+                name: string;
+                points: number;
+            } | null;
+            nextTier: {
+                id: number;
+                name: string;
+                points: number;
+                timeSeconds: number;
+            } | null;
         };
         /** @enum {string} */
         MemberSortInput: "clanPoints" | "diaryPoints" | "displayName" | "joinedAt" | "masterDiaries" | "rank" | "totalEhb" | "totalEhp" | "totalExp" | "totalLevel";
@@ -692,6 +671,26 @@ export interface components {
             submittedAt: string | null;
             submittedBy: components["schemas"]["MemberRef"];
             team: components["schemas"]["MemberRef"][];
+        };
+        MemberDiary: {
+            content: {
+                id: number;
+                name: string;
+                imageUrl: string | null;
+            };
+            scale: number;
+            timeSeconds: number | null;
+            tier: {
+                id: number;
+                name: string;
+                points: number;
+            } | null;
+            nextTier: {
+                id: number;
+                name: string;
+                points: number;
+                timeSeconds: number;
+            } | null;
         };
         /** @enum {string} */
         MemberSort: "clanPoints" | "diaryPoints" | "displayName" | "joinedAt" | "masterDiaries" | "rank" | "totalEhb" | "totalEhp" | "totalExp" | "totalLevel";

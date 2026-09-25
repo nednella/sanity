@@ -185,6 +185,89 @@
           "team"
         ]
       },
+      "MemberDiaryInput": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "number"
+              },
+              "name": {
+                "type": "string"
+              },
+              "imageUrl": {
+                "nullable": true,
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "name",
+              "imageUrl"
+            ]
+          },
+          "scale": {
+            "type": "number"
+          },
+          "timeSeconds": {
+            "nullable": true,
+            "type": "number"
+          },
+          "tier": {
+            "nullable": true,
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "number"
+              },
+              "name": {
+                "type": "string"
+              },
+              "points": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "id",
+              "name",
+              "points"
+            ]
+          },
+          "nextTier": {
+            "nullable": true,
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "number"
+              },
+              "name": {
+                "type": "string"
+              },
+              "points": {
+                "type": "number"
+              },
+              "timeSeconds": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "id",
+              "name",
+              "points",
+              "timeSeconds"
+            ]
+          }
+        },
+        "required": [
+          "content",
+          "scale",
+          "timeSeconds",
+          "tier",
+          "nextTier"
+        ]
+      },
       "MemberSortInput": {
         "type": "string",
         "enum": [
@@ -1183,6 +1266,93 @@
           "submittedAt",
           "submittedBy",
           "team"
+        ],
+        "additionalProperties": false
+      },
+      "MemberDiary": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "number"
+              },
+              "name": {
+                "type": "string"
+              },
+              "imageUrl": {
+                "nullable": true,
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "name",
+              "imageUrl"
+            ],
+            "additionalProperties": false
+          },
+          "scale": {
+            "type": "number"
+          },
+          "timeSeconds": {
+            "nullable": true,
+            "type": "number"
+          },
+          "tier": {
+            "nullable": true,
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "number"
+              },
+              "name": {
+                "type": "string"
+              },
+              "points": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "id",
+              "name",
+              "points"
+            ],
+            "additionalProperties": false
+          },
+          "nextTier": {
+            "nullable": true,
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "number"
+              },
+              "name": {
+                "type": "string"
+              },
+              "points": {
+                "type": "number"
+              },
+              "timeSeconds": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "id",
+              "name",
+              "points",
+              "timeSeconds"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "content",
+          "scale",
+          "timeSeconds",
+          "tier",
+          "nextTier"
         ],
         "additionalProperties": false
       },
@@ -2205,90 +2375,6 @@
         }
       }
     },
-    "/v1/members/{id}/personal-bests": {
-      "get": {
-        "parameters": [
-          {
-            "schema": {
-              "default": 50,
-              "type": "integer",
-              "minimum": 1,
-              "maximum": 200
-            },
-            "in": "query",
-            "name": "limit",
-            "required": false
-          },
-          {
-            "schema": {
-              "default": 0,
-              "type": "integer",
-              "minimum": 0,
-              "maximum": 9007199254740991
-            },
-            "in": "query",
-            "name": "offset",
-            "required": false
-          },
-          {
-            "schema": {
-              "type": "integer",
-              "minimum": 1,
-              "maximum": 10
-            },
-            "in": "query",
-            "name": "top",
-            "required": false
-          },
-          {
-            "schema": {
-              "type": "integer",
-              "minimum": 0,
-              "exclusiveMinimum": true,
-              "maximum": 9007199254740991
-            },
-            "in": "query",
-            "name": "contentId",
-            "required": false
-          },
-          {
-            "schema": {
-              "type": "integer",
-              "minimum": 0,
-              "exclusiveMinimum": true,
-              "maximum": 9007199254740991
-            },
-            "in": "query",
-            "name": "scale",
-            "required": false
-          },
-          {
-            "schema": {
-              "type": "string",
-              "pattern": "^\\d+$"
-            },
-            "in": "path",
-            "name": "id",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Default Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/RankedPersonalBest"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/v1/personal-bests": {
       "get": {
         "parameters": [
@@ -2323,6 +2409,18 @@
             },
             "in": "query",
             "name": "contentId",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "true",
+                "false"
+              ]
+            },
+            "in": "query",
+            "name": "diary",
             "required": false
           },
           {
@@ -2377,6 +2475,18 @@
             },
             "in": "query",
             "name": "contentId",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "true",
+                "false"
+              ]
+            },
+            "in": "query",
+            "name": "diary",
             "required": false
           },
           {
