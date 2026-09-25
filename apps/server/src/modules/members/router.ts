@@ -3,6 +3,8 @@ import { z } from "zod";
 
 import { rankedPersonalBest } from "@/modules/personal-bests/response";
 import { getMemberPersonalBests } from "@/modules/personal-bests/service/get-member-personal-bests";
+import { memberDiary } from "@/modules/speedrun-diary/response";
+import { getMemberDiaries } from "@/modules/speedrun-diary/service/get-member-diaries";
 import { notFound, paginated, toPage } from "@/schema/common";
 
 import { memberListQuery, memberParams, memberPersonalBestsQuery } from "./request";
@@ -39,6 +41,16 @@ export const membersRouter: FastifyPluginAsyncZod = async (app) => {
       const profile = await getMemberProfile(req.params.id);
       return profile ?? res.code(404).send({ message: "member not found" });
     }
+  });
+
+  app.route({
+    method: "GET",
+    url: "/members/:id/diary",
+    schema: {
+      params: memberParams,
+      response: { 200: z.array(memberDiary) }
+    },
+    handler: async (req) => getMemberDiaries(req.params.id)
   });
 
   app.route({
