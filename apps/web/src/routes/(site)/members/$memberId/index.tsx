@@ -1,16 +1,19 @@
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, getRouteApi } from "@tanstack/react-router";
 
+import { AchievementDiaryPanel } from "@/components/members/profile/overview/achievement-diary-panel";
 import { RankProgressionPanel } from "@/components/members/profile/overview/rank-progression-panel";
 import { WomSummaryPanel } from "@/components/members/profile/overview/wom-summary-panel";
 import { ProfileSummaryBar } from "@/components/members/profile/profile-summary-bar";
 import { Panel } from "@/components/panel";
-import { memberProfileOptions } from "@/lib/api/queries/members";
+import { memberDiariesOptions, memberProfileOptions } from "@/lib/api/queries/members";
 
 const ProfileBaseRoute = getRouteApi("/(site)/members/$memberId");
 
 export const Route = createFileRoute("/(site)/members/$memberId/")({
-  component: Page
+  component: Page,
+  loader: ({ context, params }) =>
+    context.queryClient.query({ ...memberDiariesOptions(params.memberId), staleTime: "static" })
 });
 
 function Page() {
@@ -21,6 +24,8 @@ function Page() {
     initialData: ProfileBaseRoute.useLoaderData()
   });
 
+  const { data: diaries } = useQuery({ ...memberDiariesOptions(memberId), initialData: Route.useLoaderData() });
+
   return (
     <div className="flex flex-col gap-8">
       <ProfileSummaryBar profile={profile} />
@@ -29,8 +34,13 @@ function Page() {
         <Panel title="Account Summary">
           <WomSummaryPanel profile={profile} />
         </Panel>
+
         <Panel title="Rank Progression">
           <RankProgressionPanel profile={profile} />
+        </Panel>
+
+        <Panel title="Achievement Diary">
+          <AchievementDiaryPanel diaries={diaries} />
         </Panel>
       </div>
     </div>

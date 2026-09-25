@@ -10,6 +10,7 @@ export type Snapshot = Schemas["Snapshot"];
 export type Skill = Schemas["Skill"];
 export type Boss = Schemas["Boss"];
 export type Activity = Schemas["Activity"];
+export type MemberDiary = Schemas["MemberDiary"];
 export type PersonalBest = Schemas["PersonalBest"];
 export type RankedPersonalBest = Schemas["RankedPersonalBest"];
 export type Submission = Schemas["Submission"];

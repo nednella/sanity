@@ -4,6 +4,10 @@ export function activityIconUrl(metric: string) {
   return iconUrl("activities", metric);
 }
 
+export function diaryTierIconUrl(tier: string) {
+  return iconUrl("diary", tier.toLowerCase());
+}
+
 export function bossIconUrl(metric: string) {
   return iconUrl("bosses", metric);
 }

@@ -7,3 +7,6 @@ export const membersOptions = (search: MembersSearch) =>
 
 export const memberProfileOptions = (memberId: string) =>
   api.queryOptions("get", "/v1/members/{id}", { params: { path: { id: memberId } } });
+
+export const memberDiariesOptions = (memberId: string) =>
+  api.queryOptions("get", "/v1/members/{id}/diary", { params: { path: { id: memberId } } });
