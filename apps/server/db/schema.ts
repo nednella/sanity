@@ -136,7 +136,8 @@ export const pointsTimelineEvents = pgTable("points_timeline_events", {
 export const speedrunContent = pgTable("speedrun_content", {
   id: integer().generatedByDefaultAsIdentity().primaryKey(),
   name: text().notNull().unique("speedrun_content_name_unique"),
-  imageUrl: text()
+  imageUrl: text(),
+  isActive: boolean().notNull().default(true)
 });
 
 export const speedrunDiaryTiers = pgTable("speedrun_diary_tiers", {

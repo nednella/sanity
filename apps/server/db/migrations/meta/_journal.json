@@ -50,6 +50,13 @@
       "when": 1790105619604,
       "tag": "0006_retired_rank_in_game_name",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1790297413928,
+      "tag": "0007_gray_blue_shield",
+      "breakpoints": true
     }
   ]
 }
