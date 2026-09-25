@@ -1,8 +1,8 @@
 import { Fragment } from "react";
 
+import { MaxRank } from "@/components/members/profile/overview/max-rank";
 import { ProgressBar } from "@/components/members/profile/overview/progress-bar";
 import { RankBadge } from "@/components/members/rank-badge";
-import { PanelEmptyMessage } from "@/components/panel";
 import type { MemberProfile } from "@/lib/api/types";
 import { Separator } from "@/lib/ui/separator";
 import { Overline } from "@/lib/ui/typography/overline";
@@ -43,7 +43,7 @@ export function RankProgressionPanel({ profile }: Readonly<RankProgressionPanelP
           />
         </div>
       ) : (
-        <PanelEmptyMessage>No further ranks to progress toward.</PanelEmptyMessage>
+        <MaxRank rank={membership.rank} />
       )}
     </div>
   );
