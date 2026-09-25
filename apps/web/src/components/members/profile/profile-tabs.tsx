@@ -20,6 +20,12 @@ export function ProfileTabs({ memberId }: Readonly<ProfileTabsProps>) {
       >
         Skills
       </Tab>
+      <Tab
+        to="/members/$memberId/bosses"
+        params={{ memberId }}
+      >
+        Bosses
+      </Tab>
     </Tabs>
   );
 }

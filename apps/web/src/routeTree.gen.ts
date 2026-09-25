@@ -17,6 +17,7 @@ import { Route as siteMembersMemberIdLayoutRouteImport } from './routes/(site)/m
 import { Route as siteWikiIndexRouteImport } from './routes/(site)/wiki/index'
 import { Route as siteWikiArticleLayoutRouteImport } from './routes/(site)/wiki/$article/_layout'
 import { Route as siteMembersMemberIdIndexRouteImport } from './routes/(site)/members/$memberId/index'
+import { Route as siteMembersMemberIdBossesRouteImport } from './routes/(site)/members/$memberId/bosses'
 import { Route as siteMembersMemberIdSkillsRouteImport } from './routes/(site)/members/$memberId/skills'
 import { Route as siteWikiArticleIndexRouteImport } from './routes/(site)/wiki/$article/index'
 import { Route as siteWikiArticleDiscussionRouteImport } from './routes/(site)/wiki/$article/discussion'
@@ -62,6 +63,12 @@ const siteMembersMemberIdIndexRoute =
     path: '/',
     getParentRoute: () => siteMembersMemberIdLayoutRoute,
   } as any)
+const siteMembersMemberIdBossesRoute =
+  siteMembersMemberIdBossesRouteImport.update({
+    id: '/bosses',
+    path: '/bosses',
+    getParentRoute: () => siteMembersMemberIdLayoutRoute,
+  } as any)
 const siteMembersMemberIdSkillsRoute =
   siteMembersMemberIdSkillsRouteImport.update({
     id: '/skills',
@@ -87,6 +94,7 @@ export interface FileRoutesByFullPath {
   '/wiki/$article': typeof siteWikiArticleLayoutRouteWithChildren
   '/members/': typeof siteMembersIndexRoute
   '/wiki/': typeof siteWikiIndexRoute
+  '/members/$memberId/bosses': typeof siteMembersMemberIdBossesRoute
   '/members/$memberId/skills': typeof siteMembersMemberIdSkillsRoute
   '/wiki/$article/discussion': typeof siteWikiArticleDiscussionRoute
   '/members/$memberId/': typeof siteMembersMemberIdIndexRoute
@@ -97,6 +105,7 @@ export interface FileRoutesByTo {
   '/login': typeof siteLoginRoute
   '/members': typeof siteMembersIndexRoute
   '/wiki': typeof siteWikiIndexRoute
+  '/members/$memberId/bosses': typeof siteMembersMemberIdBossesRoute
   '/members/$memberId/skills': typeof siteMembersMemberIdSkillsRoute
   '/wiki/$article/discussion': typeof siteWikiArticleDiscussionRoute
   '/members/$memberId': typeof siteMembersMemberIdIndexRoute
@@ -111,6 +120,7 @@ export interface FileRoutesById {
   '/(site)/wiki/$article': typeof siteWikiArticleLayoutRouteWithChildren
   '/(site)/members/': typeof siteMembersIndexRoute
   '/(site)/wiki/': typeof siteWikiIndexRoute
+  '/(site)/members/$memberId/bosses': typeof siteMembersMemberIdBossesRoute
   '/(site)/members/$memberId/skills': typeof siteMembersMemberIdSkillsRoute
   '/(site)/wiki/$article/discussion': typeof siteWikiArticleDiscussionRoute
   '/(site)/members/$memberId/': typeof siteMembersMemberIdIndexRoute
@@ -125,6 +135,7 @@ export interface FileRouteTypes {
     | '/wiki/$article'
     | '/members/'
     | '/wiki/'
+    | '/members/$memberId/bosses'
     | '/members/$memberId/skills'
     | '/wiki/$article/discussion'
     | '/members/$memberId/'
@@ -135,6 +146,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/members'
     | '/wiki'
+    | '/members/$memberId/bosses'
     | '/members/$memberId/skills'
     | '/wiki/$article/discussion'
     | '/members/$memberId'
@@ -148,6 +160,7 @@ export interface FileRouteTypes {
     | '/(site)/wiki/$article'
     | '/(site)/members/'
     | '/(site)/wiki/'
+    | '/(site)/members/$memberId/bosses'
     | '/(site)/members/$memberId/skills'
     | '/(site)/wiki/$article/discussion'
     | '/(site)/members/$memberId/'
@@ -217,6 +230,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof siteMembersMemberIdIndexRouteImport
       parentRoute: typeof siteMembersMemberIdLayoutRoute
     }
+    '/(site)/members/$memberId/bosses': {
+      id: '/(site)/members/$memberId/bosses'
+      path: '/bosses'
+      fullPath: '/members/$memberId/bosses'
+      preLoaderRoute: typeof siteMembersMemberIdBossesRouteImport
+      parentRoute: typeof siteMembersMemberIdLayoutRoute
+    }
     '/(site)/members/$memberId/skills': {
       id: '/(site)/members/$memberId/skills'
       path: '/skills'
@@ -242,12 +262,14 @@ declare module '@tanstack/react-router' {
 }
 
 interface siteMembersMemberIdLayoutRouteChildren {
+  siteMembersMemberIdBossesRoute: typeof siteMembersMemberIdBossesRoute
   siteMembersMemberIdSkillsRoute: typeof siteMembersMemberIdSkillsRoute
   siteMembersMemberIdIndexRoute: typeof siteMembersMemberIdIndexRoute
 }
 
 const siteMembersMemberIdLayoutRouteChildren: siteMembersMemberIdLayoutRouteChildren =
   {
+    siteMembersMemberIdBossesRoute: siteMembersMemberIdBossesRoute,
     siteMembersMemberIdSkillsRoute: siteMembersMemberIdSkillsRoute,
     siteMembersMemberIdIndexRoute: siteMembersMemberIdIndexRoute,
   }
