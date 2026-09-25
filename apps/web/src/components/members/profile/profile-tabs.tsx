@@ -26,6 +26,12 @@ export function ProfileTabs({ memberId }: Readonly<ProfileTabsProps>) {
       >
         Bosses
       </Tab>
+      <Tab
+        to="/members/$memberId/activities"
+        params={{ memberId }}
+      >
+        Activities
+      </Tab>
     </Tabs>
   );
 }
