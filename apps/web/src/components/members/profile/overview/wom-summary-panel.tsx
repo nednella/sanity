@@ -46,7 +46,7 @@ export function WomSummaryPanel({ profile }: Readonly<WomSummaryPanelProps>) {
   const { totalKills, mostEhb, mostKilled } = bossStats(bosses);
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-1 flex-col gap-2">
       {wom ? (
         <>
           <FactRow
