@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 
-import { MaxRank } from "@/components/members/profile/overview/max-rank";
 import { ProgressBar } from "@/components/members/profile/overview/progress-bar";
+import { RankStanding } from "@/components/members/profile/overview/rank-standing";
 import { RankBadge } from "@/components/members/rank-badge";
 import type { MemberProfile } from "@/lib/api/types";
 import { Separator } from "@/lib/ui/separator";
@@ -16,7 +16,7 @@ type RankProgressionPanelProps = {
 
 export function RankProgressionPanel({ profile }: Readonly<RankProgressionPanelProps>) {
   const { diary, membership, progression } = profile;
-  const { nextRank } = progression;
+  const { nextRank, status } = progression;
 
   const standing = {
     clanPoints: membership.points,
@@ -43,9 +43,46 @@ export function RankProgressionPanel({ profile }: Readonly<RankProgressionPanelP
           />
         </div>
       ) : (
-        <MaxRank rank={membership.rank} />
+        <Standing
+          rank={membership.rank}
+          status={status}
+        />
       )}
     </div>
+  );
+}
+
+type StandingProps = {
+  rank: MemberProfile["membership"]["rank"];
+  status: MemberProfile["progression"]["status"];
+};
+
+// Each of these is a dead end on the ladder, for a different reason, and the member should be told which.
+function Standing({ rank, status }: Readonly<StandingProps>) {
+  if (status === "maxed") {
+    return (
+      <RankStanding
+        celebrate
+        rank={rank}
+        overline="Maxed rank"
+      />
+    );
+  }
+
+  if (status === "trial") {
+    return (
+      <RankStanding
+        rank={rank}
+        overline="On trial"
+      />
+    );
+  }
+
+  return (
+    <RankStanding
+      rank={rank}
+      overline="Off the ladder"
+    />
   );
 }
 
