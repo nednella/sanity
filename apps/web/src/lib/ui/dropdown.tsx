@@ -13,9 +13,10 @@ type DropdownProps = {
   label: React.ReactNode;
   children: React.ReactNode;
   className?: string;
+  triggerClassName?: string;
 };
 
-export function Dropdown({ align = "start", label, children, className }: Readonly<DropdownProps>) {
+export function Dropdown({ align = "start", label, children, className, triggerClassName }: Readonly<DropdownProps>) {
   const id = useId();
   const anchor = `--${id.replaceAll(":", "")}`;
 
@@ -24,7 +25,7 @@ export function Dropdown({ align = "start", label, children, className }: Readon
       <button
         type="button"
         popoverTarget={id}
-        className="btn btn-sm"
+        className={cn("btn btn-sm", triggerClassName)}
         style={{ anchorName: anchor } as React.CSSProperties}
       >
         {label}
