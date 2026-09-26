@@ -1,6 +1,7 @@
 import { createColumnHelper } from "@tanstack/react-table";
 import type { ReactNode } from "react";
 
+import { MetricIcon } from "@/components/members/profile/overview/metric-icon";
 import { ParticipantList } from "@/components/members/profile/submissions/participant-list";
 import { DataTable } from "@/components/table/data-table";
 import type { DataTableFeatures } from "@/components/table/table-features";
@@ -10,6 +11,7 @@ import type { SubmissionsSearch } from "@/lib/members/submissions";
 import { useTableSearch } from "@/lib/table/use-table-search";
 import { RelativeDate } from "@/lib/ui/relative-date";
 import { DASH } from "@/utils/dash";
+import { itemIconUrl } from "@/utils/icons";
 import { formatNumber } from "@/utils/numbers";
 
 const columnHelper = createColumnHelper<DataTableFeatures, Submission>();
@@ -21,7 +23,16 @@ const buildColumns = (memberId: string) =>
       header: "Item",
       enableHiding: false,
       meta: { minWidth: 14 },
-      cell: ({ getValue }) => <span className="font-medium">{getValue() ?? DASH}</span>
+      cell: ({ row }) => {
+        const { name, osrsItemId } = row.original.item;
+
+        return (
+          <span className="inline-flex items-center gap-2 font-medium">
+            {osrsItemId !== null && <MetricIcon src={itemIconUrl(osrsItemId)} />}
+            {name ?? DASH}
+          </span>
+        );
+      }
     }),
     columnHelper.accessor("valueMillions", {
       id: "valueMillions",

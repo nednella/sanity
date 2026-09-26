@@ -19,3 +19,7 @@ export function skillIconUrl(metric: string) {
 export function statIconUrl(stat: string) {
   return iconUrl("stats", stat);
 }
+
+export function itemIconUrl(osrsItemId: number) {
+  return `https://chisel.weirdgloop.org/static/img/osrs-dii/${osrsItemId}.png`;
+}
