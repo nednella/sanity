@@ -13,6 +13,7 @@ export type Activity = Schemas["Activity"];
 export type MemberDiary = Schemas["MemberDiary"];
 export type PersonalBest = Schemas["PersonalBest"];
 export type RankedPersonalBest = Schemas["RankedPersonalBest"];
+export type MemberRef = Schemas["MemberRef"];
 export type Submission = Schemas["Submission"];
 export type Page = Schemas["Page"];
 export type MemberSort = Schemas["MemberSort"];

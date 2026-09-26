@@ -71,6 +71,7 @@ function Drops({ memberId, search, toolbar }: Readonly<TableProps>) {
       data={data}
       error={error}
       isLoading={isPending}
+      memberId={memberId}
       onRetry={() => refetch()}
       search={search}
       toolbar={toolbar}
@@ -89,6 +90,7 @@ function PersonalBests({ memberId, search, toolbar }: Readonly<TableProps>) {
       data={data}
       error={error}
       isLoading={isPending}
+      memberId={memberId}
       onRetry={() => refetch()}
       search={search}
       toolbar={toolbar}
