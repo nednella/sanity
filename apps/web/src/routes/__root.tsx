@@ -11,7 +11,7 @@ export interface RouterContext {
 
 export const Route = createRootRouteWithContext<RouterContext>()({
   component: Layout,
-  notFoundComponent: () => <NotFound />
+  notFoundComponent: () => <NotFound fullScreen />
 });
 
 function Layout() {
