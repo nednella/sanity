@@ -3,6 +3,7 @@ import { PanelEmptyMessage } from "@/components/panel";
 import type { MemberDiary } from "@/lib/api/types";
 import { useMediaStore } from "@/lib/media/media.store";
 import { metricName } from "@/lib/metrics";
+import { Tooltip } from "@/lib/ui/tooltip";
 import { DASH } from "@/utils/dash";
 import { formatTickTime } from "@/utils/dates";
 import { bossIconUrl, diaryTierIconUrl } from "@/utils/icons";
@@ -54,11 +55,14 @@ export function AchievementDiaryPanel({ diaries }: Readonly<AchievementDiaryPane
                   <span className="text-base-content/60">{scale} man</span>
                 </span>
               </td>
-              <td
-                className="font-medium tabular-nums"
-                title={nextTier ? `${nextTier.name} at ${formatTickTime(nextTier.timeSeconds)}` : undefined}
-              >
-                {formatTickTime(pb?.timeSeconds)}
+              <td className="font-medium tabular-nums">
+                {nextTier ? (
+                  <Tooltip tip={`${nextTier.name} at ${formatTickTime(nextTier.timeSeconds)}`}>
+                    {formatTickTime(pb?.timeSeconds)}
+                  </Tooltip>
+                ) : (
+                  formatTickTime(pb?.timeSeconds)
+                )}
               </td>
               <td>
                 {tier ? (

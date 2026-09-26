@@ -1,3 +1,4 @@
+import { Tooltip } from "@/lib/ui/tooltip";
 import { FLAG_CDN_URL } from "@/utils/links";
 
 type NationalityFlagProps = {
@@ -13,14 +14,15 @@ export function NationalityFlag({ countryCode }: Readonly<NationalityFlagProps>)
   const code = countryCode.toLowerCase();
 
   return (
-    <img
-      src={`${FLAG_CDN_URL}/${code}.svg`}
-      width={16}
-      height={12}
-      alt={countryCode.toUpperCase()}
-      title={countryCode.toUpperCase()}
-      loading="lazy"
-      className="inline-block"
-    />
+    <Tooltip tip={countryCode.toUpperCase()}>
+      <img
+        src={`${FLAG_CDN_URL}/${code}.svg`}
+        width={16}
+        height={12}
+        alt={countryCode.toUpperCase()}
+        loading="lazy"
+        className="inline-block"
+      />
+    </Tooltip>
   );
 }

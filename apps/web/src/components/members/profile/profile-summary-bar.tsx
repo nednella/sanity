@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 
 import type { MemberProfile } from "@/lib/api/types";
 import { DIARY_POINTS_MAX } from "@/lib/members/diary";
+import { Tooltip } from "@/lib/ui/tooltip";
 import { statIconUrl } from "@/utils/icons";
 import { formatNumber } from "@/utils/numbers";
 
@@ -62,12 +63,7 @@ function Stat({ icon, label, title, value }: Readonly<StatProps>) {
       {icon}
       <div className="flex flex-col gap-0.5">
         <dt className="text-xs text-base-content/60">{label}</dt>
-        <dd
-          title={title}
-          className="text-sm font-medium tabular-nums"
-        >
-          {value}
-        </dd>
+        <dd className="text-sm font-medium tabular-nums">{title ? <Tooltip tip={title}>{value}</Tooltip> : value}</dd>
       </div>
     </div>
   );
