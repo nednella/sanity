@@ -1,5 +1,6 @@
 import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
-import { z } from "zod";
+
+import { paginated, toPage } from "@/schema/common";
 
 import { submissionListQuery } from "./request";
 import { submission } from "./response";
@@ -11,8 +12,12 @@ export const submissionsRouter: FastifyPluginAsyncZod = async (app) => {
     url: "/submissions",
     schema: {
       querystring: submissionListQuery,
-      response: { 200: z.array(submission) }
+      response: { 200: paginated(submission) }
     },
-    handler: async (req) => getSubmissions(req.query)
+    handler: async (req) => {
+      const { limit, offset } = req.query;
+      const { items, total } = await getSubmissions(req.query);
+      return { items, page: toPage({ limit, offset, total }) };
+    }
   });
 };

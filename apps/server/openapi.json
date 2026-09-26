@@ -1112,6 +1112,14 @@
           "participants"
         ]
       },
+      "SubmissionSortInput": {
+        "type": "string",
+        "enum": [
+          "item",
+          "submittedAt",
+          "valueMillions"
+        ]
+      },
       "Page": {
         "type": "object",
         "properties": {
@@ -2247,6 +2255,14 @@
           "participants"
         ],
         "additionalProperties": false
+      },
+      "SubmissionSort": {
+        "type": "string",
+        "enum": [
+          "item",
+          "submittedAt",
+          "valueMillions"
+        ]
       }
     }
   },
@@ -2800,6 +2816,32 @@
             "in": "query",
             "name": "event",
             "required": false
+          },
+          {
+            "schema": {
+              "default": "submittedAt",
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/SubmissionSortInput"
+                }
+              ]
+            },
+            "in": "query",
+            "name": "sort",
+            "required": false
+          },
+          {
+            "schema": {
+              "default": "desc",
+              "type": "string",
+              "enum": [
+                "asc",
+                "desc"
+              ]
+            },
+            "in": "query",
+            "name": "order",
+            "required": false
           }
         ],
         "responses": {
@@ -2808,10 +2850,23 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Submission"
-                  }
+                  "type": "object",
+                  "properties": {
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Submission"
+                      }
+                    },
+                    "page": {
+                      "$ref": "#/components/schemas/Page"
+                    }
+                  },
+                  "required": [
+                    "items",
+                    "page"
+                  ],
+                  "additionalProperties": false
                 }
               }
             }

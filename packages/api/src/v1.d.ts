@@ -351,6 +351,8 @@ export interface paths {
                     offset?: number;
                     memberId?: string;
                     event?: "bingo" | "leagues";
+                    sort?: components["schemas"]["SubmissionSortInput"];
+                    order?: "asc" | "desc";
                 };
                 header?: never;
                 path?: never;
@@ -364,7 +366,10 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["Submission"][];
+                        "application/json": {
+                            items: components["schemas"]["Submission"][];
+                            page: components["schemas"]["Page"];
+                        };
                     };
                 };
             };
@@ -722,6 +727,8 @@ export interface components {
                 points: number | null;
             }[];
         };
+        /** @enum {string} */
+        SubmissionSortInput: "item" | "submittedAt" | "valueMillions";
         Page: {
             limit: number;
             offset: number;
@@ -982,6 +989,8 @@ export interface components {
                 points: number | null;
             }[];
         };
+        /** @enum {string} */
+        SubmissionSort: "item" | "submittedAt" | "valueMillions";
     };
     responses: never;
     parameters: never;
