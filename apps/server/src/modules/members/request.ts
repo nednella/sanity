@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 import { contentFilters, personalBestSortFilters, top } from "@/modules/personal-bests/request";
+import { submissionSortFilters } from "@/modules/submissions/request";
 import { bigIntString, booleanString } from "@/schema/codecs";
 import { pagination } from "@/schema/common";
 
@@ -36,6 +37,11 @@ export const memberPersonalBestsQuery = z.object({
   top: top.optional(),
   ...contentFilters.shape,
   ...personalBestSortFilters.shape
+});
+
+export const memberSubmissionsQuery = z.object({
+  ...pagination.shape,
+  ...submissionSortFilters.shape
 });
 
 export const memberListQuery = z.object({

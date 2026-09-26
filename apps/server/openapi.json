@@ -285,6 +285,94 @@
           "nextTier"
         ]
       },
+      "SubmissionInput": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "item": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "nullable": true,
+                "type": "number"
+              },
+              "name": {
+                "nullable": true,
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "name"
+            ]
+          },
+          "valueMillions": {
+            "nullable": true,
+            "type": "number"
+          },
+          "event": {
+            "nullable": true,
+            "type": "string",
+            "enum": [
+              "bingo",
+              "leagues"
+            ]
+          },
+          "imageUrl": {
+            "nullable": true,
+            "type": "string"
+          },
+          "discordMessageUrl": {
+            "nullable": true,
+            "type": "string"
+          },
+          "submittedAt": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+          },
+          "submittedBy": {
+            "$ref": "#/components/schemas/MemberRefInput"
+          },
+          "participants": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "pattern": "^\\d+$"
+                },
+                "displayName": {
+                  "type": "string"
+                },
+                "points": {
+                  "nullable": true,
+                  "type": "number"
+                }
+              },
+              "required": [
+                "id",
+                "displayName",
+                "points"
+              ]
+            }
+          }
+        },
+        "required": [
+          "id",
+          "item",
+          "valueMillions",
+          "event",
+          "imageUrl",
+          "discordMessageUrl",
+          "submittedAt",
+          "submittedBy",
+          "participants"
+        ]
+      },
       "PersonalBestSortInput": {
         "type": "string",
         "enum": [
@@ -292,6 +380,14 @@
           "scale",
           "submittedAt",
           "time"
+        ]
+      },
+      "SubmissionSortInput": {
+        "type": "string",
+        "enum": [
+          "item",
+          "submittedAt",
+          "valueMillions"
         ]
       },
       "MemberSortInput": {
@@ -1024,102 +1120,6 @@
           "requirements"
         ]
       },
-      "SubmissionInput": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "number"
-          },
-          "item": {
-            "type": "object",
-            "properties": {
-              "id": {
-                "nullable": true,
-                "type": "number"
-              },
-              "name": {
-                "nullable": true,
-                "type": "string"
-              }
-            },
-            "required": [
-              "id",
-              "name"
-            ]
-          },
-          "valueMillions": {
-            "nullable": true,
-            "type": "number"
-          },
-          "event": {
-            "nullable": true,
-            "type": "string",
-            "enum": [
-              "bingo",
-              "leagues"
-            ]
-          },
-          "imageUrl": {
-            "nullable": true,
-            "type": "string"
-          },
-          "discordMessageUrl": {
-            "nullable": true,
-            "type": "string"
-          },
-          "submittedAt": {
-            "type": "string",
-            "format": "date-time",
-            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
-          },
-          "submittedBy": {
-            "$ref": "#/components/schemas/MemberRefInput"
-          },
-          "participants": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "id": {
-                  "type": "string",
-                  "pattern": "^\\d+$"
-                },
-                "displayName": {
-                  "type": "string"
-                },
-                "points": {
-                  "nullable": true,
-                  "type": "number"
-                }
-              },
-              "required": [
-                "id",
-                "displayName",
-                "points"
-              ]
-            }
-          }
-        },
-        "required": [
-          "id",
-          "item",
-          "valueMillions",
-          "event",
-          "imageUrl",
-          "discordMessageUrl",
-          "submittedAt",
-          "submittedBy",
-          "participants"
-        ]
-      },
-      "SubmissionSortInput": {
-        "type": "string",
-        "enum": [
-          "item",
-          "submittedAt",
-          "valueMillions"
-        ]
-      },
       "Page": {
         "type": "object",
         "properties": {
@@ -1408,6 +1408,96 @@
         ],
         "additionalProperties": false
       },
+      "Submission": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "item": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "nullable": true,
+                "type": "number"
+              },
+              "name": {
+                "nullable": true,
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "name"
+            ],
+            "additionalProperties": false
+          },
+          "valueMillions": {
+            "nullable": true,
+            "type": "number"
+          },
+          "event": {
+            "nullable": true,
+            "type": "string",
+            "enum": [
+              "bingo",
+              "leagues"
+            ]
+          },
+          "imageUrl": {
+            "nullable": true,
+            "type": "string"
+          },
+          "discordMessageUrl": {
+            "nullable": true,
+            "type": "string"
+          },
+          "submittedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "submittedBy": {
+            "$ref": "#/components/schemas/MemberRef"
+          },
+          "participants": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "pattern": "^\\d+$"
+                },
+                "displayName": {
+                  "type": "string"
+                },
+                "points": {
+                  "nullable": true,
+                  "type": "number"
+                }
+              },
+              "required": [
+                "id",
+                "displayName",
+                "points"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "id",
+          "item",
+          "valueMillions",
+          "event",
+          "imageUrl",
+          "discordMessageUrl",
+          "submittedAt",
+          "submittedBy",
+          "participants"
+        ],
+        "additionalProperties": false
+      },
       "PersonalBestSort": {
         "type": "string",
         "enum": [
@@ -1415,6 +1505,14 @@
           "scale",
           "submittedAt",
           "time"
+        ]
+      },
+      "SubmissionSort": {
+        "type": "string",
+        "enum": [
+          "item",
+          "submittedAt",
+          "valueMillions"
         ]
       },
       "MemberSort": {
@@ -2165,104 +2263,6 @@
           "requirements"
         ],
         "additionalProperties": false
-      },
-      "Submission": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "number"
-          },
-          "item": {
-            "type": "object",
-            "properties": {
-              "id": {
-                "nullable": true,
-                "type": "number"
-              },
-              "name": {
-                "nullable": true,
-                "type": "string"
-              }
-            },
-            "required": [
-              "id",
-              "name"
-            ],
-            "additionalProperties": false
-          },
-          "valueMillions": {
-            "nullable": true,
-            "type": "number"
-          },
-          "event": {
-            "nullable": true,
-            "type": "string",
-            "enum": [
-              "bingo",
-              "leagues"
-            ]
-          },
-          "imageUrl": {
-            "nullable": true,
-            "type": "string"
-          },
-          "discordMessageUrl": {
-            "nullable": true,
-            "type": "string"
-          },
-          "submittedAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "submittedBy": {
-            "$ref": "#/components/schemas/MemberRef"
-          },
-          "participants": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "id": {
-                  "type": "string",
-                  "pattern": "^\\d+$"
-                },
-                "displayName": {
-                  "type": "string"
-                },
-                "points": {
-                  "nullable": true,
-                  "type": "number"
-                }
-              },
-              "required": [
-                "id",
-                "displayName",
-                "points"
-              ],
-              "additionalProperties": false
-            }
-          }
-        },
-        "required": [
-          "id",
-          "item",
-          "valueMillions",
-          "event",
-          "imageUrl",
-          "discordMessageUrl",
-          "submittedAt",
-          "submittedBy",
-          "participants"
-        ],
-        "additionalProperties": false
-      },
-      "SubmissionSort": {
-        "type": "string",
-        "enum": [
-          "item",
-          "submittedAt",
-          "valueMillions"
-        ]
       }
     }
   },
@@ -2435,6 +2435,97 @@
                   },
                   "required": [
                     "message"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/members/{id}/submissions": {
+      "get": {
+        "parameters": [
+          {
+            "schema": {
+              "default": 50,
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 200
+            },
+            "in": "query",
+            "name": "limit",
+            "required": false
+          },
+          {
+            "schema": {
+              "default": 0,
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "in": "query",
+            "name": "offset",
+            "required": false
+          },
+          {
+            "schema": {
+              "default": "submittedAt",
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/SubmissionSortInput"
+                }
+              ]
+            },
+            "in": "query",
+            "name": "sort",
+            "required": false
+          },
+          {
+            "schema": {
+              "default": "desc",
+              "type": "string",
+              "enum": [
+                "asc",
+                "desc"
+              ]
+            },
+            "in": "query",
+            "name": "order",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d+$"
+            },
+            "in": "path",
+            "name": "id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Submission"
+                      }
+                    },
+                    "page": {
+                      "$ref": "#/components/schemas/Page"
+                    }
+                  },
+                  "required": [
+                    "items",
+                    "page"
                   ],
                   "additionalProperties": false
                 }
@@ -2794,15 +2885,6 @@
             },
             "in": "query",
             "name": "offset",
-            "required": false
-          },
-          {
-            "schema": {
-              "type": "string",
-              "pattern": "^\\d+$"
-            },
-            "in": "query",
-            "name": "memberId",
             "required": false
           },
           {

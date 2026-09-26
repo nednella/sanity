@@ -135,6 +135,51 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/members/{id}/submissions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: {
+                    limit?: number;
+                    offset?: number;
+                    sort?: components["schemas"]["SubmissionSortInput"];
+                    order?: "asc" | "desc";
+                };
+                header?: never;
+                path: {
+                    id: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            items: components["schemas"]["Submission"][];
+                            page: components["schemas"]["Page"];
+                        };
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/members/{id}/diary": {
         parameters: {
             query?: never;
@@ -349,7 +394,6 @@ export interface paths {
                 query?: {
                     limit?: number;
                     offset?: number;
-                    memberId?: string;
                     event?: "bingo" | "leagues";
                     sort?: components["schemas"]["SubmissionSortInput"];
                     order?: "asc" | "desc";
@@ -533,8 +577,30 @@ export interface components {
                 timeSeconds: number;
             } | null;
         };
+        SubmissionInput: {
+            id: number;
+            item: {
+                id: number | null;
+                name: string | null;
+            };
+            valueMillions: number | null;
+            /** @enum {string|null} */
+            event: "bingo" | "leagues" | null;
+            imageUrl: string | null;
+            discordMessageUrl: string | null;
+            /** Format: date-time */
+            submittedAt: string;
+            submittedBy: components["schemas"]["MemberRefInput"];
+            participants: {
+                id: string;
+                displayName: string;
+                points: number | null;
+            }[];
+        };
         /** @enum {string} */
         PersonalBestSortInput: "content" | "scale" | "submittedAt" | "time";
+        /** @enum {string} */
+        SubmissionSortInput: "item" | "submittedAt" | "valueMillions";
         /** @enum {string} */
         MemberSortInput: "clanPoints" | "diaryPoints" | "displayName" | "joinedAt" | "masterDiaries" | "rank" | "totalEhb" | "totalEhp" | "totalExp" | "totalLevel";
         RankSummaryInput: {
@@ -707,28 +773,6 @@ export interface components {
                 maintenancePoints: number;
             };
         };
-        SubmissionInput: {
-            id: number;
-            item: {
-                id: number | null;
-                name: string | null;
-            };
-            valueMillions: number | null;
-            /** @enum {string|null} */
-            event: "bingo" | "leagues" | null;
-            imageUrl: string | null;
-            discordMessageUrl: string | null;
-            /** Format: date-time */
-            submittedAt: string;
-            submittedBy: components["schemas"]["MemberRefInput"];
-            participants: {
-                id: string;
-                displayName: string;
-                points: number | null;
-            }[];
-        };
-        /** @enum {string} */
-        SubmissionSortInput: "item" | "submittedAt" | "valueMillions";
         Page: {
             limit: number;
             offset: number;
@@ -795,8 +839,30 @@ export interface components {
                 timeSeconds: number;
             } | null;
         };
+        Submission: {
+            id: number;
+            item: {
+                id: number | null;
+                name: string | null;
+            };
+            valueMillions: number | null;
+            /** @enum {string|null} */
+            event: "bingo" | "leagues" | null;
+            imageUrl: string | null;
+            discordMessageUrl: string | null;
+            /** Format: date-time */
+            submittedAt: string;
+            submittedBy: components["schemas"]["MemberRef"];
+            participants: {
+                id: string;
+                displayName: string;
+                points: number | null;
+            }[];
+        };
         /** @enum {string} */
         PersonalBestSort: "content" | "scale" | "submittedAt" | "time";
+        /** @enum {string} */
+        SubmissionSort: "item" | "submittedAt" | "valueMillions";
         /** @enum {string} */
         MemberSort: "clanPoints" | "diaryPoints" | "displayName" | "joinedAt" | "masterDiaries" | "rank" | "totalEhb" | "totalEhp" | "totalExp" | "totalLevel";
         RankSummary: {
@@ -969,28 +1035,6 @@ export interface components {
                 maintenancePoints: number;
             };
         };
-        Submission: {
-            id: number;
-            item: {
-                id: number | null;
-                name: string | null;
-            };
-            valueMillions: number | null;
-            /** @enum {string|null} */
-            event: "bingo" | "leagues" | null;
-            imageUrl: string | null;
-            discordMessageUrl: string | null;
-            /** Format: date-time */
-            submittedAt: string;
-            submittedBy: components["schemas"]["MemberRef"];
-            participants: {
-                id: string;
-                displayName: string;
-                points: number | null;
-            }[];
-        };
-        /** @enum {string} */
-        SubmissionSort: "item" | "submittedAt" | "valueMillions";
     };
     responses: never;
     parameters: never;

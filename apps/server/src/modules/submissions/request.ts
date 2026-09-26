@@ -1,12 +1,10 @@
 import { z } from "zod";
 
-import { bigIntString } from "@/schema/codecs";
 import { pagination } from "@/schema/common";
 
 import { event } from "./response";
 
 const submissionFilters = z.object({
-  memberId: bigIntString.optional(),
   event: event.optional()
 });
 
@@ -14,7 +12,7 @@ const submissionSort = z
   .enum(["item", "submittedAt", "valueMillions"])
   .register(z.globalRegistry, { id: "SubmissionSort" });
 
-const submissionSortFilters = z.object({
+export const submissionSortFilters = z.object({
   sort: submissionSort.default("submittedAt"),
   order: z.enum(["asc", "desc"]).default("desc")
 });

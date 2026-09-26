@@ -5,9 +5,11 @@ import { rankedPersonalBest } from "@/modules/personal-bests/response";
 import { getMemberPersonalBests } from "@/modules/personal-bests/service/get-member-personal-bests";
 import { memberDiary } from "@/modules/speedrun-diary/response";
 import { getMemberDiaries } from "@/modules/speedrun-diary/service/get-member-diaries";
+import { submission } from "@/modules/submissions/response";
+import { getSubmissions } from "@/modules/submissions/service/get-submissions";
 import { notFound, paginated, toPage } from "@/schema/common";
 
-import { memberListQuery, memberParams, memberPersonalBestsQuery } from "./request";
+import { memberListQuery, memberParams, memberPersonalBestsQuery, memberSubmissionsQuery } from "./request";
 import { member, memberProfile } from "./response";
 import { getMemberProfile } from "./service/get-member-profile";
 import { getMembers } from "./service/get-members";
@@ -64,6 +66,21 @@ export const membersRouter: FastifyPluginAsyncZod = async (app) => {
     handler: async (req) => {
       const { limit, offset } = req.query;
       const { items, total } = await getMemberPersonalBests(req.params.id, req.query);
+      return { items, page: toPage({ limit, offset, total }) };
+    }
+  });
+
+  app.route({
+    method: "GET",
+    url: "/members/:id/submissions",
+    schema: {
+      params: memberParams,
+      querystring: memberSubmissionsQuery,
+      response: { 200: paginated(submission) }
+    },
+    handler: async (req) => {
+      const { limit, offset } = req.query;
+      const { items, total } = await getSubmissions({ ...req.query, memberId: req.params.id });
       return { items, page: toPage({ limit, offset, total }) };
     }
   });
