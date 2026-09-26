@@ -1,6 +1,7 @@
 import { listRanks } from "@/modules/ranks/repository/list-ranks";
 import { listDiaryProgress } from "@/modules/speedrun-diary/repository/list-diary-progress";
 import { findLatestSnapshot } from "@/modules/wom/repository/find-latest-snapshot";
+import { listNameChanges } from "@/modules/wom/repository/list-name-changes";
 
 import { toMemberProfile } from "../mapper";
 import { findMember } from "../repository/find-member";
@@ -12,6 +13,7 @@ export const getMemberProfile = async (id: bigint) => {
   const [diaryProgress] = await listDiaryProgress([id]);
   const ranks = await listRanks();
   const latestSnapshot = row.womPlayer ? await findLatestSnapshot(row.womPlayer.womPlayerId) : undefined;
+  const nameChanges = row.womPlayer ? await listNameChanges(row.womPlayer.womPlayerId) : [];
 
-  return toMemberProfile(row, diaryProgress, ranks, latestSnapshot);
+  return toMemberProfile(row, diaryProgress, ranks, latestSnapshot, nameChanges);
 };

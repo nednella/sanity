@@ -704,6 +704,11 @@ export interface components {
             rsn: {
                 main: string | null;
                 alt: string | null;
+                previous: {
+                    name: string;
+                    /** Format: date-time */
+                    until: string;
+                }[];
             };
             membership: {
                 active: boolean;
@@ -973,6 +978,11 @@ export interface components {
             rsn: {
                 main: string | null;
                 alt: string | null;
+                previous: {
+                    name: string;
+                    /** Format: date-time */
+                    until: string;
+                }[];
             };
             membership: {
                 active: boolean;

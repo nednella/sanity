@@ -20,6 +20,11 @@ const rsn = z.object({
   alt: z.string().nullable()
 });
 
+const previousRsn = z.object({
+  name: z.string(),
+  until: isoDate
+});
+
 const membership = z.object({
   active: z.boolean(),
   joinedAt: isoDate.nullable(),
@@ -139,6 +144,7 @@ export const member = z
 export const memberProfile = z
   .object({
     ...member.omit({ wom: true }).shape,
+    rsn: rsn.extend({ previous: z.array(previousRsn) }),
     progression,
     wom: womPlayer.extend({ latestSnapshot: snapshot.optional() }).nullable()
   })

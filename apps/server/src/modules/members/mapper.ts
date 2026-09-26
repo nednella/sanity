@@ -2,6 +2,7 @@ import { toRankIconUrl } from "@/modules/ranks/mapper";
 import type { RankRow } from "@/modules/ranks/repository/list-ranks";
 import type { DiaryProgressRow } from "@/modules/speedrun-diary/repository/list-diary-progress";
 import type { SnapshotRows } from "@/modules/wom/repository/find-latest-snapshot";
+import type { NameChange } from "@/modules/wom/repository/list-name-changes";
 import { sortActivities, sortBosses, sortComputed, sortSkills } from "@/utils/metrics";
 
 import type { MemberRow } from "./repository/shared/select-members";
@@ -114,6 +115,20 @@ const toProgression = (currentRankId: number, ranks: RankRow[], standing: Standi
   };
 };
 
+const asRsn = (name: string) => name.toLowerCase().replaceAll(/[_-]/g, " ").trim();
+
+const toPreviousNames = (changes: NameChange[], current: string | null) => {
+  const seen = new Set([current ? asRsn(current) : ""]);
+
+  return changes.filter(({ name }) => {
+    const rsn = asRsn(name);
+    if (seen.has(rsn)) return false;
+
+    seen.add(rsn);
+    return true;
+  });
+};
+
 const toSnapshot = ({ snapshot, computed, skills, bosses, activities }: SnapshotRows) => ({
   createdAt: snapshot.createdAt,
   computed: sortComputed(computed.map(({ metric, value, rank }) => ({ metric, value, rank }))),
@@ -128,12 +143,14 @@ export const toMemberProfile = (
   row: MemberRow,
   diaryProgress: DiaryProgressRow | undefined,
   ranks: RankRow[],
-  latestSnapshot: SnapshotRows | undefined
+  latestSnapshot: SnapshotRows | undefined,
+  nameChanges: NameChange[]
 ) => {
   const { wom, ...member } = toMember(row, diaryProgress);
 
   return {
     ...member,
+    rsn: { ...member.rsn, previous: toPreviousNames(nameChanges, member.rsn.main) },
     progression: toProgression(row.rank.id, ranks, {
       clanPoints: member.membership.points,
       diaryPoints: member.diary.points,
