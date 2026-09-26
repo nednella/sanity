@@ -1,13 +1,14 @@
+import type { PlayerResponse, SnapshotResponse } from "@wise-old-man/utils";
 import { sql } from "drizzle-orm";
 
 import { db } from "@db/index";
 import { womPlayers } from "@db/schema";
 
-import type { WomPlayer, WomSnapshot } from "@/integrations/wom";
-
 import { toPlayerRow } from "./shared/player-row";
 
-export const savePlayers = async (players: { memberId: bigint; player: WomPlayer; snapshot: WomSnapshot | null }[]) => {
+export const savePlayers = async (
+  players: { memberId: bigint; player: PlayerResponse; snapshot: SnapshotResponse | null }[]
+) => {
   const rows = players.map(({ memberId, player, snapshot }) => ({ memberId, ...toPlayerRow(player, snapshot) }));
 
   await db

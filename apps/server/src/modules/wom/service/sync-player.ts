@@ -1,4 +1,4 @@
-import { womUpdatePlayerByRsn } from "@/integrations/wom";
+import { wom } from "@/integrations/wom";
 
 import { saveWomPlayer } from "../repository/save-player";
 import { saveSnapshots } from "../repository/save-snapshots";
@@ -11,7 +11,8 @@ import { saveSnapshots } from "../repository/save-snapshots";
  * update an existing player, then we pass that report back up.
  */
 export const syncPlayer = async (username: string) => {
-  const player = await womUpdatePlayerByRsn(username);
+  const player = await wom.players.updatePlayer(username);
+  if (!player) throw new Error("wise old man returned nothing");
 
   const didStoreUpdate = await saveWomPlayer(player, player.latestSnapshot);
   if (didStoreUpdate && player.latestSnapshot) await saveSnapshots([player.latestSnapshot]);

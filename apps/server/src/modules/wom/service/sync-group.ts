@@ -1,6 +1,6 @@
 import { config } from "@config";
 
-import { womFetchGroupHiscores } from "@/integrations/wom";
+import { wom } from "@/integrations/wom";
 
 import { loadMemberMatcher } from "../repository/load-member-matcher";
 import { savePlayers } from "../repository/save-players";
@@ -12,7 +12,7 @@ import { saveSnapshots } from "../repository/save-snapshots";
  * and only once each, since a member with two accounts in the group would otherwise be saved twice.
  */
 export const syncGroup = async () => {
-  const entries = await womFetchGroupHiscores(config.womGroupId);
+  const entries = await wom.groups.getGroupBulkHiscores(Number(config.womGroupId));
 
   const memberFor = await loadMemberMatcher();
   const players = [];

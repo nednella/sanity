@@ -1,3 +1,5 @@
+import type { SnapshotResponse } from "@wise-old-man/utils";
+
 import { db } from "@db/index";
 import {
   womSnapshotActivities,
@@ -7,13 +9,11 @@ import {
   womSnapshots
 } from "@db/schema";
 
-import type { WomSnapshot } from "@/integrations/wom";
-
 // Wise Old Man reports -1 for a value it doesn't know: a rank or count below the hiscore threshold, or
 // efficiency on snapshots older than its rates. Unknown counts are left out rather than stored as -1.
 const known = (value: number) => (value === -1 ? null : value);
 
-const breakdown = (womSnapshotId: number, { skills, bosses, activities, computed }: WomSnapshot["data"]) => ({
+const breakdown = (womSnapshotId: number, { skills, bosses, activities, computed }: SnapshotResponse["data"]) => ({
   computed: Object.values(computed)
     .filter(({ value }) => value !== -1)
     .map(({ metric, rank, value }) => ({ womSnapshotId, metric, rank: known(rank), value })),
@@ -28,7 +28,7 @@ const breakdown = (womSnapshotId: number, { skills, bosses, activities, computed
     .map(({ metric, rank, ...values }) => ({ womSnapshotId, activity: metric, rank: known(rank), ...values }))
 });
 
-export const saveSnapshots = (snapshots: WomSnapshot[]) =>
+export const saveSnapshots = (snapshots: SnapshotResponse[]) =>
   db.transaction(async (tx) => {
     let saved = 0;
 

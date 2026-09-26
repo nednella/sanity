@@ -1,6 +1,6 @@
-import type { WomPlayer, WomSnapshot } from "@/integrations/wom";
+import type { PlayerResponse, SnapshotResponse } from "@wise-old-man/utils";
 
-export const toPlayerRow = (player: WomPlayer, snapshot: WomSnapshot | null) => ({
+export const toPlayerRow = (player: PlayerResponse, snapshot: SnapshotResponse | null) => ({
   womPlayerId: player.id,
   username: player.username,
   displayName: player.displayName,
