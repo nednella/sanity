@@ -2,7 +2,6 @@ import { MetricIcon } from "@/components/members/profile/overview/metric-icon";
 import { PanelEmptyMessage } from "@/components/panel";
 import type { MemberDiary } from "@/lib/api/types";
 import { useMediaStore } from "@/lib/media/media.store";
-import { metricName } from "@/lib/metrics";
 import { Tooltip } from "@/lib/ui/tooltip";
 import { DASH } from "@/utils/dash";
 import { formatTickTime } from "@/utils/dates";
@@ -21,7 +20,7 @@ export function AchievementDiaryPanel({ diaries }: Readonly<AchievementDiaryPane
     if (!pb?.imageUrl) return;
 
     showMedia({
-      alt: `${metricName(content.name)}, ${scale} man, in ${formatTickTime(pb.timeSeconds)}`,
+      alt: `${content.name}, ${scale} man, in ${formatTickTime(pb.timeSeconds)}`,
       src: pb.imageUrl
     });
   };
@@ -50,8 +49,8 @@ export function AchievementDiaryPanel({ diaries }: Readonly<AchievementDiaryPane
             >
               <td>
                 <span className="inline-flex items-center gap-2">
-                  <MetricIcon src={bossIconUrl(content.name)} />
-                  {metricName(content.name)}
+                  {content.metric && <MetricIcon src={bossIconUrl(content.metric)} />}
+                  {content.name}
                   <span className="text-base-content/60">{scale} man</span>
                 </span>
               </td>

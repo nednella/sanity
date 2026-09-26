@@ -8,7 +8,6 @@ import type { DataTableFeatures } from "@/components/table/table-features";
 import type { Page, RankedPersonalBest } from "@/lib/api/types";
 import { useMediaStore } from "@/lib/media/media.store";
 import type { SubmissionsSearch } from "@/lib/members/submissions";
-import { metricName } from "@/lib/metrics";
 import { useTableSearch } from "@/lib/table/use-table-search";
 import { RelativeDate } from "@/lib/ui/relative-date";
 import { formatTickTime } from "@/utils/dates";
@@ -18,15 +17,15 @@ const columnHelper = createColumnHelper<DataTableFeatures, RankedPersonalBest>()
 
 const buildColumns = (memberId: string) =>
   columnHelper.columns([
-    columnHelper.accessor("content.name", {
+    columnHelper.accessor("content", {
       id: "content",
       header: "Content",
       enableHiding: false,
       meta: { minWidth: 16 },
       cell: ({ getValue, row }) => (
         <span className="inline-flex items-center gap-2 font-medium">
-          <MetricIcon src={bossIconUrl(getValue())} />
-          {metricName(getValue())}
+          {getValue().metric && <MetricIcon src={bossIconUrl(getValue().metric!)} />}
+          {getValue().name}
           <span className="font-normal text-base-content/60">{row.original.scale} man</span>
         </span>
       )
@@ -89,7 +88,7 @@ export function PersonalBestTable({
   const openScreenshot = ({ content, imageUrl, scale, timeSeconds }: RankedPersonalBest) => {
     if (!imageUrl) return;
 
-    showMedia({ alt: `${metricName(content.name)}, ${scale} man, in ${formatTickTime(timeSeconds)}`, src: imageUrl });
+    showMedia({ alt: `${content.name}, ${scale} man, in ${formatTickTime(timeSeconds)}`, src: imageUrl });
   };
 
   return (

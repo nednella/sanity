@@ -527,6 +527,7 @@ export interface components {
             content: {
                 id: number;
                 name: string;
+                metric: string | null;
                 imageUrl: string | null;
             };
             scale: number;
@@ -543,6 +544,7 @@ export interface components {
             content: {
                 id: number;
                 name: string;
+                metric: string | null;
                 imageUrl: string | null;
             };
             scale: number;
@@ -557,6 +559,7 @@ export interface components {
             content: {
                 id: number;
                 name: string;
+                metric: string | null;
                 imageUrl: string | null;
             };
             scale: number;
@@ -792,6 +795,7 @@ export interface components {
             content: {
                 id: number;
                 name: string;
+                metric: string | null;
                 imageUrl: string | null;
             };
             scale: number;
@@ -808,6 +812,7 @@ export interface components {
             content: {
                 id: number;
                 name: string;
+                metric: string | null;
                 imageUrl: string | null;
             };
             scale: number;
@@ -822,6 +827,7 @@ export interface components {
             content: {
                 id: number;
                 name: string;
+                metric: string | null;
                 imageUrl: string | null;
             };
             scale: number;

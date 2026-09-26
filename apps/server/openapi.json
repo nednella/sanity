@@ -70,6 +70,10 @@
               "name": {
                 "type": "string"
               },
+              "metric": {
+                "nullable": true,
+                "type": "string"
+              },
               "imageUrl": {
                 "nullable": true,
                 "type": "string"
@@ -78,6 +82,7 @@
             "required": [
               "id",
               "name",
+              "metric",
               "imageUrl"
             ]
           },
@@ -136,6 +141,10 @@
               "name": {
                 "type": "string"
               },
+              "metric": {
+                "nullable": true,
+                "type": "string"
+              },
               "imageUrl": {
                 "nullable": true,
                 "type": "string"
@@ -144,6 +153,7 @@
             "required": [
               "id",
               "name",
+              "metric",
               "imageUrl"
             ]
           },
@@ -197,6 +207,10 @@
               "name": {
                 "type": "string"
               },
+              "metric": {
+                "nullable": true,
+                "type": "string"
+              },
               "imageUrl": {
                 "nullable": true,
                 "type": "string"
@@ -205,6 +219,7 @@
             "required": [
               "id",
               "name",
+              "metric",
               "imageUrl"
             ]
           },
@@ -1199,6 +1214,10 @@
               "name": {
                 "type": "string"
               },
+              "metric": {
+                "nullable": true,
+                "type": "string"
+              },
               "imageUrl": {
                 "nullable": true,
                 "type": "string"
@@ -1207,6 +1226,7 @@
             "required": [
               "id",
               "name",
+              "metric",
               "imageUrl"
             ],
             "additionalProperties": false
@@ -1266,6 +1286,10 @@
               "name": {
                 "type": "string"
               },
+              "metric": {
+                "nullable": true,
+                "type": "string"
+              },
               "imageUrl": {
                 "nullable": true,
                 "type": "string"
@@ -1274,6 +1298,7 @@
             "required": [
               "id",
               "name",
+              "metric",
               "imageUrl"
             ],
             "additionalProperties": false
@@ -1328,6 +1353,10 @@
               "name": {
                 "type": "string"
               },
+              "metric": {
+                "nullable": true,
+                "type": "string"
+              },
               "imageUrl": {
                 "nullable": true,
                 "type": "string"
@@ -1336,6 +1365,7 @@
             "required": [
               "id",
               "name",
+              "metric",
               "imageUrl"
             ],
             "additionalProperties": false
