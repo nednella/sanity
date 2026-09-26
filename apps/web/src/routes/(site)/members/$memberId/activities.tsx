@@ -3,6 +3,7 @@ import { createFileRoute, getRouteApi } from "@tanstack/react-router";
 
 import { ActivityTable } from "@/components/members/profile/wom/activity-table";
 import { memberProfileOptions } from "@/lib/api/queries/members";
+import { womEmptyMessage } from "@/lib/members/wom";
 
 const ProfileBaseRoute = getRouteApi("/(site)/members/$memberId");
 
@@ -18,5 +19,10 @@ function Page() {
     initialData: ProfileBaseRoute.useLoaderData()
   });
 
-  return <ActivityTable activities={profile.wom?.latestSnapshot?.activities} />;
+  return (
+    <ActivityTable
+      activities={profile.wom?.latestSnapshot?.activities}
+      emptyMessage={womEmptyMessage(profile)}
+    />
+  );
 }

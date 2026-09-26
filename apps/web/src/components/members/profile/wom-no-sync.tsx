@@ -1,7 +1,9 @@
 import { PanelEmptyMessage } from "@/components/panel";
 
-export const WOM_NO_SYNC = "This member has not synced with Wise Old Man yet.";
+type WomNoSyncProps = {
+  message: string;
+};
 
-export function WomNoSync() {
-  return <PanelEmptyMessage>{WOM_NO_SYNC}</PanelEmptyMessage>;
+export function WomNoSync({ message }: Readonly<WomNoSyncProps>) {
+  return <PanelEmptyMessage>{message}</PanelEmptyMessage>;
 }

@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 import { MetricIcon } from "@/components/members/profile/overview/metric-icon";
 import { WomNoSync } from "@/components/members/profile/wom-no-sync";
 import type { Boss, MemberProfile } from "@/lib/api/types";
+import { womEmptyMessage } from "@/lib/members/wom";
 import { metricName } from "@/lib/metrics";
 import { RelativeDate } from "@/lib/ui/relative-date";
 import { DASH } from "@/utils/dash";
@@ -105,7 +106,7 @@ export function WomSummaryPanel({ profile }: Readonly<WomSummaryPanelProps>) {
           )}
         </>
       ) : (
-        <WomNoSync />
+        <WomNoSync message={womEmptyMessage(profile)} />
       )}
     </div>
   );

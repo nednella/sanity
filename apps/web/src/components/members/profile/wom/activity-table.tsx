@@ -1,7 +1,6 @@
 import { createColumnHelper } from "@tanstack/react-table";
 
 import { MetricIcon } from "@/components/members/profile/overview/metric-icon";
-import { WOM_NO_SYNC } from "@/components/members/profile/wom-no-sync";
 import { DataTable } from "@/components/table/data-table";
 import type { DataTableFeatures } from "@/components/table/table-features";
 import type { Activity } from "@/lib/api/types";
@@ -48,14 +47,15 @@ const columns = columnHelper.columns([
 
 type ActivityTableProps = {
   activities: Activity[] | undefined;
+  emptyMessage: string;
 };
 
-export function ActivityTable({ activities }: Readonly<ActivityTableProps>) {
+export function ActivityTable({ activities, emptyMessage }: Readonly<ActivityTableProps>) {
   return (
     <DataTable
       columns={columns}
       data={activities}
-      emptyMessage={WOM_NO_SYNC}
+      emptyMessage={emptyMessage}
       stickyHeader
     />
   );

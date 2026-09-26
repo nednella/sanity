@@ -3,6 +3,7 @@ import { createFileRoute, getRouteApi } from "@tanstack/react-router";
 
 import { BossTable } from "@/components/members/profile/wom/boss-table";
 import { memberProfileOptions } from "@/lib/api/queries/members";
+import { womEmptyMessage } from "@/lib/members/wom";
 
 const ProfileBaseRoute = getRouteApi("/(site)/members/$memberId");
 
@@ -18,5 +19,10 @@ function Page() {
     initialData: ProfileBaseRoute.useLoaderData()
   });
 
-  return <BossTable snapshot={profile.wom?.latestSnapshot} />;
+  return (
+    <BossTable
+      snapshot={profile.wom?.latestSnapshot}
+      emptyMessage={womEmptyMessage(profile)}
+    />
+  );
 }

@@ -1,7 +1,6 @@
 import { createColumnHelper } from "@tanstack/react-table";
 
 import { MetricIcon } from "@/components/members/profile/overview/metric-icon";
-import { WOM_NO_SYNC } from "@/components/members/profile/wom-no-sync";
 import { DataTable } from "@/components/table/data-table";
 import type { DataTableFeatures } from "@/components/table/table-features";
 import type { Snapshot } from "@/lib/api/types";
@@ -97,15 +96,16 @@ const columns = columnHelper.columns([
 ]);
 
 type SkillTableProps = {
+  emptyMessage: string;
   snapshot: Snapshot | undefined;
 };
 
-export function SkillTable({ snapshot }: Readonly<SkillTableProps>) {
+export function SkillTable({ emptyMessage, snapshot }: Readonly<SkillTableProps>) {
   return (
     <DataTable
       columns={columns}
       data={toRows(snapshot)}
-      emptyMessage={WOM_NO_SYNC}
+      emptyMessage={emptyMessage}
       pinRow={(row) => row.metric === EHP}
       stickyHeader
     />
