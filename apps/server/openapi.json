@@ -316,11 +316,16 @@
               "name": {
                 "nullable": true,
                 "type": "string"
+              },
+              "osrsItemId": {
+                "nullable": true,
+                "type": "number"
               }
             },
             "required": [
               "id",
-              "name"
+              "name",
+              "osrsItemId"
             ]
           },
           "valueMillions": {
@@ -1467,11 +1472,16 @@
               "name": {
                 "nullable": true,
                 "type": "string"
+              },
+              "osrsItemId": {
+                "nullable": true,
+                "type": "number"
               }
             },
             "required": [
               "id",
-              "name"
+              "name",
+              "osrsItemId"
             ],
             "additionalProperties": false
           },

@@ -3,7 +3,7 @@ import { and, asc, desc, eq, inArray } from "drizzle-orm";
 import type { PgColumn } from "drizzle-orm/pg-core";
 
 import { db } from "@db/index";
-import { members, submissionEvent, submissionParticipants, submissions } from "@db/schema";
+import { items, members, submissionEvent, submissionParticipants, submissions } from "@db/schema";
 
 import type { SubmissionSort } from "../request";
 
@@ -46,9 +46,14 @@ export const listSubmissions = ({ limit, offset, order, sort, ...filters }: List
   const direction = order === "asc" ? asc : desc;
 
   return db
-    .select({ submission: submissions, submittedBy: { id: members.id, displayName: members.displayName } })
+    .select({
+      submission: submissions,
+      item: { name: items.name, osrsItemId: items.osrsItemId },
+      submittedBy: { id: members.id, displayName: members.displayName }
+    })
     .from(submissions)
     .innerJoin(members, eq(members.id, submissions.memberId))
+    .leftJoin(items, eq(items.id, submissions.itemId))
     .where(matchesSubmission(filters))
     .orderBy(direction(sortColumns[sort]), desc(submissions.id))
     .limit(limit)

@@ -5,7 +5,8 @@ import { memberRef } from "@/schema/common";
 
 const item = z.object({
   id: z.number().nullable(),
-  name: z.string().nullable()
+  name: z.string().nullable(),
+  osrsItemId: z.number().nullable()
 });
 
 const participant = memberRef.extend({ points: z.number().nullable() });

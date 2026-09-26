@@ -585,6 +585,7 @@ export interface components {
             item: {
                 id: number | null;
                 name: string | null;
+                osrsItemId: number | null;
             };
             valueMillions: number | null;
             /** @enum {string|null} */
@@ -853,6 +854,7 @@ export interface components {
             item: {
                 id: number | null;
                 name: string | null;
+                osrsItemId: number | null;
             };
             valueMillions: number | null;
             /** @enum {string|null} */
