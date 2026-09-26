@@ -1,0 +1,1841 @@
+[
+  {
+    "boss": "Abyssal Sire",
+    "killsPerHour": 50.0,
+    "uniques": [
+      {
+        "name": "Abyssal orphan",
+        "dropRate": 2560
+      },
+      {
+        "name": "Unsired",
+        "dropRate": 100
+      }
+    ]
+  },
+  {
+    "boss": "Alchemical Hydra",
+    "killsPerHour": 30.0,
+    "uniques": [
+      {
+        "name": "Alchemical hydra heads",
+        "dropRate": 256
+      },
+      {
+        "name": "Brimstone ring piece",
+        "dropRate": 181
+      },
+      {
+        "name": "Hydra's claw",
+        "dropRate": 1000
+      },
+      {
+        "name": "Hydra leather",
+        "dropRate": 512
+      },
+      {
+        "name": "Hydra tail",
+        "dropRate": 512
+      },
+      {
+        "name": "Ikkle hydra",
+        "dropRate": 3000
+      },
+      {
+        "name": "Jar of chemicals",
+        "dropRate": 2000
+      }
+    ]
+  },
+  {
+    "boss": "Amoxliatl",
+    "killsPerHour": 84.0,
+    "uniques": [
+      {
+        "name": "Glacial temotli",
+        "dropRate": 100
+      },
+      {
+        "name": "Moxi",
+        "dropRate": 3000
+      }
+    ]
+  },
+  {
+    "boss": "Araxxor",
+    "killsPerHour": 45.0,
+    "uniques": [
+      {
+        "name": "Araxyte fang",
+        "dropRate": 600
+      },
+      {
+        "name": "Araxyte head",
+        "dropRate": 250
+      },
+      {
+        "name": "Jar of venom",
+        "dropRate": 1500
+      },
+      {
+        "name": "Nid",
+        "dropRate": 1500
+      },
+      {
+        "name": "Noxious blade",
+        "dropRate": 200
+      },
+      {
+        "name": "Noxious point",
+        "dropRate": 200
+      },
+      {
+        "name": "Noxious pommel",
+        "dropRate": 200
+      }
+    ]
+  },
+  {
+    "boss": "Artio",
+    "killsPerHour": 60.0,
+    "uniques": [
+      {
+        "name": "Callisto cub",
+        "dropRate": 2800
+      },
+      {
+        "name": "Claws of callisto",
+        "dropRate": 618
+      },
+      {
+        "name": "Dragon 2h sword",
+        "dropRate": 358
+      },
+      {
+        "name": "Dragon pickaxe",
+        "dropRate": 358
+      },
+      {
+        "name": "Tyrannical ring",
+        "dropRate": 716
+      },
+      {
+        "name": "Voidwaker hilt",
+        "dropRate": 912
+      }
+    ]
+  },
+  {
+    "boss": "Brutus",
+    "uniques": [
+      {
+        "name": "Mooleta",
+        "dropRate": 30
+      },
+      {
+        "name": "Bottomless milk bucket (empty)",
+        "dropRate": 38
+      },
+      {
+        "name": "Cow slippers",
+        "dropRate": 150
+      }
+    ]
+  },
+  {
+    "boss": "Bryophyta",
+    "uniques": [
+      {
+        "name": "Bryophyta's essence",
+        "dropRate": 118
+      }
+    ]
+  },
+  {
+    "boss": "Callisto",
+    "killsPerHour": 80.0,
+    "uniques": [
+      {
+        "name": "Callisto cub",
+        "dropRate": 1500
+      },
+      {
+        "name": "Claws of callisto",
+        "dropRate": 196
+      },
+      {
+        "name": "Dragon 2h sword",
+        "dropRate": 256
+      },
+      {
+        "name": "Dragon pickaxe",
+        "dropRate": 256
+      },
+      {
+        "name": "Tyrannical ring",
+        "dropRate": 512
+      },
+      {
+        "name": "Voidwaker hilt",
+        "dropRate": 360
+      }
+    ]
+  },
+  {
+    "boss": "Calvar'ion",
+    "killsPerHour": 55.0,
+    "uniques": [
+      {
+        "name": "Dragon 2h sword",
+        "dropRate": 358
+      },
+      {
+        "name": "Dragon pickaxe",
+        "dropRate": 358
+      },
+      {
+        "name": "Ring of the gods",
+        "dropRate": 716
+      },
+      {
+        "name": "Skull of vet'ion",
+        "dropRate": 618
+      },
+      {
+        "name": "Vet'ion jr.",
+        "dropRate": 2800
+      },
+      {
+        "name": "Voidwaker blade",
+        "dropRate": 912
+      }
+    ]
+  },
+  {
+    "boss": "Cerberus",
+    "killsPerHour": 65.0,
+    "uniques": [
+      {
+        "name": "Eternal crystal",
+        "dropRate": 520
+      },
+      {
+        "name": "Hellpuppy",
+        "dropRate": 3000
+      },
+      {
+        "name": "Jar of souls",
+        "dropRate": 2000
+      },
+      {
+        "name": "Pegasian crystal",
+        "dropRate": 520
+      },
+      {
+        "name": "Primordial crystal",
+        "dropRate": 520
+      },
+      {
+        "name": "Smouldering stone",
+        "dropRate": 520
+      }
+    ]
+  },
+  {
+    "boss": "Chambers of Xeric",
+    "killsPerHour": 3.5,
+    "uniques": [
+      {
+        "name": "Ancestral hat",
+        "dropRate": 667
+      },
+      {
+        "name": "Ancestral robe bottom",
+        "dropRate": 667
+      },
+      {
+        "name": "Ancestral robe top",
+        "dropRate": 667
+      },
+      {
+        "name": "Arcane prayer scroll",
+        "dropRate": 100
+      },
+      {
+        "name": "Dexterous prayer scroll",
+        "dropRate": 100
+      },
+      {
+        "name": "Dinh's bulwark",
+        "dropRate": 667
+      },
+      {
+        "name": "Dragon claws",
+        "dropRate": 191
+      },
+      {
+        "name": "Dragon hunter crossbow",
+        "dropRate": 500
+      },
+      {
+        "name": "Elder maul",
+        "dropRate": 1001
+      },
+      {
+        "name": "Kodai insignia",
+        "dropRate": 1001
+      },
+      {
+        "name": "Olmlet",
+        "dropRate": 1474
+      },
+      {
+        "name": "Twisted bow",
+        "dropRate": 1001
+      },
+      {
+        "name": "Twisted buckler",
+        "dropRate": 500
+      }
+    ]
+  },
+  {
+    "boss": "Chambers of Xeric (CM)",
+    "killsPerHour": 3.0,
+    "uniques": [
+      {
+        "name": "Metamorphic dust",
+        "dropRate": 400
+      },
+      {
+        "name": "Twisted ancestral colour kit",
+        "dropRate": 75
+      }
+    ]
+  },
+  {
+    "boss": "Chaos Elemental",
+    "killsPerHour": 120.0,
+    "uniques": [
+      {
+        "name": "Dragon 2h sword",
+        "dropRate": 64
+      },
+      {
+        "name": "Dragon pickaxe",
+        "dropRate": 256
+      },
+      {
+        "name": "Pet chaos elemental",
+        "dropRate": 300
+      }
+    ]
+  },
+  {
+    "boss": "Chaos Fanatic",
+    "uniques": [
+      {
+        "name": "Odium shard 1",
+        "dropRate": 256
+      },
+      {
+        "name": "Malediction shard 1",
+        "dropRate": 256
+      },
+      {
+        "name": "Pet chaos elemental",
+        "dropRate": 1000
+      }
+    ]
+  },
+  {
+    "boss": "Commander Zilyana",
+    "killsPerHour": 60.0,
+    "uniques": [
+      {
+        "name": "Armadyl crossbow",
+        "dropRate": 508
+      },
+      {
+        "name": "Godsword shard 1",
+        "dropRate": 762
+      },
+      {
+        "name": "Godsword shard 2",
+        "dropRate": 762
+      },
+      {
+        "name": "Godsword shard 3",
+        "dropRate": 762
+      },
+      {
+        "name": "Pet zilyana",
+        "dropRate": 5000
+      },
+      {
+        "name": "Saradomin hilt",
+        "dropRate": 508
+      },
+      {
+        "name": "Saradomin sword",
+        "dropRate": 127
+      },
+      {
+        "name": "Saradomin's light",
+        "dropRate": 254
+      }
+    ]
+  },
+  {
+    "boss": "Corporeal Beast",
+    "killsPerHour": 40.0,
+    "uniques": [
+      {
+        "name": "Arcane sigil",
+        "dropRate": 1365
+      },
+      {
+        "name": "Elysian sigil",
+        "dropRate": 4095
+      },
+      {
+        "name": "Holy elixir",
+        "dropRate": 171
+      },
+      {
+        "name": "Jar of spirits",
+        "dropRate": 1000
+      },
+      {
+        "name": "Pet dark core",
+        "dropRate": 5000
+      },
+      {
+        "name": "Spectral sigil",
+        "dropRate": 1365
+      },
+      {
+        "name": "Spirit shield",
+        "dropRate": 64
+      }
+    ]
+  },
+  {
+    "boss": "Crazy Archaeologist",
+    "uniques": [
+      {
+        "name": "Fedora",
+        "dropRate": 128
+      },
+      {
+        "name": "Odium shard 2",
+        "dropRate": 256
+      },
+      {
+        "name": "Malediction shard 2",
+        "dropRate": 256
+      }
+    ]
+  },
+  {
+    "boss": "Dagannoth Kings",
+    "killsPerHour": 90.0,
+    "uniques": [
+      {
+        "name": "Archers ring",
+        "dropRate": 128
+      },
+      {
+        "name": "Berserker ring",
+        "dropRate": 128
+      },
+      {
+        "name": "Dragon axe",
+        "dropRate": 128
+      },
+      {
+        "name": "Pet dagannoth prime",
+        "dropRate": 5000
+      },
+      {
+        "name": "Pet dagannoth rex",
+        "dropRate": 5000
+      },
+      {
+        "name": "Pet dagannoth supreme",
+        "dropRate": 5000
+      },
+      {
+        "name": "Seers ring",
+        "dropRate": 128
+      },
+      {
+        "name": "Warrior ring",
+        "dropRate": 128
+      }
+    ]
+  },
+  {
+    "boss": "Dagannoth Prime",
+    "uniques": [
+      {
+        "name": "Seers ring",
+        "dropRate": 128
+      },
+      {
+        "name": "Mud battlestaff",
+        "dropRate": 128
+      },
+      {
+        "name": "Dragon axe",
+        "dropRate": 128
+      },
+      {
+        "name": "Pet dagannoth prime",
+        "dropRate": 5000
+      }
+    ]
+  },
+  {
+    "boss": "Dagannoth Rex",
+    "uniques": [
+      {
+        "name": "Berserker ring",
+        "dropRate": 128
+      },
+      {
+        "name": "Warrior ring",
+        "dropRate": 128
+      },
+      {
+        "name": "Dragon axe",
+        "dropRate": 128
+      },
+      {
+        "name": "Pet dagannoth rex",
+        "dropRate": 5000
+      }
+    ]
+  },
+  {
+    "boss": "Dagannoth Supreme",
+    "uniques": [
+      {
+        "name": "Archers ring",
+        "dropRate": 128
+      },
+      {
+        "name": "Seercull",
+        "dropRate": 128
+      },
+      {
+        "name": "Dragon axe",
+        "dropRate": 128
+      },
+      {
+        "name": "Pet dagannoth supreme",
+        "dropRate": 5000
+      }
+    ]
+  },
+  {
+    "boss": "Deranged Archaeologist",
+    "uniques": [
+      {
+        "name": "Odium shard 3",
+        "dropRate": 256
+      },
+      {
+        "name": "Malediction shard 3",
+        "dropRate": 256
+      }
+    ]
+  },
+  {
+    "boss": "Doom of Mokhaiotl",
+    "killsPerHour": 20.0,
+    "uniques": [
+      {
+        "name": "Avernic treads",
+        "dropRate": 160
+      },
+      {
+        "name": "Eye of ayak (uncharged)",
+        "dropRate": 148
+      },
+      {
+        "name": "Mokhaiotl cloth",
+        "dropRate": 140
+      }
+    ]
+  },
+  {
+    "boss": "Duke Sucellus",
+    "killsPerHour": 40.0,
+    "uniques": [
+      {
+        "name": "Baron",
+        "dropRate": 2500
+      },
+      {
+        "name": "Chromium ingot",
+        "dropRate": 240
+      },
+      {
+        "name": "Eye of the duke",
+        "dropRate": 720
+      },
+      {
+        "name": "Virtus mask",
+        "dropRate": 2160
+      },
+      {
+        "name": "Virtus robe bottom",
+        "dropRate": 2160
+      },
+      {
+        "name": "Virtus robe top",
+        "dropRate": 2160
+      }
+    ]
+  },
+  {
+    "boss": "General Graardor",
+    "killsPerHour": 58.0,
+    "uniques": [
+      {
+        "name": "Bandos boots",
+        "dropRate": 381
+      },
+      {
+        "name": "Bandos chestplate",
+        "dropRate": 381
+      },
+      {
+        "name": "Bandos hilt",
+        "dropRate": 508
+      },
+      {
+        "name": "Bandos tassets",
+        "dropRate": 381
+      },
+      {
+        "name": "Godsword shard 1",
+        "dropRate": 762
+      },
+      {
+        "name": "Godsword shard 2",
+        "dropRate": 762
+      },
+      {
+        "name": "Godsword shard 3",
+        "dropRate": 762
+      },
+      {
+        "name": "Pet general graardor",
+        "dropRate": 5000
+      }
+    ]
+  },
+  {
+    "boss": "Giant Mole",
+    "killsPerHour": 140.0,
+    "uniques": [
+      {
+        "name": "Baby mole",
+        "dropRate": 3000
+      },
+      {
+        "name": "Curved bone",
+        "dropRate": 5013
+      },
+      {
+        "name": "Long bone",
+        "dropRate": 400
+      }
+    ]
+  },
+  {
+    "boss": "Grotesque Guardians",
+    "killsPerHour": 38.0,
+    "uniques": [
+      {
+        "name": "Black tourmaline core",
+        "dropRate": 500
+      },
+      {
+        "name": "Granite gloves",
+        "dropRate": 250
+      },
+      {
+        "name": "Granite hammer",
+        "dropRate": 375
+      },
+      {
+        "name": "Granite ring",
+        "dropRate": 250
+      },
+      {
+        "name": "Jar of stone",
+        "dropRate": 5000
+      },
+      {
+        "name": "Noon",
+        "dropRate": 3000
+      }
+    ]
+  },
+  {
+    "boss": "Hespori",
+    "uniques": [
+      {
+        "name": "Attas seed",
+        "dropRate": 3
+      },
+      {
+        "name": "Iasor seed",
+        "dropRate": 3
+      },
+      {
+        "name": "Kronos seed",
+        "dropRate": 3
+      },
+      {
+        "name": "Bottomless compost bucket",
+        "dropRate": 35
+      }
+    ]
+  },
+  {
+    "boss": "K'ril Tsutsaroth",
+    "killsPerHour": 80.0,
+    "uniques": [
+      {
+        "name": "Godsword shard 1",
+        "dropRate": 762
+      },
+      {
+        "name": "Godsword shard 2",
+        "dropRate": 762
+      },
+      {
+        "name": "Godsword shard 3",
+        "dropRate": 762
+      },
+      {
+        "name": "Pet k'ril tsutsaroth",
+        "dropRate": 5000
+      },
+      {
+        "name": "Staff of the dead",
+        "dropRate": 508
+      },
+      {
+        "name": "Steam battlestaff",
+        "dropRate": 128
+      },
+      {
+        "name": "Zamorak hilt",
+        "dropRate": 508
+      },
+      {
+        "name": "Zamorakian spear",
+        "dropRate": 128
+      }
+    ]
+  },
+  {
+    "boss": "Kalphite Queen",
+    "killsPerHour": 55.0,
+    "uniques": [
+      {
+        "name": "Dragon 2h sword",
+        "dropRate": 256
+      },
+      {
+        "name": "Dragon chainbody",
+        "dropRate": 128
+      },
+      {
+        "name": "Dragon pickaxe",
+        "dropRate": 400
+      },
+      {
+        "name": "Jar of sand",
+        "dropRate": 2000
+      },
+      {
+        "name": "Kalphite princess",
+        "dropRate": 3000
+      },
+      {
+        "name": "Kq head",
+        "dropRate": 256
+      }
+    ]
+  },
+  {
+    "boss": "King Black Dragon",
+    "killsPerHour": 150.0,
+    "uniques": [
+      {
+        "name": "Draconic visage",
+        "dropRate": 5000
+      },
+      {
+        "name": "Dragon pickaxe",
+        "dropRate": 1000
+      },
+      {
+        "name": "Prince black dragon",
+        "dropRate": 3000
+      }
+    ]
+  },
+  {
+    "boss": "Kraken",
+    "killsPerHour": 100.0,
+    "uniques": [
+      {
+        "name": "Jar of dirt",
+        "dropRate": 1000
+      },
+      {
+        "name": "Kraken tentacle",
+        "dropRate": 400
+      },
+      {
+        "name": "Pet kraken",
+        "dropRate": 3000
+      },
+      {
+        "name": "Trident of the seas (full)",
+        "dropRate": 512
+      }
+    ]
+  },
+  {
+    "boss": "Kree'arra",
+    "killsPerHour": 50.0,
+    "uniques": [
+      {
+        "name": "Armadyl chainskirt",
+        "dropRate": 381
+      },
+      {
+        "name": "Armadyl chestplate",
+        "dropRate": 381
+      },
+      {
+        "name": "Armadyl helmet",
+        "dropRate": 381
+      },
+      {
+        "name": "Armadyl hilt",
+        "dropRate": 508
+      },
+      {
+        "name": "Godsword shard 1",
+        "dropRate": 762
+      },
+      {
+        "name": "Godsword shard 2",
+        "dropRate": 762
+      },
+      {
+        "name": "Godsword shard 3",
+        "dropRate": 762
+      },
+      {
+        "name": "Pet kree'arra",
+        "dropRate": 5000
+      }
+    ]
+  },
+  {
+    "boss": "Lunar Chests",
+    "uniques": [
+      {
+        "name": "Eclipse atlatl",
+        "dropRate": 224
+      },
+      {
+        "name": "Eclipse moon helm",
+        "dropRate": 224
+      },
+      {
+        "name": "Eclipse moon chestplate",
+        "dropRate": 224
+      },
+      {
+        "name": "Eclipse moon tassets",
+        "dropRate": 224
+      },
+      {
+        "name": "Dual macuahuitl",
+        "dropRate": 224
+      },
+      {
+        "name": "Blood moon helm",
+        "dropRate": 224
+      },
+      {
+        "name": "Blood moon chestplate",
+        "dropRate": 224
+      },
+      {
+        "name": "Blood moon tassets",
+        "dropRate": 224
+      },
+      {
+        "name": "Blue moon spear",
+        "dropRate": 224
+      },
+      {
+        "name": "Blue moon helm",
+        "dropRate": 224
+      },
+      {
+        "name": "Blue moon chestplate",
+        "dropRate": 224
+      },
+      {
+        "name": "Blue moon tassets",
+        "dropRate": 224
+      }
+    ]
+  },
+  {
+    "boss": "Mad Angel",
+    "uniques": [
+      {
+        "name": "Hallowfell",
+        "dropRate": 127
+      },
+      {
+        "name": "Jar of light",
+        "dropRate": 1000
+      },
+      {
+        "name": "Aggy",
+        "dropRate": 2000
+      }
+    ]
+  },
+  {
+    "boss": "Maggot King",
+    "uniques": [
+      {
+        "name": "Elder venator fang",
+        "dropRate": 340
+      },
+      {
+        "name": "Crimson kisten",
+        "dropRate": 520
+      },
+      {
+        "name": "Maggot marquess",
+        "dropRate": 3500
+      }
+    ]
+  },
+  {
+    "boss": "Nex",
+    "killsPerHour": 14.0,
+    "uniques": [
+      {
+        "name": "Ancient hilt",
+        "dropRate": 516
+      },
+      {
+        "name": "Nexling",
+        "dropRate": 500
+      },
+      {
+        "name": "Nihil horn",
+        "dropRate": 258
+      },
+      {
+        "name": "Torva full helm",
+        "dropRate": 258
+      },
+      {
+        "name": "Torva platebody",
+        "dropRate": 258
+      },
+      {
+        "name": "Torva platelegs",
+        "dropRate": 258
+      },
+      {
+        "name": "Zaryte vambraces",
+        "dropRate": 172
+      }
+    ]
+  },
+  {
+    "boss": "Nightmare",
+    "uniques": [
+      {
+        "name": "Nightmare staff",
+        "dropRate": 300
+      },
+      {
+        "name": "Inquisitor's great helm",
+        "dropRate": 420
+      },
+      {
+        "name": "Inquisitor's hauberk",
+        "dropRate": 420
+      },
+      {
+        "name": "Inquisitor's plateskirt",
+        "dropRate": 420
+      },
+      {
+        "name": "Inquisitor's mace",
+        "dropRate": 750
+      },
+      {
+        "name": "Little nightmare",
+        "dropRate": 800
+      },
+      {
+        "name": "Eldritch orb",
+        "dropRate": 960
+      },
+      {
+        "name": "Harmonised orb",
+        "dropRate": 960
+      },
+      {
+        "name": "Volatile orb",
+        "dropRate": 960
+      },
+      {
+        "name": "Jar of dreams",
+        "dropRate": 1900
+      }
+    ]
+  },
+  {
+    "boss": "Obor",
+    "uniques": [
+      {
+        "name": "Hill giant club",
+        "dropRate": 118
+      },
+      {
+        "name": "Giant champion scroll",
+        "dropRate": 5000
+      }
+    ]
+  },
+  {
+    "boss": "Phantom Muspah",
+    "killsPerHour": 26.0,
+    "uniques": [
+      {
+        "name": "Ancient icon",
+        "dropRate": 50
+      },
+      {
+        "name": "Magic seeds",
+        "dropRate": 534
+      },
+      {
+        "name": "Muphin",
+        "dropRate": 2500
+      },
+      {
+        "name": "Venator shard",
+        "dropRate": 100
+      }
+    ]
+  },
+  {
+    "boss": "Phosani's Nightmare",
+    "killsPerHour": 11.0,
+    "uniques": [
+      {
+        "name": "Eldritch orb",
+        "dropRate": 1600
+      },
+      {
+        "name": "Harmonised orb",
+        "dropRate": 1600
+      },
+      {
+        "name": "Inquisitor's great helm",
+        "dropRate": 700
+      },
+      {
+        "name": "Inquisitor's hauberk",
+        "dropRate": 700
+      },
+      {
+        "name": "Inquisitor's mace",
+        "dropRate": 1250
+      },
+      {
+        "name": "Inquisitor's plateskirt",
+        "dropRate": 700
+      },
+      {
+        "name": "Jar of dreams",
+        "dropRate": 1400
+      },
+      {
+        "name": "Little nightmare",
+        "dropRate": 4000
+      },
+      {
+        "name": "Nightmare staff",
+        "dropRate": 533
+      },
+      {
+        "name": "Volatile orb",
+        "dropRate": 1600
+      }
+    ]
+  },
+  {
+    "boss": "Sarachnis",
+    "killsPerHour": 110.0,
+    "uniques": [
+      {
+        "name": "Jar of eyes",
+        "dropRate": 2000
+      },
+      {
+        "name": "Sarachnis cudgel",
+        "dropRate": 384
+      },
+      {
+        "name": "Sraracha",
+        "dropRate": 3000
+      }
+    ]
+  },
+  {
+    "boss": "Scorpia",
+    "killsPerHour": 130.0,
+    "uniques": [
+      {
+        "name": "Malediction shard 3",
+        "dropRate": 256
+      },
+      {
+        "name": "Odium shard 3",
+        "dropRate": 256
+      },
+      {
+        "name": "Scorpia's offspring",
+        "dropRate": 2016
+      }
+    ]
+  },
+  {
+    "boss": "Scurrius",
+    "killsPerHour": 60.0,
+    "uniques": [
+      {
+        "name": "Long bone",
+        "dropRate": 400
+      },
+      {
+        "name": "Scurry",
+        "dropRate": 3000
+      }
+    ]
+  },
+  {
+    "boss": "Shellbane Gryphon",
+    "uniques": [
+      {
+        "name": "Belle's folly (tarnished)",
+        "dropRate": 75
+      },
+      {
+        "name": "Elkhorn frag",
+        "dropRate": 128
+      },
+      {
+        "name": "Pillar frag",
+        "dropRate": 128
+      },
+      {
+        "name": "Jar of feathers",
+        "dropRate": 2000
+      },
+      {
+        "name": "Gull",
+        "dropRate": 3000
+      }
+    ]
+  },
+  {
+    "boss": "Skotizo",
+    "uniques": [
+      {
+        "name": "Skotos",
+        "dropRate": 65
+      },
+      {
+        "name": "Jar of darkness",
+        "dropRate": 200
+      },
+      {
+        "name": "Uncut onyx",
+        "dropRate": 1000
+      }
+    ]
+  },
+  {
+    "boss": "Sol Heredit",
+    "killsPerHour": 2.5,
+    "uniques": [
+      {
+        "name": "Sunfire fanatic chausses",
+        "dropRate": 8
+      },
+      {
+        "name": "Sunfire fanatic cuirass",
+        "dropRate": 8
+      },
+      {
+        "name": "Sunfire fanatic helm",
+        "dropRate": 8
+      },
+      {
+        "name": "Dizana's quiver",
+        "dropRate": 1
+      },
+      {
+        "name": "Tonalztics of ralos",
+        "dropRate": 83
+      },
+      {
+        "name": "Echo crystal",
+        "dropRate": 12
+      },
+      {
+        "name": "Smol heredit",
+        "dropRate": 200
+      }
+    ]
+  },
+  {
+    "boss": "Spindel",
+    "killsPerHour": 55.0,
+    "uniques": [
+      {
+        "name": "Dragon 2h sword",
+        "dropRate": 358
+      },
+      {
+        "name": "Dragon pickaxe",
+        "dropRate": 358
+      },
+      {
+        "name": "Fangs of venenatis",
+        "dropRate": 618
+      },
+      {
+        "name": "Treasonous ring",
+        "dropRate": 716
+      },
+      {
+        "name": "Venenatis spiderling",
+        "dropRate": 2800
+      },
+      {
+        "name": "Voidwaker gem",
+        "dropRate": 912
+      }
+    ]
+  },
+  {
+    "boss": "Tempoross",
+    "uniques": [
+      {
+        "name": "Soaked page",
+        "dropRate": 54
+      },
+      {
+        "name": "Fish barrel",
+        "dropRate": 400
+      },
+      {
+        "name": "Tackle box",
+        "dropRate": 400
+      },
+      {
+        "name": "Big harpoonfish",
+        "dropRate": 1600
+      },
+      {
+        "name": "Tome of water (empty)",
+        "dropRate": 1600
+      },
+      {
+        "name": "Dragon harpoon",
+        "dropRate": 8000
+      },
+      {
+        "name": "Tiny tempor",
+        "dropRate": 8000
+      }
+    ]
+  },
+  {
+    "boss": "The Corrupted Gauntlet",
+    "killsPerHour": 7.0,
+    "uniques": [
+      {
+        "name": "Crystal armour seed",
+        "dropRate": 50
+      },
+      {
+        "name": "Crystal weapon seed",
+        "dropRate": 50
+      },
+      {
+        "name": "Enhanced crystal weapon seed",
+        "dropRate": 400
+      },
+      {
+        "name": "Youngllef",
+        "dropRate": 800
+      }
+    ]
+  },
+  {
+    "boss": "The Gauntlet",
+    "uniques": [
+      {
+        "name": "Crystal weapon seed",
+        "dropRate": 120
+      },
+      {
+        "name": "Crystal armour seed",
+        "dropRate": 120
+      },
+      {
+        "name": "Enhanced crystal weapon seed",
+        "dropRate": 2000
+      },
+      {
+        "name": "Youngllef",
+        "dropRate": 2000
+      }
+    ]
+  },
+  {
+    "boss": "The Hueycoatl",
+    "killsPerHour": 20.0,
+    "uniques": [
+      {
+        "name": "Dragon hunter wand",
+        "dropRate": 105
+      },
+      {
+        "name": "Huberte",
+        "dropRate": 400
+      },
+      {
+        "name": "Hueycoatl hide",
+        "dropRate": 29
+      },
+      {
+        "name": "Tome of earth",
+        "dropRate": 90
+      }
+    ]
+  },
+  {
+    "boss": "The Leviathan",
+    "killsPerHour": 30.0,
+    "uniques": [
+      {
+        "name": "Chromium ingot",
+        "dropRate": 256
+      },
+      {
+        "name": "Leviathan's lure",
+        "dropRate": 768
+      },
+      {
+        "name": "Virtus mask",
+        "dropRate": 2304
+      },
+      {
+        "name": "Virtus robe bottom",
+        "dropRate": 2304
+      },
+      {
+        "name": "Virtus robe top",
+        "dropRate": 2304
+      },
+      {
+        "name": "Lil'viathan",
+        "dropRate": 2500
+      }
+    ]
+  },
+  {
+    "boss": "The Royal Titans",
+    "killsPerHour": 55.0,
+    "uniques": [
+      {
+        "name": "Bran",
+        "dropRate": 1500
+      }
+    ]
+  },
+  {
+    "boss": "The Whisperer",
+    "killsPerHour": 21.0,
+    "uniques": [
+      {
+        "name": "Chromium ingot",
+        "dropRate": 171
+      },
+      {
+        "name": "Siren's staff",
+        "dropRate": 512
+      },
+      {
+        "name": "Virtus mask",
+        "dropRate": 1536
+      },
+      {
+        "name": "Virtus robe bottom",
+        "dropRate": 1536
+      },
+      {
+        "name": "Virtus robe top",
+        "dropRate": 1536
+      },
+      {
+        "name": "Wisp",
+        "dropRate": 2000
+      }
+    ]
+  },
+  {
+    "boss": "Theatre of Blood",
+    "killsPerHour": 3.5,
+    "uniques": [
+      {
+        "name": "Avernic defender hilt",
+        "dropRate": 79
+      },
+      {
+        "name": "Ghrazi rapier",
+        "dropRate": 315
+      },
+      {
+        "name": "Justiciar chestguard",
+        "dropRate": 315
+      },
+      {
+        "name": "Justiciar faceguard",
+        "dropRate": 315
+      },
+      {
+        "name": "Justiciar legguards",
+        "dropRate": 315
+      },
+      {
+        "name": "Lil' zik",
+        "dropRate": 650
+      },
+      {
+        "name": "Sanguinesti staff",
+        "dropRate": 315
+      },
+      {
+        "name": "Scythe of vitur",
+        "dropRate": 630
+      }
+    ]
+  },
+  {
+    "boss": "Theatre of Blood (HM)",
+    "killsPerHour": 3.2,
+    "uniques": [
+      {
+        "name": "Holy ornament kit",
+        "dropRate": 100
+      },
+      {
+        "name": "Sanguine dust",
+        "dropRate": 275
+      },
+      {
+        "name": "Sanguine ornament kit",
+        "dropRate": 150
+      }
+    ]
+  },
+  {
+    "boss": "Thermonuclear Smoke Devil",
+    "killsPerHour": 110.0,
+    "uniques": [
+      {
+        "name": "Dragon chainbody",
+        "dropRate": 2000
+      },
+      {
+        "name": "Jar of smoke",
+        "dropRate": 2000
+      },
+      {
+        "name": "Occult necklace",
+        "dropRate": 350
+      },
+      {
+        "name": "Pet smoke devil",
+        "dropRate": 3000
+      },
+      {
+        "name": "Smoke battlestaff",
+        "dropRate": 512
+      }
+    ]
+  },
+  {
+    "boss": "Tombs of Amascut",
+    "killsPerHour": 3.0,
+    "uniques": [
+      {
+        "name": "Elidinis' ward",
+        "dropRate": 90
+      },
+      {
+        "name": "Lightbearer",
+        "dropRate": 39
+      },
+      {
+        "name": "Masori body",
+        "dropRate": 135
+      },
+      {
+        "name": "Masori chaps",
+        "dropRate": 135
+      },
+      {
+        "name": "Masori mask",
+        "dropRate": 135
+      },
+      {
+        "name": "Osmumten's fang",
+        "dropRate": 39
+      },
+      {
+        "name": "Tumeken's guardian",
+        "dropRate": 315
+      },
+      {
+        "name": "Tumeken's shadow",
+        "dropRate": 270
+      }
+    ]
+  },
+  {
+    "boss": "Tombs of Amascut (Expert Mode)",
+    "uniques": [
+      {
+        "name": "Elidinis' ward",
+        "dropRate": 90
+      },
+      {
+        "name": "Lightbearer",
+        "dropRate": 39
+      },
+      {
+        "name": "Masori body",
+        "dropRate": 135
+      },
+      {
+        "name": "Masori chaps",
+        "dropRate": 135
+      },
+      {
+        "name": "Masori mask",
+        "dropRate": 135
+      },
+      {
+        "name": "Osmumten's fang",
+        "dropRate": 39
+      },
+      {
+        "name": "Tumeken's guardian",
+        "dropRate": 315
+      },
+      {
+        "name": "Tumeken's shadow",
+        "dropRate": 270
+      }
+    ]
+  },
+  {
+    "boss": "TzTok-Jad",
+    "killsPerHour": 3.0,
+    "uniques": [
+      {
+        "name": "Fire cape",
+        "dropRate": 1
+      },
+      {
+        "name": "Tzrek-jad",
+        "dropRate": 67
+      }
+    ]
+  },
+  {
+    "boss": "Tzkal-Zuk",
+    "killsPerHour": 1.0,
+    "uniques": [
+      {
+        "name": "Infernal cape",
+        "dropRate": 1
+      },
+      {
+        "name": "Jal-nib-rek",
+        "dropRate": 43
+      }
+    ]
+  },
+  {
+    "boss": "Vardorvis",
+    "killsPerHour": 37.0,
+    "uniques": [
+      {
+        "name": "Butch",
+        "dropRate": 3000
+      },
+      {
+        "name": "Chromium ingot",
+        "dropRate": 363
+      },
+      {
+        "name": "Executioner's axe head",
+        "dropRate": 1088
+      },
+      {
+        "name": "Virtus mask",
+        "dropRate": 3264
+      },
+      {
+        "name": "Virtus robe bottom",
+        "dropRate": 3264
+      },
+      {
+        "name": "Virtus robe top",
+        "dropRate": 3264
+      }
+    ]
+  },
+  {
+    "boss": "Venenatis",
+    "killsPerHour": 80.0,
+    "uniques": [
+      {
+        "name": "Dragon 2h sword",
+        "dropRate": 256
+      },
+      {
+        "name": "Dragon pickaxe",
+        "dropRate": 256
+      },
+      {
+        "name": "Fangs of venenatis",
+        "dropRate": 196
+      },
+      {
+        "name": "Treasonous ring",
+        "dropRate": 512
+      },
+      {
+        "name": "Venenatis spiderling",
+        "dropRate": 1500
+      },
+      {
+        "name": "Voidwaker gem",
+        "dropRate": 360
+      }
+    ]
+  },
+  {
+    "boss": "Vet'ion",
+    "killsPerHour": 42.0,
+    "uniques": [
+      {
+        "name": "Dragon 2h sword",
+        "dropRate": 256
+      },
+      {
+        "name": "Dragon pickaxe",
+        "dropRate": 256
+      },
+      {
+        "name": "Ring of the gods",
+        "dropRate": 512
+      },
+      {
+        "name": "Skull of vet'ion",
+        "dropRate": 196
+      },
+      {
+        "name": "Vet'ion jr.",
+        "dropRate": 1500
+      },
+      {
+        "name": "Voidwaker blade",
+        "dropRate": 360
+      }
+    ]
+  },
+  {
+    "boss": "Vorkath",
+    "killsPerHour": 34.0,
+    "uniques": [
+      {
+        "name": "Dragonbone necklace",
+        "dropRate": 1000
+      },
+      {
+        "name": "Jar of decay",
+        "dropRate": 3000
+      },
+      {
+        "name": "Skeletal visage",
+        "dropRate": 5000
+      },
+      {
+        "name": "Vorkath's head",
+        "dropRate": 50
+      },
+      {
+        "name": "Vorki",
+        "dropRate": 3000
+      }
+    ]
+  },
+  {
+    "boss": "Wintertodt",
+    "uniques": [
+      {
+        "name": "Warm gloves",
+        "dropRate": 150
+      },
+      {
+        "name": "Bruma torch",
+        "dropRate": 150
+      },
+      {
+        "name": "Pyromancer hood",
+        "dropRate": 150
+      },
+      {
+        "name": "Pyromancer garb",
+        "dropRate": 150
+      },
+      {
+        "name": "Pyromancer robe",
+        "dropRate": 150
+      },
+      {
+        "name": "Pyromancer boots",
+        "dropRate": 150
+      },
+      {
+        "name": "Phoenix",
+        "dropRate": 5000
+      },
+      {
+        "name": "Dragon axe",
+        "dropRate": 10000
+      }
+    ]
+  },
+  {
+    "boss": "Yama",
+    "killsPerHour": 20.0,
+    "uniques": [
+      {
+        "name": "Oathplate chest",
+        "dropRate": 600
+      },
+      {
+        "name": "Oathplate helm",
+        "dropRate": 600
+      },
+      {
+        "name": "Oathplate legs",
+        "dropRate": 600
+      },
+      {
+        "name": "Soulflame horn",
+        "dropRate": 300
+      }
+    ]
+  },
+  {
+    "boss": "Zalcano",
+    "uniques": [
+      {
+        "name": "Crystal tool seed",
+        "dropRate": 205
+      },
+      {
+        "name": "Zalcano shard",
+        "dropRate": 750
+      },
+      {
+        "name": "Smolcano",
+        "dropRate": 2250
+      }
+    ]
+  },
+  {
+    "boss": "Zulrah",
+    "killsPerHour": 42.0,
+    "uniques": [
+      {
+        "name": "Jar of swamp",
+        "dropRate": 3000
+      },
+      {
+        "name": "Magic fang",
+        "dropRate": 512
+      },
+      {
+        "name": "Magma mutagen",
+        "dropRate": 6554
+      },
+      {
+        "name": "Pet snakeling",
+        "dropRate": 4000
+      },
+      {
+        "name": "Serpentine visage",
+        "dropRate": 512
+      },
+      {
+        "name": "Tanzanite fang",
+        "dropRate": 512
+      },
+      {
+        "name": "Tanzanite mutagen",
+        "dropRate": 6554
+      },
+      {
+        "name": "Uncut onyx",
+        "dropRate": 512
+      }
+    ]
+  }
+]

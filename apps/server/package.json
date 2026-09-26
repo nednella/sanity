@@ -12,6 +12,9 @@
     "db:studio": "drizzle-kit studio",
     "db:port": "tsx --env-file-if-exists=.env scripts/port/index.ts",
     "wom:sync": "tsx --env-file-if-exists=.env scripts/wom-group-sync.ts",
+    "catalogue:bosses": "tsx --env-file-if-exists=.env scripts/catalogue/seed-bosses.ts",
+    "catalogue:items": "tsx --env-file-if-exists=.env scripts/catalogue/seed-items.ts",
+    "catalogue:uniques": "tsx --env-file-if-exists=.env scripts/catalogue/seed-uniques.ts",
     "openapi": "tsx --env-file-if-exists=.env scripts/openapi.ts"
   },
   "dependencies": {
