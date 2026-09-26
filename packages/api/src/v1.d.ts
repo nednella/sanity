@@ -188,6 +188,8 @@ export interface paths {
                     contentId?: number;
                     diary?: "true" | "false";
                     scale?: number;
+                    sort?: components["schemas"]["PersonalBestSortInput"];
+                    order?: "asc" | "desc";
                 };
                 header?: never;
                 path: {
@@ -203,7 +205,10 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["RankedPersonalBest"][];
+                        "application/json": {
+                            items: components["schemas"]["RankedPersonalBest"][];
+                            page: components["schemas"]["Page"];
+                        };
                     };
                 };
             };
@@ -524,6 +529,8 @@ export interface components {
             } | null;
         };
         /** @enum {string} */
+        PersonalBestSortInput: "content" | "scale" | "submittedAt" | "time";
+        /** @enum {string} */
         MemberSortInput: "clanPoints" | "diaryPoints" | "displayName" | "joinedAt" | "masterDiaries" | "rank" | "totalEhb" | "totalEhp" | "totalExp" | "totalLevel";
         RankSummaryInput: {
             id: number;
@@ -781,6 +788,8 @@ export interface components {
                 timeSeconds: number;
             } | null;
         };
+        /** @enum {string} */
+        PersonalBestSort: "content" | "scale" | "submittedAt" | "time";
         /** @enum {string} */
         MemberSort: "clanPoints" | "diaryPoints" | "displayName" | "joinedAt" | "masterDiaries" | "rank" | "totalEhb" | "totalEhp" | "totalExp" | "totalLevel";
         RankSummary: {

@@ -8,7 +8,7 @@ import { columns } from "./columns";
 
 // Ranks the matching runs within each content and team size, fastest first and the earlier submission winning a
 // tie, then keeps the top of each when a limit is given.
-export const selectRanked = (isCandidate: SQL | undefined, top: number | undefined) => {
+export const selectRanked = (isCandidate: SQL | undefined, top: number | undefined, orderBy?: SQL[]) => {
   const ranked = db.$with("ranked").as(
     db
       .select({
@@ -32,5 +32,5 @@ export const selectRanked = (isCandidate: SQL | undefined, top: number | undefin
     .innerJoin(speedrunContent, eq(speedrunContent.id, personalBests.contentId))
     .innerJoin(members, eq(members.id, personalBests.memberId))
     .where(top === undefined ? undefined : lte(ranked.position, top))
-    .orderBy(asc(speedrunContent.name), asc(personalBests.scale), asc(ranked.position));
+    .orderBy(...(orderBy ?? [asc(speedrunContent.name), asc(personalBests.scale), asc(ranked.position)]));
 };

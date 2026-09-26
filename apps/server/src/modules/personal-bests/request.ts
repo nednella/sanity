@@ -13,6 +13,17 @@ export const contentFilters = z.object({
 
 const recordFilters = z.object({ top: top.default(1) });
 
+const personalBestSort = z
+  .enum(["content", "scale", "submittedAt", "time"])
+  .register(z.globalRegistry, { id: "PersonalBestSort" });
+
+export const personalBestSortFilters = z.object({
+  sort: personalBestSort.default("submittedAt"),
+  order: z.enum(["asc", "desc"]).default("desc")
+});
+
+export type PersonalBestSort = z.output<typeof personalBestSort>;
+
 export const personalBestListQuery = z.object({
   ...pagination.shape,
   ...contentFilters.shape

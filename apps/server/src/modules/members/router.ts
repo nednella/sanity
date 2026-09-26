@@ -59,8 +59,12 @@ export const membersRouter: FastifyPluginAsyncZod = async (app) => {
     schema: {
       params: memberParams,
       querystring: memberPersonalBestsQuery,
-      response: { 200: z.array(rankedPersonalBest) }
+      response: { 200: paginated(rankedPersonalBest) }
     },
-    handler: async (req) => getMemberPersonalBests(req.params.id, req.query)
+    handler: async (req) => {
+      const { limit, offset } = req.query;
+      const { items, total } = await getMemberPersonalBests(req.params.id, req.query);
+      return { items, page: toPage({ limit, offset, total }) };
+    }
   });
 };

@@ -285,6 +285,15 @@
           "nextTier"
         ]
       },
+      "PersonalBestSortInput": {
+        "type": "string",
+        "enum": [
+          "content",
+          "scale",
+          "submittedAt",
+          "time"
+        ]
+      },
       "MemberSortInput": {
         "type": "string",
         "enum": [
@@ -1390,6 +1399,15 @@
           "nextTier"
         ],
         "additionalProperties": false
+      },
+      "PersonalBestSort": {
+        "type": "string",
+        "enum": [
+          "content",
+          "scale",
+          "submittedAt",
+          "time"
+        ]
       },
       "MemberSort": {
         "type": "string",
@@ -2511,6 +2529,32 @@
           },
           {
             "schema": {
+              "default": "submittedAt",
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/PersonalBestSortInput"
+                }
+              ]
+            },
+            "in": "query",
+            "name": "sort",
+            "required": false
+          },
+          {
+            "schema": {
+              "default": "desc",
+              "type": "string",
+              "enum": [
+                "asc",
+                "desc"
+              ]
+            },
+            "in": "query",
+            "name": "order",
+            "required": false
+          },
+          {
+            "schema": {
               "type": "string",
               "pattern": "^\\d+$"
             },
@@ -2525,10 +2569,23 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/RankedPersonalBest"
-                  }
+                  "type": "object",
+                  "properties": {
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/RankedPersonalBest"
+                      }
+                    },
+                    "page": {
+                      "$ref": "#/components/schemas/Page"
+                    }
+                  },
+                  "required": [
+                    "items",
+                    "page"
+                  ],
+                  "additionalProperties": false
                 }
               }
             }
