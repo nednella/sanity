@@ -2,11 +2,13 @@ import {
   bigint,
   boolean,
   char,
+  customType,
   date,
   doublePrecision,
   index,
   integer,
   interval,
+  numeric,
   pgEnum,
   pgTable,
   primaryKey,
@@ -15,6 +17,8 @@ import {
   timestamp,
   unique
 } from "drizzle-orm/pg-core";
+
+const citext = customType<{ data: string }>({ dataType: () => "citext" });
 
 export const ranks = pgTable("ranks", {
   id: smallint().primaryKey(),
@@ -69,8 +73,31 @@ export const submissionEvent = pgEnum("submission_event", ["bingo", "leagues"]);
 
 export const items = pgTable("items", {
   id: integer().generatedByDefaultAsIdentity().primaryKey(),
-  name: text().notNull().unique("items_name_unique")
+  name: citext().notNull().unique("items_name_unique"),
+  osrsItemId: integer().unique("items_osrs_item_id_unique")
 });
+
+export const bosses = pgTable("bosses", {
+  id: integer().generatedByDefaultAsIdentity().primaryKey(),
+  name: citext().notNull().unique("bosses_name_unique"),
+  killsPerHour: numeric({ precision: 6, scale: 2, mode: "number" }),
+  womMetric: text().unique("bosses_wom_metric_unique"),
+  womKillsPerHour: numeric({ precision: 6, scale: 2, mode: "number" })
+});
+
+export const bossUniques = pgTable(
+  "boss_uniques",
+  {
+    bossId: integer()
+      .notNull()
+      .references(() => bosses.id, { onDelete: "cascade" }),
+    itemId: integer()
+      .notNull()
+      .references(() => items.id, { onDelete: "cascade" }),
+    dropRate: integer().notNull()
+  },
+  (table) => [primaryKey({ columns: [table.bossId, table.itemId] }), index().on(table.itemId)]
+);
 
 export const submissions = pgTable(
   "submissions",
@@ -135,6 +162,7 @@ export const pointsTimelineEvents = pgTable("points_timeline_events", {
 
 export const speedrunContent = pgTable("speedrun_content", {
   id: integer().generatedByDefaultAsIdentity().primaryKey(),
+  bossId: integer().references(() => bosses.id),
   name: text().notNull().unique("speedrun_content_name_unique"),
   imageUrl: text(),
   isActive: boolean().notNull().default(true)
@@ -176,9 +204,7 @@ export const personalBests = pgTable(
     memberId: bigint({ mode: "bigint" })
       .notNull()
       .references(() => members.id),
-    contentId: integer()
-      .notNull()
-      .references(() => speedrunContent.id),
+    contentId: integer().references(() => speedrunContent.id),
     scale: smallint().notNull(),
     time: interval().notNull(),
     imageUrl: text(),
