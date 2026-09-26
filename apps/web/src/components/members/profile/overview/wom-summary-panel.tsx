@@ -5,8 +5,8 @@ import { MetricIcon } from "@/components/members/profile/overview/metric-icon";
 import { WomNoSync } from "@/components/members/profile/wom-no-sync";
 import type { Boss, MemberProfile } from "@/lib/api/types";
 import { metricName } from "@/lib/metrics";
+import { RelativeDate } from "@/lib/ui/relative-date";
 import { DASH } from "@/utils/dash";
-import { formatRelativeDate } from "@/utils/dates";
 import { bossIconUrl, statIconUrl } from "@/utils/icons";
 import { formatNumber } from "@/utils/numbers";
 
@@ -52,7 +52,7 @@ export function WomSummaryPanel({ profile }: Readonly<WomSummaryPanelProps>) {
           <FactRow
             icon={<CalendarDays className="size-4" />}
             label="Last Active"
-            value={formatRelativeDate(wom.lastChangedAt)}
+            value={<RelativeDate value={wom.lastChangedAt} />}
           />
           <FactRow
             icon={<Hourglass className="size-4" />}
