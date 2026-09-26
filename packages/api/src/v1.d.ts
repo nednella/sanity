@@ -135,51 +135,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/v1/members/{id}/submissions": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: {
-            parameters: {
-                query?: {
-                    limit?: number;
-                    offset?: number;
-                    sort?: components["schemas"]["SubmissionSortInput"];
-                    order?: "asc" | "desc";
-                };
-                header?: never;
-                path: {
-                    id: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Default Response */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            items: components["schemas"]["Submission"][];
-                            page: components["schemas"]["Page"];
-                        };
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/v1/members/{id}/diary": {
         parameters: {
             query?: never;
@@ -252,6 +207,51 @@ export interface paths {
                     content: {
                         "application/json": {
                             items: components["schemas"]["RankedPersonalBest"][];
+                            page: components["schemas"]["Page"];
+                        };
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/members/{id}/submissions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: {
+                    limit?: number;
+                    offset?: number;
+                    sort?: components["schemas"]["SubmissionSortInput"];
+                    order?: "asc" | "desc";
+                };
+                header?: never;
+                path: {
+                    id: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            items: components["schemas"]["Submission"][];
                             page: components["schemas"]["Page"];
                         };
                     };
@@ -608,6 +608,8 @@ export interface components {
             name: string;
             iconUrl: string | null;
         };
+        /** @enum {string} */
+        ProgressionStatusInput: "climbing" | "maxed" | "trial" | "manual";
         ComputedInput: {
             metric: string;
             value: number;
@@ -717,6 +719,7 @@ export interface components {
                 } | null;
             };
             progression: {
+                status: components["schemas"]["ProgressionStatusInput"];
                 eligibleRank: components["schemas"]["RankSummaryInput"] | null;
                 nextRank: {
                     points: {
@@ -870,6 +873,8 @@ export interface components {
             name: string;
             iconUrl: string | null;
         };
+        /** @enum {string} */
+        ProgressionStatus: "climbing" | "maxed" | "trial" | "manual";
         Computed: {
             metric: string;
             value: number;
@@ -979,6 +984,7 @@ export interface components {
                 } | null;
             };
             progression: {
+                status: components["schemas"]["ProgressionStatus"];
                 eligibleRank: components["schemas"]["RankSummary"] | null;
                 nextRank: {
                     points: {

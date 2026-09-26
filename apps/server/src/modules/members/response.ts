@@ -64,7 +64,12 @@ const nextRank = rank.extend({
   })
 });
 
+const progressionStatus = z
+  .enum(["climbing", "maxed", "trial", "manual"])
+  .register(z.globalRegistry, { id: "ProgressionStatus" });
+
 const progression = z.object({
+  status: progressionStatus,
   eligibleRank: rank.nullable(),
   nextRank: z.object({
     points: nextRank.nullable(),

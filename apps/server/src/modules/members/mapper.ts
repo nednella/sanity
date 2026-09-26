@@ -7,7 +7,19 @@ import { sortActivities, sortBosses, sortComputed, sortSkills } from "@/utils/me
 import type { MemberRow } from "./repository/shared/select-members";
 
 // QUIT, RETIRED and TRIALIST ranks change by hand, so they have no next rank to work toward.
-const RANK_IDS_WITHOUT_PROGRESSION = new Set([-1, 0, 1]);
+const TRIALIST_RANK_ID = 1;
+const RANK_IDS_WITHOUT_PROGRESSION = new Set([-1, 0, TRIALIST_RANK_ID]);
+
+/**
+ * Why a member has no next rank, since the panel says something different for each: a trialist earns
+ * their place on the ladder by passing trial, a quit or retired member has stepped off it, and the top
+ * rank has run out of ladder to climb.
+ */
+const toProgressionStatus = (currentRankId: number, isOnLadder: boolean, hasHigherRanks: boolean) => {
+  if (currentRankId === TRIALIST_RANK_ID) return "trial" as const;
+  if (!isOnLadder) return "manual" as const;
+  return hasHigherRanks ? ("climbing" as const) : ("maxed" as const);
+};
 
 const toRankSummary = (rank: RankRow) => ({ id: rank.id, name: rank.name, iconUrl: toRankIconUrl(rank.inGameName) });
 
@@ -93,6 +105,7 @@ const toProgression = (currentRankId: number, ranks: RankRow[], standing: Standi
   const diary = higher.find((rank) => requiresDiaries(rank));
 
   return {
+    status: toProgressionStatus(currentRankId, ladder.length > 0, higher.length > 0),
     eligibleRank: eligibleRank ? toRankSummary(eligibleRank) : null,
     nextRank: {
       points: points ? toNextRank(points) : null,
