@@ -20,6 +20,7 @@ import { Route as siteMembersMemberIdIndexRouteImport } from './routes/(site)/me
 import { Route as siteMembersMemberIdActivitiesRouteImport } from './routes/(site)/members/$memberId/activities'
 import { Route as siteMembersMemberIdBossesRouteImport } from './routes/(site)/members/$memberId/bosses'
 import { Route as siteMembersMemberIdSkillsRouteImport } from './routes/(site)/members/$memberId/skills'
+import { Route as siteMembersMemberIdSubmissionsRouteImport } from './routes/(site)/members/$memberId/submissions'
 import { Route as siteWikiArticleIndexRouteImport } from './routes/(site)/wiki/$article/index'
 import { Route as siteWikiArticleDiscussionRouteImport } from './routes/(site)/wiki/$article/discussion'
 
@@ -82,6 +83,12 @@ const siteMembersMemberIdSkillsRoute =
     path: '/skills',
     getParentRoute: () => siteMembersMemberIdLayoutRoute,
   } as any)
+const siteMembersMemberIdSubmissionsRoute =
+  siteMembersMemberIdSubmissionsRouteImport.update({
+    id: '/submissions',
+    path: '/submissions',
+    getParentRoute: () => siteMembersMemberIdLayoutRoute,
+  } as any)
 const siteWikiArticleIndexRoute = siteWikiArticleIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -104,6 +111,7 @@ export interface FileRoutesByFullPath {
   '/members/$memberId/activities': typeof siteMembersMemberIdActivitiesRoute
   '/members/$memberId/bosses': typeof siteMembersMemberIdBossesRoute
   '/members/$memberId/skills': typeof siteMembersMemberIdSkillsRoute
+  '/members/$memberId/submissions': typeof siteMembersMemberIdSubmissionsRoute
   '/wiki/$article/discussion': typeof siteWikiArticleDiscussionRoute
   '/members/$memberId/': typeof siteMembersMemberIdIndexRoute
   '/wiki/$article/': typeof siteWikiArticleIndexRoute
@@ -116,6 +124,7 @@ export interface FileRoutesByTo {
   '/members/$memberId/activities': typeof siteMembersMemberIdActivitiesRoute
   '/members/$memberId/bosses': typeof siteMembersMemberIdBossesRoute
   '/members/$memberId/skills': typeof siteMembersMemberIdSkillsRoute
+  '/members/$memberId/submissions': typeof siteMembersMemberIdSubmissionsRoute
   '/wiki/$article/discussion': typeof siteWikiArticleDiscussionRoute
   '/members/$memberId': typeof siteMembersMemberIdIndexRoute
   '/wiki/$article': typeof siteWikiArticleIndexRoute
@@ -132,6 +141,7 @@ export interface FileRoutesById {
   '/(site)/members/$memberId/activities': typeof siteMembersMemberIdActivitiesRoute
   '/(site)/members/$memberId/bosses': typeof siteMembersMemberIdBossesRoute
   '/(site)/members/$memberId/skills': typeof siteMembersMemberIdSkillsRoute
+  '/(site)/members/$memberId/submissions': typeof siteMembersMemberIdSubmissionsRoute
   '/(site)/wiki/$article/discussion': typeof siteWikiArticleDiscussionRoute
   '/(site)/members/$memberId/': typeof siteMembersMemberIdIndexRoute
   '/(site)/wiki/$article/': typeof siteWikiArticleIndexRoute
@@ -148,6 +158,7 @@ export interface FileRouteTypes {
     | '/members/$memberId/activities'
     | '/members/$memberId/bosses'
     | '/members/$memberId/skills'
+    | '/members/$memberId/submissions'
     | '/wiki/$article/discussion'
     | '/members/$memberId/'
     | '/wiki/$article/'
@@ -160,6 +171,7 @@ export interface FileRouteTypes {
     | '/members/$memberId/activities'
     | '/members/$memberId/bosses'
     | '/members/$memberId/skills'
+    | '/members/$memberId/submissions'
     | '/wiki/$article/discussion'
     | '/members/$memberId'
     | '/wiki/$article'
@@ -175,6 +187,7 @@ export interface FileRouteTypes {
     | '/(site)/members/$memberId/activities'
     | '/(site)/members/$memberId/bosses'
     | '/(site)/members/$memberId/skills'
+    | '/(site)/members/$memberId/submissions'
     | '/(site)/wiki/$article/discussion'
     | '/(site)/members/$memberId/'
     | '/(site)/wiki/$article/'
@@ -264,6 +277,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof siteMembersMemberIdSkillsRouteImport
       parentRoute: typeof siteMembersMemberIdLayoutRoute
     }
+    '/(site)/members/$memberId/submissions': {
+      id: '/(site)/members/$memberId/submissions'
+      path: '/submissions'
+      fullPath: '/members/$memberId/submissions'
+      preLoaderRoute: typeof siteMembersMemberIdSubmissionsRouteImport
+      parentRoute: typeof siteMembersMemberIdLayoutRoute
+    }
     '/(site)/wiki/$article/': {
       id: '/(site)/wiki/$article/'
       path: '/'
@@ -285,6 +305,7 @@ interface siteMembersMemberIdLayoutRouteChildren {
   siteMembersMemberIdActivitiesRoute: typeof siteMembersMemberIdActivitiesRoute
   siteMembersMemberIdBossesRoute: typeof siteMembersMemberIdBossesRoute
   siteMembersMemberIdSkillsRoute: typeof siteMembersMemberIdSkillsRoute
+  siteMembersMemberIdSubmissionsRoute: typeof siteMembersMemberIdSubmissionsRoute
   siteMembersMemberIdIndexRoute: typeof siteMembersMemberIdIndexRoute
 }
 
@@ -293,6 +314,7 @@ const siteMembersMemberIdLayoutRouteChildren: siteMembersMemberIdLayoutRouteChil
     siteMembersMemberIdActivitiesRoute: siteMembersMemberIdActivitiesRoute,
     siteMembersMemberIdBossesRoute: siteMembersMemberIdBossesRoute,
     siteMembersMemberIdSkillsRoute: siteMembersMemberIdSkillsRoute,
+    siteMembersMemberIdSubmissionsRoute: siteMembersMemberIdSubmissionsRoute,
     siteMembersMemberIdIndexRoute: siteMembersMemberIdIndexRoute,
   }
 

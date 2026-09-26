@@ -16,3 +16,6 @@ export type RankedPersonalBest = Schemas["RankedPersonalBest"];
 export type Submission = Schemas["Submission"];
 export type Page = Schemas["Page"];
 export type MemberSort = Schemas["MemberSort"];
+export type PersonalBestSort = Schemas["PersonalBestSort"];
+export type SubmissionSort = Schemas["SubmissionSort"];
+export type SubmissionEvent = NonNullable<Submission["event"]>;

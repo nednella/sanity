@@ -32,6 +32,7 @@ type DataTableProps<TData extends RowData> = {
   data: TData[] | undefined;
   emptyMessage?: string;
   error?: Error | null;
+  filters?: ReactNode;
   initialColumnVisibility?: ColumnVisibilityState;
   isLoading?: boolean;
   onPaginationChange?: OnChangeFn<PaginationState>;
@@ -56,6 +57,7 @@ export function DataTable<TData extends RowData>({
   data = NO_ROWS,
   emptyMessage = "No results.",
   error = null,
+  filters,
   initialColumnVisibility = {},
   isLoading = false,
   onPaginationChange,
@@ -109,7 +111,7 @@ export function DataTable<TData extends RowData>({
 
   return (
     <Table.Shell>
-      {(search || toolbar || canToggleColumns) && (
+      {(search || filters || toolbar || canToggleColumns) && (
         <Table.Toolbar
           actions={
             <>
@@ -119,6 +121,7 @@ export function DataTable<TData extends RowData>({
           }
         >
           {search && <Table.Search {...search} />}
+          {filters}
         </Table.Toolbar>
       )}
 
