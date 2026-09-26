@@ -17,7 +17,7 @@ export const toMemberDiary = (
   [first, ...rest]: [DiaryTimeRow, ...DiaryTimeRow[]],
   pb: MemberBestTimeRow | undefined
 ) => {
-  const { contentId, contentName, contentImageUrl, scale } = first;
+  const { contentId, contentName, contentMetric, contentImageUrl, scale } = first;
   const thresholds = [first, ...rest];
 
   const beaten = pb ? thresholds.filter((threshold) => pb.timeSeconds <= threshold.timeSeconds) : [];
@@ -28,6 +28,7 @@ export const toMemberDiary = (
     content: {
       id: contentId,
       name: contentName,
+      metric: contentMetric,
       imageUrl: contentImageUrl
     },
     scale,

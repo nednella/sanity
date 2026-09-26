@@ -2,7 +2,7 @@ import type { SQL } from "drizzle-orm";
 import { asc, eq, lte, sql } from "drizzle-orm";
 
 import { db } from "@db/index";
-import { members, personalBests, speedrunContent } from "@db/schema";
+import { bosses, members, personalBests, speedrunContent } from "@db/schema";
 
 import { columns } from "./columns";
 
@@ -30,7 +30,8 @@ export const selectRanked = (isCandidate: SQL | undefined, top: number | undefin
     .from(personalBests)
     .innerJoin(ranked, eq(ranked.id, personalBests.id))
     .innerJoin(speedrunContent, eq(speedrunContent.id, personalBests.contentId))
+    .innerJoin(bosses, eq(bosses.id, speedrunContent.bossId))
     .innerJoin(members, eq(members.id, personalBests.memberId))
     .where(top === undefined ? undefined : lte(ranked.position, top))
-    .orderBy(...(orderBy ?? [asc(speedrunContent.name), asc(personalBests.scale), asc(ranked.position)]));
+    .orderBy(...(orderBy ?? [asc(bosses.name), asc(personalBests.scale), asc(ranked.position)]));
 };

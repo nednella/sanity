@@ -11,6 +11,7 @@ export const memberDiary = z
     content: z.object({
       id: z.number(),
       name: z.string(),
+      metric: z.string().nullable(),
       imageUrl: z.string().nullable()
     }),
     scale: z.number(),

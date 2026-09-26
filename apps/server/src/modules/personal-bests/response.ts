@@ -6,6 +6,7 @@ import { memberRef } from "@/schema/common";
 const content = z.object({
   id: z.number(),
   name: z.string(),
+  metric: z.string().nullable(),
   imageUrl: z.string().nullable()
 });
 

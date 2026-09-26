@@ -3,7 +3,7 @@ import type { DiaryTimeRow } from "../repository/list-diary-times";
 import { listDiaryTimes } from "../repository/list-diary-times";
 import { listMemberBestTimes } from "../repository/list-member-best-times";
 
-const keyOf = ({ contentId, scale }: { contentId: number; scale: number }) => `${contentId}:${scale}`;
+const keyOf = ({ contentId, scale }: { contentId: number | null; scale: number }) => `${contentId}:${scale}`;
 
 /**
  * Every diary the clan tracks, whether or not the member has a time on it.

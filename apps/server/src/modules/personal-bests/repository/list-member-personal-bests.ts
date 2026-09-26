@@ -1,7 +1,7 @@
 import { and, asc, desc } from "drizzle-orm";
 import type { PgColumn } from "drizzle-orm/pg-core";
 
-import { personalBests, speedrunContent } from "@db/schema";
+import { bosses, personalBests } from "@db/schema";
 
 import type { PersonalBestSort } from "../request";
 import { type ContentFilters, isActiveContent, isFor, isInTeamOf, isPersonalBest } from "./shared/filters";
@@ -16,7 +16,7 @@ export type ListMemberPersonalBestsOptions = ContentFilters & {
 };
 
 const sortColumns: Record<PersonalBestSort, PgColumn> = {
-  content: speedrunContent.name,
+  content: bosses.name,
   scale: personalBests.scale,
   submittedAt: personalBests.submittedAt,
   time: personalBests.time
@@ -26,7 +26,7 @@ const sortColumns: Record<PersonalBestSort, PgColumn> = {
 // on its own and content name breaks any tie.
 const toOrderBy = (sort: PersonalBestSort, order: "asc" | "desc") => {
   const direction = order === "asc" ? asc : desc;
-  return [direction(sortColumns[sort]), asc(speedrunContent.name), asc(personalBests.scale)];
+  return [direction(sortColumns[sort]), asc(bosses.name), asc(personalBests.scale)];
 };
 
 export const listMemberPersonalBests = (

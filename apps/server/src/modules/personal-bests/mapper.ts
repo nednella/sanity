@@ -7,11 +7,7 @@ export const toPersonalBest = (
   team: TeamRow[]
 ) => ({
   id: personalBest.id,
-  content: {
-    id: content.id,
-    name: content.name,
-    imageUrl: content.imageUrl
-  },
+  content,
   scale: personalBest.scale,
   timeSeconds,
   imageUrl: personalBest.imageUrl,
