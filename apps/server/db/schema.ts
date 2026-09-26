@@ -252,6 +252,20 @@ export const womPlayers = pgTable("wom_players", {
   lastChangedAt: timestamp({ withTimezone: true })
 });
 
+export const womNameChanges = pgTable(
+  "wom_name_changes",
+  {
+    id: integer().primaryKey(),
+    womPlayerId: integer()
+      .notNull()
+      .references(() => womPlayers.womPlayerId, { onDelete: "cascade" }),
+    oldName: text().notNull(),
+    newName: text().notNull(),
+    resolvedAt: timestamp({ withTimezone: true }).notNull()
+  },
+  (table) => [index().on(table.womPlayerId, table.resolvedAt.desc())]
+);
+
 export const womSnapshots = pgTable(
   "wom_snapshots",
   {
