@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as siteLayoutRouteImport } from './routes/(site)/_layout'
 import { Route as siteLoginRouteImport } from './routes/(site)/login'
 import { Route as siteRecordsRouteImport } from './routes/(site)/records'
+import { Route as siteSubmissionsRouteImport } from './routes/(site)/submissions'
 import { Route as siteMembersIndexRouteImport } from './routes/(site)/members/index'
 import { Route as siteMembersMemberIdLayoutRouteImport } from './routes/(site)/members/$memberId/_layout'
 import { Route as siteWikiIndexRouteImport } from './routes/(site)/wiki/index'
@@ -42,6 +43,11 @@ const siteLoginRoute = siteLoginRouteImport.update({
 const siteRecordsRoute = siteRecordsRouteImport.update({
   id: '/records',
   path: '/records',
+  getParentRoute: () => siteLayoutRoute,
+} as any)
+const siteSubmissionsRoute = siteSubmissionsRouteImport.update({
+  id: '/submissions',
+  path: '/submissions',
   getParentRoute: () => siteLayoutRoute,
 } as any)
 const siteMembersIndexRoute = siteMembersIndexRouteImport.update({
@@ -111,6 +117,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof siteLoginRoute
   '/records': typeof siteRecordsRoute
+  '/submissions': typeof siteSubmissionsRoute
   '/members/$memberId': typeof siteMembersMemberIdLayoutRouteWithChildren
   '/wiki/$article': typeof siteWikiArticleLayoutRouteWithChildren
   '/members/': typeof siteMembersIndexRoute
@@ -127,6 +134,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof siteLoginRoute
   '/records': typeof siteRecordsRoute
+  '/submissions': typeof siteSubmissionsRoute
   '/members': typeof siteMembersIndexRoute
   '/wiki': typeof siteWikiIndexRoute
   '/members/$memberId/activities': typeof siteMembersMemberIdActivitiesRoute
@@ -143,6 +151,7 @@ export interface FileRoutesById {
   '/(site)': typeof siteLayoutRouteWithChildren
   '/(site)/login': typeof siteLoginRoute
   '/(site)/records': typeof siteRecordsRoute
+  '/(site)/submissions': typeof siteSubmissionsRoute
   '/(site)/members/$memberId': typeof siteMembersMemberIdLayoutRouteWithChildren
   '/(site)/wiki/$article': typeof siteWikiArticleLayoutRouteWithChildren
   '/(site)/members/': typeof siteMembersIndexRoute
@@ -161,6 +170,7 @@ export interface FileRouteTypes {
     | '/'
     | '/login'
     | '/records'
+    | '/submissions'
     | '/members/$memberId'
     | '/wiki/$article'
     | '/members/'
@@ -177,6 +187,7 @@ export interface FileRouteTypes {
     | '/'
     | '/login'
     | '/records'
+    | '/submissions'
     | '/members'
     | '/wiki'
     | '/members/$memberId/activities'
@@ -192,6 +203,7 @@ export interface FileRouteTypes {
     | '/(site)'
     | '/(site)/login'
     | '/(site)/records'
+    | '/(site)/submissions'
     | '/(site)/members/$memberId'
     | '/(site)/wiki/$article'
     | '/(site)/members/'
@@ -238,6 +250,13 @@ declare module '@tanstack/react-router' {
       path: '/records'
       fullPath: '/records'
       preLoaderRoute: typeof siteRecordsRouteImport
+      parentRoute: typeof siteLayoutRoute
+    }
+    '/(site)/submissions': {
+      id: '/(site)/submissions'
+      path: '/submissions'
+      fullPath: '/submissions'
+      preLoaderRoute: typeof siteSubmissionsRouteImport
       parentRoute: typeof siteLayoutRoute
     }
     '/(site)/members/': {
@@ -360,6 +379,7 @@ const siteWikiArticleLayoutRouteWithChildren =
 interface siteLayoutRouteChildren {
   siteLoginRoute: typeof siteLoginRoute
   siteRecordsRoute: typeof siteRecordsRoute
+  siteSubmissionsRoute: typeof siteSubmissionsRoute
   siteMembersMemberIdLayoutRoute: typeof siteMembersMemberIdLayoutRouteWithChildren
   siteWikiArticleLayoutRoute: typeof siteWikiArticleLayoutRouteWithChildren
   siteMembersIndexRoute: typeof siteMembersIndexRoute
@@ -369,6 +389,7 @@ interface siteLayoutRouteChildren {
 const siteLayoutRouteChildren: siteLayoutRouteChildren = {
   siteLoginRoute: siteLoginRoute,
   siteRecordsRoute: siteRecordsRoute,
+  siteSubmissionsRoute: siteSubmissionsRoute,
   siteMembersMemberIdLayoutRoute: siteMembersMemberIdLayoutRouteWithChildren,
   siteWikiArticleLayoutRoute: siteWikiArticleLayoutRouteWithChildren,
   siteMembersIndexRoute: siteMembersIndexRoute,
