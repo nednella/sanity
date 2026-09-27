@@ -3,6 +3,15 @@ import { z } from "zod";
 import { isoDate } from "@/schema/codecs";
 import { memberRef } from "@/schema/common";
 
+export const personalBestContent = z
+  .object({
+    id: z.number(),
+    name: z.string(),
+    metric: z.string().nullable(),
+    scales: z.array(z.number())
+  })
+  .register(z.globalRegistry, { id: "PersonalBestContent" });
+
 const content = z.object({
   id: z.number(),
   name: z.string(),

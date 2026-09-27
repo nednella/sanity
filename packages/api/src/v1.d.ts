@@ -313,6 +313,41 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/personal-bests/content": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["PersonalBestContent"][];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/personal-bests/records": {
         parameters: {
             query?: never;
@@ -527,6 +562,12 @@ export interface components {
         MemberRefInput: {
             id: string;
             displayName: string;
+        };
+        PersonalBestContentInput: {
+            id: number;
+            name: string;
+            metric: string | null;
+            scales: number[];
         };
         PersonalBestInput: {
             id: number;
@@ -801,6 +842,12 @@ export interface components {
         MemberRef: {
             id: string;
             displayName: string;
+        };
+        PersonalBestContent: {
+            id: number;
+            name: string;
+            metric: string | null;
+            scales: number[];
         };
         PersonalBest: {
             id: number;

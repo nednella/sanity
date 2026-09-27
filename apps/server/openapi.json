@@ -55,6 +55,33 @@
           "displayName"
         ]
       },
+      "PersonalBestContentInput": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string"
+          },
+          "metric": {
+            "nullable": true,
+            "type": "string"
+          },
+          "scales": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "metric",
+          "scales"
+        ]
+      },
       "PersonalBestInput": {
         "type": "object",
         "properties": {
@@ -1222,6 +1249,34 @@
         "required": [
           "id",
           "displayName"
+        ],
+        "additionalProperties": false
+      },
+      "PersonalBestContent": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string"
+          },
+          "metric": {
+            "nullable": true,
+            "type": "string"
+          },
+          "scales": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "metric",
+          "scales"
         ],
         "additionalProperties": false
       },
@@ -2927,6 +2982,25 @@
                     "page"
                   ],
                   "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/personal-bests/content": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PersonalBestContent"
+                  }
                 }
               }
             }
