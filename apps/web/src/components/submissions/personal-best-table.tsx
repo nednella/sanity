@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 
 import { MetricIcon } from "@/components/members/profile/overview/metric-icon";
 import { ParticipantList } from "@/components/shared/participant-list";
+import { ReviewStatusBadge } from "@/components/submissions/review-status-badge";
 import { DataTable } from "@/components/table/data-table";
 import type { DataTableFeatures } from "@/components/table/table-features";
 import type { Page, RankedPersonalBest } from "@/lib/api/types";
@@ -62,6 +63,13 @@ const buildColumns = (memberId?: string) =>
           participants={getValue()}
         />
       )
+    }),
+    columnHelper.accessor("status", {
+      id: "status",
+      header: "Status",
+      enableSorting: false,
+      meta: { minWidth: 8 },
+      cell: ({ getValue }) => <ReviewStatusBadge status={getValue()} />
     }),
     columnHelper.accessor("submittedAt", {
       id: "submittedAt",

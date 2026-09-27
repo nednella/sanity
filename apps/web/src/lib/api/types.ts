@@ -20,3 +20,4 @@ export type MemberSort = Schemas["MemberSort"];
 export type PersonalBestSort = Schemas["PersonalBestSort"];
 export type SubmissionSort = Schemas["SubmissionSort"];
 export type SubmissionEvent = NonNullable<Submission["event"]>;
+export type ReviewStatus = Schemas["ReviewStatus"];
