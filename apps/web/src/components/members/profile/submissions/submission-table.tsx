@@ -2,7 +2,7 @@ import { createColumnHelper } from "@tanstack/react-table";
 import type { ReactNode } from "react";
 
 import { MetricIcon } from "@/components/members/profile/overview/metric-icon";
-import { ParticipantList } from "@/components/members/profile/submissions/participant-list";
+import { ParticipantList } from "@/components/shared/participant-list";
 import { DataTable } from "@/components/table/data-table";
 import type { DataTableFeatures } from "@/components/table/table-features";
 import type { Page, Submission } from "@/lib/api/types";
