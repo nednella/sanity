@@ -17,7 +17,12 @@ export const isActiveContent = inArray(
 
 // The old bot marks a run approved_missing_member when its team is short, usually because a teammate has since
 // left. It still counts as a personal best, but not as a clan record.
-export const isPersonalBest = inArray(personalBests.status, ["approved", "approved_missing_member"]);
+export const isPersonalBest = inArray(personalBests.status, [
+  "approved",
+  "approved_missing_member",
+  "pending",
+  "submitted"
+]);
 export const isClanRecord = eq(personalBests.status, "approved");
 
 // Credit by team only. The submitter is often not the runner: one admin entered thousands of other people's

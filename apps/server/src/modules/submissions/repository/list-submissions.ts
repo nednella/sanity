@@ -25,7 +25,8 @@ const sortColumns: Record<SubmissionSort, PgColumn> = {
   valueMillions: submissions.valueMillions
 };
 
-const isApproved = inArray(submissions.status, ["approved", "approved_missing_member"]);
+// Denied and deleted submissions stay hidden; everything else is either counted or waiting to be.
+const isListed = inArray(submissions.status, ["approved", "approved_missing_member", "pending", "submitted"]);
 
 // Credit by team, the same way personal bests do: the submitter is often not who the drop belongs to.
 const isCreditedTo = (memberId: bigint | undefined) =>
@@ -40,7 +41,7 @@ const isCreditedTo = (memberId: bigint | undefined) =>
       );
 
 export const matchesSubmission = ({ memberId, event }: SubmissionFilters): SQL | undefined =>
-  and(isApproved, isCreditedTo(memberId), event && eq(submissions.event, event));
+  and(isListed, isCreditedTo(memberId), event && eq(submissions.event, event));
 
 export const listSubmissions = ({ limit, offset, order, sort, ...filters }: ListSubmissionsOptions) => {
   const direction = order === "asc" ? asc : desc;
