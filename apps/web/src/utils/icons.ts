@@ -23,3 +23,7 @@ export function statIconUrl(stat: string) {
 export function itemIconUrl(osrsItemId: number) {
   return `https://chisel.weirdgloop.org/static/img/osrs-dii/${osrsItemId}.png`;
 }
+
+export function contentArtworkUrl(metric: string) {
+  return `/content/${metric}.png`;
+}

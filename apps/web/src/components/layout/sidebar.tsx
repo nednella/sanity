@@ -40,6 +40,10 @@ const clanLinks = linkOptions([
   {
     to: "/members",
     title: "Members"
+  },
+  {
+    to: "/records",
+    title: "Records"
   }
 ]);
 

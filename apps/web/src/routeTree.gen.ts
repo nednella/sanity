@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as siteLayoutRouteImport } from './routes/(site)/_layout'
 import { Route as siteLoginRouteImport } from './routes/(site)/login'
+import { Route as siteRecordsRouteImport } from './routes/(site)/records'
 import { Route as siteMembersIndexRouteImport } from './routes/(site)/members/index'
 import { Route as siteMembersMemberIdLayoutRouteImport } from './routes/(site)/members/$memberId/_layout'
 import { Route as siteWikiIndexRouteImport } from './routes/(site)/wiki/index'
@@ -36,6 +37,11 @@ const siteLayoutRoute = siteLayoutRouteImport.update({
 const siteLoginRoute = siteLoginRouteImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => siteLayoutRoute,
+} as any)
+const siteRecordsRoute = siteRecordsRouteImport.update({
+  id: '/records',
+  path: '/records',
   getParentRoute: () => siteLayoutRoute,
 } as any)
 const siteMembersIndexRoute = siteMembersIndexRouteImport.update({
@@ -104,6 +110,7 @@ const siteWikiArticleDiscussionRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof siteLoginRoute
+  '/records': typeof siteRecordsRoute
   '/members/$memberId': typeof siteMembersMemberIdLayoutRouteWithChildren
   '/wiki/$article': typeof siteWikiArticleLayoutRouteWithChildren
   '/members/': typeof siteMembersIndexRoute
@@ -119,6 +126,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof siteLoginRoute
+  '/records': typeof siteRecordsRoute
   '/members': typeof siteMembersIndexRoute
   '/wiki': typeof siteWikiIndexRoute
   '/members/$memberId/activities': typeof siteMembersMemberIdActivitiesRoute
@@ -134,6 +142,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/(site)': typeof siteLayoutRouteWithChildren
   '/(site)/login': typeof siteLoginRoute
+  '/(site)/records': typeof siteRecordsRoute
   '/(site)/members/$memberId': typeof siteMembersMemberIdLayoutRouteWithChildren
   '/(site)/wiki/$article': typeof siteWikiArticleLayoutRouteWithChildren
   '/(site)/members/': typeof siteMembersIndexRoute
@@ -151,6 +160,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/login'
+    | '/records'
     | '/members/$memberId'
     | '/wiki/$article'
     | '/members/'
@@ -166,6 +176,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/login'
+    | '/records'
     | '/members'
     | '/wiki'
     | '/members/$memberId/activities'
@@ -180,6 +191,7 @@ export interface FileRouteTypes {
     | '/'
     | '/(site)'
     | '/(site)/login'
+    | '/(site)/records'
     | '/(site)/members/$memberId'
     | '/(site)/wiki/$article'
     | '/(site)/members/'
@@ -219,6 +231,13 @@ declare module '@tanstack/react-router' {
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof siteLoginRouteImport
+      parentRoute: typeof siteLayoutRoute
+    }
+    '/(site)/records': {
+      id: '/(site)/records'
+      path: '/records'
+      fullPath: '/records'
+      preLoaderRoute: typeof siteRecordsRouteImport
       parentRoute: typeof siteLayoutRoute
     }
     '/(site)/members/': {
@@ -340,6 +359,7 @@ const siteWikiArticleLayoutRouteWithChildren =
 
 interface siteLayoutRouteChildren {
   siteLoginRoute: typeof siteLoginRoute
+  siteRecordsRoute: typeof siteRecordsRoute
   siteMembersMemberIdLayoutRoute: typeof siteMembersMemberIdLayoutRouteWithChildren
   siteWikiArticleLayoutRoute: typeof siteWikiArticleLayoutRouteWithChildren
   siteMembersIndexRoute: typeof siteMembersIndexRoute
@@ -348,6 +368,7 @@ interface siteLayoutRouteChildren {
 
 const siteLayoutRouteChildren: siteLayoutRouteChildren = {
   siteLoginRoute: siteLoginRoute,
+  siteRecordsRoute: siteRecordsRoute,
   siteMembersMemberIdLayoutRoute: siteMembersMemberIdLayoutRouteWithChildren,
   siteWikiArticleLayoutRoute: siteWikiArticleLayoutRouteWithChildren,
   siteMembersIndexRoute: siteMembersIndexRoute,
