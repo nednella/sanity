@@ -52,6 +52,10 @@ function Page() {
                     record={record}
                   />
                 ))}
+                <Record.More
+                  contentId={content.id}
+                  scale={scale}
+                />
               </Record.List>
             ))}
           </Record>

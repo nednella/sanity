@@ -1,3 +1,5 @@
+import { Link } from "@tanstack/react-router";
+import { ChevronRight } from "lucide-react";
 import { createContext, useContext, useMemo, useState } from "react";
 
 import { Medal } from "@/components/records/medal";
@@ -133,8 +135,29 @@ function Item({ record }: Readonly<{ record: RankedPersonalBest }>) {
   );
 }
 
+type MoreProps = {
+  contentId: number;
+  scale: number;
+};
+
+function More({ contentId, scale }: Readonly<MoreProps>) {
+  return (
+    <li>
+      <Link
+        to="/submissions"
+        search={{ contentId, order: "asc", scale, sort: "time", type: "personalBests" }}
+        className="flex items-center justify-center gap-1 px-4 py-2.5 text-xs text-base-content/60 hover:text-base-content"
+      >
+        See more
+        <ChevronRight className="size-3" />
+      </Link>
+    </li>
+  );
+}
+
 Record.Artwork = Artwork;
 Record.Header = Header;
 Record.Item = Item;
 Record.List = List;
+Record.More = More;
 Record.Scale = ScaleButton;
