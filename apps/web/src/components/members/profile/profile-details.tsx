@@ -8,7 +8,7 @@ import { RelativeDate } from "@/lib/ui/relative-date";
 import { Muted } from "@/lib/ui/typography/muted";
 import { formatDate } from "@/utils/dates";
 
-const SHOWN = 5;
+const SHOWN = 10;
 
 const formatRsn = ({ main, alt }: { main: string | null; alt: string | null }) =>
   [main, alt].filter(Boolean).join(" / ");
@@ -58,7 +58,7 @@ function PreviousNames({ rsn }: Readonly<PreviousNamesProps>) {
   if (rsn.previous.length === 0) return name;
 
   const shown = rsn.previous.slice(0, SHOWN);
-  const rest = rsn.previous.length - shown.length;
+  const remaining = rsn.previous.length - shown.length;
 
   return (
     <Dropdown
@@ -80,7 +80,7 @@ function PreviousNames({ rsn }: Readonly<PreviousNamesProps>) {
           </span>
         </li>
       ))}
-      {rest > 0 && <li className="px-2 py-1 text-base-content/60">and {rest} more</li>}
+      {remaining > 0 && <li className="px-2 py-1 text-base-content/60">and {remaining} more</li>}
     </Dropdown>
   );
 }
