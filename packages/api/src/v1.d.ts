@@ -587,7 +587,7 @@ export interface components {
         };
         RankedPersonalBestInput: {
             id: number;
-            position: number;
+            position: number | null;
             content: {
                 id: number;
                 name: string;
@@ -867,7 +867,7 @@ export interface components {
         };
         RankedPersonalBest: {
             id: number;
-            position: number;
+            position: number | null;
             content: {
                 id: number;
                 name: string;

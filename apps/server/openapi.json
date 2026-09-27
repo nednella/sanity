@@ -157,6 +157,7 @@
             "type": "number"
           },
           "position": {
+            "nullable": true,
             "type": "number"
           },
           "content": {
@@ -1356,6 +1357,7 @@
             "type": "number"
           },
           "position": {
+            "nullable": true,
             "type": "number"
           },
           "content": {
