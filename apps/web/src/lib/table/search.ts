@@ -24,6 +24,11 @@ export const toOffset = (value: unknown) => {
 
 export const toOrder = (value: unknown) => (value === "asc" ? "asc" : "desc");
 
+export const toPositiveInteger = (value: unknown) => {
+  const parsed = Number(value);
+  return Number.isSafeInteger(parsed) && parsed > 0 ? parsed : undefined;
+};
+
 export const toSort = <TSort extends string>(value: unknown, sorts: readonly TSort[]) =>
   sorts.includes(value as TSort) ? (value as TSort) : undefined;
 

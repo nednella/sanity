@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
 
 import { PersonalBestTable } from "@/components/submissions/personal-best-table";
 import { SubmissionTable } from "@/components/submissions/submission-table";
-import { SubmissionTypeToggle } from "@/components/submissions/submission-type-toggle";
+import { SubmissionsToolbar } from "@/components/submissions/submissions-toolbar";
 import { memberPersonalBestsOptions, memberSubmissionsOptions } from "@/lib/api/queries/members";
 import type { SubmissionsSearch } from "@/lib/submissions/search";
 import { validateSubmissionsSearch } from "@/lib/submissions/search";
@@ -31,9 +31,9 @@ function Page() {
   const navigate = Route.useNavigate();
 
   const toolbar = (
-    <SubmissionTypeToggle
-      type={search.type}
-      onChange={(type) => navigate({ replace: true, search: { limit: search.limit, offset: 0, type } })}
+    <SubmissionsToolbar
+      search={search}
+      onChange={(next) => navigate({ replace: true, search: next })}
     />
   );
 
