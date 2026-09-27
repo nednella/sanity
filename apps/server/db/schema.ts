@@ -248,7 +248,8 @@ export const womPlayers = pgTable("wom_players", {
   timeTo200m: doublePrecision("time_to_200m"),
   registeredAt: timestamp({ withTimezone: true }).notNull(),
   updatedAt: timestamp({ withTimezone: true }),
-  lastChangedAt: timestamp({ withTimezone: true })
+  lastChangedAt: timestamp({ withTimezone: true }),
+  syncedAt: timestamp({ withTimezone: true }).notNull().defaultNow()
 });
 
 export const womNameChanges = pgTable(

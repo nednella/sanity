@@ -65,7 +65,8 @@ export const toMember = (
     timeToMax: womPlayer.timeToMax,
     timeTo200m: womPlayer.timeTo200m,
     updatedAt: womPlayer.updatedAt,
-    lastChangedAt: womPlayer.lastChangedAt
+    lastChangedAt: womPlayer.lastChangedAt,
+    syncedAt: womPlayer.syncedAt
   }
 });
 

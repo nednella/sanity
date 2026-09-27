@@ -1,0 +1,1 @@
+ALTER TABLE "wom_players" ADD COLUMN "synced_at" timestamp with time zone DEFAULT now() NOT NULL;

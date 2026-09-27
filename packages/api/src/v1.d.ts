@@ -743,6 +743,8 @@ export interface components {
                 updatedAt: string | null;
                 /** Format: date-time */
                 lastChangedAt: string | null;
+                /** Format: date-time */
+                syncedAt: string;
             } | null;
         };
         MemberProfileInput: {
@@ -822,6 +824,8 @@ export interface components {
                 updatedAt: string | null;
                 /** Format: date-time */
                 lastChangedAt: string | null;
+                /** Format: date-time */
+                syncedAt: string;
                 latestSnapshot?: components["schemas"]["SnapshotInput"];
             } | null;
         };
@@ -1028,6 +1032,8 @@ export interface components {
                 updatedAt: string | null;
                 /** Format: date-time */
                 lastChangedAt: string | null;
+                /** Format: date-time */
+                syncedAt: string;
             } | null;
         };
         MemberProfile: {
@@ -1107,6 +1113,8 @@ export interface components {
                 updatedAt: string | null;
                 /** Format: date-time */
                 lastChangedAt: string | null;
+                /** Format: date-time */
+                syncedAt: string;
                 latestSnapshot?: components["schemas"]["Snapshot"];
             } | null;
         };

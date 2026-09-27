@@ -58,7 +58,8 @@ const womPlayer = z.object({
   timeToMax: z.number().nullable(),
   timeTo200m: z.number().nullable(),
   updatedAt: isoDate.nullable(),
-  lastChangedAt: isoDate.nullable()
+  lastChangedAt: isoDate.nullable(),
+  syncedAt: isoDate
 });
 
 const nextRank = rank.extend({

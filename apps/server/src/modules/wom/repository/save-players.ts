@@ -29,7 +29,8 @@ export const savePlayers = async (
         timeToMax: sql`excluded.time_to_max`,
         timeTo200m: sql`excluded.time_to_200m`,
         updatedAt: sql`excluded.updated_at`,
-        lastChangedAt: sql`excluded.last_changed_at`
+        lastChangedAt: sql`excluded.last_changed_at`,
+        syncedAt: sql`excluded.synced_at`
       }
     });
 };

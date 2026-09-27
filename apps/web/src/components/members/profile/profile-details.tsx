@@ -23,12 +23,12 @@ export function ProfileDetails({ profile }: Readonly<ProfileDetailsProps>) {
   const details: { content: ReactNode; key: string }[] = [
     { content: <PreviousNames rsn={rsn} />, key: "rsn" },
     { content: `Joined ${formatDate(membership.joinedAt)}`, key: "joined" },
-    ...(wom?.updatedAt
+    ...(wom
       ? [
           {
             content: (
               <>
-                Last sync <RelativeDate value={wom.updatedAt} />
+                Last sync <RelativeDate value={wom.syncedAt} />
               </>
             ),
             key: "sync"

@@ -15,5 +15,6 @@ export const toPlayerRow = (player: PlayerResponse, snapshot: SnapshotResponse |
   timeTo200m: player.tt200m,
   registeredAt: player.registeredAt,
   updatedAt: player.updatedAt,
-  lastChangedAt: player.lastChangedAt
+  lastChangedAt: player.lastChangedAt,
+  syncedAt: new Date()
 });
