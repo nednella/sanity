@@ -39,6 +39,17 @@
           "hasPrevious"
         ]
       },
+      "ReviewStatusInput": {
+        "type": "string",
+        "enum": [
+          "approved",
+          "approved_missing_member",
+          "denied",
+          "deleted_by_user",
+          "pending",
+          "submitted"
+        ]
+      },
       "MemberRefInput": {
         "type": "object",
         "properties": {
@@ -119,6 +130,9 @@
           "timeSeconds": {
             "type": "number"
           },
+          "status": {
+            "$ref": "#/components/schemas/ReviewStatusInput"
+          },
           "imageUrl": {
             "nullable": true,
             "type": "string"
@@ -144,6 +158,7 @@
           "content",
           "scale",
           "timeSeconds",
+          "status",
           "imageUrl",
           "submittedAt",
           "submittedBy",
@@ -191,6 +206,9 @@
           "timeSeconds": {
             "type": "number"
           },
+          "status": {
+            "$ref": "#/components/schemas/ReviewStatusInput"
+          },
           "imageUrl": {
             "nullable": true,
             "type": "string"
@@ -217,6 +235,7 @@
           "content",
           "scale",
           "timeSeconds",
+          "status",
           "imageUrl",
           "submittedAt",
           "submittedBy",
@@ -368,6 +387,9 @@
               "leagues"
             ]
           },
+          "status": {
+            "$ref": "#/components/schemas/ReviewStatusInput"
+          },
           "imageUrl": {
             "nullable": true,
             "type": "string"
@@ -414,6 +436,7 @@
           "item",
           "valueMillions",
           "event",
+          "status",
           "imageUrl",
           "discordMessageUrl",
           "submittedAt",
@@ -1236,6 +1259,17 @@
         ],
         "additionalProperties": false
       },
+      "ReviewStatus": {
+        "type": "string",
+        "enum": [
+          "approved",
+          "approved_missing_member",
+          "denied",
+          "deleted_by_user",
+          "pending",
+          "submitted"
+        ]
+      },
       "MemberRef": {
         "type": "object",
         "properties": {
@@ -1319,6 +1353,9 @@
           "timeSeconds": {
             "type": "number"
           },
+          "status": {
+            "$ref": "#/components/schemas/ReviewStatus"
+          },
           "imageUrl": {
             "nullable": true,
             "type": "string"
@@ -1343,6 +1380,7 @@
           "content",
           "scale",
           "timeSeconds",
+          "status",
           "imageUrl",
           "submittedAt",
           "submittedBy",
@@ -1392,6 +1430,9 @@
           "timeSeconds": {
             "type": "number"
           },
+          "status": {
+            "$ref": "#/components/schemas/ReviewStatus"
+          },
           "imageUrl": {
             "nullable": true,
             "type": "string"
@@ -1417,6 +1458,7 @@
           "content",
           "scale",
           "timeSeconds",
+          "status",
           "imageUrl",
           "submittedAt",
           "submittedBy",
@@ -1575,6 +1617,9 @@
               "leagues"
             ]
           },
+          "status": {
+            "$ref": "#/components/schemas/ReviewStatus"
+          },
           "imageUrl": {
             "nullable": true,
             "type": "string"
@@ -1621,6 +1666,7 @@
           "item",
           "valueMillions",
           "event",
+          "status",
           "imageUrl",
           "discordMessageUrl",
           "submittedAt",

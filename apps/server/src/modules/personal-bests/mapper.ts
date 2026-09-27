@@ -9,6 +9,7 @@ export const toRankedPersonalBest = (
   position,
   content,
   scale: personalBest.scale,
+  status: personalBest.status,
   timeSeconds,
   imageUrl: personalBest.imageUrl,
   submittedAt: personalBest.submittedAt,

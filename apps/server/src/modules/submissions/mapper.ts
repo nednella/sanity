@@ -10,6 +10,7 @@ export const toSubmission = ({ item, submission, submittedBy }: SubmissionRow, p
   },
   valueMillions: submission.valueMillions,
   event: submission.event,
+  status: submission.status,
   imageUrl: submission.imageUrl,
   discordMessageUrl: submission.discordMessageUrl,
   submittedAt: submission.submittedAt,

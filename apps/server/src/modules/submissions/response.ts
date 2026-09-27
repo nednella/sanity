@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 import { isoDate } from "@/schema/codecs";
-import { memberRef } from "@/schema/common";
+import { memberRef, reviewStatus } from "@/schema/common";
 
 const item = z.object({
   id: z.number().nullable(),
@@ -19,6 +19,7 @@ export const submission = z
     item,
     valueMillions: z.number().nullable(),
     event: event.nullable(),
+    status: reviewStatus,
     imageUrl: z.string().nullable(),
     discordMessageUrl: z.string().nullable(),
     submittedAt: isoDate,

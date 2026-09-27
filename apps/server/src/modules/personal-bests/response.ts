@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 import { isoDate } from "@/schema/codecs";
-import { memberRef } from "@/schema/common";
+import { memberRef, reviewStatus } from "@/schema/common";
 
 export const personalBestContent = z
   .object({
@@ -25,6 +25,7 @@ export const personalBest = z
     content,
     scale: z.number(),
     timeSeconds: z.number(),
+    status: reviewStatus,
     imageUrl: z.string().nullable(),
     submittedAt: isoDate.nullable(),
     submittedBy: memberRef,

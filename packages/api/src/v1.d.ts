@@ -559,6 +559,8 @@ export interface components {
             hasNext: boolean;
             hasPrevious: boolean;
         };
+        /** @enum {string} */
+        ReviewStatusInput: "approved" | "approved_missing_member" | "denied" | "deleted_by_user" | "pending" | "submitted";
         MemberRefInput: {
             id: string;
             displayName: string;
@@ -579,6 +581,7 @@ export interface components {
             };
             scale: number;
             timeSeconds: number;
+            status: components["schemas"]["ReviewStatusInput"];
             imageUrl: string | null;
             /** Format: date-time */
             submittedAt: string | null;
@@ -596,6 +599,7 @@ export interface components {
             };
             scale: number;
             timeSeconds: number;
+            status: components["schemas"]["ReviewStatusInput"];
             imageUrl: string | null;
             /** Format: date-time */
             submittedAt: string | null;
@@ -637,6 +641,7 @@ export interface components {
             valueMillions: number | null;
             /** @enum {string|null} */
             event: "bingo" | "leagues" | null;
+            status: components["schemas"]["ReviewStatusInput"];
             imageUrl: string | null;
             discordMessageUrl: string | null;
             /** Format: date-time */
@@ -839,6 +844,8 @@ export interface components {
             hasNext: boolean;
             hasPrevious: boolean;
         };
+        /** @enum {string} */
+        ReviewStatus: "approved" | "approved_missing_member" | "denied" | "deleted_by_user" | "pending" | "submitted";
         MemberRef: {
             id: string;
             displayName: string;
@@ -859,6 +866,7 @@ export interface components {
             };
             scale: number;
             timeSeconds: number;
+            status: components["schemas"]["ReviewStatus"];
             imageUrl: string | null;
             /** Format: date-time */
             submittedAt: string | null;
@@ -876,6 +884,7 @@ export interface components {
             };
             scale: number;
             timeSeconds: number;
+            status: components["schemas"]["ReviewStatus"];
             imageUrl: string | null;
             /** Format: date-time */
             submittedAt: string | null;
@@ -917,6 +926,7 @@ export interface components {
             valueMillions: number | null;
             /** @enum {string|null} */
             event: "bingo" | "leagues" | null;
+            status: components["schemas"]["ReviewStatus"];
             imageUrl: string | null;
             discordMessageUrl: string | null;
             /** Format: date-time */

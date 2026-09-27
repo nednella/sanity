@@ -27,6 +27,11 @@ export const toPage = ({ limit, offset, total }: { limit: number; offset: number
   hasPrevious: offset > 0
 });
 
+// Every status a review can reach. What a list returns is the repository's business, not the shape's.
+export const reviewStatus = z
+  .enum(["approved", "approved_missing_member", "denied", "deleted_by_user", "pending", "submitted"])
+  .register(z.globalRegistry, { id: "ReviewStatus" });
+
 export const notFound = z.object({ message: z.string() });
 
 export const memberRef = z
