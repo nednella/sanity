@@ -5,7 +5,12 @@ import { client } from "@db/index";
 import { wom } from "@/integrations/wom";
 import { saveBosses } from "@/modules/catalogue/repository/save-bosses";
 
-const toDisplayName = (metric: (typeof BOSSES)[number]) => MetricProps[metric].name.replaceAll(" Of ", " of ");
+import names from "./names.json" with { type: "json" };
+
+const ours: Record<string, string> = names;
+
+const toDisplayName = (metric: (typeof BOSSES)[number]) =>
+  ours[metric] ?? MetricProps[metric].name.replaceAll(" Of ", " of ");
 
 const rates = await wom.efficiency.getEHBRates("main");
 const ratePerBoss = new Map(rates.map(({ boss, rate }) => [boss, rate]));
