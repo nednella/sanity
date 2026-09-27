@@ -13,11 +13,11 @@ const metals: Record<number, Metal> = {
 };
 
 type MedalProps = {
-  position: number;
+  position: number | null;
 };
 
 export function Medal({ position }: Readonly<MedalProps>) {
-  const metal = metals[position];
+  const metal = position === null ? undefined : metals[position];
 
   return (
     <span className="flex w-6 shrink-0 justify-center">

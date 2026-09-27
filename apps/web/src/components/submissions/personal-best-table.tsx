@@ -10,6 +10,7 @@ import { useMediaStore } from "@/lib/media/media.store";
 import type { SubmissionsSearch } from "@/lib/submissions/search";
 import { useTableSearch } from "@/lib/table/use-table-search";
 import { RelativeDate } from "@/lib/ui/relative-date";
+import { DASH } from "@/utils/dash";
 import { formatTickTime } from "@/utils/dates";
 import { bossIconUrl } from "@/utils/icons";
 
@@ -38,6 +39,17 @@ const buildColumns = (memberId?: string) =>
         numeric: true
       },
       cell: ({ getValue }) => formatTickTime(getValue())
+    }),
+    columnHelper.accessor("position", {
+      id: "position",
+      header: "Rank",
+      enableSorting: false,
+      meta: {
+        minWidth: 4,
+        numeric: true
+      },
+      // A run whose team is incomplete is not eligible for a clan record, so it holds no rank.
+      cell: ({ getValue }) => getValue() ?? DASH
     }),
     columnHelper.accessor("team", {
       id: "team",
