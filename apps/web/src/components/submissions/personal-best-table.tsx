@@ -113,6 +113,7 @@ export function PersonalBestTable({
       onPaginationChange={table.onPaginationChange}
       onRetry={onRetry}
       onRowClick={openScreenshot}
+      rowCursor="zoom-in"
       onSortingChange={table.onSortingChange}
       pagination={table.pagination}
       rowCount={data?.page.total ?? 0}

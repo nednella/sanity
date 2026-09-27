@@ -43,6 +43,8 @@ type DataTableProps<TData extends RowData> = {
   pagination?: PaginationState;
   pinRow?: (row: TData) => boolean;
   rowCount?: number;
+  // What a click on a row does: follow it, or open the picture it carries.
+  rowCursor?: "pointer" | "zoom-in";
   search?: { onChange: (value: string) => void; placeholder?: string; value: string };
   sorting?: SortingState;
   stickyHeader?: boolean;
@@ -68,6 +70,7 @@ export function DataTable<TData extends RowData>({
   pagination,
   pinRow,
   rowCount,
+  rowCursor,
   search,
   sorting,
   stickyHeader = false,
@@ -155,6 +158,7 @@ export function DataTable<TData extends RowData>({
             onRetry={onRetry}
             onRowClick={onRowClick}
             pinRow={pinRow}
+            rowCursor={rowCursor}
             table={table}
           />
         </Table.Body>
@@ -177,6 +181,7 @@ type RowsProps<TData extends RowData> = {
   onRetry?: () => void;
   onRowClick?: (row: TData) => void;
   pinRow?: (row: TData) => boolean;
+  rowCursor?: "pointer" | "zoom-in";
   table: ReactTable<DataTableFeatures, TData>;
 };
 
@@ -187,6 +192,7 @@ function Rows<TData extends RowData>({
   onRetry,
   onRowClick,
   pinRow,
+  rowCursor,
   table
 }: Readonly<RowsProps<TData>>) {
   const columnCount = table.getVisibleLeafColumns().length;
@@ -221,6 +227,7 @@ function Rows<TData extends RowData>({
   return ordered.map((row) => (
     <Table.Row
       key={row.id}
+      cursor={rowCursor}
       onSelect={onRowClick && (() => onRowClick(row.original))}
     >
       {row.getVisibleCells().map((cell) => (

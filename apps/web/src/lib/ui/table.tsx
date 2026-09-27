@@ -149,20 +149,26 @@ function Body(props: Readonly<React.ComponentPropsWithRef<"tbody">>) {
 const isInteractiveTarget = (target: EventTarget | null) =>
   target instanceof HTMLElement && target.closest("a, button") !== null;
 
+const cursors = {
+  pointer: "cursor-pointer",
+  "zoom-in": "cursor-zoom-in"
+};
+
 type RowProps = React.ComponentPropsWithRef<"tr"> & {
+  cursor?: keyof typeof cursors;
   onSelect?: () => void;
 };
 
 // A row that does something is reachable by keyboard, and a click landing on a link or button inside
 // it belongs to that control rather than the row.
-function Row({ className, onSelect, ...props }: Readonly<RowProps>) {
+function Row({ className, cursor = "pointer", onSelect, ...props }: Readonly<RowProps>) {
   return (
     <tr
       tabIndex={onSelect ? 0 : undefined}
       className={cn(
         "h-12 bg-base-100 hover:bg-base-200",
-        onSelect &&
-          "cursor-pointer focus-visible:outline focus-visible:-outline-offset-2 focus-visible:outline-primary",
+        onSelect && cursors[cursor],
+        onSelect && "focus-visible:outline focus-visible:-outline-offset-2 focus-visible:outline-primary",
         className
       )}
       onClick={
