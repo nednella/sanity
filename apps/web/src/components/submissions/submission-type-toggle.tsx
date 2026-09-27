@@ -1,6 +1,6 @@
 import { ArrowLeftRight } from "lucide-react";
 
-import type { SubmissionType } from "@/lib/members/submissions";
+import type { SubmissionType } from "@/lib/submissions/search";
 import { Button } from "@/lib/ui/button";
 import { Tooltip } from "@/lib/ui/tooltip";
 

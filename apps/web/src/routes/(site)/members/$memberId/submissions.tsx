@@ -2,12 +2,12 @@ import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { createFileRoute, getRouteApi } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 
-import { PersonalBestTable } from "@/components/members/profile/submissions/personal-best-table";
-import { SubmissionTable } from "@/components/members/profile/submissions/submission-table";
-import { SubmissionTypeToggle } from "@/components/members/profile/submissions/submission-type-toggle";
+import { PersonalBestTable } from "@/components/submissions/personal-best-table";
+import { SubmissionTable } from "@/components/submissions/submission-table";
+import { SubmissionTypeToggle } from "@/components/submissions/submission-type-toggle";
 import { memberPersonalBestsOptions, memberSubmissionsOptions } from "@/lib/api/queries/members";
-import type { SubmissionsSearch } from "@/lib/members/submissions";
-import { validateSubmissionsSearch } from "@/lib/members/submissions";
+import type { SubmissionsSearch } from "@/lib/submissions/search";
+import { validateSubmissionsSearch } from "@/lib/submissions/search";
 
 const ProfileBaseRoute = getRouteApi("/(site)/members/$memberId");
 
@@ -15,7 +15,6 @@ export const Route = createFileRoute("/(site)/members/$memberId/submissions")({
   component: Page,
   validateSearch: validateSubmissionsSearch,
   loaderDeps: ({ search }) => search,
-  // Each table has its own response shape, so the two are fetched apart rather than through one union.
   loader: async ({ context, deps, params }) => {
     if (deps.type === "drops") {
       await context.queryClient.query({ ...memberSubmissionsOptions(params.memberId, deps), staleTime: "static" });
@@ -31,7 +30,6 @@ function Page() {
   const search = Route.useSearch();
   const navigate = Route.useNavigate();
 
-  // The two tables sort on columns of their own, so switching tables drops the sort along with the page.
   const toolbar = (
     <SubmissionTypeToggle
       type={search.type}
