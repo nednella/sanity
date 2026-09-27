@@ -1,9 +1,11 @@
 import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import { z } from "zod";
 
+import { paginated, toPage } from "@/schema/common";
+
 import { personalBestListQuery, recordListQuery } from "./request";
-import { personalBest, rankedPersonalBest } from "./response";
-import { getRecentPersonalBests } from "./service/get-recent-personal-bests";
+import { rankedPersonalBest } from "./response";
+import { getPersonalBests } from "./service/get-personal-bests";
 import { getRecords } from "./service/get-records";
 
 export const personalBestsRouter: FastifyPluginAsyncZod = async (app) => {
@@ -12,9 +14,13 @@ export const personalBestsRouter: FastifyPluginAsyncZod = async (app) => {
     url: "/personal-bests",
     schema: {
       querystring: personalBestListQuery,
-      response: { 200: z.array(personalBest) }
+      response: { 200: paginated(rankedPersonalBest) }
     },
-    handler: async (req) => getRecentPersonalBests(req.query)
+    handler: async (req) => {
+      const { limit, offset } = req.query;
+      const { items, total } = await getPersonalBests(req.query);
+      return { items, page: toPage({ limit, offset, total }) };
+    }
   });
 
   app.route({

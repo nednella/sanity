@@ -7,12 +7,16 @@ import type { PersonalBestSort } from "../request";
 import { type ContentFilters, isActiveContent, isFor, isInTeamOf, isPersonalBest } from "./shared/filters";
 import { selectRanked } from "./shared/select-ranked";
 
-export type ListMemberPersonalBestsOptions = ContentFilters & {
+export type PersonalBestFilters = ContentFilters & {
+  memberId?: bigint;
+  top?: number;
+};
+
+export type ListPersonalBestsOptions = PersonalBestFilters & {
   limit: number;
   offset: number;
   order: "asc" | "desc";
   sort: PersonalBestSort;
-  top?: number;
 };
 
 const sortColumns: Record<PersonalBestSort, PgColumn> = {
@@ -29,10 +33,10 @@ const toOrderBy = (sort: PersonalBestSort, order: "asc" | "desc") => {
   return [direction(sortColumns[sort]), asc(bosses.name), asc(personalBests.scale)];
 };
 
-export const listMemberPersonalBests = (
-  memberId: bigint,
-  { limit, offset, order, sort, top, ...filters }: ListMemberPersonalBestsOptions
-) =>
-  selectRanked(and(isPersonalBest, isInTeamOf(memberId), isActiveContent, isFor(filters)), top, toOrderBy(sort, order))
-    .limit(limit)
-    .offset(offset);
+export const isCandidate = ({ memberId, ...filters }: PersonalBestFilters) =>
+  and(isPersonalBest, isActiveContent, isFor(filters), memberId === undefined ? undefined : isInTeamOf(memberId));
+
+export const listPersonalBests = ({ limit, offset, order, sort, ...filters }: ListPersonalBestsOptions) =>
+  selectRanked(isCandidate(filters), filters.top, toOrderBy(sort, order)).limit(limit).offset(offset);
+
+export type PersonalBestRow = Awaited<ReturnType<typeof listPersonalBests>>[number];

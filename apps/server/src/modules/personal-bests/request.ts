@@ -26,7 +26,9 @@ export type PersonalBestSort = z.output<typeof personalBestSort>;
 
 export const personalBestListQuery = z.object({
   ...pagination.shape,
-  ...contentFilters.shape
+  top: top.optional(),
+  ...contentFilters.shape,
+  ...personalBestSortFilters.shape
 });
 
 export const recordListQuery = z.object({

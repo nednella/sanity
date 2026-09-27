@@ -278,9 +278,12 @@ export interface paths {
                 query?: {
                     limit?: number;
                     offset?: number;
+                    top?: number;
                     contentId?: number;
                     diary?: "true" | "false";
                     scale?: number;
+                    sort?: components["schemas"]["PersonalBestSortInput"];
+                    order?: "asc" | "desc";
                 };
                 header?: never;
                 path?: never;
@@ -294,7 +297,10 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["PersonalBest"][];
+                        "application/json": {
+                            items: components["schemas"]["RankedPersonalBest"][];
+                            page: components["schemas"]["Page"];
+                        };
                     };
                 };
             };

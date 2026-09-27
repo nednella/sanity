@@ -2,7 +2,7 @@ import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import { z } from "zod";
 
 import { rankedPersonalBest } from "@/modules/personal-bests/response";
-import { getMemberPersonalBests } from "@/modules/personal-bests/service/get-member-personal-bests";
+import { getPersonalBests } from "@/modules/personal-bests/service/get-personal-bests";
 import { memberDiary } from "@/modules/speedrun-diary/response";
 import { getMemberDiaries } from "@/modules/speedrun-diary/service/get-member-diaries";
 import { submission } from "@/modules/submissions/response";
@@ -65,7 +65,7 @@ export const membersRouter: FastifyPluginAsyncZod = async (app) => {
     },
     handler: async (req) => {
       const { limit, offset } = req.query;
-      const { items, total } = await getMemberPersonalBests(req.params.id, req.query);
+      const { items, total } = await getPersonalBests({ ...req.query, memberId: req.params.id });
       return { items, page: toPage({ limit, offset, total }) };
     }
   });

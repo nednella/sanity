@@ -2836,6 +2836,16 @@
           {
             "schema": {
               "type": "integer",
+              "minimum": 1,
+              "maximum": 10
+            },
+            "in": "query",
+            "name": "top",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "integer",
               "minimum": 0,
               "exclusiveMinimum": true,
               "maximum": 9007199254740991
@@ -2866,6 +2876,32 @@
             "in": "query",
             "name": "scale",
             "required": false
+          },
+          {
+            "schema": {
+              "default": "submittedAt",
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/PersonalBestSortInput"
+                }
+              ]
+            },
+            "in": "query",
+            "name": "sort",
+            "required": false
+          },
+          {
+            "schema": {
+              "default": "desc",
+              "type": "string",
+              "enum": [
+                "asc",
+                "desc"
+              ]
+            },
+            "in": "query",
+            "name": "order",
+            "required": false
           }
         ],
         "responses": {
@@ -2874,10 +2910,23 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/PersonalBest"
-                  }
+                  "type": "object",
+                  "properties": {
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/RankedPersonalBest"
+                      }
+                    },
+                    "page": {
+                      "$ref": "#/components/schemas/Page"
+                    }
+                  },
+                  "required": [
+                    "items",
+                    "page"
+                  ],
+                  "additionalProperties": false
                 }
               }
             }

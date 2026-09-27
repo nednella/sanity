@@ -1,12 +1,12 @@
-import type { PersonalBestRow } from "./repository/list-recent-personal-bests";
-import type { RankedPersonalBestRow } from "./repository/list-records";
+import type { PersonalBestRow } from "./repository/list-personal-bests";
 import type { TeamRow } from "./repository/list-teams";
 
-export const toPersonalBest = (
-  { personalBest, timeSeconds, content, submittedBy }: PersonalBestRow,
+export const toRankedPersonalBest = (
+  { content, personalBest, position, submittedBy, timeSeconds }: PersonalBestRow,
   team: TeamRow[]
 ) => ({
   id: personalBest.id,
+  position,
   content,
   scale: personalBest.scale,
   timeSeconds,
@@ -14,9 +14,4 @@ export const toPersonalBest = (
   submittedAt: personalBest.submittedAt,
   submittedBy,
   team: team.map(({ id, displayName }) => ({ id, displayName }))
-});
-
-export const toRankedPersonalBest = ({ position, ...row }: RankedPersonalBestRow, team: TeamRow[]) => ({
-  ...toPersonalBest(row, team),
-  position
 });
