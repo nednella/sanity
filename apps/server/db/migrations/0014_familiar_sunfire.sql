@@ -1,0 +1,1 @@
+ALTER TABLE "submissions" ADD COLUMN "non_clan_count" integer DEFAULT 0 NOT NULL;
