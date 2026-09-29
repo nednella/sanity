@@ -26,6 +26,8 @@ export const submissionListQuery = z.object({
   ...submissionSortFilters.shape
 });
 
+export const submissionParams = z.object({ id: z.coerce.number().int().positive() });
+
 export const createSubmissionBody = z.object({
   submittedByMemberId: bigIntString,
   itemId: z.number().int().positive().nullable().default(null),
@@ -36,4 +38,10 @@ export const createSubmissionBody = z.object({
   discordMessageUrl: z.url().nullable().default(null),
   event: event.nullable().default(null),
   participants: z.array(bigIntString).min(1)
+});
+
+export const reviewSubmissionBody = z.object({
+  status: z.enum(["approved", "denied"]),
+  reviewedBy: bigIntString,
+  reviewNote: z.string().trim().max(500).nullable().default(null)
 });

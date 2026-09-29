@@ -3,10 +3,11 @@ import { z } from "zod";
 
 import { paginated, toPage } from "@/schema/common";
 
-import { createSubmissionBody, submissionListQuery } from "./request";
+import { createSubmissionBody, reviewSubmissionBody, submissionListQuery, submissionParams } from "./request";
 import { submission } from "./response";
 import { createSubmission } from "./service/create-submission";
 import { getSubmissions } from "./service/get-submissions";
+import { reviewSubmissionById } from "./service/review-submission-by-id";
 
 export const submissionsRouter: FastifyPluginAsyncZod = async (app) => {
   app.route({
@@ -33,6 +34,27 @@ export const submissionsRouter: FastifyPluginAsyncZod = async (app) => {
     handler: async (req, reply) => {
       const id = await createSubmission(req.body);
       return reply.code(201).send({ id });
+    }
+  });
+
+  app.route({
+    method: "POST",
+    url: "/submissions/:id/review",
+    schema: {
+      params: submissionParams,
+      body: reviewSubmissionBody,
+      response: {
+        200: z.object({ status: reviewSubmissionBody.shape.status }),
+        409: z.object({ message: z.string() })
+      }
+    },
+    handler: async (req, reply) => {
+      const result = await reviewSubmissionById(req.params.id, req.body);
+      if (result === "not-awaiting-review") {
+        return reply.code(409).send({ message: "This submission is not awaiting review." });
+      }
+
+      return { status: req.body.status };
     }
   });
 };
