@@ -1,3 +1,4 @@
+import { QUIT_RANK_ID, RETIRED_RANK_ID, TRIALIST_RANK_ID } from "@/modules/ranks/constants";
 import { toRankIconUrl } from "@/modules/ranks/mapper";
 import type { RankRow } from "@/modules/ranks/repository/list-ranks";
 import type { DiaryProgressRow } from "@/modules/speedrun-diary/repository/list-diary-progress";
@@ -8,8 +9,7 @@ import { sortActivities, sortBosses, sortComputed, sortSkills } from "@/utils/me
 import type { MemberRow } from "./repository/shared/select-members";
 
 // QUIT, RETIRED and TRIALIST ranks change by hand, so they have no next rank to work toward.
-const TRIALIST_RANK_ID = 1;
-const RANK_IDS_WITHOUT_PROGRESSION = new Set([-1, 0, TRIALIST_RANK_ID]);
+const RANK_IDS_WITHOUT_PROGRESSION = new Set([QUIT_RANK_ID, RETIRED_RANK_ID, TRIALIST_RANK_ID]);
 
 /**
  * Why a member has no next rank, since the panel says something different for each: a trialist earns
