@@ -3057,6 +3057,83 @@
             }
           }
         }
+      },
+      "post": {
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "submittedByMemberId": {
+                    "type": "string",
+                    "pattern": "^\\d+$"
+                  },
+                  "contentId": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "exclusiveMinimum": true,
+                    "maximum": 9007199254740991
+                  },
+                  "scale": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 10
+                  },
+                  "timeSeconds": {
+                    "type": "number",
+                    "minimum": 0,
+                    "exclusiveMinimum": true,
+                    "maximum": 86400
+                  },
+                  "imageUrl": {
+                    "default": null,
+                    "nullable": true,
+                    "type": "string",
+                    "format": "uri"
+                  },
+                  "participants": {
+                    "minItems": 1,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "pattern": "^\\d+$"
+                    }
+                  }
+                },
+                "required": [
+                  "submittedByMemberId",
+                  "contentId",
+                  "scale",
+                  "timeSeconds",
+                  "participants"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "id"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/v1/personal-bests/content": {

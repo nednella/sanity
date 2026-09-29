@@ -306,7 +306,43 @@ export interface paths {
             };
         };
         put?: never;
-        post?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": {
+                        submittedByMemberId: string;
+                        contentId: number;
+                        scale: number;
+                        timeSeconds: number;
+                        /**
+                         * Format: uri
+                         * @default null
+                         */
+                        imageUrl?: string | null;
+                        participants: string[];
+                    };
+                };
+            };
+            responses: {
+                /** @description Default Response */
+                201: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            id: number;
+                        };
+                    };
+                };
+            };
+        };
         delete?: never;
         options?: never;
         head?: never;

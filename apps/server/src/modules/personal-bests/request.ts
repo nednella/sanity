@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { booleanString } from "@/schema/codecs";
+import { bigIntString, booleanString } from "@/schema/codecs";
 import { pagination } from "@/schema/common";
 
 export const top = z.coerce.number().int().min(1).max(10);
@@ -35,3 +35,18 @@ export const recordListQuery = z.object({
   ...recordFilters.shape,
   ...contentFilters.shape
 });
+
+export const createPersonalBestBody = z
+  .object({
+    submittedByMemberId: bigIntString,
+    contentId: z.number().int().positive(),
+    scale: z.number().int().min(1).max(10),
+    timeSeconds: z.number().positive().max(86_400),
+    imageUrl: z.url().nullable().default(null),
+    participants: z.array(bigIntString).min(1)
+  })
+  // The team is who the run is credited to, so it cannot hold more people than the run had.
+  .refine(({ participants, scale }) => participants.length <= scale, {
+    message: "More members than the team size allows",
+    path: ["participants"]
+  });
