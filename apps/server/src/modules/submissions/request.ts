@@ -43,9 +43,3 @@ export const createSubmissionBody = z.object({
   event: event.nullable().default(null),
   participants: z.array(bigIntString).min(1)
 });
-
-export const reviewSubmissionBody = z.object({
-  status: z.enum(["approved", "denied"]),
-  reviewedBy: bigIntString,
-  reviewNote: z.string().trim().max(500).nullable().default(null)
-});

@@ -32,6 +32,13 @@ export const reviewStatus = z
   .enum(["approved", "approved_missing_member", "denied", "deleted_by_user", "pending", "submitted"])
   .register(z.globalRegistry, { id: "ReviewStatus" });
 
+// Drops and personal bests are reviewed the same way, so they are asked for the same thing.
+export const reviewBody = z.object({
+  status: z.enum(["approved", "denied"]),
+  reviewedBy: bigIntString,
+  reviewNote: z.string().trim().max(500).nullable().default(null)
+});
+
 export const notFound = z.object({ message: z.string() });
 
 export const memberRef = z

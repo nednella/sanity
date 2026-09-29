@@ -1,9 +1,9 @@
 import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import { z } from "zod";
 
-import { paginated, toPage } from "@/schema/common";
+import { paginated, reviewBody, toPage } from "@/schema/common";
 
-import { createSubmissionBody, reviewSubmissionBody, submissionListQuery, submissionParams } from "./request";
+import { createSubmissionBody, submissionListQuery, submissionParams } from "./request";
 import { submission } from "./response";
 import { createSubmission } from "./service/create-submission";
 import { getSubmissions } from "./service/get-submissions";
@@ -42,9 +42,9 @@ export const submissionsRouter: FastifyPluginAsyncZod = async (app) => {
     url: "/submissions/:id/review",
     schema: {
       params: submissionParams,
-      body: reviewSubmissionBody,
+      body: reviewBody,
       response: {
-        200: z.object({ status: reviewSubmissionBody.shape.status }),
+        200: z.object({ status: reviewBody.shape.status }),
         409: z.object({ message: z.string() })
       }
     },
