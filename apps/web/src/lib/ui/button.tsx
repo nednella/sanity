@@ -13,7 +13,7 @@ const variants = {
 
 const sizes = {
   default: "h-9 px-4",
-  sm: "btn-sm",
+  sm: "btn-sm text-xs",
   lg: "h-10 px-6",
   icon: "btn-square"
 };
