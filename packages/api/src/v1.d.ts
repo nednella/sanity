@@ -436,6 +436,7 @@ export interface paths {
                     limit?: number;
                     offset?: number;
                     event?: "bingo" | "leagues";
+                    status?: "approved" | "approved_missing_member" | "pending" | "submitted";
                     sort?: components["schemas"]["SubmissionSortInput"];
                     order?: "asc" | "desc";
                 };

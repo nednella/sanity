@@ -3202,6 +3202,20 @@
           },
           {
             "schema": {
+              "type": "string",
+              "enum": [
+                "approved",
+                "approved_missing_member",
+                "pending",
+                "submitted"
+              ]
+            },
+            "in": "query",
+            "name": "status",
+            "required": false
+          },
+          {
+            "schema": {
               "default": "submittedAt",
               "allOf": [
                 {
