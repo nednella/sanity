@@ -1,7 +1,12 @@
 import { db } from "@db/index";
 
+import { awardPoints } from "@/modules/points/repository/award-points";
+
 import { findSubmissionAwaitingReview } from "../repository/find-submission-awaiting-review";
+import { listParticipantIds } from "../repository/list-participant-ids";
+import { listTrialists } from "../repository/list-trialists";
 import { reviewSubmission } from "../repository/review-submission";
+import { generatePointSplit } from "../rules";
 
 export type ReviewRequest = {
   reviewNote: string | null;
@@ -12,8 +17,9 @@ export type ReviewRequest = {
 export type ReviewResult = "reviewed" | "not-awaiting-review";
 
 /**
- * The submission is read and written in one transaction, with the row locked while it runs, so two
- * reviewers cannot both take it. One already reviewed is refused rather than reviewed twice.
+ * Approving is what pays out, so the read of the submission, the points and the members' totals all
+ * happen in one transaction, and the row is locked while it runs. A submission already reviewed is
+ * refused rather than paid twice.
  */
 export const reviewSubmissionById = async (id: number, review: ReviewRequest): Promise<ReviewResult> =>
   db.transaction(async (tx) => {
@@ -21,6 +27,20 @@ export const reviewSubmissionById = async (id: number, review: ReviewRequest): P
     if (!awaiting) return "not-awaiting-review";
 
     await reviewSubmission(tx, id, review);
+    if (review.status === "denied") return "reviewed";
+
+    const memberIds = await listParticipantIds(tx, id);
+    const trialists = await listTrialists(tx, memberIds);
+    const valueMillions = awaiting.valueMillions ?? 0;
+
+    const awards = generatePointSplit({
+      nonClanCount: awaiting.nonClanCount,
+      participants: memberIds.map((memberId) => ({ isTrialist: trialists.has(memberId), memberId })),
+      valueMillions
+    });
+
+    const note = [awaiting.itemName, valueMillions, memberIds.length + awaiting.nonClanCount].join(",");
+    await awardPoints(tx, awards, id, note);
 
     return "reviewed";
   });
