@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+import { bigIntString } from "@/schema/codecs";
 import { pagination } from "@/schema/common";
 
 import { event } from "./response";
@@ -23,4 +24,16 @@ export const submissionListQuery = z.object({
   ...pagination.shape,
   ...submissionFilters.shape,
   ...submissionSortFilters.shape
+});
+
+export const createSubmissionBody = z.object({
+  submittedByMemberId: bigIntString,
+  itemId: z.number().int().positive().nullable().default(null),
+  itemName: z.string().trim().min(1).max(100).nullable().default(null),
+  valueMillions: z.number().int().min(0).nullable().default(null),
+  nonClanCount: z.number().int().min(0).default(0),
+  imageUrl: z.url().nullable().default(null),
+  discordMessageUrl: z.url().nullable().default(null),
+  event: event.nullable().default(null),
+  participants: z.array(bigIntString).min(1)
 });
