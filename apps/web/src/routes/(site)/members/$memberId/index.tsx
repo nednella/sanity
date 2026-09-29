@@ -3,6 +3,7 @@ import { createFileRoute, getRouteApi } from "@tanstack/react-router";
 
 import { AchievementDiaryPanel } from "@/components/members/profile/overview/achievement-diary-panel";
 import { RankProgressionPanel } from "@/components/members/profile/overview/rank-progression-panel";
+import { RecentActivity } from "@/components/members/profile/overview/recent-activity";
 import { WomSummaryPanel } from "@/components/members/profile/overview/wom-summary-panel";
 import { ProfileSummaryBar } from "@/components/members/profile/profile-summary-bar";
 import { Panel } from "@/components/panel";
@@ -37,6 +38,10 @@ function Page() {
 
         <Panel title="Rank Progression">
           <RankProgressionPanel profile={profile} />
+        </Panel>
+
+        <Panel title="Recent Activity">
+          <RecentActivity />
         </Panel>
 
         <Panel title="Achievement Diary">

@@ -1,5 +1,4 @@
-import type { SQL } from "drizzle-orm";
-import { and, eq, inArray } from "drizzle-orm";
+import { type SQL, and, eq, inArray } from "drizzle-orm";
 
 import { db } from "@db/index";
 import { submissionEvent, submissionParticipants, submissionStatus, submissions } from "@db/schema";

@@ -1,23 +1,21 @@
-import type {
-  ColumnDef,
-  ColumnVisibilityState,
-  OnChangeFn,
-  PaginationState,
-  ReactTable,
-  RowData,
-  SortingState,
-  TableState
+import {
+  type ColumnDef,
+  type ColumnVisibilityState,
+  type OnChangeFn,
+  type PaginationState,
+  type ReactTable,
+  type RowData,
+  type SortingState,
+  type TableState,
+  useTable
 } from "@tanstack/react-table";
-import { useTable } from "@tanstack/react-table";
 import type { ReactNode } from "react";
 
 import { DataTableColumnToggle } from "@/components/table/data-table-column-toggle";
 import { DataTablePagination } from "@/components/table/data-table-pagination";
-import type { DataTableFeatures } from "@/components/table/table-features";
-import { dataTableFeatures } from "@/components/table/table-features";
+import { type DataTableFeatures, dataTableFeatures } from "@/components/table/table-features";
 import { Button } from "@/lib/ui/button";
-import type { Sorted } from "@/lib/ui/table";
-import { Table } from "@/lib/ui/table";
+import { type Sorted, Table } from "@/lib/ui/table";
 
 const DEFAULT_PAGE_SIZE_OPTIONS = [50, 100, 200];
 

@@ -56,7 +56,9 @@ export default defineConfig([
       // TypeScript already errors on unresolved imports, see: https://github.com/un-ts/eslint-plugin-import-x/blob/master/docs/rules/no-unresolved.md#when-not-to-use-it
       "import/no-unresolved": "off",
       // disable default exporting, see: https://github.com/un-ts/eslint-plugin-import-x/blob/master/docs/rules/no-default-export.md
-      "import/no-default-export": "error"
+      "import/no-default-export": "error",
+      // one import per module, types inline, see: https://github.com/un-ts/eslint-plugin-import-x/blob/master/docs/rules/no-duplicates.md
+      "import/no-duplicates": ["error", { "prefer-inline": true }]
     }
   },
   {

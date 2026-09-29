@@ -1,5 +1,4 @@
-import type { SQL } from "drizzle-orm";
-import { and, asc, eq, lte, sql } from "drizzle-orm";
+import { type SQL, and, asc, eq, lte, sql } from "drizzle-orm";
 
 import { db } from "@db/index";
 import { bosses, members, personalBests, speedrunContent } from "@db/schema";

@@ -2,8 +2,7 @@ import { listDiaryProgress } from "@/modules/speedrun-diary/repository/list-diar
 
 import { toMember } from "../mapper";
 import { countMembers } from "../repository/count-members";
-import type { ListMembersOptions } from "../repository/list-members";
-import { listMembers } from "../repository/list-members";
+import { type ListMembersOptions, listMembers } from "../repository/list-members";
 
 export const getMembers = async (options: ListMembersOptions) => {
   const [rows, total] = await Promise.all([listMembers(options), countMembers(options)]);

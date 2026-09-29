@@ -4,8 +4,7 @@ import type { PgColumn } from "drizzle-orm/pg-core";
 import { bosses, personalBests } from "@db/schema";
 
 import type { PersonalBestSort } from "../request";
-import type { PersonalBestFilters } from "./shared/filters";
-import { isCandidate } from "./shared/filters";
+import { type PersonalBestFilters, isCandidate } from "./shared/filters";
 import { selectRanked } from "./shared/select-ranked";
 
 export type ListPersonalBestsOptions = PersonalBestFilters & {

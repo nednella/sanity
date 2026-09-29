@@ -1,5 +1,4 @@
-import type { ContentSelection } from "@/components/submissions/content-filter";
-import { ContentFilter } from "@/components/submissions/content-filter";
+import { ContentFilter, type ContentSelection } from "@/components/submissions/content-filter";
 import { SubmissionTypeToggle } from "@/components/submissions/submission-type-toggle";
 import type { SubmissionType, SubmissionsSearch } from "@/lib/submissions/search";
 

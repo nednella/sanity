@@ -6,8 +6,7 @@ import { PersonalBestTable } from "@/components/submissions/personal-best-table"
 import { SubmissionTable } from "@/components/submissions/submission-table";
 import { SubmissionsToolbar } from "@/components/submissions/submissions-toolbar";
 import { personalBestsOptions, submissionsOptions } from "@/lib/api/queries/submissions";
-import type { SubmissionsSearch } from "@/lib/submissions/search";
-import { validateSubmissionsSearch } from "@/lib/submissions/search";
+import { type SubmissionsSearch, validateSubmissionsSearch } from "@/lib/submissions/search";
 import { Muted } from "@/lib/ui/typography/muted";
 
 export const Route = createFileRoute("/(site)/submissions")({

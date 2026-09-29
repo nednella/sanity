@@ -1,7 +1,6 @@
 import { db } from "@db/index";
 
-import { saveSubmission } from "../repository/save-submission";
-import type { SubmissionRow } from "../repository/save-submission";
+import { type SubmissionRow, saveSubmission } from "../repository/save-submission";
 
 export type NewSubmission = Omit<SubmissionRow, "memberId" | "status" | "submittedAt"> & {
   participants: bigint[];

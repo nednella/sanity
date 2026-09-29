@@ -6,8 +6,7 @@ import { PersonalBestTable } from "@/components/submissions/personal-best-table"
 import { SubmissionTable } from "@/components/submissions/submission-table";
 import { SubmissionsToolbar } from "@/components/submissions/submissions-toolbar";
 import { memberPersonalBestsOptions, memberSubmissionsOptions } from "@/lib/api/queries/members";
-import type { SubmissionsSearch } from "@/lib/submissions/search";
-import { validateSubmissionsSearch } from "@/lib/submissions/search";
+import { type SubmissionsSearch, validateSubmissionsSearch } from "@/lib/submissions/search";
 
 const ProfileBaseRoute = getRouteApi("/(site)/members/$memberId");
 

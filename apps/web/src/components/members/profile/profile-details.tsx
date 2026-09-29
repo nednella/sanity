@@ -1,6 +1,5 @@
 import { ChevronDown } from "lucide-react";
-import { Fragment } from "react";
-import type { ReactNode } from "react";
+import { Fragment, type ReactNode } from "react";
 
 import type { MemberProfile } from "@/lib/api/types";
 import { Dropdown } from "@/lib/ui/dropdown";

@@ -1,9 +1,14 @@
 import { useNavigate } from "@tanstack/react-router";
-import type { OnChangeFn, PaginationState, SortingState } from "@tanstack/react-table";
-import { functionalUpdate } from "@tanstack/react-table";
+import { type OnChangeFn, type PaginationState, type SortingState, functionalUpdate } from "@tanstack/react-table";
 
-import type { PageSearch, SortSearch } from "@/lib/table/search";
-import { fromPaginationState, fromSortingState, toPaginationState, toSortingState } from "@/lib/table/search";
+import {
+  type PageSearch,
+  type SortSearch,
+  fromPaginationState,
+  fromSortingState,
+  toPaginationState,
+  toSortingState
+} from "@/lib/table/search";
 
 // A server-driven table keeps its page and sort in the URL, so this is the one place that translates
 // between the table's state and the route's search params. Any other param the route declares can be

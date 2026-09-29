@@ -1,8 +1,7 @@
 import type { SearchSchemaInput } from "@tanstack/react-router";
 
 import type { MemberSort } from "@/lib/api/types";
-import type { MemberStatus } from "@/lib/members/status";
-import { toActive } from "@/lib/members/status";
+import { type MemberStatus, toActive } from "@/lib/members/status";
 import { toLimit, toOffset, toOrder, toSort } from "@/lib/table/search";
 
 // The generated union is the source of truth; this list is what validates a sort arriving in the

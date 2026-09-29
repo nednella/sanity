@@ -1,6 +1,5 @@
 import { toMemberDiary } from "../mapper";
-import type { DiaryTimeRow } from "../repository/list-diary-times";
-import { listDiaryTimes } from "../repository/list-diary-times";
+import { type DiaryTimeRow, listDiaryTimes } from "../repository/list-diary-times";
 import { listMemberBestTimes } from "../repository/list-member-best-times";
 
 const keyOf = ({ contentId, scale }: { contentId: number | null; scale: number }) => `${contentId}:${scale}`;
