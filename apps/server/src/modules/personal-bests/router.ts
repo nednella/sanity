@@ -1,14 +1,15 @@
 import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import { z } from "zod";
 
-import { paginated, toPage } from "@/schema/common";
+import { paginated, reviewBody, toPage } from "@/schema/common";
 
 import { listContent } from "./repository/list-content";
-import { createPersonalBestBody, personalBestListQuery, recordListQuery } from "./request";
+import { createPersonalBestBody, personalBestListQuery, personalBestParams, recordListQuery } from "./request";
 import { personalBestContent, rankedPersonalBest } from "./response";
 import { createPersonalBest } from "./service/create-personal-best";
 import { getPersonalBests } from "./service/get-personal-bests";
 import { getRecords } from "./service/get-records";
+import { reviewPersonalBestById } from "./service/review-personal-best-by-id";
 
 export const personalBestsRouter: FastifyPluginAsyncZod = async (app) => {
   app.route({
@@ -42,7 +43,7 @@ export const personalBestsRouter: FastifyPluginAsyncZod = async (app) => {
     handler: async (req) => getRecords(req.query)
   });
 
-  // Who submits arrives in the body until there is a session to read it from.
+  // Who submits and who reviews arrive in the body until there is a session to read them from.
   app.route({
     method: "POST",
     url: "/personal-bests",
@@ -53,6 +54,27 @@ export const personalBestsRouter: FastifyPluginAsyncZod = async (app) => {
     handler: async (req, reply) => {
       const id = await createPersonalBest(req.body);
       return reply.code(201).send({ id });
+    }
+  });
+
+  app.route({
+    method: "POST",
+    url: "/personal-bests/:id/review",
+    schema: {
+      params: personalBestParams,
+      body: reviewBody,
+      response: {
+        200: z.object({ status: reviewBody.shape.status }),
+        409: z.object({ message: z.string() })
+      }
+    },
+    handler: async (req, reply) => {
+      const result = await reviewPersonalBestById(req.params.id, req.body);
+      if (result === "not-awaiting-review") {
+        return reply.code(409).send({ message: "This personal best is not awaiting review." });
+      }
+
+      return { status: req.body.status };
     }
   });
 };

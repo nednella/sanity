@@ -36,6 +36,8 @@ export const recordListQuery = z.object({
   ...contentFilters.shape
 });
 
+export const personalBestParams = z.object({ id: z.coerce.number().int().positive() });
+
 export const createPersonalBestBody = z
   .object({
     submittedByMemberId: bigIntString,
