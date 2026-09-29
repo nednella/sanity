@@ -1,16 +1,12 @@
-import { and, asc, desc } from "drizzle-orm";
+import { asc, desc } from "drizzle-orm";
 import type { PgColumn } from "drizzle-orm/pg-core";
 
 import { bosses, personalBests } from "@db/schema";
 
 import type { PersonalBestSort } from "../request";
-import { type ContentFilters, isActiveContent, isFor, isInTeamOf, isPersonalBest } from "./shared/filters";
+import type { PersonalBestFilters } from "./shared/filters";
+import { isCandidate } from "./shared/filters";
 import { selectRanked } from "./shared/select-ranked";
-
-export type PersonalBestFilters = ContentFilters & {
-  memberId?: bigint;
-  top?: number;
-};
 
 export type ListPersonalBestsOptions = PersonalBestFilters & {
   limit: number;
@@ -32,9 +28,6 @@ const toOrderBy = (sort: PersonalBestSort, order: "asc" | "desc") => {
   const direction = order === "asc" ? asc : desc;
   return [direction(sortColumns[sort]), asc(bosses.name), asc(personalBests.scale)];
 };
-
-export const isCandidate = ({ memberId, ...filters }: PersonalBestFilters) =>
-  and(isPersonalBest, isActiveContent, isFor(filters), memberId === undefined ? undefined : isInTeamOf(memberId));
 
 export const listPersonalBests = ({ limit, offset, order, sort, ...filters }: ListPersonalBestsOptions) =>
   selectRanked(isCandidate(filters), filters.top, toOrderBy(sort, order)).limit(limit).offset(offset);

@@ -2,8 +2,8 @@ import { count } from "drizzle-orm";
 
 import { db } from "@db/index";
 
-import type { PersonalBestFilters } from "./list-personal-bests";
-import { isCandidate } from "./list-personal-bests";
+import type { PersonalBestFilters } from "./shared/filters";
+import { isCandidate } from "./shared/filters";
 import { selectRanked } from "./shared/select-ranked";
 
 // Counted through the same ranked selection the list uses, so a `top` filter narrows both alike.

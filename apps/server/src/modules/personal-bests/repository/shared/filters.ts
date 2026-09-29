@@ -25,6 +25,9 @@ export const isPersonalBest = inArray(personalBests.status, [
 ]);
 export const isClanRecord = eq(personalBests.status, "approved");
 
+// A run reaches review once its submitter has confirmed it, and leaves review once someone has.
+export const isAwaitingReview = eq(personalBests.status, "submitted");
+
 // Credit by team only. The submitter is often not the runner: one admin entered thousands of other people's
 // times, and is absent from his own team on almost all of them.
 export const isInTeamOf = (memberId: bigint) =>
@@ -56,3 +59,11 @@ export const isFor = ({ contentId, diary, scale }: ContentFilters) =>
     diary ? isDiaryContent : undefined,
     scale === undefined ? undefined : eq(personalBests.scale, scale)
   );
+
+export type PersonalBestFilters = ContentFilters & {
+  memberId?: bigint;
+  top?: number;
+};
+
+export const isCandidate = ({ memberId, ...filters }: PersonalBestFilters) =>
+  and(isPersonalBest, isActiveContent, isFor(filters), memberId === undefined ? undefined : isInTeamOf(memberId));
