@@ -1,16 +1,11 @@
-import type { SQL } from "drizzle-orm";
-import { and, asc, desc, eq, inArray } from "drizzle-orm";
+import { asc, desc, eq } from "drizzle-orm";
 import type { PgColumn } from "drizzle-orm/pg-core";
 
 import { db } from "@db/index";
-import { items, members, submissionEvent, submissionParticipants, submissions } from "@db/schema";
+import { items, members, submissions } from "@db/schema";
 
 import type { SubmissionSort } from "../request";
-
-export type SubmissionFilters = {
-  memberId?: bigint;
-  event?: (typeof submissionEvent.enumValues)[number];
-};
+import { type SubmissionFilters, matchesSubmission } from "./shared/filters";
 
 export type ListSubmissionsOptions = SubmissionFilters & {
   limit: number;
@@ -24,24 +19,6 @@ const sortColumns: Record<SubmissionSort, PgColumn> = {
   submittedAt: submissions.submittedAt,
   valueMillions: submissions.valueMillions
 };
-
-// Denied and deleted submissions stay hidden; everything else is either counted or waiting to be.
-const isListed = inArray(submissions.status, ["approved", "approved_missing_member", "pending", "submitted"]);
-
-// Credit by team, the same way personal bests do: the submitter is often not who the drop belongs to.
-const isCreditedTo = (memberId: bigint | undefined) =>
-  memberId === undefined
-    ? undefined
-    : inArray(
-        submissions.id,
-        db
-          .select({ id: submissionParticipants.submissionId })
-          .from(submissionParticipants)
-          .where(eq(submissionParticipants.memberId, memberId))
-      );
-
-export const matchesSubmission = ({ memberId, event }: SubmissionFilters): SQL | undefined =>
-  and(isListed, isCreditedTo(memberId), event && eq(submissions.event, event));
 
 export const listSubmissions = ({ limit, offset, order, sort, ...filters }: ListSubmissionsOptions) => {
   const direction = order === "asc" ? asc : desc;
