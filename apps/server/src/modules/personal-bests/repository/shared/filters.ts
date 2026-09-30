@@ -15,15 +15,20 @@ export const isActiveContent = inArray(
   db.select({ id: speedrunContent.id }).from(speedrunContent).where(eq(speedrunContent.isActive, true))
 );
 
-// The old bot marks a run approved_missing_member when its team is short, usually because a teammate has since
-// left. It still counts as a personal best, but not as a clan record.
-export const isPersonalBest = inArray(personalBests.status, [
+// The old bot marks a run approved_missing_member when its team is short, usually because a teammate has
+// since left. It still counts as approved, and so still earns the diary tier it beat.
+export const isApprovedRun = inArray(personalBests.status, ["approved", "approved_missing_member"]);
+
+// Only a run with its whole team still on it can stand as the clan's record.
+export const isClanRecord = eq(personalBests.status, "approved");
+
+// Everything a list shows: the approved runs, plus the ones still waiting on a submitter or a reviewer.
+export const isListedRun = inArray(personalBests.status, [
   "approved",
   "approved_missing_member",
   "pending",
   "submitted"
 ]);
-export const isClanRecord = eq(personalBests.status, "approved");
 
 // A run reaches review once its submitter has confirmed it, and leaves review once someone has.
 export const isAwaitingReview = eq(personalBests.status, "submitted");
@@ -66,4 +71,4 @@ export type PersonalBestFilters = ContentFilters & {
 };
 
 export const isCandidate = ({ memberId, ...filters }: PersonalBestFilters) =>
-  and(isPersonalBest, isActiveContent, isFor(filters), memberId === undefined ? undefined : isInTeamOf(memberId));
+  and(isListedRun, isActiveContent, isFor(filters), memberId === undefined ? undefined : isInTeamOf(memberId));

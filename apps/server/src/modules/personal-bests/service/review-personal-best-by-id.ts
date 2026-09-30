@@ -1,6 +1,12 @@
 import { db } from "@db/index";
 
+import { awardPoints } from "@/modules/points/repository/award-points";
+import { generateDiaryCarryAwards } from "@/modules/points/rules";
+import { getEliteAndMasterDiaryTimes } from "@/modules/speedrun-diary/repository/get-elite-and-master-diary-times";
+
 import { findPersonalBestAwaitingReview } from "../repository/find-personal-best-awaiting-review";
+import { listBestTimes } from "../repository/list-best-times";
+import { listParticipantIds } from "../repository/list-participant-ids";
 import { reviewPersonalBest } from "../repository/review-personal-best";
 
 export type ReviewRequest = {
@@ -12,8 +18,9 @@ export type ReviewRequest = {
 export type ReviewResult = "reviewed" | "not-awaiting-review";
 
 /**
- * Approving a run pays no points: the speedrun diary reads the times themselves, so a member's
- * diary standing follows from this the moment it counts as approved.
+ * Approving a run earns no points for the run itself: the speedrun diary reads the times, so a
+ * member's standing follows from the approval. What it can pay is a carry, to the members who
+ * already held a tier the run has just given somebody else.
  */
 export const reviewPersonalBestById = async (id: number, review: ReviewRequest): Promise<ReviewResult> =>
   db.transaction(async (tx) => {
@@ -21,6 +28,31 @@ export const reviewPersonalBestById = async (id: number, review: ReviewRequest):
     if (!awaiting) return "not-awaiting-review";
 
     await reviewPersonalBest(tx, id, review);
+    if (review.status === "denied" || awaiting.contentId === null) return "reviewed";
+
+    const memberIds = await listParticipantIds(tx, id);
+    const diaryTier = await getEliteAndMasterDiaryTimes(tx, awaiting.contentId, awaiting.scale);
+    const personalBestsByMemberId = await listBestTimes(tx, {
+      contentId: awaiting.contentId,
+      excludeId: id,
+      memberIds,
+      scale: awaiting.scale
+    });
+
+    for (const tier of diaryTier) {
+      if (awaiting.timeSeconds > tier.timeSeconds) continue;
+
+      const hasDiaryTier = (memberId: bigint) =>
+        (personalBestsByMemberId.get(memberId) ?? Infinity) <= tier.timeSeconds;
+
+      const awards = generateDiaryCarryAwards({
+        carried: memberIds.filter((memberId) => !hasDiaryTier(memberId)),
+        holders: memberIds.filter((memberId) => hasDiaryTier(memberId)),
+        tierId: tier.tierId
+      });
+
+      await awardPoints(tx, awards, null, `${tier.tierName.toLowerCase()} diary carry - pb #${id}`);
+    }
 
     return "reviewed";
   });

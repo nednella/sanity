@@ -1,4 +1,4 @@
-import { eq, sql } from "drizzle-orm";
+import { sql } from "drizzle-orm";
 
 import type { Queryable } from "@db/index";
 import { members, points } from "@db/schema";
@@ -22,12 +22,18 @@ export const awardPoints = async (tx: Queryable, awards: Award[], submissionId: 
     }))
   );
 
-  for (const { memberId, points: value } of earned) {
-    await tx
-      .update(members)
-      .set({ clanPoints: sql`${members.clanPoints} + ${value}` })
-      .where(eq(members.id, memberId));
-  }
+  // One statement rather than one per member: a five man team earning two tiers would otherwise
+  // spend ten round trips inside the transaction.
+  const totals = sql.join(
+    earned.map(({ memberId, points: value }) => sql`(${memberId}::bigint, ${value}::int)`),
+    sql`, `
+  );
+
+  await tx.execute(sql`
+    update ${members} set clan_points = ${members.clanPoints} + awarded.points
+    from (values ${totals}) as awarded(member_id, points)
+    where ${members.id} = awarded.member_id
+  `);
 
   return earned.length;
 };

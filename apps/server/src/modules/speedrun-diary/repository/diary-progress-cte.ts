@@ -3,11 +3,12 @@ import { and, eq, inArray, lte, max, sql, sum } from "drizzle-orm";
 import { db } from "@db/index";
 import { personalBestParticipants, personalBests, speedrunDiaryTiers, speedrunDiaryTimes } from "@db/schema";
 
+import { isApprovedRun } from "@/modules/personal-bests/repository/shared/filters";
+
 // Diary progress is derived, never stored: each member's best approved time per diary earns every tier it
 // beats, so a changed threshold applies on the next read. Omitting memberIds computes it for every member,
 // so callers can join or sort on it.
 export const diaryProgressCte = (memberIds?: bigint[]) => {
-  const isApproved = inArray(personalBests.status, ["approved", "approved_missing_member"]);
   const isRequested = memberIds && inArray(personalBestParticipants.memberId, memberIds);
 
   const bestTimes = db.$with("best_times").as(
@@ -20,7 +21,7 @@ export const diaryProgressCte = (memberIds?: bigint[]) => {
       })
       .from(personalBests)
       .innerJoin(personalBestParticipants, eq(personalBestParticipants.personalBestId, personalBests.id))
-      .where(and(isApproved, isRequested))
+      .where(and(isApprovedRun, isRequested))
       .groupBy(personalBestParticipants.memberId, personalBests.contentId, personalBests.scale)
   );
 
