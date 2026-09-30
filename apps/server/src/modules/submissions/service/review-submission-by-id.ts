@@ -1,11 +1,11 @@
 import { db } from "@db/index";
 
+import { listTrialists } from "@/modules/members/repository/list-trialists";
 import { awardPoints } from "@/modules/points/repository/award-points";
 import { generatePointSplit } from "@/modules/points/rules";
 
 import { findSubmissionAwaitingReview } from "../repository/find-submission-awaiting-review";
 import { listParticipantIds } from "../repository/list-participant-ids";
-import { listTrialists } from "../repository/list-trialists";
 import { reviewSubmission } from "../repository/review-submission";
 
 export type ReviewRequest = {
