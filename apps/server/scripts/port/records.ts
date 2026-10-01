@@ -1,3 +1,6 @@
+import { db } from "@db/index";
+import { bosses } from "@db/schema";
+
 import { blankToNull, clockToInterval, read, toUtcInstant } from "./source";
 
 type MemberIds = Map<string, bigint>;
@@ -19,14 +22,43 @@ type SourcePersonalBest = {
 
 const enumName = (name: string) => name.trim().toLowerCase().replaceAll(" ", "_");
 
+/**
+ * Which boss each piece of diary content is, by Wise Old Man metric. The old table named its
+ * content in free text, so this is the only thing tying the two together. Content missing here is
+ * content the clan no longer scores.
+ */
+const metricByContentId: Record<number, string> = {
+  1: "chambers_of_xeric",
+  2: "chambers_of_xeric_challenge_mode",
+  3: "theatre_of_blood",
+  4: "theatre_of_blood_hard_mode",
+  5: "tzkal_zuk",
+  6: "tztok_jad",
+  7: "tombs_of_amascut",
+  40: "the_corrupted_gauntlet",
+  43: "sol_heredit"
+};
+
 export const readSpeedrunContent = async () => {
+  const stored = await db.select({ id: bosses.id, womMetric: bosses.womMetric }).from(bosses);
+  const bossIdByMetric = new Map(stored.flatMap(({ id, womMetric }) => (womMetric ? [[womMetric, id] as const] : [])));
+
+  if (bossIdByMetric.size === 0) {
+    throw new Error("no bosses to link content to: run catalogue:bosses before the port");
+  }
+
   const rows = await read<{ id: number; name: string; imageUrl: string | null }>("bosses", "id");
 
-  return rows.map((content) => ({
-    id: content.id,
-    name: content.name,
-    imageUrl: blankToNull(content.imageUrl)
-  }));
+  return rows.map((content) => {
+    const metric = metricByContentId[content.id];
+
+    return {
+      id: content.id,
+      bossId: metric === undefined ? null : (bossIdByMetric.get(metric) ?? null),
+      imageUrl: blankToNull(content.imageUrl),
+      isActive: metric !== undefined
+    };
+  });
 };
 
 /**
