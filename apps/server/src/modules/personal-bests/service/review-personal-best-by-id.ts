@@ -1,5 +1,6 @@
 import { db } from "@db/index";
 
+import { recordAuditEntry } from "@/modules/audit/repository/record-audit-entry";
 import { awardPoints } from "@/modules/points/repository/award-points";
 import { generateDiaryCarryAwards } from "@/modules/points/rules";
 import { getEliteAndMasterDiaryTimes } from "@/modules/speedrun-diary/repository/get-elite-and-master-diary-times";
@@ -28,9 +29,17 @@ export const reviewPersonalBestById = async (id: number, review: ReviewRequest):
     if (!awaiting) return "not-awaiting-review";
 
     await reviewPersonalBest(tx, id, review);
+    const memberIds = await listParticipantIds(tx, id);
+    await recordAuditEntry(tx, {
+      actingMemberId: review.reviewedBy,
+      action: "personal_best_reviewed",
+      affects: memberIds,
+      note: `${review.status} personal best #${id}`,
+      source: "server"
+    });
+
     if (review.status === "denied" || awaiting.contentId === null) return "reviewed";
 
-    const memberIds = await listParticipantIds(tx, id);
     const diaryTier = await getEliteAndMasterDiaryTimes(tx, awaiting.contentId, awaiting.scale);
     const personalBestsByMemberId = await listBestTimes(tx, {
       contentId: awaiting.contentId,

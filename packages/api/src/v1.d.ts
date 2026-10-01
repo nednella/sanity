@@ -505,6 +505,7 @@ export interface paths {
                 content: {
                     "application/json": {
                         memberId: string;
+                        awardedByMemberId: string;
                         points: number;
                         notes: string;
                     };

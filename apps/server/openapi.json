@@ -3328,6 +3328,10 @@
                     "type": "string",
                     "pattern": "^\\d+$"
                   },
+                  "awardedByMemberId": {
+                    "type": "string",
+                    "pattern": "^\\d+$"
+                  },
                   "points": {
                     "type": "integer",
                     "minimum": -10000,
@@ -3341,6 +3345,7 @@
                 },
                 "required": [
                   "memberId",
+                  "awardedByMemberId",
                   "points",
                   "notes"
                 ]

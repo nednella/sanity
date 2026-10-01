@@ -1,5 +1,6 @@
 import { db } from "@db/index";
 
+import { recordAuditEntry } from "@/modules/audit/repository/record-audit-entry";
 import { listTrialists } from "@/modules/members/repository/list-trialists";
 import { awardPoints } from "@/modules/points/repository/award-points";
 import { generatePointSplit } from "@/modules/points/rules";
@@ -27,9 +28,17 @@ export const reviewSubmissionById = async (id: number, review: ReviewRequest): P
     if (!awaiting) return "not-awaiting-review";
 
     await reviewSubmission(tx, id, review);
+    const memberIds = await listParticipantIds(tx, id);
+    await recordAuditEntry(tx, {
+      actingMemberId: review.reviewedBy,
+      action: "submission_reviewed",
+      affects: memberIds,
+      note: `${review.status} drop submission #${id}`,
+      source: "server"
+    });
+
     if (review.status === "denied") return "reviewed";
 
-    const memberIds = await listParticipantIds(tx, id);
     const trialists = await listTrialists(tx, memberIds);
     const valueMillions = awaiting.valueMillions ?? 0;
 

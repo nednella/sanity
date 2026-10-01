@@ -8,6 +8,7 @@ import { bigIntString } from "@/schema/codecs";
  */
 export const awardPointsBody = z.object({
   memberId: bigIntString,
+  awardedByMemberId: bigIntString,
   points: z
     .number()
     .int()
