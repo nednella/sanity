@@ -10,13 +10,14 @@ import { saveNameChanges } from "../repository/save-name-changes";
 
 const PAGE_SIZE = 50;
 
-const resolvedAt = (change: { resolvedAt: Date | null; updatedAt: Date }) =>
-  (change.resolvedAt ?? change.updatedAt).getTime();
+type NameChange = Awaited<ReturnType<typeof wom.groups.getGroupNameChanges>>[number];
 
-export const syncNameChanges = async (pages: number) => {
-  const memberFor = await loadTrackedPlayers();
+// Wise Old Man resolves a change some time after it happens, and only then is it ours to act on.
+const changedAt = (change: NameChange) => (change.resolvedAt ?? change.updatedAt).getTime();
 
-  const changes = [];
+const readGroupNameChanges = async (pages: number) => {
+  const changes: NameChange[] = [];
+
   for (let page = 0; page < pages; page++) {
     const batch = await wom.groups.getGroupNameChanges(Number(config.womGroupId), {
       limit: PAGE_SIZE,
@@ -27,12 +28,40 @@ export const syncNameChanges = async (pages: number) => {
     if (batch.length < PAGE_SIZE) break;
   }
 
-  const approved = changes
-    .filter((change) => change.status === "approved" && memberFor.has(change.playerId))
-    .toSorted((a, b) => resolvedAt(a) - resolvedAt(b) || a.id - b.id);
+  return changes;
+};
+
+const renameAndRecord = (memberId: bigint, change: NameChange) =>
+  db.transaction(async (tx) => {
+    if (!(await renameMember(tx, memberId, change.newName))) return false;
+
+    await recordAuditEntry(tx, {
+      action: "rsn_changed",
+      affects: [memberId],
+      note: `${change.oldName} to ${change.newName}`,
+      source: "worker"
+    });
+
+    return true;
+  });
+
+/**
+ * Brings every linked member's RSN up to date and keeps the history behind it.
+ *
+ * A member who renamed before we linked them is not here: the only name we hold for them has left
+ * the hiscores, so nothing in this feed points at them. Set their RSN to the name they go by now
+ * and the next group sync will match and link them.
+ */
+export const syncNameChanges = async (pages: number) => {
+  const memberIdByPlayerId = await loadTrackedPlayers();
+  const changes = await readGroupNameChanges(pages);
+
+  const ours = changes
+    .filter((change) => change.status === "approved" && memberIdByPlayerId.has(change.playerId))
+    .toSorted((a, b) => changedAt(a) - changedAt(b) || a.id - b.id);
 
   const recorded = await saveNameChanges(
-    approved.map((change) => ({
+    ours.map((change) => ({
       id: change.id,
       womPlayerId: change.playerId,
       oldName: change.oldName,
@@ -41,27 +70,15 @@ export const syncNameChanges = async (pages: number) => {
     }))
   );
 
-  const latest = new Map(approved.map((change) => [change.playerId, change]));
+  // Oldest first, so a member who renamed more than once ends on the name they go by now.
+  const latestChangeByMemberId = new Map<bigint, NameChange>();
+  for (const change of ours) {
+    latestChangeByMemberId.set(memberIdByPlayerId.get(change.playerId)!, change);
+  }
 
   let renamed = 0;
-  for (const [playerId, change] of latest) {
-    const memberId = memberFor.get(playerId);
-    if (memberId === undefined) continue;
-
-    const wasRenamed = await db.transaction(async (tx) => {
-      if (!(await renameMember(tx, memberId, change.newName))) return false;
-
-      await recordAuditEntry(tx, {
-        action: "rsn_changed",
-        affects: [memberId],
-        note: `${change.oldName} to ${change.newName}`,
-        source: "worker"
-      });
-
-      return true;
-    });
-
-    if (wasRenamed) renamed++;
+  for (const [memberId, change] of latestChangeByMemberId) {
+    if (await renameAndRecord(memberId, change)) renamed++;
   }
 
   return { read: changes.length, recorded, renamed };
