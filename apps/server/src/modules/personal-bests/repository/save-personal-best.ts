@@ -1,9 +1,9 @@
-import type { Queryable } from "@db/index";
+import type { Transaction } from "@db/index";
 import { personalBestParticipants, personalBests } from "@db/schema";
 
 export type PersonalBestRow = typeof personalBests.$inferInsert;
 
-export const savePersonalBest = async (tx: Queryable, personalBest: PersonalBestRow, participants: bigint[]) => {
+export const savePersonalBest = async (tx: Transaction, personalBest: PersonalBestRow, participants: bigint[]) => {
   const [saved] = await tx.insert(personalBests).values(personalBest).returning({ id: personalBests.id });
 
   const unique = [...new Set(participants)];

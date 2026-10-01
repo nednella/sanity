@@ -1,12 +1,12 @@
 import { and, eq, inArray, sql } from "drizzle-orm";
 
-import type { Queryable } from "@db/index";
+import type { Transaction } from "@db/index";
 import { speedrunDiaryTiers, speedrunDiaryTimes } from "@db/schema";
 
 import { ELITE_TIER_ID, MASTER_TIER_ID } from "../constants";
 
 // The two tiers a carry pays for, with the time each demands of one content and team size.
-export const getEliteAndMasterDiaryTimes = (tx: Queryable, contentId: number, scale: number) =>
+export const getEliteAndMasterDiaryTimes = (tx: Transaction, contentId: number, scale: number) =>
   tx
     .select({
       tierId: speedrunDiaryTimes.tierId,

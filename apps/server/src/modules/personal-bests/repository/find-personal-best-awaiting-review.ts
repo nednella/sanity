@@ -1,11 +1,11 @@
 import { and, eq, sql } from "drizzle-orm";
 
-import type { Queryable } from "@db/index";
+import type { Transaction } from "@db/index";
 import { personalBests } from "@db/schema";
 
 import { isAwaitingReview } from "./shared/filters";
 
-export const findPersonalBestAwaitingReview = async (tx: Queryable, id: number) => {
+export const findPersonalBestAwaitingReview = async (tx: Transaction, id: number) => {
   const [found] = await tx
     .select({
       id: personalBests.id,

@@ -1,6 +1,6 @@
 import { eq } from "drizzle-orm";
 
-import type { Queryable } from "@db/index";
+import type { Transaction } from "@db/index";
 import { personalBests } from "@db/schema";
 
 export type Review = {
@@ -9,7 +9,7 @@ export type Review = {
   status: "approved" | "denied";
 };
 
-export const reviewPersonalBest = (tx: Queryable, id: number, review: Review) =>
+export const reviewPersonalBest = (tx: Transaction, id: number, review: Review) =>
   tx
     .update(personalBests)
     .set({ ...review, reviewedAt: new Date() })

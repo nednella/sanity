@@ -1,6 +1,6 @@
 import { and, eq, inArray, ne, sql } from "drizzle-orm";
 
-import type { Queryable } from "@db/index";
+import type { Transaction } from "@db/index";
 import { personalBestParticipants, personalBests } from "@db/schema";
 
 import { isApprovedRun } from "./shared/filters";
@@ -16,7 +16,7 @@ export type BestTimesOptions = {
  * What each of these members had already run this content and team size in, before the run under
  * review. Every tier is decided against the same times, so they are read once rather than per tier.
  */
-export const listBestTimes = async (tx: Queryable, { contentId, excludeId, memberIds, scale }: BestTimesOptions) => {
+export const listBestTimes = async (tx: Transaction, { contentId, excludeId, memberIds, scale }: BestTimesOptions) => {
   if (memberIds.length === 0) return new Map<bigint, number>();
 
   const rows = await tx

@@ -1,13 +1,13 @@
 import { inArray } from "drizzle-orm";
 
-import type { Queryable } from "@db/index";
+import type { Transaction } from "@db/index";
 import { members } from "@db/schema";
 
 import { TRIALIST_RANK_ID } from "@/modules/ranks/constants";
 
 // Trial status is read when the drop is approved, not when it was submitted, so a member who has
 // since been ranked up is paid as a member.
-export const listTrialists = async (tx: Queryable, memberIds: bigint[]) => {
+export const listTrialists = async (tx: Transaction, memberIds: bigint[]) => {
   if (memberIds.length === 0) return new Set<bigint>();
 
   const rows = await tx

@@ -1,6 +1,6 @@
 import { sql } from "drizzle-orm";
 
-import type { Queryable } from "@db/index";
+import type { Transaction } from "@db/index";
 import { members, points } from "@db/schema";
 
 export type Award = {
@@ -8,7 +8,7 @@ export type Award = {
   points: number;
 };
 
-export const awardPoints = async (tx: Queryable, awards: Award[], submissionId: number | null, notes: string) => {
+export const awardPoints = async (tx: Transaction, awards: Award[], submissionId: number | null, notes: string) => {
   const earned = awards.filter(({ points: value }) => value !== 0);
   if (earned.length === 0) return 0;
 

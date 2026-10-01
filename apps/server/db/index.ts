@@ -15,6 +15,4 @@ export const db = drizzle({
 
 type Database = typeof db;
 
-// A repository write takes either the client or an open transaction, so a service can compose
-// several of them into one.
-export type Queryable = Database | Parameters<Parameters<Database["transaction"]>[0]>[0];
+export type Transaction = Parameters<Parameters<Database["transaction"]>[0]>[0];

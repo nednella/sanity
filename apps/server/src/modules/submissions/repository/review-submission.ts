@@ -1,6 +1,6 @@
 import { eq } from "drizzle-orm";
 
-import type { Queryable } from "@db/index";
+import type { Transaction } from "@db/index";
 import { submissions } from "@db/schema";
 
 export type Review = {
@@ -10,7 +10,7 @@ export type Review = {
 };
 
 // Only a submission still waiting can be reviewed, so a second approval cannot pay out twice.
-export const reviewSubmission = async (tx: Queryable, id: number, review: Review) => {
+export const reviewSubmission = async (tx: Transaction, id: number, review: Review) => {
   const reviewed = await tx
     .update(submissions)
     .set({ ...review, reviewedAt: new Date() })

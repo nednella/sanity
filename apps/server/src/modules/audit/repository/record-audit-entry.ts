@@ -1,4 +1,4 @@
-import type { Queryable } from "@db/index";
+import type { Transaction } from "@db/index";
 import { auditLog, auditLogMembers } from "@db/schema";
 
 export type AuditEntry = {
@@ -9,7 +9,7 @@ export type AuditEntry = {
   source: (typeof auditLog.$inferInsert)["source"];
 };
 
-export const recordAuditEntry = async (tx: Queryable, { affects = [], ...entry }: AuditEntry) => {
+export const recordAuditEntry = async (tx: Transaction, { affects = [], ...entry }: AuditEntry) => {
   const [recorded] = await tx
     .insert(auditLog)
     .values({ ...entry, occurredAt: new Date() })
