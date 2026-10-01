@@ -71,6 +71,22 @@ export const submissionStatus = pgEnum("submission_status", [
 
 export const submissionEvent = pgEnum("submission_event", ["bingo", "leagues"]);
 
+export const auditAction = pgEnum("audit_action", [
+  "catalogue_changed",
+  "diary_tier_claimed",
+  "member_joined",
+  "member_left",
+  "other",
+  "personal_best_reviewed",
+  "points_awarded",
+  "rank_changed",
+  "role_changed",
+  "rsn_changed",
+  "submission_reviewed"
+]);
+
+export const auditSource = pgEnum("audit_source", ["bot", "server", "web_app", "worker"]);
+
 export const items = pgTable("items", {
   id: integer().generatedByDefaultAsIdentity().primaryKey(),
   name: citext().notNull().unique("items_name_unique"),
@@ -334,4 +350,30 @@ export const womSnapshotComputed = pgTable(
     rank: integer()
   },
   (table) => [primaryKey({ columns: [table.womSnapshotId, table.metric] })]
+);
+
+export const auditLog = pgTable(
+  "audit_log",
+  {
+    id: bigint({ mode: "bigint" }).generatedByDefaultAsIdentity().primaryKey(),
+    actingMemberId: bigint({ mode: "bigint" }).references(() => members.id),
+    action: auditAction().notNull(),
+    note: text(),
+    occurredAt: timestamp({ withTimezone: true }).notNull(),
+    source: auditSource().notNull()
+  },
+  (table) => [index().on(table.occurredAt.desc()), index().on(table.action)]
+);
+
+export const auditLogMembers = pgTable(
+  "audit_log_members",
+  {
+    auditLogId: bigint({ mode: "bigint" })
+      .notNull()
+      .references(() => auditLog.id, { onDelete: "cascade" }),
+    memberId: bigint({ mode: "bigint" })
+      .notNull()
+      .references(() => members.id, { onDelete: "restrict" })
+  },
+  (table) => [primaryKey({ columns: [table.auditLogId, table.memberId] }), index().on(table.memberId)]
 );
