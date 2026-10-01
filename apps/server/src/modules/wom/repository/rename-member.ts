@@ -1,12 +1,12 @@
 import { and, eq, isNull, ne, or } from "drizzle-orm";
 
-import { db } from "@db/index";
+import type { Transaction } from "@db/index";
 import { members } from "@db/schema";
 
-export const renameMember = async (memberId: bigint, mainRsn: string) => {
+export const renameMember = async (tx: Transaction, memberId: bigint, mainRsn: string) => {
   const hasNewName = or(isNull(members.mainRsn), ne(members.mainRsn, mainRsn));
 
-  const renamed = await db
+  const renamed = await tx
     .update(members)
     .set({ mainRsn })
     .where(and(eq(members.id, memberId), hasNewName))

@@ -1,6 +1,8 @@
 import { config } from "@config";
+import { db } from "@db/index";
 
 import { wom } from "@/integrations/wom";
+import { recordAuditEntry } from "@/modules/audit/repository/record-audit-entry";
 
 import { loadTrackedPlayers } from "../repository/load-tracked-players";
 import { renameMember } from "../repository/rename-member";
@@ -44,7 +46,22 @@ export const syncNameChanges = async (pages: number) => {
   let renamed = 0;
   for (const [playerId, change] of latest) {
     const memberId = memberFor.get(playerId);
-    if (memberId !== undefined && (await renameMember(memberId, change.newName))) renamed++;
+    if (memberId === undefined) continue;
+
+    const wasRenamed = await db.transaction(async (tx) => {
+      if (!(await renameMember(tx, memberId, change.newName))) return false;
+
+      await recordAuditEntry(tx, {
+        action: "rsn_changed",
+        affects: [memberId],
+        note: `${change.oldName} to ${change.newName}`,
+        source: "worker"
+      });
+
+      return true;
+    });
+
+    if (wasRenamed) renamed++;
   }
 
   return { read: changes.length, recorded, renamed };
