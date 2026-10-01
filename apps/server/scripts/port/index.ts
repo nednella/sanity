@@ -1,9 +1,10 @@
-import { type InferInsertModel, sql } from "drizzle-orm";
+import { type InferInsertModel, and, eq, ne, sql } from "drizzle-orm";
 import { type PgTable } from "drizzle-orm/pg-core";
 
 import { client, db } from "@db/index";
 import * as schema from "@db/schema";
 
+import { readAuditLog } from "./audit";
 import { readMembers, readRanks } from "./members";
 import {
   readPersonalBestParticipants,
@@ -40,11 +41,29 @@ const insertAll = async <T extends PgTable>(table: T, rows: InferInsertModel<T>[
   report(name, rows);
 };
 
+// Live audit entries exist only here. The old database cannot replay them, so a re-run after
+// cutover would erase history nothing can restore. Catalogue changes are the exception: the seed
+// scripts write them, and they have to run before this one.
+const [live] = await db
+  .select({ value: sql<number>`count(*)::int` })
+  .from(schema.auditLog)
+  .where(and(eq(schema.auditLog.source, "server"), ne(schema.auditLog.action, "catalogue_changed")));
+
+if ((live?.value ?? 0) > 0) {
+  throw new Error(`refusing to run: ${live?.value} audit entries were written after the port`);
+}
+
+// Named in full rather than cascaded. Truncate follows every foreign key when told to cascade, which
+// reaches the Wise Old Man tables this script never refills; without it, a table we forget is an
+// error rather than silent loss.
 await db.execute(sql`
-  truncate ranks, members, members_discord_accounts, items, submissions, submission_participants,
-           points, points_timeline_events, speedrun_content, speedrun_diary_tiers, speedrun_diary_times,
-           speedrun_diary_rewards, personal_bests, personal_best_participants
-  restart identity cascade
+  truncate audit_log, audit_log_members, boss_uniques, items, members, members_discord_accounts,
+           personal_best_participants, personal_bests, points, points_timeline_events, ranks,
+           speedrun_content, speedrun_diary_rewards, speedrun_diary_tiers, speedrun_diary_times,
+           submission_participants, submissions, wom_name_changes, wom_players,
+           wom_snapshot_activities, wom_snapshot_bosses, wom_snapshot_computed, wom_snapshot_skills,
+           wom_snapshots
+  restart identity
 `);
 
 await insertAll(schema.ranks, await readRanks(), "ranks");
@@ -81,9 +100,22 @@ const keptIds = new Set(personalBests.map((best) => best.id));
 const participants = await readPersonalBestParticipants(memberIds, keptIds);
 await insertAll(schema.personalBestParticipants, participants, "personal_best_participants");
 
+const audit = await readAuditLog(memberIds);
+await insertAll(
+  schema.auditLog,
+  audit.map(({ entry }) => entry),
+  "audit_log"
+);
+await insertAll(
+  schema.auditLogMembers,
+  audit.flatMap(({ affects, entry }) => affects.map((memberId) => ({ auditLogId: entry.id, memberId }))),
+  "audit_log_members"
+);
+
 // Rows carrying their source id leave the identity sequence behind, so the next
 // insert would collide. Move each one past the highest id present.
 for (const table of [
+  "audit_log",
   "items",
   "submissions",
   "points",
