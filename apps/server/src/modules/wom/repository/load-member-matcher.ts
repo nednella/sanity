@@ -4,8 +4,7 @@ import { isNotNull } from "drizzle-orm";
 import { db } from "@db/index";
 import { members, womPlayers } from "@db/schema";
 
-// OSRS treats spaces, underscores and hyphens in a name as the same character.
-const normalise = (name: string) => name.toLowerCase().replaceAll(/[_-]/g, " ").trim();
+import { normaliseRsn } from "./shared/normalise-rsn";
 
 export const loadMemberMatcher = async () => {
   const linked = await db
@@ -18,8 +17,8 @@ export const loadMemberMatcher = async () => {
     .where(isNotNull(members.mainRsn));
 
   const byPlayerId = new Map(linked.map((row) => [row.womPlayerId, row.memberId]));
-  const byRsn = new Map(named.map((row) => [normalise(row.mainRsn!), row.id]));
+  const byRsn = new Map(named.map((row) => [normaliseRsn(row.mainRsn!), row.id]));
 
   // The player id survives a name change, so an existing link wins over the RSN.
-  return (player: PlayerResponse) => byPlayerId.get(player.id) ?? byRsn.get(normalise(player.username));
+  return (player: PlayerResponse) => byPlayerId.get(player.id) ?? byRsn.get(normaliseRsn(player.username));
 };
