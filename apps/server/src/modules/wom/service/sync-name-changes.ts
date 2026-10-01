@@ -33,12 +33,13 @@ const readGroupNameChanges = async (pages: number) => {
 
 const renameAndRecord = (memberId: bigint, change: NameChange) =>
   db.transaction(async (tx) => {
-    if (!(await renameMember(tx, memberId, change.newName))) return false;
+    const renamed = await renameMember(tx, memberId, change.newName);
+    if (!renamed) return false;
 
     await recordAuditEntry(tx, {
       action: "rsn_changed",
       affects: [memberId],
-      note: `${change.oldName} to ${change.newName}`,
+      note: renamed.previous ? `${renamed.previous} to ${change.newName}` : `set to ${change.newName}`,
       source: "worker"
     });
 
