@@ -4,7 +4,7 @@ import { z } from "zod";
 import { awardPointsBody } from "./request";
 import { awardManualPoints } from "./service/award-manual-points";
 
-export const pointsRouter: FastifyPluginAsyncZod = async (app) => {
+export const adminPointsRouter: FastifyPluginAsyncZod = async (app) => {
   app.route({
     method: "POST",
     url: "/points",

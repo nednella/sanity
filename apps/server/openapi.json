@@ -2500,6 +2500,255 @@
     }
   },
   "paths": {
+    "/v1/personal-bests/{id}/review": {
+      "post": {
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "approved",
+                      "denied"
+                    ]
+                  },
+                  "reviewedBy": {
+                    "type": "string",
+                    "pattern": "^\\d+$"
+                  },
+                  "reviewNote": {
+                    "default": null,
+                    "nullable": true,
+                    "type": "string",
+                    "maxLength": 500
+                  }
+                },
+                "required": [
+                  "status",
+                  "reviewedBy"
+                ]
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "exclusiveMinimum": true,
+              "maximum": 9007199254740991
+            },
+            "in": "path",
+            "name": "id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "approved",
+                        "denied"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "status"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "message"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/points": {
+      "post": {
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "memberId": {
+                    "type": "string",
+                    "pattern": "^\\d+$"
+                  },
+                  "awardedByMemberId": {
+                    "type": "string",
+                    "pattern": "^\\d+$"
+                  },
+                  "points": {
+                    "type": "integer",
+                    "minimum": -10000,
+                    "maximum": 10000
+                  },
+                  "notes": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 200
+                  }
+                },
+                "required": [
+                  "memberId",
+                  "awardedByMemberId",
+                  "points",
+                  "notes"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "awarded": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "awarded"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/submissions/{id}/review": {
+      "post": {
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "approved",
+                      "denied"
+                    ]
+                  },
+                  "reviewedBy": {
+                    "type": "string",
+                    "pattern": "^\\d+$"
+                  },
+                  "reviewNote": {
+                    "default": null,
+                    "nullable": true,
+                    "type": "string",
+                    "maxLength": 500
+                  }
+                },
+                "required": [
+                  "status",
+                  "reviewedBy"
+                ]
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "exclusiveMinimum": true,
+              "maximum": 9007199254740991
+            },
+            "in": "path",
+            "name": "id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "approved",
+                        "denied"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "status"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "message"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/v1/health": {
       "get": {
         "responses": {
@@ -3221,161 +3470,6 @@
         }
       }
     },
-    "/v1/personal-bests/{id}/review": {
-      "post": {
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "status": {
-                    "type": "string",
-                    "enum": [
-                      "approved",
-                      "denied"
-                    ]
-                  },
-                  "reviewedBy": {
-                    "type": "string",
-                    "pattern": "^\\d+$"
-                  },
-                  "reviewNote": {
-                    "default": null,
-                    "nullable": true,
-                    "type": "string",
-                    "maxLength": 500
-                  }
-                },
-                "required": [
-                  "status",
-                  "reviewedBy"
-                ]
-              }
-            }
-          }
-        },
-        "parameters": [
-          {
-            "schema": {
-              "type": "integer",
-              "minimum": 0,
-              "exclusiveMinimum": true,
-              "maximum": 9007199254740991
-            },
-            "in": "path",
-            "name": "id",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Default Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "enum": [
-                        "approved",
-                        "denied"
-                      ]
-                    }
-                  },
-                  "required": [
-                    "status"
-                  ],
-                  "additionalProperties": false
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Default Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "message"
-                  ],
-                  "additionalProperties": false
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/v1/points": {
-      "post": {
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "memberId": {
-                    "type": "string",
-                    "pattern": "^\\d+$"
-                  },
-                  "awardedByMemberId": {
-                    "type": "string",
-                    "pattern": "^\\d+$"
-                  },
-                  "points": {
-                    "type": "integer",
-                    "minimum": -10000,
-                    "maximum": 10000
-                  },
-                  "notes": {
-                    "type": "string",
-                    "minLength": 1,
-                    "maxLength": 200
-                  }
-                },
-                "required": [
-                  "memberId",
-                  "awardedByMemberId",
-                  "points",
-                  "notes"
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Default Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "awarded": {
-                      "type": "number"
-                    }
-                  },
-                  "required": [
-                    "awarded"
-                  ],
-                  "additionalProperties": false
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/v1/ranks": {
       "get": {
         "responses": {
@@ -3594,100 +3688,6 @@
                   },
                   "required": [
                     "id"
-                  ],
-                  "additionalProperties": false
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/v1/submissions/{id}/review": {
-      "post": {
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "status": {
-                    "type": "string",
-                    "enum": [
-                      "approved",
-                      "denied"
-                    ]
-                  },
-                  "reviewedBy": {
-                    "type": "string",
-                    "pattern": "^\\d+$"
-                  },
-                  "reviewNote": {
-                    "default": null,
-                    "nullable": true,
-                    "type": "string",
-                    "maxLength": 500
-                  }
-                },
-                "required": [
-                  "status",
-                  "reviewedBy"
-                ]
-              }
-            }
-          }
-        },
-        "parameters": [
-          {
-            "schema": {
-              "type": "integer",
-              "minimum": 0,
-              "exclusiveMinimum": true,
-              "maximum": 9007199254740991
-            },
-            "in": "path",
-            "name": "id",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Default Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "enum": [
-                        "approved",
-                        "denied"
-                      ]
-                    }
-                  },
-                  "required": [
-                    "status"
-                  ],
-                  "additionalProperties": false
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Default Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "message"
                   ],
                   "additionalProperties": false
                 }

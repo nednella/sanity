@@ -36,7 +36,9 @@ export const submissionsRouter: FastifyPluginAsyncZod = async (app) => {
       return reply.code(201).send({ id });
     }
   });
+};
 
+export const adminSubmissionsRouter: FastifyPluginAsyncZod = async (app) => {
   app.route({
     method: "POST",
     url: "/submissions/:id/review",

@@ -56,7 +56,9 @@ export const personalBestsRouter: FastifyPluginAsyncZod = async (app) => {
       return reply.code(201).send({ id });
     }
   });
+};
 
+export const adminPersonalBestsRouter: FastifyPluginAsyncZod = async (app) => {
   app.route({
     method: "POST",
     url: "/personal-bests/:id/review",
