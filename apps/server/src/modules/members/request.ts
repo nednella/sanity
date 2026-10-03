@@ -7,6 +7,8 @@ import { pagination } from "@/schema/common";
 
 export const memberParams = z.object({ id: bigIntString });
 
+const rsn = z.string().trim().min(1).max(12);
+
 const memberFilters = z.object({
   active: booleanString.optional(),
   search: z.string().trim().max(50).optional()
@@ -42,6 +44,18 @@ export const memberPersonalBestsQuery = z.object({
 export const memberSubmissionsQuery = z.object({
   ...pagination.shape,
   ...submissionSortFilters.shape
+});
+
+const trialist = z.object({
+  altRsn: rsn.nullable().default(null),
+  discordId: bigIntString,
+  displayName: z.string().trim().min(1).max(32),
+  mainRsn: rsn
+});
+
+export const trialBody = z.object({
+  actingDiscordId: bigIntString.optional(),
+  trialists: z.array(trialist).min(1).max(50)
 });
 
 export const memberListQuery = z.object({

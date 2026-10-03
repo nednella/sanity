@@ -4,6 +4,63 @@
  */
 
 export interface paths {
+    "/v1/members/trial": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": {
+                        actingDiscordId?: string;
+                        trialists: {
+                            /** @default null */
+                            altRsn?: string | null;
+                            discordId: string;
+                            displayName: string;
+                            mainRsn: string;
+                        }[];
+                    };
+                };
+            };
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            results: {
+                                discordId: string;
+                                displayName: string;
+                                memberId: string;
+                                /** @enum {string} */
+                                outcome: "retrialling" | "trialling";
+                                pointsCleared: number;
+                            }[];
+                        };
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/personal-bests/{id}/review": {
         parameters: {
             query?: never;

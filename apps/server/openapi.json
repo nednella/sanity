@@ -2500,6 +2500,120 @@
     }
   },
   "paths": {
+    "/v1/members/trial": {
+      "post": {
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "actingDiscordId": {
+                    "type": "string",
+                    "pattern": "^\\d+$"
+                  },
+                  "trialists": {
+                    "minItems": 1,
+                    "maxItems": 50,
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "altRsn": {
+                          "default": null,
+                          "nullable": true,
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 12
+                        },
+                        "discordId": {
+                          "type": "string",
+                          "pattern": "^\\d+$"
+                        },
+                        "displayName": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 32
+                        },
+                        "mainRsn": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 12
+                        }
+                      },
+                      "required": [
+                        "discordId",
+                        "displayName",
+                        "mainRsn"
+                      ]
+                    }
+                  }
+                },
+                "required": [
+                  "trialists"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "discordId": {
+                            "type": "string",
+                            "pattern": "^\\d+$"
+                          },
+                          "displayName": {
+                            "type": "string"
+                          },
+                          "memberId": {
+                            "type": "string",
+                            "pattern": "^\\d+$"
+                          },
+                          "outcome": {
+                            "type": "string",
+                            "enum": [
+                              "retrialling",
+                              "trialling"
+                            ]
+                          },
+                          "pointsCleared": {
+                            "type": "number"
+                          }
+                        },
+                        "required": [
+                          "discordId",
+                          "displayName",
+                          "memberId",
+                          "outcome",
+                          "pointsCleared"
+                        ],
+                        "additionalProperties": false
+                      }
+                    }
+                  },
+                  "required": [
+                    "results"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/v1/personal-bests/{id}/review": {
       "post": {
         "requestBody": {

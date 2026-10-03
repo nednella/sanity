@@ -25,6 +25,16 @@ const previousRsn = z.object({
   until: isoDate
 });
 
+const trialOutcome = z.object({
+  discordId: bigIntString,
+  displayName: z.string(),
+  memberId: bigIntString,
+  outcome: z.enum(["retrialling", "trialling"]),
+  pointsCleared: z.number()
+});
+
+export const trialOutcomes = z.object({ results: z.array(trialOutcome) });
+
 const membership = z.object({
   active: z.boolean(),
   joinedAt: isoDate.nullable(),
