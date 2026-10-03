@@ -64,22 +64,6 @@ export const membersRouter: FastifyPluginAsyncZod = async (app) => {
   });
 
   app.route({
-    method: "PATCH",
-    url: "/members/:id",
-    schema: {
-      params: memberParams,
-      body: updateMemberBody,
-      response: { 204: z.void(), 404: notFound }
-    },
-    handler: async (req, reply) => {
-      const edited = await editMemberProfile(req.params.id, req.body);
-      if (!edited) return reply.code(404).send({ message: "Member not found." });
-
-      return reply.code(204).send();
-    }
-  });
-
-  app.route({
     method: "GET",
     url: "/members/:id/diary",
     schema: {
@@ -116,6 +100,24 @@ export const membersRouter: FastifyPluginAsyncZod = async (app) => {
       const { limit, offset } = req.query;
       const { items, total } = await getSubmissions({ ...req.query, memberId: req.params.id });
       return { items, page: toPage({ limit, offset, total }) };
+    }
+  });
+};
+
+export const authProfileRouter: FastifyPluginAsyncZod = async (app) => {
+  app.route({
+    method: "PATCH",
+    url: "/members/:id",
+    schema: {
+      params: memberParams,
+      body: updateMemberBody,
+      response: { 204: z.void(), 404: notFound }
+    },
+    handler: async (req, reply) => {
+      const edited = await editMemberProfile(req.params.id, req.body);
+      if (!edited) return reply.code(404).send({ message: "Member not found." });
+
+      return reply.code(204).send();
     }
   });
 };

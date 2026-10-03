@@ -42,8 +42,10 @@ export const personalBestsRouter: FastifyPluginAsyncZod = async (app) => {
     },
     handler: async (req) => getRecords(req.query)
   });
+};
 
-  // Who submits and who reviews arrive in the body until there is a session to read them from.
+// Who submits and who reviews arrive in the body until there is a session to read them from.
+export const authPersonalBestsRouter: FastifyPluginAsyncZod = async (app) => {
   app.route({
     method: "POST",
     url: "/personal-bests",

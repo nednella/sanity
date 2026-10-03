@@ -23,7 +23,9 @@ export const submissionsRouter: FastifyPluginAsyncZod = async (app) => {
       return { items, page: toPage({ limit, offset, total }) };
     }
   });
+};
 
+export const authSubmissionsRouter: FastifyPluginAsyncZod = async (app) => {
   app.route({
     method: "POST",
     url: "/submissions",
