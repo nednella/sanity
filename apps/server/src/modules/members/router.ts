@@ -16,12 +16,14 @@ import {
   memberParams,
   memberPersonalBestsQuery,
   memberSubmissionsQuery,
-  trialBody
+  trialBody,
+  updateMemberBody
 } from "./request";
 import { commandOutcomes, member, memberProfile, rankProposals, trialOutcomes } from "./response";
 import { bulkRankCheck } from "./service/bulk-rank-check";
 import { changeMemberRanks } from "./service/change-member-ranks";
 import { delayDemotions } from "./service/delay-demotions";
+import { editMemberProfile } from "./service/edit-member-profile";
 import { getMemberProfile } from "./service/get-member-profile";
 import { getMembers } from "./service/get-members";
 import { passTrial } from "./service/pass-trial";
@@ -58,6 +60,22 @@ export const membersRouter: FastifyPluginAsyncZod = async (app) => {
     handler: async (req, res) => {
       const profile = await getMemberProfile(req.params.id);
       return profile ?? res.code(404).send({ message: "member not found" });
+    }
+  });
+
+  app.route({
+    method: "PATCH",
+    url: "/members/:id",
+    schema: {
+      params: memberParams,
+      body: updateMemberBody,
+      response: { 204: z.void(), 404: notFound }
+    },
+    handler: async (req, reply) => {
+      const edited = await editMemberProfile(req.params.id, req.body);
+      if (!edited) return reply.code(404).send({ message: "Member not found." });
+
+      return reply.code(204).send();
     }
   });
 

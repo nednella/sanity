@@ -72,5 +72,15 @@ export const memberListQuery = z.object({
   ...memberSortFilters.shape
 });
 
+export const updateMemberBody = z
+  .object({
+    actingMemberId: bigIntString.optional(),
+    altRsn: rsn.nullable(),
+    birthday: z.iso.date().nullable(),
+    mainRsn: rsn,
+    nationality: z.string().trim().length(2).uppercase()
+  })
+  .partial();
+
 export type MemberListQuery = Partial<z.output<typeof memberListQuery>>;
 export type MemberSort = z.output<typeof memberSort>;
