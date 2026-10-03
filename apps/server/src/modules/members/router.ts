@@ -9,10 +9,18 @@ import { submission } from "@/modules/submissions/response";
 import { getSubmissions } from "@/modules/submissions/service/get-submissions";
 import { notFound, paginated, toPage } from "@/schema/common";
 
-import { memberListQuery, memberParams, memberPersonalBestsQuery, memberSubmissionsQuery, trialBody } from "./request";
-import { member, memberProfile, trialOutcomes } from "./response";
+import {
+  memberCommandBody,
+  memberListQuery,
+  memberParams,
+  memberPersonalBestsQuery,
+  memberSubmissionsQuery,
+  trialBody
+} from "./request";
+import { commandOutcomes, member, memberProfile, trialOutcomes } from "./response";
 import { getMemberProfile } from "./service/get-member-profile";
 import { getMembers } from "./service/get-members";
+import { passTrial } from "./service/pass-trial";
 import { trialMembers } from "./service/trial-members";
 
 export const membersRouter: FastifyPluginAsyncZod = async (app) => {
@@ -88,6 +96,13 @@ export const membersRouter: FastifyPluginAsyncZod = async (app) => {
 };
 
 export const adminMembersRouter: FastifyPluginAsyncZod = async (app) => {
+  app.route({
+    method: "POST",
+    url: "/members/pass-trial",
+    schema: { body: memberCommandBody, response: { 200: commandOutcomes } },
+    handler: async (req) => ({ results: await passTrial(req.body) })
+  });
+
   app.route({
     method: "POST",
     url: "/members/trial",

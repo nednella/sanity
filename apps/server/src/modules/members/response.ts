@@ -25,6 +25,19 @@ const previousRsn = z.object({
   until: isoDate
 });
 
+const rankName = z.object({ id: z.number(), name: z.string() });
+
+const commandOutcome = z.object({
+  discordId: bigIntString,
+  displayName: z.string().nullable(),
+  memberId: bigIntString.nullable(),
+  outcome: z.string(),
+  rank: rankName.optional(),
+  until: z.string().optional()
+});
+
+export const commandOutcomes = z.object({ results: z.array(commandOutcome) });
+
 const trialOutcome = z.object({
   discordId: bigIntString,
   displayName: z.string(),

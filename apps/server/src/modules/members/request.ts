@@ -46,6 +46,12 @@ export const memberSubmissionsQuery = z.object({
   ...submissionSortFilters.shape
 });
 
+export const memberCommandBody = z.object({
+  actingDiscordId: bigIntString.optional(),
+  taggedDiscordIds: z.array(bigIntString).min(1).max(50),
+  note: z.string().trim().max(500).optional()
+});
+
 const trialist = z.object({
   altRsn: rsn.nullable().default(null),
   discordId: bigIntString,
