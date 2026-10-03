@@ -21,6 +21,7 @@ import { commandOutcomes, member, memberProfile, trialOutcomes } from "./respons
 import { getMemberProfile } from "./service/get-member-profile";
 import { getMembers } from "./service/get-members";
 import { passTrial } from "./service/pass-trial";
+import { retireMembers } from "./service/retire-members";
 import { trialMembers } from "./service/trial-members";
 
 export const membersRouter: FastifyPluginAsyncZod = async (app) => {
@@ -101,6 +102,13 @@ export const adminMembersRouter: FastifyPluginAsyncZod = async (app) => {
     url: "/members/pass-trial",
     schema: { body: memberCommandBody, response: { 200: commandOutcomes } },
     handler: async (req) => ({ results: await passTrial(req.body) })
+  });
+
+  app.route({
+    method: "POST",
+    url: "/members/retire",
+    schema: { body: memberCommandBody, response: { 200: commandOutcomes } },
+    handler: async (req) => ({ results: await retireMembers(req.body) })
   });
 
   app.route({

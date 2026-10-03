@@ -2604,6 +2604,110 @@
         }
       }
     },
+    "/v1/members/retire": {
+      "post": {
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "actingDiscordId": {
+                    "type": "string",
+                    "pattern": "^\\d+$"
+                  },
+                  "taggedDiscordIds": {
+                    "minItems": 1,
+                    "maxItems": 50,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "pattern": "^\\d+$"
+                    }
+                  },
+                  "note": {
+                    "type": "string",
+                    "maxLength": 500
+                  }
+                },
+                "required": [
+                  "taggedDiscordIds"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "discordId": {
+                            "type": "string",
+                            "pattern": "^\\d+$"
+                          },
+                          "displayName": {
+                            "nullable": true,
+                            "type": "string"
+                          },
+                          "memberId": {
+                            "nullable": true,
+                            "type": "string",
+                            "pattern": "^\\d+$"
+                          },
+                          "outcome": {
+                            "type": "string"
+                          },
+                          "rank": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "number"
+                              },
+                              "name": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "name"
+                            ],
+                            "additionalProperties": false
+                          },
+                          "until": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "discordId",
+                          "displayName",
+                          "memberId",
+                          "outcome"
+                        ],
+                        "additionalProperties": false
+                      }
+                    }
+                  },
+                  "required": [
+                    "results"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/v1/members/trial": {
       "post": {
         "requestBody": {
