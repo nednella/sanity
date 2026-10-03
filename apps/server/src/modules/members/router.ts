@@ -21,6 +21,7 @@ import {
 import { commandOutcomes, member, memberProfile, rankProposals, trialOutcomes } from "./response";
 import { bulkRankCheck } from "./service/bulk-rank-check";
 import { changeMemberRanks } from "./service/change-member-ranks";
+import { delayDemotions } from "./service/delay-demotions";
 import { getMemberProfile } from "./service/get-member-profile";
 import { getMembers } from "./service/get-members";
 import { passTrial } from "./service/pass-trial";
@@ -107,6 +108,13 @@ export const adminMembersRouter: FastifyPluginAsyncZod = async (app) => {
     url: "/members/bulk-rank-check",
     schema: { response: { 200: rankProposals } },
     handler: () => bulkRankCheck()
+  });
+
+  app.route({
+    method: "POST",
+    url: "/members/delay-demotion",
+    schema: { body: memberCommandBody, response: { 200: commandOutcomes } },
+    handler: async (req) => ({ results: await delayDemotions(req.body) })
   });
 
   app.route({

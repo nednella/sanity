@@ -8,6 +8,7 @@ export const bulkRankCheck = async () => {
   const ranks = await listRanks();
   const standings = await listMemberStandings();
   const rankById = new Map(ranks.map((rank) => [rank.id, rank]));
+  const now = new Date();
 
   const toRank = (id: number) => {
     const rank = rankById.get(id);
@@ -21,6 +22,7 @@ export const bulkRankCheck = async () => {
     if (!earned || earned.id === standing.rankId) return [];
 
     const isDemotion = earned.id < standing.rankId;
+    if (isDemotion && standing.delayedUntil && standing.delayedUntil > now) return [];
 
     return [
       {

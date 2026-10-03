@@ -52,6 +52,13 @@ export const members = pgTable(
   (table) => [index().on(table.rankId), index().on(table.clanPoints.desc()), index().on(table.displayName)]
 );
 
+export const memberRankDelays = pgTable("member_rank_delays", {
+  memberId: bigint({ mode: "bigint" })
+    .primaryKey()
+    .references(() => members.id, { onDelete: "cascade" }),
+  until: timestamp({ withTimezone: true }).notNull()
+});
+
 export const membersDiscordAccounts = pgTable("members_discord_accounts", {
   memberId: bigint({ mode: "bigint" })
     .primaryKey()
