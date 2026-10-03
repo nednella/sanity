@@ -1,15 +1,13 @@
-import { QUIT_RANK_ID, RETIRED_RANK_ID, TRIALIST_RANK_ID } from "@/modules/ranks/constants";
+import { TRIALIST_RANK_ID } from "@/modules/ranks/constants";
 import { toRankIconUrl } from "@/modules/ranks/mapper";
 import type { RankRow } from "@/modules/ranks/repository/list-ranks";
+import { RANK_IDS_OFF_LADDER, type Standing, hasMetRequirements, toActiveRanks } from "@/modules/ranks/rules";
 import type { DiaryProgressRow } from "@/modules/speedrun-diary/repository/list-diary-progress";
 import type { SnapshotRows } from "@/modules/wom/repository/find-latest-snapshot";
 import type { NameChange } from "@/modules/wom/repository/list-name-changes";
 import { sortActivities, sortBosses, sortComputed, sortSkills } from "@/utils/metrics";
 
 import type { MemberRow } from "./repository/shared/select-members";
-
-// QUIT, RETIRED and TRIALIST ranks change by hand, so they have no next rank to work toward.
-const RANK_IDS_WITHOUT_PROGRESSION = new Set([QUIT_RANK_ID, RETIRED_RANK_ID, TRIALIST_RANK_ID]);
 
 /**
  * Why a member has no next rank, since the panel says something different for each: a trialist earns
@@ -79,25 +77,12 @@ const toNextRank = (rank: RankRow) => ({
   }
 });
 
-type Standing = {
-  clanPoints: number;
-  diaryPoints: number;
-  masterDiaries: number;
-};
-
 const requiresDiaries = (rank: RankRow) => rank.diaryPointRequirement > 0 || rank.masterDiaryRequirement > 0;
-
-// A diary requirement is met by either diary points or master diaries.
-const hasMetRequirements = (rank: RankRow, standing: Standing) =>
-  standing.clanPoints >= rank.clanPointRequirement &&
-  (standing.diaryPoints >= rank.diaryPointRequirement || standing.masterDiaries >= rank.masterDiaryRequirement);
 
 // Promotion is manual, so a member can already qualify for a rank several places above their own. Next ranks are
 // counted from whichever is higher: the rank they hold or the best rank they qualify for.
 const toProgression = (currentRankId: number, ranks: RankRow[], standing: Standing) => {
-  const ladder = RANK_IDS_WITHOUT_PROGRESSION.has(currentRankId)
-    ? []
-    : ranks.filter((rank) => !RANK_IDS_WITHOUT_PROGRESSION.has(rank.id));
+  const ladder = RANK_IDS_OFF_LADDER.has(currentRankId) ? [] : toActiveRanks(ranks);
 
   const eligible = ladder.findLast((rank) => hasMetRequirements(rank, standing));
   const eligibleRank = eligible && eligible.id > currentRankId ? eligible : undefined;
