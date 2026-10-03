@@ -10,6 +10,7 @@ import { getSubmissions } from "@/modules/submissions/service/get-submissions";
 import { notFound, paginated, toPage } from "@/schema/common";
 
 import {
+  changeRankBody,
   memberCommandBody,
   memberListQuery,
   memberParams,
@@ -18,6 +19,7 @@ import {
   trialBody
 } from "./request";
 import { commandOutcomes, member, memberProfile, trialOutcomes } from "./response";
+import { changeMemberRanks } from "./service/change-member-ranks";
 import { getMemberProfile } from "./service/get-member-profile";
 import { getMembers } from "./service/get-members";
 import { passTrial } from "./service/pass-trial";
@@ -111,6 +113,13 @@ export const adminMembersRouter: FastifyPluginAsyncZod = async (app) => {
     url: "/members/quit",
     schema: { body: memberCommandBody, response: { 200: commandOutcomes } },
     handler: async (req) => ({ results: await quitMembers(req.body) })
+  });
+
+  app.route({
+    method: "POST",
+    url: "/members/rank",
+    schema: { body: changeRankBody, response: { 200: commandOutcomes } },
+    handler: async (req) => ({ results: await changeMemberRanks(req.body) })
   });
 
   app.route({

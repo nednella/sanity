@@ -114,6 +114,62 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/members/rank": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": {
+                        actingDiscordId?: string;
+                        taggedDiscordIds: string[];
+                        note?: string;
+                        rankId: number;
+                    };
+                };
+            };
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            results: {
+                                discordId: string;
+                                displayName: string | null;
+                                memberId: string | null;
+                                outcome: string;
+                                rank?: {
+                                    id: number;
+                                    name: string;
+                                };
+                                until?: string;
+                            }[];
+                        };
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/members/retire": {
         parameters: {
             query?: never;

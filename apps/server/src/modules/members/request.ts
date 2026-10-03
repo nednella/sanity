@@ -59,6 +59,8 @@ const trialist = z.object({
   mainRsn: rsn
 });
 
+export const changeRankBody = memberCommandBody.extend({ rankId: z.number().int() });
+
 export const trialBody = z.object({
   actingDiscordId: bigIntString.optional(),
   trialists: z.array(trialist).min(1).max(50)
