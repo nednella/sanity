@@ -2,7 +2,7 @@ import { z } from "zod";
 
 import { bigIntString, isoDate } from "@/schema/codecs";
 
-const rank = z
+export const rankSummary = z
   .object({
     id: z.number(),
     name: z.string(),
@@ -48,11 +48,29 @@ const trialOutcome = z.object({
 
 export const trialOutcomes = z.object({ results: z.array(trialOutcome) });
 
+export const rankProposal = z
+  .object({
+    memberId: bigIntString,
+    discordId: bigIntString,
+    displayName: z.string(),
+    direction: z.enum(["demotion", "promotion"]),
+    from: rankSummary,
+    to: rankSummary,
+    standing: z.object({
+      clanPoints: z.number(),
+      diaryPoints: z.number(),
+      masterDiaries: z.number()
+    })
+  })
+  .register(z.globalRegistry, { id: "RankProposal" });
+
+export const rankProposals = z.object({ checked: z.number(), proposals: z.array(rankProposal) });
+
 const membership = z.object({
   active: z.boolean(),
   joinedAt: isoDate.nullable(),
   leftAt: isoDate.nullable(),
-  rank,
+  rank: rankSummary,
   points: z.number()
 });
 
@@ -85,7 +103,7 @@ const womPlayer = z.object({
   syncedAt: isoDate
 });
 
-const nextRank = rank.extend({
+const nextRank = rankSummary.extend({
   requirements: z.object({
     clanPoints: z.number(),
     diaryPoints: z.number(),
@@ -99,7 +117,7 @@ const progressionStatus = z
 
 const progression = z.object({
   status: progressionStatus,
-  eligibleRank: rank.nullable(),
+  eligibleRank: rankSummary.nullable(),
   nextRank: z.object({
     points: nextRank.nullable(),
     diary: nextRank.nullable()

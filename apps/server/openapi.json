@@ -496,6 +496,63 @@
           "iconUrl"
         ]
       },
+      "RankProposalInput": {
+        "type": "object",
+        "properties": {
+          "memberId": {
+            "type": "string",
+            "pattern": "^\\d+$"
+          },
+          "discordId": {
+            "type": "string",
+            "pattern": "^\\d+$"
+          },
+          "displayName": {
+            "type": "string"
+          },
+          "direction": {
+            "type": "string",
+            "enum": [
+              "demotion",
+              "promotion"
+            ]
+          },
+          "from": {
+            "$ref": "#/components/schemas/RankSummaryInput"
+          },
+          "to": {
+            "$ref": "#/components/schemas/RankSummaryInput"
+          },
+          "standing": {
+            "type": "object",
+            "properties": {
+              "clanPoints": {
+                "type": "number"
+              },
+              "diaryPoints": {
+                "type": "number"
+              },
+              "masterDiaries": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "clanPoints",
+              "diaryPoints",
+              "masterDiaries"
+            ]
+          }
+        },
+        "required": [
+          "memberId",
+          "discordId",
+          "displayName",
+          "direction",
+          "from",
+          "to",
+          "standing"
+        ]
+      },
       "ProgressionStatusInput": {
         "type": "string",
         "enum": [
@@ -1740,6 +1797,65 @@
         ],
         "additionalProperties": false
       },
+      "RankProposal": {
+        "type": "object",
+        "properties": {
+          "memberId": {
+            "type": "string",
+            "pattern": "^\\d+$"
+          },
+          "discordId": {
+            "type": "string",
+            "pattern": "^\\d+$"
+          },
+          "displayName": {
+            "type": "string"
+          },
+          "direction": {
+            "type": "string",
+            "enum": [
+              "demotion",
+              "promotion"
+            ]
+          },
+          "from": {
+            "$ref": "#/components/schemas/RankSummary"
+          },
+          "to": {
+            "$ref": "#/components/schemas/RankSummary"
+          },
+          "standing": {
+            "type": "object",
+            "properties": {
+              "clanPoints": {
+                "type": "number"
+              },
+              "diaryPoints": {
+                "type": "number"
+              },
+              "masterDiaries": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "clanPoints",
+              "diaryPoints",
+              "masterDiaries"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "memberId",
+          "discordId",
+          "displayName",
+          "direction",
+          "from",
+          "to",
+          "standing"
+        ],
+        "additionalProperties": false
+      },
       "ProgressionStatus": {
         "type": "string",
         "enum": [
@@ -2500,6 +2616,38 @@
     }
   },
   "paths": {
+    "/v1/members/bulk-rank-check": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "checked": {
+                      "type": "number"
+                    },
+                    "proposals": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/RankProposal"
+                      }
+                    }
+                  },
+                  "required": [
+                    "checked",
+                    "proposals"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/v1/members/pass-trial": {
       "post": {
         "requestBody": {

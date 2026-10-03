@@ -16,7 +16,8 @@
     "catalogue:bosses": "tsx --env-file-if-exists=.env scripts/catalogue/seed-bosses.ts",
     "catalogue:items": "tsx --env-file-if-exists=.env scripts/catalogue/seed-items.ts",
     "catalogue:uniques": "tsx --env-file-if-exists=.env scripts/catalogue/seed-uniques.ts",
-    "openapi": "tsx --env-file-if-exists=.env scripts/openapi.ts"
+    "openapi": "tsx --env-file-if-exists=.env scripts/openapi.ts",
+    "rank:check": "tsx --env-file-if-exists=.env scripts/bulk-rank-check.ts"
   },
   "dependencies": {
     "@fastify/cors": "^11.3.0",

@@ -4,6 +4,44 @@
  */
 
 export interface paths {
+    "/v1/members/bulk-rank-check": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            checked: number;
+                            proposals: components["schemas"]["RankProposal"][];
+                        };
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/members/pass-trial": {
         parameters: {
             query?: never;
@@ -1253,6 +1291,20 @@ export interface components {
             name: string;
             iconUrl: string | null;
         };
+        RankProposalInput: {
+            memberId: string;
+            discordId: string;
+            displayName: string;
+            /** @enum {string} */
+            direction: "demotion" | "promotion";
+            from: components["schemas"]["RankSummaryInput"];
+            to: components["schemas"]["RankSummaryInput"];
+            standing: {
+                clanPoints: number;
+                diaryPoints: number;
+                masterDiaries: number;
+            };
+        };
         /** @enum {string} */
         ProgressionStatusInput: "climbing" | "maxed" | "trial" | "manual";
         ComputedInput: {
@@ -1541,6 +1593,20 @@ export interface components {
             id: number;
             name: string;
             iconUrl: string | null;
+        };
+        RankProposal: {
+            memberId: string;
+            discordId: string;
+            displayName: string;
+            /** @enum {string} */
+            direction: "demotion" | "promotion";
+            from: components["schemas"]["RankSummary"];
+            to: components["schemas"]["RankSummary"];
+            standing: {
+                clanPoints: number;
+                diaryPoints: number;
+                masterDiaries: number;
+            };
         };
         /** @enum {string} */
         ProgressionStatus: "climbing" | "maxed" | "trial" | "manual";

@@ -18,7 +18,8 @@ import {
   memberSubmissionsQuery,
   trialBody
 } from "./request";
-import { commandOutcomes, member, memberProfile, trialOutcomes } from "./response";
+import { commandOutcomes, member, memberProfile, rankProposals, trialOutcomes } from "./response";
+import { bulkRankCheck } from "./service/bulk-rank-check";
 import { changeMemberRanks } from "./service/change-member-ranks";
 import { getMemberProfile } from "./service/get-member-profile";
 import { getMembers } from "./service/get-members";
@@ -101,6 +102,13 @@ export const membersRouter: FastifyPluginAsyncZod = async (app) => {
 };
 
 export const adminMembersRouter: FastifyPluginAsyncZod = async (app) => {
+  app.route({
+    method: "POST",
+    url: "/members/bulk-rank-check",
+    schema: { response: { 200: rankProposals } },
+    handler: () => bulkRankCheck()
+  });
+
   app.route({
     method: "POST",
     url: "/members/pass-trial",
