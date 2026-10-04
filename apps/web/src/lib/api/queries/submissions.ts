@@ -1,4 +1,4 @@
-import { api } from "@/lib/api/openapi-client";
+import { api } from "@/lib/api/client";
 import { type SubmissionsSearch, toDropsQueryParams, toPersonalBestsQueryParams } from "@/lib/submissions/search";
 
 export const submissionsOptions = (search: SubmissionsSearch) =>

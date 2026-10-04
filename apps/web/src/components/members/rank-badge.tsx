@@ -1,4 +1,4 @@
-import type { RankSummary } from "@/lib/api/types";
+import type { RankSummary } from "@sanity/api";
 
 type RankBadgeProps = {
   rank: RankSummary;

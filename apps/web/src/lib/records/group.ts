@@ -1,4 +1,4 @@
-import type { RankedPersonalBest } from "@/lib/api/types";
+import type { RankedPersonalBest } from "@sanity/api";
 
 export type RecordWithScale = {
   records: RankedPersonalBest[];

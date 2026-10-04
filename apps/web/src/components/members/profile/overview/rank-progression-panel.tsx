@@ -1,9 +1,10 @@
 import { Fragment } from "react";
 
+import type { MemberProfile } from "@sanity/api";
+
 import { ProgressBar } from "@/components/members/profile/overview/progress-bar";
 import { RankStanding } from "@/components/members/profile/overview/rank-standing";
 import { RankBadge } from "@/components/members/rank-badge";
-import type { MemberProfile } from "@/lib/api/types";
 import { Separator } from "@/lib/ui/separator";
 import { Overline } from "@/lib/ui/typography/overline";
 import { Small } from "@/lib/ui/typography/small";

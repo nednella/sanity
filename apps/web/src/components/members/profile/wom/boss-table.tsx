@@ -1,9 +1,10 @@
 import { createColumnHelper } from "@tanstack/react-table";
 
+import type { Snapshot } from "@sanity/api";
+
 import { MetricIcon } from "@/components/members/profile/overview/metric-icon";
 import { DataTable } from "@/components/table/data-table";
 import type { DataTableFeatures } from "@/components/table/table-features";
-import type { Snapshot } from "@/lib/api/types";
 import { metricName } from "@/lib/metrics";
 import { bossIconUrl, statIconUrl } from "@/utils/icons";
 import { formatNumber } from "@/utils/numbers";

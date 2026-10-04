@@ -1,7 +1,8 @@
 import { ChevronDown } from "lucide-react";
 import { Fragment, type ReactNode } from "react";
 
-import type { MemberProfile } from "@/lib/api/types";
+import type { MemberProfile } from "@sanity/api";
+
 import { Dropdown } from "@/lib/ui/dropdown";
 import { RelativeDate } from "@/lib/ui/relative-date";
 import { Muted } from "@/lib/ui/typography/muted";

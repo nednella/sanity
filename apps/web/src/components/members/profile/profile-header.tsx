@@ -1,8 +1,9 @@
+import type { MemberProfile } from "@sanity/api";
+
 import { AvatarWithNationality } from "@/components/members/profile/avatar-with-nationality";
 import { ProfileDetails } from "@/components/members/profile/profile-details";
 import { WomSyncButton } from "@/components/members/profile/wom-sync-button";
 import { RankBadge } from "@/components/members/rank-badge";
-import type { MemberProfile } from "@/lib/api/types";
 import { H1 } from "@/lib/ui/typography/h1";
 import { Muted } from "@/lib/ui/typography/muted";
 

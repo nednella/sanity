@@ -1,4 +1,4 @@
-import type { components } from "@sanity/api/v1";
+import type { components } from "./v1";
 
 type Schemas = components["schemas"];
 

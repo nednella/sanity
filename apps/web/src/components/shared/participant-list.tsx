@@ -1,7 +1,8 @@
 import { Link } from "@tanstack/react-router";
 import { Fragment } from "react";
 
-import type { MemberRef } from "@/lib/api/types";
+import type { MemberRef } from "@sanity/api";
+
 import { DASH } from "@/utils/dash";
 import { formatNumber } from "@/utils/numbers";
 

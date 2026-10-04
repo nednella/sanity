@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 
-import type { MemberProfile } from "@/lib/api/types";
+import type { MemberProfile } from "@sanity/api";
+
 import { DIARY_POINTS_MAX } from "@/lib/members/diary";
 import { Tooltip } from "@/lib/ui/tooltip";
 import { statIconUrl } from "@/utils/icons";

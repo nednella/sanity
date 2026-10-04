@@ -1,12 +1,13 @@
 import { createColumnHelper } from "@tanstack/react-table";
 import type { ReactNode } from "react";
 
+import type { Page, Submission } from "@sanity/api";
+
 import { MetricIcon } from "@/components/members/profile/overview/metric-icon";
 import { ParticipantList } from "@/components/shared/participant-list";
 import { ReviewStatusBadge } from "@/components/submissions/review-status-badge";
 import { DataTable } from "@/components/table/data-table";
 import type { DataTableFeatures } from "@/components/table/table-features";
-import type { Page, Submission } from "@/lib/api/types";
 import { useMediaStore } from "@/lib/media/media.store";
 import type { SubmissionsSearch } from "@/lib/submissions/search";
 import { useTableSearch } from "@/lib/table/use-table-search";

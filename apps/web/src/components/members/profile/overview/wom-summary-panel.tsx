@@ -1,9 +1,10 @@
 import { CalendarDays, Hourglass, Swords } from "lucide-react";
 import type { ReactNode } from "react";
 
+import type { Boss, MemberProfile } from "@sanity/api";
+
 import { MetricIcon } from "@/components/members/profile/overview/metric-icon";
 import { WomNoSync } from "@/components/members/profile/wom-no-sync";
-import type { Boss, MemberProfile } from "@/lib/api/types";
 import { womEmptyMessage } from "@/lib/members/wom";
 import { metricName } from "@/lib/metrics";
 import { RelativeDate } from "@/lib/ui/relative-date";

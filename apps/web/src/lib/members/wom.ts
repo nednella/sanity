@@ -1,4 +1,4 @@
-import type { MemberProfile } from "@/lib/api/types";
+import type { MemberProfile } from "@sanity/api";
 
 /**
  * Why a member has no Wise Old Man data.

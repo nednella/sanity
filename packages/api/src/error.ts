@@ -9,8 +9,8 @@ const parseBody = async (response: Response) => {
   }
 };
 
-// Every failure a component sees is an Error, so it can render a stack without first working out
-// what it was handed. Status is what a component branches on: 404 means "say it doesn't exist".
+// Every failure a caller sees is an Error, so it can be handled without first working out what it
+// was handed. Status is what a caller branches on: 404 means "say it doesn't exist".
 class ApiError extends Error {
   static async from(response: Response) {
     return new ApiError(response, await parseBody(response));

@@ -1,6 +1,7 @@
 import type { SearchSchemaInput } from "@tanstack/react-router";
 
-import type { PersonalBestSort, SubmissionSort } from "@/lib/api/types";
+import type { PersonalBestSort, SubmissionSort } from "@sanity/api";
+
 import { toLimit, toOffset, toOrder, toPositiveInteger, toSort } from "@/lib/table/search";
 
 // The generated unions are the source of truth; these lists are what validate a sort arriving in the

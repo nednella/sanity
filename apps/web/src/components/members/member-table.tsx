@@ -1,12 +1,13 @@
 import { Link, useNavigate } from "@tanstack/react-router";
 import { createColumnHelper } from "@tanstack/react-table";
 
+import type { Member, Page } from "@sanity/api";
+
 import { MemberStatusFilter } from "@/components/members/member-status-filter";
 import { NationalityFlag } from "@/components/members/nationality-flag";
 import { RankBadge } from "@/components/members/rank-badge";
 import { DataTable } from "@/components/table/data-table";
 import type { DataTableFeatures } from "@/components/table/table-features";
-import type { Member, Page } from "@/lib/api/types";
 import type { MembersSearch } from "@/lib/members/search";
 import { useTableSearch } from "@/lib/table/use-table-search";
 import { DASH } from "@/utils/dash";

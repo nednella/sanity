@@ -2,9 +2,10 @@ import { Link } from "@tanstack/react-router";
 import { ChevronRight } from "lucide-react";
 import { createContext, useContext, useMemo, useState } from "react";
 
+import type { RankedPersonalBest } from "@sanity/api";
+
 import { Medal } from "@/components/records/medal";
 import { ParticipantList } from "@/components/shared/participant-list";
-import type { RankedPersonalBest } from "@/lib/api/types";
 import { useMediaStore } from "@/lib/media/media.store";
 import { Button } from "@/lib/ui/button";
 import { RelativeDate } from "@/lib/ui/relative-date";

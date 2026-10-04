@@ -1,6 +1,7 @@
 import { Sparkles } from "lucide-react";
 
-import type { RankSummary } from "@/lib/api/types";
+import type { RankSummary } from "@sanity/api";
+
 import { H3 } from "@/lib/ui/typography/h3";
 import { Overline } from "@/lib/ui/typography/overline";
 

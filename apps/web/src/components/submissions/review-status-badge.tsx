@@ -1,4 +1,5 @@
-import type { ReviewStatus } from "@/lib/api/types";
+import type { ReviewStatus } from "@sanity/api";
+
 import { Badge } from "@/lib/ui/badge";
 
 const labels: Record<ReviewStatus, string> = {

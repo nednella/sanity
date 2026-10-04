@@ -1,6 +1,7 @@
+import type { MemberDiary } from "@sanity/api";
+
 import { MetricIcon } from "@/components/members/profile/overview/metric-icon";
 import { PanelEmptyMessage } from "@/components/panel";
-import type { MemberDiary } from "@/lib/api/types";
 import { useMediaStore } from "@/lib/media/media.store";
 import { Tooltip } from "@/lib/ui/tooltip";
 import { DASH } from "@/utils/dash";

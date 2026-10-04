@@ -1,4 +1,4 @@
-import { api } from "@/lib/api/openapi-client";
+import { api } from "@/lib/api/client";
 import { type MembersSearch, toMembersQueryParams } from "@/lib/members/search";
 import { type SubmissionsSearch, toDropsQueryParams, toPersonalBestsQueryParams } from "@/lib/submissions/search";
 
