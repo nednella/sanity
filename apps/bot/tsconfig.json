@@ -1,0 +1,17 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "lib": ["ESNext"],
+    "types": ["node"],
+
+    /* Bundler mode */
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+
+    "paths": {
+      "@/*": ["./src/*"],
+      "@config": ["./config.ts"]
+    }
+  },
+  "include": ["src", "config.ts"]
+}
