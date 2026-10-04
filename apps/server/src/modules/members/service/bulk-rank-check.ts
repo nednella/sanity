@@ -1,3 +1,5 @@
+import { db } from "@db/index";
+
 import { toRankIconUrl } from "@/modules/ranks/mapper";
 import { listRanks } from "@/modules/ranks/repository/list-ranks";
 import { RANK_IDS_OFF_LADDER, toEarnedRank } from "@/modules/ranks/rules";
@@ -6,7 +8,7 @@ import { listMemberStandings } from "../repository/list-member-standings";
 
 export const bulkRankCheck = async () => {
   const ranks = await listRanks();
-  const standings = await listMemberStandings();
+  const standings = await db.transaction((tx) => listMemberStandings(tx));
   const rankById = new Map(ranks.map((rank) => [rank.id, rank]));
   const now = new Date();
 

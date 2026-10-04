@@ -1,16 +1,17 @@
-import { eq, sql } from "drizzle-orm";
+import { and, eq, inArray, sql } from "drizzle-orm";
 
-import { db } from "@db/index";
+import type { Transaction } from "@db/index";
 import { memberRankDelays, members, membersDiscordAccounts } from "@db/schema";
 
 import { diaryProgressCte } from "@/modules/speedrun-diary/repository/diary-progress-cte";
 
-export const listMemberStandings = () => {
-  const { bestTimes, diaryProgress, reachedTiers } = diaryProgressCte();
+export const listMemberStandings = (tx: Transaction, memberIds?: bigint[]) => {
+  const { bestTimes, diaryProgress, reachedTiers } = diaryProgressCte(memberIds);
 
-  return db
+  return tx
     .with(bestTimes, reachedTiers, diaryProgress)
     .select({
+      claimedDiaryTierId: members.claimedDiaryTierId,
       clanPoints: members.clanPoints,
       diaryPoints: sql<number>`coalesce(${diaryProgress.diaryPoints}, 0)`.mapWith(Number),
       discordId: membersDiscordAccounts.discordId,
@@ -24,5 +25,5 @@ export const listMemberStandings = () => {
     .innerJoin(membersDiscordAccounts, eq(membersDiscordAccounts.memberId, members.id))
     .leftJoin(diaryProgress, eq(diaryProgress.memberId, members.id))
     .leftJoin(memberRankDelays, eq(memberRankDelays.memberId, members.id))
-    .where(eq(members.isActive, true));
+    .where(and(eq(members.isActive, true), memberIds && inArray(members.id, memberIds)));
 };
