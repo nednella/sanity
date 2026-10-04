@@ -8,6 +8,7 @@
     "start": "tsx --env-file-if-exists=.env src/index.ts",
     "typecheck": "tsc --noEmit",
     "db:generate": "drizzle-kit generate",
+    "db:bootstrap": "pnpm db:migrate && pnpm catalogue:bosses && pnpm db:port && pnpm catalogue:items && pnpm catalogue:uniques",
     "db:migrate": "drizzle-kit migrate",
     "db:studio": "drizzle-kit studio",
     "db:port": "tsx --env-file-if-exists=.env scripts/port/index.ts",
