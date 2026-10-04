@@ -30,6 +30,9 @@ One member has the free text 'Chile' where a country code belongs.
 */
 const nationalityFixes: Record<string, string> = { Chile: "CL" };
 
+// The old bot never mapped retired members to an in-game rank, so the mapping table has no row for it.
+const inGameNameFixes: Record<string, string> = { RETIRED: "Defiler" };
+
 export const readRanks = async () => {
   const mappings = await read<{ osrsName: string | null; discordRankId: number | null }>("osrsRankMapping", "id");
   const inGameNames = new Map(mappings.map((row) => [row.discordRankId, row.osrsName]));
@@ -39,7 +42,7 @@ export const readRanks = async () => {
     id: rank.id,
     // Every rank is upper case except Mythic.
     name: rank.name.toUpperCase(),
-    inGameName: inGameNames.get(rank.id) ?? null,
+    inGameName: inGameNames.get(rank.id) ?? inGameNameFixes[rank.name.toUpperCase()] ?? null,
     discordRoleId: rank.discordRoleId === null ? null : BigInt(rank.discordRoleId),
     clanPointRequirement: rank.pointRequirement ?? 0,
     diaryPointRequirement: rank.diaryPointRequirement ?? 0,
