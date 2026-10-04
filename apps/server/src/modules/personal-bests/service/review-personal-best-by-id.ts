@@ -2,14 +2,11 @@ import { db } from "@db/index";
 
 import { recordAuditEntry } from "@/modules/audit/repository/record-audit-entry";
 import { claimEarnedDiaryTiers } from "@/modules/members/service/shared/claim-earned-diary-tiers";
-import { awardPoints } from "@/modules/points/repository/award-points";
-import { generateDiaryCarryAwards } from "@/modules/points/rules";
-import { getEliteAndMasterDiaryTimes } from "@/modules/speedrun-diary/repository/get-elite-and-master-diary-times";
 
 import { findPersonalBestAwaitingReview } from "../repository/find-personal-best-awaiting-review";
-import { listBestTimes } from "../repository/list-best-times";
 import { listParticipantIds } from "../repository/list-participant-ids";
 import { reviewPersonalBest } from "../repository/review-personal-best";
+import { payDiaryCarries } from "./shared/pay-diary-carries";
 
 export type ReviewRequest = {
   reviewNote: string | null;
@@ -42,29 +39,7 @@ export const reviewPersonalBestById = async (id: number, review: ReviewRequest):
 
     if (review.status === "denied" || awaiting.contentId === null) return "reviewed";
 
-    const diaryTier = await getEliteAndMasterDiaryTimes(tx, awaiting.contentId, awaiting.scale);
-    const personalBestsByMemberId = await listBestTimes(tx, {
-      contentId: awaiting.contentId,
-      excludeId: id,
-      memberIds,
-      scale: awaiting.scale
-    });
-
-    for (const tier of diaryTier) {
-      if (awaiting.timeSeconds > tier.timeSeconds) continue;
-
-      const hasDiaryTier = (memberId: bigint) =>
-        (personalBestsByMemberId.get(memberId) ?? Infinity) <= tier.timeSeconds;
-
-      const awards = generateDiaryCarryAwards({
-        carried: memberIds.filter((memberId) => !hasDiaryTier(memberId)),
-        holders: memberIds.filter((memberId) => hasDiaryTier(memberId)),
-        tierId: tier.tierId
-      });
-
-      await awardPoints(tx, awards, null, `${tier.tierName.toLowerCase()} diary carry - pb #${id}`);
-    }
-
+    await payDiaryCarries(tx, { ...awaiting, contentId: awaiting.contentId }, memberIds);
     await claimEarnedDiaryTiers(tx, memberIds);
     return "reviewed";
   });
