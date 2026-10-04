@@ -9,6 +9,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@sanity/api": "workspace:*",
     "discord.js": "^14.27.0",
     "pino": "^10.4.0"
   },

@@ -229,6 +229,9 @@ importers:
 
   apps/bot:
     dependencies:
+      '@sanity/api':
+        specifier: workspace:*
+        version: link:../../packages/api
       discord.js:
         specifier: ^14.27.0
         version: 14.27.0
