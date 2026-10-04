@@ -1677,7 +1677,6 @@ export interface components {
                 clanPoints: number;
                 diaryPoints: number;
                 masterDiaries: number;
-                maintenancePoints: number;
             };
         };
         Page: {
@@ -1980,7 +1979,6 @@ export interface components {
                 clanPoints: number;
                 diaryPoints: number;
                 masterDiaries: number;
-                maintenancePoints: number;
             };
         };
     };

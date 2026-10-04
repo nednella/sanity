@@ -1275,16 +1275,12 @@
               },
               "masterDiaries": {
                 "type": "number"
-              },
-              "maintenancePoints": {
-                "type": "number"
               }
             },
             "required": [
               "clanPoints",
               "diaryPoints",
-              "masterDiaries",
-              "maintenancePoints"
+              "masterDiaries"
             ]
           }
         },
@@ -2594,16 +2590,12 @@
               },
               "masterDiaries": {
                 "type": "number"
-              },
-              "maintenancePoints": {
-                "type": "number"
               }
             },
             "required": [
               "clanPoints",
               "diaryPoints",
-              "masterDiaries",
-              "maintenancePoints"
+              "masterDiaries"
             ],
             "additionalProperties": false
           }

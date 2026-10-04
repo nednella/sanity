@@ -5,8 +5,7 @@ import { bigIntString } from "@/schema/codecs";
 const requirements = z.object({
   clanPoints: z.number(),
   diaryPoints: z.number(),
-  masterDiaries: z.number(),
-  maintenancePoints: z.number()
+  masterDiaries: z.number()
 });
 
 export const rank = z

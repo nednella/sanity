@@ -6,7 +6,6 @@ type SourceRank = {
   pointRequirement: number | null;
   diaryPointRequirement: number | null;
   masterDiaryRequirement: number | null;
-  maintenancePoints: number;
   discordRoleId: string | null;
 };
 
@@ -51,8 +50,7 @@ export const readRanks = async () => {
     discordRoleId: rank.discordRoleId === null ? null : BigInt(rank.discordRoleId),
     clanPointRequirement: rank.pointRequirement ?? 0,
     diaryPointRequirement: rank.diaryPointRequirement ?? 0,
-    masterDiaryRequirement: rank.masterDiaryRequirement ?? 0,
-    maintenancePointRequirement: rank.maintenancePoints
+    masterDiaryRequirement: rank.masterDiaryRequirement ?? 0
   }));
 };
 

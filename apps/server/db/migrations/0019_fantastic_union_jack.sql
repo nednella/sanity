@@ -1,0 +1,1 @@
+ALTER TABLE "ranks" DROP COLUMN "maintenance_point_requirement";

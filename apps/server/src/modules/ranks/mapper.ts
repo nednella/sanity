@@ -13,7 +13,6 @@ export const toRank = (row: RankRow) => ({
   requirements: {
     clanPoints: row.clanPointRequirement,
     diaryPoints: row.diaryPointRequirement,
-    masterDiaries: row.masterDiaryRequirement,
-    maintenancePoints: row.maintenancePointRequirement
+    masterDiaries: row.masterDiaryRequirement
   }
 });

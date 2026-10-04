@@ -27,8 +27,7 @@ export const ranks = pgTable("ranks", {
   discordRoleId: bigint({ mode: "bigint" }).unique("ranks_discord_role_id_unique"),
   clanPointRequirement: integer().notNull().default(0),
   diaryPointRequirement: integer().notNull().default(0),
-  masterDiaryRequirement: integer().notNull().default(0),
-  maintenancePointRequirement: integer().notNull().default(0)
+  masterDiaryRequirement: integer().notNull().default(0)
 });
 
 export const members = pgTable(
