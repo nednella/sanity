@@ -3748,6 +3748,69 @@
         }
       }
     },
+    "/v1/admin/discord/avatars": {
+      "post": {
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "avatars": {
+                    "minItems": 1,
+                    "maxItems": 1000,
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "avatarHash": {
+                          "nullable": true,
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "discordId": {
+                          "type": "string",
+                          "pattern": "^\\d+$"
+                        }
+                      },
+                      "required": [
+                        "avatarHash",
+                        "discordId"
+                      ]
+                    }
+                  }
+                },
+                "required": [
+                  "avatars"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "saved": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "saved"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/v1/admin/discord/update-account": {
       "post": {
         "requestBody": {

@@ -2,6 +2,8 @@ import { z } from "zod";
 
 import { bigIntString } from "@/schema/codecs";
 
+export const savedAvatars = z.object({ saved: z.number() });
+
 export const updatedDiscordAccount = z.object({
   member: z.object({ id: bigIntString, displayName: z.string() }).nullable(),
   outcome: z.enum([

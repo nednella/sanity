@@ -7,6 +7,8 @@ const discordAccount = z.object({
   discordId: bigIntString
 });
 
+export const saveAvatarsBody = z.object({ avatars: z.array(discordAccount).min(1).max(1000) });
+
 export const updateDiscordAccountBody = z.object({
   account: discordAccount,
   actingDiscordId: bigIntString.optional(),
