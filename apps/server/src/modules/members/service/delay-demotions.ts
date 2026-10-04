@@ -1,5 +1,4 @@
 import { recordAuditEntry } from "@/modules/audit/repository/record-audit-entry";
-
 import { firstOfNextMonth } from "@/utils/dates";
 
 import { delayRankChange } from "../repository/delay-rank-change";
