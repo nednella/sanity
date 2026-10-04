@@ -3748,6 +3748,100 @@
         }
       }
     },
+    "/v1/admin/discord/update-account": {
+      "post": {
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "account": {
+                    "type": "object",
+                    "properties": {
+                      "avatarHash": {
+                        "nullable": true,
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "discordId": {
+                        "type": "string",
+                        "pattern": "^\\d+$"
+                      }
+                    },
+                    "required": [
+                      "avatarHash",
+                      "discordId"
+                    ]
+                  },
+                  "actingDiscordId": {
+                    "type": "string",
+                    "pattern": "^\\d+$"
+                  },
+                  "displayName": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 32
+                  }
+                },
+                "required": [
+                  "account",
+                  "displayName"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "member": {
+                      "nullable": true,
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "pattern": "^\\d+$"
+                        },
+                        "displayName": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "displayName"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "outcome": {
+                      "type": "string",
+                      "enum": [
+                        "discord-account-changed",
+                        "discord-id-taken",
+                        "non-unique-display-name",
+                        "not-a-member",
+                        "unchanged"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "member",
+                    "outcome"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/v1/admin/members/bulk-rank-check": {
       "post": {
         "responses": {

@@ -680,6 +680,59 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/admin/discord/update-account": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": {
+                        account: {
+                            avatarHash: string | null;
+                            discordId: string;
+                        };
+                        actingDiscordId?: string;
+                        displayName: string;
+                    };
+                };
+            };
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            member: {
+                                id: string;
+                                displayName: string;
+                            } | null;
+                            /** @enum {string} */
+                            outcome: "discord-account-changed" | "discord-id-taken" | "non-unique-display-name" | "not-a-member" | "unchanged";
+                        };
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/admin/members/bulk-rank-check": {
         parameters: {
             query?: never;

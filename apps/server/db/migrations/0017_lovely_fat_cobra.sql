@@ -1,0 +1,1 @@
+ALTER TYPE "public"."audit_action" ADD VALUE 'discord_id_changed' BEFORE 'member_joined';

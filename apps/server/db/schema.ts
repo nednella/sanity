@@ -81,6 +81,7 @@ export const submissionEvent = pgEnum("submission_event", ["bingo", "leagues"]);
 export const auditAction = pgEnum("audit_action", [
   "catalogue_changed",
   "diary_tier_claimed",
+  "discord_id_changed",
   "member_joined",
   "member_left",
   "other",

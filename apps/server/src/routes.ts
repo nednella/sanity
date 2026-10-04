@@ -1,5 +1,6 @@
 import type { FastifyPluginAsync } from "fastify";
 
+import { adminDiscordRouter } from "@/modules/discord/router";
 import { healthRouter } from "@/modules/health/router";
 import { adminMembersRouter, authProfileRouter, membersRouter } from "@/modules/members/router";
 import {
@@ -28,6 +29,7 @@ const authRoutes: FastifyPluginAsync = async (app) => {
 };
 
 const adminRoutes: FastifyPluginAsync = async (app) => {
+  app.register(adminDiscordRouter);
   app.register(adminMembersRouter);
   app.register(adminPersonalBestsRouter);
   app.register(adminPointsRouter);
