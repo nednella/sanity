@@ -173,7 +173,7 @@ export const member = z
   .object({
     id: bigIntString,
     displayName: z.string(),
-    nationality: z.string(),
+    nationality: z.string().nullable(),
     discord,
     rsn,
     membership,

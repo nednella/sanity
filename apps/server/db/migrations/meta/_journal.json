@@ -127,6 +127,13 @@
       "when": 1791074633710,
       "tag": "0017_lovely_fat_cobra",
       "breakpoints": true
+    },
+    {
+      "idx": 18,
+      "version": "7",
+      "when": 1791127913918,
+      "tag": "0018_slimy_zaladane",
+      "breakpoints": true
     }
   ]
 }

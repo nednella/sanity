@@ -706,6 +706,7 @@
             "type": "string"
           },
           "nationality": {
+            "nullable": true,
             "type": "string"
           },
           "discord": {
@@ -910,6 +911,7 @@
             "type": "string"
           },
           "nationality": {
+            "nullable": true,
             "type": "string"
           },
           "discord": {
@@ -2013,6 +2015,7 @@
             "type": "string"
           },
           "nationality": {
+            "nullable": true,
             "type": "string"
           },
           "discord": {
@@ -2219,6 +2222,7 @@
             "type": "string"
           },
           "nationality": {
+            "nullable": true,
             "type": "string"
           },
           "discord": {
@@ -2822,6 +2826,7 @@
                     "maxLength": 12
                   },
                   "nationality": {
+                    "nullable": true,
                     "type": "string",
                     "minLength": 2,
                     "maxLength": 2,

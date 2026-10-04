@@ -7,7 +7,7 @@ export type MemberProfile = {
   altRsn?: string | null;
   birthday?: string | null;
   mainRsn?: string;
-  nationality?: string;
+  nationality?: string | null;
 };
 
 export const updateMemberProfile = async (tx: Transaction, memberId: bigint, profile: MemberProfile) => {

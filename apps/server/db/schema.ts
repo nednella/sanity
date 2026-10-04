@@ -47,7 +47,7 @@ export const members = pgTable(
     joinedAt: timestamp({ withTimezone: true }),
     leftAt: timestamp({ withTimezone: true }),
     birthday: date(),
-    nationality: char({ length: 2 }).notNull().default("AQ")
+    nationality: char({ length: 2 })
   },
   (table) => [index().on(table.rankId), index().on(table.clanPoints.desc()), index().on(table.displayName)]
 );

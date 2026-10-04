@@ -78,7 +78,7 @@ export const updateMemberBody = z
     altRsn: rsn.nullable(),
     birthday: z.iso.date().nullable(),
     mainRsn: rsn,
-    nationality: z.string().trim().length(2).uppercase()
+    nationality: z.string().trim().length(2).uppercase().nullable()
   })
   .partial();
 

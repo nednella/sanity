@@ -150,7 +150,7 @@ export interface paths {
                         birthday?: string | null;
                         mainRsn?: string;
                         /** Format: uppercase */
-                        nationality?: string;
+                        nationality?: string | null;
                     };
                 };
             };
@@ -1539,7 +1539,7 @@ export interface components {
         MemberInput: {
             id: string;
             displayName: string;
-            nationality: string;
+            nationality: string | null;
             discord: {
                 id: string;
                 avatarUrl: string | null;
@@ -1589,7 +1589,7 @@ export interface components {
         MemberProfileInput: {
             id: string;
             displayName: string;
-            nationality: string;
+            nationality: string | null;
             discord: {
                 id: string;
                 avatarUrl: string | null;
@@ -1842,7 +1842,7 @@ export interface components {
         Member: {
             id: string;
             displayName: string;
-            nationality: string;
+            nationality: string | null;
             discord: {
                 id: string;
                 avatarUrl: string | null;
@@ -1892,7 +1892,7 @@ export interface components {
         MemberProfile: {
             id: string;
             displayName: string;
-            nationality: string;
+            nationality: string | null;
             discord: {
                 id: string;
                 avatarUrl: string | null;

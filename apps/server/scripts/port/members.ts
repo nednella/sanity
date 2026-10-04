@@ -26,9 +26,14 @@ type SourceUser = {
 };
 
 /**
-One member has the free text 'Chile' where a country code belongs.
+The old system defaulted a missing nationality to AQ, so the value means nothing. One member has the
+free text 'Chile' where a country code belongs.
 */
-const nationalityFixes: Record<string, string> = { Chile: "CL" };
+const toNationality = (value: string | null) => {
+  const nationality = value?.trim() || null;
+  if (nationality === "AQ") return null;
+  return nationality === "Chile" ? "CL" : nationality;
+};
 
 // The old bot never mapped retired members to an in-game rank, so the mapping table has no row for it.
 const inGameNameFixes: Record<string, string> = { RETIRED: "Defiler" };
@@ -57,7 +62,6 @@ export const readMembers = async () => {
   const users = await read<SourceUser>("users", "userId");
 
   return users.map((user) => {
-    const nationality = user.nationality?.trim() || "AQ";
     // Rejoining overwrote the join date but kept the old leave date, so a leave before the join is stale.
     const hasRejoined = user.leaveDate !== null && user.joinDate !== null && user.leaveDate < user.joinDate;
 
@@ -73,7 +77,7 @@ export const readMembers = async () => {
       joinedAt: dayToUtcMidnight(user.joinDate),
       leftAt: hasRejoined ? null : dayToUtcMidnight(user.leaveDate),
       birthday: user.birthday,
-      nationality: nationalityFixes[nationality] ?? nationality,
+      nationality: toNationality(user.nationality),
       // 0 meant no tier claimed yet.
       claimedDiaryTierId: user.diaryTierClaimed || null
     };
