@@ -1,5 +1,7 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
 
+import { SANITY_DISCORD_URL } from "@sanity/urls";
+
 import { LandingContent } from "@/components/landing-content";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/lib/ui/button";
@@ -7,7 +9,6 @@ import { ExternalLink } from "@/lib/ui/external-link";
 import { Hero } from "@/lib/ui/hero";
 import { DiscordLogo } from "@/lib/ui/logos";
 import { cn } from "@/lib/ui/utils";
-import { SANITY_DISCORD_URL } from "@/utils/links";
 
 export const Route = createFileRoute("/")({
   component: Page

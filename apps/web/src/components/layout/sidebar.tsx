@@ -1,12 +1,13 @@
 import { Link, linkOptions } from "@tanstack/react-router";
 
+import { SANITY_DISCORD_URL } from "@sanity/urls";
+
 import { Button } from "@/lib/ui/button";
 import { ExternalLink } from "@/lib/ui/external-link";
 import { DiscordLogo } from "@/lib/ui/logos";
 import { H2 } from "@/lib/ui/typography/h2";
 import { H4 } from "@/lib/ui/typography/h4";
 import { Overline } from "@/lib/ui/typography/overline";
-import { SANITY_DISCORD_URL } from "@/utils/links";
 
 const wikiLinks = linkOptions([
   {

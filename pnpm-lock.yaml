@@ -257,6 +257,9 @@ importers:
       '@fastify/cors':
         specifier: ^11.3.0
         version: 11.3.0
+      '@sanity/urls':
+        specifier: workspace:*
+        version: link:../../packages/urls
       '@wise-old-man/utils':
         specifier: ^4.0.24
         version: 4.0.24
@@ -303,6 +306,9 @@ importers:
       '@sanity/api':
         specifier: workspace:*
         version: link:../../packages/api
+      '@sanity/urls':
+        specifier: workspace:*
+        version: link:../../packages/urls
       '@tanstack/react-query':
         specifier: ^5.102.8
         version: 5.102.8(react@19.3.0)
@@ -404,6 +410,12 @@ importers:
       openapi-typescript:
         specifier: ^7.13.0
         version: 7.13.0(typescript@6.0.3)
+      typescript:
+        specifier: ~6.0.3
+        version: 6.0.3
+
+  packages/urls:
+    devDependencies:
       typescript:
         specifier: ~6.0.3
         version: 6.0.3

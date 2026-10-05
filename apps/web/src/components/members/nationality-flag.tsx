@@ -1,5 +1,6 @@
+import { CIRCLE_FLAG_CDN_URL, RECTANGLE_FLAG_CDN_URL } from "@sanity/urls";
+
 import { Tooltip } from "@/lib/ui/tooltip";
-import { CIRCLE_FLAG_CDN_URL, RECTANGLE_FLAG_CDN_URL } from "@/utils/links";
 
 const shapes = {
   circle: { className: "block size-full rounded-full", cdn: CIRCLE_FLAG_CDN_URL, height: 16 },

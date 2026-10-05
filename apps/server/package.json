@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "@fastify/cors": "^11.3.0",
+    "@sanity/urls": "workspace:*",
     "@wise-old-man/utils": "^4.0.24",
     "drizzle-orm": "^0.45.2",
     "fastify": "^5.12.4",
