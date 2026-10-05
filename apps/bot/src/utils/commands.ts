@@ -1,6 +1,11 @@
 import type { SlashCommandOptionsOnlyBuilder } from "discord.js";
 
-import type { Command, Execute } from "@/types";
+import type { Category, Command, Execute } from "@/types";
 
-export const defineCommand = (data: SlashCommandOptionsOnlyBuilder, execute: Execute): Command =>
-  Object.assign(data, { execute });
+type Options = {
+  category: Category;
+  data: SlashCommandOptionsOnlyBuilder;
+  execute: Execute;
+};
+
+export const defineCommand = ({ data, ...options }: Options): Command => Object.assign(data, options);
