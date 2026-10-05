@@ -26,10 +26,16 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": {
-                            /** @enum {string} */
-                            status: "ok";
-                        };
+                        "application/json": components["schemas"]["Health"];
+                    };
+                };
+                /** @description Default Response */
+                503: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["Health"];
                     };
                 };
             };
@@ -1377,6 +1383,16 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        HealthInput: {
+            /** @enum {string} */
+            status: "error" | "ok";
+            checks: {
+                name: string;
+                /** @enum {string} */
+                status: "error" | "ok";
+                latencyMs: number;
+            }[];
+        };
         PageInput: {
             limit: number;
             offset: number;
@@ -1678,6 +1694,16 @@ export interface components {
                 diaryPoints: number;
                 masterDiaries: number;
             };
+        };
+        Health: {
+            /** @enum {string} */
+            status: "error" | "ok";
+            checks: {
+                name: string;
+                /** @enum {string} */
+                status: "error" | "ok";
+                latencyMs: number;
+            }[];
         };
         Page: {
             limit: number;

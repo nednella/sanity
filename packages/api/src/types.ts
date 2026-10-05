@@ -15,6 +15,7 @@ export type PersonalBest = Schemas["PersonalBest"];
 export type RankedPersonalBest = Schemas["RankedPersonalBest"];
 export type MemberRef = Schemas["MemberRef"];
 export type Submission = Schemas["Submission"];
+export type Health = Schemas["Health"];
 export type Page = Schemas["Page"];
 export type MemberSort = Schemas["MemberSort"];
 export type PersonalBestSort = Schemas["PersonalBestSort"];

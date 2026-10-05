@@ -6,6 +6,48 @@
   },
   "components": {
     "schemas": {
+      "HealthInput": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "error",
+              "ok"
+            ]
+          },
+          "checks": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "error",
+                    "ok"
+                  ]
+                },
+                "latencyMs": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "name",
+                "status",
+                "latencyMs"
+              ]
+            }
+          }
+        },
+        "required": [
+          "status",
+          "checks"
+        ]
+      },
       "PageInput": {
         "type": "object",
         "properties": {
@@ -1291,6 +1333,50 @@
           "discordRoleId",
           "requirements"
         ]
+      },
+      "Health": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "error",
+              "ok"
+            ]
+          },
+          "checks": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "error",
+                    "ok"
+                  ]
+                },
+                "latencyMs": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "name",
+                "status",
+                "latencyMs"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "status",
+          "checks"
+        ],
+        "additionalProperties": false
       },
       "Page": {
         "type": "object",
@@ -2620,19 +2706,17 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "enum": [
-                        "ok"
-                      ]
-                    }
-                  },
-                  "required": [
-                    "status"
-                  ],
-                  "additionalProperties": false
+                  "$ref": "#/components/schemas/Health"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Health"
                 }
               }
             }
