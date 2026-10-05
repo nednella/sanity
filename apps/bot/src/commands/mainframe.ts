@@ -6,5 +6,6 @@ import { defineCommand } from "@/utils/commands";
 export const mainframe = defineCommand({
   data: new SlashCommandBuilder().setName("mainframe").setDescription("Check the mainframe is alive"),
   category: "Health",
+  admin: true,
   execute: handleMainframe
 });

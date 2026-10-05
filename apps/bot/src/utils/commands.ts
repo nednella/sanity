@@ -3,9 +3,15 @@ import type { SlashCommandOptionsOnlyBuilder } from "discord.js";
 import type { Category, Command, Execute } from "@/types";
 
 type Options = {
+  admin?: boolean;
   category: Category;
   data: SlashCommandOptionsOnlyBuilder;
+  ephemeral?: boolean;
   execute: Execute;
 };
 
-export const defineCommand = ({ data, ...options }: Options): Command => Object.assign(data, options);
+export const defineCommand = ({ admin = false, data, ephemeral = false, ...options }: Options): Command => {
+  // Hide admin commands by default - the server decides access using the integration settings
+  if (admin) data.setDefaultMemberPermissions(0);
+  return Object.assign(data, { admin, ephemeral, ...options });
+};

@@ -1,4 +1,4 @@
-import type { Interaction } from "discord.js";
+import { type Interaction, MessageFlags } from "discord.js";
 
 import { commands } from "@/commands";
 import { logger } from "@/lib/logger";
@@ -13,6 +13,7 @@ export const onInteractionCreate = async (interaction: Interaction) => {
   }
 
   try {
+    await interaction.deferReply({ flags: command.ephemeral ? MessageFlags.Ephemeral : undefined });
     await command.execute(interaction);
   } catch (error) {
     logger.error(error, `/${interaction.commandName} failed`);
