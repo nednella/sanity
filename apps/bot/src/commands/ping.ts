@@ -1,5 +1,6 @@
-import { type ChatInputCommandInteraction, SlashCommandBuilder } from "discord.js";
+import { SlashCommandBuilder } from "discord.js";
 
+import { handlePing } from "@/handlers/ping";
 import { defineCommand } from "@/utils/commands";
 
 export const ping = defineCommand({
@@ -7,7 +8,3 @@ export const ping = defineCommand({
   category: "Health",
   execute: handlePing
 });
-
-function handlePing(interaction: ChatInputCommandInteraction) {
-  return interaction.reply("I'm alive mate");
-}
