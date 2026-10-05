@@ -1,13 +1,13 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
 
-import { SANITY_DISCORD_URL } from "@sanity/urls";
+import { SANITY_DISCORD_URL, SANITY_X_URL } from "@sanity/urls";
 
 import { LandingContent } from "@/components/landing-content";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/lib/ui/button";
 import { ExternalLink } from "@/lib/ui/external-link";
 import { Hero } from "@/lib/ui/hero";
-import { DiscordLogo } from "@/lib/ui/logos";
+import { DiscordLogo, TwitterLogo } from "@/lib/ui/logos";
 import { cn } from "@/lib/ui/utils";
 
 export const Route = createFileRoute("/")({
@@ -32,6 +32,19 @@ function Page() {
             aria-label="Join our Discord"
           >
             <DiscordLogo className="size-4 fill-current" />
+          </ExternalLink>
+        </Button>
+        <Button
+          asChild
+          size="icon"
+          variant="ghost"
+          className={floatingButton}
+        >
+          <ExternalLink
+            href={SANITY_X_URL}
+            aria-label="Follow us on X"
+          >
+            <TwitterLogo className="size-4 fill-current" />
           </ExternalLink>
         </Button>
         <ThemeToggle className={floatingButton} />
