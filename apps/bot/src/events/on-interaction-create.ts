@@ -1,7 +1,15 @@
 import { type Interaction, MessageFlags } from "discord.js";
 
+import { NetworkError } from "@sanity/api";
+
 import { commands } from "@/commands";
 import { logger } from "@/lib/logger";
+import { replyError } from "@/utils/replies";
+
+const describe = (error: unknown) =>
+  error instanceof NetworkError
+    ? "The mainframe did not answer. Please try again in a moment."
+    : "Something went wrong. Please try again later.";
 
 export const onInteractionCreate = async (interaction: Interaction) => {
   if (!interaction.isChatInputCommand()) return;
@@ -17,7 +25,6 @@ export const onInteractionCreate = async (interaction: Interaction) => {
     await command.execute(interaction);
   } catch (error) {
     logger.error(error, `/${interaction.commandName} failed`);
-    const content = "Something went wrong. Please try again later.";
-    await (interaction.replied || interaction.deferred ? interaction.editReply(content) : interaction.reply(content));
+    await replyError(interaction, describe(error));
   }
 };
