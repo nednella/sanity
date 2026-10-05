@@ -3,8 +3,8 @@ import { SlashCommandBuilder } from "discord.js";
 import { api } from "@/lib/api";
 import { defineCommand } from "@/utils/commands";
 
-export const health = defineCommand(
-  new SlashCommandBuilder().setName("health").setDescription("Check the bot can reach the API"),
+export const mainframe = defineCommand(
+  new SlashCommandBuilder().setName("mainframe").setDescription("Check the mainframe is alive"),
   async (interaction) => {
     await interaction.deferReply();
     const started = Date.now();
