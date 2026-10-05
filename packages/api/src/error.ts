@@ -27,4 +27,11 @@ class ApiError extends Error {
   }
 }
 
-export { ApiError };
+class NetworkError extends Error {
+  constructor(cause: unknown) {
+    super("network_error", { cause });
+    this.name = "NetworkError";
+  }
+}
+
+export { ApiError, NetworkError };

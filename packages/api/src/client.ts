@@ -1,4 +1,4 @@
-import createFetchClient, { type Middleware } from "openapi-fetch";
+import createFetchClient, { type Client, type Middleware } from "openapi-fetch";
 
 import { ApiError } from "./error";
 import type { paths } from "./v1";
@@ -19,4 +19,4 @@ export const createApiClient = (baseUrl: string) => {
   return client;
 };
 
-export type ApiClient = ReturnType<typeof createApiClient>;
+export type ApiClient = Client<paths>;
