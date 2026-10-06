@@ -4,6 +4,7 @@ type Config = {
   databaseUrl: string;
   corsOrigin: string;
   logLevel: string;
+  isProduction: boolean;
   womGroupId: string;
   womApiKey: string;
   womUserAgent: string;
@@ -21,6 +22,7 @@ export const config: Config = {
   databaseUrl: required("DATABASE_URL"),
   corsOrigin: required("CORS_ORIGIN"),
   logLevel: required("LOG_LEVEL"),
+  isProduction: process.env.NODE_ENV === "production",
   womGroupId: required("WOM_GROUP_ID"),
   womApiKey: required("WOM_API_KEY"),
   womUserAgent: required("WOM_USER_AGENT")

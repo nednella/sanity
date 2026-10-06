@@ -3,6 +3,7 @@ type Config = {
   discordClientId: string;
   discordGuildId: string;
   discordToken: string;
+  isProduction: boolean;
   logLevel: string;
   webUrl: string;
 };
@@ -18,6 +19,7 @@ export const config: Config = {
   discordClientId: required("DISCORD_CLIENT_ID"),
   discordGuildId: required("DISCORD_GUILD_ID"),
   discordToken: required("DISCORD_TOKEN"),
+  isProduction: process.env.NODE_ENV === "production",
   logLevel: required("LOG_LEVEL"),
   webUrl: required("WEB_URL")
 };
