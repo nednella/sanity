@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@sanity/api": "workspace:*",
+    "@sanity/urls": "workspace:*",
     "discord.js": "^14.27.0",
     "pino": "^10.4.0"
   },

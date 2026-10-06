@@ -4,6 +4,7 @@ type Config = {
   discordGuildId: string;
   discordToken: string;
   logLevel: string;
+  webUrl: string;
 };
 
 const required = (name: string): string => {
@@ -17,5 +18,6 @@ export const config: Config = {
   discordClientId: required("DISCORD_CLIENT_ID"),
   discordGuildId: required("DISCORD_GUILD_ID"),
   discordToken: required("DISCORD_TOKEN"),
-  logLevel: required("LOG_LEVEL")
+  logLevel: required("LOG_LEVEL"),
+  webUrl: required("WEB_URL")
 };

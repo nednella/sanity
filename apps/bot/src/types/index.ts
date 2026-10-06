@@ -1,6 +1,6 @@
 import type { ChatInputCommandInteraction, SlashCommandOptionsOnlyBuilder } from "discord.js";
 
-export type Category = "Health";
+export type Category = "General" | "Health";
 
 export type Execute = (interaction: ChatInputCommandInteraction) => Promise<unknown>;
 
