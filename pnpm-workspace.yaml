@@ -8,3 +8,15 @@ allowBuilds:
 
 catalog:
   zod: ^4.6.3
+
+minimumReleaseAgeExclude:
+  - "@scalar/client-side-rendering@0.4.9"
+  - "@scalar/fastify-api-reference@1.73.0"
+  - "@scalar/helpers@0.16.1"
+  - "@scalar/json-magic@0.15.5"
+  - "@scalar/json-schema-validator@0.1.10"
+  - "@scalar/openapi-parser@0.29.11"
+  - "@scalar/openapi-upgrader@0.4.2"
+  - "@scalar/openapi-validator@0.1.10"
+  - "@scalar/schemas@0.13.0"
+  - "@scalar/types@0.23.0"

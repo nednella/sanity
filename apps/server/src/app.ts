@@ -1,5 +1,6 @@
 import cors from "@fastify/cors";
 import swagger from "@fastify/swagger";
+import scalar from "@scalar/fastify-api-reference";
 import Fastify from "fastify";
 import {
   createJsonSchemaTransform,
@@ -31,6 +32,7 @@ export const buildApp = () => {
     transform: createJsonSchemaTransform({ zodToJsonConfig: { override: jsonSchemaOverride } }),
     transformObject: createJsonSchemaTransformObject({ zodToJsonConfig: { override: jsonSchemaOverride } })
   });
+  app.register(scalar, { routePrefix: "/docs" });
 
   app.setValidatorCompiler(validatorCompiler);
   app.setSerializerCompiler(serializerCompiler);

@@ -1,5 +1,7 @@
 import type { FastifyPluginAsync } from "fastify";
 
+import { config } from "@config";
+
 import { adminDiscordRouter } from "@/modules/discord/router";
 import { healthRouter } from "@/modules/health/router";
 import { adminMembersRouter, authProfileRouter, membersRouter } from "@/modules/members/router";
@@ -29,6 +31,11 @@ const authRoutes: FastifyPluginAsync = async (app) => {
 };
 
 const adminRoutes: FastifyPluginAsync = async (app) => {
+  // hide admin routes from production `/docs` endpoint
+  app.addHook("onRoute", (route) => {
+    route.schema = { ...route.schema, hide: config.isProduction };
+  });
+
   app.register(adminDiscordRouter);
   app.register(adminMembersRouter);
   app.register(adminPersonalBestsRouter);
