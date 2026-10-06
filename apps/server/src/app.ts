@@ -14,13 +14,13 @@ import { jsonSchemaOverride } from "@/schema/codecs";
 
 import { routes } from "./routes";
 
-const { logLevel, corsOrigin } = config;
+const { corsOrigin, isProduction, logLevel } = config;
 
 export const buildApp = () => {
   const app = Fastify({
     logger: {
       level: logLevel,
-      transport: { target: "pino-pretty" }
+      transport: isProduction ? undefined : { target: "pino-pretty" }
     }
   });
 

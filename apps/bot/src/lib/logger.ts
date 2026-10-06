@@ -4,5 +4,5 @@ import { config } from "@config";
 
 export const logger = pino({
   level: config.logLevel,
-  transport: { target: "pino-pretty" }
+  transport: config.isProduction ? undefined : { target: "pino-pretty" }
 });
