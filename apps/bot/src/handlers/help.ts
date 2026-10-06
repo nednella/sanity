@@ -9,9 +9,7 @@ import { brandEmbed } from "@/utils/embeds";
 import { commandMention } from "@/utils/mentions";
 import { reply } from "@/utils/replies";
 
-const PUBLIC_DESCRIPTION = "Yo, I run this clan";
-
-const PUBLIC_GETTING_STARTED = [
+const GETTING_STARTED = [
   "My commands are available with the `/` prefix. Some commands are channel restricted, and the commands themselves redirect you if needed.\n\n"
 ].join("");
 
@@ -19,8 +17,8 @@ export const handleHelp = (interaction: ChatInputCommandInteraction) =>
   reply(
     interaction,
     brandEmbed({
-      description: PUBLIC_DESCRIPTION,
-      fields: [{ name: "Getting Started", value: PUBLIC_GETTING_STARTED }, ...filteredSections(interaction, false)],
+      description: "Can you help me box, what's the command?",
+      fields: [{ name: "Getting Started", value: GETTING_STARTED }, ...filteredSections(interaction, false)],
       thumbnail: interaction.client.user.displayAvatarURL()
     }),
     { components: [links] }
