@@ -2,8 +2,11 @@ import { Link, createFileRoute } from "@tanstack/react-router";
 
 import { SANITY_DISCORD_URL, SANITY_X_URL } from "@sanity/urls";
 
+import { config } from "@config";
+
 import { LandingContent } from "@/components/landing-content";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { Badge } from "@/lib/ui/badge";
 import { Button } from "@/lib/ui/button";
 import { ExternalLink } from "@/lib/ui/external-link";
 import { Hero } from "@/lib/ui/hero";
@@ -48,16 +51,18 @@ function Page() {
           </ExternalLink>
         </Button>
         <ThemeToggle className={floatingButton} />
-        <Button
-          asChild
-          size="lg"
-          variant="outline"
-          className={floatingButton}
-        >
-          <Link to="/login">
-            <span>Log in</span>
-          </Link>
-        </Button>
+        {!config.isProduction && (
+          <Button
+            asChild
+            size="lg"
+            variant="outline"
+            className={floatingButton}
+          >
+            <Link to="/login">
+              <span>Log in</span>
+            </Link>
+          </Button>
+        )}
       </div>
       <Hero
         title="Welcome to Sanity"
@@ -65,16 +70,25 @@ function Page() {
         className="relative flex min-h-screen items-center justify-center overflow-hidden"
         overlay
       >
-        <Button
-          asChild
-          size="lg"
-          variant="outline"
-          className={cn("w-full max-w-48", floatingButton)}
-        >
-          <Link to="/wiki">
-            <span>Enter</span>
-          </Link>
-        </Button>
+        {config.isProduction ? (
+          <Badge
+            variant="outline"
+            className={cn("badge-lg", floatingButton)}
+          >
+            Coming soon
+          </Badge>
+        ) : (
+          <Button
+            asChild
+            size="lg"
+            variant="outline"
+            className={cn("w-full max-w-48", floatingButton)}
+          >
+            <Link to="/wiki">
+              <span>Enter</span>
+            </Link>
+          </Button>
+        )}
       </Hero>
     </>
   );

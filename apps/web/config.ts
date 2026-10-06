@@ -1,5 +1,6 @@
 type Config = {
   apiUrl: string;
+  isProduction: boolean;
 };
 
 const required = (name: keyof ImportMetaEnv): string => {
@@ -9,5 +10,6 @@ const required = (name: keyof ImportMetaEnv): string => {
 };
 
 export const config: Config = {
-  apiUrl: required("VITE_API_URL")
+  apiUrl: required("VITE_API_URL"),
+  isProduction: import.meta.env.PROD
 };
