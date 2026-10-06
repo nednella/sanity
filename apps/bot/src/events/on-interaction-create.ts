@@ -21,7 +21,7 @@ export const onInteractionCreate = async (interaction: Interaction) => {
   }
 
   try {
-    await interaction.deferReply({ flags: command.ephemeral ? MessageFlags.Ephemeral : undefined });
+    await interaction.deferReply({ flags: command.selfOnly ? MessageFlags.Ephemeral : undefined });
     await command.execute(interaction);
   } catch (error) {
     logger.error(error, `/${interaction.commandName} failed`);

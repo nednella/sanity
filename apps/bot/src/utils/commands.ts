@@ -6,12 +6,12 @@ type Options = {
   admin?: boolean;
   category: Category;
   data: SlashCommandOptionsOnlyBuilder;
-  ephemeral?: boolean;
+  selfOnly?: boolean;
   execute: Execute;
 };
 
-export const defineCommand = ({ admin = false, data, ephemeral = false, ...options }: Options): Command => {
+export const defineCommand = ({ admin = false, data, selfOnly = false, ...options }: Options): Command => {
   // Hide admin commands by default - the server decides access using the integration settings
   if (admin) data.setDefaultMemberPermissions(0);
-  return Object.assign(data, { admin, ephemeral, ...options });
+  return Object.assign(data, { admin, selfOnly, ...options });
 };

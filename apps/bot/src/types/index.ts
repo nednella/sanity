@@ -7,6 +7,6 @@ export type Execute = (interaction: ChatInputCommandInteraction) => Promise<unkn
 export type Command = SlashCommandOptionsOnlyBuilder & {
   admin: boolean;
   category: Category;
-  ephemeral: boolean;
+  selfOnly: boolean;
   execute: Execute;
 };

@@ -9,6 +9,6 @@ export const adminHelp = defineCommand({
     .setDescription("Learn how to interact with the Sanity Mainframe"),
   category: "General",
   admin: true,
-  ephemeral: true,
+  selfOnly: true,
   execute: handleAdminHelp
 });
