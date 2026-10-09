@@ -178,5 +178,5 @@ dist
 
 # End of https://www.toptal.com/developers/gitignore/api/node,macos,dotenv
 
-# worktrees made by /work
-trees/
+# Set up by agentos: https://github.com/nednella/agentos
+worktrees/
