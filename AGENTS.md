@@ -1,3 +1,5 @@
+<!-- Set up by agentos: https://github.com/nednella/agentos -->
+
 # AGENTS.md
 
 sanity: website, API and Discord bot for the Sanity OSRS clan. A pnpm workspace, Node 24.
@@ -24,13 +26,13 @@ React + TanStack Router/Query + daisyUI, deployed to Vercel · `apps/bot` discor
 
 ```
 git fetch origin
-git worktree add trees/issue-<n> -b issue-<n> origin/main
-cd trees/issue-<n>
+git worktree add worktrees/issue-<n> -b issue-<n> origin/main
+cd worktrees/issue-<n>
 for app in bot server web; do cp ../../apps/$app/.env apps/$app/.env; done
 pnpm install
 ```
 
-Branch from `origin/main`, never local `main`. Work only inside the worktree. `trees/` is in
+Branch from `origin/main`, never local `main`. Work only inside the worktree. `worktrees/` is in
 `.gitignore`.
 
 ## Commands
@@ -84,7 +86,10 @@ Conventional, enforced by commitlint: `type(scope): subject`, scope `server`, `w
 
 ## Workflow
 
-Issues on `nednella/sanity` are the queue. One issue → branch `issue-<n>` in `trees/issue-<n>`
-→ one draft PR → the owner merges. Issues follow `.github/ISSUE_TEMPLATE/issue.md`: a
-`## Description` written by the owner and never edited by a session; a session appends its
-findings below it under `## Agent Review`.
+Issues on `nednella/sanity` are the queue. One issue → branch `issue-<n>` in
+`worktrees/issue-<n>` → one draft PR → the owner merges. Issues follow
+`.github/ISSUE_TEMPLATE/issue.md`: a `## Description` written by the owner and never edited by
+a session; a session posts its findings as an issue comment headed `## Agent Review`.
+
+A branch takes `main`'s changes by a rebase onto `origin/main`, never a merge of `main`. Push
+after a rebase with `--force-with-lease`.
