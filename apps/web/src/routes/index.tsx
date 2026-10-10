@@ -67,7 +67,7 @@ function Page() {
       <Hero
         title="Welcome to Sanity"
         description="an elite Old School RuneScape PvM clan home to some of the best players in the game"
-        className="relative flex min-h-screen items-center justify-center overflow-hidden"
+        className="relative flex min-h-screen items-start justify-center overflow-hidden pt-[12vh]"
         overlay
       >
         {config.isProduction ? (
