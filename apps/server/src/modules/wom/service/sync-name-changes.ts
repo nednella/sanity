@@ -2,6 +2,7 @@ import { config } from "@config";
 
 import { wom } from "@/integrations/wom";
 
+import { hasNameChanges } from "../repository/has-name-changes";
 import { loadTrackedPlayers } from "../repository/load-tracked-players";
 import { saveNameChanges } from "../repository/save-name-changes";
 
@@ -36,7 +37,7 @@ const readGroupNameChanges = async (pages: number) => {
  */
 export const syncNameChanges = async (pages: number) => {
   const memberIdByPlayerId = await loadTrackedPlayers();
-  const changes = await readGroupNameChanges(pages);
+  const changes = await readGroupNameChanges((await hasNameChanges()) ? pages : Infinity);
 
   const ours = changes
     .filter((change) => change.status === "approved" && memberIdByPlayerId.has(change.playerId))
