@@ -9,6 +9,10 @@ import {
   womSnapshots
 } from "@db/schema";
 
+// Postgres takes at most 65,535 parameters in one statement, and the bosses of one snapshot alone can
+// use about 350.
+const SNAPSHOTS_PER_BATCH = 100;
+
 // Wise Old Man reports -1 for a value it doesn't know: a rank or count below the hiscore threshold, or
 // efficiency on snapshots older than its rates. Unknown counts are left out rather than stored as -1.
 const known = (value: number) => (value === -1 ? null : value);
@@ -28,27 +32,40 @@ const breakdown = (womSnapshotId: number, { skills, bosses, activities, computed
     .map(({ metric, rank, ...values }) => ({ womSnapshotId, activity: metric, rank: known(rank), ...values }))
 });
 
+const saveBatch = async (tx: Transaction, snapshots: SnapshotResponse[]) => {
+  const saved = await tx
+    .insert(womSnapshots)
+    .values(snapshots.map(({ playerId, createdAt }) => ({ womPlayerId: playerId, createdAt })))
+    .onConflictDoNothing()
+    .returning({
+      id: womSnapshots.id,
+      womPlayerId: womSnapshots.womPlayerId,
+      createdAt: womSnapshots.createdAt
+    });
+
+  const idFor = new Map(saved.map(({ id, womPlayerId, createdAt }) => [`${womPlayerId}:${createdAt.getTime()}`, id]));
+  const rows = snapshots.flatMap(({ playerId, createdAt, data }) => {
+    const id = idFor.get(`${playerId}:${createdAt.getTime()}`);
+    return id === undefined ? [] : [breakdown(id, data)];
+  });
+
+  const computed = rows.flatMap((row) => row.computed);
+  const skills = rows.flatMap((row) => row.skills);
+  const bosses = rows.flatMap((row) => row.bosses);
+  const activities = rows.flatMap((row) => row.activities);
+  if (computed.length > 0) await tx.insert(womSnapshotComputed).values(computed);
+  if (skills.length > 0) await tx.insert(womSnapshotSkills).values(skills);
+  if (bosses.length > 0) await tx.insert(womSnapshotBosses).values(bosses);
+  if (activities.length > 0) await tx.insert(womSnapshotActivities).values(activities);
+
+  return saved.length;
+};
+
+// Snapshots already stored are skipped, so overlapping pulls are safe. Returns how many were new.
 export const saveSnapshots = async (tx: Transaction, snapshots: SnapshotResponse[]) => {
   let saved = 0;
-
-  for (const { playerId, createdAt, data } of snapshots) {
-    const [snapshot] = await tx
-      .insert(womSnapshots)
-      .values({
-        womPlayerId: playerId,
-        createdAt
-      })
-      .onConflictDoNothing()
-      .returning({ id: womSnapshots.id });
-    if (!snapshot) continue;
-
-    const { activities, bosses, computed, skills } = breakdown(snapshot.id, data);
-    if (computed.length > 0) await tx.insert(womSnapshotComputed).values(computed);
-    if (skills.length > 0) await tx.insert(womSnapshotSkills).values(skills);
-    if (bosses.length > 0) await tx.insert(womSnapshotBosses).values(bosses);
-    if (activities.length > 0) await tx.insert(womSnapshotActivities).values(activities);
-    saved++;
+  for (let start = 0; start < snapshots.length; start += SNAPSHOTS_PER_BATCH) {
+    saved += await saveBatch(tx, snapshots.slice(start, start + SNAPSHOTS_PER_BATCH));
   }
-
   return saved;
 };
