@@ -1,7 +1,9 @@
-import { and, eq, inArray, sql } from "drizzle-orm";
+import { and, eq, inArray } from "drizzle-orm";
 
 import type { Transaction } from "@db/index";
 import { speedrunDiaryTiers, speedrunDiaryTimes } from "@db/schema";
+
+import { epochSeconds } from "@/utils/sql";
 
 import { ELITE_TIER_ID, MASTER_TIER_ID } from "../constants";
 
@@ -11,7 +13,7 @@ export const getEliteAndMasterDiaryTimes = (tx: Transaction, contentId: number, 
     .select({
       tierId: speedrunDiaryTimes.tierId,
       tierName: speedrunDiaryTiers.name,
-      timeSeconds: sql<number>`extract(epoch from ${speedrunDiaryTimes.time})::float8`
+      timeSeconds: epochSeconds(speedrunDiaryTimes.time)
     })
     .from(speedrunDiaryTimes)
     .innerJoin(speedrunDiaryTiers, eq(speedrunDiaryTiers.id, speedrunDiaryTimes.tierId))
