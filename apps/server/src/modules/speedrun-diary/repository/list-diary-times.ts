@@ -1,7 +1,9 @@
-import { asc, eq, sql } from "drizzle-orm";
+import { asc, eq } from "drizzle-orm";
 
 import { db } from "@db/index";
 import { bosses, speedrunContent, speedrunDiaryTiers, speedrunDiaryTimes } from "@db/schema";
+
+import { epochSeconds } from "@/utils/sql";
 
 // Every threshold the diary sets: one row per content, team size and tier.
 export const listDiaryTimes = () =>
@@ -15,7 +17,7 @@ export const listDiaryTimes = () =>
       tierId: speedrunDiaryTiers.id,
       tierName: speedrunDiaryTiers.name,
       tierPoints: speedrunDiaryTiers.points,
-      timeSeconds: sql<number>`extract(epoch from ${speedrunDiaryTimes.time})::float8`
+      timeSeconds: epochSeconds(speedrunDiaryTimes.time)
     })
     .from(speedrunDiaryTimes)
     .innerJoin(speedrunContent, eq(speedrunContent.id, speedrunDiaryTimes.contentId))

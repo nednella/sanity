@@ -1,9 +1,10 @@
-import { and, asc, eq, sql } from "drizzle-orm";
+import { and, asc, eq } from "drizzle-orm";
 
 import { db } from "@db/index";
 import { personalBestParticipants, personalBests } from "@db/schema";
 
 import { isApprovedRun } from "@/modules/personal-bests/repository/shared/filters";
+import { epochSeconds } from "@/utils/sql";
 
 // Credited by team, matching how the diary itself is scored. The whole run comes back rather than its time
 // alone, so the screenshot that proves it is one field away.
@@ -13,7 +14,7 @@ export const listMemberBestTimes = (memberId: bigint) =>
       id: personalBests.id,
       contentId: personalBests.contentId,
       scale: personalBests.scale,
-      timeSeconds: sql<number>`extract(epoch from ${personalBests.time})::float8`,
+      timeSeconds: epochSeconds(personalBests.time),
       imageUrl: personalBests.imageUrl
     })
     .from(personalBests)

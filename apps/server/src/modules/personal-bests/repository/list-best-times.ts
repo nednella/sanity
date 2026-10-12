@@ -1,7 +1,9 @@
-import { and, eq, inArray, ne, sql } from "drizzle-orm";
+import { and, eq, inArray, min, ne } from "drizzle-orm";
 
 import type { Transaction } from "@db/index";
 import { personalBestParticipants, personalBests } from "@db/schema";
+
+import { epochSeconds } from "@/utils/sql";
 
 import { isApprovedRun } from "./shared/filters";
 
@@ -22,7 +24,7 @@ export const listBestTimes = async (tx: Transaction, { contentId, excludeId, mem
   const rows = await tx
     .select({
       memberId: personalBestParticipants.memberId,
-      timeSeconds: sql<number>`extract(epoch from min(${personalBests.time}))::float8`
+      timeSeconds: epochSeconds(min(personalBests.time))
     })
     .from(personalBests)
     .innerJoin(personalBestParticipants, eq(personalBestParticipants.personalBestId, personalBests.id))
