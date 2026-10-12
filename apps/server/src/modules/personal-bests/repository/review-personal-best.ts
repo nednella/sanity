@@ -3,11 +3,7 @@ import { eq } from "drizzle-orm";
 import type { Transaction } from "@db/index";
 import { personalBests } from "@db/schema";
 
-export type Review = {
-  reviewNote: string | null;
-  reviewedBy: bigint;
-  status: "approved" | "denied";
-};
+import type { Review } from "@/schema/common";
 
 export const reviewPersonalBest = (tx: Transaction, id: number, review: Review) =>
   tx

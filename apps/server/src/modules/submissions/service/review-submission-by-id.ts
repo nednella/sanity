@@ -4,16 +4,11 @@ import { recordAuditEntry } from "@/modules/audit/repository/record-audit-entry"
 import { listTrialists } from "@/modules/members/repository/list-trialists";
 import { awardPoints } from "@/modules/points/repository/award-points";
 import { generatePointSplit } from "@/modules/points/rules";
+import type { Review } from "@/schema/common";
 
 import { findSubmissionAwaitingReview } from "../repository/find-submission-awaiting-review";
 import { listParticipantIds } from "../repository/list-participant-ids";
 import { reviewSubmission } from "../repository/review-submission";
-
-export type ReviewRequest = {
-  reviewNote: string | null;
-  reviewedBy: bigint;
-  status: "approved" | "denied";
-};
 
 export type ReviewResult = "reviewed" | "not-awaiting-review";
 
@@ -22,7 +17,7 @@ export type ReviewResult = "reviewed" | "not-awaiting-review";
  * happen in one transaction, and the row is locked while it runs. A submission already reviewed is
  * refused rather than paid twice.
  */
-export const reviewSubmissionById = async (id: number, review: ReviewRequest): Promise<ReviewResult> =>
+export const reviewSubmissionById = async (id: number, review: Review): Promise<ReviewResult> =>
   db.transaction(async (tx) => {
     const awaiting = await findSubmissionAwaitingReview(tx, id);
     if (!awaiting) return "not-awaiting-review";

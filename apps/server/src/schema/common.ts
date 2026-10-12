@@ -49,3 +49,4 @@ export const memberRef = z
   .register(z.globalRegistry, { id: "MemberRef" });
 
 export type Page = z.output<typeof page>;
+export type Review = z.output<typeof reviewBody>;
