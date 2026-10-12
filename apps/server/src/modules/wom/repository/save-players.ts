@@ -35,5 +35,3 @@ export const savePlayers = async (
       }
     });
 };
-
-// Snapshots already stored are skipped, so overlapping pulls are safe. Returns how many were new.
