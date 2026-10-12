@@ -3,14 +3,14 @@ import { eq } from "drizzle-orm";
 import type { Transaction } from "@db/index";
 import { members } from "@db/schema";
 
-export type MemberProfile = {
+export type ProfileChanges = {
   altRsn?: string | null;
   birthday?: string | null;
   mainRsn?: string;
   nationality?: string | null;
 };
 
-export const updateMemberProfile = async (tx: Transaction, memberId: bigint, profile: MemberProfile) => {
+export const updateMemberProfile = async (tx: Transaction, memberId: bigint, profile: ProfileChanges) => {
   const [member] = await tx
     .select({ altRsn: members.altRsn, mainRsn: members.mainRsn })
     .from(members)
