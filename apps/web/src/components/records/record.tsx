@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { ChevronRight } from "lucide-react";
-import { createContext, useContext, useMemo, useState } from "react";
+import { createContext, useContext, useState } from "react";
 
 import type { RankedPersonalBest } from "@sanity/api";
 
@@ -35,10 +35,9 @@ type RootProps = {
 
 export function Record({ children, defaultScale }: Readonly<RootProps>) {
   const [scale, setScale] = useState(defaultScale);
-  const value = useMemo(() => ({ scale, setScale }), [scale]);
 
   return (
-    <ScaleContext value={value}>
+    <ScaleContext value={{ scale, setScale }}>
       <article className="relative isolate overflow-hidden rounded-xs border border-base-300 bg-base-100">
         {children}
       </article>
