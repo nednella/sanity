@@ -28,7 +28,7 @@ export const executePerTaggedMember = async <T extends { outcome: string }>(
     for (const discordId of discordIds) {
       const member = found.get(discordId);
       if (!member) {
-        results.push({ discordId, displayName: null, memberId: null, outcome: "not-a-member" });
+        results.push({ discordId, displayName: null, memberId: null, outcome: "not-a-member" as const });
         continue;
       }
 

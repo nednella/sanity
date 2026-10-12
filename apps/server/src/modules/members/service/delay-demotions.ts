@@ -17,6 +17,6 @@ export const delayDemotions = async ({ ...command }: AdminCommand) => {
       source: "server"
     });
 
-    return { outcome: "delayed" as const, until: until.toISOString() };
+    return { outcome: "delayed" as const, until };
   });
 };
