@@ -2,7 +2,6 @@ import { TRIALIST_RANK_ID } from "@/modules/ranks/constants";
 import { toRankIconUrl } from "@/modules/ranks/mapper";
 import type { RankRow } from "@/modules/ranks/repository/list-ranks";
 import { RANK_IDS_OFF_LADDER, type Standing, hasMetRequirements, toActiveRanks } from "@/modules/ranks/rules";
-import type { DiaryProgressRow } from "@/modules/speedrun-diary/repository/list-diary-progress";
 import type { SnapshotRows } from "@/modules/wom/repository/find-latest-snapshot";
 import type { NameChange } from "@/modules/wom/repository/list-name-changes";
 import { sortActivities, sortBosses, sortComputed, sortSkills } from "@/utils/metrics";
@@ -22,10 +21,7 @@ const toProgressionStatus = (currentRankId: number, isOnLadder: boolean, hasHigh
 
 const toRankSummary = (rank: RankRow) => ({ id: rank.id, name: rank.name, iconUrl: toRankIconUrl(rank.inGameName) });
 
-export const toMember = (
-  { member, discordAccount, rank, claimedDiaryTier, womPlayer }: MemberRow,
-  diaryProgress: DiaryProgressRow | undefined
-) => ({
+export const toMember = ({ member, discordAccount, rank, claimedDiaryTier, womPlayer, diaryProgress }: MemberRow) => ({
   id: member.id,
   displayName: member.displayName,
   nationality: member.nationality,
@@ -127,12 +123,11 @@ const toSnapshot = ({ snapshot, computed, skills, bosses, activities }: Snapshot
 
 export const toMemberProfile = (
   row: MemberRow,
-  diaryProgress: DiaryProgressRow | undefined,
   ranks: RankRow[],
   latestSnapshot: SnapshotRows | undefined,
   nameChanges: NameChange[]
 ) => {
-  const { wom, ...member } = toMember(row, diaryProgress);
+  const { wom, ...member } = toMember(row);
 
   return {
     ...member,

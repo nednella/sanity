@@ -1,14 +1,13 @@
-import { type SQL, and, asc, desc, eq, sql } from "drizzle-orm";
+import { type SQL, and, asc, desc, sql } from "drizzle-orm";
 import type { PgColumn } from "drizzle-orm/pg-core";
 
-import { db } from "@db/index";
-import { members, membersDiscordAccounts, ranks, speedrunDiaryTiers, womPlayers } from "@db/schema";
+import { members, ranks, womPlayers } from "@db/schema";
 
 import { diaryProgressCte } from "@/modules/speedrun-diary/repository/diary-progress-cte";
 
 import type { MemberSort } from "../request";
-import { memberColumns } from "./shared/columns";
 import { isActive, matchesSearch } from "./shared/filters";
+import { selectMembers } from "./shared/select-members";
 
 export type ListMembersOptions = {
   limit: number;
@@ -20,7 +19,8 @@ export type ListMembersOptions = {
 };
 
 export const listMembers = ({ limit, offset, active, search, sort, order }: ListMembersOptions) => {
-  const { bestTimes, reachedTiers, diaryProgress } = diaryProgressCte();
+  const progress = diaryProgressCte();
+  const { diaryProgress } = progress;
   const direction = order === "asc" ? asc : desc;
 
   const sortColumns: Record<MemberSort, PgColumn | SQL> = {
@@ -36,15 +36,7 @@ export const listMembers = ({ limit, offset, active, search, sort, order }: List
     totalLevel: sql`coalesce(${womPlayers.totalLevel}, 0)`
   };
 
-  return db
-    .with(bestTimes, reachedTiers, diaryProgress)
-    .select(memberColumns)
-    .from(members)
-    .innerJoin(membersDiscordAccounts, eq(membersDiscordAccounts.memberId, members.id))
-    .innerJoin(ranks, eq(ranks.id, members.rankId))
-    .leftJoin(speedrunDiaryTiers, eq(speedrunDiaryTiers.id, members.claimedDiaryTierId))
-    .leftJoin(womPlayers, eq(womPlayers.memberId, members.id))
-    .leftJoin(diaryProgress, eq(diaryProgress.memberId, members.id))
+  return selectMembers(progress)
     .where(and(isActive(active), matchesSearch(search)))
     .orderBy(direction(sortColumns[sort]), members.id)
     .limit(limit)
