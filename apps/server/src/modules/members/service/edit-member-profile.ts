@@ -3,14 +3,14 @@ import { db } from "@db/index";
 import { recordAuditEntry } from "@/modules/audit/repository/record-audit-entry";
 
 import { findMemberIdByDiscordId } from "../repository/find-member-id-by-discord-id";
-import { type MemberProfile, updateMemberProfile } from "../repository/update-member-profile";
+import { type ProfileChanges, updateMemberProfile } from "../repository/update-member-profile";
 
 const describe = (label: string, previous: string | null, next: string | null) =>
   `${label} ${previous ?? "none"} to ${next ?? "none"}`;
 
 export const editMemberProfile = async (
   memberId: bigint,
-  { actingDiscordId, ...profile }: MemberProfile & { actingDiscordId?: bigint }
+  { actingDiscordId, ...profile }: ProfileChanges & { actingDiscordId?: bigint }
 ) =>
   db.transaction(async (tx) => {
     const previous = await updateMemberProfile(tx, memberId, profile);
