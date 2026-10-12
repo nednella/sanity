@@ -613,6 +613,52 @@
           "iconUrl"
         ]
       },
+      "RankInput": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string"
+          },
+          "iconUrl": {
+            "nullable": true,
+            "type": "string"
+          },
+          "discordRoleId": {
+            "nullable": true,
+            "type": "string",
+            "pattern": "^\\d+$"
+          },
+          "requirements": {
+            "type": "object",
+            "properties": {
+              "clanPoints": {
+                "type": "number"
+              },
+              "diaryPoints": {
+                "type": "number"
+              },
+              "masterDiaries": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "clanPoints",
+              "diaryPoints",
+              "masterDiaries"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "iconUrl",
+          "discordRoleId",
+          "requirements"
+        ]
+      },
       "RankProposalInput": {
         "type": "object",
         "properties": {
@@ -1363,52 +1409,6 @@
           "wom"
         ]
       },
-      "RankInput": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "number"
-          },
-          "name": {
-            "type": "string"
-          },
-          "iconUrl": {
-            "nullable": true,
-            "type": "string"
-          },
-          "discordRoleId": {
-            "nullable": true,
-            "type": "string",
-            "pattern": "^\\d+$"
-          },
-          "requirements": {
-            "type": "object",
-            "properties": {
-              "clanPoints": {
-                "type": "number"
-              },
-              "diaryPoints": {
-                "type": "number"
-              },
-              "masterDiaries": {
-                "type": "number"
-              }
-            },
-            "required": [
-              "clanPoints",
-              "diaryPoints",
-              "masterDiaries"
-            ]
-          }
-        },
-        "required": [
-          "id",
-          "name",
-          "iconUrl",
-          "discordRoleId",
-          "requirements"
-        ]
-      },
       "Health": {
         "type": "object",
         "properties": {
@@ -2032,6 +2032,54 @@
           "id",
           "name",
           "iconUrl"
+        ],
+        "additionalProperties": false
+      },
+      "Rank": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string"
+          },
+          "iconUrl": {
+            "nullable": true,
+            "type": "string"
+          },
+          "discordRoleId": {
+            "nullable": true,
+            "type": "string",
+            "pattern": "^\\d+$"
+          },
+          "requirements": {
+            "type": "object",
+            "properties": {
+              "clanPoints": {
+                "type": "number"
+              },
+              "diaryPoints": {
+                "type": "number"
+              },
+              "masterDiaries": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "clanPoints",
+              "diaryPoints",
+              "masterDiaries"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "iconUrl",
+          "discordRoleId",
+          "requirements"
         ],
         "additionalProperties": false
       },
@@ -2798,54 +2846,6 @@
           "diary",
           "progression",
           "wom"
-        ],
-        "additionalProperties": false
-      },
-      "Rank": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "number"
-          },
-          "name": {
-            "type": "string"
-          },
-          "iconUrl": {
-            "nullable": true,
-            "type": "string"
-          },
-          "discordRoleId": {
-            "nullable": true,
-            "type": "string",
-            "pattern": "^\\d+$"
-          },
-          "requirements": {
-            "type": "object",
-            "properties": {
-              "clanPoints": {
-                "type": "number"
-              },
-              "diaryPoints": {
-                "type": "number"
-              },
-              "masterDiaries": {
-                "type": "number"
-              }
-            },
-            "required": [
-              "clanPoints",
-              "diaryPoints",
-              "masterDiaries"
-            ],
-            "additionalProperties": false
-          }
-        },
-        "required": [
-          "id",
-          "name",
-          "iconUrl",
-          "discordRoleId",
-          "requirements"
         ],
         "additionalProperties": false
       }
@@ -4274,20 +4274,11 @@
                             ]
                           },
                           "rank": {
-                            "type": "object",
-                            "properties": {
-                              "id": {
-                                "type": "number"
-                              },
-                              "name": {
-                                "type": "string"
+                            "allOf": [
+                              {
+                                "$ref": "#/components/schemas/RankSummary"
                               }
-                            },
-                            "required": [
-                              "id",
-                              "name"
-                            ],
-                            "additionalProperties": false
+                            ]
                           },
                           "until": {
                             "type": "string",
@@ -4398,20 +4389,11 @@
                             ]
                           },
                           "rank": {
-                            "type": "object",
-                            "properties": {
-                              "id": {
-                                "type": "number"
-                              },
-                              "name": {
-                                "type": "string"
+                            "allOf": [
+                              {
+                                "$ref": "#/components/schemas/RankSummary"
                               }
-                            },
-                            "required": [
-                              "id",
-                              "name"
-                            ],
-                            "additionalProperties": false
+                            ]
                           },
                           "until": {
                             "type": "string",
@@ -4522,20 +4504,11 @@
                             ]
                           },
                           "rank": {
-                            "type": "object",
-                            "properties": {
-                              "id": {
-                                "type": "number"
-                              },
-                              "name": {
-                                "type": "string"
+                            "allOf": [
+                              {
+                                "$ref": "#/components/schemas/RankSummary"
                               }
-                            },
-                            "required": [
-                              "id",
-                              "name"
-                            ],
-                            "additionalProperties": false
+                            ]
                           },
                           "until": {
                             "type": "string",
@@ -4652,20 +4625,11 @@
                             ]
                           },
                           "rank": {
-                            "type": "object",
-                            "properties": {
-                              "id": {
-                                "type": "number"
-                              },
-                              "name": {
-                                "type": "string"
+                            "allOf": [
+                              {
+                                "$ref": "#/components/schemas/RankSummary"
                               }
-                            },
-                            "required": [
-                              "id",
-                              "name"
-                            ],
-                            "additionalProperties": false
+                            ]
                           },
                           "until": {
                             "type": "string",
@@ -4776,20 +4740,11 @@
                             ]
                           },
                           "rank": {
-                            "type": "object",
-                            "properties": {
-                              "id": {
-                                "type": "number"
-                              },
-                              "name": {
-                                "type": "string"
+                            "allOf": [
+                              {
+                                "$ref": "#/components/schemas/RankSummary"
                               }
-                            },
-                            "required": [
-                              "id",
-                              "name"
-                            ],
-                            "additionalProperties": false
+                            ]
                           },
                           "until": {
                             "type": "string",
@@ -5014,20 +4969,11 @@
                             ]
                           },
                           "rank": {
-                            "type": "object",
-                            "properties": {
-                              "id": {
-                                "type": "number"
-                              },
-                              "name": {
-                                "type": "string"
+                            "allOf": [
+                              {
+                                "$ref": "#/components/schemas/RankSummary"
                               }
-                            },
-                            "required": [
-                              "id",
-                              "name"
-                            ],
-                            "additionalProperties": false
+                            ]
                           },
                           "until": {
                             "type": "string",

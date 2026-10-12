@@ -1,14 +1,7 @@
 import { z } from "zod";
 
+import { rankSummary } from "@/modules/ranks/response";
 import { bigIntString, isoDate } from "@/schema/codecs";
-
-export const rankSummary = z
-  .object({
-    id: z.number(),
-    name: z.string(),
-    iconUrl: z.string().nullable()
-  })
-  .register(z.globalRegistry, { id: "RankSummary" });
 
 const discord = z.object({
   id: bigIntString,
@@ -24,8 +17,6 @@ const previousRsn = z.object({
   name: z.string(),
   until: isoDate
 });
-
-const rankName = z.object({ id: z.number(), name: z.string() });
 
 const commandOutcome = z.object({
   discordId: bigIntString,
@@ -50,7 +41,7 @@ const commandOutcome = z.object({
     "unknown-rank",
     "unretired"
   ]),
-  rank: rankName.optional(),
+  rank: rankSummary.optional(),
   until: isoDate.optional()
 });
 

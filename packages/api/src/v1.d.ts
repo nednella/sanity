@@ -897,10 +897,7 @@ export interface paths {
                                 memberId: string | null;
                                 /** @enum {string} */
                                 outcome: "already-quit" | "already-retired" | "delayed" | "has-quit" | "no-rank-earned" | "no-rank-to-give" | "not-a-member" | "not-a-rank-change" | "not-a-trialist" | "not-retired" | "passed" | "quit" | "ranked" | "retired" | "unchanged" | "unknown-rank" | "unretired";
-                                rank?: {
-                                    id: number;
-                                    name: string;
-                                };
+                                rank?: components["schemas"]["RankSummary"];
                                 /** Format: date-time */
                                 until?: string;
                             }[];
@@ -954,10 +951,7 @@ export interface paths {
                                 memberId: string | null;
                                 /** @enum {string} */
                                 outcome: "already-quit" | "already-retired" | "delayed" | "has-quit" | "no-rank-earned" | "no-rank-to-give" | "not-a-member" | "not-a-rank-change" | "not-a-trialist" | "not-retired" | "passed" | "quit" | "ranked" | "retired" | "unchanged" | "unknown-rank" | "unretired";
-                                rank?: {
-                                    id: number;
-                                    name: string;
-                                };
+                                rank?: components["schemas"]["RankSummary"];
                                 /** Format: date-time */
                                 until?: string;
                             }[];
@@ -1011,10 +1005,7 @@ export interface paths {
                                 memberId: string | null;
                                 /** @enum {string} */
                                 outcome: "already-quit" | "already-retired" | "delayed" | "has-quit" | "no-rank-earned" | "no-rank-to-give" | "not-a-member" | "not-a-rank-change" | "not-a-trialist" | "not-retired" | "passed" | "quit" | "ranked" | "retired" | "unchanged" | "unknown-rank" | "unretired";
-                                rank?: {
-                                    id: number;
-                                    name: string;
-                                };
+                                rank?: components["schemas"]["RankSummary"];
                                 /** Format: date-time */
                                 until?: string;
                             }[];
@@ -1069,10 +1060,7 @@ export interface paths {
                                 memberId: string | null;
                                 /** @enum {string} */
                                 outcome: "already-quit" | "already-retired" | "delayed" | "has-quit" | "no-rank-earned" | "no-rank-to-give" | "not-a-member" | "not-a-rank-change" | "not-a-trialist" | "not-retired" | "passed" | "quit" | "ranked" | "retired" | "unchanged" | "unknown-rank" | "unretired";
-                                rank?: {
-                                    id: number;
-                                    name: string;
-                                };
+                                rank?: components["schemas"]["RankSummary"];
                                 /** Format: date-time */
                                 until?: string;
                             }[];
@@ -1126,10 +1114,7 @@ export interface paths {
                                 memberId: string | null;
                                 /** @enum {string} */
                                 outcome: "already-quit" | "already-retired" | "delayed" | "has-quit" | "no-rank-earned" | "no-rank-to-give" | "not-a-member" | "not-a-rank-change" | "not-a-trialist" | "not-retired" | "passed" | "quit" | "ranked" | "retired" | "unchanged" | "unknown-rank" | "unretired";
-                                rank?: {
-                                    id: number;
-                                    name: string;
-                                };
+                                rank?: components["schemas"]["RankSummary"];
                                 /** Format: date-time */
                                 until?: string;
                             }[];
@@ -1240,10 +1225,7 @@ export interface paths {
                                 memberId: string | null;
                                 /** @enum {string} */
                                 outcome: "already-quit" | "already-retired" | "delayed" | "has-quit" | "no-rank-earned" | "no-rank-to-give" | "not-a-member" | "not-a-rank-change" | "not-a-trialist" | "not-retired" | "passed" | "quit" | "ranked" | "retired" | "unchanged" | "unknown-rank" | "unretired";
-                                rank?: {
-                                    id: number;
-                                    name: string;
-                                };
+                                rank?: components["schemas"]["RankSummary"];
                                 /** Format: date-time */
                                 until?: string;
                             }[];
@@ -1569,6 +1551,17 @@ export interface components {
             name: string;
             iconUrl: string | null;
         };
+        RankInput: {
+            id: number;
+            name: string;
+            iconUrl: string | null;
+            discordRoleId: string | null;
+            requirements: {
+                clanPoints: number;
+                diaryPoints: number;
+                masterDiaries: number;
+            };
+        };
         RankProposalInput: {
             memberId: string;
             discordId: string;
@@ -1748,17 +1741,6 @@ export interface components {
                 latestSnapshot?: components["schemas"]["SnapshotInput"];
             } | null;
         };
-        RankInput: {
-            id: number;
-            name: string;
-            iconUrl: string | null;
-            discordRoleId: string | null;
-            requirements: {
-                clanPoints: number;
-                diaryPoints: number;
-                masterDiaries: number;
-            };
-        };
         Health: {
             /** @enum {string} */
             status: "error" | "ok";
@@ -1897,6 +1879,17 @@ export interface components {
             id: number;
             name: string;
             iconUrl: string | null;
+        };
+        Rank: {
+            id: number;
+            name: string;
+            iconUrl: string | null;
+            discordRoleId: string | null;
+            requirements: {
+                clanPoints: number;
+                diaryPoints: number;
+                masterDiaries: number;
+            };
         };
         RankProposal: {
             memberId: string;
@@ -2076,17 +2069,6 @@ export interface components {
                 syncedAt: string;
                 latestSnapshot?: components["schemas"]["Snapshot"];
             } | null;
-        };
-        Rank: {
-            id: number;
-            name: string;
-            iconUrl: string | null;
-            discordRoleId: string | null;
-            requirements: {
-                clanPoints: number;
-                diaryPoints: number;
-                masterDiaries: number;
-            };
         };
     };
     responses: never;
