@@ -66,7 +66,7 @@ export const membersDiscordAccounts = pgTable("members_discord_accounts", {
   avatarUrl: text()
 });
 
-export const submissionStatus = pgEnum("submission_status", [
+export const reviewStatus = pgEnum("review_status", [
   "pending",
   "submitted",
   "approved",
@@ -138,7 +138,7 @@ export const submissions = pgTable(
     imageUrl: text(),
     discordMessageUrl: text(),
     event: submissionEvent(),
-    status: submissionStatus().notNull(),
+    status: reviewStatus().notNull(),
     submittedAt: timestamp({ withTimezone: true }).notNull(),
     reviewedBy: bigint({ mode: "bigint" }).references(() => members.id, { onDelete: "restrict" }),
     reviewedAt: timestamp({ withTimezone: true }),
@@ -234,7 +234,7 @@ export const personalBests = pgTable(
     scale: smallint().notNull(),
     time: interval().notNull(),
     imageUrl: text(),
-    status: submissionStatus().notNull(),
+    status: reviewStatus().notNull(),
     submittedAt: timestamp({ withTimezone: true }),
     reviewedBy: bigint({ mode: "bigint" }).references(() => members.id, { onDelete: "restrict" }),
     reviewedAt: timestamp({ withTimezone: true }),

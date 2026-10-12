@@ -1,12 +1,12 @@
 import { type SQL, and, eq, inArray } from "drizzle-orm";
 
 import { db } from "@db/index";
-import { submissionEvent, submissionParticipants, submissionStatus, submissions } from "@db/schema";
+import { reviewStatus, submissionEvent, submissionParticipants, submissions } from "@db/schema";
 
 export type SubmissionFilters = {
   memberId?: bigint;
   event?: (typeof submissionEvent.enumValues)[number];
-  status?: (typeof submissionStatus.enumValues)[number];
+  status?: (typeof reviewStatus.enumValues)[number];
 };
 
 // Denied and deleted submissions stay hidden; everything else is either counted or waiting to be.
