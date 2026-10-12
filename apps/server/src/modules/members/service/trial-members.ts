@@ -2,6 +2,7 @@ import { db } from "@db/index";
 
 import { recordAuditEntry } from "@/modules/audit/repository/record-audit-entry";
 
+import { findMemberIdByDiscordId } from "../repository/find-member-id-by-discord-id";
 import { listMembersByDiscordId } from "../repository/list-members-by-discord-id";
 import { saveMember } from "../repository/save-member";
 import { startMemberTrial } from "../repository/start-member-trial";
@@ -14,12 +15,13 @@ export type NewTrialist = {
 };
 
 export type TrialCommand = {
-  actingMemberId?: bigint;
+  actingDiscordId?: bigint;
   trialists: NewTrialist[];
 };
 
-export const trialMembers = async ({ actingMemberId, trialists }: TrialCommand) =>
+export const trialMembers = async ({ actingDiscordId, trialists }: TrialCommand) =>
   db.transaction(async (tx) => {
+    const actingMemberId = await findMemberIdByDiscordId(tx, actingDiscordId);
     const found = await listMembersByDiscordId(
       tx,
       trialists.map(({ discordId }) => discordId)
