@@ -3,7 +3,7 @@ import { isNull, sql } from "drizzle-orm";
 import { client, db } from "@db/index";
 import { items } from "@db/schema";
 
-import { saveItems } from "@/modules/catalogue/repository/save-items";
+import { importItems } from "@/modules/catalogue/service/import-items";
 
 const CACHE_URL = "https://static.runelite.net/cache/item/names.json";
 
@@ -24,7 +24,7 @@ const resolved = stored.flatMap((item) => {
   return osrsItemId === undefined ? [] : [{ name: names[String(osrsItemId)]!, osrsItemId }];
 });
 
-const saved = await saveItems(resolved);
+const saved = await importItems(resolved);
 
 const [unresolved] = await db
   .select({ value: sql<number>`count(*)::int` })
