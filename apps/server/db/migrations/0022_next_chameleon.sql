@@ -1,0 +1,1 @@
+ALTER TYPE "public"."submission_status" RENAME TO "review_status";
