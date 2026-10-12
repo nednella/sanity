@@ -1,0 +1,2 @@
+ALTER TABLE "points" ADD COLUMN "awarded_by" bigint;--> statement-breakpoint
+ALTER TABLE "points" ADD CONSTRAINT "points_awarded_by_members_id_fk" FOREIGN KEY ("awarded_by") REFERENCES "public"."members"("id") ON DELETE no action ON UPDATE no action;

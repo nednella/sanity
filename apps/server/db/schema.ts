@@ -175,6 +175,7 @@ export const points = pgTable(
     submissionId: integer().references(() => submissions.id),
     value: integer().notNull(),
     notes: text(),
+    awardedBy: bigint({ mode: "bigint" }).references(() => members.id),
     awardedAt: timestamp({ withTimezone: true }).notNull()
   },
   (table) => [index().on(table.memberId, table.awardedAt.desc()), index().on(table.submissionId)]

@@ -39,7 +39,7 @@ export const reviewPersonalBestById = async (id: number, review: ReviewRequest):
 
     if (review.status === "denied" || awaiting.contentId === null) return "reviewed";
 
-    await payDiaryCarries(tx, { ...awaiting, contentId: awaiting.contentId }, memberIds);
-    await claimEarnedDiaryTiers(tx, memberIds);
+    await payDiaryCarries(tx, { ...awaiting, contentId: awaiting.contentId }, memberIds, review.reviewedBy);
+    await claimEarnedDiaryTiers(tx, memberIds, review.reviewedBy);
     return "reviewed";
   });
