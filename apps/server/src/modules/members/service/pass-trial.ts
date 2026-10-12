@@ -5,7 +5,8 @@ import { listRanks } from "@/modules/ranks/repository/list-ranks";
 import { toActiveRanks } from "@/modules/ranks/rules";
 
 import { setMemberRank } from "../repository/set-member-rank";
-import { type AdminCommand, executePerTaggedMember } from "./shared/execute-per-tagged-member";
+import type { AdminCommand } from "../request";
+import { executePerTaggedMember } from "./shared/execute-per-tagged-member";
 
 export const passTrial = async ({ note, ...command }: AdminCommand) => {
   const [first] = toActiveRanks(await listRanks());

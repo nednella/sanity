@@ -9,12 +9,6 @@ export type TaggedMember = {
   rankId: number;
 };
 
-export type AdminCommand = {
-  actingDiscordId?: bigint;
-  taggedDiscordIds: bigint[];
-  note?: string;
-};
-
 export const executePerTaggedMember = async <T extends { outcome: string }>(
   { actingDiscordId, taggedDiscordIds }: { actingDiscordId?: bigint; taggedDiscordIds: bigint[] },
   handle: (tx: Transaction, member: TaggedMember, actingMemberId: bigint | undefined) => Promise<T>
