@@ -39,9 +39,9 @@ export const members = pgTable(
     altRsn: text(),
     rankId: smallint()
       .notNull()
-      .references(() => ranks.id),
+      .references(() => ranks.id, { onDelete: "restrict" }),
     clanPoints: integer().notNull().default(0),
-    claimedDiaryTierId: smallint().references(() => speedrunDiaryTiers.id),
+    claimedDiaryTierId: smallint().references(() => speedrunDiaryTiers.id, { onDelete: "restrict" }),
     isActive: boolean().notNull().default(false),
     joinedAt: timestamp({ withTimezone: true }),
     leftAt: timestamp({ withTimezone: true }),
@@ -128,8 +128,8 @@ export const submissions = pgTable(
     id: integer().generatedByDefaultAsIdentity().primaryKey(),
     memberId: bigint({ mode: "bigint" })
       .notNull()
-      .references(() => members.id),
-    itemId: integer().references(() => items.id),
+      .references(() => members.id, { onDelete: "restrict" }),
+    itemId: integer().references(() => items.id, { onDelete: "restrict" }),
     itemName: text(),
     valueMillions: integer(),
     // People on the drop who are not in the clan. They take a share, so the split needs them, and
@@ -140,7 +140,7 @@ export const submissions = pgTable(
     event: submissionEvent(),
     status: submissionStatus().notNull(),
     submittedAt: timestamp({ withTimezone: true }).notNull(),
-    reviewedBy: bigint({ mode: "bigint" }).references(() => members.id),
+    reviewedBy: bigint({ mode: "bigint" }).references(() => members.id, { onDelete: "restrict" }),
     reviewedAt: timestamp({ withTimezone: true }),
     reviewNote: text()
   },
@@ -160,7 +160,7 @@ export const submissionParticipants = pgTable(
       .references(() => submissions.id, { onDelete: "cascade" }),
     memberId: bigint({ mode: "bigint" })
       .notNull()
-      .references(() => members.id)
+      .references(() => members.id, { onDelete: "restrict" })
   },
   (table) => [primaryKey({ columns: [table.submissionId, table.memberId] }), index().on(table.memberId)]
 );
@@ -171,11 +171,11 @@ export const points = pgTable(
     id: bigint({ mode: "bigint" }).generatedByDefaultAsIdentity().primaryKey(),
     memberId: bigint({ mode: "bigint" })
       .notNull()
-      .references(() => members.id),
-    submissionId: integer().references(() => submissions.id),
+      .references(() => members.id, { onDelete: "restrict" }),
+    submissionId: integer().references(() => submissions.id, { onDelete: "restrict" }),
     value: integer().notNull(),
     notes: text(),
-    awardedBy: bigint({ mode: "bigint" }).references(() => members.id),
+    awardedBy: bigint({ mode: "bigint" }).references(() => members.id, { onDelete: "restrict" }),
     awardedAt: timestamp({ withTimezone: true }).notNull()
   },
   (table) => [index().on(table.memberId, table.awardedAt.desc()), index().on(table.submissionId)]
@@ -189,7 +189,7 @@ export const pointsTimelineEvents = pgTable("points_timeline_events", {
 
 export const speedrunContent = pgTable("speedrun_content", {
   id: integer().generatedByDefaultAsIdentity().primaryKey(),
-  bossId: integer().references(() => bosses.id),
+  bossId: integer().references(() => bosses.id, { onDelete: "restrict" }),
   imageUrl: text(),
   isActive: boolean().notNull().default(true)
 });
@@ -205,11 +205,11 @@ export const speedrunDiaryTimes = pgTable(
   {
     contentId: integer()
       .notNull()
-      .references(() => speedrunContent.id),
+      .references(() => speedrunContent.id, { onDelete: "restrict" }),
     scale: smallint().notNull(),
     tierId: smallint()
       .notNull()
-      .references(() => speedrunDiaryTiers.id),
+      .references(() => speedrunDiaryTiers.id, { onDelete: "restrict" }),
     time: interval().notNull()
   },
   (table) => [primaryKey({ columns: [table.contentId, table.scale, table.tierId] })]
@@ -218,7 +218,7 @@ export const speedrunDiaryTimes = pgTable(
 export const speedrunDiaryRewards = pgTable("speedrun_diary_rewards", {
   tierId: smallint()
     .primaryKey()
-    .references(() => speedrunDiaryTiers.id),
+    .references(() => speedrunDiaryTiers.id, { onDelete: "restrict" }),
   requiredDiaryPoints: smallint().notNull(),
   clanPoints: integer().notNull()
 });
@@ -229,14 +229,14 @@ export const personalBests = pgTable(
     id: integer().generatedByDefaultAsIdentity().primaryKey(),
     memberId: bigint({ mode: "bigint" })
       .notNull()
-      .references(() => members.id),
-    contentId: integer().references(() => speedrunContent.id),
+      .references(() => members.id, { onDelete: "restrict" }),
+    contentId: integer().references(() => speedrunContent.id, { onDelete: "restrict" }),
     scale: smallint().notNull(),
     time: interval().notNull(),
     imageUrl: text(),
     status: submissionStatus().notNull(),
     submittedAt: timestamp({ withTimezone: true }),
-    reviewedBy: bigint({ mode: "bigint" }).references(() => members.id),
+    reviewedBy: bigint({ mode: "bigint" }).references(() => members.id, { onDelete: "restrict" }),
     reviewedAt: timestamp({ withTimezone: true }),
     reviewNote: text()
   },
@@ -251,7 +251,7 @@ export const personalBestParticipants = pgTable(
       .references(() => personalBests.id, { onDelete: "cascade" }),
     memberId: bigint({ mode: "bigint" })
       .notNull()
-      .references(() => members.id)
+      .references(() => members.id, { onDelete: "restrict" })
   },
   (table) => [primaryKey({ columns: [table.personalBestId, table.memberId] }), index().on(table.memberId)]
 );
@@ -364,7 +364,7 @@ export const auditLog = pgTable(
   "audit_log",
   {
     id: bigint({ mode: "bigint" }).generatedByDefaultAsIdentity().primaryKey(),
-    actingMemberId: bigint({ mode: "bigint" }).references(() => members.id),
+    actingMemberId: bigint({ mode: "bigint" }).references(() => members.id, { onDelete: "restrict" }),
     action: auditAction().notNull(),
     note: text(),
     occurredAt: timestamp({ withTimezone: true }).notNull(),
