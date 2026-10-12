@@ -3,12 +3,7 @@ import { members, membersDiscordAccounts } from "@db/schema";
 
 import { TRIALIST_RANK_ID } from "@/modules/ranks/constants";
 
-export type NewMember = {
-  altRsn: string | null;
-  discordId: bigint;
-  displayName: string;
-  mainRsn: string;
-};
+import type { NewMember } from "../request";
 
 export const saveMember = async (tx: Transaction, { discordId, ...member }: NewMember) => {
   const [inserted] = await tx

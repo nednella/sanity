@@ -6,18 +6,7 @@ import { findMemberIdByDiscordId } from "../repository/find-member-id-by-discord
 import { listMembersByDiscordId } from "../repository/list-members-by-discord-id";
 import { saveMember } from "../repository/save-member";
 import { startMemberTrial } from "../repository/start-member-trial";
-
-export type NewTrialist = {
-  altRsn: string | null;
-  discordId: bigint;
-  displayName: string;
-  mainRsn: string;
-};
-
-export type TrialCommand = {
-  actingDiscordId?: bigint;
-  trialists: NewTrialist[];
-};
+import type { TrialCommand } from "../request";
 
 export const trialMembers = async ({ actingDiscordId, trialists }: TrialCommand) =>
   db.transaction(async (tx) => {

@@ -2,7 +2,8 @@ import { recordAuditEntry } from "@/modules/audit/repository/record-audit-entry"
 import { QUIT_RANK_ID, RETIRED_RANK_ID } from "@/modules/ranks/constants";
 
 import { setMemberRank } from "../repository/set-member-rank";
-import { type AdminCommand, executePerTaggedMember } from "./shared/execute-per-tagged-member";
+import type { AdminCommand } from "../request";
+import { executePerTaggedMember } from "./shared/execute-per-tagged-member";
 
 export const retireMembers = async ({ note, ...command }: AdminCommand) =>
   executePerTaggedMember(command, async (tx, member, actingMemberId) => {

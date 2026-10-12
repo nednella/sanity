@@ -82,5 +82,8 @@ export const updateMemberBody = z
   })
   .partial();
 
+export type AdminCommand = z.output<typeof memberCommandBody>;
 export type MemberListQuery = Partial<z.output<typeof memberListQuery>>;
 export type MemberSort = z.output<typeof memberSort>;
+export type NewMember = z.output<typeof trialist>;
+export type TrialCommand = z.output<typeof trialBody>;

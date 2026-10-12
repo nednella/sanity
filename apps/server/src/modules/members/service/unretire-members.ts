@@ -6,7 +6,8 @@ import { toEarnedRank } from "@/modules/ranks/rules";
 
 import { findMemberStanding } from "../repository/find-member-standing";
 import { setMemberRank } from "../repository/set-member-rank";
-import { type AdminCommand, executePerTaggedMember } from "./shared/execute-per-tagged-member";
+import type { AdminCommand } from "../request";
+import { executePerTaggedMember } from "./shared/execute-per-tagged-member";
 
 export const unretireMembers = async ({ note, ...command }: AdminCommand) => {
   const ranks = await listRanks();

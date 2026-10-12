@@ -2,7 +2,8 @@ import { recordAuditEntry } from "@/modules/audit/repository/record-audit-entry"
 import { firstOfNextMonth } from "@/utils/dates";
 
 import { delayRankChange } from "../repository/delay-rank-change";
-import { type AdminCommand, executePerTaggedMember } from "./shared/execute-per-tagged-member";
+import type { AdminCommand } from "../request";
+import { executePerTaggedMember } from "./shared/execute-per-tagged-member";
 
 export const delayDemotions = async ({ ...command }: AdminCommand) => {
   const until = firstOfNextMonth(new Date());

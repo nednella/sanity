@@ -4,7 +4,8 @@ import { toRankSummary } from "@/modules/ranks/mapper";
 import { listRanks } from "@/modules/ranks/repository/list-ranks";
 
 import { setMemberRank } from "../repository/set-member-rank";
-import { type AdminCommand, executePerTaggedMember } from "./shared/execute-per-tagged-member";
+import type { AdminCommand } from "../request";
+import { executePerTaggedMember } from "./shared/execute-per-tagged-member";
 
 export type RankChange = AdminCommand & { rankId: number };
 
