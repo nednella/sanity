@@ -1,5 +1,6 @@
 import { recordAuditEntry } from "@/modules/audit/repository/record-audit-entry";
 import { QUIT_RANK_ID, RETIRED_RANK_ID } from "@/modules/ranks/constants";
+import { toRankSummary } from "@/modules/ranks/mapper";
 import { listRanks } from "@/modules/ranks/repository/list-ranks";
 
 import { setMemberRank } from "../repository/set-member-rank";
@@ -30,6 +31,6 @@ export const changeMemberRanks = async ({ note, rankId, ...command }: RankChange
       source: "server"
     });
 
-    return { outcome: "ranked" as const, rank: { id: rank.id, name: rank.name } };
+    return { outcome: "ranked" as const, rank: toRankSummary(rank) };
   });
 };

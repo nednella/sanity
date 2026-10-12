@@ -8,11 +8,16 @@ const requirements = z.object({
   masterDiaries: z.number()
 });
 
-export const rank = z
+export const rankSummary = z
   .object({
     id: z.number(),
     name: z.string(),
-    iconUrl: z.string().nullable(),
+    iconUrl: z.string().nullable()
+  })
+  .register(z.globalRegistry, { id: "RankSummary" });
+
+export const rank = rankSummary
+  .extend({
     discordRoleId: bigIntString.nullable(),
     requirements
   })

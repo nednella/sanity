@@ -1,5 +1,6 @@
 import { recordAuditEntry } from "@/modules/audit/repository/record-audit-entry";
 import { TRIALIST_RANK_ID } from "@/modules/ranks/constants";
+import { toRankSummary } from "@/modules/ranks/mapper";
 import { listRanks } from "@/modules/ranks/repository/list-ranks";
 import { toActiveRanks } from "@/modules/ranks/rules";
 
@@ -22,6 +23,6 @@ export const passTrial = async ({ note, ...command }: AdminCommand) => {
       source: "server"
     });
 
-    return { outcome: "passed" as const, rank: { id: first.id, name: first.name } };
+    return { outcome: "passed" as const, rank: toRankSummary(first) };
   });
 };

@@ -1,6 +1,6 @@
 import { db } from "@db/index";
 
-import { toRankIconUrl } from "@/modules/ranks/mapper";
+import { toRankSummary } from "@/modules/ranks/mapper";
 import { listRanks } from "@/modules/ranks/repository/list-ranks";
 import { RANK_IDS_OFF_LADDER, toEarnedRank } from "@/modules/ranks/rules";
 
@@ -12,10 +12,7 @@ export const bulkRankCheck = async () => {
   const rankById = new Map(ranks.map((rank) => [rank.id, rank]));
   const now = new Date();
 
-  const toRank = (id: number) => {
-    const rank = rankById.get(id);
-    return { iconUrl: rank ? toRankIconUrl(rank.inGameName) : null, id, name: rank?.name ?? String(id) };
-  };
+  const toRank = (id: number) => toRankSummary(rankById.get(id)!);
 
   const proposals = standings.flatMap((standing) => {
     if (RANK_IDS_OFF_LADDER.has(standing.rankId)) return [];

@@ -1,5 +1,6 @@
 import { recordAuditEntry } from "@/modules/audit/repository/record-audit-entry";
 import { QUIT_RANK_ID, RETIRED_RANK_ID } from "@/modules/ranks/constants";
+import { toRankSummary } from "@/modules/ranks/mapper";
 import { listRanks } from "@/modules/ranks/repository/list-ranks";
 import { toEarnedRank } from "@/modules/ranks/rules";
 
@@ -27,6 +28,6 @@ export const unretireMembers = async ({ note, ...command }: AdminCommand) => {
       source: "server"
     });
 
-    return { outcome: "unretired" as const, rank: { id: earned.id, name: earned.name } };
+    return { outcome: "unretired" as const, rank: toRankSummary(earned) };
   });
 };
