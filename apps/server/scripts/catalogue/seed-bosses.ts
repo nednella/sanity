@@ -3,7 +3,7 @@ import { BOSSES, MetricProps } from "@wise-old-man/utils";
 import { client } from "@db/index";
 
 import { wom } from "@/integrations/wom";
-import { saveBosses } from "@/modules/catalogue/repository/save-bosses";
+import { importBosses } from "@/modules/catalogue/service/import-bosses";
 
 import names from "./names.json" with { type: "json" };
 
@@ -15,7 +15,7 @@ const toDisplayName = (metric: (typeof BOSSES)[number]) =>
 const rates = await wom.efficiency.getEHBRates("main");
 const ratePerBoss = new Map(rates.map(({ boss, rate }) => [boss, rate]));
 
-const saved = await saveBosses(
+const saved = await importBosses(
   BOSSES.map((metric) => ({
     womMetric: metric,
     name: toDisplayName(metric),

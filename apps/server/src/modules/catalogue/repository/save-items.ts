@@ -1,13 +1,11 @@
 import { sql } from "drizzle-orm";
 
-import { db } from "@db/index";
+import type { Transaction } from "@db/index";
 import { items } from "@db/schema";
-
-import { recordAuditEntry } from "@/modules/audit/repository/record-audit-entry";
 
 export type ItemRow = typeof items.$inferInsert;
 
-export const saveItems = async (rows: ItemRow[]) => {
+export const saveItems = async (tx: Transaction, rows: ItemRow[]) => {
   const seen = new Set<string>();
   const unique = rows.filter((row) => {
     const name = row.name.toLowerCase();
@@ -17,24 +15,14 @@ export const saveItems = async (rows: ItemRow[]) => {
     return true;
   });
 
-  if (unique.length === 0) return 0;
+  const saved = await tx
+    .insert(items)
+    .values(unique)
+    .onConflictDoUpdate({
+      target: items.name,
+      set: { name: sql`excluded.name`, osrsItemId: sql`coalesce(excluded.osrs_item_id, ${items.osrsItemId})` }
+    })
+    .returning({ id: items.id });
 
-  return db.transaction(async (tx) => {
-    const saved = await tx
-      .insert(items)
-      .values(unique)
-      .onConflictDoUpdate({
-        target: items.name,
-        set: { name: sql`excluded.name`, osrsItemId: sql`coalesce(excluded.osrs_item_id, ${items.osrsItemId})` }
-      })
-      .returning({ id: items.id });
-
-    await recordAuditEntry(tx, {
-      action: "catalogue_changed",
-      note: `${saved.length} items saved`,
-      source: "server"
-    });
-
-    return saved.length;
-  });
+  return saved.length;
 };

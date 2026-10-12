@@ -3,8 +3,8 @@ import { eq, sql } from "drizzle-orm";
 import { client, db } from "@db/index";
 import { bosses, items } from "@db/schema";
 
-import { saveItems } from "@/modules/catalogue/repository/save-items";
-import { saveUniques } from "@/modules/catalogue/repository/save-uniques";
+import { importItems } from "@/modules/catalogue/service/import-items";
+import { importUniques } from "@/modules/catalogue/service/import-uniques";
 
 import catalogue from "./uniques.json" with { type: "json" };
 
@@ -16,7 +16,7 @@ for (const { boss, killsPerHour } of seed) {
   if (killsPerHour !== undefined) await db.update(bosses).set({ killsPerHour }).where(eq(bosses.name, boss));
 }
 
-await saveItems(seed.flatMap(({ uniques }) => uniques.map(({ name }) => ({ name }))));
+await importItems(seed.flatMap(({ uniques }) => uniques.map(({ name }) => ({ name }))));
 
 const storedBosses = await db.select({ id: bosses.id, name: bosses.name }).from(bosses);
 const storedItems = await db.select({ id: items.id, name: items.name }).from(items);
@@ -44,7 +44,7 @@ const rows = seed.flatMap(({ boss, uniques }) => {
   });
 });
 
-const saved = await saveUniques(rows);
+const saved = await importUniques(rows);
 
 const [rated] = await db
   .select({ value: sql<number>`count(*)::int` })
