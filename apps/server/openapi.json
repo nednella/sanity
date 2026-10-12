@@ -284,6 +284,81 @@
           "team"
         ]
       },
+      "DiaryInput": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "number"
+              },
+              "name": {
+                "type": "string"
+              },
+              "metric": {
+                "nullable": true,
+                "type": "string"
+              },
+              "imageUrl": {
+                "nullable": true,
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "name",
+              "metric",
+              "imageUrl"
+            ]
+          },
+          "scales": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "scale": {
+                  "type": "number"
+                },
+                "tiers": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "number"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "points": {
+                        "type": "number"
+                      },
+                      "timeSeconds": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "name",
+                      "points",
+                      "timeSeconds"
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "scale",
+                "tiers"
+              ]
+            }
+          }
+        },
+        "required": [
+          "content",
+          "scales"
+        ]
+      },
       "MemberDiaryInput": {
         "type": "object",
         "properties": {
@@ -1616,6 +1691,85 @@
           "submittedAt",
           "submittedBy",
           "team"
+        ],
+        "additionalProperties": false
+      },
+      "Diary": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "number"
+              },
+              "name": {
+                "type": "string"
+              },
+              "metric": {
+                "nullable": true,
+                "type": "string"
+              },
+              "imageUrl": {
+                "nullable": true,
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "name",
+              "metric",
+              "imageUrl"
+            ],
+            "additionalProperties": false
+          },
+          "scales": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "scale": {
+                  "type": "number"
+                },
+                "tiers": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "number"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "points": {
+                        "type": "number"
+                      },
+                      "timeSeconds": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "name",
+                      "points",
+                      "timeSeconds"
+                    ],
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "required": [
+                "scale",
+                "tiers"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "content",
+          "scales"
         ],
         "additionalProperties": false
       },
@@ -3511,6 +3665,25 @@
                   "type": "array",
                   "items": {
                     "$ref": "#/components/schemas/Rank"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/speedrun-diary": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Diary"
                   }
                 }
               }

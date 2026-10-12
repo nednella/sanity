@@ -1,10 +1,27 @@
 import type { DiaryTimeRow } from "./repository/list-diary-times";
 import type { MemberBestTimeRow } from "./repository/list-member-best-times";
 
+const toContent = ({ contentId, contentName, contentMetric, contentImageUrl }: DiaryTimeRow) => ({
+  id: contentId,
+  name: contentName,
+  metric: contentMetric,
+  imageUrl: contentImageUrl
+});
+
 const toTier = ({ tierId, tierName, tierPoints }: DiaryTimeRow) => ({
   id: tierId,
   name: tierName,
   points: tierPoints
+});
+
+const toTierTime = (row: DiaryTimeRow) => ({ ...toTier(row), timeSeconds: row.timeSeconds });
+
+export const toDiary = (rows: [DiaryTimeRow, ...DiaryTimeRow[]]) => ({
+  content: toContent(rows[0]),
+  scales: [...Map.groupBy(rows, (row) => row.scale)].map(([scale, tiers]) => ({
+    scale,
+    tiers: tiers.map((tier) => toTierTime(tier))
+  }))
 });
 
 /**
@@ -17,7 +34,6 @@ export const toMemberDiary = (
   [first, ...rest]: [DiaryTimeRow, ...DiaryTimeRow[]],
   pb: MemberBestTimeRow | undefined
 ) => {
-  const { contentId, contentName, contentMetric, contentImageUrl, scale } = first;
   const thresholds = [first, ...rest];
 
   const beaten = pb ? thresholds.filter((threshold) => pb.timeSeconds <= threshold.timeSeconds) : [];
@@ -25,15 +41,10 @@ export const toMemberDiary = (
   const next = thresholds.find((threshold) => !beaten.includes(threshold));
 
   return {
-    content: {
-      id: contentId,
-      name: contentName,
-      metric: contentMetric,
-      imageUrl: contentImageUrl
-    },
-    scale,
+    content: toContent(first),
+    scale: first.scale,
     pb: pb ? { id: pb.id, timeSeconds: pb.timeSeconds, imageUrl: pb.imageUrl } : null,
     tier: reached ? toTier(reached) : null,
-    nextTier: next ? { ...toTier(next), timeSeconds: next.timeSeconds } : null
+    nextTier: next ? toTierTime(next) : null
   };
 };
