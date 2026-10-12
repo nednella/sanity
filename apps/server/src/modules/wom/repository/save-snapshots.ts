@@ -1,6 +1,6 @@
 import type { SnapshotResponse } from "@wise-old-man/utils";
 
-import { db } from "@db/index";
+import type { Transaction } from "@db/index";
 import {
   womSnapshotActivities,
   womSnapshotBosses,
@@ -28,28 +28,27 @@ const breakdown = (womSnapshotId: number, { skills, bosses, activities, computed
     .map(({ metric, rank, ...values }) => ({ womSnapshotId, activity: metric, rank: known(rank), ...values }))
 });
 
-export const saveSnapshots = (snapshots: SnapshotResponse[]) =>
-  db.transaction(async (tx) => {
-    let saved = 0;
+export const saveSnapshots = async (tx: Transaction, snapshots: SnapshotResponse[]) => {
+  let saved = 0;
 
-    for (const { playerId, createdAt, data } of snapshots) {
-      const [snapshot] = await tx
-        .insert(womSnapshots)
-        .values({
-          womPlayerId: playerId,
-          createdAt
-        })
-        .onConflictDoNothing()
-        .returning({ id: womSnapshots.id });
-      if (!snapshot) continue;
+  for (const { playerId, createdAt, data } of snapshots) {
+    const [snapshot] = await tx
+      .insert(womSnapshots)
+      .values({
+        womPlayerId: playerId,
+        createdAt
+      })
+      .onConflictDoNothing()
+      .returning({ id: womSnapshots.id });
+    if (!snapshot) continue;
 
-      const { activities, bosses, computed, skills } = breakdown(snapshot.id, data);
-      if (computed.length > 0) await tx.insert(womSnapshotComputed).values(computed);
-      if (skills.length > 0) await tx.insert(womSnapshotSkills).values(skills);
-      if (bosses.length > 0) await tx.insert(womSnapshotBosses).values(bosses);
-      if (activities.length > 0) await tx.insert(womSnapshotActivities).values(activities);
-      saved++;
-    }
+    const { activities, bosses, computed, skills } = breakdown(snapshot.id, data);
+    if (computed.length > 0) await tx.insert(womSnapshotComputed).values(computed);
+    if (skills.length > 0) await tx.insert(womSnapshotSkills).values(skills);
+    if (bosses.length > 0) await tx.insert(womSnapshotBosses).values(bosses);
+    if (activities.length > 0) await tx.insert(womSnapshotActivities).values(activities);
+    saved++;
+  }
 
-    return saved;
-  });
+  return saved;
+};

@@ -1,7 +1,7 @@
 import type { PlayerResponse, SnapshotResponse } from "@wise-old-man/utils";
 import { eq } from "drizzle-orm";
 
-import { db } from "@db/index";
+import type { Transaction } from "@db/index";
 import { womPlayers } from "@db/schema";
 
 import { toPlayerRow } from "./shared/player-row";
@@ -13,8 +13,8 @@ import { toPlayerRow } from "./shared/player-row";
  * group sync has never seen, whether or not the RSN belongs to a clan member.
  * Reports whether a row was updated or not.
  */
-export const savePlayer = async (player: PlayerResponse, snapshot: SnapshotResponse | null) => {
-  const updated = await db
+export const savePlayer = async (tx: Transaction, player: PlayerResponse, snapshot: SnapshotResponse | null) => {
+  const updated = await tx
     .update(womPlayers)
     .set(toPlayerRow(player, snapshot))
     .where(eq(womPlayers.womPlayerId, player.id))

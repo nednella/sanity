@@ -1,3 +1,5 @@
+import { db } from "@db/index";
+
 import { wom } from "@/integrations/wom";
 
 import { savePlayer } from "../repository/save-player";
@@ -14,8 +16,10 @@ export const syncPlayer = async (username: string) => {
   const player = await wom.players.updatePlayer(username);
   if (!player) throw new Error("wise old man returned nothing");
 
-  const didStoreUpdate = await savePlayer(player, player.latestSnapshot);
-  if (didStoreUpdate && player.latestSnapshot) await saveSnapshots([player.latestSnapshot]);
+  return db.transaction(async (tx) => {
+    const didStoreUpdate = await savePlayer(tx, player, player.latestSnapshot);
+    if (didStoreUpdate && player.latestSnapshot) await saveSnapshots(tx, [player.latestSnapshot]);
 
-  return didStoreUpdate;
+    return didStoreUpdate;
+  });
 };

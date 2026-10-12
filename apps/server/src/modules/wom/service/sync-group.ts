@@ -20,8 +20,8 @@ export const syncGroup = async () => {
   const entries = await wom.groups.getGroupBulkHiscores(Number(config.womGroupId));
 
   const memberFor = await loadMemberMatcher();
-  const players: Parameters<typeof savePlayers>[0] = [];
-  const snapshots = [];
+  const players: Parameters<typeof savePlayers>[1] = [];
+  const snapshots: Parameters<typeof saveSnapshots>[1] = [];
   const linked = new Set<bigint>();
 
   for (const { player, data } of entries) {
@@ -33,16 +33,15 @@ export const syncGroup = async () => {
     snapshots.push(data);
   }
 
-  await savePlayers(players);
-  const saved = await saveSnapshots(snapshots);
+  return db.transaction(async (tx) => {
+    await savePlayers(tx, players);
+    const saved = await saveSnapshots(tx, snapshots);
 
-  const renamed = await db.transaction(async (tx) => {
-    let count = 0;
+    let renamed = 0;
     for (const { memberId, player } of players) {
-      if (await renameAndRecord(tx, memberId, player.displayName)) count++;
+      if (await renameAndRecord(tx, memberId, player.displayName)) renamed++;
     }
-    return count;
-  });
 
-  return { linked: players.length, members: entries.length, renamed, saved };
+    return { linked: players.length, members: entries.length, renamed, saved };
+  });
 };
