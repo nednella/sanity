@@ -509,6 +509,41 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/speedrun-diary": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["Diary"][];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/submissions": {
         parameters: {
             query?: never;
@@ -1447,6 +1482,23 @@ export interface components {
             submittedBy: components["schemas"]["MemberRefInput"];
             team: components["schemas"]["MemberRefInput"][];
         };
+        DiaryInput: {
+            content: {
+                id: number;
+                name: string;
+                metric: string | null;
+                imageUrl: string | null;
+            };
+            scales: {
+                scale: number;
+                tiers: {
+                    id: number;
+                    name: string;
+                    points: number;
+                    timeSeconds: number;
+                }[];
+            }[];
+        };
         MemberDiaryInput: {
             content: {
                 id: number;
@@ -1758,6 +1810,23 @@ export interface components {
             submittedAt: string | null;
             submittedBy: components["schemas"]["MemberRef"];
             team: components["schemas"]["MemberRef"][];
+        };
+        Diary: {
+            content: {
+                id: number;
+                name: string;
+                metric: string | null;
+                imageUrl: string | null;
+            };
+            scales: {
+                scale: number;
+                tiers: {
+                    id: number;
+                    name: string;
+                    points: number;
+                    timeSeconds: number;
+                }[];
+            }[];
         };
         MemberDiary: {
             content: {
