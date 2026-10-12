@@ -10,10 +10,12 @@ export const getMemberProfile = async (id: bigint) => {
   const row = await findMember(id);
   if (!row) return;
 
-  const [diaryProgress] = await listDiaryProgress([id]);
-  const ranks = await listRanks();
-  const latestSnapshot = row.womPlayer ? await findLatestSnapshot(row.womPlayer.womPlayerId) : undefined;
-  const nameChanges = row.womPlayer ? await listNameChanges(row.womPlayer.womPlayerId) : [];
+  const [[diaryProgress], ranks, latestSnapshot, nameChanges] = await Promise.all([
+    listDiaryProgress([id]),
+    listRanks(),
+    row.womPlayer ? findLatestSnapshot(row.womPlayer.womPlayerId) : undefined,
+    row.womPlayer ? listNameChanges(row.womPlayer.womPlayerId) : []
+  ]);
 
   return toMemberProfile(row, diaryProgress, ranks, latestSnapshot, nameChanges);
 };
