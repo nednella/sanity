@@ -1,4 +1,4 @@
-import { inArray } from "drizzle-orm";
+import { and, eq, inArray } from "drizzle-orm";
 
 import type { Transaction } from "@db/index";
 import { members } from "@db/schema";
@@ -11,9 +11,9 @@ export const listTrialists = async (tx: Transaction, memberIds: bigint[]) => {
   if (memberIds.length === 0) return new Set<bigint>();
 
   const rows = await tx
-    .select({ id: members.id, rankId: members.rankId })
+    .select({ id: members.id })
     .from(members)
-    .where(inArray(members.id, memberIds));
+    .where(and(inArray(members.id, memberIds), eq(members.rankId, TRIALIST_RANK_ID)));
 
-  return new Set(rows.filter(({ rankId }) => rankId === TRIALIST_RANK_ID).map(({ id }) => id));
+  return new Set(rows.map(({ id }) => id));
 };
