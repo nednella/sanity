@@ -55,5 +55,10 @@ export const diaryProgressCte = (memberIds?: bigint[]) => {
       .groupBy(reachedTiers.memberId)
   );
 
-  return { bestTimes, reachedTiers, diaryProgress };
+  const diaryTotals = {
+    diaryPoints: sql<number>`coalesce(${diaryProgress.diaryPoints}, 0)`.mapWith(Number),
+    masterDiaries: sql<number>`coalesce(${diaryProgress.masterDiaries}, 0)`.mapWith(Number)
+  };
+
+  return { bestTimes, reachedTiers, diaryProgress, diaryTotals };
 };
