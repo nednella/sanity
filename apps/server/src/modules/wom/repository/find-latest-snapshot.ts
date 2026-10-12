@@ -18,19 +18,12 @@ export const findLatestSnapshot = async (womPlayerId: number) => {
     .limit(1);
   if (!snapshot) return;
 
-  const computed = await db
-    .select()
-    .from(womSnapshotComputed)
-    .where(eq(womSnapshotComputed.womSnapshotId, snapshot.id));
-
-  const skills = await db.select().from(womSnapshotSkills).where(eq(womSnapshotSkills.womSnapshotId, snapshot.id));
-
-  const bosses = await db.select().from(womSnapshotBosses).where(eq(womSnapshotBosses.womSnapshotId, snapshot.id));
-
-  const activities = await db
-    .select()
-    .from(womSnapshotActivities)
-    .where(eq(womSnapshotActivities.womSnapshotId, snapshot.id));
+  const [computed, skills, bosses, activities] = await Promise.all([
+    db.select().from(womSnapshotComputed).where(eq(womSnapshotComputed.womSnapshotId, snapshot.id)),
+    db.select().from(womSnapshotSkills).where(eq(womSnapshotSkills.womSnapshotId, snapshot.id)),
+    db.select().from(womSnapshotBosses).where(eq(womSnapshotBosses.womSnapshotId, snapshot.id)),
+    db.select().from(womSnapshotActivities).where(eq(womSnapshotActivities.womSnapshotId, snapshot.id))
+  ]);
 
   return { snapshot, computed, skills, bosses, activities };
 };
