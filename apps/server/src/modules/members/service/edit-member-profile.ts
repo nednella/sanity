@@ -2,6 +2,7 @@ import { db } from "@db/index";
 
 import { recordAuditEntry } from "@/modules/audit/repository/record-audit-entry";
 
+import { findMemberIdByDiscordId } from "../repository/find-member-id-by-discord-id";
 import { type MemberProfile, updateMemberProfile } from "../repository/update-member-profile";
 
 const describe = (label: string, previous: string | null, next: string | null) =>
@@ -9,7 +10,7 @@ const describe = (label: string, previous: string | null, next: string | null) =
 
 export const editMemberProfile = async (
   memberId: bigint,
-  { actingMemberId, ...profile }: MemberProfile & { actingMemberId?: bigint }
+  { actingDiscordId, ...profile }: MemberProfile & { actingDiscordId?: bigint }
 ) =>
   db.transaction(async (tx) => {
     const previous = await updateMemberProfile(tx, memberId, profile);
@@ -26,7 +27,7 @@ export const editMemberProfile = async (
 
     if (renames.length > 0) {
       await recordAuditEntry(tx, {
-        actingMemberId,
+        actingMemberId: await findMemberIdByDiscordId(tx, actingDiscordId),
         action: "rsn_changed",
         affects: [memberId],
         note: renames.join(", "),

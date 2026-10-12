@@ -3034,7 +3034,7 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "actingMemberId": {
+                  "actingDiscordId": {
                     "type": "string",
                     "pattern": "^\\d+$"
                   },
