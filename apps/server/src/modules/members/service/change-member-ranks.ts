@@ -1,22 +1,25 @@
 import { recordAuditEntry } from "@/modules/audit/repository/record-audit-entry";
 import { QUIT_RANK_ID, RETIRED_RANK_ID } from "@/modules/ranks/constants";
-import { findRank } from "@/modules/ranks/repository/find-rank";
+import { listRanks } from "@/modules/ranks/repository/list-ranks";
 
 import { setMemberRank } from "../repository/set-member-rank";
 import { type AdminCommand, executePerTaggedMember } from "./shared/execute-per-tagged-member";
 
 export type RankChange = AdminCommand & { rankId: number };
 
-export const changeMemberRanks = async ({ note, rankId, ...command }: RankChange) =>
-  executePerTaggedMember(command, async (tx, member, actingMemberId) => {
+export const changeMemberRanks = async ({ note, rankId, ...command }: RankChange) => {
+  const rows = await listRanks();
+  const ranks = new Map(rows.map((rank) => [rank.id, rank]));
+
+  return executePerTaggedMember(command, async (tx, member, actingMemberId) => {
     if (rankId === QUIT_RANK_ID || rankId === RETIRED_RANK_ID) return { outcome: "not-a-rank-change" as const };
     if (member.rankId === QUIT_RANK_ID) return { outcome: "has-quit" as const };
     if (member.rankId === rankId) return { outcome: "unchanged" as const };
 
-    const rank = await findRank(tx, rankId);
+    const rank = ranks.get(rankId);
     if (!rank) return { outcome: "unknown-rank" as const };
 
-    const from = await findRank(tx, member.rankId);
+    const from = ranks.get(member.rankId);
     await setMemberRank(tx, member.id, rankId);
 
     await recordAuditEntry(tx, {
@@ -29,3 +32,4 @@ export const changeMemberRanks = async ({ note, rankId, ...command }: RankChange
 
     return { outcome: "ranked" as const, rank: { id: rank.id, name: rank.name } };
   });
+};
