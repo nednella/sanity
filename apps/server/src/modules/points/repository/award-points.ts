@@ -8,13 +8,20 @@ export type Award = {
   points: number;
 };
 
-export const awardPoints = async (tx: Transaction, awards: Award[], submissionId: number | null, notes: string) => {
+export const awardPoints = async (
+  tx: Transaction,
+  awards: Award[],
+  awardedBy: bigint,
+  submissionId: number | null,
+  notes: string
+) => {
   const earned = awards.filter(({ points: value }) => value !== 0);
   if (earned.length === 0) return 0;
 
   await tx.insert(points).values(
     earned.map(({ memberId, points: value }) => ({
       awardedAt: new Date(),
+      awardedBy,
       memberId,
       notes,
       submissionId,

@@ -49,7 +49,7 @@ export const reviewSubmissionById = async (id: number, review: ReviewRequest): P
     });
 
     const note = [awaiting.itemName, valueMillions, memberIds.length + awaiting.nonClanCount].join(",");
-    await awardPoints(tx, awards, id, note);
+    await awardPoints(tx, awards, review.reviewedBy, id, note);
 
     return "reviewed";
   });

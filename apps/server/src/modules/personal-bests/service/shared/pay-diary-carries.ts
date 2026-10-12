@@ -13,7 +13,7 @@ export type ApprovedRun = {
   timeSeconds: number;
 };
 
-export const payDiaryCarries = async (tx: Transaction, run: ApprovedRun, memberIds: bigint[]) => {
+export const payDiaryCarries = async (tx: Transaction, run: ApprovedRun, memberIds: bigint[], awardedBy: bigint) => {
   const tiers = await getEliteAndMasterDiaryTimes(tx, run.contentId, run.scale);
   const bestTimes = await listBestTimes(tx, {
     contentId: run.contentId,
@@ -33,6 +33,6 @@ export const payDiaryCarries = async (tx: Transaction, run: ApprovedRun, memberI
       tierId: tier.tierId
     });
 
-    await awardPoints(tx, awards, null, `${tier.tierName.toLowerCase()} diary carry - pb #${run.id}`);
+    await awardPoints(tx, awards, awardedBy, null, `${tier.tierName.toLowerCase()} diary carry - pb #${run.id}`);
   }
 };
