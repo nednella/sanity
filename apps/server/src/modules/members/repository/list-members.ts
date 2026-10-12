@@ -20,15 +20,15 @@ export type ListMembersOptions = {
 
 export const listMembers = ({ limit, offset, active, search, sort, order }: ListMembersOptions) => {
   const progress = diaryProgressCte();
-  const { diaryProgress } = progress;
+  const { diaryTotals } = progress;
   const direction = order === "asc" ? asc : desc;
 
   const sortColumns: Record<MemberSort, PgColumn | SQL> = {
     clanPoints: members.clanPoints,
-    diaryPoints: sql`coalesce(${diaryProgress.diaryPoints}, 0)`,
+    diaryPoints: diaryTotals.diaryPoints,
     displayName: members.displayName,
     joinedAt: sql`coalesce(${members.joinedAt}, to_timestamp(0))`,
-    masterDiaries: sql`coalesce(${diaryProgress.masterDiaries}, 0)`,
+    masterDiaries: diaryTotals.masterDiaries,
     rank: ranks.id,
     totalEhb: sql`coalesce(${womPlayers.totalEhb}, 0)`,
     totalEhp: sql`coalesce(${womPlayers.totalEhp}, 0)`,
