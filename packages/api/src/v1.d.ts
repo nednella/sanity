@@ -150,7 +150,7 @@ export interface paths {
             requestBody: {
                 content: {
                     "application/json": {
-                        actingMemberId?: string;
+                        actingDiscordId?: string;
                         altRsn?: string | null;
                         /** Format: date */
                         birthday?: string | null;

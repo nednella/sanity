@@ -74,7 +74,7 @@ export const memberListQuery = z.object({
 
 export const updateMemberBody = z
   .object({
-    actingMemberId: bigIntString.optional(),
+    actingDiscordId: bigIntString.optional(),
     altRsn: rsn.nullable(),
     birthday: z.iso.date().nullable(),
     mainRsn: rsn,
