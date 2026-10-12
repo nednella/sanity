@@ -31,9 +31,27 @@ const commandOutcome = z.object({
   discordId: bigIntString,
   displayName: z.string().nullable(),
   memberId: bigIntString.nullable(),
-  outcome: z.string(),
+  outcome: z.enum([
+    "already-quit",
+    "already-retired",
+    "delayed",
+    "has-quit",
+    "no-rank-earned",
+    "no-rank-to-give",
+    "not-a-member",
+    "not-a-rank-change",
+    "not-a-trialist",
+    "not-retired",
+    "passed",
+    "quit",
+    "ranked",
+    "retired",
+    "unchanged",
+    "unknown-rank",
+    "unretired"
+  ]),
   rank: rankName.optional(),
-  until: z.string().optional()
+  until: isoDate.optional()
 });
 
 export const commandOutcomes = z.object({ results: z.array(commandOutcome) });
