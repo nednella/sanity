@@ -38,11 +38,11 @@
         "dropRate": 512
       },
       {
-        "name": "Ikkle hydra",
+        "name": "Ikkle Hydra",
         "dropRate": 3000
       },
       {
-        "name": "Jar of chemicals",
+        "name": "Jar of Chemicals",
         "dropRate": 2000
       }
     ]
@@ -74,7 +74,7 @@
         "dropRate": 250
       },
       {
-        "name": "Jar of venom",
+        "name": "Jar of Venom",
         "dropRate": 1500
       },
       {
@@ -104,7 +104,7 @@
         "dropRate": 2800
       },
       {
-        "name": "Claws of callisto",
+        "name": "Claws of Callisto",
         "dropRate": 618
       },
       {
@@ -160,7 +160,7 @@
         "dropRate": 1500
       },
       {
-        "name": "Claws of callisto",
+        "name": "Claws of Callisto",
         "dropRate": 196
       },
       {
@@ -198,7 +198,7 @@
         "dropRate": 716
       },
       {
-        "name": "Skull of vet'ion",
+        "name": "Skull of Vet'ion",
         "dropRate": 618
       },
       {
@@ -224,7 +224,7 @@
         "dropRate": 3000
       },
       {
-        "name": "Jar of souls",
+        "name": "Jar of Souls",
         "dropRate": 2000
       },
       {
@@ -369,7 +369,7 @@
         "dropRate": 762
       },
       {
-        "name": "Pet zilyana",
+        "name": "Pet Zilyana",
         "dropRate": 5000
       },
       {
@@ -403,7 +403,7 @@
         "dropRate": 171
       },
       {
-        "name": "Jar of spirits",
+        "name": "Jar of Spirits",
         "dropRate": 1000
       },
       {
@@ -454,15 +454,15 @@
         "dropRate": 128
       },
       {
-        "name": "Pet dagannoth prime",
+        "name": "Pet Dagannoth Prime",
         "dropRate": 5000
       },
       {
-        "name": "Pet dagannoth rex",
+        "name": "Pet Dagannoth Rex",
         "dropRate": 5000
       },
       {
-        "name": "Pet dagannoth supreme",
+        "name": "Pet Dagannoth Supreme",
         "dropRate": 5000
       },
       {
@@ -491,7 +491,7 @@
         "dropRate": 128
       },
       {
-        "name": "Pet dagannoth prime",
+        "name": "Pet Dagannoth Prime",
         "dropRate": 5000
       }
     ]
@@ -512,7 +512,7 @@
         "dropRate": 128
       },
       {
-        "name": "Pet dagannoth rex",
+        "name": "Pet Dagannoth Rex",
         "dropRate": 5000
       }
     ]
@@ -533,7 +533,7 @@
         "dropRate": 128
       },
       {
-        "name": "Pet dagannoth supreme",
+        "name": "Pet Dagannoth Supreme",
         "dropRate": 5000
       }
     ]
@@ -560,7 +560,7 @@
         "dropRate": 160
       },
       {
-        "name": "Eye of ayak (uncharged)",
+        "name": "Eye of Ayak (uncharged)",
         "dropRate": 148
       },
       {
@@ -582,7 +582,7 @@
         "dropRate": 240
       },
       {
-        "name": "Eye of the duke",
+        "name": "Eye of the Duke",
         "dropRate": 720
       },
       {
@@ -632,7 +632,7 @@
         "dropRate": 762
       },
       {
-        "name": "Pet general graardor",
+        "name": "Pet General Graardor",
         "dropRate": 5000
       }
     ]
@@ -642,7 +642,7 @@
     "killsPerHour": 140.0,
     "uniques": [
       {
-        "name": "Baby mole",
+        "name": "Baby Mole",
         "dropRate": 3000
       },
       {
@@ -676,7 +676,7 @@
         "dropRate": 250
       },
       {
-        "name": "Jar of stone",
+        "name": "Jar of Stone",
         "dropRate": 5000
       },
       {
@@ -723,11 +723,11 @@
         "dropRate": 762
       },
       {
-        "name": "Pet k'ril tsutsaroth",
+        "name": "Pet K'ril Tsutsaroth",
         "dropRate": 5000
       },
       {
-        "name": "Staff of the dead",
+        "name": "Staff of the Dead",
         "dropRate": 508
       },
       {
@@ -761,11 +761,11 @@
         "dropRate": 400
       },
       {
-        "name": "Jar of sand",
+        "name": "Jar of Sand",
         "dropRate": 2000
       },
       {
-        "name": "Kalphite princess",
+        "name": "Kalphite Princess",
         "dropRate": 3000
       },
       {
@@ -787,7 +787,7 @@
         "dropRate": 1000
       },
       {
-        "name": "Prince black dragon",
+        "name": "Prince Black Dragon",
         "dropRate": 3000
       }
     ]
@@ -797,7 +797,7 @@
     "killsPerHour": 100.0,
     "uniques": [
       {
-        "name": "Jar of dirt",
+        "name": "Jar of Dirt",
         "dropRate": 1000
       },
       {
@@ -805,11 +805,11 @@
         "dropRate": 400
       },
       {
-        "name": "Pet kraken",
+        "name": "Pet Kraken",
         "dropRate": 3000
       },
       {
-        "name": "Trident of the seas (full)",
+        "name": "Trident of the Seas (full)",
         "dropRate": 512
       }
     ]
@@ -847,7 +847,7 @@
         "dropRate": 762
       },
       {
-        "name": "Pet kree'arra",
+        "name": "Pet Kree'arra",
         "dropRate": 5000
       }
     ]
@@ -860,15 +860,15 @@
         "dropRate": 224
       },
       {
-        "name": "Eclipse moon helm",
+        "name": "Eclipse Moon helm",
         "dropRate": 224
       },
       {
-        "name": "Eclipse moon chestplate",
+        "name": "Eclipse Moon chestplate",
         "dropRate": 224
       },
       {
-        "name": "Eclipse moon tassets",
+        "name": "Eclipse Moon tassets",
         "dropRate": 224
       },
       {
@@ -876,31 +876,31 @@
         "dropRate": 224
       },
       {
-        "name": "Blood moon helm",
+        "name": "Blood Moon helm",
         "dropRate": 224
       },
       {
-        "name": "Blood moon chestplate",
+        "name": "Blood Moon chestplate",
         "dropRate": 224
       },
       {
-        "name": "Blood moon tassets",
+        "name": "Blood Moon tassets",
         "dropRate": 224
       },
       {
-        "name": "Blue moon spear",
+        "name": "Blue Moon spear",
         "dropRate": 224
       },
       {
-        "name": "Blue moon helm",
+        "name": "Blue Moon helm",
         "dropRate": 224
       },
       {
-        "name": "Blue moon chestplate",
+        "name": "Blue Moon chestplate",
         "dropRate": 224
       },
       {
-        "name": "Blue moon tassets",
+        "name": "Blue Moon tassets",
         "dropRate": 224
       }
     ]
@@ -913,7 +913,7 @@
         "dropRate": 127
       },
       {
-        "name": "Jar of light",
+        "name": "Jar of Light",
         "dropRate": 1000
       },
       {
@@ -997,7 +997,7 @@
         "dropRate": 750
       },
       {
-        "name": "Little nightmare",
+        "name": "Little Nightmare",
         "dropRate": 800
       },
       {
@@ -1013,7 +1013,7 @@
         "dropRate": 960
       },
       {
-        "name": "Jar of dreams",
+        "name": "Jar of Dreams",
         "dropRate": 1900
       }
     ]
@@ -1082,11 +1082,11 @@
         "dropRate": 700
       },
       {
-        "name": "Jar of dreams",
+        "name": "Jar of Dreams",
         "dropRate": 1400
       },
       {
-        "name": "Little nightmare",
+        "name": "Little Nightmare",
         "dropRate": 4000
       },
       {
@@ -1104,7 +1104,7 @@
     "killsPerHour": 110.0,
     "uniques": [
       {
-        "name": "Jar of eyes",
+        "name": "Jar of Eyes",
         "dropRate": 2000
       },
       {
@@ -1165,7 +1165,7 @@
         "dropRate": 128
       },
       {
-        "name": "Jar of feathers",
+        "name": "Jar of Feathers",
         "dropRate": 2000
       },
       {
@@ -1182,7 +1182,7 @@
         "dropRate": 65
       },
       {
-        "name": "Jar of darkness",
+        "name": "Jar of Darkness",
         "dropRate": 200
       },
       {
@@ -1212,7 +1212,7 @@
         "dropRate": 1
       },
       {
-        "name": "Tonalztics of ralos",
+        "name": "Tonalztics of Ralos",
         "dropRate": 83
       },
       {
@@ -1220,7 +1220,7 @@
         "dropRate": 12
       },
       {
-        "name": "Smol heredit",
+        "name": "Smol Heredit",
         "dropRate": 200
       }
     ]
@@ -1238,7 +1238,7 @@
         "dropRate": 358
       },
       {
-        "name": "Fangs of venenatis",
+        "name": "Fangs of Venenatis",
         "dropRate": 618
       },
       {
@@ -1275,7 +1275,7 @@
         "dropRate": 1600
       },
       {
-        "name": "Tome of water (empty)",
+        "name": "Tome of Water (empty)",
         "dropRate": 1600
       },
       {
@@ -1348,7 +1348,7 @@
         "dropRate": 29
       },
       {
-        "name": "Tome of earth",
+        "name": "Tome of Earth",
         "dropRate": 90
       }
     ]
@@ -1448,7 +1448,7 @@
         "dropRate": 315
       },
       {
-        "name": "Lil' zik",
+        "name": "Lil' Zik",
         "dropRate": 650
       },
       {
@@ -1456,7 +1456,7 @@
         "dropRate": 315
       },
       {
-        "name": "Scythe of vitur",
+        "name": "Scythe of Vitur",
         "dropRate": 630
       }
     ]
@@ -1488,7 +1488,7 @@
         "dropRate": 2000
       },
       {
-        "name": "Jar of smoke",
+        "name": "Jar of Smoke",
         "dropRate": 2000
       },
       {
@@ -1496,7 +1496,7 @@
         "dropRate": 350
       },
       {
-        "name": "Pet smoke devil",
+        "name": "Pet Smoke Devil",
         "dropRate": 3000
       },
       {
@@ -1589,7 +1589,7 @@
         "dropRate": 1
       },
       {
-        "name": "Tzrek-jad",
+        "name": "TzRek-Jad",
         "dropRate": 67
       }
     ]
@@ -1603,7 +1603,7 @@
         "dropRate": 1
       },
       {
-        "name": "Jal-nib-rek",
+        "name": "Jal-Nib-Rek",
         "dropRate": 43
       }
     ]
@@ -1651,7 +1651,7 @@
         "dropRate": 256
       },
       {
-        "name": "Fangs of venenatis",
+        "name": "Fangs of Venenatis",
         "dropRate": 196
       },
       {
@@ -1685,7 +1685,7 @@
         "dropRate": 512
       },
       {
-        "name": "Skull of vet'ion",
+        "name": "Skull of Vet'ion",
         "dropRate": 196
       },
       {
@@ -1707,7 +1707,7 @@
         "dropRate": 1000
       },
       {
-        "name": "Jar of decay",
+        "name": "Jar of Decay",
         "dropRate": 3000
       },
       {
@@ -1805,7 +1805,7 @@
     "killsPerHour": 42.0,
     "uniques": [
       {
-        "name": "Jar of swamp",
+        "name": "Jar of Swamp",
         "dropRate": 3000
       },
       {
@@ -1817,7 +1817,7 @@
         "dropRate": 6554
       },
       {
-        "name": "Pet snakeling",
+        "name": "Pet Snakeling",
         "dropRate": 4000
       },
       {
