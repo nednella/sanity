@@ -956,15 +956,15 @@
         "dropRate": 258
       },
       {
-        "name": "Torva full helm",
+        "name": "Torva full helm (damaged)",
         "dropRate": 258
       },
       {
-        "name": "Torva platebody",
+        "name": "Torva platebody (damaged)",
         "dropRate": 258
       },
       {
-        "name": "Torva platelegs",
+        "name": "Torva platelegs (damaged)",
         "dropRate": 258
       },
       {
@@ -1212,7 +1212,7 @@
         "dropRate": 1
       },
       {
-        "name": "Tonalztics of Ralos",
+        "name": "Tonalztics of Ralos (uncharged)",
         "dropRate": 83
       },
       {
@@ -1348,7 +1348,7 @@
         "dropRate": 29
       },
       {
-        "name": "Tome of Earth",
+        "name": "Tome of Earth (empty)",
         "dropRate": 90
       }
     ]
@@ -1452,11 +1452,11 @@
         "dropRate": 650
       },
       {
-        "name": "Sanguinesti staff",
+        "name": "Sanguinesti staff (uncharged)",
         "dropRate": 315
       },
       {
-        "name": "Scythe of Vitur",
+        "name": "Scythe of Vitur (uncharged)",
         "dropRate": 630
       }
     ]
@@ -1538,7 +1538,7 @@
         "dropRate": 315
       },
       {
-        "name": "Tumeken's shadow",
+        "name": "Tumeken's shadow (uncharged)",
         "dropRate": 270
       }
     ]
@@ -1575,7 +1575,7 @@
         "dropRate": 315
       },
       {
-        "name": "Tumeken's shadow",
+        "name": "Tumeken's shadow (uncharged)",
         "dropRate": 270
       }
     ]
