@@ -542,12 +542,8 @@
     "boss": "Deranged Archaeologist",
     "uniques": [
       {
-        "name": "Odium shard 3",
-        "dropRate": 256
-      },
-      {
-        "name": "Malediction shard 3",
-        "dropRate": 256
+        "name": "Steel ring",
+        "dropRate": 44
       }
     ]
   },
