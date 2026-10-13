@@ -1507,35 +1507,35 @@
     "uniques": [
       {
         "name": "Elidinis' ward",
-        "dropRate": 90
+        "dropRate": 64
       },
       {
         "name": "Lightbearer",
-        "dropRate": 39
+        "dropRate": 28
       },
       {
         "name": "Masori body",
-        "dropRate": 135
+        "dropRate": 97
       },
       {
         "name": "Masori chaps",
-        "dropRate": 135
+        "dropRate": 97
       },
       {
         "name": "Masori mask",
-        "dropRate": 135
+        "dropRate": 97
       },
       {
         "name": "Osmumten's fang",
-        "dropRate": 39
+        "dropRate": 28
       },
       {
         "name": "Tumeken's guardian",
-        "dropRate": 315
+        "dropRate": 263
       },
       {
         "name": "Tumeken's shadow (uncharged)",
-        "dropRate": 270
+        "dropRate": 193
       }
     ]
   },
@@ -1544,35 +1544,35 @@
     "uniques": [
       {
         "name": "Elidinis' ward",
-        "dropRate": 90
+        "dropRate": 31
       },
       {
         "name": "Lightbearer",
-        "dropRate": 39
+        "dropRate": 13
       },
       {
         "name": "Masori body",
-        "dropRate": 135
+        "dropRate": 47
       },
       {
         "name": "Masori chaps",
-        "dropRate": 135
+        "dropRate": 47
       },
       {
         "name": "Masori mask",
-        "dropRate": 135
+        "dropRate": 47
       },
       {
         "name": "Osmumten's fang",
-        "dropRate": 39
+        "dropRate": 13
       },
       {
         "name": "Tumeken's guardian",
-        "dropRate": 315
+        "dropRate": 121
       },
       {
         "name": "Tumeken's shadow (uncharged)",
-        "dropRate": 270
+        "dropRate": 94
       }
     ]
   },
