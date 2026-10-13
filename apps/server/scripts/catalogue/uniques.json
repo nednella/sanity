@@ -1541,6 +1541,7 @@
   },
   {
     "boss": "Tombs of Amascut (Expert Mode)",
+    "killsPerHour": 3.0,
     "uniques": [
       {
         "name": "Elidinis' ward",
