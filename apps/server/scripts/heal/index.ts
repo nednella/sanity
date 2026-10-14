@@ -1,6 +1,6 @@
 import { and, eq, sql } from "drizzle-orm";
 
-import { client, db } from "@db/index";
+import { type Transaction, client, db } from "@db/index";
 import { bossUniques, items, submissions } from "@db/schema";
 
 import { saveItems } from "@/modules/catalogue/repository/save-items";
@@ -8,11 +8,36 @@ import { saveItems } from "@/modules/catalogue/repository/save-items";
 import plan from "./items.json" with { type: "json" };
 
 type Plan = {
+  remove: string[];
   merge: Record<string, string>;
   ids: Record<string, number>;
 };
 
-const { merge, ids } = plan as Plan;
+const { remove, merge, ids } = plan as Plan;
+
+const unlinkSubmissions = async (tx: Transaction, name: string) => {
+  const [item] = await tx.select({ id: items.id }).from(items).where(eq(items.name, name));
+  if (!item) return;
+
+  const unlinked = await tx
+    .update(submissions)
+    .set({ itemId: null })
+    .where(eq(submissions.itemId, item.id))
+    .returning({ id: submissions.id });
+
+  return { item, unlinked: unlinked.length };
+};
+
+for (const name of remove) {
+  await db.transaction(async (tx) => {
+    const removed = await unlinkSubmissions(tx, name);
+    if (!removed) return;
+
+    await tx.delete(items).where(eq(items.id, removed.item.id));
+
+    console.log(`removed ${name}, unlinked ${removed.unlinked} submissions`);
+  });
+}
 
 for (const [wrong, right] of Object.entries(merge)) {
   await db.transaction(async (tx) => {
@@ -45,6 +70,19 @@ for (const [name, osrsItemId] of Object.entries(ids)) {
 
   if (updated.length > 0) console.log(`set ${name} to game item ${osrsItemId}`);
 }
+
+const pruned = await db
+  .delete(items)
+  .where(
+    sql`
+      ${items.osrsItemId} is null
+      and not exists (select 1 from ${submissions} where ${submissions.itemId} = ${items.id})
+      and not exists (select 1 from ${bossUniques} where ${bossUniques.itemId} = ${items.id})
+    `
+  )
+  .returning({ id: items.id });
+
+console.log(`pruned ${pruned.length} items nothing referenced and no game item matched`);
 
 const remaining = await db
   .select({ name: items.name, uses: sql<number>`count(${submissions.id})::int` })

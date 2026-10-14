@@ -1,4 +1,5 @@
 {
+  "remove": ["Brimstone ring", "test"],
   "merge": {
     "Bone claw": "Burning claw",
     "Brimstrong Ring Piece": "Brimstone ring piece",
@@ -13,6 +14,7 @@
     "Vet'ion Jr": "Vet'ion jr."
   },
   "ids": {
+    "Brimstone ring piece": 22975,
     "Dom": 31130,
     "Magic seeds": 5316,
     "Noxious pommel": 29794,
