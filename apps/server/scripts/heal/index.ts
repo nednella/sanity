@@ -11,9 +11,10 @@ type Plan = {
   remove: string[];
   merge: Record<string, string>;
   ids: Record<string, number>;
+  unlink: string[];
 };
 
-const { remove, merge, ids } = plan as Plan;
+const { remove, merge, ids, unlink } = plan as Plan;
 
 const unlinkSubmissions = async (tx: Transaction, name: string) => {
   const [item] = await tx.select({ id: items.id }).from(items).where(eq(items.name, name));
@@ -69,6 +70,13 @@ for (const [name, osrsItemId] of Object.entries(ids)) {
     .returning({ id: items.id });
 
   if (updated.length > 0) console.log(`set ${name} to game item ${osrsItemId}`);
+}
+
+for (const name of unlink) {
+  await db.transaction(async (tx) => {
+    const kept = await unlinkSubmissions(tx, name);
+    if (kept) console.log(`unlinked ${kept.unlinked} submissions from ${name}`);
+  });
 }
 
 const pruned = await db

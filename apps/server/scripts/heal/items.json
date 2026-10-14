@@ -21,5 +21,6 @@
     "Thorny hedge": 8203,
     "Twisted ancestral colour kit": 24670,
     "Vet'ion jr.": 13179
-  }
+  },
+  "unlink": ["Dust", "Staff"]
 }
