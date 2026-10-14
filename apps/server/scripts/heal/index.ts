@@ -1,4 +1,4 @@
-import { eq, sql } from "drizzle-orm";
+import { and, eq, sql } from "drizzle-orm";
 
 import { client, db } from "@db/index";
 import { bossUniques, items, submissions } from "@db/schema";
@@ -9,9 +9,10 @@ import plan from "./items.json" with { type: "json" };
 
 type Plan = {
   merge: Record<string, string>;
+  ids: Record<string, number>;
 };
 
-const { merge } = plan as Plan;
+const { merge, ids } = plan as Plan;
 
 for (const [wrong, right] of Object.entries(merge)) {
   await db.transaction(async (tx) => {
@@ -34,5 +35,26 @@ for (const [wrong, right] of Object.entries(merge)) {
     console.log(`merged ${wrong} into ${right}`);
   });
 }
+
+for (const [name, osrsItemId] of Object.entries(ids)) {
+  const updated = await db
+    .update(items)
+    .set({ osrsItemId })
+    .where(and(eq(items.name, name), sql`${items.osrsItemId} is distinct from ${osrsItemId}`))
+    .returning({ id: items.id });
+
+  if (updated.length > 0) console.log(`set ${name} to game item ${osrsItemId}`);
+}
+
+const remaining = await db
+  .select({ name: items.name, uses: sql<number>`count(${submissions.id})::int` })
+  .from(items)
+  .leftJoin(submissions, eq(submissions.itemId, items.id))
+  .where(sql`${items.osrsItemId} is null`)
+  .groupBy(items.id, items.name)
+  .orderBy(sql`count(${submissions.id}) desc`);
+
+console.log(`${remaining.length} items left without a game item:`);
+for (const item of remaining) console.log(`  ${String(item.uses).padStart(5)}  ${item.name}`);
 
 await client.end();
