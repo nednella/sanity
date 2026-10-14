@@ -8,7 +8,7 @@
     "start": "tsx --env-file-if-exists=.env src/index.ts",
     "typecheck": "tsc --noEmit",
     "db:generate": "drizzle-kit generate",
-    "db:bootstrap": "pnpm db:migrate && pnpm catalogue:bosses && pnpm db:port && pnpm catalogue:items && pnpm catalogue:uniques && pnpm db:heal",
+    "db:bootstrap": "pnpm db:migrate && pnpm catalogue:bosses && pnpm db:port && pnpm catalogue:uniques && pnpm catalogue:items && pnpm db:heal",
     "db:migrate": "drizzle-kit migrate",
     "db:studio": "drizzle-kit studio",
     "db:heal": "tsx --env-file-if-exists=.env scripts/heal/index.ts",
