@@ -162,6 +162,13 @@
       "when": 1791837552182,
       "tag": "0022_next_chameleon",
       "breakpoints": true
+    },
+    {
+      "idx": 23,
+      "version": "7",
+      "when": 1792101486498,
+      "tag": "0023_common_human_torch",
+      "breakpoints": true
     }
   ]
 }

@@ -20,7 +20,12 @@ export const saveItems = async (tx: Transaction, rows: ItemRow[]) => {
     .values(unique)
     .onConflictDoUpdate({
       target: items.name,
-      set: { name: sql`excluded.name`, osrsItemId: sql`coalesce(excluded.osrs_item_id, ${items.osrsItemId})` }
+      set: {
+        name: sql`excluded.name`,
+        osrsItemId: sql`coalesce(excluded.osrs_item_id, ${items.osrsItemId})`,
+        valueMillions: sql`coalesce(excluded.value_millions, ${items.valueMillions})`,
+        valueRule: sql`coalesce(excluded.value_rule, ${items.valueRule})`
+      }
     })
     .returning({ id: items.id });
 
