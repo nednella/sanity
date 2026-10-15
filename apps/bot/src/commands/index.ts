@@ -13,6 +13,7 @@ import { ranksGracePeriod } from "./admin/ranks-grace-period/command";
 import { retire } from "./admin/retire/command";
 import { trial } from "./admin/trial/command";
 import { unretire } from "./admin/unretire/command";
+import { updateDiscordId } from "./admin/update-discord-id/command";
 import { help } from "./public/help/command";
 
 const all: Command[] = [
@@ -27,7 +28,8 @@ const all: Command[] = [
   ranksGracePeriod,
   retire,
   trial,
-  unretire
+  unretire,
+  updateDiscordId
 ];
 
 export const commands = new Collection(all.map((command) => [command.name, command]));
