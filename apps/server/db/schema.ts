@@ -94,10 +94,14 @@ export const auditAction = pgEnum("audit_action", [
 
 export const auditSource = pgEnum("audit_source", ["bot", "server", "web_app", "worker"]);
 
+export const itemValueRule = pgEnum("item_value_rule", ["exact", "minimum"]);
+
 export const items = pgTable("items", {
   id: integer().generatedByDefaultAsIdentity().primaryKey(),
   name: citext().notNull().unique("items_name_unique"),
-  osrsItemId: integer().unique("items_osrs_item_id_unique")
+  osrsItemId: integer().unique("items_osrs_item_id_unique"),
+  valueMillions: integer(),
+  valueRule: itemValueRule()
 });
 
 export const bosses = pgTable("bosses", {
