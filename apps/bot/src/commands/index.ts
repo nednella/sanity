@@ -12,7 +12,20 @@ import { changeRsn } from "./public/change-rsn/command";
 import { diary } from "./public/diary/command";
 import { help } from "./public/help/command";
 import { profile } from "./public/profile/command";
+import { setNationality } from "./public/set-nationality/command";
 
-const all: Command[] = [addPoints, adminHelp, age, birthdayAdd, changeRsn, diary, help, mainframe, ping, profile];
+const all: Command[] = [
+  addPoints,
+  adminHelp,
+  age,
+  birthdayAdd,
+  changeRsn,
+  diary,
+  help,
+  mainframe,
+  ping,
+  profile,
+  setNationality
+];
 
 export const commands = new Collection(all.map((command) => [command.name, command]));
