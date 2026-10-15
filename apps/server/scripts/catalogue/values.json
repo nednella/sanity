@@ -1,0 +1,512 @@
+[
+  {
+    "name": "Abyssal orphan",
+    "rule": "exact",
+    "valueMillions": 25
+  },
+  {
+    "name": "Abyssal protector",
+    "rule": "exact",
+    "valueMillions": 50
+  },
+  {
+    "name": "Ancestral hat",
+    "rule": "minimum",
+    "valueMillions": 80
+  },
+  {
+    "name": "Ancestral robe bottom",
+    "rule": "minimum",
+    "valueMillions": 100
+  },
+  {
+    "name": "Ancestral robe top",
+    "rule": "minimum",
+    "valueMillions": 100
+  },
+  {
+    "name": "Arcane prayer scroll",
+    "rule": "minimum",
+    "valueMillions": 40
+  },
+  {
+    "name": "Avernic defender hilt",
+    "rule": "minimum",
+    "valueMillions": 60
+  },
+  {
+    "name": "Baby chinchompa",
+    "rule": "exact",
+    "valueMillions": 50
+  },
+  {
+    "name": "Baby Mole",
+    "rule": "exact",
+    "valueMillions": 30
+  },
+  {
+    "name": "Baron",
+    "rule": "exact",
+    "valueMillions": 30
+  },
+  {
+    "name": "Beaver",
+    "rule": "exact",
+    "valueMillions": 50
+  },
+  {
+    "name": "Beef",
+    "rule": "exact",
+    "valueMillions": 10
+  },
+  {
+    "name": "Bloodhound",
+    "rule": "exact",
+    "valueMillions": 100
+  },
+  {
+    "name": "Bran",
+    "rule": "exact",
+    "valueMillions": 30
+  },
+  {
+    "name": "Butch",
+    "rule": "exact",
+    "valueMillions": 30
+  },
+  {
+    "name": "Callisto cub",
+    "rule": "exact",
+    "valueMillions": 20
+  },
+  {
+    "name": "Chompy chick",
+    "rule": "exact",
+    "valueMillions": 10
+  },
+  {
+    "name": "Dexterous prayer scroll",
+    "rule": "minimum",
+    "valueMillions": 40
+  },
+  {
+    "name": "Diary Carry",
+    "rule": "exact",
+    "valueMillions": 50
+  },
+  {
+    "name": "Dinh's bulwark",
+    "rule": "minimum",
+    "valueMillions": 60
+  },
+  {
+    "name": "Dom",
+    "rule": "exact",
+    "valueMillions": 30
+  },
+  {
+    "name": "Dragon claws",
+    "rule": "minimum",
+    "valueMillions": 80
+  },
+  {
+    "name": "Dragon hunter crossbow",
+    "rule": "minimum",
+    "valueMillions": 60
+  },
+  {
+    "name": "Elder maul",
+    "rule": "minimum",
+    "valueMillions": 160
+  },
+  {
+    "name": "Elidinis' ward",
+    "rule": "minimum",
+    "valueMillions": 60
+  },
+  {
+    "name": "Ghrazi rapier",
+    "rule": "minimum",
+    "valueMillions": 140
+  },
+  {
+    "name": "Giant Squirrel",
+    "rule": "exact",
+    "valueMillions": 50
+  },
+  {
+    "name": "Gull",
+    "rule": "exact",
+    "valueMillions": 30
+  },
+  {
+    "name": "Hellpuppy",
+    "rule": "exact",
+    "valueMillions": 30
+  },
+  {
+    "name": "Herbi",
+    "rule": "exact",
+    "valueMillions": 50
+  },
+  {
+    "name": "Heron",
+    "rule": "exact",
+    "valueMillions": 50
+  },
+  {
+    "name": "Holy ornament kit",
+    "rule": "exact",
+    "valueMillions": 25
+  },
+  {
+    "name": "Huberte",
+    "rule": "exact",
+    "valueMillions": 30
+  },
+  {
+    "name": "Ikkle Hydra",
+    "rule": "exact",
+    "valueMillions": 30
+  },
+  {
+    "name": "Jal-Nib-Rek",
+    "rule": "exact",
+    "valueMillions": 50
+  },
+  {
+    "name": "Justiciar chestguard",
+    "rule": "minimum",
+    "valueMillions": 60
+  },
+  {
+    "name": "Justiciar faceguard",
+    "rule": "minimum",
+    "valueMillions": 60
+  },
+  {
+    "name": "Justiciar legguards",
+    "rule": "minimum",
+    "valueMillions": 60
+  },
+  {
+    "name": "Kalphite Princess",
+    "rule": "exact",
+    "valueMillions": 30
+  },
+  {
+    "name": "Kodai insignia",
+    "rule": "minimum",
+    "valueMillions": 160
+  },
+  {
+    "name": "Lightbearer",
+    "rule": "minimum",
+    "valueMillions": 60
+  },
+  {
+    "name": "Lil' Creator",
+    "rule": "exact",
+    "valueMillions": 50
+  },
+  {
+    "name": "Lil' Zik",
+    "rule": "exact",
+    "valueMillions": 50
+  },
+  {
+    "name": "Lil'viathan",
+    "rule": "exact",
+    "valueMillions": 30
+  },
+  {
+    "name": "Little Nightmare",
+    "rule": "exact",
+    "valueMillions": 40
+  },
+  {
+    "name": "Maggot marquess",
+    "rule": "exact",
+    "valueMillions": 30
+  },
+  {
+    "name": "Magma mutagen",
+    "rule": "minimum",
+    "valueMillions": 50
+  },
+  {
+    "name": "Masori body",
+    "rule": "minimum",
+    "valueMillions": 100
+  },
+  {
+    "name": "Masori chaps",
+    "rule": "minimum",
+    "valueMillions": 100
+  },
+  {
+    "name": "Masori mask",
+    "rule": "minimum",
+    "valueMillions": 80
+  },
+  {
+    "name": "Metamorphic dust",
+    "rule": "exact",
+    "valueMillions": 50
+  },
+  {
+    "name": "Moxi",
+    "rule": "exact",
+    "valueMillions": 30
+  },
+  {
+    "name": "Muphin",
+    "rule": "exact",
+    "valueMillions": 25
+  },
+  {
+    "name": "Nexling",
+    "rule": "exact",
+    "valueMillions": 50
+  },
+  {
+    "name": "Nid",
+    "rule": "exact",
+    "valueMillions": 30
+  },
+  {
+    "name": "Noon",
+    "rule": "exact",
+    "valueMillions": 30
+  },
+  {
+    "name": "Olmlet",
+    "rule": "exact",
+    "valueMillions": 50
+  },
+  {
+    "name": "Osmumten's fang",
+    "rule": "minimum",
+    "valueMillions": 60
+  },
+  {
+    "name": "Parasitic egg",
+    "rule": "exact",
+    "valueMillions": 15
+  },
+  {
+    "name": "Pet chaos elemental",
+    "rule": "exact",
+    "valueMillions": 10
+  },
+  {
+    "name": "Pet Dagannoth Prime",
+    "rule": "exact",
+    "valueMillions": 50
+  },
+  {
+    "name": "Pet Dagannoth Rex",
+    "rule": "exact",
+    "valueMillions": 50
+  },
+  {
+    "name": "Pet Dagannoth Supreme",
+    "rule": "exact",
+    "valueMillions": 50
+  },
+  {
+    "name": "Pet dark core",
+    "rule": "exact",
+    "valueMillions": 50
+  },
+  {
+    "name": "Pet General Graardor",
+    "rule": "exact",
+    "valueMillions": 50
+  },
+  {
+    "name": "Pet K'ril Tsutsaroth",
+    "rule": "exact",
+    "valueMillions": 50
+  },
+  {
+    "name": "Pet Kraken",
+    "rule": "exact",
+    "valueMillions": 30
+  },
+  {
+    "name": "Pet Kree'arra",
+    "rule": "exact",
+    "valueMillions": 50
+  },
+  {
+    "name": "Pet Penance Queen",
+    "rule": "exact",
+    "valueMillions": 100
+  },
+  {
+    "name": "Pet Smoke Devil",
+    "rule": "exact",
+    "valueMillions": 30
+  },
+  {
+    "name": "Pet Snakeling",
+    "rule": "exact",
+    "valueMillions": 40
+  },
+  {
+    "name": "Pet Zilyana",
+    "rule": "exact",
+    "valueMillions": 50
+  },
+  {
+    "name": "Phoenix",
+    "rule": "exact",
+    "valueMillions": 50
+  },
+  {
+    "name": "Prince Black Dragon",
+    "rule": "exact",
+    "valueMillions": 30
+  },
+  {
+    "name": "Quetzin",
+    "rule": "exact",
+    "valueMillions": 50
+  },
+  {
+    "name": "Rift guardian",
+    "rule": "exact",
+    "valueMillions": 50
+  },
+  {
+    "name": "Rock golem",
+    "rule": "exact",
+    "valueMillions": 50
+  },
+  {
+    "name": "Rocky",
+    "rule": "exact",
+    "valueMillions": 50
+  },
+  {
+    "name": "Sanguine dust",
+    "rule": "exact",
+    "valueMillions": 50
+  },
+  {
+    "name": "Sanguine ornament kit",
+    "rule": "exact",
+    "valueMillions": 25
+  },
+  {
+    "name": "Sanguinesti staff (uncharged)",
+    "rule": "minimum",
+    "valueMillions": 140
+  },
+  {
+    "name": "Scorpia's offspring",
+    "rule": "exact",
+    "valueMillions": 20
+  },
+  {
+    "name": "Scurry",
+    "rule": "exact",
+    "valueMillions": 30
+  },
+  {
+    "name": "Scythe of Vitur (uncharged)",
+    "rule": "minimum",
+    "valueMillions": 1000
+  },
+  {
+    "name": "Skotos",
+    "rule": "exact",
+    "valueMillions": 30
+  },
+  {
+    "name": "Smol Heredit",
+    "rule": "exact",
+    "valueMillions": 50
+  },
+  {
+    "name": "Smolcano",
+    "rule": "exact",
+    "valueMillions": 50
+  },
+  {
+    "name": "Soup",
+    "rule": "exact",
+    "valueMillions": 50
+  },
+  {
+    "name": "Sraracha",
+    "rule": "exact",
+    "valueMillions": 30
+  },
+  {
+    "name": "Tanzanite mutagen",
+    "rule": "minimum",
+    "valueMillions": 50
+  },
+  {
+    "name": "Tumeken's guardian",
+    "rule": "exact",
+    "valueMillions": 50
+  },
+  {
+    "name": "Tumeken's shadow (uncharged)",
+    "rule": "minimum",
+    "valueMillions": 1000
+  },
+  {
+    "name": "Twisted ancestral colour kit",
+    "rule": "exact",
+    "valueMillions": 25
+  },
+  {
+    "name": "Twisted bow",
+    "rule": "minimum",
+    "valueMillions": 1000
+  },
+  {
+    "name": "Twisted buckler",
+    "rule": "minimum",
+    "valueMillions": 60
+  },
+  {
+    "name": "TzRek-Jad",
+    "rule": "exact",
+    "valueMillions": 20
+  },
+  {
+    "name": "Venenatis spiderling",
+    "rule": "exact",
+    "valueMillions": 20
+  },
+  {
+    "name": "Vet'ion jr.",
+    "rule": "exact",
+    "valueMillions": 20
+  },
+  {
+    "name": "Vorki",
+    "rule": "exact",
+    "valueMillions": 30
+  },
+  {
+    "name": "Wisp",
+    "rule": "exact",
+    "valueMillions": 30
+  },
+  {
+    "name": "Yami",
+    "rule": "exact",
+    "valueMillions": 25
+  },
+  {
+    "name": "Youngllef",
+    "rule": "exact",
+    "valueMillions": 30
+  }
+]

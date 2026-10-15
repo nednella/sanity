@@ -176,6 +176,13 @@
       "when": 1792630168050,
       "tag": "0024_bitter_plazm",
       "breakpoints": true
+    },
+    {
+      "idx": 25,
+      "version": "7",
+      "when": 1792630587353,
+      "tag": "0025_thin_ghost_rider",
+      "breakpoints": true
     }
   ]
 }
