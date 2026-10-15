@@ -7,11 +7,13 @@ import { memberDiary } from "@/modules/speedrun-diary/response";
 import { getMemberDiaries } from "@/modules/speedrun-diary/service/get-member-diaries";
 import { submission } from "@/modules/submissions/response";
 import { getSubmissions } from "@/modules/submissions/service/get-submissions";
-import { notFound, paginated, toPage } from "@/schema/common";
+import { memberRef, notFound, paginated, toPage } from "@/schema/common";
 
+import { findMemberByDiscordId } from "./repository/find-member-by-discord-id";
 import {
   changeRankBody,
   memberCommandBody,
+  memberDiscordParams,
   memberListQuery,
   memberParams,
   memberPersonalBestsQuery,
@@ -44,6 +46,22 @@ export const membersRouter: FastifyPluginAsyncZod = async (app) => {
       const { limit, offset } = req.query;
       const { items, total } = await getMembers(req.query);
       return { items, page: toPage({ limit, offset, total }) };
+    }
+  });
+
+  app.route({
+    method: "GET",
+    url: "/members/discord/:discordId",
+    schema: {
+      params: memberDiscordParams,
+      response: {
+        200: memberRef,
+        404: notFound
+      }
+    },
+    handler: async (req, res) => {
+      const found = await findMemberByDiscordId(req.params.discordId);
+      return found ?? res.code(404).send({ message: "member not found" });
     }
   });
 

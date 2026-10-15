@@ -7,6 +7,8 @@ import { pagination } from "@/schema/common";
 
 export const memberParams = z.object({ id: bigIntString });
 
+export const memberDiscordParams = z.object({ discordId: bigIntString });
+
 const rsn = z.string().trim().min(1).max(12);
 
 const memberFilters = z.object({
