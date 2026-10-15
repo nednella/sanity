@@ -10,9 +10,22 @@ import { quitto } from "./admin/quitto/command";
 import { rank } from "./admin/rank/command";
 import { ranksGracePeriod } from "./admin/ranks-grace-period/command";
 import { retire } from "./admin/retire/command";
+import { trial } from "./admin/trial/command";
 import { unretire } from "./admin/unretire/command";
 import { help } from "./public/help/command";
 
-const all: Command[] = [adminHelp, help, mainframe, passTrial, ping, quitto, rank, ranksGracePeriod, retire, unretire];
+const all: Command[] = [
+  adminHelp,
+  help,
+  mainframe,
+  passTrial,
+  ping,
+  quitto,
+  rank,
+  ranksGracePeriod,
+  retire,
+  trial,
+  unretire
+];
 
 export const commands = new Collection(all.map((command) => [command.name, command]));
