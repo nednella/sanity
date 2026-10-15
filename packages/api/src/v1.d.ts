@@ -597,8 +597,7 @@ export interface paths {
                         itemId?: number | null;
                         /** @default null */
                         itemName?: string | null;
-                        /** @default null */
-                        valueMillions?: number | null;
+                        valueMillions: number;
                         /** @default 0 */
                         nonClanCount?: number;
                         /**
