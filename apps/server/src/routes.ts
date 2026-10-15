@@ -12,7 +12,7 @@ import {
 } from "@/modules/personal-bests/router";
 import { adminPointsRouter } from "@/modules/points/router";
 import { adminRanksRouter, ranksRouter } from "@/modules/ranks/router";
-import { speedrunDiaryRouter } from "@/modules/speedrun-diary/router";
+import { adminSpeedrunDiaryRouter, speedrunDiaryRouter } from "@/modules/speedrun-diary/router";
 import { adminSubmissionsRouter, authSubmissionsRouter, submissionsRouter } from "@/modules/submissions/router";
 import { womRouter } from "@/modules/wom/router";
 
@@ -43,6 +43,7 @@ const adminRoutes: FastifyPluginAsync = async (app) => {
   app.register(adminPersonalBestsRouter);
   app.register(adminPointsRouter);
   app.register(adminRanksRouter);
+  app.register(adminSpeedrunDiaryRouter);
   app.register(adminSubmissionsRouter);
 };
 
