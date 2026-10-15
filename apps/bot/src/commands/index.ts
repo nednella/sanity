@@ -3,6 +3,7 @@ import { Collection } from "discord.js";
 import type { Command } from "@/types";
 
 import { adminHelp } from "./admin/admin-help/command";
+import { checkRank } from "./admin/check-rank/command";
 import { mainframe } from "./admin/mainframe/command";
 import { passTrial } from "./admin/pass-trial/command";
 import { ping } from "./admin/ping/command";
@@ -16,6 +17,7 @@ import { help } from "./public/help/command";
 
 const all: Command[] = [
   adminHelp,
+  checkRank,
   help,
   mainframe,
   passTrial,

@@ -1,7 +1,8 @@
 import { SlashCommandBuilder } from "discord.js";
 
 import { defineCommand } from "@/utils/commands";
-import { replyNotImplemented } from "@/utils/replies";
+
+import { handleCheckRank } from "./handler";
 
 export const checkRank = defineCommand({
   data: new SlashCommandBuilder()
@@ -9,5 +10,5 @@ export const checkRank = defineCommand({
     .setDescription("Check every member for the rank they have earned"),
   category: "Membership",
   admin: true,
-  execute: replyNotImplemented
+  execute: handleCheckRank
 });
