@@ -83,7 +83,9 @@ const toProgression = (currentRankId: number, ranks: RankRow[], standing: Standi
 
   const higher = ladder.filter((rank) => rank.id > (eligibleRank?.id ?? currentRankId));
   const points = higher.find((rank) => !requiresDiaries(rank));
-  const diary = higher.find((rank) => requiresDiaries(rank));
+  const diary = higher.find(
+    (rank) => requiresDiaries(rank) && (!points || rank.clanPointRequirement === points.clanPointRequirement)
+  );
 
   return {
     status: toProgressionStatus(currentRankId, ladder.length > 0, higher.length > 0),
