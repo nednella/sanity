@@ -28,7 +28,7 @@ export const handleMainframe = async (interaction: ChatInputCommandInteraction) 
       thumbnail: interaction.client.user.displayAvatarURL(),
       fields: [
         { name: "Latency", value: `Discord ping · ${formatMs(discordPing)}\nServer ping · ${formatMs(serverPing)}` },
-        { name: "Checks", value: checks.map((check) => describe(check)).join("\n") }
+        { name: "Health", value: checks.map((check) => describe(check)).join("\n") }
       ]
     })
   );
