@@ -1,4 +1,10 @@
-import { type ChatInputCommandInteraction, channelMention, userMention } from "discord.js";
+import {
+  CategoryChannel,
+  type ChatInputCommandInteraction,
+  type SendableChannels,
+  channelMention,
+  userMention
+} from "discord.js";
 
 import { api } from "@/lib/api";
 import { CHANNELS, type ChannelPurpose, type ChannelType, fetchChannels, requireChannel } from "@/lib/channels";
@@ -78,12 +84,11 @@ const set = async (interaction: ChatInputCommandInteraction) => {
   );
 };
 
-const test = async (interaction: ChatInputCommandInteraction) => {
-  const purpose = purposeOption(interaction);
-  const channelId = await requireChannel(purpose);
-  const channel = await interaction.client.channels.fetch(channelId);
-  if (!channel?.isSendable()) throw new Error(`channel ${channelId} is not sendable`);
-
+const postTest = async (
+  interaction: ChatInputCommandInteraction,
+  purpose: ChannelPurpose,
+  channel: SendableChannels
+) => {
   await channel.send({
     embeds: [
       buildEmbed({
@@ -96,8 +101,27 @@ const test = async (interaction: ChatInputCommandInteraction) => {
 
   await reply(
     interaction,
-    buildEmbed({ style: "success", title: "Test sent", description: `Posted in ${channelMention(channelId)}.` })
+    buildEmbed({ style: "success", title: "Test sent", description: `Posted in ${channelMention(channel.id)}.` })
   );
+};
+
+const testCategory = async (interaction: ChatInputCommandInteraction) => {
+  const purpose = purposeOption(interaction);
+  const categoryId = await requireChannel(purpose);
+  const category = await interaction.client.channels.fetch(categoryId);
+  if (!(category instanceof CategoryChannel)) throw new Error(`channel ${categoryId} is not a category`);
+
+  const channel = await category.children.create({ name: interaction.options.getString("name", true) });
+  await postTest(interaction, purpose, channel);
+};
+
+const testText = async (interaction: ChatInputCommandInteraction) => {
+  const purpose = purposeOption(interaction);
+  const channelId = await requireChannel(purpose);
+  const channel = await interaction.client.channels.fetch(channelId);
+  if (!channel?.isSendable()) throw new Error(`channel ${channelId} is not sendable`);
+
+  await postTest(interaction, purpose, channel);
 };
 
 const SUBCOMMANDS = {
@@ -105,7 +129,8 @@ const SUBCOMMANDS = {
   list,
   "set category": set,
   "set text": set,
-  test
+  "test category": testCategory,
+  "test text": testText
 } satisfies Record<string, (interaction: ChatInputCommandInteraction) => Promise<void>>;
 
 export const handleChannels = (interaction: ChatInputCommandInteraction) => {
