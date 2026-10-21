@@ -2,49 +2,32 @@ import { type APIEmbedField, Colors, EmbedBuilder } from "discord.js";
 
 const HEADER = "Bald Bot";
 const FOOTER = "Powered by the Sanity Mainframe";
-const BRAND_COLOUR = 0x22_d3_ee;
 
-const COLOURS = {
-  error: Colors.Red,
-  info: Colors.Blurple,
-  success: Colors.Green,
-  warning: Colors.Yellow
+const STYLES = {
+  brand: { colour: 0x22_d3_ee, icon: null },
+  error: { colour: Colors.Red, icon: "❌" },
+  info: { colour: Colors.Blurple, icon: "ℹ️" },
+  success: { colour: Colors.Green, icon: "✅" },
+  warning: { colour: Colors.Yellow, icon: "⚠️" }
 };
-
-const ICONS = {
-  error: "❌",
-  info: "ℹ️",
-  success: "✅",
-  warning: "⚠️"
-};
-
-type Tone = keyof typeof COLOURS;
 
 type EmbedOptions = {
   description?: string;
   fields?: APIEmbedField[];
+  style?: keyof typeof STYLES;
   thumbnail?: string;
   title?: string;
 };
 
-const build = (colour: number, { description, fields, thumbnail, title }: EmbedOptions) => {
-  const embed = new EmbedBuilder().setColor(colour);
-  if (title) embed.setTitle(title);
+export const buildEmbed = ({ description, fields, style = "brand", thumbnail, title = HEADER }: EmbedOptions) => {
+  const { colour, icon } = STYLES[style];
+  const embed = new EmbedBuilder()
+    .setColor(colour)
+    .setTitle(icon ? `${icon} ${title}` : title)
+    .setFooter({ text: FOOTER })
+    .setTimestamp();
   if (description) embed.setDescription(description);
   if (fields) embed.addFields(fields);
   if (thumbnail) embed.setThumbnail(thumbnail);
-  return embed.setFooter({ text: FOOTER }).setTimestamp();
+  return embed;
 };
-
-// A tone says how things went; without one the brand colour stands.
-export const brandEmbed = ({ tone, ...options }: EmbedOptions & { tone?: Tone }) =>
-  build(tone ? COLOURS[tone] : BRAND_COLOUR, { title: HEADER, ...options });
-
-type ToneOptions = EmbedOptions & { title: string };
-
-const embed = (tone: Tone, { title, ...options }: ToneOptions) =>
-  build(COLOURS[tone], { title: `${ICONS[tone]} ${title}`, ...options });
-export const errorEmbed = (options: ToneOptions) => embed("error", options);
-export const infoEmbed = (options: ToneOptions) => embed("info", options);
-export const successEmbed = (options: ToneOptions) => embed("success", options);
-export const warningEmbed = (options: ToneOptions) => embed("warning", options);

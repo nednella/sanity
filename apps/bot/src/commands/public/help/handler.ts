@@ -12,7 +12,7 @@ import { config } from "@config";
 
 import { commands } from "@/commands";
 import type { Command } from "@/types";
-import { brandEmbed } from "@/utils/embeds";
+import { buildEmbed } from "@/utils/embeds";
 import { commandMention } from "@/utils/mentions";
 import { reply } from "@/utils/replies";
 
@@ -23,7 +23,7 @@ const GETTING_STARTED =
 export const handleAdminHelp = (interaction: ChatInputCommandInteraction) =>
   reply(
     interaction,
-    brandEmbed({
+    buildEmbed({
       description: EMBED_DESCRIPTION,
       fields: filteredSections(interaction, true),
       thumbnail: interaction.client.user.displayAvatarURL()
@@ -33,7 +33,7 @@ export const handleAdminHelp = (interaction: ChatInputCommandInteraction) =>
 export const handleHelp = (interaction: ChatInputCommandInteraction) =>
   reply(
     interaction,
-    brandEmbed({
+    buildEmbed({
       description: EMBED_DESCRIPTION,
       fields: [{ name: "Getting Started", value: GETTING_STARTED }, ...filteredSections(interaction, false)],
       thumbnail: interaction.client.user.displayAvatarURL()

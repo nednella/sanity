@@ -5,7 +5,7 @@ import type {
   MessageActionRowComponentBuilder
 } from "discord.js";
 
-import { errorEmbed, warningEmbed } from "./embeds";
+import { buildEmbed } from "./embeds";
 
 type ReplyOptions = { components?: ActionRowBuilder<MessageActionRowComponentBuilder>[] };
 
@@ -19,10 +19,14 @@ export const reply = (
 export const replyError = (
   interaction: ChatInputCommandInteraction,
   { title, description }: { title: string; description: string }
-) => reply(interaction, errorEmbed({ title, description }));
+) => reply(interaction, buildEmbed({ description, style: "error", title }));
 
 export const replyNotImplemented = (interaction: ChatInputCommandInteraction) =>
   reply(
     interaction,
-    warningEmbed({ title: "Not implemented", description: `\`/${interaction.commandName}\` is not implemented yet.` })
+    buildEmbed({
+      description: `\`/${interaction.commandName}\` is not implemented yet.`,
+      style: "warning",
+      title: "Not implemented"
+    })
   );
