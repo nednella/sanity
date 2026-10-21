@@ -3,11 +3,11 @@ import { ChannelType, SlashCommandBuilder } from "discord.js";
 import { purposeChoices } from "@/lib/channels";
 import { defineCommand } from "@/utils/commands";
 
-import { handleChannel } from "./handler";
+import { handleChannels } from "./handler";
 
-export const channel = defineCommand({
+export const channels = defineCommand({
   data: new SlashCommandBuilder()
-    .setName("channel")
+    .setName("channels")
     .setDescription("Manage the channels and categories the bot uses")
     .addSubcommand((subcommand) =>
       subcommand
@@ -81,5 +81,5 @@ export const channel = defineCommand({
     ),
   category: "Setup",
   admin: true,
-  execute: handleChannel
+  execute: handleChannels
 });
