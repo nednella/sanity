@@ -9,7 +9,7 @@ import { reply } from "@/utils/replies";
 
 type Check = Omit<Health["checks"][number], "latencyMs"> & { latencyMs?: number };
 
-export const handleMainframe = async (interaction: ChatInputCommandInteraction) => {
+export const handleHealth = async (interaction: ChatInputCommandInteraction) => {
   const started = Date.now();
   const health = await fetchHealth();
   const serverPing = Date.now() - started;
