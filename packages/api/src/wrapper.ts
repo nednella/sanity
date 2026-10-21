@@ -40,7 +40,8 @@ export const createWrappedApiClient = (baseUrl: string, { timeoutMs = DEFAULT_TI
     delete: unwrapped(client, "delete"),
     get: unwrapped(client, "get"),
     patch: unwrapped(client, "patch"),
-    post: unwrapped(client, "post")
+    post: unwrapped(client, "post"),
+    put: unwrapped(client, "put")
   };
 };
 
