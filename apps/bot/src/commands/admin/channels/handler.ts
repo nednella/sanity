@@ -8,6 +8,7 @@ import {
 
 import { api } from "@/lib/api";
 import { CHANNELS, type ChannelPurpose, type ChannelType, fetchChannels, requireChannel } from "@/lib/channels";
+import { runSubcommand } from "@/utils/commands";
 import { buildEmbed } from "@/utils/embeds";
 import { capitalise } from "@/utils/format";
 import { reply } from "@/utils/replies";
@@ -133,9 +134,4 @@ const SUBCOMMANDS = {
   "test text": testText
 } satisfies Record<string, (interaction: ChatInputCommandInteraction) => Promise<void>>;
 
-export const handleChannels = (interaction: ChatInputCommandInteraction) => {
-  const name = [interaction.options.getSubcommandGroup(), interaction.options.getSubcommand(true)]
-    .filter(Boolean)
-    .join(" ") as keyof typeof SUBCOMMANDS;
-  return SUBCOMMANDS[name](interaction);
-};
+export const handleChannels = (interaction: ChatInputCommandInteraction) => runSubcommand(interaction, SUBCOMMANDS);
