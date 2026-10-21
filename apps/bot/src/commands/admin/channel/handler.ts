@@ -2,7 +2,7 @@ import { type ChatInputCommandInteraction, channelMention, userMention } from "d
 
 import { api } from "@/lib/api";
 import { CHANNELS, type ChannelPurpose, type ChannelType, fetchChannels, requireChannel } from "@/lib/channels";
-import { brandEmbed, infoEmbed, successEmbed } from "@/utils/embeds";
+import { buildEmbed } from "@/utils/embeds";
 import { capitalise } from "@/utils/format";
 import { reply } from "@/utils/replies";
 
@@ -25,7 +25,8 @@ const clear = async (interaction: ChatInputCommandInteraction) => {
 
   await reply(
     interaction,
-    successEmbed({
+    buildEmbed({
+      style: "success",
       title: "Channel cleared",
       fields: [{ name: "Purpose", value: CHANNELS[purpose].label }]
     })
@@ -45,7 +46,7 @@ const list = async (interaction: ChatInputCommandInteraction) => {
 
   await reply(
     interaction,
-    brandEmbed({
+    buildEmbed({
       title: "Connected Channels",
       fields: Object.entries(GROUPS)
         .map(([type, name]) => ({ name, value: describe(type) }))
@@ -66,7 +67,8 @@ const set = async (interaction: ChatInputCommandInteraction) => {
 
   await reply(
     interaction,
-    successEmbed({
+    buildEmbed({
+      style: "success",
       title: `${capitalise(kind)} set`,
       fields: [
         { name: "Purpose", value: CHANNELS[purpose].label, inline: true },
@@ -84,7 +86,8 @@ const test = async (interaction: ChatInputCommandInteraction) => {
 
   await channel.send({
     embeds: [
-      infoEmbed({
+      buildEmbed({
+        style: "info",
         title: "Test message",
         description: `${CHANNELS[purpose].label} test from ${userMention(interaction.user.id)}.`
       })
@@ -93,7 +96,7 @@ const test = async (interaction: ChatInputCommandInteraction) => {
 
   await reply(
     interaction,
-    successEmbed({ title: "Test sent", description: `Posted in ${channelMention(channelId)}.` })
+    buildEmbed({ style: "success", title: "Test sent", description: `Posted in ${channelMention(channelId)}.` })
   );
 };
 

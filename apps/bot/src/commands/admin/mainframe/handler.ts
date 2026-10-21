@@ -3,7 +3,7 @@ import type { ChatInputCommandInteraction } from "discord.js";
 import { ApiError, type Health, NetworkError } from "@sanity/api";
 
 import { api } from "@/lib/api";
-import { brandEmbed } from "@/utils/embeds";
+import { buildEmbed } from "@/utils/embeds";
 import { capitalise, formatMs } from "@/utils/format";
 import { reply } from "@/utils/replies";
 
@@ -21,8 +21,8 @@ export const handleMainframe = async (interaction: ChatInputCommandInteraction) 
 
   await reply(
     interaction,
-    brandEmbed({
-      tone: failing === 0 ? "success" : "error",
+    buildEmbed({
+      style: failing === 0 ? "success" : "error",
       title: "Mainframe Status",
       description: failing === 0 ? "I'm alive mate" : `${failing} of ${checks.length} checks failing`,
       thumbnail: interaction.client.user.displayAvatarURL(),
