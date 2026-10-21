@@ -4,9 +4,9 @@ import type { Command } from "@/types";
 
 import { adminHelp } from "./admin/admin-help/command";
 import { channel } from "./admin/channel/command";
-import { mainframe } from "./admin/mainframe/command";
+import { health } from "./admin/health/command";
 import { help } from "./public/help/command";
 
-const all: Command[] = [adminHelp, channel, help, mainframe];
+const all: Command[] = [adminHelp, channel, health, help];
 
 export const commands = new Collection(all.map((command) => [command.name, command]));
