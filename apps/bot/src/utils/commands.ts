@@ -1,11 +1,9 @@
-import type { SlashCommandOptionsOnlyBuilder } from "discord.js";
-
-import type { Category, Command, Execute } from "@/types";
+import type { Category, Command, CommandData, Execute } from "@/types";
 
 type Options = {
   admin?: boolean;
   category: Category;
-  data: SlashCommandOptionsOnlyBuilder;
+  data: CommandData;
   selfOnly?: boolean;
   execute: Execute;
 };
