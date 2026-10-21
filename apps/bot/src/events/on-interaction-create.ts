@@ -6,10 +6,18 @@ import { commands } from "@/commands";
 import { logger } from "@/lib/logger";
 import { replyError } from "@/utils/replies";
 
-const describe = (error: unknown) =>
-  error instanceof NetworkError
-    ? "The mainframe did not answer. Please try again in a moment."
-    : "Something went wrong. Please try again later.";
+const describe = (error: unknown) => {
+  if (error instanceof NetworkError) {
+    return {
+      title: "Mainframe offline",
+      description: "The mainframe did not answer. Please try again in a moment."
+    };
+  }
+  return {
+    title: "Something went wrong",
+    description: "Please try again later."
+  };
+};
 
 export const onInteractionCreate = async (interaction: Interaction) => {
   if (!interaction.isChatInputCommand()) return;

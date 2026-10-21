@@ -16,8 +16,13 @@ export const reply = (
   { components }: ReplyOptions = {}
 ) => interaction.editReply({ embeds: [embed], components });
 
-export const replyError = (interaction: ChatInputCommandInteraction, description: string) =>
-  reply(interaction, errorEmbed({ description }));
+export const replyError = (
+  interaction: ChatInputCommandInteraction,
+  { title, description }: { title: string; description: string }
+) => reply(interaction, errorEmbed({ title, description }));
 
 export const replyNotImplemented = (interaction: ChatInputCommandInteraction) =>
-  reply(interaction, warningEmbed({ description: `\`/${interaction.commandName}\` is not implemented yet.` }));
+  reply(
+    interaction,
+    warningEmbed({ title: "Not implemented", description: `\`/${interaction.commandName}\` is not implemented yet.` })
+  );
