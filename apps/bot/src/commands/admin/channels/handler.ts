@@ -108,7 +108,7 @@ const SUBCOMMANDS = {
   test
 } satisfies Record<string, (interaction: ChatInputCommandInteraction) => Promise<void>>;
 
-export const handleChannel = (interaction: ChatInputCommandInteraction) => {
+export const handleChannels = (interaction: ChatInputCommandInteraction) => {
   const name = [interaction.options.getSubcommandGroup(), interaction.options.getSubcommand(true)]
     .filter(Boolean)
     .join(" ") as keyof typeof SUBCOMMANDS;

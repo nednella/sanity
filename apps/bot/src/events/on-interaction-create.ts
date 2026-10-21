@@ -17,7 +17,7 @@ const describe = (error: unknown) => {
   if (error instanceof ChannelNotSetError) {
     return {
       title: `${CHANNELS[error.purpose].label} is not set`,
-      description: `An admin can set it with ${inlineCode("/channel set")}.`
+      description: `An admin can set it with ${inlineCode("/channels set")}.`
     };
   }
   return {
