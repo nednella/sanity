@@ -2,6 +2,15 @@ import { z } from "zod";
 
 import { bigIntString } from "@/schema/codecs";
 
+const discordChannel = z
+  .object({
+    purpose: z.string(),
+    channelId: bigIntString
+  })
+  .register(z.globalRegistry, { id: "DiscordChannel" });
+
+export const discordChannels = z.array(discordChannel);
+
 export const savedAvatars = z.object({ saved: z.number() });
 
 export const updatedDiscordAccount = z.object({

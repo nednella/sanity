@@ -94,6 +94,13 @@ export const auditAction = pgEnum("audit_action", [
 
 export const auditSource = pgEnum("audit_source", ["bot", "server", "web_app", "worker"]);
 
+// Where the bot posts or opens channels, by purpose. The bot owns the list of purposes, so adding one needs no
+// migration. Admins point each purpose at a channel from Discord itself.
+export const discordChannels = pgTable("discord_channels", {
+  purpose: text().primaryKey(),
+  channelId: bigint({ mode: "bigint" }).notNull()
+});
+
 export const items = pgTable("items", {
   id: integer().generatedByDefaultAsIdentity().primaryKey(),
   name: citext().notNull().unique("items_name_unique"),
