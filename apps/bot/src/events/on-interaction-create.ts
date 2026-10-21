@@ -3,9 +3,15 @@ import { type Interaction, MessageFlags, inlineCode } from "discord.js";
 import { NetworkError } from "@sanity/api";
 
 import { commands } from "@/commands";
-import { CHANNELS, ChannelNotSetError } from "@/lib/channels";
+import { CHANNELS, ChannelNotSetError, type ChannelType } from "@/lib/channels";
 import { logger } from "@/lib/logger";
 import { replyError } from "@/utils/replies";
+
+const NOUNS: Record<ChannelType, string> = {
+  category: "category",
+  text: "channel",
+  voice: "voice channel"
+};
 
 const describe = (error: unknown) => {
   if (error instanceof NetworkError) {
@@ -15,9 +21,10 @@ const describe = (error: unknown) => {
     };
   }
   if (error instanceof ChannelNotSetError) {
+    const { label, type } = CHANNELS[error.purpose];
     return {
-      title: `${CHANNELS[error.purpose].label} is not set`,
-      description: `An admin can set it with ${inlineCode("/channels set")}.`
+      title: `${label} ${NOUNS[type]} is not set`,
+      description: `An admin can set it with ${inlineCode(`/channels set ${type}`)}.`
     };
   }
   return {
