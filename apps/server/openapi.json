@@ -6,6 +6,22 @@
   },
   "components": {
     "schemas": {
+      "DiscordChannelInput": {
+        "type": "object",
+        "properties": {
+          "purpose": {
+            "type": "string"
+          },
+          "channelId": {
+            "type": "string",
+            "pattern": "^\\d+$"
+          }
+        },
+        "required": [
+          "purpose",
+          "channelId"
+        ]
+      },
       "HealthInput": {
         "type": "object",
         "properties": {
@@ -1408,6 +1424,23 @@
           "progression",
           "wom"
         ]
+      },
+      "DiscordChannel": {
+        "type": "object",
+        "properties": {
+          "purpose": {
+            "type": "string"
+          },
+          "channelId": {
+            "type": "string",
+            "pattern": "^\\d+$"
+          }
+        },
+        "required": [
+          "purpose",
+          "channelId"
+        ],
+        "additionalProperties": false
       },
       "Health": {
         "type": "object",
@@ -3996,6 +4029,112 @@
                   ],
                   "additionalProperties": false
                 }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/admin/discord/channels": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DiscordChannel"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/admin/discord/channels/{purpose}": {
+      "delete": {
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "actingDiscordId": {
+                    "type": "string",
+                    "pattern": "^\\d+$"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "pattern": "^[a-z_]{1,50}$"
+            },
+            "in": "path",
+            "name": "purpose",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "actingDiscordId": {
+                    "type": "string",
+                    "pattern": "^\\d+$"
+                  },
+                  "channelId": {
+                    "type": "string",
+                    "pattern": "^\\d+$"
+                  }
+                },
+                "required": [
+                  "channelId"
+                ]
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "pattern": "^[a-z_]{1,50}$"
+            },
+            "in": "path",
+            "name": "purpose",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {}
               }
             }
           }
