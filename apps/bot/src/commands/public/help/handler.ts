@@ -1,10 +1,17 @@
-import { ActionRowBuilder, ButtonBuilder, ButtonStyle, type ChatInputCommandInteraction } from "discord.js";
+import {
+  ActionRowBuilder,
+  ApplicationCommandOptionType,
+  ButtonBuilder,
+  ButtonStyle,
+  type ChatInputCommandInteraction
+} from "discord.js";
 
 import { SANITY_TEMPLE_URL, SANITY_WOM_URL, SANITY_X_URL } from "@sanity/urls";
 
 import { config } from "@config";
 
 import { commands } from "@/commands";
+import type { Command } from "@/types";
 import { brandEmbed } from "@/utils/embeds";
 import { commandMention } from "@/utils/mentions";
 import { reply } from "@/utils/replies";
@@ -46,8 +53,21 @@ const filteredSections = (interaction: ChatInputCommandInteraction, isAdmin: boo
     .toSorted(([a], [b]) => a.localeCompare(b))
     .map(([category, grouped]) => ({
       name: category,
-      value: grouped.map((command) => `${commandMention(interaction, command)} · ${command.description}`).join("\n")
+      value: grouped.flatMap((command) => describeCommand(interaction, command)).join("\n")
     }));
+};
+
+// A command with subcommands can only be run through one of them, so each gets its own line.
+const describeCommand = (interaction: ChatInputCommandInteraction, command: Command) => {
+  const subcommands = (command.toJSON().options ?? []).flatMap((option) => {
+    if (option.type === ApplicationCommandOptionType.Subcommand) return [option];
+    if (option.type !== ApplicationCommandOptionType.SubcommandGroup) return [];
+    return (option.options ?? []).map((subcommand) => ({ ...subcommand, name: `${option.name} ${subcommand.name}` }));
+  });
+  if (subcommands.length === 0) return [`${commandMention(interaction, command)} · ${command.description}`];
+  return subcommands.map(
+    (subcommand) => `${commandMention(interaction, command, subcommand.name)} · ${subcommand.description}`
+  );
 };
 
 const links = new ActionRowBuilder<ButtonBuilder>().addComponents(
