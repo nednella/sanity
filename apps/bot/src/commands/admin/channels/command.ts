@@ -67,16 +67,36 @@ export const channels = defineCommand({
             )
         )
     )
-    .addSubcommand((subcommand) =>
-      subcommand
+    .addSubcommandGroup((group) =>
+      group
         .setName("test")
-        .setDescription("Post a test message in one of the bot's channels")
-        .addStringOption((option) =>
-          option
-            .setName("purpose")
-            .setDescription("The channel to post in")
-            .setRequired(true)
-            .addChoices(...purposeChoices("text"))
+        .setDescription("Post a test message in one of the bot's channels or categories")
+        .addSubcommand((subcommand) =>
+          subcommand
+            .setName("category")
+            .setDescription("Create a channel in a category and post a test message in it")
+            .addStringOption((option) =>
+              option
+                .setName("purpose")
+                .setDescription("The category to create the channel in")
+                .setRequired(true)
+                .addChoices(...purposeChoices("category"))
+            )
+            .addStringOption((option) =>
+              option.setName("name").setDescription("The name of the channel to create").setRequired(true)
+            )
+        )
+        .addSubcommand((subcommand) =>
+          subcommand
+            .setName("text")
+            .setDescription("Post a test message in one of the bot's channels")
+            .addStringOption((option) =>
+              option
+                .setName("purpose")
+                .setDescription("The channel to post in")
+                .setRequired(true)
+                .addChoices(...purposeChoices("text"))
+            )
         )
     ),
   category: "Setup",
