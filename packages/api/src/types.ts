@@ -9,6 +9,7 @@ export type RankSummary = Schemas["RankSummary"];
 export type Snapshot = Schemas["Snapshot"];
 export type Skill = Schemas["Skill"];
 export type Boss = Schemas["Boss"];
+export type DiscordChannel = Schemas["DiscordChannel"];
 export type Activity = Schemas["Activity"];
 export type MemberDiary = Schemas["MemberDiary"];
 export type PersonalBest = Schemas["PersonalBest"];
