@@ -1,8 +1,9 @@
-import { type Interaction, MessageFlags } from "discord.js";
+import { type Interaction, MessageFlags, inlineCode } from "discord.js";
 
 import { NetworkError } from "@sanity/api";
 
 import { commands } from "@/commands";
+import { CHANNELS, ChannelNotSetError } from "@/lib/channels";
 import { logger } from "@/lib/logger";
 import { replyError } from "@/utils/replies";
 
@@ -11,6 +12,12 @@ const describe = (error: unknown) => {
     return {
       title: "Mainframe offline",
       description: "The mainframe did not answer. Please try again in a moment."
+    };
+  }
+  if (error instanceof ChannelNotSetError) {
+    return {
+      title: `${CHANNELS[error.purpose].label} is not set`,
+      description: `An admin can set it with ${inlineCode("/channel set")}.`
     };
   }
   return {
