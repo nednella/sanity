@@ -1,8 +1,8 @@
-import { type ChatInputCommandInteraction, channelMention } from "discord.js";
+import { type ChatInputCommandInteraction, channelMention, userMention } from "discord.js";
 
 import { api } from "@/lib/api";
-import { CHANNELS, type ChannelPurpose, type ChannelType, fetchChannels } from "@/lib/channels";
-import { brandEmbed, successEmbed } from "@/utils/embeds";
+import { CHANNELS, type ChannelPurpose, type ChannelType, fetchChannels, requireChannel } from "@/lib/channels";
+import { brandEmbed, infoEmbed, successEmbed } from "@/utils/embeds";
 import { capitalise } from "@/utils/format";
 import { reply } from "@/utils/replies";
 
@@ -76,11 +76,33 @@ const set = async (interaction: ChatInputCommandInteraction) => {
   );
 };
 
+const test = async (interaction: ChatInputCommandInteraction) => {
+  const purpose = purposeOption(interaction);
+  const channelId = await requireChannel(purpose);
+  const channel = await interaction.client.channels.fetch(channelId);
+  if (!channel?.isSendable()) throw new Error(`channel ${channelId} is not sendable`);
+
+  await channel.send({
+    embeds: [
+      infoEmbed({
+        title: "Test message",
+        description: `${CHANNELS[purpose].label} test from ${userMention(interaction.user.id)}.`
+      })
+    ]
+  });
+
+  await reply(
+    interaction,
+    successEmbed({ title: "Test sent", description: `Posted in ${channelMention(channelId)}.` })
+  );
+};
+
 const SUBCOMMANDS = {
   clear,
   list,
   "set category": set,
-  "set text": set
+  "set text": set,
+  test
 } satisfies Record<string, (interaction: ChatInputCommandInteraction) => Promise<void>>;
 
 export const handleChannel = (interaction: ChatInputCommandInteraction) => {
