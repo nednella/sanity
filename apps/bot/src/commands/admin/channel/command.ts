@@ -66,6 +66,18 @@ export const channel = defineCommand({
                 .addChannelTypes(ChannelType.GuildText)
             )
         )
+    )
+    .addSubcommand((subcommand) =>
+      subcommand
+        .setName("test")
+        .setDescription("Post a test message in one of the bot's channels")
+        .addStringOption((option) =>
+          option
+            .setName("purpose")
+            .setDescription("The channel to post in")
+            .setRequired(true)
+            .addChoices(...purposeChoices("text"))
+        )
     ),
   category: "Setup",
   admin: true,
