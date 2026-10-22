@@ -1,0 +1,69 @@
+import {
+  type ChatInputCommandInteraction,
+  type SlashCommandStringOption,
+  TimestampStyles,
+  time,
+  userMention
+} from "discord.js";
+
+import type { CommandOutcome } from "@sanity/api";
+
+import { buildEmbed } from "@/utils/embeds";
+
+const MENTIONED_USER_ID = /(?<=<@!?)\d{17,20}(?=>)/g;
+
+const CHANGES = new Set<CommandOutcome["outcome"]>(["delayed", "passed", "quit", "ranked", "retired", "unretired"]);
+
+// Maps each outcome to a line an admin can read.
+const DESCRIPTIONS: Record<CommandOutcome["outcome"], (result: CommandOutcome) => string> = {
+  "already-quit": () => "has already quit the clan!",
+  "already-retired": () => "is already retired",
+  delayed: ({ until }) => `demotion held until ${time(new Date(until!), TimestampStyles.LongDate)}`,
+  "has-quit": () => "has now quit the clan",
+  "no-rank-earned": () => "has not earned a rank",
+  "no-rank-to-give": () => "has no rank to pass into",
+  "not-a-member": () => "is not a member of this clan",
+  "not-a-rank-change": () => "needs /member retire or /member quit for that rank",
+  "not-a-trialist": () => "is not a trialist!",
+  "not-retired": () => "is not retired!",
+  passed: ({ rank }) => `has passed their trial! Rank: ${rank!.name}`,
+  quit: () => "has now quit the clan",
+  ranked: ({ rank }) => `is now ${rank!.name}`,
+  retired: () => "has now been retired",
+  unchanged: () => "already has that rank!",
+  "unknown-rank": () => "cannot take a rank that does not exist",
+  unretired: ({ rank }) => `has been unretired! Rank: ${rank!.name}`
+};
+
+const styleOf = (results: CommandOutcome[]) => {
+  const changed = results.filter(({ outcome }) => CHANGES.has(outcome)).length;
+  if (changed === results.length) return "success";
+  return changed === 0 ? "error" : "warning";
+};
+
+export const NO_MEMBERS_TAGGED = {
+  title: "No members tagged",
+  description: "Tag at least one member."
+};
+
+export const membersOption = (option: SlashCommandStringOption) =>
+  option.setName("members").setDescription("Tag the members").setRequired(true);
+
+export const noteOption = (option: SlashCommandStringOption) =>
+  option.setName("note").setDescription("Why, for the audit log").setMaxLength(500);
+
+// Members are tagged in a text option, because a user option holds only one member.
+export const readTaggedMembers = (interaction: ChatInputCommandInteraction) => ({
+  actingDiscordId: interaction.user.id,
+  note: interaction.options.getString("note") ?? undefined,
+  taggedDiscordIds: interaction.options.getString("members", true).match(MENTIONED_USER_ID) ?? []
+});
+
+export const outcomesEmbed = (title: string, results: CommandOutcome[]) =>
+  buildEmbed({
+    style: styleOf(results),
+    title,
+    description: results
+      .map((result) => `${userMention(result.discordId)} ${DESCRIPTIONS[result.outcome](result)}`)
+      .join("\n")
+  });
