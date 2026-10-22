@@ -675,6 +675,64 @@
           "requirements"
         ]
       },
+      "CommandOutcomeInput": {
+        "type": "object",
+        "properties": {
+          "discordId": {
+            "type": "string",
+            "pattern": "^\\d+$"
+          },
+          "displayName": {
+            "nullable": true,
+            "type": "string"
+          },
+          "memberId": {
+            "nullable": true,
+            "type": "string",
+            "pattern": "^\\d+$"
+          },
+          "outcome": {
+            "type": "string",
+            "enum": [
+              "already-quit",
+              "already-retired",
+              "delayed",
+              "has-quit",
+              "no-rank-earned",
+              "no-rank-to-give",
+              "not-a-member",
+              "not-a-rank-change",
+              "not-a-trialist",
+              "not-retired",
+              "passed",
+              "quit",
+              "ranked",
+              "retired",
+              "unchanged",
+              "unknown-rank",
+              "unretired"
+            ]
+          },
+          "rank": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/RankSummaryInput"
+              }
+            ]
+          },
+          "until": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+          }
+        },
+        "required": [
+          "discordId",
+          "displayName",
+          "memberId",
+          "outcome"
+        ]
+      },
       "RankProposalInput": {
         "type": "object",
         "properties": {
@@ -2113,6 +2171,64 @@
           "iconUrl",
           "discordRoleId",
           "requirements"
+        ],
+        "additionalProperties": false
+      },
+      "CommandOutcome": {
+        "type": "object",
+        "properties": {
+          "discordId": {
+            "type": "string",
+            "pattern": "^\\d+$"
+          },
+          "displayName": {
+            "nullable": true,
+            "type": "string"
+          },
+          "memberId": {
+            "nullable": true,
+            "type": "string",
+            "pattern": "^\\d+$"
+          },
+          "outcome": {
+            "type": "string",
+            "enum": [
+              "already-quit",
+              "already-retired",
+              "delayed",
+              "has-quit",
+              "no-rank-earned",
+              "no-rank-to-give",
+              "not-a-member",
+              "not-a-rank-change",
+              "not-a-trialist",
+              "not-retired",
+              "passed",
+              "quit",
+              "ranked",
+              "retired",
+              "unchanged",
+              "unknown-rank",
+              "unretired"
+            ]
+          },
+          "rank": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/RankSummary"
+              }
+            ]
+          },
+          "until": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "discordId",
+          "displayName",
+          "memberId",
+          "outcome"
         ],
         "additionalProperties": false
       },
@@ -4375,62 +4491,7 @@
                     "results": {
                       "type": "array",
                       "items": {
-                        "type": "object",
-                        "properties": {
-                          "discordId": {
-                            "type": "string",
-                            "pattern": "^\\d+$"
-                          },
-                          "displayName": {
-                            "nullable": true,
-                            "type": "string"
-                          },
-                          "memberId": {
-                            "nullable": true,
-                            "type": "string",
-                            "pattern": "^\\d+$"
-                          },
-                          "outcome": {
-                            "type": "string",
-                            "enum": [
-                              "already-quit",
-                              "already-retired",
-                              "delayed",
-                              "has-quit",
-                              "no-rank-earned",
-                              "no-rank-to-give",
-                              "not-a-member",
-                              "not-a-rank-change",
-                              "not-a-trialist",
-                              "not-retired",
-                              "passed",
-                              "quit",
-                              "ranked",
-                              "retired",
-                              "unchanged",
-                              "unknown-rank",
-                              "unretired"
-                            ]
-                          },
-                          "rank": {
-                            "allOf": [
-                              {
-                                "$ref": "#/components/schemas/RankSummary"
-                              }
-                            ]
-                          },
-                          "until": {
-                            "type": "string",
-                            "format": "date-time"
-                          }
-                        },
-                        "required": [
-                          "discordId",
-                          "displayName",
-                          "memberId",
-                          "outcome"
-                        ],
-                        "additionalProperties": false
+                        "$ref": "#/components/schemas/CommandOutcome"
                       }
                     }
                   },
@@ -4490,62 +4551,7 @@
                     "results": {
                       "type": "array",
                       "items": {
-                        "type": "object",
-                        "properties": {
-                          "discordId": {
-                            "type": "string",
-                            "pattern": "^\\d+$"
-                          },
-                          "displayName": {
-                            "nullable": true,
-                            "type": "string"
-                          },
-                          "memberId": {
-                            "nullable": true,
-                            "type": "string",
-                            "pattern": "^\\d+$"
-                          },
-                          "outcome": {
-                            "type": "string",
-                            "enum": [
-                              "already-quit",
-                              "already-retired",
-                              "delayed",
-                              "has-quit",
-                              "no-rank-earned",
-                              "no-rank-to-give",
-                              "not-a-member",
-                              "not-a-rank-change",
-                              "not-a-trialist",
-                              "not-retired",
-                              "passed",
-                              "quit",
-                              "ranked",
-                              "retired",
-                              "unchanged",
-                              "unknown-rank",
-                              "unretired"
-                            ]
-                          },
-                          "rank": {
-                            "allOf": [
-                              {
-                                "$ref": "#/components/schemas/RankSummary"
-                              }
-                            ]
-                          },
-                          "until": {
-                            "type": "string",
-                            "format": "date-time"
-                          }
-                        },
-                        "required": [
-                          "discordId",
-                          "displayName",
-                          "memberId",
-                          "outcome"
-                        ],
-                        "additionalProperties": false
+                        "$ref": "#/components/schemas/CommandOutcome"
                       }
                     }
                   },
@@ -4605,62 +4611,7 @@
                     "results": {
                       "type": "array",
                       "items": {
-                        "type": "object",
-                        "properties": {
-                          "discordId": {
-                            "type": "string",
-                            "pattern": "^\\d+$"
-                          },
-                          "displayName": {
-                            "nullable": true,
-                            "type": "string"
-                          },
-                          "memberId": {
-                            "nullable": true,
-                            "type": "string",
-                            "pattern": "^\\d+$"
-                          },
-                          "outcome": {
-                            "type": "string",
-                            "enum": [
-                              "already-quit",
-                              "already-retired",
-                              "delayed",
-                              "has-quit",
-                              "no-rank-earned",
-                              "no-rank-to-give",
-                              "not-a-member",
-                              "not-a-rank-change",
-                              "not-a-trialist",
-                              "not-retired",
-                              "passed",
-                              "quit",
-                              "ranked",
-                              "retired",
-                              "unchanged",
-                              "unknown-rank",
-                              "unretired"
-                            ]
-                          },
-                          "rank": {
-                            "allOf": [
-                              {
-                                "$ref": "#/components/schemas/RankSummary"
-                              }
-                            ]
-                          },
-                          "until": {
-                            "type": "string",
-                            "format": "date-time"
-                          }
-                        },
-                        "required": [
-                          "discordId",
-                          "displayName",
-                          "memberId",
-                          "outcome"
-                        ],
-                        "additionalProperties": false
+                        "$ref": "#/components/schemas/CommandOutcome"
                       }
                     }
                   },
@@ -4726,62 +4677,7 @@
                     "results": {
                       "type": "array",
                       "items": {
-                        "type": "object",
-                        "properties": {
-                          "discordId": {
-                            "type": "string",
-                            "pattern": "^\\d+$"
-                          },
-                          "displayName": {
-                            "nullable": true,
-                            "type": "string"
-                          },
-                          "memberId": {
-                            "nullable": true,
-                            "type": "string",
-                            "pattern": "^\\d+$"
-                          },
-                          "outcome": {
-                            "type": "string",
-                            "enum": [
-                              "already-quit",
-                              "already-retired",
-                              "delayed",
-                              "has-quit",
-                              "no-rank-earned",
-                              "no-rank-to-give",
-                              "not-a-member",
-                              "not-a-rank-change",
-                              "not-a-trialist",
-                              "not-retired",
-                              "passed",
-                              "quit",
-                              "ranked",
-                              "retired",
-                              "unchanged",
-                              "unknown-rank",
-                              "unretired"
-                            ]
-                          },
-                          "rank": {
-                            "allOf": [
-                              {
-                                "$ref": "#/components/schemas/RankSummary"
-                              }
-                            ]
-                          },
-                          "until": {
-                            "type": "string",
-                            "format": "date-time"
-                          }
-                        },
-                        "required": [
-                          "discordId",
-                          "displayName",
-                          "memberId",
-                          "outcome"
-                        ],
-                        "additionalProperties": false
+                        "$ref": "#/components/schemas/CommandOutcome"
                       }
                     }
                   },
@@ -4841,62 +4737,7 @@
                     "results": {
                       "type": "array",
                       "items": {
-                        "type": "object",
-                        "properties": {
-                          "discordId": {
-                            "type": "string",
-                            "pattern": "^\\d+$"
-                          },
-                          "displayName": {
-                            "nullable": true,
-                            "type": "string"
-                          },
-                          "memberId": {
-                            "nullable": true,
-                            "type": "string",
-                            "pattern": "^\\d+$"
-                          },
-                          "outcome": {
-                            "type": "string",
-                            "enum": [
-                              "already-quit",
-                              "already-retired",
-                              "delayed",
-                              "has-quit",
-                              "no-rank-earned",
-                              "no-rank-to-give",
-                              "not-a-member",
-                              "not-a-rank-change",
-                              "not-a-trialist",
-                              "not-retired",
-                              "passed",
-                              "quit",
-                              "ranked",
-                              "retired",
-                              "unchanged",
-                              "unknown-rank",
-                              "unretired"
-                            ]
-                          },
-                          "rank": {
-                            "allOf": [
-                              {
-                                "$ref": "#/components/schemas/RankSummary"
-                              }
-                            ]
-                          },
-                          "until": {
-                            "type": "string",
-                            "format": "date-time"
-                          }
-                        },
-                        "required": [
-                          "discordId",
-                          "displayName",
-                          "memberId",
-                          "outcome"
-                        ],
-                        "additionalProperties": false
+                        "$ref": "#/components/schemas/CommandOutcome"
                       }
                     }
                   },
@@ -5070,62 +4911,7 @@
                     "results": {
                       "type": "array",
                       "items": {
-                        "type": "object",
-                        "properties": {
-                          "discordId": {
-                            "type": "string",
-                            "pattern": "^\\d+$"
-                          },
-                          "displayName": {
-                            "nullable": true,
-                            "type": "string"
-                          },
-                          "memberId": {
-                            "nullable": true,
-                            "type": "string",
-                            "pattern": "^\\d+$"
-                          },
-                          "outcome": {
-                            "type": "string",
-                            "enum": [
-                              "already-quit",
-                              "already-retired",
-                              "delayed",
-                              "has-quit",
-                              "no-rank-earned",
-                              "no-rank-to-give",
-                              "not-a-member",
-                              "not-a-rank-change",
-                              "not-a-trialist",
-                              "not-retired",
-                              "passed",
-                              "quit",
-                              "ranked",
-                              "retired",
-                              "unchanged",
-                              "unknown-rank",
-                              "unretired"
-                            ]
-                          },
-                          "rank": {
-                            "allOf": [
-                              {
-                                "$ref": "#/components/schemas/RankSummary"
-                              }
-                            ]
-                          },
-                          "until": {
-                            "type": "string",
-                            "format": "date-time"
-                          }
-                        },
-                        "required": [
-                          "discordId",
-                          "displayName",
-                          "memberId",
-                          "outcome"
-                        ],
-                        "additionalProperties": false
+                        "$ref": "#/components/schemas/CommandOutcome"
                       }
                     }
                   },
