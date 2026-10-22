@@ -4,6 +4,7 @@ type Schemas = components["schemas"];
 
 export type Member = Schemas["Member"];
 export type MemberProfile = Schemas["MemberProfile"];
+export type CommandOutcome = Schemas["CommandOutcome"];
 export type Rank = Schemas["Rank"];
 export type RankProposal = Schemas["RankProposal"];
 export type RankSummary = Schemas["RankSummary"];

@@ -997,16 +997,7 @@ export interface paths {
                     };
                     content: {
                         "application/json": {
-                            results: {
-                                discordId: string;
-                                displayName: string | null;
-                                memberId: string | null;
-                                /** @enum {string} */
-                                outcome: "already-quit" | "already-retired" | "delayed" | "has-quit" | "no-rank-earned" | "no-rank-to-give" | "not-a-member" | "not-a-rank-change" | "not-a-trialist" | "not-retired" | "passed" | "quit" | "ranked" | "retired" | "unchanged" | "unknown-rank" | "unretired";
-                                rank?: components["schemas"]["RankSummary"];
-                                /** Format: date-time */
-                                until?: string;
-                            }[];
+                            results: components["schemas"]["CommandOutcome"][];
                         };
                     };
                 };
@@ -1051,16 +1042,7 @@ export interface paths {
                     };
                     content: {
                         "application/json": {
-                            results: {
-                                discordId: string;
-                                displayName: string | null;
-                                memberId: string | null;
-                                /** @enum {string} */
-                                outcome: "already-quit" | "already-retired" | "delayed" | "has-quit" | "no-rank-earned" | "no-rank-to-give" | "not-a-member" | "not-a-rank-change" | "not-a-trialist" | "not-retired" | "passed" | "quit" | "ranked" | "retired" | "unchanged" | "unknown-rank" | "unretired";
-                                rank?: components["schemas"]["RankSummary"];
-                                /** Format: date-time */
-                                until?: string;
-                            }[];
+                            results: components["schemas"]["CommandOutcome"][];
                         };
                     };
                 };
@@ -1105,16 +1087,7 @@ export interface paths {
                     };
                     content: {
                         "application/json": {
-                            results: {
-                                discordId: string;
-                                displayName: string | null;
-                                memberId: string | null;
-                                /** @enum {string} */
-                                outcome: "already-quit" | "already-retired" | "delayed" | "has-quit" | "no-rank-earned" | "no-rank-to-give" | "not-a-member" | "not-a-rank-change" | "not-a-trialist" | "not-retired" | "passed" | "quit" | "ranked" | "retired" | "unchanged" | "unknown-rank" | "unretired";
-                                rank?: components["schemas"]["RankSummary"];
-                                /** Format: date-time */
-                                until?: string;
-                            }[];
+                            results: components["schemas"]["CommandOutcome"][];
                         };
                     };
                 };
@@ -1160,16 +1133,7 @@ export interface paths {
                     };
                     content: {
                         "application/json": {
-                            results: {
-                                discordId: string;
-                                displayName: string | null;
-                                memberId: string | null;
-                                /** @enum {string} */
-                                outcome: "already-quit" | "already-retired" | "delayed" | "has-quit" | "no-rank-earned" | "no-rank-to-give" | "not-a-member" | "not-a-rank-change" | "not-a-trialist" | "not-retired" | "passed" | "quit" | "ranked" | "retired" | "unchanged" | "unknown-rank" | "unretired";
-                                rank?: components["schemas"]["RankSummary"];
-                                /** Format: date-time */
-                                until?: string;
-                            }[];
+                            results: components["schemas"]["CommandOutcome"][];
                         };
                     };
                 };
@@ -1214,16 +1178,7 @@ export interface paths {
                     };
                     content: {
                         "application/json": {
-                            results: {
-                                discordId: string;
-                                displayName: string | null;
-                                memberId: string | null;
-                                /** @enum {string} */
-                                outcome: "already-quit" | "already-retired" | "delayed" | "has-quit" | "no-rank-earned" | "no-rank-to-give" | "not-a-member" | "not-a-rank-change" | "not-a-trialist" | "not-retired" | "passed" | "quit" | "ranked" | "retired" | "unchanged" | "unknown-rank" | "unretired";
-                                rank?: components["schemas"]["RankSummary"];
-                                /** Format: date-time */
-                                until?: string;
-                            }[];
+                            results: components["schemas"]["CommandOutcome"][];
                         };
                     };
                 };
@@ -1325,16 +1280,7 @@ export interface paths {
                     };
                     content: {
                         "application/json": {
-                            results: {
-                                discordId: string;
-                                displayName: string | null;
-                                memberId: string | null;
-                                /** @enum {string} */
-                                outcome: "already-quit" | "already-retired" | "delayed" | "has-quit" | "no-rank-earned" | "no-rank-to-give" | "not-a-member" | "not-a-rank-change" | "not-a-trialist" | "not-retired" | "passed" | "quit" | "ranked" | "retired" | "unchanged" | "unknown-rank" | "unretired";
-                                rank?: components["schemas"]["RankSummary"];
-                                /** Format: date-time */
-                                until?: string;
-                            }[];
+                            results: components["schemas"]["CommandOutcome"][];
                         };
                     };
                 };
@@ -1672,6 +1618,16 @@ export interface components {
                 masterDiaries: number;
             };
         };
+        CommandOutcomeInput: {
+            discordId: string;
+            displayName: string | null;
+            memberId: string | null;
+            /** @enum {string} */
+            outcome: "already-quit" | "already-retired" | "delayed" | "has-quit" | "no-rank-earned" | "no-rank-to-give" | "not-a-member" | "not-a-rank-change" | "not-a-trialist" | "not-retired" | "passed" | "quit" | "ranked" | "retired" | "unchanged" | "unknown-rank" | "unretired";
+            rank?: components["schemas"]["RankSummaryInput"];
+            /** Format: date-time */
+            until?: string;
+        };
         RankProposalInput: {
             memberId: string;
             discordId: string;
@@ -2004,6 +1960,16 @@ export interface components {
                 diaryPoints: number;
                 masterDiaries: number;
             };
+        };
+        CommandOutcome: {
+            discordId: string;
+            displayName: string | null;
+            memberId: string | null;
+            /** @enum {string} */
+            outcome: "already-quit" | "already-retired" | "delayed" | "has-quit" | "no-rank-earned" | "no-rank-to-give" | "not-a-member" | "not-a-rank-change" | "not-a-trialist" | "not-retired" | "passed" | "quit" | "ranked" | "retired" | "unchanged" | "unknown-rank" | "unretired";
+            rank?: components["schemas"]["RankSummary"];
+            /** Format: date-time */
+            until?: string;
         };
         RankProposal: {
             memberId: string;
