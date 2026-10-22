@@ -58,8 +58,8 @@ await db.transaction(async (tx) => {
   // reaches the Wise Old Man tables this script never refills; without it, a table we forget is an
   // error rather than silent loss.
   await tx.execute(sql`
-    truncate audit_log, audit_log_members, boss_uniques, items, member_rank_delays, members,
-             members_discord_accounts, personal_best_participants, personal_bests, points,
+    truncate audit_log, audit_log_members, boss_uniques, discord_accounts, items, member_rank_delays,
+             members, personal_best_participants, personal_bests, points,
              points_timeline_events, ranks,
              speedrun_content, speedrun_diary_rewards, speedrun_diary_tiers, speedrun_diary_times,
              submission_participants, submissions, wom_name_changes, wom_players,
@@ -77,11 +77,11 @@ await db.transaction(async (tx) => {
   const memberIds = new Map<string, bigint>();
   for (const { member, discordAccount } of sourceMembers) {
     const [inserted] = await tx.insert(schema.members).values(member).returning({ id: schema.members.id });
-    await tx.insert(schema.membersDiscordAccounts).values({ memberId: inserted!.id, ...discordAccount });
+    await tx.insert(schema.discordAccounts).values({ memberId: inserted!.id, ...discordAccount });
     memberIds.set(discordAccount.discordId.toString(), inserted!.id);
   }
   report("members", sourceMembers);
-  report("members_discord_accounts", sourceMembers);
+  report("discord_accounts", sourceMembers);
 
   const items = await readItems();
   await insertAll(tx, schema.items, items, "items");

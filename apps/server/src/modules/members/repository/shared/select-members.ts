@@ -1,7 +1,7 @@
 import { eq } from "drizzle-orm";
 
 import { db } from "@db/index";
-import { members, membersDiscordAccounts, ranks, speedrunDiaryTiers, womPlayers } from "@db/schema";
+import { discordAccounts, members, ranks, speedrunDiaryTiers, womPlayers } from "@db/schema";
 
 import type { diaryProgressCte } from "@/modules/speedrun-diary/repository/diary-progress-cte";
 
@@ -18,7 +18,7 @@ export const selectMembers = ({ bestTimes, reachedTiers, diaryProgress }: Return
       }
     })
     .from(members)
-    .innerJoin(membersDiscordAccounts, eq(membersDiscordAccounts.memberId, members.id))
+    .innerJoin(discordAccounts, eq(discordAccounts.memberId, members.id))
     .innerJoin(ranks, eq(ranks.id, members.rankId))
     .leftJoin(speedrunDiaryTiers, eq(speedrunDiaryTiers.id, members.claimedDiaryTierId))
     .leftJoin(womPlayers, eq(womPlayers.memberId, members.id))

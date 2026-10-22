@@ -1,7 +1,7 @@
 import { and, eq, inArray } from "drizzle-orm";
 
 import type { Transaction } from "@db/index";
-import { memberRankDelays, members, membersDiscordAccounts } from "@db/schema";
+import { discordAccounts, memberRankDelays, members } from "@db/schema";
 
 import { diaryProgressCte } from "@/modules/speedrun-diary/repository/diary-progress-cte";
 
@@ -14,7 +14,7 @@ export const listMemberStandings = (tx: Transaction, memberIds?: bigint[]) => {
       claimedDiaryTierId: members.claimedDiaryTierId,
       clanPoints: members.clanPoints,
       diaryPoints: diaryTotals.diaryPoints,
-      discordId: membersDiscordAccounts.discordId,
+      discordId: discordAccounts.discordId,
       displayName: members.displayName,
       id: members.id,
       masterDiaries: diaryTotals.masterDiaries,
@@ -22,7 +22,7 @@ export const listMemberStandings = (tx: Transaction, memberIds?: bigint[]) => {
       rankId: members.rankId
     })
     .from(members)
-    .innerJoin(membersDiscordAccounts, eq(membersDiscordAccounts.memberId, members.id))
+    .innerJoin(discordAccounts, eq(discordAccounts.memberId, members.id))
     .leftJoin(diaryProgress, eq(diaryProgress.memberId, members.id))
     .leftJoin(memberRankDelays, eq(memberRankDelays.memberId, members.id))
     .where(and(eq(members.isActive, true), memberIds && inArray(members.id, memberIds)));

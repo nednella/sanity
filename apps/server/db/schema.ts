@@ -58,11 +58,11 @@ export const memberRankDelays = pgTable("member_rank_delays", {
   until: timestamp({ withTimezone: true }).notNull()
 });
 
-export const membersDiscordAccounts = pgTable("members_discord_accounts", {
+export const discordAccounts = pgTable("discord_accounts", {
   memberId: bigint({ mode: "bigint" })
     .primaryKey()
     .references(() => members.id, { onDelete: "cascade" }),
-  discordId: bigint({ mode: "bigint" }).notNull().unique("members_discord_accounts_discord_id_unique"),
+  discordId: bigint({ mode: "bigint" }).notNull().unique("discord_accounts_discord_id_unique"),
   avatarUrl: text()
 });
 
