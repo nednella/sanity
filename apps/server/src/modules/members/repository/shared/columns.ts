@@ -1,8 +1,8 @@
-import { members, membersDiscordAccounts, ranks, speedrunDiaryTiers, womPlayers } from "@db/schema";
+import { discordAccounts, members, ranks, speedrunDiaryTiers, womPlayers } from "@db/schema";
 
 export const memberColumns = {
   member: members,
-  discordAccount: membersDiscordAccounts,
+  discordAccount: discordAccounts,
   rank: ranks,
   claimedDiaryTier: speedrunDiaryTiers,
   womPlayer: womPlayers

@@ -1,5 +1,5 @@
 import type { Transaction } from "@db/index";
-import { members, membersDiscordAccounts } from "@db/schema";
+import { discordAccounts, members } from "@db/schema";
 
 import { TRIALIST_RANK_ID } from "@/modules/ranks/constants";
 
@@ -11,7 +11,7 @@ export const saveMember = async (tx: Transaction, { discordId, ...member }: NewM
     .values({ ...member, isActive: true, joinedAt: new Date(), rankId: TRIALIST_RANK_ID })
     .returning({ id: members.id });
 
-  await tx.insert(membersDiscordAccounts).values({ discordId, memberId: inserted!.id });
+  await tx.insert(discordAccounts).values({ discordId, memberId: inserted!.id });
 
   return inserted!.id;
 };
