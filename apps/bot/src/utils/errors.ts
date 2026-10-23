@@ -1,6 +1,6 @@
 import { type ChatInputCommandInteraction, inlineCode } from "discord.js";
 
-import { NetworkError } from "@sanity/api";
+import { ApiError, NetworkError } from "@sanity/api";
 
 import { CHANNELS, type ChannelType, ChannelUnavailableError } from "@/lib/channels";
 import { logger } from "@/lib/logger";
@@ -28,6 +28,13 @@ const describeChannelUnavailableError = ({ missingPermissions, purpose, reason }
   };
 };
 
+const describeApiError = ({ code, message, status }: ApiError) => {
+  return {
+    title: "Server Error",
+    description: `${inlineCode(code ?? `HTTP ${status}`)}\n${message}`
+  };
+};
+
 const describeNetworkError = () => {
   return {
     title: "Mainframe offline",
@@ -44,6 +51,7 @@ const describeUnexpectedError = () => {
 
 const describeError = (error: unknown) => {
   if (error instanceof ChannelUnavailableError) return describeChannelUnavailableError(error);
+  if (error instanceof ApiError) return describeApiError(error);
   if (error instanceof NetworkError) return describeNetworkError();
   return describeUnexpectedError();
 };
