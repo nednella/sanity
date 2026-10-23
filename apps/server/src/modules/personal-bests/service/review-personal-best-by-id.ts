@@ -14,13 +14,14 @@ import { payDiaryCarries } from "./shared/pay-diary-carries";
  * Approving a run earns no points for the run itself: the speedrun diary reads the times, so a
  * member's standing follows from the approval. What it can pay is a carry, to the members who
  * already held a tier the run has just given somebody else, and any diary tier the run pushes a
- * member's points over. A run reaches review once its submitter has confirmed it, and leaves review once
- * someone has.
+ * member's points over. A run reaches review once its submitter has confirmed it. Asking for the review
+ * it already has changes nothing, and any other review of a pending or reviewed run is refused.
  */
 export const reviewPersonalBestById = async (id: number, review: Review) =>
   db.transaction(async (tx) => {
     const personalBest = await findPersonalBestForReview(tx, id);
     if (!personalBest) throw personalBestErrors.notFound(id);
+    if (personalBest.status === review.status) return;
     if (personalBest.status !== "submitted") throw personalBestErrors.notAwaitingReview(id);
 
     await reviewPersonalBest(tx, id, review);

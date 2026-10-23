@@ -14,12 +14,14 @@ import { reviewSubmission } from "../repository/review-submission";
 /**
  * Approving is what pays out, so the read of the submission, the points and the members' totals all
  * happen in one transaction, and the row is locked while it runs. A submission reaches review once its
- * submitter has confirmed it, so a pending or reviewed submission is refused rather than paid twice.
+ * submitter has confirmed it. Asking for the review it already has changes nothing, and any other review
+ * of a pending or reviewed submission is refused, so it is never paid twice.
  */
 export const reviewSubmissionById = async (id: number, review: Review) =>
   db.transaction(async (tx) => {
     const submission = await findSubmissionForReview(tx, id);
     if (!submission) throw submissionErrors.notFound(id);
+    if (submission.status === review.status) return;
     if (submission.status !== "submitted") throw submissionErrors.notAwaitingReview(id);
 
     await reviewSubmission(tx, id, review);
