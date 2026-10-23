@@ -17,7 +17,7 @@ export function WomSyncButton({ memberId, username }: Readonly<WomSyncButtonProp
 
   const sync = api.useMutation("post", "/v1/wom/players/{username}/sync", {
     onSuccess: () => queryClient.invalidateQueries({ queryKey: memberProfileOptions(memberId).queryKey }),
-    onError: (error) => toast.error("Couldn't update this clan member", { description: (error as Error).message })
+    onError: (error) => toast.error("Couldn't update this clan member", { description: error.message })
   });
 
   return (
