@@ -1,3 +1,3 @@
-# Example
+# Sanity
 
-An example greeter plugin
+A RuneLite plugin for the Sanity Old School RuneScape clan.
