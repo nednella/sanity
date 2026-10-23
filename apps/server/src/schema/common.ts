@@ -48,8 +48,6 @@ export const errorResponse = z
   })
   .register(z.globalRegistry, { id: "ErrorResponse" });
 
-export const notFound = z.object({ message: z.string() });
-
 export const memberRef = z
   .object({
     id: bigIntString,
