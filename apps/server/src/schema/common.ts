@@ -39,6 +39,15 @@ export const reviewBody = z.object({
   reviewNote: z.string().trim().max(500).nullable().default(null)
 });
 
+export const errorResponse = z
+  .object({
+    code: z.string(),
+    message: z.string(),
+    timestamp: z.iso.datetime(),
+    url: z.string()
+  })
+  .register(z.globalRegistry, { id: "ErrorResponse" });
+
 export const notFound = z.object({ message: z.string() });
 
 export const memberRef = z

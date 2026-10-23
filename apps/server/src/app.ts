@@ -11,6 +11,7 @@ import {
 
 import { config } from "@config";
 
+import { handleError, handleNotFound } from "@/errors/handlers";
 import { jsonSchemaOverride } from "@/schema/codecs";
 
 import { routes } from "./routes";
@@ -36,6 +37,8 @@ export const buildApp = () => {
 
   app.setValidatorCompiler(validatorCompiler);
   app.setSerializerCompiler(serializerCompiler);
+  app.setErrorHandler(handleError);
+  app.setNotFoundHandler(handleNotFound);
 
   app.register(routes, { prefix: "/v1" });
 
