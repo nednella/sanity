@@ -1,8 +1,11 @@
 dist
 pnpm-lock.yaml
 
-apps/server/db/migrations
-apps/web/src/routeTree.gen.ts
 .claude/skills
+
+apps/plugin/build
+apps/web/src/routeTree.gen.ts
+apps/server/db/migrations
 apps/server/openapi.json
+
 packages/api/src/v1.d.ts
