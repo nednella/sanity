@@ -3976,10 +3976,9 @@
                     "maxLength": 100
                   },
                   "valueMillions": {
-                    "default": null,
-                    "nullable": true,
                     "type": "integer",
                     "minimum": 0,
+                    "exclusiveMinimum": true,
                     "maximum": 9007199254740991
                   },
                   "nonClanCount": {
@@ -4020,6 +4019,7 @@
                 },
                 "required": [
                   "submittedByMemberId",
+                  "valueMillions",
                   "participants"
                 ]
               }
