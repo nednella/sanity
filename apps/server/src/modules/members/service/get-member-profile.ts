@@ -2,12 +2,13 @@ import { listRanks } from "@/modules/ranks/repository/list-ranks";
 import { findLatestSnapshot } from "@/modules/wom/repository/find-latest-snapshot";
 import { listNameChanges } from "@/modules/wom/repository/list-name-changes";
 
+import { memberErrors } from "../errors";
 import { toMemberProfile } from "../mapper";
 import { findMember } from "../repository/find-member";
 
 export const getMemberProfile = async (id: bigint) => {
   const row = await findMember(id);
-  if (!row) return;
+  if (!row) throw memberErrors.notFound(id);
 
   const [ranks, latestSnapshot, nameChanges] = await Promise.all([
     listRanks(),
