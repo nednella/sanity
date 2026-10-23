@@ -1,7 +1,7 @@
 import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import { z } from "zod";
 
-import { paginated, reviewBody, toPage } from "@/schema/common";
+import { errorResponse, paginated, reviewBody, toPage } from "@/schema/common";
 
 import { createSubmissionBody, submissionListQuery, submissionParams } from "./request";
 import { submission } from "./response";
@@ -15,7 +15,9 @@ export const submissionsRouter: FastifyPluginAsyncZod = async (app) => {
     url: "/submissions",
     schema: {
       querystring: submissionListQuery,
-      response: { 200: paginated(submission) }
+      response: {
+        200: paginated(submission)
+      }
     },
     handler: async (req) => {
       const { limit, offset } = req.query;
@@ -31,7 +33,9 @@ export const authSubmissionsRouter: FastifyPluginAsyncZod = async (app) => {
     url: "/submissions",
     schema: {
       body: createSubmissionBody,
-      response: { 201: z.object({ id: z.number() }) }
+      response: {
+        201: z.object({ id: z.number() })
+      }
     },
     handler: async (req, reply) => {
       const id = await createSubmission(req.body);
@@ -49,15 +53,12 @@ export const adminSubmissionsRouter: FastifyPluginAsyncZod = async (app) => {
       body: reviewBody,
       response: {
         200: z.object({ status: reviewBody.shape.status }),
-        409: z.object({ message: z.string() })
+        404: errorResponse,
+        409: errorResponse
       }
     },
-    handler: async (req, reply) => {
-      const result = await reviewSubmissionById(req.params.id, req.body);
-      if (result === "not-awaiting-review") {
-        return reply.code(409).send({ message: "This submission is not awaiting review." });
-      }
-
+    handler: async (req) => {
+      await reviewSubmissionById(req.params.id, req.body);
       return { status: req.body.status };
     }
   });

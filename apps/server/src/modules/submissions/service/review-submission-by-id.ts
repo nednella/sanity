@@ -6,21 +6,21 @@ import { awardPoints } from "@/modules/points/repository/award-points";
 import { generatePointSplit } from "@/modules/points/rules";
 import type { Review } from "@/schema/common";
 
-import { findSubmissionAwaitingReview } from "../repository/find-submission-awaiting-review";
+import { submissionErrors } from "../errors";
+import { findSubmissionForReview } from "../repository/find-submission-for-review";
 import { listParticipantIds } from "../repository/list-participant-ids";
 import { reviewSubmission } from "../repository/review-submission";
 
-export type ReviewResult = "reviewed" | "not-awaiting-review";
-
 /**
  * Approving is what pays out, so the read of the submission, the points and the members' totals all
- * happen in one transaction, and the row is locked while it runs. A submission already reviewed is
- * refused rather than paid twice.
+ * happen in one transaction, and the row is locked while it runs. A submission reaches review once its
+ * submitter has confirmed it, so a pending or reviewed submission is refused rather than paid twice.
  */
-export const reviewSubmissionById = async (id: number, review: Review): Promise<ReviewResult> =>
+export const reviewSubmissionById = async (id: number, review: Review) =>
   db.transaction(async (tx) => {
-    const awaiting = await findSubmissionAwaitingReview(tx, id);
-    if (!awaiting) return "not-awaiting-review";
+    const submission = await findSubmissionForReview(tx, id);
+    if (!submission) throw submissionErrors.notFound(id);
+    if (submission.status !== "submitted") throw submissionErrors.notAwaitingReview(id);
 
     await reviewSubmission(tx, id, review);
     const memberIds = await listParticipantIds(tx, id);
@@ -32,19 +32,17 @@ export const reviewSubmissionById = async (id: number, review: Review): Promise<
       source: "server"
     });
 
-    if (review.status === "denied") return "reviewed";
+    if (review.status === "denied") return;
 
     const trialists = await listTrialists(tx, memberIds);
-    const valueMillions = awaiting.valueMillions ?? 0;
+    const valueMillions = submission.valueMillions ?? 0;
 
     const awards = generatePointSplit({
-      nonClanCount: awaiting.nonClanCount,
+      nonClanCount: submission.nonClanCount,
       participants: memberIds.map((memberId) => ({ isTrialist: trialists.has(memberId), memberId })),
       valueMillions
     });
 
-    const note = [awaiting.itemName, valueMillions, memberIds.length + awaiting.nonClanCount].join(",");
+    const note = [submission.itemName, valueMillions, memberIds.length + submission.nonClanCount].join(",");
     await awardPoints(tx, awards, review.reviewedBy, id, note);
-
-    return "reviewed";
   });

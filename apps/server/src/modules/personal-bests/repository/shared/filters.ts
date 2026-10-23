@@ -30,9 +30,6 @@ export const isListedRun = inArray(personalBests.status, [
   "submitted"
 ]);
 
-// A run reaches review once its submitter has confirmed it, and leaves review once someone has.
-export const isAwaitingReview = eq(personalBests.status, "submitted");
-
 // Credit by team only. The submitter is often not the runner: one admin entered thousands of other people's
 // times, and is absent from his own team on almost all of them.
 export const isInTeamOf = (memberId: bigint) =>

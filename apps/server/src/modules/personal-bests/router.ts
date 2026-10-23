@@ -1,7 +1,7 @@
 import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import { z } from "zod";
 
-import { paginated, reviewBody, toPage } from "@/schema/common";
+import { errorResponse, paginated, reviewBody, toPage } from "@/schema/common";
 
 import { listContent } from "./repository/list-content";
 import { createPersonalBestBody, personalBestListQuery, personalBestParams, recordListQuery } from "./request";
@@ -17,7 +17,9 @@ export const personalBestsRouter: FastifyPluginAsyncZod = async (app) => {
     url: "/personal-bests",
     schema: {
       querystring: personalBestListQuery,
-      response: { 200: paginated(rankedPersonalBest) }
+      response: {
+        200: paginated(rankedPersonalBest)
+      }
     },
     handler: async (req) => {
       const { limit, offset } = req.query;
@@ -29,7 +31,11 @@ export const personalBestsRouter: FastifyPluginAsyncZod = async (app) => {
   app.route({
     method: "GET",
     url: "/personal-bests/content",
-    schema: { response: { 200: z.array(personalBestContent) } },
+    schema: {
+      response: {
+        200: z.array(personalBestContent)
+      }
+    },
     handler: async () => listContent()
   });
 
@@ -38,7 +44,9 @@ export const personalBestsRouter: FastifyPluginAsyncZod = async (app) => {
     url: "/personal-bests/records",
     schema: {
       querystring: recordListQuery,
-      response: { 200: z.array(rankedPersonalBest) }
+      response: {
+        200: z.array(rankedPersonalBest)
+      }
     },
     handler: async (req) => getRecords(req.query)
   });
@@ -51,7 +59,9 @@ export const authPersonalBestsRouter: FastifyPluginAsyncZod = async (app) => {
     url: "/personal-bests",
     schema: {
       body: createPersonalBestBody,
-      response: { 201: z.object({ id: z.number() }) }
+      response: {
+        201: z.object({ id: z.number() })
+      }
     },
     handler: async (req, reply) => {
       const id = await createPersonalBest(req.body);
@@ -69,15 +79,12 @@ export const adminPersonalBestsRouter: FastifyPluginAsyncZod = async (app) => {
       body: reviewBody,
       response: {
         200: z.object({ status: reviewBody.shape.status }),
-        409: z.object({ message: z.string() })
+        404: errorResponse,
+        409: errorResponse
       }
     },
-    handler: async (req, reply) => {
-      const result = await reviewPersonalBestById(req.params.id, req.body);
-      if (result === "not-awaiting-review") {
-        return reply.code(409).send({ message: "This personal best is not awaiting review." });
-      }
-
+    handler: async (req) => {
+      await reviewPersonalBestById(req.params.id, req.body);
       return { status: req.body.status };
     }
   });
