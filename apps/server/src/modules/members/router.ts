@@ -7,7 +7,7 @@ import { memberDiary } from "@/modules/speedrun-diary/response";
 import { getMemberDiaries } from "@/modules/speedrun-diary/service/get-member-diaries";
 import { submission } from "@/modules/submissions/response";
 import { getSubmissions } from "@/modules/submissions/service/get-submissions";
-import { notFound, paginated, toPage } from "@/schema/common";
+import { errorResponse, paginated, toPage } from "@/schema/common";
 
 import {
   changeRankBody,
@@ -38,7 +38,9 @@ export const membersRouter: FastifyPluginAsyncZod = async (app) => {
     url: "/members",
     schema: {
       querystring: memberListQuery,
-      response: { 200: paginated(member) }
+      response: {
+        200: paginated(member)
+      }
     },
     handler: async (req) => {
       const { limit, offset } = req.query;
@@ -54,13 +56,10 @@ export const membersRouter: FastifyPluginAsyncZod = async (app) => {
       params: memberParams,
       response: {
         200: memberProfile,
-        404: notFound
+        404: errorResponse
       }
     },
-    handler: async (req, res) => {
-      const profile = await getMemberProfile(req.params.id);
-      return profile ?? res.code(404).send({ message: "member not found" });
-    }
+    handler: async (req) => getMemberProfile(req.params.id)
   });
 
   app.route({
@@ -68,7 +67,9 @@ export const membersRouter: FastifyPluginAsyncZod = async (app) => {
     url: "/members/:id/diary",
     schema: {
       params: memberParams,
-      response: { 200: z.array(memberDiary) }
+      response: {
+        200: z.array(memberDiary)
+      }
     },
     handler: async (req) => getMemberDiaries(req.params.id)
   });
@@ -79,7 +80,9 @@ export const membersRouter: FastifyPluginAsyncZod = async (app) => {
     schema: {
       params: memberParams,
       querystring: memberPersonalBestsQuery,
-      response: { 200: paginated(rankedPersonalBest) }
+      response: {
+        200: paginated(rankedPersonalBest)
+      }
     },
     handler: async (req) => {
       const { limit, offset } = req.query;
@@ -94,7 +97,9 @@ export const membersRouter: FastifyPluginAsyncZod = async (app) => {
     schema: {
       params: memberParams,
       querystring: memberSubmissionsQuery,
-      response: { 200: paginated(submission) }
+      response: {
+        200: paginated(submission)
+      }
     },
     handler: async (req) => {
       const { limit, offset } = req.query;
@@ -111,12 +116,13 @@ export const authProfileRouter: FastifyPluginAsyncZod = async (app) => {
     schema: {
       params: memberParams,
       body: updateMemberBody,
-      response: { 204: z.void(), 404: notFound }
+      response: {
+        204: z.void(),
+        404: errorResponse
+      }
     },
     handler: async (req, reply) => {
-      const edited = await editMemberProfile(req.params.id, req.body);
-      if (!edited) return reply.code(404).send({ message: "Member not found." });
-
+      await editMemberProfile(req.params.id, req.body);
       return reply.code(204).send();
     }
   });
@@ -126,55 +132,94 @@ export const adminMembersRouter: FastifyPluginAsyncZod = async (app) => {
   app.route({
     method: "POST",
     url: "/members/bulk-rank-check",
-    schema: { response: { 200: rankProposals } },
+    schema: {
+      response: {
+        200: rankProposals
+      }
+    },
     handler: () => bulkRankCheck()
   });
 
   app.route({
     method: "POST",
     url: "/members/delay-demotion",
-    schema: { body: memberCommandBody, response: { 200: commandOutcomes } },
+    schema: {
+      body: memberCommandBody,
+      response: {
+        200: commandOutcomes
+      }
+    },
     handler: async (req) => ({ results: await delayDemotions(req.body) })
   });
 
   app.route({
     method: "POST",
     url: "/members/pass-trial",
-    schema: { body: memberCommandBody, response: { 200: commandOutcomes } },
+    schema: {
+      body: memberCommandBody,
+      response: {
+        200: commandOutcomes
+      }
+    },
     handler: async (req) => ({ results: await passTrial(req.body) })
   });
 
   app.route({
     method: "POST",
     url: "/members/quit",
-    schema: { body: memberCommandBody, response: { 200: commandOutcomes } },
+    schema: {
+      body: memberCommandBody,
+      response: {
+        200: commandOutcomes
+      }
+    },
     handler: async (req) => ({ results: await quitMembers(req.body) })
   });
 
   app.route({
     method: "POST",
     url: "/members/rank",
-    schema: { body: changeRankBody, response: { 200: commandOutcomes } },
+    schema: {
+      body: changeRankBody,
+      response: {
+        200: commandOutcomes
+      }
+    },
     handler: async (req) => ({ results: await changeMemberRanks(req.body) })
   });
 
   app.route({
     method: "POST",
     url: "/members/retire",
-    schema: { body: memberCommandBody, response: { 200: commandOutcomes } },
+    schema: {
+      body: memberCommandBody,
+      response: {
+        200: commandOutcomes
+      }
+    },
     handler: async (req) => ({ results: await retireMembers(req.body) })
   });
 
   app.route({
     method: "POST",
     url: "/members/trial",
-    schema: { body: trialBody, response: { 200: trialOutcomes } },
+    schema: {
+      body: trialBody,
+      response: {
+        200: trialOutcomes
+      }
+    },
     handler: async (req) => ({ results: await trialMembers(req.body) })
   });
   app.route({
     method: "POST",
     url: "/members/unretire",
-    schema: { body: memberCommandBody, response: { 200: commandOutcomes } },
+    schema: {
+      body: memberCommandBody,
+      response: {
+        200: commandOutcomes
+      }
+    },
     handler: async (req) => ({ results: await unretireMembers(req.body) })
   });
 };

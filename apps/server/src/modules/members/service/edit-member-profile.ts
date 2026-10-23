@@ -2,6 +2,7 @@ import { db } from "@db/index";
 
 import { recordAuditEntry } from "@/modules/audit/repository/record-audit-entry";
 
+import { memberErrors } from "../errors";
 import { findMemberIdByDiscordId } from "../repository/find-member-id-by-discord-id";
 import { type ProfileChanges, updateMemberProfile } from "../repository/update-member-profile";
 
@@ -14,7 +15,7 @@ export const editMemberProfile = async (
 ) =>
   db.transaction(async (tx) => {
     const previous = await updateMemberProfile(tx, memberId, profile);
-    if (!previous) return false;
+    if (!previous) throw memberErrors.notFound(memberId);
 
     const renames = [
       profile.mainRsn !== undefined && profile.mainRsn !== previous.mainRsn
@@ -34,6 +35,4 @@ export const editMemberProfile = async (
         source: "server"
       });
     }
-
-    return true;
   });
