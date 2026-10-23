@@ -14,7 +14,6 @@ React + TanStack Router/Query + daisyUI, deployed to Vercel · `apps/bot` discor
 - Never touch the database beyond reading it. A session may write a migration with
   `db:generate`, but never runs `db:migrate`, `db:bootstrap`, `db:port`, any `catalogue:*`,
   `wom:*` or `rank:check` script. The owner applies migrations by hand.
-- Never run the bot. It logs in as the real bot and re-registers its commands on the live server.
 - Stop only the processes you started, by their PID. Never `pkill`, `killall` or kill by a
   name pattern: one killed the owner's dev server.
 - Never use the ports the owner's dev servers hold; use the spare ports below.
@@ -55,12 +54,13 @@ Run on spare ports; the shell values win over each app's `.env`:
 ```
 PORT=3101 CORS_ORIGIN=http://localhost:5174 pnpm --filter @sanity/server start
 VITE_API_URL=http://localhost:3101 pnpm --filter @sanity/web exec vite --port 5174 --strictPort
+API_URL=http://localhost:3101 WEB_URL=http://localhost:5174 pnpm --filter @sanity/bot dev
 ```
 
 - API: `curl` the route on `http://localhost:3101`. Scalar docs are at `/docs`.
 - Web: open `http://localhost:5174` with `agentos browser`, look at the change, and file a
   screenshot with `agentos browser screenshot --caption "..."`.
-- Stop both by PID when done.
+- Stop each by PID when done.
 
 ## Code
 
