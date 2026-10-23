@@ -108,6 +108,31 @@
           "submitted"
         ]
       },
+      "ErrorResponseInput": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+          },
+          "url": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "code",
+          "message",
+          "timestamp",
+          "url"
+        ]
+      },
       "MemberRefInput": {
         "type": "object",
         "properties": {
@@ -1588,6 +1613,32 @@
           "pending",
           "submitted"
         ]
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+          },
+          "url": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "code",
+          "message",
+          "timestamp",
+          "url"
+        ],
+        "additionalProperties": false
       },
       "MemberRef": {
         "type": "object",
@@ -3159,16 +3210,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "message"
-                  ],
-                  "additionalProperties": false
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -3242,16 +3284,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "message"
-                  ],
-                  "additionalProperties": false
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -4077,16 +4110,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "message"
-                  ],
-                  "additionalProperties": false
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -4096,16 +4120,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "message"
-                  ],
-                  "additionalProperties": false
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -4115,16 +4130,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "message"
-                  ],
-                  "additionalProperties": false
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -4134,16 +4140,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "message"
-                  ],
-                  "additionalProperties": false
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -4998,21 +4995,22 @@
               }
             }
           },
+          "404": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
           "409": {
             "description": "Default Response",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "message"
-                  ],
-                  "additionalProperties": false
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -5153,21 +5151,22 @@
               }
             }
           },
+          "404": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
           "409": {
             "description": "Default Response",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "message"
-                  ],
-                  "additionalProperties": false
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
