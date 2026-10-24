@@ -64,7 +64,7 @@ export const toAction = (actionType: number, note: string | null): AuditAction =
 
 const toSource = (actionType: number): AuditSource => {
   if (actionType === LOOP) return "worker";
-  if (actionType === WEBSITE) return "web_app";
+  if (actionType === WEBSITE) return "web";
 
   return "bot";
 };
