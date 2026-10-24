@@ -1,7 +1,9 @@
+import { sql } from "drizzle-orm";
 import {
   bigint,
   boolean,
   char,
+  check,
   customType,
   date,
   doublePrecision,
@@ -17,9 +19,27 @@ import {
   unique
 } from "drizzle-orm/pg-core";
 
-import { auditAction, auditSource, reviewStatus, submissionEvent } from "./enums";
+import { apiClient, auditAction, auditSource, reviewStatus, submissionEvent } from "./enums";
 
 const citext = customType<{ data: string }>({ dataType: () => "citext" });
+
+export const apiKeys = pgTable(
+  "api_keys",
+  {
+    id: integer().generatedAlwaysAsIdentity().primaryKey(),
+    client: apiClient().notNull(),
+    memberId: bigint({ mode: "bigint" }).references(() => members.id, { onDelete: "cascade" }),
+    keyHash: text().notNull().unique("api_keys_key_hash_unique"),
+    createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
+    lastUsedAt: timestamp({ withTimezone: true }),
+    revokedAt: timestamp({ withTimezone: true })
+  },
+  (table) => [
+    // RuneLite plugin keys must be associated with a member ID
+    check("api_keys_member_key", sql`(${table.client} = 'runelite') = (${table.memberId} is not null)`),
+    index().on(table.memberId)
+  ]
+);
 
 export const auditLog = pgTable(
   "audit_log",
