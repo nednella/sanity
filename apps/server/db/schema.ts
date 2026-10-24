@@ -67,8 +67,6 @@ export const discordAccounts = pgTable("discord_accounts", {
   avatarUrl: text()
 });
 
-// Where the bot posts or opens channels, by purpose. The bot owns the list of purposes, so adding one needs no
-// migration. Admins point each purpose at a channel from Discord itself.
 export const discordChannels = pgTable("discord_channels", {
   purpose: text().primaryKey(),
   channelId: bigint({ mode: "bigint" }).notNull()
