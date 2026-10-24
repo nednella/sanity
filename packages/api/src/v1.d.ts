@@ -665,6 +665,52 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/auth/plugin-key": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                201: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            key: string;
+                        };
+                    };
+                };
+                /** @description Default Response */
+                403: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/members/me": {
         parameters: {
             query?: never;
@@ -1459,20 +1505,6 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
-        DiscordChannelInput: {
-            purpose: string;
-            channelId: string;
-        };
-        HealthInput: {
-            /** @enum {string} */
-            status: "error" | "ok";
-            checks: {
-                name: string;
-                /** @enum {string} */
-                status: "error" | "ok";
-                latencyMs: number;
-            }[];
-        };
         PageInput: {
             limit: number;
             offset: number;
@@ -1492,6 +1524,20 @@ export interface components {
         MemberRefInput: {
             id: string;
             displayName: string;
+        };
+        DiscordChannelInput: {
+            purpose: string;
+            channelId: string;
+        };
+        HealthInput: {
+            /** @enum {string} */
+            status: "error" | "ok";
+            checks: {
+                name: string;
+                /** @enum {string} */
+                status: "error" | "ok";
+                latencyMs: number;
+            }[];
         };
         PersonalBestContentInput: {
             id: number;
@@ -1809,20 +1855,6 @@ export interface components {
                 latestSnapshot?: components["schemas"]["SnapshotInput"];
             } | null;
         };
-        DiscordChannel: {
-            purpose: string;
-            channelId: string;
-        };
-        Health: {
-            /** @enum {string} */
-            status: "error" | "ok";
-            checks: {
-                name: string;
-                /** @enum {string} */
-                status: "error" | "ok";
-                latencyMs: number;
-            }[];
-        };
         Page: {
             limit: number;
             offset: number;
@@ -1842,6 +1874,20 @@ export interface components {
         MemberRef: {
             id: string;
             displayName: string;
+        };
+        DiscordChannel: {
+            purpose: string;
+            channelId: string;
+        };
+        Health: {
+            /** @enum {string} */
+            status: "error" | "ok";
+            checks: {
+                name: string;
+                /** @enum {string} */
+                status: "error" | "ok";
+                latencyMs: number;
+            }[];
         };
         PersonalBestContent: {
             id: number;
