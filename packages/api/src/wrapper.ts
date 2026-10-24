@@ -9,7 +9,10 @@ const DEFAULT_TIMEOUT_MS = 10_000;
 
 type Init<I> = RequiredKeysOf<I> extends never ? [I?] : [I];
 
-type ApiOptions = { timeoutMs?: number };
+type ApiOptions = {
+  middleware?: Middleware[];
+  timeoutMs?: number;
+};
 
 const timeout = (ms: number): Middleware => ({
   onRequest: ({ request }) => new Request(request, { signal: AbortSignal.timeout(ms) })
@@ -32,9 +35,12 @@ const unwrapped =
 
 // For callers without a UI of their own, such as the bot: every call either returns data or throws,
 // and a server that never answers is told apart from one that answered with an error.
-export const createWrappedApiClient = (baseUrl: string, { timeoutMs = DEFAULT_TIMEOUT_MS }: ApiOptions = {}) => {
+export const createWrappedApiClient = (
+  baseUrl: string,
+  { middleware = [], timeoutMs = DEFAULT_TIMEOUT_MS }: ApiOptions = {}
+) => {
   const client = createApiClient(baseUrl);
-  client.use(timeout(timeoutMs), unavailable);
+  client.use(...middleware, timeout(timeoutMs), unavailable);
 
   return {
     delete: unwrapped(client, "delete"),
