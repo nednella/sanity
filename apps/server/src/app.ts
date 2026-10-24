@@ -26,7 +26,10 @@ export const buildApp = () => {
     }
   });
 
-  app.register(cors, { origin: corsOrigin });
+  app.register(cors, {
+    origin: corsOrigin,
+    methods: ["DELETE", "GET", "HEAD", "PATCH", "POST"]
+  });
 
   app.register(swagger, {
     openapi: { info: { title: "Sanity API", version: "1.0.0" } },
