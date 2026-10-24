@@ -112,9 +112,8 @@ export const membersRouter: FastifyPluginAsyncZod = async (app) => {
 export const authProfileRouter: FastifyPluginAsyncZod = async (app) => {
   app.route({
     method: "PATCH",
-    url: "/members/:id",
+    url: "/members/me",
     schema: {
-      params: memberParams,
       body: updateMemberBody,
       response: {
         204: z.void(),
@@ -122,7 +121,7 @@ export const authProfileRouter: FastifyPluginAsyncZod = async (app) => {
       }
     },
     handler: async (req, reply) => {
-      await editMemberProfile(req.params.id, req.body);
+      await editMemberProfile(req.actor, req.body);
       return reply.code(204).send();
     }
   });
@@ -149,7 +148,7 @@ export const adminMembersRouter: FastifyPluginAsyncZod = async (app) => {
         200: commandOutcomes
       }
     },
-    handler: async (req) => ({ results: await delayDemotions(req.body) })
+    handler: async (req) => ({ results: await delayDemotions(req.body, req.actor) })
   });
 
   app.route({
@@ -161,7 +160,7 @@ export const adminMembersRouter: FastifyPluginAsyncZod = async (app) => {
         200: commandOutcomes
       }
     },
-    handler: async (req) => ({ results: await passTrial(req.body) })
+    handler: async (req) => ({ results: await passTrial(req.body, req.actor) })
   });
 
   app.route({
@@ -173,7 +172,7 @@ export const adminMembersRouter: FastifyPluginAsyncZod = async (app) => {
         200: commandOutcomes
       }
     },
-    handler: async (req) => ({ results: await quitMembers(req.body) })
+    handler: async (req) => ({ results: await quitMembers(req.body, req.actor) })
   });
 
   app.route({
@@ -185,7 +184,7 @@ export const adminMembersRouter: FastifyPluginAsyncZod = async (app) => {
         200: commandOutcomes
       }
     },
-    handler: async (req) => ({ results: await changeMemberRanks(req.body) })
+    handler: async (req) => ({ results: await changeMemberRanks(req.body, req.actor) })
   });
 
   app.route({
@@ -197,7 +196,7 @@ export const adminMembersRouter: FastifyPluginAsyncZod = async (app) => {
         200: commandOutcomes
       }
     },
-    handler: async (req) => ({ results: await retireMembers(req.body) })
+    handler: async (req) => ({ results: await retireMembers(req.body, req.actor) })
   });
 
   app.route({
@@ -209,7 +208,7 @@ export const adminMembersRouter: FastifyPluginAsyncZod = async (app) => {
         200: trialOutcomes
       }
     },
-    handler: async (req) => ({ results: await trialMembers(req.body) })
+    handler: async (req) => ({ results: await trialMembers(req.body, req.actor) })
   });
   app.route({
     method: "POST",
@@ -220,6 +219,6 @@ export const adminMembersRouter: FastifyPluginAsyncZod = async (app) => {
         200: commandOutcomes
       }
     },
-    handler: async (req) => ({ results: await unretireMembers(req.body) })
+    handler: async (req) => ({ results: await unretireMembers(req.body, req.actor) })
   });
 };

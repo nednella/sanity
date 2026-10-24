@@ -136,49 +136,7 @@ export interface paths {
         delete?: never;
         options?: never;
         head?: never;
-        patch: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    id: string;
-                };
-                cookie?: never;
-            };
-            requestBody: {
-                content: {
-                    "application/json": {
-                        actingDiscordId?: string;
-                        altRsn?: string | null;
-                        /** Format: date */
-                        birthday?: string | null;
-                        mainRsn?: string;
-                        /** Format: uppercase */
-                        nationality?: string | null;
-                    };
-                };
-            };
-            responses: {
-                /** @description Default Response */
-                204: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Default Response */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["ErrorResponse"];
-                    };
-                };
-            };
-        };
+        patch?: never;
         trace?: never;
     };
     "/v1/members/{id}/diary": {
@@ -362,7 +320,6 @@ export interface paths {
             requestBody: {
                 content: {
                     "application/json": {
-                        submittedByMemberId: string;
                         contentId: number;
                         scale: number;
                         timeSeconds: number;
@@ -588,7 +545,6 @@ export interface paths {
             requestBody: {
                 content: {
                     "application/json": {
-                        submittedByMemberId: string;
                         /** @default null */
                         itemId?: number | null;
                         /** @default null */
@@ -709,6 +665,61 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/members/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": {
+                        altRsn?: string | null;
+                        /** Format: date */
+                        birthday?: string | null;
+                        mainRsn?: string;
+                        /** Format: uppercase */
+                        nationality?: string | null;
+                    };
+                };
+            };
+            responses: {
+                /** @description Default Response */
+                204: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": unknown;
+                    };
+                };
+                /** @description Default Response */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+        };
+        trace?: never;
+    };
     "/v1/admin/discord/channels": {
         parameters: {
             query?: never;
@@ -764,7 +775,6 @@ export interface paths {
             requestBody: {
                 content: {
                     "application/json": {
-                        actingDiscordId?: string;
                         channelId: string;
                     };
                 };
@@ -791,13 +801,7 @@ export interface paths {
                 };
                 cookie?: never;
             };
-            requestBody: {
-                content: {
-                    "application/json": {
-                        actingDiscordId?: string;
-                    };
-                };
-            };
+            requestBody?: never;
             responses: {
                 /** @description Default Response */
                 204: {
@@ -884,7 +888,6 @@ export interface paths {
                             avatarHash: string | null;
                             discordId: string;
                         };
-                        actingDiscordId?: string;
                         displayName: string;
                     };
                 };
@@ -971,7 +974,6 @@ export interface paths {
             requestBody: {
                 content: {
                     "application/json": {
-                        actingDiscordId?: string;
                         taggedDiscordIds: string[];
                         note?: string;
                     };
@@ -1016,7 +1018,6 @@ export interface paths {
             requestBody: {
                 content: {
                     "application/json": {
-                        actingDiscordId?: string;
                         taggedDiscordIds: string[];
                         note?: string;
                     };
@@ -1061,7 +1062,6 @@ export interface paths {
             requestBody: {
                 content: {
                     "application/json": {
-                        actingDiscordId?: string;
                         taggedDiscordIds: string[];
                         note?: string;
                     };
@@ -1106,7 +1106,6 @@ export interface paths {
             requestBody: {
                 content: {
                     "application/json": {
-                        actingDiscordId?: string;
                         taggedDiscordIds: string[];
                         note?: string;
                         rankId: number;
@@ -1152,7 +1151,6 @@ export interface paths {
             requestBody: {
                 content: {
                     "application/json": {
-                        actingDiscordId?: string;
                         taggedDiscordIds: string[];
                         note?: string;
                     };
@@ -1197,7 +1195,6 @@ export interface paths {
             requestBody: {
                 content: {
                     "application/json": {
-                        actingDiscordId?: string;
                         trialists: {
                             /** @default null */
                             altRsn?: string | null;
@@ -1254,7 +1251,6 @@ export interface paths {
             requestBody: {
                 content: {
                     "application/json": {
-                        actingDiscordId?: string;
                         taggedDiscordIds: string[];
                         note?: string;
                     };
@@ -1303,7 +1299,6 @@ export interface paths {
                     "application/json": {
                         /** @enum {string} */
                         status: "approved" | "denied";
-                        reviewedBy: string;
                         /** @default null */
                         reviewNote?: string | null;
                     };
@@ -1368,7 +1363,6 @@ export interface paths {
                 content: {
                     "application/json": {
                         memberId: string;
-                        awardedByMemberId: string;
                         points: number;
                         notes: string;
                     };
@@ -1417,7 +1411,6 @@ export interface paths {
                     "application/json": {
                         /** @enum {string} */
                         status: "approved" | "denied";
-                        reviewedBy: string;
                         /** @default null */
                         reviewNote?: string | null;
                     };

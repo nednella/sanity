@@ -47,7 +47,6 @@ export const memberSubmissionsQuery = z.object({
 });
 
 export const memberCommandBody = z.object({
-  actingDiscordId: bigIntString.optional(),
   taggedDiscordIds: z.array(bigIntString).min(1).max(50),
   note: z.string().trim().max(500).optional()
 });
@@ -61,10 +60,7 @@ const trialist = z.object({
 
 export const changeRankBody = memberCommandBody.extend({ rankId: z.number().int() });
 
-export const trialBody = z.object({
-  actingDiscordId: bigIntString.optional(),
-  trialists: z.array(trialist).min(1).max(50)
-});
+export const trialBody = z.object({ trialists: z.array(trialist).min(1).max(50) });
 
 export const memberListQuery = z.object({
   ...pagination.shape,
@@ -74,7 +70,6 @@ export const memberListQuery = z.object({
 
 export const updateMemberBody = z
   .object({
-    actingDiscordId: bigIntString.optional(),
     altRsn: rsn.nullable(),
     birthday: z.iso.date().nullable(),
     mainRsn: rsn,

@@ -26,10 +26,7 @@ const purposeOption = (interaction: ChatInputCommandInteraction) =>
 const clear = async (interaction: ChatInputCommandInteraction) => {
   const purpose = purposeOption(interaction);
 
-  await api.delete("/v1/admin/discord/channels/{purpose}", {
-    params: { path: { purpose } },
-    body: { actingDiscordId: interaction.user.id }
-  });
+  await api.delete("/v1/admin/discord/channels/{purpose}", { params: { path: { purpose } } });
 
   await reply(
     interaction,
@@ -70,7 +67,7 @@ const set = async (interaction: ChatInputCommandInteraction) => {
 
   await api.put("/v1/admin/discord/channels/{purpose}", {
     params: { path: { purpose } },
-    body: { actingDiscordId: interaction.user.id, channelId: channel.id }
+    body: { channelId: channel.id }
   });
 
   await reply(

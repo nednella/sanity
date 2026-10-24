@@ -35,7 +35,6 @@ export const reviewStatus = z
 // Drops and personal bests are reviewed the same way, so they are asked for the same thing.
 export const reviewBody = z.object({
   status: z.enum(["approved", "denied"]),
-  reviewedBy: bigIntString,
   reviewNote: z.string().trim().max(500).nullable().default(null)
 });
 

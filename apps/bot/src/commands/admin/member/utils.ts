@@ -54,7 +54,6 @@ export const noteOption = (option: SlashCommandStringOption) =>
 
 // Members are tagged in a text option, because a user option holds only one member.
 export const readTaggedMembers = (interaction: ChatInputCommandInteraction) => ({
-  actingDiscordId: interaction.user.id,
   note: interaction.options.getString("note") ?? undefined,
   taggedDiscordIds: interaction.options.getString("members", true).match(MENTIONED_USER_ID) ?? []
 });

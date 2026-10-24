@@ -1,6 +1,5 @@
 import { type Transaction, db } from "@db/index";
 
-import { findMemberIdByDiscordId } from "../../repository/find-member-id-by-discord-id";
 import { listMembersByDiscordId } from "../../repository/list-members-by-discord-id";
 
 export type TaggedMember = {
@@ -10,11 +9,10 @@ export type TaggedMember = {
 };
 
 export const executePerTaggedMember = async <T extends { outcome: string }>(
-  { actingDiscordId, taggedDiscordIds }: { actingDiscordId?: bigint; taggedDiscordIds: bigint[] },
-  handle: (tx: Transaction, member: TaggedMember, actingMemberId: bigint | undefined) => Promise<T>
+  { taggedDiscordIds }: { taggedDiscordIds: bigint[] },
+  handle: (tx: Transaction, member: TaggedMember) => Promise<T>
 ) =>
   db.transaction(async (tx) => {
-    const actingMemberId = await findMemberIdByDiscordId(tx, actingDiscordId);
     const discordIds = [...new Set(taggedDiscordIds)];
     const found = await listMembersByDiscordId(tx, discordIds);
 
@@ -30,7 +28,7 @@ export const executePerTaggedMember = async <T extends { outcome: string }>(
         discordId,
         displayName: member.displayName,
         memberId: member.id,
-        ...(await handle(tx, member, actingMemberId))
+        ...(await handle(tx, member))
       });
     }
 

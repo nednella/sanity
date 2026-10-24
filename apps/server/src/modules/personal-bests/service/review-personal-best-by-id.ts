@@ -1,6 +1,7 @@
 import { db } from "@db/index";
 
 import { recordAuditEntry } from "@/modules/audit/repository/record-audit-entry";
+import type { Actor } from "@/modules/auth/service/authenticate";
 import { claimEarnedDiaryTiers } from "@/modules/members/service/shared/claim-earned-diary-tiers";
 import type { Review } from "@/schema/common";
 
@@ -17,25 +18,25 @@ import { payDiaryCarries } from "./shared/pay-diary-carries";
  * member's points over. A run reaches review once its submitter has confirmed it. Asking for the review
  * it already has changes nothing, and any other review of a pending or reviewed run is refused.
  */
-export const reviewPersonalBestById = async (id: number, review: Review) =>
+export const reviewPersonalBestById = async (id: number, review: Review, actor: Actor) =>
   db.transaction(async (tx) => {
     const personalBest = await findPersonalBestForReview(tx, id);
     if (!personalBest) throw personalBestErrors.notFound(id);
     if (personalBest.status === review.status) return;
     if (personalBest.status !== "submitted") throw personalBestErrors.notAwaitingReview(id);
 
-    await reviewPersonalBest(tx, id, review);
+    await reviewPersonalBest(tx, id, review, actor.memberId);
     const memberIds = await listParticipantIds(tx, id);
     await recordAuditEntry(tx, {
-      actingMemberId: review.reviewedBy,
+      actingMemberId: actor.memberId,
       action: "personal_best_reviewed",
       affects: memberIds,
       note: `${review.status} personal best #${id}`,
-      source: "server"
+      source: actor.source
     });
 
     if (review.status === "denied" || personalBest.contentId === null) return;
 
-    await payDiaryCarries(tx, { ...personalBest, contentId: personalBest.contentId }, memberIds, review.reviewedBy);
-    await claimEarnedDiaryTiers(tx, memberIds, review.reviewedBy);
+    await payDiaryCarries(tx, { ...personalBest, contentId: personalBest.contentId }, memberIds, actor.memberId);
+    await claimEarnedDiaryTiers(tx, memberIds, actor);
   });

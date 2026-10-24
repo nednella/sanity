@@ -40,7 +40,6 @@ export const personalBestParams = z.object({ id: z.coerce.number().int().positiv
 
 export const createPersonalBestBody = z
   .object({
-    submittedByMemberId: bigIntString,
     contentId: z.number().int().positive(),
     scale: z.number().int().min(1).max(10),
     timeSeconds: z.number().positive().max(86_400),

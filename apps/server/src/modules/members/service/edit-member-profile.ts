@@ -1,21 +1,18 @@
 import { db } from "@db/index";
 
 import { recordAuditEntry } from "@/modules/audit/repository/record-audit-entry";
+import type { Actor } from "@/modules/auth/service/authenticate";
 
 import { memberErrors } from "../errors";
-import { findMemberIdByDiscordId } from "../repository/find-member-id-by-discord-id";
 import { type ProfileChanges, updateMemberProfile } from "../repository/update-member-profile";
 
 const describe = (label: string, previous: string | null, next: string | null) =>
   `${label} ${previous ?? "none"} to ${next ?? "none"}`;
 
-export const editMemberProfile = async (
-  memberId: bigint,
-  { actingDiscordId, ...profile }: ProfileChanges & { actingDiscordId?: bigint }
-) =>
+export const editMemberProfile = async (actor: Actor, profile: ProfileChanges) =>
   db.transaction(async (tx) => {
-    const previous = await updateMemberProfile(tx, memberId, profile);
-    if (!previous) throw memberErrors.notFound(memberId);
+    const previous = await updateMemberProfile(tx, actor.memberId, profile);
+    if (!previous) throw memberErrors.notFound(actor.memberId);
 
     const renames = [
       profile.mainRsn !== undefined && profile.mainRsn !== previous.mainRsn
@@ -28,11 +25,11 @@ export const editMemberProfile = async (
 
     if (renames.length > 0) {
       await recordAuditEntry(tx, {
-        actingMemberId: await findMemberIdByDiscordId(tx, actingDiscordId),
+        actingMemberId: actor.memberId,
         action: "rsn_changed",
-        affects: [memberId],
+        affects: [actor.memberId],
         note: renames.join(", "),
-        source: "server"
+        source: actor.source
       });
     }
   });

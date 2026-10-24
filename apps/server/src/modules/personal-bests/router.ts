@@ -52,7 +52,6 @@ export const personalBestsRouter: FastifyPluginAsyncZod = async (app) => {
   });
 };
 
-// Who submits and who reviews arrive in the body until there is a session to read them from.
 export const authPersonalBestsRouter: FastifyPluginAsyncZod = async (app) => {
   app.route({
     method: "POST",
@@ -64,7 +63,7 @@ export const authPersonalBestsRouter: FastifyPluginAsyncZod = async (app) => {
       }
     },
     handler: async (req, reply) => {
-      const id = await createPersonalBest(req.body);
+      const id = await createPersonalBest(req.body, req.actor);
       return reply.code(201).send({ id });
     }
   });
@@ -84,7 +83,7 @@ export const adminPersonalBestsRouter: FastifyPluginAsyncZod = async (app) => {
       }
     },
     handler: async (req) => {
-      await reviewPersonalBestById(req.params.id, req.body);
+      await reviewPersonalBestById(req.params.id, req.body, req.actor);
       return { status: req.body.status };
     }
   });
