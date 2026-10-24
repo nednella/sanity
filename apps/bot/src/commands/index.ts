@@ -8,7 +8,8 @@ import { health } from "./admin/health/command";
 import { member } from "./admin/member/command";
 import { rank } from "./admin/rank/command";
 import { help } from "./public/help/command";
+import { pluginKey } from "./public/plugin-key/command";
 
-const all: Command[] = [adminHelp, channels, health, help, member, rank];
+const all: Command[] = [adminHelp, channels, health, help, member, pluginKey, rank];
 
 export const commands = new Collection(all.map((command) => [command.name, command]));
