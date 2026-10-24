@@ -9,7 +9,6 @@ import {
   integer,
   interval,
   numeric,
-  pgEnum,
   pgTable,
   primaryKey,
   smallint,
@@ -17,6 +16,8 @@ import {
   timestamp,
   unique
 } from "drizzle-orm/pg-core";
+
+import { auditAction, auditSource, reviewStatus, submissionEvent } from "./enums";
 
 const citext = customType<{ data: string }>({ dataType: () => "citext" });
 
@@ -65,34 +66,6 @@ export const discordAccounts = pgTable("discord_accounts", {
   discordId: bigint({ mode: "bigint" }).notNull().unique("discord_accounts_discord_id_unique"),
   avatarUrl: text()
 });
-
-export const reviewStatus = pgEnum("review_status", [
-  "pending",
-  "submitted",
-  "approved",
-  "approved_missing_member",
-  "denied",
-  "deleted_by_user"
-]);
-
-export const submissionEvent = pgEnum("submission_event", ["bingo", "leagues"]);
-
-export const auditAction = pgEnum("audit_action", [
-  "catalogue_changed",
-  "diary_tier_claimed",
-  "discord_id_changed",
-  "member_joined",
-  "member_left",
-  "other",
-  "personal_best_reviewed",
-  "points_awarded",
-  "rank_changed",
-  "role_changed",
-  "rsn_changed",
-  "submission_reviewed"
-]);
-
-export const auditSource = pgEnum("audit_source", ["bot", "server", "web_app", "worker"]);
 
 // Where the bot posts or opens channels, by purpose. The bot owns the list of purposes, so adding one needs no
 // migration. Admins point each purpose at a channel from Discord itself.
