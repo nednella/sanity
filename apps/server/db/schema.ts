@@ -21,14 +21,71 @@ import { auditAction, auditSource, reviewStatus, submissionEvent } from "./enums
 
 const citext = customType<{ data: string }>({ dataType: () => "citext" });
 
-export const ranks = pgTable("ranks", {
-  id: smallint().primaryKey(),
-  name: text().notNull(),
-  inGameName: text().unique("ranks_in_game_name_unique"),
-  discordRoleId: bigint({ mode: "bigint" }).unique("ranks_discord_role_id_unique"),
-  clanPointRequirement: integer().notNull().default(0),
-  diaryPointRequirement: integer().notNull().default(0),
-  masterDiaryRequirement: integer().notNull().default(0)
+export const auditLog = pgTable(
+  "audit_log",
+  {
+    id: bigint({ mode: "bigint" }).generatedByDefaultAsIdentity().primaryKey(),
+    actingMemberId: bigint({ mode: "bigint" }).references(() => members.id, { onDelete: "restrict" }),
+    action: auditAction().notNull(),
+    note: text(),
+    occurredAt: timestamp({ withTimezone: true }).notNull(),
+    source: auditSource().notNull()
+  },
+  (table) => [index().on(table.occurredAt.desc()), index().on(table.action)]
+);
+
+export const auditLogMembers = pgTable(
+  "audit_log_members",
+  {
+    auditLogId: bigint({ mode: "bigint" })
+      .notNull()
+      .references(() => auditLog.id, { onDelete: "cascade" }),
+    memberId: bigint({ mode: "bigint" })
+      .notNull()
+      .references(() => members.id, { onDelete: "restrict" })
+  },
+  (table) => [primaryKey({ columns: [table.auditLogId, table.memberId] }), index().on(table.memberId)]
+);
+
+export const bosses = pgTable("bosses", {
+  id: integer().generatedByDefaultAsIdentity().primaryKey(),
+  name: citext().notNull().unique("bosses_name_unique"),
+  killsPerHour: numeric({ precision: 6, scale: 2, mode: "number" }),
+  womMetric: text().unique("bosses_wom_metric_unique"),
+  womKillsPerHour: numeric({ precision: 6, scale: 2, mode: "number" })
+});
+
+export const bossUniques = pgTable(
+  "boss_uniques",
+  {
+    bossId: integer()
+      .notNull()
+      .references(() => bosses.id, { onDelete: "cascade" }),
+    itemId: integer()
+      .notNull()
+      .references(() => items.id, { onDelete: "cascade" }),
+    dropRate: integer().notNull()
+  },
+  (table) => [primaryKey({ columns: [table.bossId, table.itemId] }), index().on(table.itemId)]
+);
+
+export const discordAccounts = pgTable("discord_accounts", {
+  memberId: bigint({ mode: "bigint" })
+    .primaryKey()
+    .references(() => members.id, { onDelete: "cascade" }),
+  discordId: bigint({ mode: "bigint" }).notNull().unique("discord_accounts_discord_id_unique"),
+  avatarUrl: text()
+});
+
+export const discordChannels = pgTable("discord_channels", {
+  purpose: text().primaryKey(),
+  channelId: bigint({ mode: "bigint" }).notNull()
+});
+
+export const items = pgTable("items", {
+  id: integer().generatedByDefaultAsIdentity().primaryKey(),
+  name: citext().notNull().unique("items_name_unique"),
+  osrsItemId: integer().unique("items_osrs_item_id_unique")
 });
 
 export const members = pgTable(
@@ -59,46 +116,106 @@ export const memberRankDelays = pgTable("member_rank_delays", {
   until: timestamp({ withTimezone: true }).notNull()
 });
 
-export const discordAccounts = pgTable("discord_accounts", {
-  memberId: bigint({ mode: "bigint" })
-    .primaryKey()
-    .references(() => members.id, { onDelete: "cascade" }),
-  discordId: bigint({ mode: "bigint" }).notNull().unique("discord_accounts_discord_id_unique"),
-  avatarUrl: text()
-});
-
-export const discordChannels = pgTable("discord_channels", {
-  purpose: text().primaryKey(),
-  channelId: bigint({ mode: "bigint" }).notNull()
-});
-
-export const items = pgTable("items", {
-  id: integer().generatedByDefaultAsIdentity().primaryKey(),
-  name: citext().notNull().unique("items_name_unique"),
-  osrsItemId: integer().unique("items_osrs_item_id_unique")
-});
-
-export const bosses = pgTable("bosses", {
-  id: integer().generatedByDefaultAsIdentity().primaryKey(),
-  name: citext().notNull().unique("bosses_name_unique"),
-  killsPerHour: numeric({ precision: 6, scale: 2, mode: "number" }),
-  womMetric: text().unique("bosses_wom_metric_unique"),
-  womKillsPerHour: numeric({ precision: 6, scale: 2, mode: "number" })
-});
-
-export const bossUniques = pgTable(
-  "boss_uniques",
+export const personalBests = pgTable(
+  "personal_bests",
   {
-    bossId: integer()
+    id: integer().generatedByDefaultAsIdentity().primaryKey(),
+    memberId: bigint({ mode: "bigint" })
       .notNull()
-      .references(() => bosses.id, { onDelete: "cascade" }),
-    itemId: integer()
-      .notNull()
-      .references(() => items.id, { onDelete: "cascade" }),
-    dropRate: integer().notNull()
+      .references(() => members.id, { onDelete: "restrict" }),
+    contentId: integer().references(() => speedrunContent.id, { onDelete: "restrict" }),
+    scale: smallint().notNull(),
+    time: interval().notNull(),
+    imageUrl: text(),
+    status: reviewStatus().notNull(),
+    submittedAt: timestamp({ withTimezone: true }),
+    reviewedBy: bigint({ mode: "bigint" }).references(() => members.id, { onDelete: "restrict" }),
+    reviewedAt: timestamp({ withTimezone: true }),
+    reviewNote: text()
   },
-  (table) => [primaryKey({ columns: [table.bossId, table.itemId] }), index().on(table.itemId)]
+  (table) => [index().on(table.memberId), index().on(table.contentId, table.scale, table.time)]
 );
+
+export const personalBestParticipants = pgTable(
+  "personal_best_participants",
+  {
+    personalBestId: integer()
+      .notNull()
+      .references(() => personalBests.id, { onDelete: "cascade" }),
+    memberId: bigint({ mode: "bigint" })
+      .notNull()
+      .references(() => members.id, { onDelete: "restrict" })
+  },
+  (table) => [primaryKey({ columns: [table.personalBestId, table.memberId] }), index().on(table.memberId)]
+);
+
+export const points = pgTable(
+  "points",
+  {
+    id: bigint({ mode: "bigint" }).generatedByDefaultAsIdentity().primaryKey(),
+    memberId: bigint({ mode: "bigint" })
+      .notNull()
+      .references(() => members.id, { onDelete: "restrict" }),
+    submissionId: integer().references(() => submissions.id, { onDelete: "restrict" }),
+    value: integer().notNull(),
+    notes: text(),
+    awardedBy: bigint({ mode: "bigint" }).references(() => members.id, { onDelete: "restrict" }),
+    awardedAt: timestamp({ withTimezone: true }).notNull()
+  },
+  (table) => [index().on(table.memberId, table.awardedAt.desc()), index().on(table.submissionId)]
+);
+
+export const pointsTimelineEvents = pgTable("points_timeline_events", {
+  id: integer().generatedByDefaultAsIdentity().primaryKey(),
+  name: text().notNull(),
+  occurredAt: timestamp({ withTimezone: true }).notNull()
+});
+
+export const ranks = pgTable("ranks", {
+  id: smallint().primaryKey(),
+  name: text().notNull(),
+  inGameName: text().unique("ranks_in_game_name_unique"),
+  discordRoleId: bigint({ mode: "bigint" }).unique("ranks_discord_role_id_unique"),
+  clanPointRequirement: integer().notNull().default(0),
+  diaryPointRequirement: integer().notNull().default(0),
+  masterDiaryRequirement: integer().notNull().default(0)
+});
+
+export const speedrunContent = pgTable("speedrun_content", {
+  id: integer().generatedByDefaultAsIdentity().primaryKey(),
+  bossId: integer().references(() => bosses.id, { onDelete: "restrict" }),
+  imageUrl: text(),
+  isActive: boolean().notNull().default(true)
+});
+
+export const speedrunDiaryTiers = pgTable("speedrun_diary_tiers", {
+  id: smallint().primaryKey(),
+  name: text().notNull().unique("speedrun_diary_tiers_name_unique"),
+  points: smallint().notNull()
+});
+
+export const speedrunDiaryTimes = pgTable(
+  "speedrun_diary_times",
+  {
+    contentId: integer()
+      .notNull()
+      .references(() => speedrunContent.id, { onDelete: "restrict" }),
+    scale: smallint().notNull(),
+    tierId: smallint()
+      .notNull()
+      .references(() => speedrunDiaryTiers.id, { onDelete: "restrict" }),
+    time: interval().notNull()
+  },
+  (table) => [primaryKey({ columns: [table.contentId, table.scale, table.tierId] })]
+);
+
+export const speedrunDiaryRewards = pgTable("speedrun_diary_rewards", {
+  tierId: smallint()
+    .primaryKey()
+    .references(() => speedrunDiaryTiers.id, { onDelete: "restrict" }),
+  requiredDiaryPoints: smallint().notNull(),
+  clanPoints: integer().notNull()
+});
 
 export const submissions = pgTable(
   "submissions",
@@ -141,97 +258,6 @@ export const submissionParticipants = pgTable(
       .references(() => members.id, { onDelete: "restrict" })
   },
   (table) => [primaryKey({ columns: [table.submissionId, table.memberId] }), index().on(table.memberId)]
-);
-
-export const points = pgTable(
-  "points",
-  {
-    id: bigint({ mode: "bigint" }).generatedByDefaultAsIdentity().primaryKey(),
-    memberId: bigint({ mode: "bigint" })
-      .notNull()
-      .references(() => members.id, { onDelete: "restrict" }),
-    submissionId: integer().references(() => submissions.id, { onDelete: "restrict" }),
-    value: integer().notNull(),
-    notes: text(),
-    awardedBy: bigint({ mode: "bigint" }).references(() => members.id, { onDelete: "restrict" }),
-    awardedAt: timestamp({ withTimezone: true }).notNull()
-  },
-  (table) => [index().on(table.memberId, table.awardedAt.desc()), index().on(table.submissionId)]
-);
-
-export const pointsTimelineEvents = pgTable("points_timeline_events", {
-  id: integer().generatedByDefaultAsIdentity().primaryKey(),
-  name: text().notNull(),
-  occurredAt: timestamp({ withTimezone: true }).notNull()
-});
-
-export const speedrunContent = pgTable("speedrun_content", {
-  id: integer().generatedByDefaultAsIdentity().primaryKey(),
-  bossId: integer().references(() => bosses.id, { onDelete: "restrict" }),
-  imageUrl: text(),
-  isActive: boolean().notNull().default(true)
-});
-
-export const speedrunDiaryTiers = pgTable("speedrun_diary_tiers", {
-  id: smallint().primaryKey(),
-  name: text().notNull().unique("speedrun_diary_tiers_name_unique"),
-  points: smallint().notNull()
-});
-
-export const speedrunDiaryTimes = pgTable(
-  "speedrun_diary_times",
-  {
-    contentId: integer()
-      .notNull()
-      .references(() => speedrunContent.id, { onDelete: "restrict" }),
-    scale: smallint().notNull(),
-    tierId: smallint()
-      .notNull()
-      .references(() => speedrunDiaryTiers.id, { onDelete: "restrict" }),
-    time: interval().notNull()
-  },
-  (table) => [primaryKey({ columns: [table.contentId, table.scale, table.tierId] })]
-);
-
-export const speedrunDiaryRewards = pgTable("speedrun_diary_rewards", {
-  tierId: smallint()
-    .primaryKey()
-    .references(() => speedrunDiaryTiers.id, { onDelete: "restrict" }),
-  requiredDiaryPoints: smallint().notNull(),
-  clanPoints: integer().notNull()
-});
-
-export const personalBests = pgTable(
-  "personal_bests",
-  {
-    id: integer().generatedByDefaultAsIdentity().primaryKey(),
-    memberId: bigint({ mode: "bigint" })
-      .notNull()
-      .references(() => members.id, { onDelete: "restrict" }),
-    contentId: integer().references(() => speedrunContent.id, { onDelete: "restrict" }),
-    scale: smallint().notNull(),
-    time: interval().notNull(),
-    imageUrl: text(),
-    status: reviewStatus().notNull(),
-    submittedAt: timestamp({ withTimezone: true }),
-    reviewedBy: bigint({ mode: "bigint" }).references(() => members.id, { onDelete: "restrict" }),
-    reviewedAt: timestamp({ withTimezone: true }),
-    reviewNote: text()
-  },
-  (table) => [index().on(table.memberId), index().on(table.contentId, table.scale, table.time)]
-);
-
-export const personalBestParticipants = pgTable(
-  "personal_best_participants",
-  {
-    personalBestId: integer()
-      .notNull()
-      .references(() => personalBests.id, { onDelete: "cascade" }),
-    memberId: bigint({ mode: "bigint" })
-      .notNull()
-      .references(() => members.id, { onDelete: "restrict" })
-  },
-  (table) => [primaryKey({ columns: [table.personalBestId, table.memberId] }), index().on(table.memberId)]
 );
 
 export const womPlayers = pgTable("wom_players", {
@@ -336,30 +362,4 @@ export const womSnapshotComputed = pgTable(
     rank: integer()
   },
   (table) => [primaryKey({ columns: [table.womSnapshotId, table.metric] })]
-);
-
-export const auditLog = pgTable(
-  "audit_log",
-  {
-    id: bigint({ mode: "bigint" }).generatedByDefaultAsIdentity().primaryKey(),
-    actingMemberId: bigint({ mode: "bigint" }).references(() => members.id, { onDelete: "restrict" }),
-    action: auditAction().notNull(),
-    note: text(),
-    occurredAt: timestamp({ withTimezone: true }).notNull(),
-    source: auditSource().notNull()
-  },
-  (table) => [index().on(table.occurredAt.desc()), index().on(table.action)]
-);
-
-export const auditLogMembers = pgTable(
-  "audit_log_members",
-  {
-    auditLogId: bigint({ mode: "bigint" })
-      .notNull()
-      .references(() => auditLog.id, { onDelete: "cascade" }),
-    memberId: bigint({ mode: "bigint" })
-      .notNull()
-      .references(() => members.id, { onDelete: "restrict" })
-  },
-  (table) => [primaryKey({ columns: [table.auditLogId, table.memberId] }), index().on(table.memberId)]
 );
