@@ -18,6 +18,9 @@
     "catalogue:bosses": "tsx --env-file-if-exists=.env scripts/catalogue/seed-bosses.ts",
     "catalogue:items": "tsx --env-file-if-exists=.env scripts/catalogue/seed-items.ts",
     "catalogue:uniques": "tsx --env-file-if-exists=.env scripts/catalogue/seed-uniques.ts",
+    "key:create": "tsx --env-file-if-exists=.env scripts/keys/create.ts",
+    "key:list": "tsx --env-file-if-exists=.env scripts/keys/list.ts",
+    "key:revoke": "tsx --env-file-if-exists=.env scripts/keys/revoke.ts",
     "openapi": "tsx --env-file-if-exists=.env scripts/openapi.ts",
     "rank:check": "tsx --env-file-if-exists=.env scripts/bulk-rank-check.ts"
   },
