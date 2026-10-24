@@ -5,7 +5,7 @@ import { buildEmbed } from "@/utils/embeds";
 import { reply } from "@/utils/replies";
 
 const PASTE_INSTRUCTIONS =
-  "In RuneLite, open **Configuration**, find the **Sanity** plugin and paste it into **Plugin key**.";
+  "In RuneLite, open **Configuration**, find the **Sanity** plugin and paste it into **API Key**.";
 
 const KEEP_SECRET = "Keep it to yourself. If it leaks, run this command again: a new key revokes the old one.";
 
