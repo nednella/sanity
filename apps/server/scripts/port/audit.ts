@@ -1,4 +1,4 @@
-import { auditAction, auditSource } from "@db/schema";
+import type { AuditAction, AuditSource } from "@db/enums";
 
 import { read, toUtcInstant } from "./source";
 
@@ -10,8 +10,6 @@ type SourceAuditLog = {
   actionNote: string | null;
   actionDate: string;
 };
-
-type Action = (typeof auditAction.enumValues)[number];
 
 const DROP_ACCEPT = 7;
 const EMBED_ACTION = 3;
@@ -30,7 +28,7 @@ const isPersonalBestNote = (note: string) => {
   return parts.length >= 4 && /^\d+$/.test(parts[1]!.trim());
 };
 
-const matchers: [RegExp, Action][] = [
+const matchers: [RegExp, AuditAction][] = [
   [/rank ?(id)? from/i, "rank_changed"],
   [/name from/i, "rsn_changed"],
   [/nitro points/i, "points_awarded"],
@@ -51,7 +49,7 @@ const matchers: [RegExp, Action][] = [
  * What the note says wins over how the row arrived: the drop-accept button was reused for quits,
  * value edits and role changes, so trusting its type alone files all of those as drop approvals.
  */
-export const toAction = (actionType: number, note: string | null): Action => {
+export const toAction = (actionType: number, note: string | null): AuditAction => {
   if (!note) return "other";
   if (isPersonalBestNote(note)) return "personal_best_reviewed";
 
@@ -64,7 +62,7 @@ export const toAction = (actionType: number, note: string | null): Action => {
   return "other";
 };
 
-const toSource = (actionType: number): (typeof auditSource.enumValues)[number] => {
+const toSource = (actionType: number): AuditSource => {
   if (actionType === LOOP) return "worker";
   if (actionType === WEBSITE) return "web_app";
 

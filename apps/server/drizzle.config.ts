@@ -5,7 +5,7 @@ import { config } from "./config";
 const { databaseUrl } = config;
 
 export default defineConfig({
-  schema: "./db/schema.ts",
+  schema: ["./db/enums.ts", "./db/schema.ts"],
   out: "./db/migrations",
   dialect: "postgresql",
   casing: "snake_case",
