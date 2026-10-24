@@ -1,16 +1,16 @@
 package rs.sanity;
 
+import ch.qos.logback.classic.Level;
+import ch.qos.logback.classic.Logger;
 import com.google.inject.Provides;
 import javax.inject.Inject;
 import lombok.extern.slf4j.Slf4j;
-import net.runelite.api.ChatMessageType;
-import net.runelite.api.Client;
-import net.runelite.api.GameState;
-import net.runelite.api.events.GameStateChanged;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
+import net.runelite.client.events.ConfigChanged;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDescriptor;
+import org.slf4j.LoggerFactory;
 
 @Slf4j
 @PluginDescriptor(
@@ -18,36 +18,63 @@ import net.runelite.client.plugins.PluginDescriptor;
 )
 public class SanityPlugin extends Plugin
 {
-	@Inject
-	private Client client;
+	private static final Logger PLUGIN_LOGGER = (Logger) LoggerFactory.getLogger("rs.sanity");
 
 	@Inject
 	private SanityConfig config;
 
+	@Inject
+	private ChatLogAppender chatLogAppender;
+
 	@Override
 	protected void startUp() throws Exception
 	{
-		log.debug("Sanity started!");
+		chatLogAppender.setContext(PLUGIN_LOGGER.getLoggerContext());
+		chatLogAppender.start();
+		applyDebugLogging(config.debug());
+		log.debug("Sanity started with API URL {}", config.apiUrl());
 	}
 
 	@Override
 	protected void shutDown() throws Exception
 	{
-		log.debug("Sanity stopped!");
+		log.debug("Sanity stopped");
+		applyDebugLogging(false);
+		chatLogAppender.stop();
 	}
 
 	@Subscribe
-	public void onGameStateChanged(GameStateChanged gameStateChanged)
+	public void onConfigChanged(ConfigChanged configChanged)
 	{
-		if (gameStateChanged.getGameState() == GameState.LOGGED_IN)
+		if (!configChanged.getGroup().equals(SanityConfig.GROUP))
 		{
-			client.addChatMessage(ChatMessageType.GAMEMESSAGE, "", "Sanity says " + config.greeting(), null);
+			return;
 		}
+
+		if (configChanged.getKey().equals("debug"))
+		{
+			applyDebugLogging(config.debug());
+		}
+
+		log.debug("Config {} changed", configChanged.getKey());
 	}
 
 	@Provides
 	SanityConfig provideConfig(ConfigManager configManager)
 	{
 		return configManager.getConfig(SanityConfig.class);
+	}
+
+	private void applyDebugLogging(boolean enabled)
+	{
+		if (enabled)
+		{
+			PLUGIN_LOGGER.setLevel(Level.DEBUG);
+			PLUGIN_LOGGER.addAppender(chatLogAppender);
+			return;
+		}
+
+		PLUGIN_LOGGER.setLevel(null);
+		PLUGIN_LOGGER.detachAppender(chatLogAppender);
 	}
 }
