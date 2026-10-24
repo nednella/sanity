@@ -5,9 +5,7 @@ import { discordAccounts, members } from "@db/schema";
 
 import { QUIT_RANK_ID } from "@/modules/ranks/constants";
 
-export const findMemberIdByDiscordId = async (tx: Transaction, discordId: bigint | undefined) => {
-  if (discordId === undefined) return;
-
+export const findMemberIdByDiscordId = async (tx: Transaction, discordId: bigint) => {
   const [account] = await tx
     .select({ memberId: discordAccounts.memberId })
     .from(discordAccounts)

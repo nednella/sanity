@@ -33,7 +33,6 @@ export const submissionListQuery = z.object({
 export const submissionParams = z.object({ id: z.coerce.number().int().positive() });
 
 export const createSubmissionBody = z.object({
-  submittedByMemberId: bigIntString,
   itemId: z.number().int().positive().nullable().default(null),
   itemName: z.string().trim().min(1).max(100).nullable().default(null),
   valueMillions: z.number().int().min(0).nullable().default(null),

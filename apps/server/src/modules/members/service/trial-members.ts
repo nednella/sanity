@@ -1,16 +1,15 @@
 import { db } from "@db/index";
 
 import { recordAuditEntry } from "@/modules/audit/repository/record-audit-entry";
+import type { Actor } from "@/modules/auth/service/authenticate";
 
-import { findMemberIdByDiscordId } from "../repository/find-member-id-by-discord-id";
 import { listMembersByDiscordId } from "../repository/list-members-by-discord-id";
 import { saveMember } from "../repository/save-member";
 import { startMemberTrial } from "../repository/start-member-trial";
 import type { TrialCommand } from "../request";
 
-export const trialMembers = async ({ actingDiscordId, trialists }: TrialCommand) =>
+export const trialMembers = async ({ trialists }: TrialCommand, actor: Actor) =>
   db.transaction(async (tx) => {
-    const actingMemberId = await findMemberIdByDiscordId(tx, actingDiscordId);
     const found = await listMembersByDiscordId(
       tx,
       trialists.map(({ discordId }) => discordId)
@@ -23,11 +22,11 @@ export const trialMembers = async ({ actingDiscordId, trialists }: TrialCommand)
       if (!existing) {
         const memberId = await saveMember(tx, trialist);
         await recordAuditEntry(tx, {
-          actingMemberId,
+          actingMemberId: actor.memberId,
           action: "member_joined",
           affects: [memberId],
           note: `${trialist.displayName} has joined the clan`,
-          source: "server"
+          source: actor.source
         });
 
         results.push({ ...trialist, memberId, outcome: "trialling" as const, pointsCleared: 0 });
@@ -36,11 +35,11 @@ export const trialMembers = async ({ actingDiscordId, trialists }: TrialCommand)
 
       const restarted = await startMemberTrial(tx, existing.id);
       await recordAuditEntry(tx, {
-        actingMemberId,
+        actingMemberId: actor.memberId,
         action: "member_joined",
         affects: [existing.id],
         note: `${existing.displayName} has rejoined the clan, clearing ${restarted?.pointsCleared ?? 0} points`,
-        source: "server"
+        source: actor.source
       });
 
       results.push({

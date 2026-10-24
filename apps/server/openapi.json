@@ -3216,80 +3216,6 @@
             }
           }
         }
-      },
-      "patch": {
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "actingDiscordId": {
-                    "type": "string",
-                    "pattern": "^\\d+$"
-                  },
-                  "altRsn": {
-                    "nullable": true,
-                    "type": "string",
-                    "minLength": 1,
-                    "maxLength": 12
-                  },
-                  "birthday": {
-                    "nullable": true,
-                    "type": "string",
-                    "format": "date",
-                    "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))$"
-                  },
-                  "mainRsn": {
-                    "type": "string",
-                    "minLength": 1,
-                    "maxLength": 12
-                  },
-                  "nationality": {
-                    "nullable": true,
-                    "type": "string",
-                    "minLength": 2,
-                    "maxLength": 2,
-                    "format": "uppercase",
-                    "pattern": "^[^a-z]*$"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "parameters": [
-          {
-            "schema": {
-              "type": "string",
-              "pattern": "^\\d+$"
-            },
-            "in": "path",
-            "name": "id",
-            "required": true
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Default Response",
-            "content": {
-              "application/json": {
-                "schema": {}
-              }
-            }
-          },
-          "404": {
-            "description": "Default Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        }
       }
     },
     "/v1/members/{id}/diary": {
@@ -3681,10 +3607,6 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "submittedByMemberId": {
-                    "type": "string",
-                    "pattern": "^\\d+$"
-                  },
                   "contentId": {
                     "type": "integer",
                     "minimum": 0,
@@ -3718,7 +3640,6 @@
                   }
                 },
                 "required": [
-                  "submittedByMemberId",
                   "contentId",
                   "scale",
                   "timeSeconds",
@@ -3989,10 +3910,6 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "submittedByMemberId": {
-                    "type": "string",
-                    "pattern": "^\\d+$"
-                  },
                   "itemId": {
                     "default": null,
                     "nullable": true,
@@ -4052,7 +3969,6 @@
                   }
                 },
                 "required": [
-                  "submittedByMemberId",
                   "participants"
                 ]
               }
@@ -4148,6 +4064,67 @@
         }
       }
     },
+    "/v1/members/me": {
+      "patch": {
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "altRsn": {
+                    "nullable": true,
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 12
+                  },
+                  "birthday": {
+                    "nullable": true,
+                    "type": "string",
+                    "format": "date",
+                    "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))$"
+                  },
+                  "mainRsn": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 12
+                  },
+                  "nationality": {
+                    "nullable": true,
+                    "type": "string",
+                    "minLength": 2,
+                    "maxLength": 2,
+                    "format": "uppercase",
+                    "pattern": "^[^a-z]*$"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "404": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/v1/admin/discord/channels": {
       "get": {
         "responses": {
@@ -4169,22 +4146,6 @@
     },
     "/v1/admin/discord/channels/{purpose}": {
       "delete": {
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "actingDiscordId": {
-                    "type": "string",
-                    "pattern": "^\\d+$"
-                  }
-                }
-              }
-            }
-          }
-        },
         "parameters": [
           {
             "schema": {
@@ -4215,10 +4176,6 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "actingDiscordId": {
-                    "type": "string",
-                    "pattern": "^\\d+$"
-                  },
                   "channelId": {
                     "type": "string",
                     "pattern": "^\\d+$"
@@ -4344,10 +4301,6 @@
                       "discordId"
                     ]
                   },
-                  "actingDiscordId": {
-                    "type": "string",
-                    "pattern": "^\\d+$"
-                  },
                   "displayName": {
                     "type": "string",
                     "minLength": 1,
@@ -4452,10 +4405,6 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "actingDiscordId": {
-                    "type": "string",
-                    "pattern": "^\\d+$"
-                  },
                   "taggedDiscordIds": {
                     "minItems": 1,
                     "maxItems": 50,
@@ -4512,10 +4461,6 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "actingDiscordId": {
-                    "type": "string",
-                    "pattern": "^\\d+$"
-                  },
                   "taggedDiscordIds": {
                     "minItems": 1,
                     "maxItems": 50,
@@ -4572,10 +4517,6 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "actingDiscordId": {
-                    "type": "string",
-                    "pattern": "^\\d+$"
-                  },
                   "taggedDiscordIds": {
                     "minItems": 1,
                     "maxItems": 50,
@@ -4632,10 +4573,6 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "actingDiscordId": {
-                    "type": "string",
-                    "pattern": "^\\d+$"
-                  },
                   "taggedDiscordIds": {
                     "minItems": 1,
                     "maxItems": 50,
@@ -4698,10 +4635,6 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "actingDiscordId": {
-                    "type": "string",
-                    "pattern": "^\\d+$"
-                  },
                   "taggedDiscordIds": {
                     "minItems": 1,
                     "maxItems": 50,
@@ -4758,10 +4691,6 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "actingDiscordId": {
-                    "type": "string",
-                    "pattern": "^\\d+$"
-                  },
                   "trialists": {
                     "minItems": 1,
                     "maxItems": 50,
@@ -4872,10 +4801,6 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "actingDiscordId": {
-                    "type": "string",
-                    "pattern": "^\\d+$"
-                  },
                   "taggedDiscordIds": {
                     "minItems": 1,
                     "maxItems": 50,
@@ -4939,10 +4864,6 @@
                       "denied"
                     ]
                   },
-                  "reviewedBy": {
-                    "type": "string",
-                    "pattern": "^\\d+$"
-                  },
                   "reviewNote": {
                     "default": null,
                     "nullable": true,
@@ -4951,8 +4872,7 @@
                   }
                 },
                 "required": [
-                  "status",
-                  "reviewedBy"
+                  "status"
                 ]
               }
             }
@@ -5031,10 +4951,6 @@
                     "type": "string",
                     "pattern": "^\\d+$"
                   },
-                  "awardedByMemberId": {
-                    "type": "string",
-                    "pattern": "^\\d+$"
-                  },
                   "points": {
                     "type": "integer",
                     "minimum": -10000,
@@ -5048,7 +4964,6 @@
                 },
                 "required": [
                   "memberId",
-                  "awardedByMemberId",
                   "points",
                   "notes"
                 ]
@@ -5095,10 +5010,6 @@
                       "denied"
                     ]
                   },
-                  "reviewedBy": {
-                    "type": "string",
-                    "pattern": "^\\d+$"
-                  },
                   "reviewNote": {
                     "default": null,
                     "nullable": true,
@@ -5107,8 +5018,7 @@
                   }
                 },
                 "required": [
-                  "status",
-                  "reviewedBy"
+                  "status"
                 ]
               }
             }

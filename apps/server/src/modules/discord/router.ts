@@ -2,7 +2,7 @@ import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import { z } from "zod";
 
 import { listChannels } from "./repository/list-channels";
-import { channelParams, clearChannelBody, saveAvatarsBody, setChannelBody, updateDiscordAccountBody } from "./request";
+import { channelParams, saveAvatarsBody, setChannelBody, updateDiscordAccountBody } from "./request";
 import { discordChannels, savedAvatars, updatedDiscordAccount } from "./response";
 import { clearDiscordChannel } from "./service/clear-channel";
 import { saveAvatars } from "./service/save-avatars";
@@ -20,9 +20,9 @@ export const adminDiscordRouter: FastifyPluginAsyncZod = async (app) => {
   app.route({
     method: "DELETE",
     url: "/discord/channels/:purpose",
-    schema: { params: channelParams, body: clearChannelBody, response: { 204: z.void() } },
+    schema: { params: channelParams, response: { 204: z.void() } },
     handler: async (req, reply) => {
-      await clearDiscordChannel({ ...req.params, ...req.body });
+      await clearDiscordChannel(req.params, req.actor);
       return reply.code(204).send();
     }
   });
@@ -32,7 +32,7 @@ export const adminDiscordRouter: FastifyPluginAsyncZod = async (app) => {
     url: "/discord/channels/:purpose",
     schema: { params: channelParams, body: setChannelBody, response: { 204: z.void() } },
     handler: async (req, reply) => {
-      await setDiscordChannel({ ...req.params, ...req.body });
+      await setDiscordChannel({ ...req.params, ...req.body }, req.actor);
       return reply.code(204).send();
     }
   });
@@ -48,6 +48,6 @@ export const adminDiscordRouter: FastifyPluginAsyncZod = async (app) => {
     method: "POST",
     url: "/discord/update-account",
     schema: { body: updateDiscordAccountBody, response: { 200: updatedDiscordAccount } },
-    handler: async (req) => updateDiscordAccount(req.body)
+    handler: async (req) => updateDiscordAccount(req.body, req.actor)
   });
 };

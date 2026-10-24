@@ -35,7 +35,6 @@ const discordId = async (interaction: ChatInputCommandInteraction) => {
         avatarHash: account.avatar,
         discordId: account.id
       },
-      actingDiscordId: interaction.user.id,
       displayName: name
     }
   });
@@ -94,7 +93,6 @@ const trial = async (interaction: ChatInputCommandInteraction) => {
 
   const { results } = await api.post("/v1/admin/members/trial", {
     body: {
-      actingDiscordId: interaction.user.id,
       trialists: [
         {
           altRsn: interaction.options.getString("alt_rsn"),

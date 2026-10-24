@@ -13,7 +13,7 @@ export const adminPointsRouter: FastifyPluginAsyncZod = async (app) => {
       response: { 201: z.object({ awarded: z.number() }) }
     },
     handler: async (req, reply) => {
-      const awarded = await awardManualPoints(req.body);
+      const awarded = await awardManualPoints(req.body, req.actor);
       return reply.code(201).send({ awarded });
     }
   });
