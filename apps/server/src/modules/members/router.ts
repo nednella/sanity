@@ -111,6 +111,18 @@ export const membersRouter: FastifyPluginAsyncZod = async (app) => {
 
 export const authProfileRouter: FastifyPluginAsyncZod = async (app) => {
   app.route({
+    method: "GET",
+    url: "/members/me",
+    schema: {
+      response: {
+        200: memberProfile,
+        404: errorResponse
+      }
+    },
+    handler: async (req) => getMemberProfile(req.actor.memberId)
+  });
+
+  app.route({
     method: "PATCH",
     url: "/members/me",
     schema: {
