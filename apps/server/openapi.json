@@ -6,64 +6,6 @@
   },
   "components": {
     "schemas": {
-      "DiscordChannelInput": {
-        "type": "object",
-        "properties": {
-          "purpose": {
-            "type": "string"
-          },
-          "channelId": {
-            "type": "string",
-            "pattern": "^\\d+$"
-          }
-        },
-        "required": [
-          "purpose",
-          "channelId"
-        ]
-      },
-      "HealthInput": {
-        "type": "object",
-        "properties": {
-          "status": {
-            "type": "string",
-            "enum": [
-              "error",
-              "ok"
-            ]
-          },
-          "checks": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "type": "string"
-                },
-                "status": {
-                  "type": "string",
-                  "enum": [
-                    "error",
-                    "ok"
-                  ]
-                },
-                "latencyMs": {
-                  "type": "number"
-                }
-              },
-              "required": [
-                "name",
-                "status",
-                "latencyMs"
-              ]
-            }
-          }
-        },
-        "required": [
-          "status",
-          "checks"
-        ]
-      },
       "PageInput": {
         "type": "object",
         "properties": {
@@ -147,6 +89,64 @@
         "required": [
           "id",
           "displayName"
+        ]
+      },
+      "DiscordChannelInput": {
+        "type": "object",
+        "properties": {
+          "purpose": {
+            "type": "string"
+          },
+          "channelId": {
+            "type": "string",
+            "pattern": "^\\d+$"
+          }
+        },
+        "required": [
+          "purpose",
+          "channelId"
+        ]
+      },
+      "HealthInput": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "error",
+              "ok"
+            ]
+          },
+          "checks": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "error",
+                    "ok"
+                  ]
+                },
+                "latencyMs": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "name",
+                "status",
+                "latencyMs"
+              ]
+            }
+          }
+        },
+        "required": [
+          "status",
+          "checks"
         ]
       },
       "PersonalBestContentInput": {
@@ -1508,67 +1508,6 @@
           "wom"
         ]
       },
-      "DiscordChannel": {
-        "type": "object",
-        "properties": {
-          "purpose": {
-            "type": "string"
-          },
-          "channelId": {
-            "type": "string",
-            "pattern": "^\\d+$"
-          }
-        },
-        "required": [
-          "purpose",
-          "channelId"
-        ],
-        "additionalProperties": false
-      },
-      "Health": {
-        "type": "object",
-        "properties": {
-          "status": {
-            "type": "string",
-            "enum": [
-              "error",
-              "ok"
-            ]
-          },
-          "checks": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "type": "string"
-                },
-                "status": {
-                  "type": "string",
-                  "enum": [
-                    "error",
-                    "ok"
-                  ]
-                },
-                "latencyMs": {
-                  "type": "number"
-                }
-              },
-              "required": [
-                "name",
-                "status",
-                "latencyMs"
-              ],
-              "additionalProperties": false
-            }
-          }
-        },
-        "required": [
-          "status",
-          "checks"
-        ],
-        "additionalProperties": false
-      },
       "Page": {
         "type": "object",
         "properties": {
@@ -1654,6 +1593,67 @@
         "required": [
           "id",
           "displayName"
+        ],
+        "additionalProperties": false
+      },
+      "DiscordChannel": {
+        "type": "object",
+        "properties": {
+          "purpose": {
+            "type": "string"
+          },
+          "channelId": {
+            "type": "string",
+            "pattern": "^\\d+$"
+          }
+        },
+        "required": [
+          "purpose",
+          "channelId"
+        ],
+        "additionalProperties": false
+      },
+      "Health": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "error",
+              "ok"
+            ]
+          },
+          "checks": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "error",
+                    "ok"
+                  ]
+                },
+                "latencyMs": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "name",
+                "status",
+                "latencyMs"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "status",
+          "checks"
         ],
         "additionalProperties": false
       },
@@ -4052,6 +4052,41 @@
             }
           },
           "429": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/auth/plugin-key": {
+      "post": {
+        "responses": {
+          "201": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "key": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "key"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "403": {
             "description": "Default Response",
             "content": {
               "application/json": {

@@ -2,6 +2,7 @@ import type { FastifyPluginAsync } from "fastify";
 
 import { config } from "@config";
 
+import { authPluginKeyRouter } from "@/modules/auth/router";
 import { authenticate } from "@/modules/auth/service/authenticate";
 import { adminDiscordRouter } from "@/modules/discord/router";
 import { healthRouter } from "@/modules/health/router";
@@ -31,6 +32,7 @@ const authRoutes: FastifyPluginAsync = async (app) => {
   app.addHook("onRequest", authenticate);
 
   app.register(authPersonalBestsRouter);
+  app.register(authPluginKeyRouter);
   app.register(authProfileRouter);
   app.register(authSubmissionsRouter);
 };
