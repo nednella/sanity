@@ -1,4 +1,5 @@
 type Config = {
+  apiKey: string;
   apiUrl: string;
   discordClientId: string;
   discordGuildId: string;
@@ -15,6 +16,7 @@ const required = (name: string): string => {
 };
 
 export const config: Config = {
+  apiKey: required("API_KEY"),
   apiUrl: required("API_URL"),
   discordClientId: required("DISCORD_CLIENT_ID"),
   discordGuildId: required("DISCORD_GUILD_ID"),
