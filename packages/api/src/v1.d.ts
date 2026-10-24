@@ -336,7 +336,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/v1/members/{id}": {
+    "/v1/members/{member}": {
         parameters: {
             query?: never;
             header?: never;
@@ -348,7 +348,7 @@ export interface paths {
                 query?: never;
                 header?: never;
                 path: {
-                    id: string;
+                    member: string;
                 };
                 cookie?: never;
             };
