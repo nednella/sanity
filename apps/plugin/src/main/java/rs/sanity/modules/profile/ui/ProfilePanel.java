@@ -24,7 +24,7 @@ public class ProfilePanel extends JPanel
 		JPanel grid = new JPanel(new GridLayout(2, 2, 4, 4));
 		grid.setOpaque(false);
 		grid.add(new StatTile("clan_points.png", "Clan Points", ProfileText.number(member.getMembership().getPoints())));
-		grid.add(new StatTile("diary_points.png", "Diary Points", ProfileText.diaryPoints(diary.getPoints())));
+		grid.add(new StatTile("diary_points.png", "Diary Points", ProfileText.diaryPoints(diary)));
 		grid.add(new StatTile("diary_master.png", "Master Diaries", ProfileText.number(diary.getMasterDiaries())));
 		grid.add(tier == null
 			? new StatTile("diary_easy.png", "Diary Tier", "None")

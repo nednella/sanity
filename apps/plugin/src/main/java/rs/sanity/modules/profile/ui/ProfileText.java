@@ -10,7 +10,6 @@ import rs.sanity.modules.profile.Member;
 
 final class ProfileText
 {
-	private static final int DIARY_POINTS_MAX = 180;
 	private static final NumberFormat NUMBERS = NumberFormat.getIntegerInstance(Locale.ENGLISH);
 	private static final DateTimeFormatter DATES = DateTimeFormatter.ofPattern("d MMM yyyy", Locale.ENGLISH);
 
@@ -38,8 +37,8 @@ final class ProfileText
 		return NUMBERS.format(value);
 	}
 
-	static String diaryPoints(int points)
+	static String diaryPoints(Member.Diary diary)
 	{
-		return number(points) + " / " + number(DIARY_POINTS_MAX);
+		return number(diary.getPoints()) + " / " + number(diary.getMaxPoints());
 	}
 }
