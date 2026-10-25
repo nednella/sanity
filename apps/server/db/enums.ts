@@ -22,6 +22,9 @@ export type AuditAction = (typeof auditAction.enumValues)[number];
 export const auditSource = pgEnum("audit_source", ["bot", "plugin", "server", "web", "worker"]);
 export type AuditSource = (typeof auditSource.enumValues)[number];
 
+export const memberRole = pgEnum("member_role", ["admin", "superuser"]);
+export type MemberRole = (typeof memberRole.enumValues)[number];
+
 export const reviewStatus = pgEnum("review_status", [
   "pending",
   "submitted",
