@@ -1,7 +1,7 @@
 import type { Transaction } from "@db/index";
 
 import { recordAuditEntry } from "@/modules/audit/repository/record-audit-entry";
-import type { Actor } from "@/modules/auth/service/authenticate";
+import type { Auth } from "@/modules/auth/service/authenticate";
 import { awardPoints } from "@/modules/points/repository/award-points";
 import { RANK_IDS_OFF_LADDER } from "@/modules/ranks/rules";
 import { listDiaryRewards } from "@/modules/speedrun-diary/repository/list-diary-rewards";
@@ -15,7 +15,7 @@ import { setClaimedDiaryTier } from "../../repository/set-claimed-diary-tier";
  * Trialists wait until they pass, as they did under the old loop: their next approved run claims
  * everything they have earned by then.
  */
-export const claimEarnedDiaryTiers = async (tx: Transaction, memberIds: bigint[], actor: Actor) => {
+export const claimEarnedDiaryTiers = async (tx: Transaction, memberIds: bigint[], auth: Auth) => {
   const rewards = await listDiaryRewards(tx);
   const standings = await listMemberStandings(tx, memberIds);
 
@@ -31,12 +31,12 @@ export const claimEarnedDiaryTiers = async (tx: Transaction, memberIds: bigint[]
       const tier = `${tierName.toLowerCase()} diary tier`;
 
       await setClaimedDiaryTier(tx, standing.id, tierId);
-      await awardPoints(tx, [{ memberId: standing.id, points: clanPoints }], actor.memberId, null, tier);
+      await awardPoints(tx, [{ memberId: standing.id, points: clanPoints }], auth.member.id, null, tier);
       await recordAuditEntry(tx, {
         action: "diary_tier_claimed",
         affects: [standing.id],
         note: `${tier} for ${clanPoints} points`,
-        source: actor.source
+        source: auth.client
       });
     }
   }

@@ -9,14 +9,18 @@ import { authErrors } from "../errors";
 import { validateApiKey } from "../repository/validate-api-key";
 import { hashApiKey } from "./keys";
 
-export type Actor = {
-  memberId: bigint;
-  source: ApiClient;
+export type AuthMember = {
+  id: bigint;
+};
+
+export type Auth = {
+  client: ApiClient;
+  member: AuthMember;
 };
 
 declare module "fastify" {
   interface FastifyRequest {
-    actor: Actor;
+    auth: Auth;
   }
 }
 
@@ -28,7 +32,7 @@ declare module "fastify" {
  * ```
  *
  * A request without a valid key gets a 401. A request with a valid key but no
- * requesting member gets a 403. Otherwise the hook sets `request.actor`.
+ * requesting member gets a 403. Otherwise the hook sets `request.auth`.
  */
 export async function authenticate(request: FastifyRequest) {
   const key = await findApiKey(request);
@@ -37,9 +41,9 @@ export async function authenticate(request: FastifyRequest) {
   const memberId = await findRequestingMemberId(request, key.memberId);
   if (memberId === undefined) throw authErrors.forbidden();
 
-  request.actor = {
-    memberId,
-    source: key.client
+  request.auth = {
+    client: key.client,
+    member: { id: memberId }
   };
 }
 

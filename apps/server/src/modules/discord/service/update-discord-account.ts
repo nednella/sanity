@@ -1,7 +1,7 @@
 import { db } from "@db/index";
 
 import { recordAuditEntry } from "@/modules/audit/repository/record-audit-entry";
-import type { Actor } from "@/modules/auth/service/authenticate";
+import type { Auth } from "@/modules/auth/service/authenticate";
 import { findMemberIdByDiscordId } from "@/modules/members/repository/find-member-id-by-discord-id";
 import { listMembersByDisplayName } from "@/modules/members/repository/list-members-by-display-name";
 
@@ -17,7 +17,7 @@ export type UpdateDiscordAccountCommand = {
  * The member is named rather than tagged: the account being replaced may have left the server or
  * been banned, so a mention would not resolve.
  */
-export const updateDiscordAccount = async ({ account, displayName }: UpdateDiscordAccountCommand, actor: Actor) =>
+export const updateDiscordAccount = async ({ account, displayName }: UpdateDiscordAccountCommand, auth: Auth) =>
   db.transaction(async (tx) => {
     const matches = await listMembersByDisplayName(tx, displayName);
     const [member] = matches;
@@ -32,11 +32,11 @@ export const updateDiscordAccount = async ({ account, displayName }: UpdateDisco
 
     await setDiscordAccount(tx, member.id, { avatarUrl: toAvatarUrl(account), discordId: account.discordId });
     await recordAuditEntry(tx, {
-      actingMemberId: actor.memberId,
+      actingMemberId: auth.member.id,
       action: "discord_id_changed",
       affects: [member.id],
       note: `discord id ${member.discordId} to ${account.discordId}`,
-      source: actor.source
+      source: auth.client
     });
 
     return { member: summary, outcome: "discord-account-changed" as const };

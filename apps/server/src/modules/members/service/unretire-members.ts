@@ -1,5 +1,5 @@
 import { recordAuditEntry } from "@/modules/audit/repository/record-audit-entry";
-import type { Actor } from "@/modules/auth/service/authenticate";
+import type { Auth } from "@/modules/auth/service/authenticate";
 import { QUIT_RANK_ID, RETIRED_RANK_ID } from "@/modules/ranks/constants";
 import { toRankSummary } from "@/modules/ranks/mapper";
 import { listRanks } from "@/modules/ranks/repository/list-ranks";
@@ -10,7 +10,7 @@ import { setMemberRank } from "../repository/set-member-rank";
 import type { AdminCommand } from "../request";
 import { executePerTaggedMember } from "./shared/execute-per-tagged-member";
 
-export const unretireMembers = async ({ note, ...command }: AdminCommand, actor: Actor) => {
+export const unretireMembers = async ({ note, ...command }: AdminCommand, auth: Auth) => {
   const ranks = await listRanks();
 
   return executePerTaggedMember(command, async (tx, member) => {
@@ -23,11 +23,11 @@ export const unretireMembers = async ({ note, ...command }: AdminCommand, actor:
 
     await setMemberRank(tx, member.id, earned.id);
     await recordAuditEntry(tx, {
-      actingMemberId: actor.memberId,
+      actingMemberId: auth.member.id,
       action: "rank_changed",
       affects: [member.id],
       note: note ?? `unretired as ${earned.name}`,
-      source: actor.source
+      source: auth.client
     });
 
     return { outcome: "unretired" as const, rank: toRankSummary(earned) };

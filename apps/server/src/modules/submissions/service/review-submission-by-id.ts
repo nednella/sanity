@@ -1,7 +1,7 @@
 import { db } from "@db/index";
 
 import { recordAuditEntry } from "@/modules/audit/repository/record-audit-entry";
-import type { Actor } from "@/modules/auth/service/authenticate";
+import type { Auth } from "@/modules/auth/service/authenticate";
 import { listTrialists } from "@/modules/members/repository/list-trialists";
 import { awardPoints } from "@/modules/points/repository/award-points";
 import { generatePointSplit } from "@/modules/points/rules";
@@ -18,21 +18,21 @@ import { reviewSubmission } from "../repository/review-submission";
  * submitter has confirmed it. Asking for the review it already has changes nothing, and any other review
  * of a pending or reviewed submission is refused, so it is never paid twice.
  */
-export const reviewSubmissionById = async (id: number, review: Review, actor: Actor) =>
+export const reviewSubmissionById = async (id: number, review: Review, auth: Auth) =>
   db.transaction(async (tx) => {
     const submission = await findSubmissionForReview(tx, id);
     if (!submission) throw submissionErrors.notFound(id);
     if (submission.status === review.status) return;
     if (submission.status !== "submitted") throw submissionErrors.notAwaitingReview(id);
 
-    await reviewSubmission(tx, id, review, actor.memberId);
+    await reviewSubmission(tx, id, review, auth.member.id);
     const memberIds = await listParticipantIds(tx, id);
     await recordAuditEntry(tx, {
-      actingMemberId: actor.memberId,
+      actingMemberId: auth.member.id,
       action: "submission_reviewed",
       affects: memberIds,
       note: `${review.status} drop submission #${id}`,
-      source: actor.source
+      source: auth.client
     });
 
     if (review.status === "denied") return;
@@ -47,5 +47,5 @@ export const reviewSubmissionById = async (id: number, review: Review, actor: Ac
     });
 
     const note = [submission.itemName, valueMillions, memberIds.length + submission.nonClanCount].join(",");
-    await awardPoints(tx, awards, actor.memberId, id, note);
+    await awardPoints(tx, awards, auth.member.id, id, note);
   });

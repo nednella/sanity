@@ -38,7 +38,7 @@ export const authSubmissionsRouter: FastifyPluginAsyncZod = async (app) => {
       }
     },
     handler: async (req, reply) => {
-      const id = await createSubmission(req.body, req.actor);
+      const id = await createSubmission(req.body, req.auth);
       return reply.code(201).send({ id });
     }
   });
@@ -58,7 +58,7 @@ export const adminSubmissionsRouter: FastifyPluginAsyncZod = async (app) => {
       }
     },
     handler: async (req) => {
-      await reviewSubmissionById(req.params.id, req.body, req.actor);
+      await reviewSubmissionById(req.params.id, req.body, req.auth);
       return { status: req.body.status };
     }
   });

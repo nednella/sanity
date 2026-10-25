@@ -1,5 +1,5 @@
 import { recordAuditEntry } from "@/modules/audit/repository/record-audit-entry";
-import type { Actor } from "@/modules/auth/service/authenticate";
+import type { Auth } from "@/modules/auth/service/authenticate";
 import { QUIT_RANK_ID, RETIRED_RANK_ID } from "@/modules/ranks/constants";
 import { toRankSummary } from "@/modules/ranks/mapper";
 import { listRanks } from "@/modules/ranks/repository/list-ranks";
@@ -10,7 +10,7 @@ import { executePerTaggedMember } from "./shared/execute-per-tagged-member";
 
 export type RankChange = AdminCommand & { rankId: number };
 
-export const changeMemberRanks = async ({ note, rankId, ...command }: RankChange, actor: Actor) => {
+export const changeMemberRanks = async ({ note, rankId, ...command }: RankChange, auth: Auth) => {
   const rows = await listRanks();
   const ranks = new Map(rows.map((rank) => [rank.id, rank]));
 
@@ -26,11 +26,11 @@ export const changeMemberRanks = async ({ note, rankId, ...command }: RankChange
     await setMemberRank(tx, member.id, rankId);
 
     await recordAuditEntry(tx, {
-      actingMemberId: actor.memberId,
+      actingMemberId: auth.member.id,
       action: "rank_changed",
       affects: [member.id],
       note: note ?? `${from?.name ?? member.rankId} to ${rank.name}`,
-      source: actor.source
+      source: auth.client
     });
 
     return { outcome: "ranked" as const, rank: toRankSummary(rank) };

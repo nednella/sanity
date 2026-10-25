@@ -1,7 +1,7 @@
 import { db } from "@db/index";
 
 import { recordAuditEntry } from "@/modules/audit/repository/record-audit-entry";
-import type { Actor } from "@/modules/auth/service/authenticate";
+import type { Auth } from "@/modules/auth/service/authenticate";
 
 import { memberErrors } from "../errors";
 import { type ProfileChanges, updateMemberProfile } from "../repository/update-member-profile";
@@ -9,10 +9,10 @@ import { type ProfileChanges, updateMemberProfile } from "../repository/update-m
 const describe = (label: string, previous: string | null, next: string | null) =>
   `${label} ${previous ?? "none"} to ${next ?? "none"}`;
 
-export const editMemberProfile = async (actor: Actor, profile: ProfileChanges) =>
+export const editMemberProfile = async (auth: Auth, profile: ProfileChanges) =>
   db.transaction(async (tx) => {
-    const previous = await updateMemberProfile(tx, actor.memberId, profile);
-    if (!previous) throw memberErrors.notFound(actor.memberId);
+    const previous = await updateMemberProfile(tx, auth.member.id, profile);
+    if (!previous) throw memberErrors.notFound(auth.member.id);
 
     const renames = [
       profile.mainRsn !== undefined && profile.mainRsn !== previous.mainRsn
@@ -25,11 +25,11 @@ export const editMemberProfile = async (actor: Actor, profile: ProfileChanges) =
 
     if (renames.length > 0) {
       await recordAuditEntry(tx, {
-        actingMemberId: actor.memberId,
+        actingMemberId: auth.member.id,
         action: "rsn_changed",
-        affects: [actor.memberId],
+        affects: [auth.member.id],
         note: renames.join(", "),
-        source: actor.source
+        source: auth.client
       });
     }
   });
