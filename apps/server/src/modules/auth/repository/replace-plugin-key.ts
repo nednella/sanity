@@ -4,7 +4,7 @@ import { db } from "@db/index";
 import { apiKeys, members } from "@db/schema";
 
 /**
- * Revokes the member's live RuneLite plugin key, if any, and saves the new
+ * Revokes the member's live plugin key, if any, and saves the new
  * one. Ensure the caller NEVER passes the key itself, only the hashed key.
  *
  * The transaction first locks the member row. The second request waits on
@@ -21,10 +21,10 @@ export function replacePluginKey(memberId: bigint, keyHash: string) {
     await tx
       .update(apiKeys)
       .set({ revokedAt: new Date() })
-      .where(and(eq(apiKeys.client, "runelite"), eq(apiKeys.memberId, memberId), isNull(apiKeys.revokedAt)));
+      .where(and(eq(apiKeys.client, "plugin"), eq(apiKeys.memberId, memberId), isNull(apiKeys.revokedAt)));
 
     await tx.insert(apiKeys).values({
-      client: "runelite",
+      client: "plugin",
       keyHash,
       memberId
     });

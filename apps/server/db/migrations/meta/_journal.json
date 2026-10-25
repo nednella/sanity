@@ -190,6 +190,13 @@
       "when": 1792812842498,
       "tag": "0026_remarkable_bucky",
       "breakpoints": true
+    },
+    {
+      "idx": 27,
+      "version": "7",
+      "when": 1792944968591,
+      "tag": "0027_rename_runelite_client",
+      "breakpoints": true
     }
   ]
 }
