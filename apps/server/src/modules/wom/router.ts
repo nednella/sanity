@@ -10,6 +10,13 @@ export const womRouter: FastifyPluginAsyncZod = async (app) => {
   app.route({
     method: "POST",
     url: "/wom/players/:username/sync",
+    config: {
+      rateLimit: {
+        max: 20,
+        timeWindow: "1 minute",
+        keyGenerator: () => "wise-old-man"
+      }
+    },
     schema: {
       params: womPlayerParams,
       response: {
