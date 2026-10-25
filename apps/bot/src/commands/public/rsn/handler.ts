@@ -1,24 +1,34 @@
 import { type ChatInputCommandInteraction, inlineCode } from "discord.js";
 
 import { api } from "@/lib/api";
+import { runSubcommand } from "@/utils/commands";
 import { buildEmbed } from "@/utils/embeds";
-import { reply, replyError } from "@/utils/replies";
+import { reply } from "@/utils/replies";
 
-const NO_RSN_GIVEN = {
-  title: "No RSN given",
-  description: "Give a new main RSN, a new alt RSN, or both."
+const replyChanged = (interaction: ChatInputCommandInteraction, description: string) =>
+  reply(interaction, buildEmbed({ style: "success", title: "RSN changed", description }));
+
+const setAlt = async (interaction: ChatInputCommandInteraction) => {
+  const altRsn = interaction.options.getString("name", true);
+  await api.patch("/v1/members/me", { body: { altRsn } });
+  return replyChanged(interaction, `Your alt RSN is now ${inlineCode(altRsn)}.`);
 };
 
-export const handleRsn = async (interaction: ChatInputCommandInteraction) => {
-  const mainRsn = interaction.options.getString("main") ?? undefined;
-  const altRsn = interaction.options.getString("alt") ?? undefined;
-  if (!mainRsn && !altRsn) return replyError(interaction, NO_RSN_GIVEN);
-
-  await api.patch("/v1/members/me", { body: { altRsn, mainRsn } });
-
-  const lines = [
-    mainRsn ? `Your main RSN is now ${inlineCode(mainRsn)}.` : null,
-    altRsn ? `Your alt RSN is now ${inlineCode(altRsn)}.` : null
-  ].filter(Boolean);
-  return reply(interaction, buildEmbed({ style: "success", title: "RSN changed", description: lines.join("\n") }));
+const setMain = async (interaction: ChatInputCommandInteraction) => {
+  const mainRsn = interaction.options.getString("name", true);
+  await api.patch("/v1/members/me", { body: { mainRsn } });
+  return replyChanged(interaction, `Your main RSN is now ${inlineCode(mainRsn)}.`);
 };
+
+const unsetAlt = async (interaction: ChatInputCommandInteraction) => {
+  await api.patch("/v1/members/me", { body: { altRsn: null } });
+  return replyChanged(interaction, "You no longer have an alt RSN.");
+};
+
+const SUBCOMMANDS = {
+  "set alt": setAlt,
+  "set main": setMain,
+  "unset alt": unsetAlt
+};
+
+export const handleRsn = (interaction: ChatInputCommandInteraction) => runSubcommand(interaction, SUBCOMMANDS);
