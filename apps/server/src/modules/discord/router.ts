@@ -22,7 +22,7 @@ export const adminDiscordRouter: FastifyPluginAsyncZod = async (app) => {
     url: "/discord/channels/:purpose",
     schema: { params: channelParams, response: { 204: z.void() } },
     handler: async (req, reply) => {
-      await clearDiscordChannel(req.params, req.actor);
+      await clearDiscordChannel(req.params, req.auth);
       return reply.code(204).send();
     }
   });
@@ -32,7 +32,7 @@ export const adminDiscordRouter: FastifyPluginAsyncZod = async (app) => {
     url: "/discord/channels/:purpose",
     schema: { params: channelParams, body: setChannelBody, response: { 204: z.void() } },
     handler: async (req, reply) => {
-      await setDiscordChannel({ ...req.params, ...req.body }, req.actor);
+      await setDiscordChannel({ ...req.params, ...req.body }, req.auth);
       return reply.code(204).send();
     }
   });
@@ -48,6 +48,6 @@ export const adminDiscordRouter: FastifyPluginAsyncZod = async (app) => {
     method: "POST",
     url: "/discord/update-account",
     schema: { body: updateDiscordAccountBody, response: { 200: updatedDiscordAccount } },
-    handler: async (req) => updateDiscordAccount(req.body, req.actor)
+    handler: async (req) => updateDiscordAccount(req.body, req.auth)
   });
 };

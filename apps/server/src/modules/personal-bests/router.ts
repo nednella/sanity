@@ -63,7 +63,7 @@ export const authPersonalBestsRouter: FastifyPluginAsyncZod = async (app) => {
       }
     },
     handler: async (req, reply) => {
-      const id = await createPersonalBest(req.body, req.actor);
+      const id = await createPersonalBest(req.body, req.auth);
       return reply.code(201).send({ id });
     }
   });
@@ -83,7 +83,7 @@ export const adminPersonalBestsRouter: FastifyPluginAsyncZod = async (app) => {
       }
     },
     handler: async (req) => {
-      await reviewPersonalBestById(req.params.id, req.body, req.actor);
+      await reviewPersonalBestById(req.params.id, req.body, req.auth);
       return { status: req.body.status };
     }
   });

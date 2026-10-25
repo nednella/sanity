@@ -119,7 +119,7 @@ export const authProfileRouter: FastifyPluginAsyncZod = async (app) => {
         404: errorResponse
       }
     },
-    handler: async (req) => getMemberProfile(req.actor.memberId)
+    handler: async (req) => getMemberProfile(req.auth.member.id)
   });
 
   app.route({
@@ -133,7 +133,7 @@ export const authProfileRouter: FastifyPluginAsyncZod = async (app) => {
       }
     },
     handler: async (req, reply) => {
-      await editMemberProfile(req.actor, req.body);
+      await editMemberProfile(req.auth, req.body);
       return reply.code(204).send();
     }
   });
@@ -160,7 +160,7 @@ export const adminMembersRouter: FastifyPluginAsyncZod = async (app) => {
         200: commandOutcomes
       }
     },
-    handler: async (req) => ({ results: await delayDemotions(req.body, req.actor) })
+    handler: async (req) => ({ results: await delayDemotions(req.body, req.auth) })
   });
 
   app.route({
@@ -172,7 +172,7 @@ export const adminMembersRouter: FastifyPluginAsyncZod = async (app) => {
         200: commandOutcomes
       }
     },
-    handler: async (req) => ({ results: await passTrial(req.body, req.actor) })
+    handler: async (req) => ({ results: await passTrial(req.body, req.auth) })
   });
 
   app.route({
@@ -184,7 +184,7 @@ export const adminMembersRouter: FastifyPluginAsyncZod = async (app) => {
         200: commandOutcomes
       }
     },
-    handler: async (req) => ({ results: await quitMembers(req.body, req.actor) })
+    handler: async (req) => ({ results: await quitMembers(req.body, req.auth) })
   });
 
   app.route({
@@ -196,7 +196,7 @@ export const adminMembersRouter: FastifyPluginAsyncZod = async (app) => {
         200: commandOutcomes
       }
     },
-    handler: async (req) => ({ results: await changeMemberRanks(req.body, req.actor) })
+    handler: async (req) => ({ results: await changeMemberRanks(req.body, req.auth) })
   });
 
   app.route({
@@ -208,7 +208,7 @@ export const adminMembersRouter: FastifyPluginAsyncZod = async (app) => {
         200: commandOutcomes
       }
     },
-    handler: async (req) => ({ results: await retireMembers(req.body, req.actor) })
+    handler: async (req) => ({ results: await retireMembers(req.body, req.auth) })
   });
 
   app.route({
@@ -220,7 +220,7 @@ export const adminMembersRouter: FastifyPluginAsyncZod = async (app) => {
         200: trialOutcomes
       }
     },
-    handler: async (req) => ({ results: await trialMembers(req.body, req.actor) })
+    handler: async (req) => ({ results: await trialMembers(req.body, req.auth) })
   });
   app.route({
     method: "POST",
@@ -231,6 +231,6 @@ export const adminMembersRouter: FastifyPluginAsyncZod = async (app) => {
         200: commandOutcomes
       }
     },
-    handler: async (req) => ({ results: await unretireMembers(req.body, req.actor) })
+    handler: async (req) => ({ results: await unretireMembers(req.body, req.auth) })
   });
 };

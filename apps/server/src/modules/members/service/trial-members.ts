@@ -1,14 +1,14 @@
 import { db } from "@db/index";
 
 import { recordAuditEntry } from "@/modules/audit/repository/record-audit-entry";
-import type { Actor } from "@/modules/auth/service/authenticate";
+import type { Auth } from "@/modules/auth/service/authenticate";
 
 import { listMembersByDiscordId } from "../repository/list-members-by-discord-id";
 import { saveMember } from "../repository/save-member";
 import { startMemberTrial } from "../repository/start-member-trial";
 import type { TrialCommand } from "../request";
 
-export const trialMembers = async ({ trialists }: TrialCommand, actor: Actor) =>
+export const trialMembers = async ({ trialists }: TrialCommand, auth: Auth) =>
   db.transaction(async (tx) => {
     const found = await listMembersByDiscordId(
       tx,
@@ -22,11 +22,11 @@ export const trialMembers = async ({ trialists }: TrialCommand, actor: Actor) =>
       if (!existing) {
         const memberId = await saveMember(tx, trialist);
         await recordAuditEntry(tx, {
-          actingMemberId: actor.memberId,
+          actingMemberId: auth.member.id,
           action: "member_joined",
           affects: [memberId],
           note: `${trialist.displayName} has joined the clan`,
-          source: actor.source
+          source: auth.client
         });
 
         results.push({ ...trialist, memberId, outcome: "trialling" as const, pointsCleared: 0 });
@@ -35,11 +35,11 @@ export const trialMembers = async ({ trialists }: TrialCommand, actor: Actor) =>
 
       const restarted = await startMemberTrial(tx, existing.id);
       await recordAuditEntry(tx, {
-        actingMemberId: actor.memberId,
+        actingMemberId: auth.member.id,
         action: "member_joined",
         affects: [existing.id],
         note: `${existing.displayName} has rejoined the clan, clearing ${restarted?.pointsCleared ?? 0} points`,
-        source: actor.source
+        source: auth.client
       });
 
       results.push({

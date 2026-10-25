@@ -16,7 +16,7 @@ export const authPluginKeyRouter: FastifyPluginAsyncZod = async (app) => {
       }
     },
     handler: async (req, reply) => {
-      const key = await createPluginKey(req.actor);
+      const key = await createPluginKey(req.auth);
       return reply.code(201).send({ key });
     }
   });

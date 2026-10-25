@@ -2,7 +2,7 @@ import { db } from "@db/index";
 import type { discordChannels } from "@db/schema";
 
 import { recordAuditEntry } from "@/modules/audit/repository/record-audit-entry";
-import type { Actor } from "@/modules/auth/service/authenticate";
+import type { Auth } from "@/modules/auth/service/authenticate";
 
 import { setChannel } from "../repository/set-channel";
 
@@ -11,13 +11,13 @@ export type SetChannelCommand = {
   purpose: (typeof discordChannels.$inferInsert)["purpose"];
 };
 
-export const setDiscordChannel = async ({ channelId, purpose }: SetChannelCommand, actor: Actor) =>
+export const setDiscordChannel = async ({ channelId, purpose }: SetChannelCommand, auth: Auth) =>
   db.transaction(async (tx) => {
     await setChannel(tx, purpose, channelId);
     await recordAuditEntry(tx, {
-      actingMemberId: actor.memberId,
+      actingMemberId: auth.member.id,
       action: "catalogue_changed",
       note: `${purpose} channel set to ${channelId}`,
-      source: actor.source
+      source: auth.client
     });
   });

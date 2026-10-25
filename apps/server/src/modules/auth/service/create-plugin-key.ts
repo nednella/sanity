@@ -1,6 +1,6 @@
 import { authErrors } from "../errors";
 import { replacePluginKey } from "../repository/replace-plugin-key";
-import type { Actor } from "./authenticate";
+import type { Auth } from "./authenticate";
 import { generateApiKey, hashApiKey } from "./keys";
 
 /**
@@ -12,11 +12,11 @@ import { generateApiKey, hashApiKey } from "./keys";
  * Each key will only be shown once in its lifetime. Subsequent calls
  * generate a new key and replace the old one.
  */
-export async function createPluginKey(actor: Actor) {
-  if (actor.source !== "bot") throw authErrors.forbidden();
+export async function createPluginKey(auth: Auth) {
+  if (auth.client !== "bot") throw authErrors.forbidden();
 
   const key = generateApiKey("plugin");
-  await replacePluginKey(actor.memberId, hashApiKey(key));
+  await replacePluginKey(auth.member.id, hashApiKey(key));
 
   return key;
 }
