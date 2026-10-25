@@ -6,7 +6,8 @@ import { apiKeys } from "@db/schema";
 /**
  * Finds the live key with the given hash and stamps its `last_used_at`.
  *
- * Returns `undefined` when no key is found, or the key is revoked.
+ * Returns the key's associated client and member id, else `undefined` when no
+ * key is found, or the key is revoked.
  */
 export async function validateApiKey(keyHash: string) {
   const [key] = await db
