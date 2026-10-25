@@ -1774,6 +1774,7 @@ export interface components {
             };
             diary: {
                 points: number;
+                maxPoints: number;
                 masterDiaries: number;
                 claimedTier: {
                     id: number;
@@ -1829,6 +1830,7 @@ export interface components {
             };
             diary: {
                 points: number;
+                maxPoints: number;
                 masterDiaries: number;
                 claimedTier: {
                     id: number;
@@ -2124,6 +2126,7 @@ export interface components {
             };
             diary: {
                 points: number;
+                maxPoints: number;
                 masterDiaries: number;
                 claimedTier: {
                     id: number;
@@ -2179,6 +2182,7 @@ export interface components {
             };
             diary: {
                 points: number;
+                maxPoints: number;
                 masterDiaries: number;
                 claimedTier: {
                     id: number;
