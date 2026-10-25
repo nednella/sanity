@@ -1,8 +1,8 @@
 import type { FastifyRequest } from "fastify";
 
-import type { ApiClient } from "@db/enums";
+import type { ApiClient, MemberRole } from "@db/enums";
 
-import { findClanMemberIdByDiscordId } from "@/modules/members/repository/find-member-id-by-discord-id";
+import { findMemberAccessByDiscordId, findMemberAccessById } from "@/modules/members/repository/find-member-access";
 import { parseAuthorizationHeader, parseXDiscordUserIdHeader } from "@/utils/headers";
 
 import { authErrors } from "../errors";
@@ -11,18 +11,13 @@ import { hashApiKey } from "../service/keys";
 
 export type AuthMember = {
   id: bigint;
+  role: MemberRole | null;
 };
 
 export type Auth = {
   client: ApiClient;
   member: AuthMember;
 };
-
-declare module "fastify" {
-  interface FastifyRequest {
-    auth: Auth;
-  }
-}
 
 export async function authenticate(request: FastifyRequest) {
   const token = parseAuthorizationHeader(request);
@@ -32,29 +27,29 @@ export async function authenticate(request: FastifyRequest) {
   if (!key) throw authErrors.invalidApiKey();
 
   // identify the acting user based on the key's client
-  const memberId = await findRequestingMemberId(request, key);
-  if (memberId === undefined) throw authErrors.invalidApiKey();
+  const member = await findRequestingMember(request, key);
+  if (member === undefined) throw authErrors.invalidApiKey();
 
   request.auth = {
     client: key.client,
-    member: { id: memberId }
+    member
   };
 }
 
 type ApiKey = NonNullable<Awaited<ReturnType<typeof validateApiKey>>>;
 
-async function findRequestingMemberId(request: FastifyRequest, key: ApiKey): Promise<bigint | undefined> {
+async function findRequestingMember(request: FastifyRequest, key: ApiKey): Promise<AuthMember | undefined> {
   switch (key.client) {
     case "plugin": {
       // plugin keys are unique to a member
-      return key.memberId!;
+      return await findMemberAccessById(key.memberId!);
     }
     case "bot": {
       // bot commands on behalf of a user pass that user's Discord ID in a header
       const discordId = parseXDiscordUserIdHeader(request);
       if (discordId === undefined) return;
 
-      return await findClanMemberIdByDiscordId(discordId);
+      return await findMemberAccessByDiscordId(discordId);
     }
     case "web": {
       // web client support not implemented yet
