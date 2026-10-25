@@ -1,7 +1,5 @@
 package rs.sanity;
 
-import ch.qos.logback.classic.Level;
-import ch.qos.logback.classic.Logger;
 import com.google.inject.Provides;
 import javax.inject.Inject;
 import lombok.extern.slf4j.Slf4j;
@@ -10,8 +8,8 @@ import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.events.ConfigChanged;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDescriptor;
-import org.slf4j.LoggerFactory;
 import rs.sanity.config.SanityConfig;
+import rs.sanity.debug.ChatboxLogger;
 
 @Slf4j
 @PluginDescriptor(
@@ -19,20 +17,17 @@ import rs.sanity.config.SanityConfig;
 )
 public class SanityPlugin extends Plugin
 {
-	private static final Logger PLUGIN_LOGGER = (Logger) LoggerFactory.getLogger("rs.sanity");
-
 	@Inject
 	private SanityConfig config;
 
 	@Inject
-	private ChatLogAppender chatLogAppender;
+	private ChatboxLogger chatboxLogger;
 
 	@Override
 	protected void startUp() throws Exception
 	{
-		chatLogAppender.setContext(PLUGIN_LOGGER.getLoggerContext());
-		chatLogAppender.start();
-		applyDebugLogging(config.debug());
+		chatboxLogger.start();
+		chatboxLogger.setEnabled(config.debug());
 		log.debug("Sanity started with API URL {}", config.apiUrl());
 	}
 
@@ -40,8 +35,7 @@ public class SanityPlugin extends Plugin
 	protected void shutDown() throws Exception
 	{
 		log.debug("Sanity stopped");
-		applyDebugLogging(false);
-		chatLogAppender.stop();
+		chatboxLogger.stop();
 	}
 
 	@Subscribe
@@ -54,7 +48,7 @@ public class SanityPlugin extends Plugin
 
 		if (configChanged.getKey().equals(SanityConfig.DEBUG))
 		{
-			applyDebugLogging(config.debug());
+			chatboxLogger.setEnabled(config.debug());
 		}
 
 		log.debug("Config {} changed", configChanged.getKey());
@@ -64,18 +58,5 @@ public class SanityPlugin extends Plugin
 	SanityConfig provideConfig(ConfigManager configManager)
 	{
 		return configManager.getConfig(SanityConfig.class);
-	}
-
-	private void applyDebugLogging(boolean enabled)
-	{
-		if (enabled)
-		{
-			PLUGIN_LOGGER.setLevel(Level.DEBUG);
-			PLUGIN_LOGGER.addAppender(chatLogAppender);
-			return;
-		}
-
-		PLUGIN_LOGGER.setLevel(null);
-		PLUGIN_LOGGER.detachAppender(chatLogAppender);
 	}
 }
