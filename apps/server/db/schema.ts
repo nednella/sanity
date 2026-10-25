@@ -19,7 +19,7 @@ import {
   unique
 } from "drizzle-orm/pg-core";
 
-import { apiClient, auditAction, auditSource, reviewStatus, submissionEvent } from "./enums";
+import { apiClient, auditAction, auditSource, memberRole, reviewStatus, submissionEvent } from "./enums";
 
 const citext = customType<{ data: string }>({ dataType: () => "citext" });
 
@@ -121,6 +121,7 @@ export const members = pgTable(
     clanPoints: integer().notNull().default(0),
     claimedDiaryTierId: smallint().references(() => speedrunDiaryTiers.id, { onDelete: "restrict" }),
     isActive: boolean().notNull().default(false),
+    role: memberRole(),
     joinedAt: timestamp({ withTimezone: true }),
     leftAt: timestamp({ withTimezone: true }),
     birthday: date(),
