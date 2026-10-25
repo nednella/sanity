@@ -1,5 +1,5 @@
 import { recordAuditEntry } from "@/modules/audit/repository/record-audit-entry";
-import type { Auth } from "@/modules/auth/service/authenticate";
+import type { Auth } from "@/modules/auth/hooks/authenticate";
 import { QUIT_RANK_ID, RETIRED_RANK_ID } from "@/modules/ranks/constants";
 import { toRankSummary } from "@/modules/ranks/mapper";
 import { listRanks } from "@/modules/ranks/repository/list-ranks";

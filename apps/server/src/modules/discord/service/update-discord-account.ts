@@ -1,7 +1,7 @@
 import { db } from "@db/index";
 
 import { recordAuditEntry } from "@/modules/audit/repository/record-audit-entry";
-import type { Auth } from "@/modules/auth/service/authenticate";
+import type { Auth } from "@/modules/auth/hooks/authenticate";
 import { findMemberIdByDiscordId } from "@/modules/members/repository/find-member-id-by-discord-id";
 import { listMembersByDisplayName } from "@/modules/members/repository/list-members-by-display-name";
 

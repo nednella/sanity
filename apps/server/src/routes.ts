@@ -2,8 +2,8 @@ import type { FastifyPluginAsync } from "fastify";
 
 import { config } from "@config";
 
+import { authenticate } from "@/modules/auth/hooks/authenticate";
 import { authPluginKeyRouter } from "@/modules/auth/router";
-import { authenticate } from "@/modules/auth/service/authenticate";
 import { adminDiscordRouter } from "@/modules/discord/router";
 import { healthRouter } from "@/modules/health/router";
 import { adminMembersRouter, authProfileRouter, membersRouter } from "@/modules/members/router";

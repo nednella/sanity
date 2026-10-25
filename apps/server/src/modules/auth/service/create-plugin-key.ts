@@ -1,6 +1,6 @@
 import { authErrors } from "../errors";
+import type { Auth } from "../hooks/authenticate";
 import { replacePluginKey } from "../repository/replace-plugin-key";
-import type { Auth } from "./authenticate";
 import { generateApiKey, hashApiKey } from "./keys";
 
 /**

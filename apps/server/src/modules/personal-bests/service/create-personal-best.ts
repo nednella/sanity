@@ -1,6 +1,6 @@
 import { db } from "@db/index";
 
-import type { Auth } from "@/modules/auth/service/authenticate";
+import type { Auth } from "@/modules/auth/hooks/authenticate";
 
 import { savePersonalBest } from "../repository/save-personal-best";
 
