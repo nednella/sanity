@@ -24,21 +24,15 @@ declare module "fastify" {
   }
 }
 
-/**
- * The hook that guards a route group. Add it once per group in `routes.ts`:
- *
- * ```ts
- * app.addHook("onRequest", authenticate);
- * ```
- *
- * A request without a valid key, or without a requesting member, gets a 401.
- * Otherwise the hook sets `request.auth`.
- */
 export async function authenticate(request: FastifyRequest) {
-  const key = await findApiKey(request);
+  const token = parseAuthorizationHeader(request);
+  if (!token) throw authErrors.invalidApiKey();
+
+  const key = await validateApiKey(hashApiKey(token));
   if (!key) throw authErrors.invalidApiKey();
 
-  const memberId = await findRequestingMemberId(request, key.memberId);
+  // identify the acting user based on the key's client
+  const memberId = await findRequestingMemberId(request, key);
   if (memberId === undefined) throw authErrors.invalidApiKey();
 
   request.auth = {
@@ -47,32 +41,24 @@ export async function authenticate(request: FastifyRequest) {
   };
 }
 
-/**
- * Finds the live key that a request sends, and stamps its `last_used_at`.
- *
- * Returns `undefined` when the key is missing, unknown or revoked.
- */
-async function findApiKey(request: FastifyRequest) {
-  const token = parseAuthorizationHeader(request);
-  if (token === undefined) return;
+type ApiKey = NonNullable<Awaited<ReturnType<typeof validateApiKey>>>;
 
-  return await validateApiKey(hashApiKey(token));
-}
+async function findRequestingMemberId(request: FastifyRequest, key: ApiKey): Promise<bigint | undefined> {
+  switch (key.client) {
+    case "plugin": {
+      // plugin keys are unique to a member
+      return key.memberId!;
+    }
+    case "bot": {
+      // bot commands on behalf of a user pass that user's Discord ID in a header
+      const discordId = parseXDiscordUserIdHeader(request);
+      if (discordId === undefined) return;
 
-/**
- * Finds the member that a request comes from.
- *
- * - A plugin key belongs to 1 member, so the request belongs to them.
- * - The bot sends the Discord ID of the person who ran the command in the
- *   `X-Discord-User-Id` header. That person must be a member who has not quit.
- *
- * Returns `undefined` when no such member is found.
- */
-async function findRequestingMemberId(request: FastifyRequest, keyMemberId: bigint | null) {
-  if (keyMemberId !== null) return keyMemberId;
-
-  const discordId = parseXDiscordUserIdHeader(request);
-  if (discordId === undefined) return;
-
-  return await findClanMemberIdByDiscordId(discordId);
+      return await findClanMemberIdByDiscordId(discordId);
+    }
+    case "web": {
+      // web client support not implemented yet
+      throw authErrors.forbidden();
+    }
+  }
 }
