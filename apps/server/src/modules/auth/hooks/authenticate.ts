@@ -7,7 +7,7 @@ import { parseAuthorizationHeader, parseXDiscordUserIdHeader } from "@/utils/hea
 
 import { authErrors } from "../errors";
 import { validateApiKey } from "../repository/validate-api-key";
-import { hashApiKey } from "./keys";
+import { hashApiKey } from "../service/keys";
 
 export type AuthMember = {
   id: bigint;

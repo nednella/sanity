@@ -1,7 +1,7 @@
 import type { Transaction } from "@db/index";
 
 import { recordAuditEntry } from "@/modules/audit/repository/record-audit-entry";
-import type { Auth } from "@/modules/auth/service/authenticate";
+import type { Auth } from "@/modules/auth/hooks/authenticate";
 import { awardPoints } from "@/modules/points/repository/award-points";
 import { RANK_IDS_OFF_LADDER } from "@/modules/ranks/rules";
 import { listDiaryRewards } from "@/modules/speedrun-diary/repository/list-diary-rewards";

@@ -2,7 +2,7 @@ import { db } from "@db/index";
 import type { discordChannels } from "@db/schema";
 
 import { recordAuditEntry } from "@/modules/audit/repository/record-audit-entry";
-import type { Auth } from "@/modules/auth/service/authenticate";
+import type { Auth } from "@/modules/auth/hooks/authenticate";
 
 import { clearChannel } from "../repository/clear-channel";
 
