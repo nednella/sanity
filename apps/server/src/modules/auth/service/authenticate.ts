@@ -31,15 +31,15 @@ declare module "fastify" {
  * app.addHook("onRequest", authenticate);
  * ```
  *
- * A request without a valid key gets a 401. A request with a valid key but no
- * requesting member gets a 403. Otherwise the hook sets `request.auth`.
+ * A request without a valid key, or without a requesting member, gets a 401.
+ * Otherwise the hook sets `request.auth`.
  */
 export async function authenticate(request: FastifyRequest) {
   const key = await findApiKey(request);
   if (!key) throw authErrors.invalidApiKey();
 
   const memberId = await findRequestingMemberId(request, key.memberId);
-  if (memberId === undefined) throw authErrors.forbidden();
+  if (memberId === undefined) throw authErrors.invalidApiKey();
 
   request.auth = {
     client: key.client,
