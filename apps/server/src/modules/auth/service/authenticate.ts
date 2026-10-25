@@ -6,7 +6,7 @@ import { findClanMemberIdByDiscordId } from "@/modules/members/repository/find-m
 import { parseAuthorizationHeader, parseXDiscordUserIdHeader } from "@/utils/headers";
 
 import { authErrors } from "../errors";
-import { recordApiKeyUsage } from "../repository/record-api-key-usage";
+import { validateApiKey } from "../repository/validate-api-key";
 import { hashApiKey } from "./keys";
 
 export type Actor = {
@@ -52,7 +52,7 @@ async function findApiKey(request: FastifyRequest) {
   const token = parseAuthorizationHeader(request);
   if (token === undefined) return;
 
-  return await recordApiKeyUsage(hashApiKey(token));
+  return await validateApiKey(hashApiKey(token));
 }
 
 /**
