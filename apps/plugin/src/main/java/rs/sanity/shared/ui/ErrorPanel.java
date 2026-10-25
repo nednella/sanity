@@ -2,6 +2,7 @@ package rs.sanity.shared.ui;
 
 import static rs.sanity.shared.ui.Labels.centred;
 import static rs.sanity.shared.ui.Labels.label;
+import static rs.sanity.shared.ui.Labels.paragraph;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.FlowLayout;
@@ -12,10 +13,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextPane;
-import javax.swing.text.SimpleAttributeSet;
-import javax.swing.text.StyleConstants;
-import javax.swing.text.StyledDocument;
 import net.runelite.client.ui.ColorScheme;
 import net.runelite.client.ui.DynamicGridLayout;
 import net.runelite.client.ui.FontManager;
@@ -43,7 +40,7 @@ class ErrorPanel extends JPanel
 
 		add(icon);
 		add(centred(label(error.getTitle(), Color.WHITE, true)));
-		add(body(error.getMessage()));
+		add(paragraph(error.getMessage()));
 		if (error.getDetail() != null)
 		{
 			add(centred(label(error.getDetail(), ColorScheme.MEDIUM_GRAY_COLOR, false)));
@@ -67,24 +64,6 @@ class ErrorPanel extends JPanel
 			default:
 				return "error_lock.png";
 		}
-	}
-
-	private static JTextPane body(String text)
-	{
-		JTextPane body = new JTextPane();
-		body.setText(text);
-		body.setEditable(false);
-		body.setFocusable(false);
-		body.setOpaque(false);
-		body.setBorder(null);
-		body.setForeground(ColorScheme.LIGHT_GRAY_COLOR);
-		body.setFont(FontManager.getRunescapeSmallFont());
-
-		SimpleAttributeSet centre = new SimpleAttributeSet();
-		StyleConstants.setAlignment(centre, StyleConstants.ALIGN_CENTER);
-		StyledDocument document = body.getStyledDocument();
-		document.setParagraphAttributes(0, document.getLength(), centre, false);
-		return body;
 	}
 
 	private static JButton refreshButton(Runnable onRefresh)
