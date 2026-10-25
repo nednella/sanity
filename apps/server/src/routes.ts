@@ -1,7 +1,9 @@
+import rateLimit from "@fastify/rate-limit";
 import type { FastifyPluginAsync } from "fastify";
 
 import { config } from "@config";
 
+import { ApplicationError } from "@/errors/error";
 import { authPluginKeyRouter } from "@/modules/auth/router";
 import { authenticate } from "@/modules/auth/service/authenticate";
 import { adminDiscordRouter } from "@/modules/discord/router";
@@ -19,6 +21,13 @@ import { adminSubmissionsRouter, authSubmissionsRouter, submissionsRouter } from
 import { womRouter } from "@/modules/wom/router";
 
 const publicRoutes: FastifyPluginAsync = async (app) => {
+  app.register(rateLimit, {
+    max: 60,
+    timeWindow: "1 minute",
+    errorResponseBuilder: (_request, context) =>
+      new ApplicationError("RATE_LIMITED", 429, `Too many requests, try again in ${context.after}.`)
+  });
+
   app.register(healthRouter);
   app.register(membersRouter);
   app.register(personalBestsRouter);
