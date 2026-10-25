@@ -1,6 +1,6 @@
 import { pgEnum } from "drizzle-orm/pg-core";
 
-export const apiClient = pgEnum("api_client", ["bot", "runelite", "web"] as const satisfies readonly AuditSource[]);
+export const apiClient = pgEnum("api_client", ["bot", "plugin", "web"] as const satisfies readonly AuditSource[]);
 export type ApiClient = (typeof apiClient.enumValues)[number];
 
 export const auditAction = pgEnum("audit_action", [
@@ -19,7 +19,7 @@ export const auditAction = pgEnum("audit_action", [
 ]);
 export type AuditAction = (typeof auditAction.enumValues)[number];
 
-export const auditSource = pgEnum("audit_source", ["bot", "runelite", "server", "web", "worker"]);
+export const auditSource = pgEnum("audit_source", ["bot", "plugin", "server", "web", "worker"]);
 export type AuditSource = (typeof auditSource.enumValues)[number];
 
 export const reviewStatus = pgEnum("review_status", [

@@ -6,8 +6,8 @@ import { client } from "@db/index";
 import { saveApiKey } from "@/modules/auth/repository/save-api-key";
 import { generateApiKey, hashApiKey } from "@/modules/auth/service/keys";
 
-// A RuneLite key belongs to a member, and the web signs in through Discord, so neither is made by hand.
-const machineClient = z.enum(apiClient.enumValues).exclude(["runelite", "web"]);
+// A plugin key belongs to a member, and the web signs in through Discord, so neither is made by hand.
+const machineClient = z.enum(apiClient.enumValues).exclude(["plugin", "web"]);
 
 const parsed = machineClient.safeParse(process.argv[2]);
 if (!parsed.success) throw new Error(`usage: pnpm key:create <${machineClient.options.join("|")}>`);

@@ -35,8 +35,8 @@ export const apiKeys = pgTable(
     revokedAt: timestamp({ withTimezone: true })
   },
   (table) => [
-    // RuneLite plugin keys must be associated with a member ID
-    check("api_keys_member_key", sql`(${table.client} = 'runelite') = (${table.memberId} is not null)`),
+    // Plugin keys must be associated with a member ID
+    check("api_keys_member_key", sql`(${table.client} = 'plugin') = (${table.memberId} is not null)`),
     index().on(table.memberId)
   ]
 );

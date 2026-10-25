@@ -4,7 +4,7 @@ import type { Actor } from "./authenticate";
 import { generateApiKey, hashApiKey } from "./keys";
 
 /**
- * Creates a RuneLite plugin key for the member who requested and returns it.
+ * Creates a plugin key for the member who requested and returns it.
  *
  * This function can only be executed from running the `/plugin-key` bot
  * command.
@@ -15,7 +15,7 @@ import { generateApiKey, hashApiKey } from "./keys";
 export async function createPluginKey(actor: Actor) {
   if (actor.source !== "bot") throw authErrors.forbidden();
 
-  const key = generateApiKey("runelite");
+  const key = generateApiKey("plugin");
   await replacePluginKey(actor.memberId, hashApiKey(key));
 
   return key;

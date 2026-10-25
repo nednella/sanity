@@ -58,7 +58,7 @@ async function findApiKey(request: FastifyRequest) {
 /**
  * Finds the member that a request comes from.
  *
- * - A RuneLite plugin key belongs to 1 member, so the request belongs to them.
+ * - A plugin key belongs to 1 member, so the request belongs to them.
  * - The bot sends the Discord ID of the person who ran the command in the
  *   `X-Discord-User-Id` header. That person must be a member who has not quit.
  *
