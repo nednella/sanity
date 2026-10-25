@@ -3,6 +3,12 @@ package rs.sanity;
 import com.google.inject.Provides;
 import javax.inject.Inject;
 import lombok.extern.slf4j.Slf4j;
+import net.runelite.api.Client;
+import net.runelite.api.GameState;
+import net.runelite.api.Player;
+import net.runelite.api.events.GameStateChanged;
+import net.runelite.api.events.PlayerSpawned;
+import net.runelite.client.callback.ClientThread;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.events.ConfigChanged;
@@ -21,6 +27,12 @@ import rs.sanity.modules.profile.service.ProfileService;
 )
 public class SanityPlugin extends Plugin
 {
+	@Inject
+	private Client client;
+
+	@Inject
+	private ClientThread clientThread;
+
 	@Inject
 	private SanityConfig config;
 
@@ -48,6 +60,7 @@ public class SanityPlugin extends Plugin
 			.panel(profileService.start())
 			.build();
 		clientToolbar.addNavigation(navigationButton);
+		clientThread.invoke(() -> profileService.setPlayerName(playerName(client.getLocalPlayer())));
 	}
 
 	@Override
@@ -80,9 +93,33 @@ public class SanityPlugin extends Plugin
 		log.debug("Config {} changed", key);
 	}
 
+	@Subscribe
+	public void onGameStateChanged(GameStateChanged gameStateChanged)
+	{
+		if (gameStateChanged.getGameState() == GameState.LOGIN_SCREEN)
+		{
+			profileService.setPlayerName(null);
+		}
+	}
+
+	@Subscribe
+	public void onPlayerSpawned(PlayerSpawned playerSpawned)
+	{
+		Player player = playerSpawned.getPlayer();
+		if (player == client.getLocalPlayer())
+		{
+			profileService.setPlayerName(player.getName());
+		}
+	}
+
 	@Provides
 	SanityConfig provideConfig(ConfigManager configManager)
 	{
 		return configManager.getConfig(SanityConfig.class);
+	}
+
+	private static String playerName(Player player)
+	{
+		return player == null ? null : player.getName();
 	}
 }
