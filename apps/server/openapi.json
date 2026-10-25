@@ -1044,6 +1044,9 @@
               "points": {
                 "type": "number"
               },
+              "maxPoints": {
+                "type": "number"
+              },
               "masterDiaries": {
                 "type": "number"
               },
@@ -1066,6 +1069,7 @@
             },
             "required": [
               "points",
+              "maxPoints",
               "masterDiaries",
               "claimedTier"
             ]
@@ -1270,6 +1274,9 @@
               "points": {
                 "type": "number"
               },
+              "maxPoints": {
+                "type": "number"
+              },
               "masterDiaries": {
                 "type": "number"
               },
@@ -1292,6 +1299,7 @@
             },
             "required": [
               "points",
+              "maxPoints",
               "masterDiaries",
               "claimedTier"
             ]
@@ -2576,6 +2584,9 @@
               "points": {
                 "type": "number"
               },
+              "maxPoints": {
+                "type": "number"
+              },
               "masterDiaries": {
                 "type": "number"
               },
@@ -2599,6 +2610,7 @@
             },
             "required": [
               "points",
+              "maxPoints",
               "masterDiaries",
               "claimedTier"
             ],
@@ -2804,6 +2816,9 @@
               "points": {
                 "type": "number"
               },
+              "maxPoints": {
+                "type": "number"
+              },
               "masterDiaries": {
                 "type": "number"
               },
@@ -2827,6 +2842,7 @@
             },
             "required": [
               "points",
+              "maxPoints",
               "masterDiaries",
               "claimedTier"
             ],
