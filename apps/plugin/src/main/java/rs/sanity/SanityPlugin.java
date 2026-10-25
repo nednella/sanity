@@ -11,6 +11,7 @@ import net.runelite.client.events.ConfigChanged;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDescriptor;
 import org.slf4j.LoggerFactory;
+import rs.sanity.config.SanityConfig;
 
 @Slf4j
 @PluginDescriptor(
@@ -51,7 +52,7 @@ public class SanityPlugin extends Plugin
 			return;
 		}
 
-		if (configChanged.getKey().equals("debug"))
+		if (configChanged.getKey().equals(SanityConfig.DEBUG))
 		{
 			applyDebugLogging(config.debug());
 		}
