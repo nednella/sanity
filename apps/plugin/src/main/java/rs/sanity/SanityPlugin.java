@@ -8,8 +8,12 @@ import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.events.ConfigChanged;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDescriptor;
+import net.runelite.client.ui.ClientToolbar;
+import net.runelite.client.ui.NavigationButton;
+import net.runelite.client.util.ImageUtil;
 import rs.sanity.config.SanityConfig;
 import rs.sanity.debug.ChatboxLogger;
+import rs.sanity.modules.profile.service.ProfileService;
 
 @Slf4j
 @PluginDescriptor(
@@ -23,18 +27,34 @@ public class SanityPlugin extends Plugin
 	@Inject
 	private ChatboxLogger chatboxLogger;
 
+	@Inject
+	private ClientToolbar clientToolbar;
+
+	@Inject
+	private ProfileService profileService;
+
+	private NavigationButton navigationButton;
+
 	@Override
 	protected void startUp() throws Exception
 	{
 		chatboxLogger.start();
 		chatboxLogger.setEnabled(config.debug());
-		log.debug("Sanity started with API URL {}", config.apiUrl());
+		log.debug("Plugin enabled, welcome!");
+
+		navigationButton = NavigationButton.builder()
+			.tooltip("Sanity")
+			.icon(ImageUtil.loadImageResource(getClass(), "panel_icon.png"))
+			.panel(profileService.start())
+			.build();
+		clientToolbar.addNavigation(navigationButton);
 	}
 
 	@Override
 	protected void shutDown() throws Exception
 	{
-		log.debug("Sanity stopped");
+		log.debug("Plugin disabled.");
+		clientToolbar.removeNavigation(navigationButton);
 		chatboxLogger.stop();
 	}
 
@@ -46,12 +66,18 @@ public class SanityPlugin extends Plugin
 			return;
 		}
 
-		if (configChanged.getKey().equals(SanityConfig.DEBUG))
+		String key = configChanged.getKey();
+		if (key.equals(SanityConfig.DEBUG))
 		{
 			chatboxLogger.setEnabled(config.debug());
 		}
 
-		log.debug("Config {} changed", configChanged.getKey());
+		if (key.equals(SanityConfig.API_KEY) || key.equals(SanityConfig.API_URL))
+		{
+			profileService.refresh();
+		}
+
+		log.debug("Config {} changed", key);
 	}
 
 	@Provides
