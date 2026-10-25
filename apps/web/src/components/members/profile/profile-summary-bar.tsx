@@ -2,7 +2,6 @@ import type { ReactNode } from "react";
 
 import type { MemberProfile } from "@sanity/api";
 
-import { DIARY_POINTS_MAX } from "@/lib/members/diary";
 import { Tooltip } from "@/lib/ui/tooltip";
 import { statIconUrl } from "@/utils/icons";
 import { formatNumber } from "@/utils/numbers";
@@ -24,7 +23,7 @@ export function ProfileSummaryBar({ profile }: Readonly<ProfileSummaryBarProps>)
       <Stat
         icon={<StatIcon stat="diary-points" />}
         label="Diary Points"
-        value={`${formatNumber(diary.points)} / ${formatNumber(DIARY_POINTS_MAX)}`}
+        value={`${formatNumber(diary.points)} / ${formatNumber(diary.maxPoints)}`}
       />
       <Stat
         icon={<StatIcon stat="overall" />}
