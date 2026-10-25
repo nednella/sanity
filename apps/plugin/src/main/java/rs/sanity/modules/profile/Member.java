@@ -1,6 +1,7 @@
 package rs.sanity.modules.profile;
 
 import lombok.Value;
+import net.runelite.client.util.Text;
 
 @Value
 public class Member
@@ -23,6 +24,16 @@ public class Member
 	{
 		String main;
 		String alt;
+
+		public boolean includes(String name)
+		{
+			return sameName(main, name) || sameName(alt, name);
+		}
+
+		private static boolean sameName(String rsn, String name)
+		{
+			return rsn != null && Text.toJagexName(rsn).equalsIgnoreCase(Text.toJagexName(name));
+		}
 	}
 
 	@Value

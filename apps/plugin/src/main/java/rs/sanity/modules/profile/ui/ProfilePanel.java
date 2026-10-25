@@ -8,9 +8,13 @@ import rs.sanity.shared.ui.ImageLoader;
 
 public class ProfilePanel extends JPanel
 {
-	public ProfilePanel(Member member, ImageLoader imageLoader)
+	public ProfilePanel(Member member, String playerName, ImageLoader imageLoader)
 	{
 		setLayout(new DynamicGridLayout(0, 1, 0, 8));
+		if (playerName != null && !member.getRsn().includes(playerName))
+		{
+			add(new AccountWarning(playerName));
+		}
 		add(new ProfileHeader(member, imageLoader));
 		add(new RankCard(member.getMembership().getRank(), imageLoader));
 		add(stats(member));

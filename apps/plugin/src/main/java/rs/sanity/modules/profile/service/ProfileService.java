@@ -1,5 +1,6 @@
 package rs.sanity.modules.profile.service;
 
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -20,6 +21,7 @@ public class ProfileService
 	private final AtomicInteger latestRequest = new AtomicInteger();
 
 	private SanityPanel panel;
+	private volatile String playerName;
 
 	@Inject
 	ProfileService(SanityApi api, ImageLoader imageLoader)
@@ -41,9 +43,20 @@ public class ProfileService
 		api.get(
 			PROFILE_PATH,
 			Member.class,
-			member -> showIfLatest(request, () -> panel.showContent(new ProfilePanel(member, imageLoader))),
+			member -> showIfLatest(request, () -> panel.showContent(new ProfilePanel(member, playerName, imageLoader))),
 			error -> showIfLatest(request, () -> panel.showError(error))
 		);
+	}
+
+	public void setPlayerName(String playerName)
+	{
+		if (Objects.equals(this.playerName, playerName))
+		{
+			return;
+		}
+
+		this.playerName = playerName;
+		refresh();
 	}
 
 	private void showIfLatest(int request, Runnable show)
