@@ -1,4 +1,4 @@
-package rs.sanity;
+package rs.sanity.config;
 
 import net.runelite.client.config.Config;
 import net.runelite.client.config.ConfigGroup;
@@ -8,11 +8,14 @@ import net.runelite.client.config.ConfigItem;
 public interface SanityConfig extends Config
 {
 	String GROUP = "sanity";
+	String API_URL = "apiUrl";
+	String API_KEY = "apiKey";
+	String DEBUG = "debug";
 
 	@ConfigItem(
-		keyName = "apiUrl",
+		keyName = API_URL,
 		name = "API URL",
-		description = "The Sanity API to talk to. Change it only for local development",
+		description = "The Sanity API web address (don't change this unless for local development!)",
 		position = 0
 	)
 	default String apiUrl()
@@ -21,9 +24,9 @@ public interface SanityConfig extends Config
 	}
 
 	@ConfigItem(
-		keyName = "apiKey",
+		keyName = API_KEY,
 		name = "API Key",
-		description = "Your key from the /plugin-key command in the Sanity Discord",
+		description = "Your unique plugin key from the Sanity Discord server",
 		position = 1,
 		secret = true
 	)
@@ -33,7 +36,7 @@ public interface SanityConfig extends Config
 	}
 
 	@ConfigItem(
-		keyName = "debug",
+		keyName = DEBUG,
 		name = "Enable debug",
 		description = "Write plugin debug logs to the client chat box and log file",
 		position = 2
