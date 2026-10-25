@@ -44,6 +44,7 @@ public class Member
 	public static class Diary
 	{
 		int points;
+		int maxPoints;
 		int masterDiaries;
 		DiaryTier claimedTier;
 	}
