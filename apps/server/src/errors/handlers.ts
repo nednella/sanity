@@ -40,6 +40,6 @@ export const handleNotFound = (request: FastifyRequest, reply: FastifyReply) => 
   return errorResponse({
     request,
     reply,
-    error: new ApplicationError("ROUTE_NOT_FOUND", 404, `${request.method} ${request.url} does not exist.`)
+    error: new ApplicationError("ROUTE_NOT_FOUND", 404, "Route does not exist.")
   });
 };
