@@ -60,6 +60,8 @@ const trialist = z.object({
 
 export const changeRankBody = memberCommandBody.extend({ rankId: z.number().int() });
 
+export const changeRoleBody = memberCommandBody.extend({ role: z.enum(["admin"]).nullable() });
+
 export const trialBody = z.object({ trialists: z.array(trialist).min(1).max(50) });
 
 export const memberListQuery = z.object({
@@ -81,4 +83,5 @@ export type AdminCommand = z.output<typeof memberCommandBody>;
 export type MemberListQuery = Partial<z.output<typeof memberListQuery>>;
 export type MemberSort = z.output<typeof memberSort>;
 export type NewMember = z.output<typeof trialist>;
+export type RoleChange = z.output<typeof changeRoleBody>;
 export type TrialCommand = z.output<typeof trialBody>;
