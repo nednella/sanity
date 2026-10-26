@@ -12,13 +12,13 @@ import { pointsModule } from "@/modules/points/router";
 import { ranksModule } from "@/modules/ranks/router";
 import { speedrunDiaryModule } from "@/modules/speedrun-diary/router";
 import { submissionsModule } from "@/modules/submissions/router";
-import { womRouter } from "@/modules/wom/router";
+import { womModule } from "@/modules/wom/router";
 
 const publicRoutes: FastifyPluginAsync = async (app) => {
   app.register(healthModule);
   app.register(ranksModule);
   app.register(speedrunDiaryModule);
-  app.register(womRouter);
+  app.register(womModule);
 };
 
 const authRoutes: FastifyPluginAsync = async (app) => {
