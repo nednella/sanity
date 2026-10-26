@@ -24,6 +24,6 @@ class AccountWarning extends JPanel
 		));
 
 		add(centred(label("Plugin Disabled", TITLE, true)));
-		add(paragraph(playerName + " is not an account on file. Log in to an account on file, or update your RSN in Discord with /rsn."));
+		add(paragraph(playerName + " does not match your account(s) on file. Please log in to an account on file or manually update your RSN in Discord to continue using the plugin."));
 	}
 }
