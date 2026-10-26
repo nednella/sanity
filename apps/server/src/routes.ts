@@ -5,7 +5,7 @@ import { config } from "@config";
 import { authenticate } from "@/modules/auth/hooks/authenticate";
 import { authModule } from "@/modules/auth/router";
 import { discordModule } from "@/modules/discord/router";
-import { healthRouter } from "@/modules/health/router";
+import { healthModule } from "@/modules/health/router";
 import { adminMembersRouter, authProfileRouter, membersRouter } from "@/modules/members/router";
 import {
   adminPersonalBestsRouter,
@@ -19,7 +19,7 @@ import { adminSubmissionsRouter, authSubmissionsRouter, submissionsRouter } from
 import { womRouter } from "@/modules/wom/router";
 
 const publicRoutes: FastifyPluginAsync = async (app) => {
-  app.register(healthRouter);
+  app.register(healthModule);
   app.register(membersRouter);
   app.register(personalBestsRouter);
   app.register(ranksRouter);
