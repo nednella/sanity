@@ -8,7 +8,7 @@ import { discordModule } from "@/modules/discord/router";
 import { healthModule } from "@/modules/health/router";
 import { membersModule } from "@/modules/members/router";
 import { personalBestsModule } from "@/modules/personal-bests/router";
-import { adminPointsRouter } from "@/modules/points/router";
+import { pointsModule } from "@/modules/points/router";
 import { ranksRouter } from "@/modules/ranks/router";
 import { speedrunDiaryRouter } from "@/modules/speedrun-diary/router";
 import { adminSubmissionsRouter, authSubmissionsRouter, submissionsRouter } from "@/modules/submissions/router";
@@ -38,7 +38,7 @@ const adminRoutes: FastifyPluginAsync = async (app) => {
   });
 
   app.register(discordModule);
-  app.register(adminPointsRouter);
+  app.register(pointsModule);
   app.register(adminSubmissionsRouter);
 };
 
