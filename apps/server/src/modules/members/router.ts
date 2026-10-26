@@ -1,4 +1,3 @@
-import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import { z } from "zod";
 
 import { rankedPersonalBest } from "@/modules/personal-bests/response";
@@ -8,6 +7,8 @@ import { getMemberDiaries } from "@/modules/speedrun-diary/service/get-member-di
 import { submission } from "@/modules/submissions/response";
 import { getSubmissions } from "@/modules/submissions/service/get-submissions";
 import { errorResponse, paginated, toPage } from "@/schema/common";
+import { defineModule } from "@/utils/define-module";
+import { defineRoute } from "@/utils/define-route";
 
 import {
   changeRankBody,
@@ -32,10 +33,13 @@ import { retireMembers } from "./service/retire-members";
 import { trialMembers } from "./service/trial-members";
 import { unretireMembers } from "./service/unretire-members";
 
-export const membersRouter: FastifyPluginAsyncZod = async (app) => {
-  app.route({
+export const membersModule = defineModule([
+  defineRoute({
     method: "GET",
     url: "/members",
+    config: {
+      access: "public"
+    },
     schema: {
       querystring: memberListQuery,
       response: {
@@ -47,11 +51,14 @@ export const membersRouter: FastifyPluginAsyncZod = async (app) => {
       const { items, total } = await getMembers(req.query);
       return { items, page: toPage({ limit, offset, total }) };
     }
-  });
+  }),
 
-  app.route({
+  defineRoute({
     method: "GET",
     url: "/members/:id",
+    config: {
+      access: "public"
+    },
     schema: {
       params: memberParams,
       response: {
@@ -60,11 +67,14 @@ export const membersRouter: FastifyPluginAsyncZod = async (app) => {
       }
     },
     handler: async (req) => getMemberProfile(req.params.id)
-  });
+  }),
 
-  app.route({
+  defineRoute({
     method: "GET",
     url: "/members/:id/diary",
+    config: {
+      access: "public"
+    },
     schema: {
       params: memberParams,
       response: {
@@ -72,11 +82,14 @@ export const membersRouter: FastifyPluginAsyncZod = async (app) => {
       }
     },
     handler: async (req) => getMemberDiaries(req.params.id)
-  });
+  }),
 
-  app.route({
+  defineRoute({
     method: "GET",
     url: "/members/:id/personal-bests",
+    config: {
+      access: "public"
+    },
     schema: {
       params: memberParams,
       querystring: memberPersonalBestsQuery,
@@ -89,11 +102,14 @@ export const membersRouter: FastifyPluginAsyncZod = async (app) => {
       const { items, total } = await getPersonalBests({ ...req.query, memberId: req.params.id });
       return { items, page: toPage({ limit, offset, total }) };
     }
-  });
+  }),
 
-  app.route({
+  defineRoute({
     method: "GET",
     url: "/members/:id/submissions",
+    config: {
+      access: "public"
+    },
     schema: {
       params: memberParams,
       querystring: memberSubmissionsQuery,
@@ -106,13 +122,17 @@ export const membersRouter: FastifyPluginAsyncZod = async (app) => {
       const { items, total } = await getSubmissions({ ...req.query, memberId: req.params.id });
       return { items, page: toPage({ limit, offset, total }) };
     }
-  });
-};
+  }),
 
-export const authProfileRouter: FastifyPluginAsyncZod = async (app) => {
-  app.route({
+  defineRoute({
     method: "GET",
     url: "/members/me",
+    config: {
+      access: {
+        role: "*",
+        clients: ["bot", "plugin"]
+      }
+    },
     schema: {
       response: {
         200: memberProfile,
@@ -120,11 +140,17 @@ export const authProfileRouter: FastifyPluginAsyncZod = async (app) => {
       }
     },
     handler: async (req) => getMemberProfile(req.auth.member.id)
-  });
+  }),
 
-  app.route({
+  defineRoute({
     method: "PATCH",
     url: "/members/me",
+    config: {
+      access: {
+        role: "*",
+        clients: ["bot"]
+      }
+    },
     schema: {
       body: updateMemberBody,
       response: {
@@ -136,24 +162,34 @@ export const authProfileRouter: FastifyPluginAsyncZod = async (app) => {
       await editMemberProfile(req.auth, req.body);
       return reply.code(204).send();
     }
-  });
-};
+  }),
 
-export const adminMembersRouter: FastifyPluginAsyncZod = async (app) => {
-  app.route({
+  defineRoute({
     method: "POST",
-    url: "/members/bulk-rank-check",
+    url: "/admin/members/bulk-rank-check",
+    config: {
+      access: {
+        role: "admin",
+        clients: ["bot"]
+      }
+    },
     schema: {
       response: {
         200: rankProposals
       }
     },
     handler: () => bulkRankCheck()
-  });
+  }),
 
-  app.route({
+  defineRoute({
     method: "POST",
-    url: "/members/delay-demotion",
+    url: "/admin/members/delay-demotion",
+    config: {
+      access: {
+        role: "admin",
+        clients: ["bot"]
+      }
+    },
     schema: {
       body: memberCommandBody,
       response: {
@@ -161,11 +197,17 @@ export const adminMembersRouter: FastifyPluginAsyncZod = async (app) => {
       }
     },
     handler: async (req) => ({ results: await delayDemotions(req.body, req.auth) })
-  });
+  }),
 
-  app.route({
+  defineRoute({
     method: "POST",
-    url: "/members/pass-trial",
+    url: "/admin/members/pass-trial",
+    config: {
+      access: {
+        role: "admin",
+        clients: ["bot"]
+      }
+    },
     schema: {
       body: memberCommandBody,
       response: {
@@ -173,11 +215,17 @@ export const adminMembersRouter: FastifyPluginAsyncZod = async (app) => {
       }
     },
     handler: async (req) => ({ results: await passTrial(req.body, req.auth) })
-  });
+  }),
 
-  app.route({
+  defineRoute({
     method: "POST",
-    url: "/members/quit",
+    url: "/admin/members/quit",
+    config: {
+      access: {
+        role: "admin",
+        clients: ["bot"]
+      }
+    },
     schema: {
       body: memberCommandBody,
       response: {
@@ -185,11 +233,17 @@ export const adminMembersRouter: FastifyPluginAsyncZod = async (app) => {
       }
     },
     handler: async (req) => ({ results: await quitMembers(req.body, req.auth) })
-  });
+  }),
 
-  app.route({
+  defineRoute({
     method: "POST",
-    url: "/members/rank",
+    url: "/admin/members/rank",
+    config: {
+      access: {
+        role: "admin",
+        clients: ["bot"]
+      }
+    },
     schema: {
       body: changeRankBody,
       response: {
@@ -197,11 +251,17 @@ export const adminMembersRouter: FastifyPluginAsyncZod = async (app) => {
       }
     },
     handler: async (req) => ({ results: await changeMemberRanks(req.body, req.auth) })
-  });
+  }),
 
-  app.route({
+  defineRoute({
     method: "POST",
-    url: "/members/retire",
+    url: "/admin/members/retire",
+    config: {
+      access: {
+        role: "admin",
+        clients: ["bot"]
+      }
+    },
     schema: {
       body: memberCommandBody,
       response: {
@@ -209,11 +269,17 @@ export const adminMembersRouter: FastifyPluginAsyncZod = async (app) => {
       }
     },
     handler: async (req) => ({ results: await retireMembers(req.body, req.auth) })
-  });
+  }),
 
-  app.route({
+  defineRoute({
     method: "POST",
-    url: "/members/trial",
+    url: "/admin/members/trial",
+    config: {
+      access: {
+        role: "admin",
+        clients: ["bot"]
+      }
+    },
     schema: {
       body: trialBody,
       response: {
@@ -221,10 +287,17 @@ export const adminMembersRouter: FastifyPluginAsyncZod = async (app) => {
       }
     },
     handler: async (req) => ({ results: await trialMembers(req.body, req.auth) })
-  });
-  app.route({
+  }),
+
+  defineRoute({
     method: "POST",
-    url: "/members/unretire",
+    url: "/admin/members/unretire",
+    config: {
+      access: {
+        role: "admin",
+        clients: ["bot"]
+      }
+    },
     schema: {
       body: memberCommandBody,
       response: {
@@ -232,5 +305,5 @@ export const adminMembersRouter: FastifyPluginAsyncZod = async (app) => {
       }
     },
     handler: async (req) => ({ results: await unretireMembers(req.body, req.auth) })
-  });
-};
+  })
+]);
