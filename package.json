@@ -17,6 +17,7 @@
     "dev": "pnpm --recursive dev",
     "build": "pnpm --recursive build",
     "typecheck": "pnpm --recursive typecheck",
+    "test": "pnpm --recursive test",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier . --check",
