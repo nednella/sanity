@@ -11,14 +11,13 @@ import { personalBestsModule } from "@/modules/personal-bests/router";
 import { pointsModule } from "@/modules/points/router";
 import { ranksModule } from "@/modules/ranks/router";
 import { speedrunDiaryModule } from "@/modules/speedrun-diary/router";
-import { adminSubmissionsRouter, authSubmissionsRouter, submissionsRouter } from "@/modules/submissions/router";
+import { submissionsModule } from "@/modules/submissions/router";
 import { womRouter } from "@/modules/wom/router";
 
 const publicRoutes: FastifyPluginAsync = async (app) => {
   app.register(healthModule);
   app.register(ranksModule);
   app.register(speedrunDiaryModule);
-  app.register(submissionsRouter);
   app.register(womRouter);
 };
 
@@ -26,7 +25,6 @@ const authRoutes: FastifyPluginAsync = async (app) => {
   app.addHook("onRequest", authenticate);
 
   app.register(authModule);
-  app.register(authSubmissionsRouter);
 };
 
 const adminRoutes: FastifyPluginAsync = async (app) => {
@@ -39,7 +37,6 @@ const adminRoutes: FastifyPluginAsync = async (app) => {
 
   app.register(discordModule);
   app.register(pointsModule);
-  app.register(adminSubmissionsRouter);
 };
 
 export const routes: FastifyPluginAsync = async (app) => {
@@ -48,4 +45,5 @@ export const routes: FastifyPluginAsync = async (app) => {
   app.register(adminRoutes, { prefix: "/admin" });
   app.register(membersModule);
   app.register(personalBestsModule);
+  app.register(submissionsModule);
 };

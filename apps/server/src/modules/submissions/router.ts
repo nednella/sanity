@@ -1,18 +1,22 @@
-import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import { z } from "zod";
 
 import { errorResponse, paginated, reviewBody, toPage } from "@/schema/common";
+import { defineModule } from "@/utils/define-module";
+import { defineRoute } from "@/utils/define-route";
 
 import { createSubmissionBody, submissionListQuery, submissionParams } from "./request";
-import { submission } from "./response";
+import { createdSubmission, submission } from "./response";
 import { createSubmission } from "./service/create-submission";
 import { getSubmissions } from "./service/get-submissions";
 import { reviewSubmissionById } from "./service/review-submission-by-id";
 
-export const submissionsRouter: FastifyPluginAsyncZod = async (app) => {
-  app.route({
+export const submissionsModule = defineModule([
+  defineRoute({
     method: "GET",
     url: "/submissions",
+    config: {
+      access: "public"
+    },
     schema: {
       querystring: submissionListQuery,
       response: {
@@ -24,30 +28,38 @@ export const submissionsRouter: FastifyPluginAsyncZod = async (app) => {
       const { items, total } = await getSubmissions(req.query);
       return { items, page: toPage({ limit, offset, total }) };
     }
-  });
-};
+  }),
 
-export const authSubmissionsRouter: FastifyPluginAsyncZod = async (app) => {
-  app.route({
+  defineRoute({
     method: "POST",
     url: "/submissions",
+    config: {
+      access: {
+        role: "*",
+        clients: ["bot"]
+      }
+    },
     schema: {
       body: createSubmissionBody,
       response: {
-        201: z.object({ id: z.number() })
+        201: createdSubmission
       }
     },
     handler: async (req, reply) => {
       const id = await createSubmission(req.body, req.auth);
       return reply.code(201).send({ id });
     }
-  });
-};
+  }),
 
-export const adminSubmissionsRouter: FastifyPluginAsyncZod = async (app) => {
-  app.route({
+  defineRoute({
     method: "POST",
-    url: "/submissions/:id/review",
+    url: "/admin/submissions/:id/review",
+    config: {
+      access: {
+        role: "admin",
+        clients: ["bot"]
+      }
+    },
     schema: {
       params: submissionParams,
       body: reviewBody,
@@ -61,5 +73,5 @@ export const adminSubmissionsRouter: FastifyPluginAsyncZod = async (app) => {
       await reviewSubmissionById(req.params.id, req.body, req.auth);
       return { status: req.body.status };
     }
-  });
-};
+  })
+]);
