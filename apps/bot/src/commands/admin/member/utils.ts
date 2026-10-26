@@ -12,19 +12,33 @@ import { buildEmbed } from "@/utils/embeds";
 
 const MENTIONED_USER_ID = /(?<=<@!?)\d{17,20}(?=>)/g;
 
-const CHANGES = new Set<CommandOutcome["outcome"]>(["delayed", "passed", "quit", "ranked", "retired", "unretired"]);
+const CHANGES = new Set<CommandOutcome["outcome"]>([
+  "admin-given",
+  "admin-removed",
+  "delayed",
+  "passed",
+  "quit",
+  "ranked",
+  "retired",
+  "unretired"
+]);
 
 // Maps each outcome to a line an admin can read.
 const DESCRIPTIONS: Record<CommandOutcome["outcome"], (result: CommandOutcome) => string> = {
+  "admin-given": () => "is now an admin",
+  "admin-removed": () => "is no longer an admin",
+  "already-admin": () => "is already an admin!",
   "already-quit": () => "has already quit the clan!",
   "already-retired": () => "is already retired",
   delayed: ({ until }) => `demotion held until ${time(new Date(until!), TimestampStyles.LongDate)}`,
   "has-quit": () => "has now quit the clan",
+  "is-superuser": () => "is a superuser, so their role cannot change",
   "no-rank-earned": () => "has not earned a rank",
   "no-rank-to-give": () => "has no rank to pass into",
   "not-a-member": () => "is not a member of this clan",
   "not-a-rank-change": () => "needs /member retire or /member quit for that rank",
   "not-a-trialist": () => "is not a trialist!",
+  "not-an-admin": () => "is not an admin!",
   "not-retired": () => "is not retired!",
   passed: ({ rank }) => `has passed their trial! Rank: ${rank!.name}`,
   quit: () => "has now quit the clan",
