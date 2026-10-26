@@ -1,7 +1,7 @@
 import { client } from "@db/index";
 
-import { listApiKeys } from "@/modules/auth/repository/list-api-keys";
+import { listKeys } from "@/modules/auth/repository/list-keys";
 
-console.table(await listApiKeys());
+console.table(await listKeys());
 
 await client.end();

@@ -14,7 +14,7 @@ const KEY_BYTES = 32;
  * The server never stores this value, only its hash. Show it to the person once
  * and never log it.
  */
-export function generateApiKey(client: ApiClient) {
+export function generateKey(client: ApiClient) {
   const secret = randomBytes(KEY_BYTES).toString("base64url");
   return `sanity_${client}_${secret}`;
 }
@@ -26,6 +26,6 @@ export function generateApiKey(client: ApiClient) {
  * password hash such as bcrypt would add no protection and would slow every
  * request.
  */
-export function hashApiKey(key: string) {
+export function hashKey(key: string) {
   return createHash("sha256").update(key).digest("hex");
 }

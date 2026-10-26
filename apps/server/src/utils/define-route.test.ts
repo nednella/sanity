@@ -1,13 +1,13 @@
 import Fastify from "fastify";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import { validateApiKey } from "@/modules/auth/repository/validate-api-key";
+import { validateKey } from "@/modules/auth/repository/validate-key";
 import { findMemberAccessByDiscordId, findMemberAccessById } from "@/modules/members/repository/find-member-access";
 
 import { defineModule } from "./define-module";
 import { defineRoute } from "./define-route";
 
-vi.mock("@/modules/auth/repository/validate-api-key", () => ({ validateApiKey: vi.fn() }));
+vi.mock("@/modules/auth/repository/validate-key", () => ({ validateKey: vi.fn() }));
 vi.mock("@/modules/members/repository/find-member-access", () => ({
   findMemberAccessByDiscordId: vi.fn(),
   findMemberAccessById: vi.fn()
@@ -60,7 +60,7 @@ describe("defineRoute guarding", () => {
     });
 
     expect(response.statusCode).toBe(200);
-    expect(validateApiKey).not.toHaveBeenCalled();
+    expect(validateKey).not.toHaveBeenCalled();
   });
 
   it("answers 401 on a guarded route with no key", async () => {
@@ -73,7 +73,7 @@ describe("defineRoute guarding", () => {
   });
 
   it("answers 403 on a guarded route for a client it does not list", async () => {
-    vi.mocked(validateApiKey).mockResolvedValue({
+    vi.mocked(validateKey).mockResolvedValue({
       client: "plugin",
       memberId: 1n
     });
@@ -92,7 +92,7 @@ describe("defineRoute guarding", () => {
   });
 
   it("answers 403 on a guarded route for a member without the role", async () => {
-    vi.mocked(validateApiKey).mockResolvedValue({
+    vi.mocked(validateKey).mockResolvedValue({
       client: "bot",
       memberId: null
     });
@@ -111,7 +111,7 @@ describe("defineRoute guarding", () => {
   });
 
   it("runs the handler as the member when the key and role are allowed", async () => {
-    vi.mocked(validateApiKey).mockResolvedValue({
+    vi.mocked(validateKey).mockResolvedValue({
       client: "bot",
       memberId: null
     });

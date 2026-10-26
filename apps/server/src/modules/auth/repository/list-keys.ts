@@ -6,7 +6,7 @@ import { apiKeys } from "@db/schema";
 /**
  * Lists every API key, oldest first, WITHOUT hash.
  */
-export function listApiKeys() {
+export function listKeys() {
   return db
     .select({
       id: apiKeys.id,

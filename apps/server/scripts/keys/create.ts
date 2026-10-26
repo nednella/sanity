@@ -3,8 +3,8 @@ import { z } from "zod";
 import { apiClient } from "@db/enums";
 import { client } from "@db/index";
 
-import { saveApiKey } from "@/modules/auth/repository/save-api-key";
-import { generateApiKey, hashApiKey } from "@/modules/auth/service/keys";
+import { saveKey } from "@/modules/auth/repository/save-key";
+import { generateKey, hashKey } from "@/modules/auth/service/keys";
 
 // A plugin key belongs to a member, and the web signs in through Discord, so neither is made by hand.
 const machineClient = z.enum(apiClient.enumValues).exclude(["plugin", "web"]);
@@ -12,8 +12,8 @@ const machineClient = z.enum(apiClient.enumValues).exclude(["plugin", "web"]);
 const parsed = machineClient.safeParse(process.argv[2]);
 if (!parsed.success) throw new Error(`usage: pnpm key:create <${machineClient.options.join("|")}>`);
 
-const key = generateApiKey(parsed.data);
-const id = await saveApiKey({ client: parsed.data, keyHash: hashApiKey(key) });
+const key = generateKey(parsed.data);
+const id = await saveKey({ client: parsed.data, keyHash: hashKey(key) });
 console.log(`Key #${id} for ${parsed.data}. It is shown once and cannot be recovered:\n${key}`);
 
 await client.end();

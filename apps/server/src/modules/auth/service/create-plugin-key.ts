@@ -1,6 +1,6 @@
 import type { Auth } from "../hooks/authenticate";
 import { replacePluginKey } from "../repository/replace-plugin-key";
-import { generateApiKey, hashApiKey } from "./keys";
+import { generateKey, hashKey } from "./keys";
 
 /**
  * Creates a plugin key for the member who requested and returns it.
@@ -9,8 +9,8 @@ import { generateApiKey, hashApiKey } from "./keys";
  * generate a new key and replace the old one.
  */
 export async function createPluginKey(auth: Auth) {
-  const key = generateApiKey("plugin");
-  await replacePluginKey(auth.member.id, hashApiKey(key));
+  const key = generateKey("plugin");
+  await replacePluginKey(auth.member.id, hashKey(key));
 
   return key;
 }
