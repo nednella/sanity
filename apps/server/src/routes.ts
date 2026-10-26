@@ -4,7 +4,7 @@ import { config } from "@config";
 
 import { authenticate } from "@/modules/auth/hooks/authenticate";
 import { authPluginKeyRouter } from "@/modules/auth/router";
-import { adminDiscordRouter } from "@/modules/discord/router";
+import { discordModule } from "@/modules/discord/router";
 import { healthRouter } from "@/modules/health/router";
 import { adminMembersRouter, authProfileRouter, membersRouter } from "@/modules/members/router";
 import {
@@ -45,7 +45,7 @@ const adminRoutes: FastifyPluginAsync = async (app) => {
     route.schema = { ...route.schema, hide: config.isProduction };
   });
 
-  app.register(adminDiscordRouter);
+  app.register(discordModule);
   app.register(adminMembersRouter);
   app.register(adminPersonalBestsRouter);
   app.register(adminPointsRouter);
