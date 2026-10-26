@@ -4,8 +4,8 @@ on:
   pull_request:
 
 jobs:
-  typecheck-build:
-    name: Typecheck and build
+  typecheck-test-build:
+    name: Typecheck, test and build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -16,4 +16,5 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm typecheck
+      - run: pnpm test
       - run: pnpm build
