@@ -41,3 +41,5 @@ export const rankedPersonalBest = z
     ...personalBest.omit({ id: true }).shape
   })
   .register(z.globalRegistry, { id: "RankedPersonalBest" });
+
+export const createdPersonalBest = z.object({ id: z.number() });
