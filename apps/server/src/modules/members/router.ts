@@ -12,6 +12,7 @@ import { defineRoute } from "@/utils/define-route";
 
 import {
   changeRankBody,
+  changeRoleBody,
   memberCommandBody,
   memberListQuery,
   memberParams,
@@ -23,6 +24,7 @@ import {
 import { commandOutcomes, member, memberProfile, rankProposals, trialOutcomes } from "./response";
 import { bulkRankCheck } from "./service/bulk-rank-check";
 import { changeMemberRanks } from "./service/change-member-ranks";
+import { changeMemberRoles } from "./service/change-member-roles";
 import { delayDemotions } from "./service/delay-demotions";
 import { editMemberProfile } from "./service/edit-member-profile";
 import { getMemberProfile } from "./service/get-member-profile";
@@ -269,6 +271,24 @@ export const membersModule = defineModule([
       }
     },
     handler: async (req) => ({ results: await retireMembers(req.body, req.auth) })
+  }),
+
+  defineRoute({
+    method: "POST",
+    url: "/members/role",
+    config: {
+      access: {
+        role: "superuser",
+        clients: ["bot"]
+      }
+    },
+    schema: {
+      body: changeRoleBody,
+      response: {
+        200: commandOutcomes
+      }
+    },
+    handler: async (req) => ({ results: await changeMemberRoles(req.body, req.auth) })
   }),
 
   defineRoute({

@@ -855,6 +855,52 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/members/role": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": {
+                        taggedDiscordIds: string[];
+                        note?: string;
+                        /** @enum {string|null} */
+                        role: "admin" | null;
+                    };
+                };
+            };
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            results: components["schemas"]["CommandOutcome"][];
+                        };
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/members/trial": {
         parameters: {
             query?: never;
@@ -1699,7 +1745,7 @@ export interface components {
             displayName: string | null;
             memberId: string | null;
             /** @enum {string} */
-            outcome: "already-quit" | "already-retired" | "delayed" | "has-quit" | "no-rank-earned" | "no-rank-to-give" | "not-a-member" | "not-a-rank-change" | "not-a-trialist" | "not-retired" | "passed" | "quit" | "ranked" | "retired" | "unchanged" | "unknown-rank" | "unretired";
+            outcome: "admin-given" | "admin-removed" | "already-admin" | "already-quit" | "already-retired" | "delayed" | "has-quit" | "is-superuser" | "no-rank-earned" | "no-rank-to-give" | "not-a-member" | "not-a-rank-change" | "not-a-trialist" | "not-an-admin" | "not-retired" | "passed" | "quit" | "ranked" | "retired" | "unchanged" | "unknown-rank" | "unretired";
             rank?: components["schemas"]["RankSummaryInput"];
             /** Format: date-time */
             until?: string;
@@ -2051,7 +2097,7 @@ export interface components {
             displayName: string | null;
             memberId: string | null;
             /** @enum {string} */
-            outcome: "already-quit" | "already-retired" | "delayed" | "has-quit" | "no-rank-earned" | "no-rank-to-give" | "not-a-member" | "not-a-rank-change" | "not-a-trialist" | "not-retired" | "passed" | "quit" | "ranked" | "retired" | "unchanged" | "unknown-rank" | "unretired";
+            outcome: "admin-given" | "admin-removed" | "already-admin" | "already-quit" | "already-retired" | "delayed" | "has-quit" | "is-superuser" | "no-rank-earned" | "no-rank-to-give" | "not-a-member" | "not-a-rank-change" | "not-a-trialist" | "not-an-admin" | "not-retired" | "passed" | "quit" | "ranked" | "retired" | "unchanged" | "unknown-rank" | "unretired";
             rank?: components["schemas"]["RankSummary"];
             /** Format: date-time */
             until?: string;

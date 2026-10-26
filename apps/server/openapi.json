@@ -719,15 +719,20 @@
           "outcome": {
             "type": "string",
             "enum": [
+              "admin-given",
+              "admin-removed",
+              "already-admin",
               "already-quit",
               "already-retired",
               "delayed",
               "has-quit",
+              "is-superuser",
               "no-rank-earned",
               "no-rank-to-give",
               "not-a-member",
               "not-a-rank-change",
               "not-a-trialist",
+              "not-an-admin",
               "not-retired",
               "passed",
               "quit",
@@ -2252,15 +2257,20 @@
           "outcome": {
             "type": "string",
             "enum": [
+              "admin-given",
+              "admin-removed",
+              "already-admin",
               "already-quit",
               "already-retired",
               "delayed",
               "has-quit",
+              "is-superuser",
               "no-rank-earned",
               "no-rank-to-give",
               "not-a-member",
               "not-a-rank-change",
               "not-a-trialist",
+              "not-an-admin",
               "not-retired",
               "passed",
               "quit",
@@ -4136,6 +4146,70 @@
                 },
                 "required": [
                   "taggedDiscordIds"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/CommandOutcome"
+                      }
+                    }
+                  },
+                  "required": [
+                    "results"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/members/role": {
+      "post": {
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "taggedDiscordIds": {
+                    "minItems": 1,
+                    "maxItems": 50,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "pattern": "^\\d+$"
+                    }
+                  },
+                  "note": {
+                    "type": "string",
+                    "maxLength": 500
+                  },
+                  "role": {
+                    "nullable": true,
+                    "type": "string",
+                    "enum": [
+                      "admin"
+                    ]
+                  }
+                },
+                "required": [
+                  "taggedDiscordIds",
+                  "role"
                 ]
               }
             }
