@@ -2,6 +2,7 @@ import { type APIEmbedField, Colors, EmbedBuilder } from "discord.js";
 
 const HEADER = "Bald Bot";
 const FOOTER = "Powered by the Sanity Mainframe";
+const OVERFLOW_LINE_ROOM = 20;
 
 const STYLES = {
   brand: { colour: 0x22_d3_ee, icon: null },
@@ -31,3 +32,17 @@ export const buildEmbed = ({ description, fields, style = "brand", thumbnail, ti
   if (thumbnail) embed.setThumbnail(thumbnail);
   return embed;
 };
+
+// A long list stops short of the limit and counts the lines it leaves out.
+export function fitLines(lines: string[], limit: number) {
+  const shown: string[] = [];
+  let length = 0;
+  for (const line of lines) {
+    length += line.length + 1;
+    if (length > limit - OVERFLOW_LINE_ROOM) break;
+    shown.push(line);
+  }
+
+  const hidden = lines.length - shown.length;
+  return (hidden === 0 ? shown : [...shown, `…and ${hidden} more`]).join("\n");
+}

@@ -5,37 +5,25 @@ import type { RankProposal } from "@sanity/api";
 import { api } from "@/lib/api";
 import { resolveTextChannel } from "@/lib/channels";
 import { runSubcommand } from "@/utils/commands";
-import { buildEmbed } from "@/utils/embeds";
+import { buildEmbed, fitLines } from "@/utils/embeds";
 import { capitalise } from "@/utils/format";
 import { reply, replyError } from "@/utils/replies";
 
 import { NO_MEMBERS_TAGGED, outcomesEmbed, readTaggedMembers } from "../member/utils";
 
 const FIELD_LIMIT = 1024;
-const OVERFLOW_LINE_ROOM = 20;
 
 const rankName = (name: string) => capitalise(name.toLowerCase());
 
 const describeProposal = ({ discordId, from, to }: RankProposal) =>
   `${userMention(discordId)} ${rankName(from.name)} → ${rankName(to.name)}`;
 
-// A long list stops short of the field limit and counts the members it leaves out.
-const fitField = (lines: string[]) => {
-  const shown: string[] = [];
-  let length = 0;
-  for (const line of lines) {
-    length += line.length + 1;
-    if (length > FIELD_LIMIT - OVERFLOW_LINE_ROOM) break;
-    shown.push(line);
-  }
-
-  const hidden = lines.length - shown.length;
-  return (hidden === 0 ? shown : [...shown, `…and ${hidden} more`]).join("\n");
-};
-
 const proposalField = (name: string, proposals: RankProposal[]) => ({
   name: `${name} (${proposals.length})`,
-  value: fitField(proposals.map((proposal) => describeProposal(proposal)))
+  value: fitLines(
+    proposals.map((proposal) => describeProposal(proposal)),
+    FIELD_LIMIT
+  )
 });
 
 const check = async (interaction: ChatInputCommandInteraction) => {
