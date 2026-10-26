@@ -5,8 +5,8 @@ import { type SubmissionsSearch, toDropsQueryParams, toPersonalBestsQueryParams 
 export const membersOptions = (search: MembersSearch) =>
   api.queryOptions("get", "/v1/members", { params: { query: toMembersQueryParams(search) } });
 
-export const memberProfileOptions = (memberId: string) =>
-  api.queryOptions("get", "/v1/members/{id}", { params: { path: { id: memberId } } });
+export const memberProfileOptions = (member: string) =>
+  api.queryOptions("get", "/v1/members/{member}", { params: { path: { member } } });
 
 export const memberDiariesOptions = (memberId: string) =>
   api.queryOptions("get", "/v1/members/{id}/diary", { params: { path: { id: memberId } } });

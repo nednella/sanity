@@ -3471,16 +3471,25 @@
         }
       }
     },
-    "/v1/members/{id}": {
+    "/v1/members/{member}": {
       "get": {
         "parameters": [
           {
             "schema": {
-              "type": "string",
-              "pattern": "^\\d+$"
+              "anyOf": [
+                {
+                  "type": "string",
+                  "pattern": "^\\d+$"
+                },
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 32
+                }
+              ]
             },
             "in": "path",
-            "name": "id",
+            "name": "member",
             "required": true
           }
         ],

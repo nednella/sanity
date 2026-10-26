@@ -7,6 +7,8 @@ import { pagination } from "@/schema/common";
 
 export const memberParams = z.object({ id: bigIntString });
 
+export const memberProfileParams = z.object({ member: z.union([bigIntString, z.string().trim().min(1).max(32)]) });
+
 const rsn = z.string().trim().min(1).max(12);
 
 const memberFilters = z.object({

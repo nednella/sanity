@@ -1,5 +1,5 @@
-import { useQuery } from "@tanstack/react-query";
-import { Outlet, createFileRoute, notFound } from "@tanstack/react-router";
+import { type QueryClient, useQuery } from "@tanstack/react-query";
+import { Outlet, createFileRoute, notFound, redirect } from "@tanstack/react-router";
 
 import { ErrorState } from "@/components/error-state";
 import { ProfileHeader } from "@/components/members/profile/profile-header";
@@ -7,13 +7,24 @@ import { ProfileTabs } from "@/components/members/profile/profile-tabs";
 import { NotFound } from "@/components/not-found";
 import { memberProfileOptions } from "@/lib/api/queries/members";
 
+async function loadProfile(queryClient: QueryClient, member: string) {
+  try {
+    return await queryClient.query({ ...memberProfileOptions(member), staleTime: "static" });
+  } catch (error) {
+    if ((error as { code?: string }).code === "MEMBER_NOT_FOUND") throw notFound();
+    throw error;
+  }
+}
+
 export const Route = createFileRoute("/(site)/members/$memberId")({
   component: Layout,
   loader: async ({ context, params }) => {
-    // A member id is a number, so anything else can't be a member.
-    if (Number.isNaN(Number(params.memberId))) throw notFound();
+    const profile = await loadProfile(context.queryClient, params.memberId);
 
-    return context.queryClient.query({ ...memberProfileOptions(params.memberId), staleTime: "static" });
+    // A profile is reached by name as well, but its id is the one address every tab links to.
+    if (profile.id !== params.memberId) throw redirect({ to: ".", params: { memberId: profile.id }, replace: true });
+
+    return profile;
   },
   notFoundComponent: () => (
     <NotFound

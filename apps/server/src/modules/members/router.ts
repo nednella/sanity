@@ -16,6 +16,7 @@ import {
   memberListQuery,
   memberParams,
   memberPersonalBestsQuery,
+  memberProfileParams,
   memberSubmissionsQuery,
   trialBody,
   updateMemberBody
@@ -55,18 +56,18 @@ export const membersModule = defineModule([
 
   defineRoute({
     method: "GET",
-    url: "/members/:id",
+    url: "/members/:member",
     config: {
       access: "public"
     },
     schema: {
-      params: memberParams,
+      params: memberProfileParams,
       response: {
         200: memberProfile,
         404: errorResponse
       }
     },
-    handler: async (req) => getMemberProfile(req.params.id)
+    handler: async (req) => getMemberProfile(req.params.member)
   }),
 
   defineRoute({
