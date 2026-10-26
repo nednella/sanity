@@ -166,7 +166,7 @@ export const membersModule = defineModule([
 
   defineRoute({
     method: "POST",
-    url: "/admin/members/bulk-rank-check",
+    url: "/members/bulk-rank-check",
     config: {
       access: {
         role: "admin",
@@ -183,7 +183,7 @@ export const membersModule = defineModule([
 
   defineRoute({
     method: "POST",
-    url: "/admin/members/delay-demotion",
+    url: "/members/delay-demotion",
     config: {
       access: {
         role: "admin",
@@ -201,7 +201,7 @@ export const membersModule = defineModule([
 
   defineRoute({
     method: "POST",
-    url: "/admin/members/pass-trial",
+    url: "/members/pass-trial",
     config: {
       access: {
         role: "admin",
@@ -219,7 +219,7 @@ export const membersModule = defineModule([
 
   defineRoute({
     method: "POST",
-    url: "/admin/members/quit",
+    url: "/members/quit",
     config: {
       access: {
         role: "admin",
@@ -237,7 +237,7 @@ export const membersModule = defineModule([
 
   defineRoute({
     method: "POST",
-    url: "/admin/members/rank",
+    url: "/members/rank",
     config: {
       access: {
         role: "admin",
@@ -255,7 +255,7 @@ export const membersModule = defineModule([
 
   defineRoute({
     method: "POST",
-    url: "/admin/members/retire",
+    url: "/members/retire",
     config: {
       access: {
         role: "admin",
@@ -273,7 +273,7 @@ export const membersModule = defineModule([
 
   defineRoute({
     method: "POST",
-    url: "/admin/members/trial",
+    url: "/members/trial",
     config: {
       access: {
         role: "admin",
@@ -291,7 +291,7 @@ export const membersModule = defineModule([
 
   defineRoute({
     method: "POST",
-    url: "/admin/members/unretire",
+    url: "/members/unretire",
     config: {
       access: {
         role: "admin",

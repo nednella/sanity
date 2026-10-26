@@ -13,11 +13,11 @@ import { womModule } from "@/modules/wom/router";
 
 export const routes: FastifyPluginAsync = async (app) => {
   app.register(authModule);
-  app.register(discordModule, { prefix: "/admin" });
+  app.register(discordModule);
   app.register(healthModule);
   app.register(membersModule);
   app.register(personalBestsModule);
-  app.register(pointsModule, { prefix: "/admin" });
+  app.register(pointsModule);
   app.register(ranksModule);
   app.register(speedrunDiaryModule);
   app.register(submissionsModule);

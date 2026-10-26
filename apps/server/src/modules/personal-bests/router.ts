@@ -84,7 +84,7 @@ export const personalBestsModule = defineModule([
 
   defineRoute({
     method: "POST",
-    url: "/admin/personal-bests/:id/review",
+    url: "/personal-bests/:id/review",
     config: {
       access: {
         role: "admin",
