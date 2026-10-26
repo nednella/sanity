@@ -11,6 +11,7 @@ import { defineModule } from "@/utils/define-module";
 import { defineRoute } from "@/utils/define-route";
 
 import {
+  changePluginAccessBody,
   changeRankBody,
   changeRoleBody,
   memberCommandBody,
@@ -25,6 +26,7 @@ import { commandOutcomes, member, memberProfile, rankProposals, trialOutcomes } 
 import { bulkRankCheck } from "./service/bulk-rank-check";
 import { changeMemberRanks } from "./service/change-member-ranks";
 import { changeMemberRoles } from "./service/change-member-roles";
+import { changePluginAccess } from "./service/change-plugin-access";
 import { delayDemotions } from "./service/delay-demotions";
 import { editMemberProfile } from "./service/edit-member-profile";
 import { getMemberProfile } from "./service/get-member-profile";
@@ -217,6 +219,24 @@ export const membersModule = defineModule([
       }
     },
     handler: async (req) => ({ results: await passTrial(req.body, req.auth) })
+  }),
+
+  defineRoute({
+    method: "POST",
+    url: "/members/plugin-access",
+    config: {
+      access: {
+        role: "*",
+        clients: ["bot"]
+      }
+    },
+    schema: {
+      body: changePluginAccessBody,
+      response: {
+        200: commandOutcomes
+      }
+    },
+    handler: async (req) => ({ results: await changePluginAccess(req.body, req.auth) })
   }),
 
   defineRoute({

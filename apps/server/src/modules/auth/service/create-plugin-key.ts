@@ -1,3 +1,4 @@
+import { authErrors } from "../errors";
 import type { Auth } from "../hooks/authenticate";
 import { replacePluginKey } from "../repository/replace-plugin-key";
 import { generateKey, hashKey } from "./keys";
@@ -10,7 +11,8 @@ import { generateKey, hashKey } from "./keys";
  */
 export async function createPluginKey(auth: Auth) {
   const key = generateKey("plugin");
-  await replacePluginKey(auth.member.id, hashKey(key));
+  const replaced = await replacePluginKey(auth.member.id, hashKey(key));
+  if (!replaced) throw authErrors.pluginAccessRevoked();
 
   return key;
 }

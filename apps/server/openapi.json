@@ -768,9 +768,11 @@
               "admin-given",
               "admin-removed",
               "already-admin",
+              "already-plugin-access-revoked",
               "already-quit",
               "already-retired",
               "delayed",
+              "has-plugin-access",
               "has-quit",
               "is-superuser",
               "no-rank-earned",
@@ -781,6 +783,8 @@
               "not-an-admin",
               "not-retired",
               "passed",
+              "plugin-access-reinstated",
+              "plugin-access-revoked",
               "quit",
               "ranked",
               "retired",
@@ -2350,9 +2354,11 @@
               "admin-given",
               "admin-removed",
               "already-admin",
+              "already-plugin-access-revoked",
               "already-quit",
               "already-retired",
               "delayed",
+              "has-plugin-access",
               "has-quit",
               "is-superuser",
               "no-rank-earned",
@@ -2363,6 +2369,8 @@
               "not-an-admin",
               "not-retired",
               "passed",
+              "plugin-access-reinstated",
+              "plugin-access-revoked",
               "quit",
               "ranked",
               "retired",
@@ -4147,6 +4155,66 @@
                 },
                 "required": [
                   "taggedDiscordIds"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/CommandOutcome"
+                      }
+                    }
+                  },
+                  "required": [
+                    "results"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/members/plugin-access": {
+      "post": {
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "taggedDiscordIds": {
+                    "minItems": 1,
+                    "maxItems": 50,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "pattern": "^\\d+$"
+                    }
+                  },
+                  "note": {
+                    "type": "string",
+                    "maxLength": 500
+                  },
+                  "revoked": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "taggedDiscordIds",
+                  "revoked"
                 ]
               }
             }
