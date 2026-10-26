@@ -6,6 +6,7 @@ import { listMembersByDiscordId } from "../../repository/list-members-by-discord
 export type TaggedMember = {
   displayName: string;
   id: bigint;
+  pluginAccessRevokedAt: Date | null;
   rankId: number;
   role: MemberRole | null;
 };
