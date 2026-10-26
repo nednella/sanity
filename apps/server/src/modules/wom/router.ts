@@ -1,15 +1,19 @@
-import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import { z } from "zod";
 
 import { errorResponse } from "@/schema/common";
+import { defineModule } from "@/utils/define-module";
+import { defineRoute } from "@/utils/define-route";
 
 import { womPlayerParams } from "./request";
 import { syncPlayer } from "./service/sync-player";
 
-export const womRouter: FastifyPluginAsyncZod = async (app) => {
-  app.route({
+export const womModule = defineModule([
+  defineRoute({
     method: "POST",
     url: "/wom/players/:username/sync",
+    config: {
+      access: "public"
+    },
     schema: {
       params: womPlayerParams,
       response: {
@@ -24,5 +28,5 @@ export const womRouter: FastifyPluginAsyncZod = async (app) => {
       await syncPlayer(req.params.username);
       return res.code(204).send();
     }
-  });
-};
+  })
+]);
