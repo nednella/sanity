@@ -5,15 +5,15 @@ import type { ApiClient } from "@db/enums";
 
 import { findMemberAccessByDiscordId, findMemberAccessById } from "@/modules/members/repository/find-member-access";
 
-import { validateApiKey } from "../repository/validate-api-key";
-import { hashApiKey } from "../service/keys";
+import { validateKey } from "../repository/validate-key";
+import { hashKey } from "../service/keys";
 import { authenticate } from "./authenticate";
 
 vi.mock("@/modules/members/repository/find-member-access", () => ({
   findMemberAccessByDiscordId: vi.fn(),
   findMemberAccessById: vi.fn()
 }));
-vi.mock("../repository/validate-api-key", () => ({ validateApiKey: vi.fn() }));
+vi.mock("../repository/validate-key", () => ({ validateKey: vi.fn() }));
 
 const TOKEN = "sanity_bot_secret";
 const DISCORD_ID = 123_456_789_012_345_678n;
@@ -38,7 +38,7 @@ function botRequest() {
 }
 
 function mockKey(client: ApiClient, memberId: bigint | null = null) {
-  vi.mocked(validateApiKey).mockResolvedValue({
+  vi.mocked(validateKey).mockResolvedValue({
     client,
     memberId
   });
@@ -53,7 +53,7 @@ describe("authenticate", () => {
     const request = requestWith({});
 
     await expect(authenticate(request)).rejects.toMatchObject({ statusCode: 401 });
-    expect(validateApiKey).not.toHaveBeenCalled();
+    expect(validateKey).not.toHaveBeenCalled();
   });
 
   it("rejects an authorization header that is not a bearer token", async () => {
@@ -63,11 +63,11 @@ describe("authenticate", () => {
   });
 
   it("rejects an unknown or revoked key, looked up by its hash", async () => {
-    vi.mocked(validateApiKey).mockResolvedValue(undefined);
+    vi.mocked(validateKey).mockResolvedValue(undefined);
     const request = requestWith(bearer());
 
     await expect(authenticate(request)).rejects.toMatchObject({ statusCode: 401 });
-    expect(validateApiKey).toHaveBeenCalledWith(hashApiKey(TOKEN));
+    expect(validateKey).toHaveBeenCalledWith(hashKey(TOKEN));
   });
 
   it("acts as the member who owns a plugin key", async () => {

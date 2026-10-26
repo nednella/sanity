@@ -6,8 +6,8 @@ import { findMemberAccessByDiscordId, findMemberAccessById } from "@/modules/mem
 import { parseAuthorizationHeader, parseXDiscordUserIdHeader } from "@/utils/headers";
 
 import { authErrors } from "../errors";
-import { validateApiKey } from "../repository/validate-api-key";
-import { hashApiKey } from "../service/keys";
+import { validateKey } from "../repository/validate-key";
+import { hashKey } from "../service/keys";
 
 export type AuthMember = {
   id: bigint;
@@ -23,7 +23,7 @@ export async function authenticate(request: FastifyRequest) {
   const token = parseAuthorizationHeader(request);
   if (!token) throw authErrors.invalidApiKey();
 
-  const key = await validateApiKey(hashApiKey(token));
+  const key = await validateKey(hashKey(token));
   if (!key) throw authErrors.invalidApiKey();
 
   // identify the acting user based on the key's client
@@ -36,7 +36,7 @@ export async function authenticate(request: FastifyRequest) {
   };
 }
 
-type ApiKey = NonNullable<Awaited<ReturnType<typeof validateApiKey>>>;
+type ApiKey = NonNullable<Awaited<ReturnType<typeof validateKey>>>;
 
 async function findRequestingMember(request: FastifyRequest, key: ApiKey): Promise<AuthMember | undefined> {
   switch (key.client) {

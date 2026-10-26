@@ -9,7 +9,7 @@ import { apiKeys } from "@db/schema";
  * Returns the key's associated client and member id, else `undefined` when no
  * key is found, or the key is revoked.
  */
-export async function validateApiKey(keyHash: string) {
+export async function validateKey(keyHash: string) {
   const [key] = await db
     .update(apiKeys)
     .set({ lastUsedAt: new Date() })

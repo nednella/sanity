@@ -8,7 +8,7 @@ import { apiKeys } from "@db/schema";
  *
  * Returns `false` when no key has this ID, or the key is already revoked.
  */
-export async function revokeApiKey(id: number) {
+export async function revokeKey(id: number) {
   const [revoked] = await db
     .update(apiKeys)
     .set({ revokedAt: new Date() })
