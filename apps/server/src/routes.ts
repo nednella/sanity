@@ -6,7 +6,7 @@ import { authenticate } from "@/modules/auth/hooks/authenticate";
 import { authModule } from "@/modules/auth/router";
 import { discordModule } from "@/modules/discord/router";
 import { healthModule } from "@/modules/health/router";
-import { adminMembersRouter, authProfileRouter, membersRouter } from "@/modules/members/router";
+import { membersModule } from "@/modules/members/router";
 import {
   adminPersonalBestsRouter,
   authPersonalBestsRouter,
@@ -20,7 +20,6 @@ import { womRouter } from "@/modules/wom/router";
 
 const publicRoutes: FastifyPluginAsync = async (app) => {
   app.register(healthModule);
-  app.register(membersRouter);
   app.register(personalBestsRouter);
   app.register(ranksRouter);
   app.register(speedrunDiaryRouter);
@@ -33,7 +32,6 @@ const authRoutes: FastifyPluginAsync = async (app) => {
 
   app.register(authModule);
   app.register(authPersonalBestsRouter);
-  app.register(authProfileRouter);
   app.register(authSubmissionsRouter);
 };
 
@@ -46,7 +44,6 @@ const adminRoutes: FastifyPluginAsync = async (app) => {
   });
 
   app.register(discordModule);
-  app.register(adminMembersRouter);
   app.register(adminPersonalBestsRouter);
   app.register(adminPointsRouter);
   app.register(adminSubmissionsRouter);
@@ -56,4 +53,5 @@ export const routes: FastifyPluginAsync = async (app) => {
   app.register(publicRoutes);
   app.register(authRoutes);
   app.register(adminRoutes, { prefix: "/admin" });
+  app.register(membersModule);
 };
