@@ -1,0 +1,2 @@
+ALTER TYPE "public"."audit_action" ADD VALUE 'plugin_access_changed' BEFORE 'points_awarded';--> statement-breakpoint
+ALTER TABLE "members" ADD COLUMN "plugin_access_revoked_at" timestamp with time zone;
