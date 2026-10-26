@@ -29,7 +29,7 @@ const discordId = async (interaction: ChatInputCommandInteraction) => {
   const name = interaction.options.getString("name", true);
   const account = interaction.options.getUser("account", true);
 
-  const { member, outcome } = await api.post("/v1/admin/discord/update-account", {
+  const { member, outcome } = await api.post("/v1/discord/update-account", {
     body: {
       account: {
         avatarHash: account.avatar,
@@ -47,7 +47,7 @@ const pass = async (interaction: ChatInputCommandInteraction) => {
   const body = readTaggedMembers(interaction);
   if (body.taggedDiscordIds.length === 0) return replyError(interaction, NO_MEMBERS_TAGGED);
 
-  const { results } = await api.post("/v1/admin/members/pass-trial", { body });
+  const { results } = await api.post("/v1/members/pass-trial", { body });
   return reply(interaction, outcomesEmbed("Pass trial", results));
 };
 
@@ -55,7 +55,7 @@ const quit = async (interaction: ChatInputCommandInteraction) => {
   const body = readTaggedMembers(interaction);
   if (body.taggedDiscordIds.length === 0) return replyError(interaction, NO_MEMBERS_TAGGED);
 
-  const { results } = await api.post("/v1/admin/members/quit", { body });
+  const { results } = await api.post("/v1/members/quit", { body });
   return reply(interaction, outcomesEmbed("Quit", results));
 };
 
@@ -63,7 +63,7 @@ const retire = async (interaction: ChatInputCommandInteraction) => {
   const body = readTaggedMembers(interaction);
   if (body.taggedDiscordIds.length === 0) return replyError(interaction, NO_MEMBERS_TAGGED);
 
-  const { results } = await api.post("/v1/admin/members/retire", { body });
+  const { results } = await api.post("/v1/members/retire", { body });
   return reply(interaction, outcomesEmbed("Retire", results));
 };
 
@@ -91,7 +91,7 @@ const trial = async (interaction: ChatInputCommandInteraction) => {
     resolveCategory(interaction.client, "trial_feedback")
   ]);
 
-  const { results } = await api.post("/v1/admin/members/trial", {
+  const { results } = await api.post("/v1/members/trial", {
     body: {
       trialists: [
         {
@@ -146,7 +146,7 @@ const unretire = async (interaction: ChatInputCommandInteraction) => {
   const body = readTaggedMembers(interaction);
   if (body.taggedDiscordIds.length === 0) return replyError(interaction, NO_MEMBERS_TAGGED);
 
-  const { results } = await api.post("/v1/admin/members/unretire", { body });
+  const { results } = await api.post("/v1/members/unretire", { body });
   return reply(interaction, outcomesEmbed("Unretire", results));
 };
 

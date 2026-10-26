@@ -53,7 +53,7 @@ export const submissionsModule = defineModule([
 
   defineRoute({
     method: "POST",
-    url: "/admin/submissions/:id/review",
+    url: "/submissions/:id/review",
     config: {
       access: {
         role: "admin",

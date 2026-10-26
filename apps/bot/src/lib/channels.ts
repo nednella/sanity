@@ -50,7 +50,7 @@ export const purposeChoices = (type?: ChannelType) =>
     .map(([value, { label }]) => ({ name: label, value }));
 
 export const fetchChannels = async () => {
-  const channels = await api.get("/v1/admin/discord/channels");
+  const channels = await api.get("/v1/discord/channels");
   return new Map(channels.map((channel) => [channel.purpose, channel.channelId]));
 };
 

@@ -40,7 +40,7 @@ const proposalField = (name: string, proposals: RankProposal[]) => ({
 
 const check = async (interaction: ChatInputCommandInteraction) => {
   const channel = await resolveTextChannel(interaction.client, "admin_review");
-  const { proposals } = await api.post("/v1/admin/members/bulk-rank-check");
+  const { proposals } = await api.post("/v1/members/bulk-rank-check");
 
   const promotions = proposals.filter(({ direction }) => direction === "promotion");
   const demotions = proposals.filter(({ direction }) => direction === "demotion");
@@ -72,7 +72,7 @@ const holdDemotion = async (interaction: ChatInputCommandInteraction) => {
   const body = readTaggedMembers(interaction);
   if (body.taggedDiscordIds.length === 0) return replyError(interaction, NO_MEMBERS_TAGGED);
 
-  const { results } = await api.post("/v1/admin/members/delay-demotion", { body });
+  const { results } = await api.post("/v1/members/delay-demotion", { body });
   return reply(interaction, outcomesEmbed("Hold demotion", results));
 };
 
@@ -90,7 +90,7 @@ const set = async (interaction: ChatInputCommandInteraction) => {
     });
   }
 
-  const { results } = await api.post("/v1/admin/members/rank", { body: { ...body, rankId: rank.id } });
+  const { results } = await api.post("/v1/members/rank", { body: { ...body, rankId: rank.id } });
   return reply(interaction, outcomesEmbed("Set rank", results));
 };
 
