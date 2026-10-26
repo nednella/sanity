@@ -27,3 +27,5 @@ export const submission = z
     participants: z.array(participant)
   })
   .register(z.globalRegistry, { id: "Submission" });
+
+export const createdSubmission = z.object({ id: z.number() });
