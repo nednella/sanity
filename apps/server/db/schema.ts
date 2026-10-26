@@ -122,6 +122,7 @@ export const members = pgTable(
     claimedDiaryTierId: smallint().references(() => speedrunDiaryTiers.id, { onDelete: "restrict" }),
     isActive: boolean().notNull().default(false),
     role: memberRole(),
+    pluginAccessRevokedAt: timestamp({ withTimezone: true }),
     joinedAt: timestamp({ withTimezone: true }),
     leftAt: timestamp({ withTimezone: true }),
     birthday: date(),
