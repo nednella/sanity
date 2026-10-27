@@ -17,14 +17,15 @@ import { jsonSchemaOverride } from "@/schema/codecs";
 
 import { routes } from "./routes";
 
-const { corsOrigin, isProduction, logLevel } = config;
+const { corsOrigin, isProduction, logLevel, trustProxy } = config;
 
 export const buildApp = () => {
   const app = Fastify({
     logger: {
       level: logLevel,
       transport: isProduction ? undefined : { target: "pino-pretty" }
-    }
+    },
+    trustProxy
   });
 
   app.register(cors, {

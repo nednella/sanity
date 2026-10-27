@@ -5,6 +5,7 @@ type Config = {
   corsOrigin: string;
   logLevel: string;
   isProduction: boolean;
+  trustProxy: string | false;
   womGroupId: string;
   womApiKey: string;
   womUserAgent: string;
@@ -23,6 +24,7 @@ export const config: Config = {
   corsOrigin: required("CORS_ORIGIN"),
   logLevel: required("LOG_LEVEL"),
   isProduction: process.env.NODE_ENV === "production",
+  trustProxy: process.env.TRUST_PROXY || false,
   womGroupId: required("WOM_GROUP_ID"),
   womApiKey: required("WOM_API_KEY"),
   womUserAgent: required("WOM_USER_AGENT")
