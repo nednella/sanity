@@ -16,8 +16,18 @@ export const handleError = (error: FastifyError | ApplicationError, request: Fas
       error
     });
 
-  // Handle FastifyError
   const { code, message, statusCode = 500 } = error;
+
+  // Handle rate limit
+  if (statusCode === 429) {
+    return errorResponse({
+      request,
+      reply,
+      error: new ApplicationError("RATE_LIMITED", statusCode, message)
+    });
+  }
+
+  // Handle FastifyError
   if (code?.startsWith("FST_") && statusCode < 500) {
     return errorResponse({
       request,
