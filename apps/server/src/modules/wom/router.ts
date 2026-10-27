@@ -12,7 +12,12 @@ export const womModule = defineModule([
     method: "POST",
     url: "/wom/players/:username/sync",
     config: {
-      access: "public"
+      access: "public",
+      rateLimit: {
+        max: 20,
+        timeWindow: "1 minute",
+        keyGenerator: () => "wise-old-man"
+      }
     },
     schema: {
       params: womPlayerParams,
