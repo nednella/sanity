@@ -1,3 +1,4 @@
+import type { RateLimitOptions } from "@fastify/rate-limit";
 import type {
   ContextConfigDefault,
   FastifyBaseLogger,
@@ -26,12 +27,23 @@ type ZodRouteOptions<Schema extends FastifySchema> = RouteOptions<
   FastifyBaseLogger
 >;
 
+type RouteConfig = {
+  access: RouteAccess;
+  rateLimit?: RateLimitOptions;
+};
+
 // Require route access to be declared in each routes' config object!
 type RouteDefinition<Schema extends FastifySchema> = Omit<ZodRouteOptions<Schema>, "config" | "onRequest"> & {
-  config: { access: RouteAccess };
+  config: RouteConfig;
 };
 
 export type Route = (app: ZodApp) => void;
+
+// Apply the default rate limiting to all routes declared with public access!
+function limitRoute(app: ZodApp, { access, rateLimit }: RouteConfig) {
+  if (access !== "public") return [];
+  return [app.rateLimit(rateLimit)];
+}
 
 // Based on the route access declared per-route, we attach hooks on request.
 // If access is "public", we leave it open, else we attach authenticate and
@@ -46,7 +58,8 @@ export function defineRoute<const Schema extends FastifySchema>(route: RouteDefi
   return function register(app) {
     app.route({
       ...route,
-      onRequest: guardRoute(route.config.access)
+      config: { access: route.config.access },
+      onRequest: [...limitRoute(app, route.config), ...guardRoute(route.config.access)]
     });
   };
 }

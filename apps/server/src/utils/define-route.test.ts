@@ -1,3 +1,4 @@
+import rateLimit from "@fastify/rate-limit";
 import Fastify from "fastify";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -21,6 +22,7 @@ const BOT_HEADERS = {
 function buildTestApp() {
   const app = Fastify();
 
+  app.register(rateLimit, { global: false });
   app.register(
     defineModule([
       defineRoute({
@@ -46,6 +48,67 @@ function buildTestApp() {
   );
 
   return app;
+}
+
+function buildLimitedApp() {
+  const app = Fastify();
+
+  app.register(rateLimit, {
+    global: false,
+    max: 2,
+    timeWindow: "1 minute"
+  });
+  app.register(
+    defineModule([
+      defineRoute({
+        method: "GET",
+        url: "/public",
+        config: {
+          access: "public"
+        },
+        handler: async () => ({ ok: true })
+      }),
+      defineRoute({
+        method: "GET",
+        url: "/public-strict",
+        config: {
+          access: "public",
+          rateLimit: {
+            max: 1,
+            timeWindow: "1 minute"
+          }
+        },
+        handler: async () => ({ ok: true })
+      }),
+      defineRoute({
+        method: "GET",
+        url: "/guarded",
+        config: {
+          access: {
+            role: "*",
+            clients: ["bot"]
+          }
+        },
+        handler: async () => ({ ok: true })
+      })
+    ])
+  );
+
+  return app;
+}
+
+async function statusCodes(app: ReturnType<typeof Fastify>, url: string, count: number) {
+  const codes = [];
+  for (let attempt = 0; attempt < count; attempt++) {
+    const response = await app.inject({
+      method: "GET",
+      url,
+      headers: BOT_HEADERS
+    });
+    codes.push(response.statusCode);
+  }
+
+  return codes;
 }
 
 describe("defineRoute guarding", () => {
@@ -128,5 +191,38 @@ describe("defineRoute guarding", () => {
 
     expect(response.statusCode).toBe(200);
     expect(response.json()).toEqual({ memberId: "1" });
+  });
+});
+
+describe("defineRoute rate limiting", () => {
+  beforeEach(() => {
+    vi.resetAllMocks();
+  });
+
+  it("gives a public route the default limit", async () => {
+    const codes = await statusCodes(buildLimitedApp(), "/public", 3);
+
+    expect(codes).toEqual([200, 200, 429]);
+  });
+
+  it("lets a public route set its own limit in place of the default", async () => {
+    const codes = await statusCodes(buildLimitedApp(), "/public-strict", 2);
+
+    expect(codes).toEqual([200, 429]);
+  });
+
+  it("leaves a guarded route unlimited", async () => {
+    vi.mocked(validateKey).mockResolvedValue({
+      client: "bot",
+      memberId: null
+    });
+    vi.mocked(findMemberAccessByDiscordId).mockResolvedValue({
+      id: 1n,
+      role: null
+    });
+
+    const codes = await statusCodes(buildLimitedApp(), "/guarded", 3);
+
+    expect(codes).toEqual([200, 200, 200]);
   });
 });

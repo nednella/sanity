@@ -1,4 +1,5 @@
 import cors from "@fastify/cors";
+import rateLimit from "@fastify/rate-limit";
 import swagger from "@fastify/swagger";
 import scalar from "@scalar/fastify-api-reference";
 import Fastify from "fastify";
@@ -29,6 +30,14 @@ export const buildApp = () => {
   app.register(cors, {
     origin: corsOrigin,
     methods: ["DELETE", "GET", "HEAD", "PATCH", "POST"]
+  });
+
+  // register a default rate limit of 60/min per IP address.
+  // with global = false, it applies only to routes that ask for it (see: utils/define-route.ts)
+  app.register(rateLimit, {
+    global: false,
+    max: 60,
+    timeWindow: "1 minute"
   });
 
   app.register(swagger, {
