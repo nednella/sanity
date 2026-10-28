@@ -4,6 +4,7 @@ import { recordAuditEntry } from "@/modules/audit/repository/record-audit-entry"
 import type { Auth } from "@/modules/auth/hooks/authenticate";
 import { listTrialists } from "@/modules/members/repository/list-trialists";
 import { awardPoints } from "@/modules/points/repository/award-points";
+import { findLiveMultiplier } from "@/modules/points/repository/find-live-multiplier";
 import { generatePointSplit } from "@/modules/points/rules";
 import type { Review } from "@/schema/common";
 
@@ -25,8 +26,13 @@ export async function reviewSubmissionById(id: number, review: Review, auth: Aut
     if (submission.status === review.status) return;
     if (submission.status !== "submitted") throw submissionErrors.notAwaitingReview(id);
 
-    await reviewSubmission(tx, id, review, auth.member.id);
     const memberIds = await listParticipantIds(tx, id);
+    const multiplier =
+      review.status === "approved"
+        ? await findLiveMultiplier(tx, { at: submission.submittedAt, itemId: submission.itemId, memberIds })
+        : undefined;
+
+    await reviewSubmission(tx, id, review, auth.member.id, multiplier?.id ?? null);
     await recordAuditEntry(tx, {
       actingMemberId: auth.member.id,
       action: "submission_reviewed",
@@ -41,7 +47,7 @@ export async function reviewSubmissionById(id: number, review: Review, auth: Aut
     const valueMillions = submission.valueMillions ?? 0;
 
     const awards = generatePointSplit({
-      multiplier: 1,
+      multiplier: multiplier?.value ?? 1,
       nonClanCount: submission.nonClanCount,
       participants: memberIds.map((memberId) => ({ isTrialist: trialists.has(memberId), memberId })),
       valueMillions
