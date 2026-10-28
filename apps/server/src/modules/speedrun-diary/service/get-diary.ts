@@ -1,7 +1,7 @@
 import { toDiary } from "../mapper";
 import { type DiaryTimeRow, listDiaryTimes } from "../repository/list-diary-times";
 
-export const getDiaries = async () => {
+export const getDiary = async () => {
   const times = await listDiaryTimes();
   const diaries = new Map<number, [DiaryTimeRow, ...DiaryTimeRow[]]>();
 

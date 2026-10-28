@@ -3,7 +3,7 @@ import { z } from "zod";
 import { rankedPersonalBest } from "@/modules/personal-bests/response";
 import { getPersonalBests } from "@/modules/personal-bests/service/get-personal-bests";
 import { memberDiary } from "@/modules/speedrun-diary/response";
-import { getMemberDiaries } from "@/modules/speedrun-diary/service/get-member-diaries";
+import { getMemberDiary } from "@/modules/speedrun-diary/service/get-member-diary";
 import { submission } from "@/modules/submissions/response";
 import { getSubmissions } from "@/modules/submissions/service/get-submissions";
 import { errorResponse, paginated, toPage } from "@/schema/common";
@@ -85,7 +85,7 @@ export const membersModule = defineModule([
         200: z.array(memberDiary)
       }
     },
-    handler: async (req) => getMemberDiaries(req.params.id)
+    handler: async (req) => getMemberDiary(req.params.id)
   }),
 
   defineRoute({
