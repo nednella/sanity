@@ -232,6 +232,13 @@
       "when": 1793495091758,
       "tag": "0032_jittery_reavers",
       "breakpoints": true
+    },
+    {
+      "idx": 33,
+      "version": "7",
+      "when": 1793495098691,
+      "tag": "0033_overrated_talos",
+      "breakpoints": true
     }
   ]
 }
