@@ -225,6 +225,13 @@
       "when": 1793494283842,
       "tag": "0031_slippery_ma_gnuci",
       "breakpoints": true
+    },
+    {
+      "idx": 32,
+      "version": "7",
+      "when": 1793495091758,
+      "tag": "0032_jittery_reavers",
+      "breakpoints": true
     }
   ]
 }

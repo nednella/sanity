@@ -172,6 +172,17 @@ export const personalBestParticipants = pgTable(
   (table) => [primaryKey({ columns: [table.personalBestId, table.memberId] }), index().on(table.memberId)]
 );
 
+export const pointMultipliers = pgTable("point_multipliers", {
+  id: integer().generatedByDefaultAsIdentity().primaryKey(),
+  value: numeric({ precision: 3, scale: 2, mode: "number" }).notNull(),
+  // A multiplier with no member or no boss applies to every member or every boss.
+  memberId: bigint({ mode: "bigint" }).references(() => members.id, { onDelete: "restrict" }),
+  bossId: integer().references(() => bosses.id, { onDelete: "restrict" }),
+  reason: text().notNull(),
+  startsAt: timestamp({ withTimezone: true }).notNull(),
+  endsAt: timestamp({ withTimezone: true }).notNull()
+});
+
 export const points = pgTable(
   "points",
   {
@@ -258,6 +269,7 @@ export const submissions = pgTable(
     event: submissionEvent(),
     status: reviewStatus().notNull(),
     submittedAt: timestamp({ withTimezone: true }).notNull(),
+    multiplierId: integer().references(() => pointMultipliers.id, { onDelete: "restrict" }),
     reviewedBy: bigint({ mode: "bigint" }).references(() => members.id, { onDelete: "restrict" }),
     reviewedAt: timestamp({ withTimezone: true }),
     reviewNote: text(),
