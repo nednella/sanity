@@ -7,7 +7,7 @@ const keyOf = ({ contentId, scale }: { contentId: number | null; scale: number }
 /**
  * Every diary the clan tracks, whether or not the member has a time on it.
  */
-export const getMemberDiaries = async (memberId: bigint) => {
+export const getMemberDiary = async (memberId: bigint) => {
   const [times, personalBests] = await Promise.all([listDiaryTimes(), listMemberBestTimes(memberId)]);
 
   const pbFor = new Map(personalBests.map((row) => [keyOf(row), row]));

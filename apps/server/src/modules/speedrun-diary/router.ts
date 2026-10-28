@@ -4,7 +4,7 @@ import { defineModule } from "@/utils/define-module";
 import { defineRoute } from "@/utils/define-route";
 
 import { diary } from "./response";
-import { getDiaries } from "./service/get-diaries";
+import { getDiary } from "./service/get-diary";
 
 export const speedrunDiaryModule = defineModule([
   defineRoute({
@@ -18,6 +18,6 @@ export const speedrunDiaryModule = defineModule([
         200: z.array(diary)
       }
     },
-    handler: async () => getDiaries()
+    handler: async () => getDiary()
   })
 ]);
