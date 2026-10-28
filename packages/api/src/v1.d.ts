@@ -1434,6 +1434,63 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/points/multipliers": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": {
+                        /** @default null */
+                        bossName?: string | null;
+                        days: number;
+                        reason: string;
+                        taggedDiscordIds?: string[];
+                        value: number;
+                    };
+                };
+            };
+            responses: {
+                /** @description Default Response */
+                201: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            multipliers: components["schemas"]["PointMultiplier"][];
+                        };
+                    };
+                };
+                /** @description Default Response */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/ranks": {
         parameters: {
             query?: never;
@@ -2107,6 +2164,17 @@ export interface components {
                 latestSnapshot?: components["schemas"]["SnapshotInput"];
             } | null;
         };
+        PointMultiplierInput: {
+            id: number;
+            value: number;
+            bossName: string | null;
+            member: components["schemas"]["MemberRefInput"] | null;
+            reason: string;
+            /** Format: date-time */
+            startsAt: string;
+            /** Format: date-time */
+            endsAt: string;
+        };
         Page: {
             limit: number;
             offset: number;
@@ -2470,6 +2538,17 @@ export interface components {
                 syncedAt: string;
                 latestSnapshot?: components["schemas"]["Snapshot"];
             } | null;
+        };
+        PointMultiplier: {
+            id: number;
+            value: number;
+            bossName: string | null;
+            member: components["schemas"]["MemberRef"] | null;
+            reason: string;
+            /** Format: date-time */
+            startsAt: string;
+            /** Format: date-time */
+            endsAt: string;
         };
     };
     responses: never;
