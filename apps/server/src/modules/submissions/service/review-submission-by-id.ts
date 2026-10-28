@@ -41,6 +41,7 @@ export async function reviewSubmissionById(id: number, review: Review, auth: Aut
     const valueMillions = submission.valueMillions ?? 0;
 
     const awards = generatePointSplit({
+      multiplier: 1,
       nonClanCount: submission.nonClanCount,
       participants: memberIds.map((memberId) => ({ isTrialist: trialists.has(memberId), memberId })),
       valueMillions

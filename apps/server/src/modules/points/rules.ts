@@ -17,6 +17,7 @@ export type Participant = {
 };
 
 export type SubmissionSplit = {
+  multiplier: number;
   nonClanCount: number;
   participants: Participant[];
   valueMillions: number;
@@ -27,12 +28,25 @@ export type PointAward = {
   points: number;
 };
 
+// The multiplier is read in hundredths, because 10 * 1.1 is 11.000000000000002 and rounding up would pay 12.
+function applyMultiplier(points: number, multiplier: number) {
+  const hundredths = Math.round(multiplier * 100);
+  return Math.ceil((points * hundredths) / 100);
+}
+
 /**
  * A drop is worth a point per million, split by head count and including the people on it who are
  * not in the clan, and each share is capped. Teaming with a trialist pays the members double, which
- * is the point of it; the trialist only doubles their own share when another trialist is with them.
+ * is the point of it; the trialist only doubles their own share when another trialist is with them. A
+ * bonus multiplier raises each member's points after that, rounding up, so one member's buff pays the
+ * whole team and the drop keeps its real value.
  */
-export function generatePointSplit({ nonClanCount, participants, valueMillions }: SubmissionSplit): PointAward[] {
+export function generatePointSplit({
+  multiplier,
+  nonClanCount,
+  participants,
+  valueMillions
+}: SubmissionSplit): PointAward[] {
   const headCount = participants.length + nonClanCount;
   if (headCount === 0) return [];
 
@@ -42,7 +56,9 @@ export function generatePointSplit({ nonClanCount, participants, valueMillions }
   return participants.map(({ isTrialist, memberId }) => {
     const isDoubled = trialistCount > (isTrialist ? 1 : 0);
 
-    return { memberId, points: Math.min(POINT_CAP, share * (isDoubled ? TRIAL_MULTIPLIER : 1)) };
+    const points = applyMultiplier(share * (isDoubled ? TRIAL_MULTIPLIER : 1), multiplier);
+
+    return { memberId, points: Math.min(POINT_CAP, points) };
   });
 }
 
