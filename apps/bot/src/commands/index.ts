@@ -8,6 +8,7 @@ import { channels } from "./admin/channels/command";
 import { health } from "./admin/health/command";
 import { member } from "./admin/member/command";
 import { plugin } from "./admin/plugin/command";
+import { points } from "./admin/points/command";
 import { rank } from "./admin/rank/command";
 import { reviewer } from "./admin/reviewer/command";
 import { birthday } from "./public/birthday/command";
@@ -25,6 +26,7 @@ const all: Command[] = [
   member,
   plugin,
   pluginKey,
+  points,
   profile,
   rank,
   reviewer
