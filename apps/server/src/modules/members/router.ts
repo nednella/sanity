@@ -31,7 +31,7 @@ import { delayDemotions } from "./service/delay-demotions";
 import { editMemberProfile } from "./service/edit-member-profile";
 import { getMemberProfile } from "./service/get-member-profile";
 import { getMembers } from "./service/get-members";
-import { passTrial } from "./service/pass-trial";
+import { passMembers } from "./service/pass-members";
 import { quitMembers } from "./service/quit-members";
 import { retireMembers } from "./service/retire-members";
 import { trialMembers } from "./service/trial-members";
@@ -218,7 +218,7 @@ export const membersModule = defineModule([
         200: commandOutcomes
       }
     },
-    handler: async (req) => ({ results: await passTrial(req.body, req.auth) })
+    handler: async (req) => ({ results: await passMembers(req.body, req.auth) })
   }),
 
   defineRoute({
