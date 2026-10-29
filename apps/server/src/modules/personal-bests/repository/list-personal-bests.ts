@@ -4,7 +4,7 @@ import type { PgColumn } from "drizzle-orm/pg-core";
 import { bosses, personalBests } from "@db/schema";
 
 import type { PersonalBestSort } from "../request";
-import { type PersonalBestFilters, isCandidate } from "./shared/filters";
+import { type PersonalBestFilters, matchesPersonalBest } from "./shared/filters";
 import { selectRanked } from "./shared/select-ranked";
 
 export type ListPersonalBestsOptions = PersonalBestFilters & {
@@ -29,7 +29,7 @@ function toOrderBy(sort: PersonalBestSort, order: "asc" | "desc") {
 }
 
 export function listPersonalBests({ limit, offset, order, sort, ...filters }: ListPersonalBestsOptions) {
-  return selectRanked(isCandidate(filters), filters.top, toOrderBy(sort, order)).limit(limit).offset(offset);
+  return selectRanked(matchesPersonalBest(filters), filters.top, toOrderBy(sort, order)).limit(limit).offset(offset);
 }
 
 export type PersonalBestRow = Awaited<ReturnType<typeof listPersonalBests>>[number];
