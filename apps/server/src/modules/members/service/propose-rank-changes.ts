@@ -6,7 +6,7 @@ import { RANK_IDS_OFF_LADDER, toEarnedRank } from "@/modules/ranks/rules";
 
 import { listMemberStandings } from "../repository/list-member-standings";
 
-export async function bulkRankCheck() {
+export async function proposeRankChanges() {
   const ranks = await listRanks();
   const standings = await db.transaction((tx) => listMemberStandings(tx));
   const rankById = new Map(ranks.map((rank) => [rank.id, rank]));

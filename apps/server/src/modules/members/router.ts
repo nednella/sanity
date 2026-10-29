@@ -23,7 +23,6 @@ import {
   updateMemberBody
 } from "./request";
 import { commandOutcomes, member, memberProfile, rankProposals, trialOutcomes } from "./response";
-import { bulkRankCheck } from "./service/bulk-rank-check";
 import { changeMemberRanks } from "./service/change-member-ranks";
 import { changeMemberRoles } from "./service/change-member-roles";
 import { changePluginAccess } from "./service/change-plugin-access";
@@ -32,6 +31,7 @@ import { editMemberProfile } from "./service/edit-member-profile";
 import { getMemberProfile } from "./service/get-member-profile";
 import { getMembers } from "./service/get-members";
 import { passMembers } from "./service/pass-members";
+import { proposeRankChanges } from "./service/propose-rank-changes";
 import { quitMembers } from "./service/quit-members";
 import { retireMembers } from "./service/retire-members";
 import { trialMembers } from "./service/trial-members";
@@ -170,7 +170,7 @@ export const membersModule = defineModule([
 
   defineRoute({
     method: "POST",
-    url: "/members/bulk-rank-check",
+    url: "/members/propose-rank-changes",
     config: {
       access: {
         role: "admin",
@@ -182,7 +182,7 @@ export const membersModule = defineModule([
         200: rankProposals
       }
     },
-    handler: () => bulkRankCheck()
+    handler: () => proposeRankChanges()
   }),
 
   defineRoute({
