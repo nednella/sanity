@@ -6,7 +6,7 @@ import { wom } from "@/integrations/wom";
 import { loadMemberMatcher } from "../repository/load-member-matcher";
 import { savePlayers } from "../repository/save-players";
 import { saveSnapshots } from "../repository/save-snapshots";
-import { renameAndRecord } from "./shared/rename-and-record";
+import { changeMainRsn } from "./shared/change-main-rsn";
 
 /**
  * Reads every tracked clan member in one request and stores the snapshot each one carries, skipping
@@ -39,7 +39,7 @@ export async function syncGroup() {
 
     let renamed = 0;
     for (const { memberId, player } of players) {
-      if (await renameAndRecord(tx, memberId, player.displayName)) renamed++;
+      if (await changeMainRsn(tx, memberId, player.displayName)) renamed++;
     }
 
     return { linked: players.length, members: entries.length, renamed, saved };
