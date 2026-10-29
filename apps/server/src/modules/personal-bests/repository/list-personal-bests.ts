@@ -5,7 +5,7 @@ import { bosses, personalBests } from "@db/schema";
 
 import type { PersonalBestSort } from "../request";
 import { type PersonalBestFilters, matchesPersonalBest } from "./shared/filters";
-import { selectRanked } from "./shared/select-ranked";
+import { selectRankedPersonalBests } from "./shared/select-ranked-personal-bests";
 
 export type ListPersonalBestsOptions = PersonalBestFilters & {
   limit: number;
@@ -29,7 +29,9 @@ function toOrderBy(sort: PersonalBestSort, order: "asc" | "desc") {
 }
 
 export function listPersonalBests({ limit, offset, order, sort, ...filters }: ListPersonalBestsOptions) {
-  return selectRanked(matchesPersonalBest(filters), filters.top, toOrderBy(sort, order)).limit(limit).offset(offset);
+  return selectRankedPersonalBests(matchesPersonalBest(filters), filters.top, toOrderBy(sort, order))
+    .limit(limit)
+    .offset(offset);
 }
 
 export type PersonalBestRow = Awaited<ReturnType<typeof listPersonalBests>>[number];
