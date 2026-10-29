@@ -2,7 +2,7 @@ import { toMemberDiary } from "../mapper";
 import { type DiaryTimeRow, listDiaryTimes } from "../repository/list-diary-times";
 import { listMemberBestTimes } from "../repository/list-member-best-times";
 
-function keyOf({ contentId, scale }: { contentId: number | null; scale: number }) {
+function toDiaryKey({ contentId, scale }: { contentId: number | null; scale: number }) {
   return `${contentId}:${scale}`;
 }
 
@@ -12,11 +12,11 @@ function keyOf({ contentId, scale }: { contentId: number | null; scale: number }
 export async function getMemberDiary(memberId: bigint) {
   const [times, personalBests] = await Promise.all([listDiaryTimes(), listMemberBestTimes(memberId)]);
 
-  const pbFor = new Map(personalBests.map((row) => [keyOf(row), row]));
+  const pbFor = new Map(personalBests.map((row) => [toDiaryKey(row), row]));
   const thresholds = new Map<string, [DiaryTimeRow, ...DiaryTimeRow[]]>();
 
   for (const time of times) {
-    const key = keyOf(time);
+    const key = toDiaryKey(time);
     const current = thresholds.get(key);
     thresholds.set(key, current ? [...current, time] : [time]);
   }
