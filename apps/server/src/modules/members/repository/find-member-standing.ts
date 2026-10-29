@@ -3,10 +3,10 @@ import { eq } from "drizzle-orm";
 import type { Transaction } from "@db/index";
 import { members } from "@db/schema";
 
-import { diaryProgressCte } from "@/modules/speedrun-diary/repository/diary-progress-cte";
+import { diaryProgressQueries } from "@/modules/speedrun-diary/repository/diary-progress-queries";
 
 export async function findMemberStanding(tx: Transaction, memberId: bigint) {
-  const { bestTimes, diaryProgress, diaryTotals, reachedTiers } = diaryProgressCte([memberId]);
+  const { bestTimes, diaryProgress, diaryTotals, reachedTiers } = diaryProgressQueries([memberId]);
 
   const [standing] = await tx
     .with(bestTimes, reachedTiers, diaryProgress)
