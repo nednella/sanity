@@ -3,7 +3,7 @@ import type { PgColumn } from "drizzle-orm/pg-core";
 
 import { members, ranks, womPlayers } from "@db/schema";
 
-import { diaryProgressCte } from "@/modules/speedrun-diary/repository/diary-progress-cte";
+import { diaryProgressQueries } from "@/modules/speedrun-diary/repository/diary-progress-queries";
 
 import type { MemberSort } from "../request";
 import { isActive, matchesSearch } from "./shared/filters";
@@ -19,7 +19,7 @@ export type ListMembersOptions = {
 };
 
 export function listMembers({ limit, offset, active, search, sort, order }: ListMembersOptions) {
-  const progress = diaryProgressCte();
+  const progress = diaryProgressQueries();
   const { diaryTotals } = progress;
   const direction = order === "asc" ? asc : desc;
 

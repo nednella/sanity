@@ -3,10 +3,10 @@ import { and, eq, inArray } from "drizzle-orm";
 import type { Transaction } from "@db/index";
 import { discordAccounts, memberRankDelays, members } from "@db/schema";
 
-import { diaryProgressCte } from "@/modules/speedrun-diary/repository/diary-progress-cte";
+import { diaryProgressQueries } from "@/modules/speedrun-diary/repository/diary-progress-queries";
 
 export function listMemberStandings(tx: Transaction, memberIds?: bigint[]) {
-  const { bestTimes, diaryProgress, diaryTotals, reachedTiers } = diaryProgressCte(memberIds);
+  const { bestTimes, diaryProgress, diaryTotals, reachedTiers } = diaryProgressQueries(memberIds);
 
   return tx
     .with(bestTimes, reachedTiers, diaryProgress)
