@@ -56,7 +56,7 @@ const isDiaryContent = exists(
     .where(matchesDiaryTime)
 );
 
-export function isFor({ contentId, diary, scale }: ContentFilters) {
+export function matchesContent({ contentId, diary, scale }: ContentFilters) {
   return and(
     contentId === undefined ? undefined : eq(personalBests.contentId, contentId),
     diary ? isDiaryContent : undefined,
@@ -69,6 +69,11 @@ export type PersonalBestFilters = ContentFilters & {
   top?: number;
 };
 
-export function isCandidate({ memberId, ...filters }: PersonalBestFilters) {
-  return and(isListedRun, isActiveContent, isFor(filters), memberId === undefined ? undefined : isInTeamOf(memberId));
+export function matchesPersonalBest({ memberId, ...filters }: PersonalBestFilters) {
+  return and(
+    isListedRun,
+    isActiveContent,
+    matchesContent(filters),
+    memberId === undefined ? undefined : isInTeamOf(memberId)
+  );
 }
