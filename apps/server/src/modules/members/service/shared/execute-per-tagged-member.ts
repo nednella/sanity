@@ -11,11 +11,11 @@ export type TaggedMember = {
   role: MemberRole | null;
 };
 
-export const executePerTaggedMember = async <T extends { outcome: string }>(
+export async function executePerTaggedMember<T extends { outcome: string }>(
   { taggedDiscordIds }: { taggedDiscordIds: bigint[] },
   handle: (tx: Transaction, member: TaggedMember) => Promise<T>
-) =>
-  db.transaction(async (tx) => {
+) {
+  return db.transaction(async (tx) => {
     const discordIds = [...new Set(taggedDiscordIds)];
     const found = await listMembersByDiscordId(tx, discordIds);
 
@@ -37,3 +37,4 @@ export const executePerTaggedMember = async <T extends { outcome: string }>(
 
     return results;
   });
+}

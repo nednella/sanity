@@ -11,16 +11,17 @@ const REFUSALS = {
   429: { code: "WOM_UPDATED_RECENTLY", message: "Updated less than a minute ago, try again shortly." }
 } as const;
 
-const isRefusal = (status: number | undefined): status is keyof typeof REFUSALS =>
-  status !== undefined && Object.hasOwn(REFUSALS, status);
+function isRefusal(status: number | undefined): status is keyof typeof REFUSALS {
+  return status !== undefined && Object.hasOwn(REFUSALS, status);
+}
 
-const fromRefusal = (error: unknown) => {
+function fromRefusal(error: unknown) {
   const { statusCode } = error as { statusCode?: number };
   if (!isRefusal(statusCode)) return error;
 
   const { code, message } = REFUSALS[statusCode];
   return new ApplicationError(code, statusCode, message);
-};
+}
 
 export const womErrors = {
   fromRefusal,

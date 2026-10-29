@@ -3,7 +3,7 @@ import { asc, eq, inArray } from "drizzle-orm";
 import { db } from "@db/index";
 import { members, personalBestParticipants } from "@db/schema";
 
-export const listTeams = async (personalBestIds: number[]) => {
+export async function listTeams(personalBestIds: number[]) {
   if (personalBestIds.length === 0) return [];
 
   return db
@@ -16,6 +16,6 @@ export const listTeams = async (personalBestIds: number[]) => {
     .innerJoin(members, eq(members.id, personalBestParticipants.memberId))
     .where(inArray(personalBestParticipants.personalBestId, personalBestIds))
     .orderBy(asc(members.displayName));
-};
+}
 
 export type TeamRow = Awaited<ReturnType<typeof listTeams>>[number];

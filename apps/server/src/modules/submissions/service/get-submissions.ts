@@ -3,7 +3,7 @@ import { countSubmissions } from "../repository/count-submissions";
 import { listParticipants } from "../repository/list-participants";
 import { type ListSubmissionsOptions, listSubmissions } from "../repository/list-submissions";
 
-export const getSubmissions = async (options: ListSubmissionsOptions) => {
+export async function getSubmissions(options: ListSubmissionsOptions) {
   const [rows, total] = await Promise.all([listSubmissions(options), countSubmissions(options)]);
   const participants = await listParticipants(rows.map((row) => row.submission.id));
 
@@ -16,4 +16,4 @@ export const getSubmissions = async (options: ListSubmissionsOptions) => {
     ),
     total
   };
-};
+}

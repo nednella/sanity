@@ -17,15 +17,19 @@ export const page = z
   })
   .register(z.globalRegistry, { id: "Page" });
 
-export const paginated = <T extends z.ZodType>(item: T) => z.object({ items: z.array(item), page });
+export function paginated<T extends z.ZodType>(item: T) {
+  return z.object({ items: z.array(item), page });
+}
 
-export const toPage = ({ limit, offset, total }: { limit: number; offset: number; total: number }) => ({
-  limit,
-  offset,
-  total,
-  hasNext: offset + limit < total,
-  hasPrevious: offset > 0
-});
+export function toPage({ limit, offset, total }: { limit: number; offset: number; total: number }) {
+  return {
+    limit,
+    offset,
+    total,
+    hasNext: offset + limit < total,
+    hasPrevious: offset > 0
+  };
+}
 
 // Every status a review can reach. What a list returns is the repository's business, not the shape's.
 export const reviewStatus = z

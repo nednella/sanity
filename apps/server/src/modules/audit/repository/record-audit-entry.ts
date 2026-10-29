@@ -9,7 +9,7 @@ export type AuditEntry = {
   source: (typeof auditLog.$inferInsert)["source"];
 };
 
-export const recordAuditEntry = async (tx: Transaction, { affects = [], ...entry }: AuditEntry) => {
+export async function recordAuditEntry(tx: Transaction, { affects = [], ...entry }: AuditEntry) {
   const [recorded] = await tx
     .insert(auditLog)
     .values({ ...entry, occurredAt: new Date() })
@@ -21,4 +21,4 @@ export const recordAuditEntry = async (tx: Transaction, { affects = [], ...entry
   }
 
   return recorded!.id;
-};
+}

@@ -5,7 +5,7 @@ import { TRIALIST_RANK_ID } from "@/modules/ranks/constants";
 
 import type { NewMember } from "../request";
 
-export const saveMember = async (tx: Transaction, { discordId, ...member }: NewMember) => {
+export async function saveMember(tx: Transaction, { discordId, ...member }: NewMember) {
   const [inserted] = await tx
     .insert(members)
     .values({ ...member, isActive: true, joinedAt: new Date(), rankId: TRIALIST_RANK_ID })
@@ -14,4 +14,4 @@ export const saveMember = async (tx: Transaction, { discordId, ...member }: NewM
   await tx.insert(discordAccounts).values({ discordId, memberId: inserted!.id });
 
   return inserted!.id;
-};
+}

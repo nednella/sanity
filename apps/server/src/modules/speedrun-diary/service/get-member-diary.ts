@@ -2,12 +2,14 @@ import { toMemberDiary } from "../mapper";
 import { type DiaryTimeRow, listDiaryTimes } from "../repository/list-diary-times";
 import { listMemberBestTimes } from "../repository/list-member-best-times";
 
-const keyOf = ({ contentId, scale }: { contentId: number | null; scale: number }) => `${contentId}:${scale}`;
+function keyOf({ contentId, scale }: { contentId: number | null; scale: number }) {
+  return `${contentId}:${scale}`;
+}
 
 /**
  * Every diary the clan tracks, whether or not the member has a time on it.
  */
-export const getMemberDiary = async (memberId: bigint) => {
+export async function getMemberDiary(memberId: bigint) {
   const [times, personalBests] = await Promise.all([listDiaryTimes(), listMemberBestTimes(memberId)]);
 
   const pbFor = new Map(personalBests.map((row) => [keyOf(row), row]));
@@ -20,4 +22,4 @@ export const getMemberDiary = async (memberId: bigint) => {
   }
 
   return [...thresholds].map(([key, rows]) => toMemberDiary(rows, pbFor.get(key)));
-};
+}

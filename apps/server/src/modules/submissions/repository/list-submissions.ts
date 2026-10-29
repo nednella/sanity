@@ -20,7 +20,7 @@ const sortColumns: Record<SubmissionSort, PgColumn> = {
   valueMillions: submissions.valueMillions
 };
 
-export const listSubmissions = ({ limit, offset, order, sort, ...filters }: ListSubmissionsOptions) => {
+export function listSubmissions({ limit, offset, order, sort, ...filters }: ListSubmissionsOptions) {
   const direction = order === "asc" ? asc : desc;
 
   return db
@@ -36,6 +36,6 @@ export const listSubmissions = ({ limit, offset, order, sort, ...filters }: List
     .orderBy(direction(sortColumns[sort]), desc(submissions.id))
     .limit(limit)
     .offset(offset);
-};
+}
 
 export type SubmissionRow = Awaited<ReturnType<typeof listSubmissions>>[number];

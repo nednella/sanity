@@ -4,7 +4,7 @@ import { recordAuditEntry } from "@/modules/audit/repository/record-audit-entry"
 
 import { type ItemRow, saveItems } from "../repository/save-items";
 
-export const importItems = async (rows: ItemRow[]) => {
+export async function importItems(rows: ItemRow[]) {
   if (rows.length === 0) return 0;
 
   return db.transaction(async (tx) => {
@@ -18,4 +18,4 @@ export const importItems = async (rows: ItemRow[]) => {
 
     return saved;
   });
-};
+}

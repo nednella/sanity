@@ -9,7 +9,7 @@ import {
   womSnapshots
 } from "@db/schema";
 
-export const findLatestSnapshot = async (womPlayerId: number) => {
+export async function findLatestSnapshot(womPlayerId: number) {
   const [snapshot] = await db
     .select()
     .from(womSnapshots)
@@ -26,6 +26,6 @@ export const findLatestSnapshot = async (womPlayerId: number) => {
   ]);
 
   return { snapshot, computed, skills, bosses, activities };
-};
+}
 
 export type SnapshotRows = NonNullable<Awaited<ReturnType<typeof findLatestSnapshot>>>;

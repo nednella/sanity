@@ -3,8 +3,8 @@ import { asc, eq } from "drizzle-orm";
 import type { Transaction } from "@db/index";
 import { speedrunDiaryRewards, speedrunDiaryTiers } from "@db/schema";
 
-export const listDiaryRewards = (tx: Transaction) =>
-  tx
+export function listDiaryRewards(tx: Transaction) {
+  return tx
     .select({
       clanPoints: speedrunDiaryRewards.clanPoints,
       requiredDiaryPoints: speedrunDiaryRewards.requiredDiaryPoints,
@@ -14,3 +14,4 @@ export const listDiaryRewards = (tx: Transaction) =>
     .from(speedrunDiaryRewards)
     .innerJoin(speedrunDiaryTiers, eq(speedrunDiaryTiers.id, speedrunDiaryRewards.tierId))
     .orderBy(asc(speedrunDiaryRewards.tierId));
+}

@@ -15,7 +15,7 @@ import { setClaimedDiaryTier } from "../../repository/set-claimed-diary-tier";
  * Trialists wait until they pass, as they did under the old loop: their next approved run claims
  * everything they have earned by then.
  */
-export const claimEarnedDiaryTiers = async (tx: Transaction, memberIds: bigint[], auth: Auth) => {
+export async function claimEarnedDiaryTiers(tx: Transaction, memberIds: bigint[], auth: Auth) {
   const rewards = await listDiaryRewards(tx);
   const standings = await listMemberStandings(tx, memberIds);
 
@@ -40,4 +40,4 @@ export const claimEarnedDiaryTiers = async (tx: Transaction, memberIds: bigint[]
       });
     }
   }
-};
+}

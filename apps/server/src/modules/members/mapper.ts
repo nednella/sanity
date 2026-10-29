@@ -14,70 +14,76 @@ import type { MemberRow } from "./repository/shared/select-members";
  * their place on the ladder by passing trial, a quit or retired member has stepped off it, and the top
  * rank has run out of ladder to climb.
  */
-const toProgressionStatus = (currentRankId: number, isOnLadder: boolean, hasHigherRanks: boolean) => {
+function toProgressionStatus(currentRankId: number, isOnLadder: boolean, hasHigherRanks: boolean) {
   if (currentRankId === TRIALIST_RANK_ID) return "trial" as const;
   if (!isOnLadder) return "manual" as const;
   return hasHigherRanks ? ("climbing" as const) : ("maxed" as const);
-};
+}
 
-export const toMember = ({ member, discordAccount, rank, claimedDiaryTier, womPlayer, diaryProgress }: MemberRow) => ({
-  id: member.id,
-  displayName: member.displayName,
-  nationality: member.nationality,
-  discord: {
-    id: discordAccount.discordId,
-    avatarUrl: discordAccount.avatarUrl
-  },
-  rsn: {
-    main: member.mainRsn,
-    alt: member.altRsn
-  },
-  membership: {
-    active: member.isActive,
-    joinedAt: member.joinedAt,
-    leftAt: member.leftAt,
-    rank: toRankSummary(rank),
-    points: member.clanPoints
-  },
-  diary: {
-    points: diaryProgress?.diaryPoints ?? 0,
-    maxPoints: DIARY_POINTS_MAX,
-    masterDiaries: diaryProgress?.masterDiaries ?? 0,
-    claimedTier: claimedDiaryTier && { id: claimedDiaryTier.id, name: claimedDiaryTier.name }
-  },
-  wom: womPlayer && {
-    playerId: womPlayer.womPlayerId,
-    username: womPlayer.username,
-    displayName: womPlayer.displayName,
-    type: womPlayer.type,
-    build: womPlayer.build,
-    status: womPlayer.status,
-    totalLevel: womPlayer.totalLevel,
-    totalExp: womPlayer.totalExp,
-    totalEhp: womPlayer.totalEhp,
-    totalEhb: womPlayer.totalEhb,
-    timeToMax: womPlayer.timeToMax,
-    timeTo200m: womPlayer.timeTo200m,
-    updatedAt: womPlayer.updatedAt,
-    lastChangedAt: womPlayer.lastChangedAt,
-    syncedAt: womPlayer.syncedAt
-  }
-});
+export function toMember({ member, discordAccount, rank, claimedDiaryTier, womPlayer, diaryProgress }: MemberRow) {
+  return {
+    id: member.id,
+    displayName: member.displayName,
+    nationality: member.nationality,
+    discord: {
+      id: discordAccount.discordId,
+      avatarUrl: discordAccount.avatarUrl
+    },
+    rsn: {
+      main: member.mainRsn,
+      alt: member.altRsn
+    },
+    membership: {
+      active: member.isActive,
+      joinedAt: member.joinedAt,
+      leftAt: member.leftAt,
+      rank: toRankSummary(rank),
+      points: member.clanPoints
+    },
+    diary: {
+      points: diaryProgress?.diaryPoints ?? 0,
+      maxPoints: DIARY_POINTS_MAX,
+      masterDiaries: diaryProgress?.masterDiaries ?? 0,
+      claimedTier: claimedDiaryTier && { id: claimedDiaryTier.id, name: claimedDiaryTier.name }
+    },
+    wom: womPlayer && {
+      playerId: womPlayer.womPlayerId,
+      username: womPlayer.username,
+      displayName: womPlayer.displayName,
+      type: womPlayer.type,
+      build: womPlayer.build,
+      status: womPlayer.status,
+      totalLevel: womPlayer.totalLevel,
+      totalExp: womPlayer.totalExp,
+      totalEhp: womPlayer.totalEhp,
+      totalEhb: womPlayer.totalEhb,
+      timeToMax: womPlayer.timeToMax,
+      timeTo200m: womPlayer.timeTo200m,
+      updatedAt: womPlayer.updatedAt,
+      lastChangedAt: womPlayer.lastChangedAt,
+      syncedAt: womPlayer.syncedAt
+    }
+  };
+}
 
-const toNextRank = (rank: RankRow) => ({
-  ...toRankSummary(rank),
-  requirements: {
-    clanPoints: rank.clanPointRequirement,
-    diaryPoints: rank.diaryPointRequirement,
-    masterDiaries: rank.masterDiaryRequirement
-  }
-});
+function toNextRank(rank: RankRow) {
+  return {
+    ...toRankSummary(rank),
+    requirements: {
+      clanPoints: rank.clanPointRequirement,
+      diaryPoints: rank.diaryPointRequirement,
+      masterDiaries: rank.masterDiaryRequirement
+    }
+  };
+}
 
-const requiresDiaries = (rank: RankRow) => rank.diaryPointRequirement > 0 || rank.masterDiaryRequirement > 0;
+function requiresDiaries(rank: RankRow) {
+  return rank.diaryPointRequirement > 0 || rank.masterDiaryRequirement > 0;
+}
 
 // Promotion is manual, so a member can already qualify for a rank several places above their own. Next ranks are
 // counted from whichever is higher: the rank they hold or the best rank they qualify for.
-const toProgression = (currentRankId: number, ranks: RankRow[], standing: Standing) => {
+function toProgression(currentRankId: number, ranks: RankRow[], standing: Standing) {
   const ladder = RANK_IDS_OFF_LADDER.has(currentRankId) ? [] : toActiveRanks(ranks);
 
   const eligible = ladder.findLast((rank) => hasMetRequirements(rank, standing));
@@ -95,11 +101,13 @@ const toProgression = (currentRankId: number, ranks: RankRow[], standing: Standi
       diary: diary ? toNextRank(diary) : null
     }
   };
-};
+}
 
-const asRsn = (name: string) => name.toLowerCase().replaceAll(/[_-]/g, " ").trim();
+function asRsn(name: string) {
+  return name.toLowerCase().replaceAll(/[_-]/g, " ").trim();
+}
 
-const toPreviousNames = (changes: NameChange[], current: string | null) => {
+function toPreviousNames(changes: NameChange[], current: string | null) {
   const seen = new Set([current ? asRsn(current) : ""]);
 
   return changes.filter(({ name }) => {
@@ -109,24 +117,26 @@ const toPreviousNames = (changes: NameChange[], current: string | null) => {
     seen.add(rsn);
     return true;
   });
-};
+}
 
-const toSnapshot = ({ snapshot, computed, skills, bosses, activities }: SnapshotRows) => ({
-  createdAt: snapshot.createdAt,
-  computed: sortComputed(computed.map(({ metric, value, rank }) => ({ metric, value, rank }))),
-  skills: sortSkills(
-    skills.map(({ skill, experience, level, rank, ehp }) => ({ skill, experience, level, rank, ehp }))
-  ),
-  bosses: sortBosses(bosses.map(({ boss, kills, rank, ehb }) => ({ boss, kills, rank, ehb }))),
-  activities: sortActivities(activities.map(({ activity, score, rank }) => ({ activity, score, rank })))
-});
+function toSnapshot({ snapshot, computed, skills, bosses, activities }: SnapshotRows) {
+  return {
+    createdAt: snapshot.createdAt,
+    computed: sortComputed(computed.map(({ metric, value, rank }) => ({ metric, value, rank }))),
+    skills: sortSkills(
+      skills.map(({ skill, experience, level, rank, ehp }) => ({ skill, experience, level, rank, ehp }))
+    ),
+    bosses: sortBosses(bosses.map(({ boss, kills, rank, ehb }) => ({ boss, kills, rank, ehb }))),
+    activities: sortActivities(activities.map(({ activity, score, rank }) => ({ activity, score, rank })))
+  };
+}
 
-export const toMemberProfile = (
+export function toMemberProfile(
   row: MemberRow,
   ranks: RankRow[],
   latestSnapshot: SnapshotRows | undefined,
   nameChanges: NameChange[]
-) => {
+) {
   const { wom, ...member } = toMember(row);
 
   return {
@@ -139,4 +149,4 @@ export const toMemberProfile = (
     }),
     wom: wom && { ...wom, latestSnapshot: latestSnapshot && toSnapshot(latestSnapshot) }
   };
-};
+}

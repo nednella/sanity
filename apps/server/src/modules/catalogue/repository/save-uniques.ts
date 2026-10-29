@@ -5,7 +5,7 @@ import { bossUniques } from "@db/schema";
 
 export type UniqueRow = typeof bossUniques.$inferInsert;
 
-export const saveUniques = async (tx: Transaction, rows: UniqueRow[]) => {
+export async function saveUniques(tx: Transaction, rows: UniqueRow[]) {
   const saved = await tx
     .insert(bossUniques)
     .values(rows)
@@ -16,4 +16,4 @@ export const saveUniques = async (tx: Transaction, rows: UniqueRow[]) => {
     .returning({ bossId: bossUniques.bossId });
 
   return saved.length;
-};
+}

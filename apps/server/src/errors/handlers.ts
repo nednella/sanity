@@ -7,7 +7,7 @@ import { errorResponse } from "./response";
 
 const { isProduction } = config;
 
-export const handleError = (error: FastifyError | ApplicationError, request: FastifyRequest, reply: FastifyReply) => {
+export function handleError(error: FastifyError | ApplicationError, request: FastifyRequest, reply: FastifyReply) {
   // Handle ApplicationError
   if (error instanceof ApplicationError)
     return errorResponse({
@@ -44,12 +44,12 @@ export const handleError = (error: FastifyError | ApplicationError, request: Fas
     reply,
     error: new ApplicationError("INTERNAL_ERROR", 500, shown)
   });
-};
+}
 
-export const handleNotFound = (request: FastifyRequest, reply: FastifyReply) => {
+export function handleNotFound(request: FastifyRequest, reply: FastifyReply) {
   return errorResponse({
     request,
     reply,
     error: new ApplicationError("ROUTE_NOT_FOUND", 404, "Route does not exist.")
   });
-};
+}

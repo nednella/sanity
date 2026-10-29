@@ -18,8 +18,8 @@ import { payDiaryCarries } from "./shared/pay-diary-carries";
  * member's points over. A run reaches review once its submitter has confirmed it. Asking for the review
  * it already has changes nothing, and any other review of a pending or reviewed run is refused.
  */
-export const reviewPersonalBestById = async (id: number, review: Review, auth: Auth) =>
-  db.transaction(async (tx) => {
+export async function reviewPersonalBestById(id: number, review: Review, auth: Auth) {
+  return db.transaction(async (tx) => {
     const personalBest = await findPersonalBestForReview(tx, id);
     if (!personalBest) throw personalBestErrors.notFound(id);
     if (personalBest.status === review.status) return;
@@ -40,3 +40,4 @@ export const reviewPersonalBestById = async (id: number, review: Review, auth: A
     await payDiaryCarries(tx, { ...personalBest, contentId: personalBest.contentId }, memberIds, auth.member.id);
     await claimEarnedDiaryTiers(tx, memberIds, auth);
   });
+}

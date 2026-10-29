@@ -12,15 +12,15 @@ import { saveSnapshots } from "../repository/save-snapshots";
  * We don't need to know what clan member the RSN belongs to, because we are expecting that
  * we already track the clan member's WOM player id tied to their main RSN.
  */
-const updatePlayer = async (username: string) => {
+async function updatePlayer(username: string) {
   try {
     return await wom.players.updatePlayer(username);
   } catch (error) {
     throw womErrors.fromRefusal(error);
   }
-};
+}
 
-export const syncPlayer = async (username: string) => {
+export async function syncPlayer(username: string) {
   const player = await updatePlayer(username);
   if (!player) throw new Error("wise old man returned nothing");
 
@@ -31,4 +31,4 @@ export const syncPlayer = async (username: string) => {
     return stored;
   });
   if (!didStoreUpdate) throw womErrors.notTracked(username);
-};
+}

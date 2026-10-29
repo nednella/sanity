@@ -5,7 +5,7 @@ import { members } from "@db/schema";
 
 import { QUIT_RANK_ID, RETIRED_RANK_ID } from "@/modules/ranks/constants";
 
-export const setMemberRank = async (tx: Transaction, memberId: bigint, rankId: number) => {
+export async function setMemberRank(tx: Transaction, memberId: bigint, rankId: number) {
   const [member] = await tx.select({ rankId: members.rankId }).from(members).where(eq(members.id, memberId));
   if (!member || member.rankId === rankId) return;
 
@@ -19,4 +19,4 @@ export const setMemberRank = async (tx: Transaction, memberId: bigint, rankId: n
     .where(eq(members.id, memberId));
 
   return { previous: member.rankId };
-};
+}

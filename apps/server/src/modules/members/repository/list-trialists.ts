@@ -7,7 +7,7 @@ import { TRIALIST_RANK_ID } from "@/modules/ranks/constants";
 
 // Trial status is read when the drop is approved, not when it was submitted, so a member who has
 // since been ranked up is paid as a member.
-export const listTrialists = async (tx: Transaction, memberIds: bigint[]) => {
+export async function listTrialists(tx: Transaction, memberIds: bigint[]) {
   if (memberIds.length === 0) return new Set<bigint>();
 
   const rows = await tx
@@ -16,4 +16,4 @@ export const listTrialists = async (tx: Transaction, memberIds: bigint[]) => {
     .where(and(inArray(members.id, memberIds), eq(members.rankId, TRIALIST_RANK_ID)));
 
   return new Set(rows.map(({ id }) => id));
-};
+}

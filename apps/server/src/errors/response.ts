@@ -8,11 +8,11 @@ type ErrorResponseOptions = {
   error: ApplicationError;
 };
 
-export const errorResponse = ({ request, reply, error }: ErrorResponseOptions) => {
+export function errorResponse({ request, reply, error }: ErrorResponseOptions) {
   return reply.code(error.statusCode).send({
     code: error.code,
     message: error.message,
     timestamp: new Date().toISOString(),
     url: request.url
   });
-};
+}

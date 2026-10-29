@@ -10,7 +10,7 @@ export type ProfileChanges = {
   nationality?: string | null;
 };
 
-export const updateMemberProfile = async (tx: Transaction, memberId: bigint, profile: ProfileChanges) => {
+export async function updateMemberProfile(tx: Transaction, memberId: bigint, profile: ProfileChanges) {
   const [member] = await tx
     .select({ altRsn: members.altRsn, mainRsn: members.mainRsn })
     .from(members)
@@ -22,4 +22,4 @@ export const updateMemberProfile = async (tx: Transaction, memberId: bigint, pro
   }
 
   return member;
-};
+}

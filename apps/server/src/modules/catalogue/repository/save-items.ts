@@ -5,7 +5,7 @@ import { items } from "@db/schema";
 
 export type ItemRow = typeof items.$inferInsert;
 
-export const saveItems = async (tx: Transaction, rows: ItemRow[]) => {
+export async function saveItems(tx: Transaction, rows: ItemRow[]) {
   const seen = new Set<string>();
   const unique = rows.filter((row) => {
     const name = row.name.toLowerCase();
@@ -25,4 +25,4 @@ export const saveItems = async (tx: Transaction, rows: ItemRow[]) => {
     .returning({ id: items.id });
 
   return saved.length;
-};
+}

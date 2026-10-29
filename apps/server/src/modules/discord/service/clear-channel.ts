@@ -10,8 +10,8 @@ export type ClearChannelCommand = {
   purpose: (typeof discordChannels.$inferInsert)["purpose"];
 };
 
-export const clearDiscordChannel = async ({ purpose }: ClearChannelCommand, auth: Auth) =>
-  db.transaction(async (tx) => {
+export async function clearDiscordChannel({ purpose }: ClearChannelCommand, auth: Auth) {
+  return db.transaction(async (tx) => {
     await clearChannel(tx, purpose);
     await recordAuditEntry(tx, {
       actingMemberId: auth.member.id,
@@ -20,3 +20,4 @@ export const clearDiscordChannel = async ({ purpose }: ClearChannelCommand, auth
       source: auth.client
     });
   });
+}

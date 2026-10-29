@@ -6,7 +6,7 @@ import { members, womPlayers } from "@db/schema";
 
 import { normaliseRsn } from "./shared/normalise-rsn";
 
-export const loadMemberMatcher = async () => {
+export async function loadMemberMatcher() {
   const linked = await db
     .select({ womPlayerId: womPlayers.womPlayerId, memberId: womPlayers.memberId })
     .from(womPlayers);
@@ -21,4 +21,4 @@ export const loadMemberMatcher = async () => {
 
   // The player id survives a name change, so an existing link wins over the RSN.
   return (player: PlayerResponse) => byPlayerId.get(player.id) ?? byRsn.get(normaliseRsn(player.username));
-};
+}

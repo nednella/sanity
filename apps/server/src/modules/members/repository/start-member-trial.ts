@@ -5,7 +5,7 @@ import { memberRankDelays, members } from "@db/schema";
 
 import { TRIALIST_RANK_ID } from "@/modules/ranks/constants";
 
-export const startMemberTrial = async (tx: Transaction, memberId: bigint) => {
+export async function startMemberTrial(tx: Transaction, memberId: bigint) {
   const [member] = await tx
     .select({ clanPoints: members.clanPoints, rankId: members.rankId })
     .from(members)
@@ -26,4 +26,4 @@ export const startMemberTrial = async (tx: Transaction, memberId: bigint) => {
   await tx.delete(memberRankDelays).where(eq(memberRankDelays.memberId, memberId));
 
   return { pointsCleared: member.clanPoints, previousRankId: member.rankId };
-};
+}

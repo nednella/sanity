@@ -16,7 +16,7 @@ import { renameAndRecord } from "./shared/rename-and-record";
  * Wise Old Man reflects the hiscores, so the name it reports for a linked player is the member's
  * real RSN and replaces whatever we hold.
  */
-export const syncGroup = async () => {
+export async function syncGroup() {
   const entries = await wom.groups.getGroupBulkHiscores(Number(config.womGroupId));
 
   const memberFor = await loadMemberMatcher();
@@ -44,4 +44,4 @@ export const syncGroup = async () => {
 
     return { linked: players.length, members: entries.length, renamed, saved };
   });
-};
+}

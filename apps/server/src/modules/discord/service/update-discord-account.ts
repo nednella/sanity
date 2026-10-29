@@ -17,8 +17,8 @@ export type UpdateDiscordAccountCommand = {
  * The member is named rather than tagged: the account being replaced may have left the server or
  * been banned, so a mention would not resolve.
  */
-export const updateDiscordAccount = async ({ account, displayName }: UpdateDiscordAccountCommand, auth: Auth) =>
-  db.transaction(async (tx) => {
+export async function updateDiscordAccount({ account, displayName }: UpdateDiscordAccountCommand, auth: Auth) {
+  return db.transaction(async (tx) => {
     const matches = await listMembersByDisplayName(tx, displayName);
     const [member] = matches;
     if (!member) return { member: null, outcome: "not-a-member" as const };
@@ -41,3 +41,4 @@ export const updateDiscordAccount = async ({ account, displayName }: UpdateDisco
 
     return { member: summary, outcome: "discord-account-changed" as const };
   });
+}

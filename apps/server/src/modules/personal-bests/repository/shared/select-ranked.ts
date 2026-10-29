@@ -9,7 +9,7 @@ import { isActiveContent, isClanRecord } from "./filters";
 // Ranks every run eligible to be a clan record within its content and team size, fastest first and the
 // earlier submission winning a tie. A run whose team is incomplete is not eligible, so it comes back
 // without a rank rather than displacing the runs that are.
-export const selectRanked = (matches: SQL | undefined, top: number | undefined, orderBy?: SQL[]) => {
+export function selectRanked(matches: SQL | undefined, top: number | undefined, orderBy?: SQL[]) {
   const ranked = db.$with("ranked").as(
     db
       .select({
@@ -35,4 +35,4 @@ export const selectRanked = (matches: SQL | undefined, top: number | undefined, 
     .innerJoin(members, eq(members.id, personalBests.memberId))
     .where(top === undefined ? matches : and(matches, lte(ranked.position, top)))
     .orderBy(...(orderBy ?? [asc(bosses.name), asc(personalBests.scale), asc(ranked.position)]));
-};
+}

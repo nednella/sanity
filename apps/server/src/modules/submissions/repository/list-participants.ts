@@ -3,7 +3,7 @@ import { and, desc, eq, inArray } from "drizzle-orm";
 import { db } from "@db/index";
 import { members, points, submissionParticipants } from "@db/schema";
 
-export const listParticipants = async (submissionIds: number[]) => {
+export async function listParticipants(submissionIds: number[]) {
   if (submissionIds.length === 0) return [];
 
   return db
@@ -24,6 +24,6 @@ export const listParticipants = async (submissionIds: number[]) => {
     )
     .where(inArray(submissionParticipants.submissionId, submissionIds))
     .orderBy(desc(points.value));
-};
+}
 
 export type ParticipantRow = Awaited<ReturnType<typeof listParticipants>>[number];

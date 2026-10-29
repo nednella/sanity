@@ -20,13 +20,13 @@ export const booleanString = z.codec(z.enum(["true", "false"]), z.boolean(), {
 
 // A response schema is converted from its output side, where a codec has already decoded into a
 // bigint or a Date. Neither exists in JSON, so this restores what actually travels on the wire.
-export const jsonSchemaOverride = ({
+export function jsonSchemaOverride({
   zodSchema,
   jsonSchema
 }: {
   zodSchema: { _zod: { def: { type: string } } };
   jsonSchema: Record<string, unknown>;
-}) => {
+}) {
   if (zodSchema._zod.def.type === "bigint") {
     jsonSchema.type = "string";
     jsonSchema.pattern = String.raw`^\d+$`;
@@ -34,4 +34,4 @@ export const jsonSchemaOverride = ({
     jsonSchema.type = "string";
     jsonSchema.format = "date-time";
   }
-};
+}
