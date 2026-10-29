@@ -211,6 +211,20 @@
       "when": 1793047170332,
       "tag": "0029_woozy_clea",
       "breakpoints": true
+    },
+    {
+      "idx": 30,
+      "version": "7",
+      "when": 1793226772788,
+      "tag": "0030_adorable_surge",
+      "breakpoints": true
+    },
+    {
+      "idx": 31,
+      "version": "7",
+      "when": 1793226898573,
+      "tag": "0031_silly_hellfire_club",
+      "breakpoints": true
     }
   ]
 }

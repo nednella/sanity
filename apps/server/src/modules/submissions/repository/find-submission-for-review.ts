@@ -7,9 +7,11 @@ export async function findSubmissionForReview(tx: Transaction, id: number) {
   const [found] = await tx
     .select({
       id: submissions.id,
+      itemId: submissions.itemId,
       itemName: sql<string | null>`coalesce(${items.name}, ${submissions.itemName})`,
       nonClanCount: submissions.nonClanCount,
       status: submissions.status,
+      submittedAt: submissions.submittedAt,
       valueMillions: submissions.valueMillions
     })
     .from(submissions)

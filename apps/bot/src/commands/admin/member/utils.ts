@@ -10,7 +10,7 @@ import type { CommandOutcome } from "@sanity/api";
 
 import { buildEmbed } from "@/utils/embeds";
 
-const MENTIONED_USER_ID = /(?<=<@!?)\d{17,20}(?=>)/g;
+export const MENTIONED_USER_ID = /(?<=<@!?)\d{17,20}(?=>)/g;
 
 const CHANGES = new Set<CommandOutcome["outcome"]>([
   "admin-given",
