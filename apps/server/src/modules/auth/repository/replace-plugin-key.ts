@@ -3,7 +3,7 @@ import { eq } from "drizzle-orm";
 import { db } from "@db/index";
 import { apiKeys, members } from "@db/schema";
 
-import { revokePluginKey } from "./revoke-plugin-key";
+import { revokePluginKeys } from "./revoke-plugin-keys";
 
 /**
  * Revokes the member's live plugin key, if any, and saves the new
@@ -28,7 +28,7 @@ export function replacePluginKey(memberId: bigint, keyHash: string) {
       .for("update");
     if (member?.pluginAccessRevokedAt) return false;
 
-    await revokePluginKey(tx, memberId);
+    await revokePluginKeys(tx, [memberId]);
     await tx.insert(apiKeys).values({
       client: "plugin",
       keyHash,
