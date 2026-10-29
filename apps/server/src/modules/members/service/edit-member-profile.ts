@@ -6,7 +6,7 @@ import type { Auth } from "@/modules/auth/hooks/authenticate";
 import { memberErrors } from "../errors";
 import { type ProfileChanges, updateMemberProfile } from "../repository/update-member-profile";
 
-function describe(label: string, previous: string | null, next: string | null) {
+function describeRename(label: string, previous: string | null, next: string | null) {
   return `${label} ${previous ?? "none"} to ${next ?? "none"}`;
 }
 
@@ -17,10 +17,10 @@ export async function editMemberProfile(auth: Auth, profile: ProfileChanges) {
 
     const renames = [
       profile.mainRsn !== undefined && profile.mainRsn !== previous.mainRsn
-        ? describe("main", previous.mainRsn, profile.mainRsn)
+        ? describeRename("main", previous.mainRsn, profile.mainRsn)
         : null,
       profile.altRsn !== undefined && profile.altRsn !== previous.altRsn
-        ? describe("alt", previous.altRsn, profile.altRsn)
+        ? describeRename("alt", previous.altRsn, profile.altRsn)
         : null
     ].filter(Boolean);
 
