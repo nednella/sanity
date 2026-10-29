@@ -1,6 +1,6 @@
 import { recordAuditEntry } from "@/modules/audit/repository/record-audit-entry";
 import type { Auth } from "@/modules/auth/hooks/authenticate";
-import { revokePluginKey } from "@/modules/auth/repository/revoke-plugin-key";
+import { revokePluginKeys } from "@/modules/auth/repository/revoke-plugin-keys";
 
 import { setPluginAccessRevokedAt } from "../repository/set-plugin-access-revoked-at";
 import type { PluginAccessChange } from "../request";
@@ -17,7 +17,7 @@ export async function changePluginAccess({ note, revoked, taggedDiscordIds }: Pl
     if (!revoked && member.pluginAccessRevokedAt === null) return { outcome: "has-plugin-access" as const };
 
     await setPluginAccessRevokedAt(tx, member.id, revoked ? new Date() : null);
-    if (revoked) await revokePluginKey(tx, member.id);
+    if (revoked) await revokePluginKeys(tx, [member.id]);
     await recordAuditEntry(tx, {
       actingMemberId: auth.member.id,
       action: "plugin_access_changed",
