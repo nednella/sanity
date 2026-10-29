@@ -4042,7 +4042,7 @@
         }
       }
     },
-    "/v1/members/bulk-rank-check": {
+    "/v1/members/propose-rank-changes": {
       "post": {
         "responses": {
           "200": {
