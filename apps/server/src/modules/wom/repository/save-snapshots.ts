@@ -15,28 +15,28 @@ const SNAPSHOTS_PER_BATCH = 100;
 
 // Wise Old Man reports -1 for a value it doesn't know: a rank or count below the hiscore threshold, or
 // efficiency on snapshots older than its rates. Unknown counts are left out rather than stored as -1.
-function known(value: number) {
+function unknownAsNull(value: number) {
   return value === -1 ? null : value;
 }
 
-function breakdown(womSnapshotId: number, { skills, bosses, activities, computed }: SnapshotResponse["data"]) {
+function toSnapshotRows(womSnapshotId: number, { skills, bosses, activities, computed }: SnapshotResponse["data"]) {
   return {
     computed: Object.values(computed)
       .filter(({ value }) => value !== -1)
-      .map(({ metric, rank, value }) => ({ womSnapshotId, metric, rank: known(rank), value })),
+      .map(({ metric, rank, value }) => ({ womSnapshotId, metric, rank: unknownAsNull(rank), value })),
     skills: Object.values(skills)
       .filter(({ experience }) => experience !== -1)
-      .map(({ metric, rank, ...values }) => ({ womSnapshotId, skill: metric, rank: known(rank), ...values })),
+      .map(({ metric, rank, ...values }) => ({ womSnapshotId, skill: metric, rank: unknownAsNull(rank), ...values })),
     bosses: Object.values(bosses)
       .filter(({ kills }) => kills !== -1)
-      .map(({ metric, rank, ...values }) => ({ womSnapshotId, boss: metric, rank: known(rank), ...values })),
+      .map(({ metric, rank, ...values }) => ({ womSnapshotId, boss: metric, rank: unknownAsNull(rank), ...values })),
     activities: Object.values(activities)
       .filter(({ score }) => score !== -1)
-      .map(({ metric, rank, ...values }) => ({ womSnapshotId, activity: metric, rank: known(rank), ...values }))
+      .map(({ metric, rank, ...values }) => ({ womSnapshotId, activity: metric, rank: unknownAsNull(rank), ...values }))
   };
 }
 
-async function saveBatch(tx: Transaction, snapshots: SnapshotResponse[]) {
+async function saveSnapshotBatch(tx: Transaction, snapshots: SnapshotResponse[]) {
   const saved = await tx
     .insert(womSnapshots)
     .values(snapshots.map(({ playerId, createdAt }) => ({ womPlayerId: playerId, createdAt })))
@@ -50,7 +50,7 @@ async function saveBatch(tx: Transaction, snapshots: SnapshotResponse[]) {
   const idFor = new Map(saved.map(({ id, womPlayerId, createdAt }) => [`${womPlayerId}:${createdAt.getTime()}`, id]));
   const rows = snapshots.flatMap(({ playerId, createdAt, data }) => {
     const id = idFor.get(`${playerId}:${createdAt.getTime()}`);
-    return id === undefined ? [] : [breakdown(id, data)];
+    return id === undefined ? [] : [toSnapshotRows(id, data)];
   });
 
   const computed = rows.flatMap((row) => row.computed);
@@ -69,7 +69,7 @@ async function saveBatch(tx: Transaction, snapshots: SnapshotResponse[]) {
 export async function saveSnapshots(tx: Transaction, snapshots: SnapshotResponse[]) {
   let saved = 0;
   for (let start = 0; start < snapshots.length; start += SNAPSHOTS_PER_BATCH) {
-    saved += await saveBatch(tx, snapshots.slice(start, start + SNAPSHOTS_PER_BATCH));
+    saved += await saveSnapshotBatch(tx, snapshots.slice(start, start + SNAPSHOTS_PER_BATCH));
   }
   return saved;
 }
