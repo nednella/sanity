@@ -8,7 +8,7 @@ import { isApprovedRun } from "@/modules/personal-bests/repository/shared/filter
 // Diary progress is derived, never stored: each member's best approved time per diary earns every tier it
 // beats, so a changed threshold applies on the next read. Omitting memberIds computes it for every member,
 // so callers can join or sort on it.
-export const diaryProgressCte = (memberIds?: bigint[]) => {
+export function diaryProgressCte(memberIds?: bigint[]) {
   const isRequested = memberIds && inArray(personalBestParticipants.memberId, memberIds);
 
   const bestTimes = db.$with("best_times").as(
@@ -61,4 +61,4 @@ export const diaryProgressCte = (memberIds?: bigint[]) => {
   };
 
   return { bestTimes, reachedTiers, diaryProgress, diaryTotals };
-};
+}

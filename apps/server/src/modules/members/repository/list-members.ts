@@ -18,7 +18,7 @@ export type ListMembersOptions = {
   order: "asc" | "desc";
 };
 
-export const listMembers = ({ limit, offset, active, search, sort, order }: ListMembersOptions) => {
+export function listMembers({ limit, offset, active, search, sort, order }: ListMembersOptions) {
   const progress = diaryProgressCte();
   const { diaryTotals } = progress;
   const direction = order === "asc" ? asc : desc;
@@ -41,4 +41,4 @@ export const listMembers = ({ limit, offset, active, search, sort, order }: List
     .orderBy(direction(sortColumns[sort]), members.id)
     .limit(limit)
     .offset(offset);
-};
+}

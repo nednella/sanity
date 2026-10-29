@@ -8,8 +8,8 @@ import { epochSeconds } from "@/utils/sql";
 
 // Credited by team, matching how the diary itself is scored. The whole run comes back rather than its time
 // alone, so the screenshot that proves it is one field away.
-export const listMemberBestTimes = (memberId: bigint) =>
-  db
+export function listMemberBestTimes(memberId: bigint) {
+  return db
     .selectDistinctOn([personalBests.contentId, personalBests.scale], {
       id: personalBests.id,
       contentId: personalBests.contentId,
@@ -21,5 +21,6 @@ export const listMemberBestTimes = (memberId: bigint) =>
     .innerJoin(personalBestParticipants, eq(personalBestParticipants.personalBestId, personalBests.id))
     .where(and(isApprovedRun, eq(personalBestParticipants.memberId, memberId)))
     .orderBy(asc(personalBests.contentId), asc(personalBests.scale), asc(personalBests.time), asc(personalBests.id));
+}
 
 export type MemberBestTimeRow = Awaited<ReturnType<typeof listMemberBestTimes>>[number];

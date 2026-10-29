@@ -32,14 +32,15 @@ export const isListedRun = inArray(personalBests.status, [
 
 // Credit by team only. The submitter is often not the runner: one admin entered thousands of other people's
 // times, and is absent from his own team on almost all of them.
-export const isInTeamOf = (memberId: bigint) =>
-  inArray(
+export function isInTeamOf(memberId: bigint) {
+  return inArray(
     personalBests.id,
     db
       .select({ id: personalBestParticipants.personalBestId })
       .from(personalBestParticipants)
       .where(eq(personalBestParticipants.memberId, memberId))
   );
+}
 
 // The speedrun diary sets a time for each content and team size it rewards, so a run only counts toward it
 // when both match a row.
@@ -55,17 +56,19 @@ const isDiaryContent = exists(
     .where(matchesDiaryTime)
 );
 
-export const isFor = ({ contentId, diary, scale }: ContentFilters) =>
-  and(
+export function isFor({ contentId, diary, scale }: ContentFilters) {
+  return and(
     contentId === undefined ? undefined : eq(personalBests.contentId, contentId),
     diary ? isDiaryContent : undefined,
     scale === undefined ? undefined : eq(personalBests.scale, scale)
   );
+}
 
 export type PersonalBestFilters = ContentFilters & {
   memberId?: bigint;
   top?: number;
 };
 
-export const isCandidate = ({ memberId, ...filters }: PersonalBestFilters) =>
-  and(isListedRun, isActiveContent, isFor(filters), memberId === undefined ? undefined : isInTeamOf(memberId));
+export function isCandidate({ memberId, ...filters }: PersonalBestFilters) {
+  return and(isListedRun, isActiveContent, isFor(filters), memberId === undefined ? undefined : isInTeamOf(memberId));
+}

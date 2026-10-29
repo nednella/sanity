@@ -18,8 +18,8 @@ import { reviewSubmission } from "../repository/review-submission";
  * submitter has confirmed it. Asking for the review it already has changes nothing, and any other review
  * of a pending or reviewed submission is refused, so it is never paid twice.
  */
-export const reviewSubmissionById = async (id: number, review: Review, auth: Auth) =>
-  db.transaction(async (tx) => {
+export async function reviewSubmissionById(id: number, review: Review, auth: Auth) {
+  return db.transaction(async (tx) => {
     const submission = await findSubmissionForReview(tx, id);
     if (!submission) throw submissionErrors.notFound(id);
     if (submission.status === review.status) return;
@@ -49,3 +49,4 @@ export const reviewSubmissionById = async (id: number, review: Review, auth: Aut
     const note = [submission.itemName, valueMillions, memberIds.length + submission.nonClanCount].join(",");
     await awardPoints(tx, awards, auth.member.id, id, note);
   });
+}

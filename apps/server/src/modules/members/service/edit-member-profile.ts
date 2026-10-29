@@ -6,11 +6,12 @@ import type { Auth } from "@/modules/auth/hooks/authenticate";
 import { memberErrors } from "../errors";
 import { type ProfileChanges, updateMemberProfile } from "../repository/update-member-profile";
 
-const describe = (label: string, previous: string | null, next: string | null) =>
-  `${label} ${previous ?? "none"} to ${next ?? "none"}`;
+function describe(label: string, previous: string | null, next: string | null) {
+  return `${label} ${previous ?? "none"} to ${next ?? "none"}`;
+}
 
-export const editMemberProfile = async (auth: Auth, profile: ProfileChanges) =>
-  db.transaction(async (tx) => {
+export async function editMemberProfile(auth: Auth, profile: ProfileChanges) {
+  return db.transaction(async (tx) => {
     const previous = await updateMemberProfile(tx, auth.member.id, profile);
     if (!previous) throw memberErrors.notFound(auth.member.id);
 
@@ -33,3 +34,4 @@ export const editMemberProfile = async (auth: Auth, profile: ProfileChanges) =>
       });
     }
   });
+}

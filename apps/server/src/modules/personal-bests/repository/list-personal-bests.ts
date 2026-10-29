@@ -23,12 +23,13 @@ const sortColumns: Record<PersonalBestSort, PgColumn> = {
 
 // A run is only ever one member's best for a content and team size, so the sorted column decides the order
 // on its own and content name breaks any tie.
-const toOrderBy = (sort: PersonalBestSort, order: "asc" | "desc") => {
+function toOrderBy(sort: PersonalBestSort, order: "asc" | "desc") {
   const direction = order === "asc" ? asc : desc;
   return [direction(sortColumns[sort]), asc(bosses.name), asc(personalBests.scale)];
-};
+}
 
-export const listPersonalBests = ({ limit, offset, order, sort, ...filters }: ListPersonalBestsOptions) =>
-  selectRanked(isCandidate(filters), filters.top, toOrderBy(sort, order)).limit(limit).offset(offset);
+export function listPersonalBests({ limit, offset, order, sort, ...filters }: ListPersonalBestsOptions) {
+  return selectRanked(isCandidate(filters), filters.top, toOrderBy(sort, order)).limit(limit).offset(offset);
+}
 
 export type PersonalBestRow = Awaited<ReturnType<typeof listPersonalBests>>[number];

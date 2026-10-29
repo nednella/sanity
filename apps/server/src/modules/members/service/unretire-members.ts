@@ -10,7 +10,7 @@ import { setMemberRank } from "../repository/set-member-rank";
 import type { AdminCommand } from "../request";
 import { executePerTaggedMember } from "./shared/execute-per-tagged-member";
 
-export const unretireMembers = async ({ note, ...command }: AdminCommand, auth: Auth) => {
+export async function unretireMembers({ note, ...command }: AdminCommand, auth: Auth) {
   const ranks = await listRanks();
 
   return executePerTaggedMember(command, async (tx, member) => {
@@ -32,4 +32,4 @@ export const unretireMembers = async ({ note, ...command }: AdminCommand, auth: 
 
     return { outcome: "unretired" as const, rank: toRankSummary(earned) };
   });
-};
+}

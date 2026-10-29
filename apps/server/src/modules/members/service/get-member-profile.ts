@@ -6,7 +6,7 @@ import { memberErrors } from "../errors";
 import { toMemberProfile } from "../mapper";
 import { findMember } from "../repository/find-member";
 
-export const getMemberProfile = async (id: bigint) => {
+export async function getMemberProfile(id: bigint) {
   const row = await findMember(id);
   if (!row) throw memberErrors.notFound(id);
 
@@ -17,4 +17,4 @@ export const getMemberProfile = async (id: bigint) => {
   ]);
 
   return toMemberProfile(row, ranks, latestSnapshot, nameChanges);
-};
+}

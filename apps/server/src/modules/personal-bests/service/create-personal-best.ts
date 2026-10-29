@@ -16,8 +16,8 @@ export type NewPersonalBest = {
  * A run arrives waiting for review, and its time is stored as an interval so Postgres holds the
  * hundredths the game reports rather than a float we would have to round back.
  */
-export const createPersonalBest = async ({ participants, timeSeconds, ...personalBest }: NewPersonalBest, auth: Auth) =>
-  db.transaction(async (tx) =>
+export async function createPersonalBest({ participants, timeSeconds, ...personalBest }: NewPersonalBest, auth: Auth) {
+  return db.transaction(async (tx) =>
     savePersonalBest(
       tx,
       {
@@ -30,3 +30,4 @@ export const createPersonalBest = async ({ participants, timeSeconds, ...persona
       participants
     )
   );
+}

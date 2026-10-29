@@ -4,7 +4,7 @@ import type { MemberRole } from "@db/enums";
 import type { Transaction } from "@db/index";
 import { discordAccounts, members } from "@db/schema";
 
-export const listMembersByDiscordId = async (tx: Transaction, discordIds: bigint[]) => {
+export async function listMembersByDiscordId(tx: Transaction, discordIds: bigint[]) {
   if (discordIds.length === 0)
     return new Map<
       bigint,
@@ -25,4 +25,4 @@ export const listMembersByDiscordId = async (tx: Transaction, discordIds: bigint
     .where(inArray(discordAccounts.discordId, discordIds));
 
   return new Map(rows.map(({ discordId, ...member }) => [discordId, member]));
-};
+}

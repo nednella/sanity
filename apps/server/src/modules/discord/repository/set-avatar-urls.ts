@@ -4,8 +4,8 @@ import { db } from "@db/index";
 import { discordAccounts } from "@db/schema";
 
 // Accounts we don't hold are skipped. Returns how many were updated.
-export const setAvatarUrls = async (avatars: { avatarUrl: string | null; discordId: bigint }[]) =>
-  db.transaction(async (tx) => {
+export async function setAvatarUrls(avatars: { avatarUrl: string | null; discordId: bigint }[]) {
+  return db.transaction(async (tx) => {
     let saved = 0;
     for (const { avatarUrl, discordId } of avatars) {
       const updated = await tx
@@ -17,3 +17,4 @@ export const setAvatarUrls = async (avatars: { avatarUrl: string | null; discord
     }
     return saved;
   });
+}

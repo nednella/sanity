@@ -5,7 +5,7 @@ import { bosses } from "@db/schema";
 
 export type BossRow = typeof bosses.$inferInsert;
 
-export const saveBosses = async (tx: Transaction, rows: BossRow[]) => {
+export async function saveBosses(tx: Transaction, rows: BossRow[]) {
   const saved = await tx
     .insert(bosses)
     .values(rows)
@@ -16,4 +16,4 @@ export const saveBosses = async (tx: Transaction, rows: BossRow[]) => {
     .returning({ id: bosses.id });
 
   return saved.length;
-};
+}

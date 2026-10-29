@@ -11,8 +11,8 @@ export type SetChannelCommand = {
   purpose: (typeof discordChannels.$inferInsert)["purpose"];
 };
 
-export const setDiscordChannel = async ({ channelId, purpose }: SetChannelCommand, auth: Auth) =>
-  db.transaction(async (tx) => {
+export async function setDiscordChannel({ channelId, purpose }: SetChannelCommand, auth: Auth) {
+  return db.transaction(async (tx) => {
     await setChannel(tx, purpose, channelId);
     await recordAuditEntry(tx, {
       actingMemberId: auth.member.id,
@@ -21,3 +21,4 @@ export const setDiscordChannel = async ({ channelId, purpose }: SetChannelComman
       source: auth.client
     });
   });
+}

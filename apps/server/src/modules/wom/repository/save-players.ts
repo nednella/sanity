@@ -6,10 +6,10 @@ import { womPlayers } from "@db/schema";
 
 import { toPlayerRow } from "./shared/player-row";
 
-export const savePlayers = async (
+export async function savePlayers(
   tx: Transaction,
   players: { memberId: bigint; player: PlayerResponse; snapshot: SnapshotResponse | null }[]
-) => {
+) {
   const rows = players.map(({ memberId, player, snapshot }) => ({ memberId, ...toPlayerRow(player, snapshot) }));
 
   await tx
@@ -34,4 +34,4 @@ export const savePlayers = async (
         syncedAt: sql`excluded.synced_at`
       }
     });
-};
+}

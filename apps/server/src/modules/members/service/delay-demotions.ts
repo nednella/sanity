@@ -6,7 +6,7 @@ import { delayRankChange } from "../repository/delay-rank-change";
 import type { AdminCommand } from "../request";
 import { executePerTaggedMember } from "./shared/execute-per-tagged-member";
 
-export const delayDemotions = async (command: AdminCommand, auth: Auth) => {
+export async function delayDemotions(command: AdminCommand, auth: Auth) {
   const until = firstOfNextMonth(new Date());
 
   return executePerTaggedMember(command, async (tx, member) => {
@@ -21,4 +21,4 @@ export const delayDemotions = async (command: AdminCommand, auth: Auth) => {
 
     return { outcome: "delayed" as const, until };
   });
-};
+}

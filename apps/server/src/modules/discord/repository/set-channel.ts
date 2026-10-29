@@ -5,9 +5,9 @@ import { discordChannels } from "@db/schema";
 
 type Purpose = (typeof discordChannels.$inferInsert)["purpose"];
 
-export const setChannel = async (tx: Transaction, purpose: Purpose, channelId: bigint) => {
+export async function setChannel(tx: Transaction, purpose: Purpose, channelId: bigint) {
   await tx
     .insert(discordChannels)
     .values({ channelId, purpose })
     .onConflictDoUpdate({ target: discordChannels.purpose, set: { channelId: sql`excluded.channel_id` } });
-};
+}

@@ -3,7 +3,7 @@ import { personalBestParticipants, personalBests } from "@db/schema";
 
 export type PersonalBestRow = typeof personalBests.$inferInsert;
 
-export const savePersonalBest = async (tx: Transaction, personalBest: PersonalBestRow, participants: bigint[]) => {
+export async function savePersonalBest(tx: Transaction, personalBest: PersonalBestRow, participants: bigint[]) {
   const [saved] = await tx.insert(personalBests).values(personalBest).returning({ id: personalBests.id });
 
   const unique = [...new Set(participants)];
@@ -14,4 +14,4 @@ export const savePersonalBest = async (tx: Transaction, personalBest: PersonalBe
   }
 
   return saved!.id;
-};
+}

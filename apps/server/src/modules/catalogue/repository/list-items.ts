@@ -8,10 +8,11 @@ export type ListItemsOptions = {
   search?: string;
 };
 
-export const listItems = ({ limit, search }: ListItemsOptions) =>
-  db
+export function listItems({ limit, search }: ListItemsOptions) {
+  return db
     .select()
     .from(items)
     .where(search === undefined ? undefined : ilike(items.name, `%${search}%`))
     .orderBy(asc(items.name))
     .limit(limit);
+}

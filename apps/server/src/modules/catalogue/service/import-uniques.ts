@@ -4,7 +4,7 @@ import { recordAuditEntry } from "@/modules/audit/repository/record-audit-entry"
 
 import { type UniqueRow, saveUniques } from "../repository/save-uniques";
 
-export const importUniques = async (rows: UniqueRow[]) => {
+export async function importUniques(rows: UniqueRow[]) {
   if (rows.length === 0) return 0;
 
   return db.transaction(async (tx) => {
@@ -18,4 +18,4 @@ export const importUniques = async (rows: UniqueRow[]) => {
 
     return saved;
   });
-};
+}

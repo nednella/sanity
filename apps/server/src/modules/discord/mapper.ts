@@ -5,5 +5,6 @@ export type DiscordAccount = {
   discordId: bigint;
 };
 
-export const toAvatarUrl = ({ avatarHash, discordId }: DiscordAccount) =>
-  avatarHash === null ? null : discordAvatarUrl(discordId, avatarHash);
+export function toAvatarUrl({ avatarHash, discordId }: DiscordAccount) {
+  return avatarHash === null ? null : discordAvatarUrl(discordId, avatarHash);
+}

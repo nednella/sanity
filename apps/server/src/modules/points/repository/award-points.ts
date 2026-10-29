@@ -8,13 +8,13 @@ export type Award = {
   points: number;
 };
 
-export const awardPoints = async (
+export async function awardPoints(
   tx: Transaction,
   awards: Award[],
   awardedBy: bigint,
   submissionId: number | null,
   notes: string
-) => {
+) {
   const earned = awards.filter(({ points: value }) => value !== 0);
   if (earned.length === 0) return 0;
 
@@ -43,4 +43,4 @@ export const awardPoints = async (
   `);
 
   return earned.length;
-};
+}

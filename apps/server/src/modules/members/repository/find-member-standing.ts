@@ -5,7 +5,7 @@ import { members } from "@db/schema";
 
 import { diaryProgressCte } from "@/modules/speedrun-diary/repository/diary-progress-cte";
 
-export const findMemberStanding = async (tx: Transaction, memberId: bigint) => {
+export async function findMemberStanding(tx: Transaction, memberId: bigint) {
   const { bestTimes, diaryProgress, diaryTotals, reachedTiers } = diaryProgressCte([memberId]);
 
   const [standing] = await tx
@@ -21,4 +21,4 @@ export const findMemberStanding = async (tx: Transaction, memberId: bigint) => {
     .where(eq(members.id, memberId));
 
   return standing;
-};
+}

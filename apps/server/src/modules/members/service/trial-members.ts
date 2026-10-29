@@ -8,8 +8,8 @@ import { saveMember } from "../repository/save-member";
 import { startMemberTrial } from "../repository/start-member-trial";
 import type { TrialCommand } from "../request";
 
-export const trialMembers = async ({ trialists }: TrialCommand, auth: Auth) =>
-  db.transaction(async (tx) => {
+export async function trialMembers({ trialists }: TrialCommand, auth: Auth) {
+  return db.transaction(async (tx) => {
     const found = await listMembersByDiscordId(
       tx,
       trialists.map(({ discordId }) => discordId)
@@ -52,3 +52,4 @@ export const trialMembers = async ({ trialists }: TrialCommand, auth: Auth) =>
 
     return results;
   });
+}

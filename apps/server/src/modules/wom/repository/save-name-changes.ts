@@ -3,7 +3,7 @@ import { womNameChanges } from "@db/schema";
 
 export type NameChangeRow = typeof womNameChanges.$inferInsert;
 
-export const saveNameChanges = async (rows: NameChangeRow[]) => {
+export async function saveNameChanges(rows: NameChangeRow[]) {
   if (rows.length === 0) return 0;
 
   const saved = await db
@@ -13,4 +13,4 @@ export const saveNameChanges = async (rows: NameChangeRow[]) => {
     .returning({ id: womNameChanges.id });
 
   return saved.length;
-};
+}

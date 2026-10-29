@@ -32,7 +32,7 @@ export type PointAward = {
  * not in the clan, and each share is capped. Teaming with a trialist pays the members double, which
  * is the point of it; the trialist only doubles their own share when another trialist is with them.
  */
-export const generatePointSplit = ({ nonClanCount, participants, valueMillions }: SubmissionSplit): PointAward[] => {
+export function generatePointSplit({ nonClanCount, participants, valueMillions }: SubmissionSplit): PointAward[] {
   const headCount = participants.length + nonClanCount;
   if (headCount === 0) return [];
 
@@ -44,16 +44,16 @@ export const generatePointSplit = ({ nonClanCount, participants, valueMillions }
 
     return { memberId, points: Math.min(POINT_CAP, share * (isDoubled ? TRIAL_MULTIPLIER : 1)) };
   });
-};
+}
 
 /**
  * Carrying somebody into a diary tier pays the members who already held it, once per person they
  * carried. Elite and master are counted apart, since a run can clear both and a teammate may hold
  * one without the other. A first clear for the whole team pays nobody: there was no one to carry.
  */
-export const generateDiaryCarryAwards = ({ carried, holders, tierId }: DiaryCarry): PointAward[] => {
+export function generateDiaryCarryAwards({ carried, holders, tierId }: DiaryCarry): PointAward[] {
   const points = (DIARY_CARRY_POINTS[tierId] ?? 0) * carried.length;
   if (points === 0) return [];
 
   return holders.map((memberId) => ({ memberId, points }));
-};
+}

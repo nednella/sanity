@@ -6,8 +6,8 @@ import { bosses, speedrunContent, speedrunDiaryTiers, speedrunDiaryTimes } from 
 import { epochSeconds } from "@/utils/sql";
 
 // Every threshold the diary sets: one row per content, team size and tier.
-export const listDiaryTimes = () =>
-  db
+export function listDiaryTimes() {
+  return db
     .select({
       contentId: speedrunContent.id,
       contentName: bosses.name,
@@ -24,5 +24,6 @@ export const listDiaryTimes = () =>
     .innerJoin(bosses, eq(bosses.id, speedrunContent.bossId))
     .innerJoin(speedrunDiaryTiers, eq(speedrunDiaryTiers.id, speedrunDiaryTimes.tierId))
     .orderBy(asc(bosses.name), asc(speedrunDiaryTimes.scale), asc(speedrunDiaryTiers.id));
+}
 
 export type DiaryTimeRow = Awaited<ReturnType<typeof listDiaryTimes>>[number];

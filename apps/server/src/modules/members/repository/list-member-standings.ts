@@ -5,7 +5,7 @@ import { discordAccounts, memberRankDelays, members } from "@db/schema";
 
 import { diaryProgressCte } from "@/modules/speedrun-diary/repository/diary-progress-cte";
 
-export const listMemberStandings = (tx: Transaction, memberIds?: bigint[]) => {
+export function listMemberStandings(tx: Transaction, memberIds?: bigint[]) {
   const { bestTimes, diaryProgress, diaryTotals, reachedTiers } = diaryProgressCte(memberIds);
 
   return tx
@@ -26,4 +26,4 @@ export const listMemberStandings = (tx: Transaction, memberIds?: bigint[]) => {
     .leftJoin(diaryProgress, eq(diaryProgress.memberId, members.id))
     .leftJoin(memberRankDelays, eq(memberRankDelays.memberId, members.id))
     .where(and(eq(members.isActive, true), memberIds && inArray(members.id, memberIds)));
-};
+}

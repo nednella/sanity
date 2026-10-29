@@ -9,7 +9,7 @@ import { setMemberRank } from "../repository/set-member-rank";
 import type { AdminCommand } from "../request";
 import { executePerTaggedMember } from "./shared/execute-per-tagged-member";
 
-export const passMembers = async ({ note, ...command }: AdminCommand, auth: Auth) => {
+export async function passMembers({ note, ...command }: AdminCommand, auth: Auth) {
   const [first] = toActiveRanks(await listRanks());
 
   return executePerTaggedMember(command, async (tx, member) => {
@@ -27,4 +27,4 @@ export const passMembers = async ({ note, ...command }: AdminCommand, auth: Auth
 
     return { outcome: "passed" as const, rank: toRankSummary(first) };
   });
-};
+}

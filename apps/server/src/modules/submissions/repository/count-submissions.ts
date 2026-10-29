@@ -5,7 +5,7 @@ import { submissions } from "@db/schema";
 
 import { type SubmissionFilters, matchesSubmission } from "./shared/filters";
 
-export const countSubmissions = async (filters: SubmissionFilters) => {
+export async function countSubmissions(filters: SubmissionFilters) {
   const [row] = await db.select({ value: count() }).from(submissions).where(matchesSubmission(filters));
   return row?.value ?? 0;
-};
+}

@@ -13,7 +13,7 @@ import { toPlayerRow } from "./shared/player-row";
  * group sync has never seen, whether or not the RSN belongs to a clan member.
  * Reports whether a row was updated or not.
  */
-export const savePlayer = async (tx: Transaction, player: PlayerResponse, snapshot: SnapshotResponse | null) => {
+export async function savePlayer(tx: Transaction, player: PlayerResponse, snapshot: SnapshotResponse | null) {
   const updated = await tx
     .update(womPlayers)
     .set(toPlayerRow(player, snapshot))
@@ -21,4 +21,4 @@ export const savePlayer = async (tx: Transaction, player: PlayerResponse, snapsh
     .returning({ womPlayerId: womPlayers.womPlayerId });
 
   return updated.length > 0;
-};
+}

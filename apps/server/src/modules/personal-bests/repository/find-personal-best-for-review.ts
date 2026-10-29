@@ -5,7 +5,7 @@ import { personalBests } from "@db/schema";
 
 import { epochSeconds } from "@/utils/sql";
 
-export const findPersonalBestForReview = async (tx: Transaction, id: number) => {
+export async function findPersonalBestForReview(tx: Transaction, id: number) {
   const [found] = await tx
     .select({
       id: personalBests.id,
@@ -19,4 +19,4 @@ export const findPersonalBestForReview = async (tx: Transaction, id: number) => 
     .for("update");
 
   return found;
-};
+}

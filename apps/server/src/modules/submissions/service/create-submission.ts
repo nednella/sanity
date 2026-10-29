@@ -8,11 +8,12 @@ export type NewSubmission = Omit<SubmissionRow, "memberId" | "status" | "submitt
 
 // A submission arrives waiting for review. Nothing it claims is trusted until someone approves it,
 // and no points exist until then.
-export const createSubmission = async ({ participants, ...submission }: NewSubmission, auth: Auth) =>
-  db.transaction(async (tx) =>
+export async function createSubmission({ participants, ...submission }: NewSubmission, auth: Auth) {
+  return db.transaction(async (tx) =>
     saveSubmission(
       tx,
       { ...submission, memberId: auth.member.id, status: "submitted", submittedAt: new Date() },
       participants
     )
   );
+}

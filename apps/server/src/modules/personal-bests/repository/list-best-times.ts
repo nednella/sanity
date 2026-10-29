@@ -18,7 +18,7 @@ export type BestTimesOptions = {
  * What each of these members had already run this content and team size in, before the run under
  * review. Every tier is decided against the same times, so they are read once rather than per tier.
  */
-export const listBestTimes = async (tx: Transaction, { contentId, excludeId, memberIds, scale }: BestTimesOptions) => {
+export async function listBestTimes(tx: Transaction, { contentId, excludeId, memberIds, scale }: BestTimesOptions) {
   if (memberIds.length === 0) return new Map<bigint, number>();
 
   const rows = await tx
@@ -40,4 +40,4 @@ export const listBestTimes = async (tx: Transaction, { contentId, excludeId, mem
     .groupBy(personalBestParticipants.memberId);
 
   return new Map(rows.map(({ memberId, timeSeconds }) => [memberId, timeSeconds]));
-};
+}

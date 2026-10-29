@@ -2,6 +2,6 @@ import { sql } from "drizzle-orm";
 
 import { db } from "@db/index";
 
-export const pingDatabase = async () => {
+export async function pingDatabase() {
   await db.execute(sql`select 1`);
-};
+}

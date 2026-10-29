@@ -10,7 +10,7 @@ import { executePerTaggedMember } from "./shared/execute-per-tagged-member";
 
 export type RankChange = AdminCommand & { rankId: number };
 
-export const changeMemberRanks = async ({ note, rankId, ...command }: RankChange, auth: Auth) => {
+export async function changeMemberRanks({ note, rankId, ...command }: RankChange, auth: Auth) {
   const rows = await listRanks();
   const ranks = new Map(rows.map((rank) => [rank.id, rank]));
 
@@ -35,4 +35,4 @@ export const changeMemberRanks = async ({ note, rankId, ...command }: RankChange
 
     return { outcome: "ranked" as const, rank: toRankSummary(rank) };
   });
-};
+}

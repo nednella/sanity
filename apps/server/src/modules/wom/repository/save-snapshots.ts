@@ -15,24 +15,28 @@ const SNAPSHOTS_PER_BATCH = 100;
 
 // Wise Old Man reports -1 for a value it doesn't know: a rank or count below the hiscore threshold, or
 // efficiency on snapshots older than its rates. Unknown counts are left out rather than stored as -1.
-const known = (value: number) => (value === -1 ? null : value);
+function known(value: number) {
+  return value === -1 ? null : value;
+}
 
-const breakdown = (womSnapshotId: number, { skills, bosses, activities, computed }: SnapshotResponse["data"]) => ({
-  computed: Object.values(computed)
-    .filter(({ value }) => value !== -1)
-    .map(({ metric, rank, value }) => ({ womSnapshotId, metric, rank: known(rank), value })),
-  skills: Object.values(skills)
-    .filter(({ experience }) => experience !== -1)
-    .map(({ metric, rank, ...values }) => ({ womSnapshotId, skill: metric, rank: known(rank), ...values })),
-  bosses: Object.values(bosses)
-    .filter(({ kills }) => kills !== -1)
-    .map(({ metric, rank, ...values }) => ({ womSnapshotId, boss: metric, rank: known(rank), ...values })),
-  activities: Object.values(activities)
-    .filter(({ score }) => score !== -1)
-    .map(({ metric, rank, ...values }) => ({ womSnapshotId, activity: metric, rank: known(rank), ...values }))
-});
+function breakdown(womSnapshotId: number, { skills, bosses, activities, computed }: SnapshotResponse["data"]) {
+  return {
+    computed: Object.values(computed)
+      .filter(({ value }) => value !== -1)
+      .map(({ metric, rank, value }) => ({ womSnapshotId, metric, rank: known(rank), value })),
+    skills: Object.values(skills)
+      .filter(({ experience }) => experience !== -1)
+      .map(({ metric, rank, ...values }) => ({ womSnapshotId, skill: metric, rank: known(rank), ...values })),
+    bosses: Object.values(bosses)
+      .filter(({ kills }) => kills !== -1)
+      .map(({ metric, rank, ...values }) => ({ womSnapshotId, boss: metric, rank: known(rank), ...values })),
+    activities: Object.values(activities)
+      .filter(({ score }) => score !== -1)
+      .map(({ metric, rank, ...values }) => ({ womSnapshotId, activity: metric, rank: known(rank), ...values }))
+  };
+}
 
-const saveBatch = async (tx: Transaction, snapshots: SnapshotResponse[]) => {
+async function saveBatch(tx: Transaction, snapshots: SnapshotResponse[]) {
   const saved = await tx
     .insert(womSnapshots)
     .values(snapshots.map(({ playerId, createdAt }) => ({ womPlayerId: playerId, createdAt })))
@@ -59,13 +63,13 @@ const saveBatch = async (tx: Transaction, snapshots: SnapshotResponse[]) => {
   if (activities.length > 0) await tx.insert(womSnapshotActivities).values(activities);
 
   return saved.length;
-};
+}
 
 // Snapshots already stored are skipped, so overlapping pulls are safe. Returns how many were new.
-export const saveSnapshots = async (tx: Transaction, snapshots: SnapshotResponse[]) => {
+export async function saveSnapshots(tx: Transaction, snapshots: SnapshotResponse[]) {
   let saved = 0;
   for (let start = 0; start < snapshots.length; start += SNAPSHOTS_PER_BATCH) {
     saved += await saveBatch(tx, snapshots.slice(start, start + SNAPSHOTS_PER_BATCH));
   }
   return saved;
-};
+}

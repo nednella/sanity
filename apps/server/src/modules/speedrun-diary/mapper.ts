@@ -1,28 +1,36 @@
 import type { DiaryTimeRow } from "./repository/list-diary-times";
 import type { MemberBestTimeRow } from "./repository/list-member-best-times";
 
-const toContent = ({ contentId, contentName, contentMetric, contentImageUrl }: DiaryTimeRow) => ({
-  id: contentId,
-  name: contentName,
-  metric: contentMetric,
-  imageUrl: contentImageUrl
-});
+function toContent({ contentId, contentName, contentMetric, contentImageUrl }: DiaryTimeRow) {
+  return {
+    id: contentId,
+    name: contentName,
+    metric: contentMetric,
+    imageUrl: contentImageUrl
+  };
+}
 
-const toTier = ({ tierId, tierName, tierPoints }: DiaryTimeRow) => ({
-  id: tierId,
-  name: tierName,
-  points: tierPoints
-});
+function toTier({ tierId, tierName, tierPoints }: DiaryTimeRow) {
+  return {
+    id: tierId,
+    name: tierName,
+    points: tierPoints
+  };
+}
 
-const toTierTime = (row: DiaryTimeRow) => ({ ...toTier(row), timeSeconds: row.timeSeconds });
+function toTierTime(row: DiaryTimeRow) {
+  return { ...toTier(row), timeSeconds: row.timeSeconds };
+}
 
-export const toDiary = (rows: [DiaryTimeRow, ...DiaryTimeRow[]]) => ({
-  content: toContent(rows[0]),
-  scales: [...Map.groupBy(rows, (row) => row.scale)].map(([scale, tiers]) => ({
-    scale,
-    tiers: tiers.map((tier) => toTierTime(tier))
-  }))
-});
+export function toDiary(rows: [DiaryTimeRow, ...DiaryTimeRow[]]) {
+  return {
+    content: toContent(rows[0]),
+    scales: [...Map.groupBy(rows, (row) => row.scale)].map(([scale, tiers]) => ({
+      scale,
+      tiers: tiers.map((tier) => toTierTime(tier))
+    }))
+  };
+}
 
 /**
  * Turns one diary's thresholds into the member's standing on it.
@@ -30,10 +38,7 @@ export const toDiary = (rows: [DiaryTimeRow, ...DiaryTimeRow[]]) => ({
  * Thresholds arrive ordered by tier, and a faster time beats every tier below it, so the last one the
  * member's best beats is the tier they hold and the one after it is what they are chasing.
  */
-export const toMemberDiary = (
-  [first, ...rest]: [DiaryTimeRow, ...DiaryTimeRow[]],
-  pb: MemberBestTimeRow | undefined
-) => {
+export function toMemberDiary([first, ...rest]: [DiaryTimeRow, ...DiaryTimeRow[]], pb: MemberBestTimeRow | undefined) {
   const thresholds = [first, ...rest];
 
   const beaten = pb ? thresholds.filter((threshold) => pb.timeSeconds <= threshold.timeSeconds) : [];
@@ -47,4 +52,4 @@ export const toMemberDiary = (
     tier: reached ? toTier(reached) : null,
     nextTier: next ? toTierTime(next) : null
   };
-};
+}

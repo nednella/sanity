@@ -9,11 +9,17 @@ export type Standing = {
 
 export const RANK_IDS_OFF_LADDER = new Set([QUIT_RANK_ID, RETIRED_RANK_ID, TRIALIST_RANK_ID]);
 
-export const toActiveRanks = (ranks: RankRow[]) => ranks.filter((rank) => !RANK_IDS_OFF_LADDER.has(rank.id));
+export function toActiveRanks(ranks: RankRow[]) {
+  return ranks.filter((rank) => !RANK_IDS_OFF_LADDER.has(rank.id));
+}
 
-export const hasMetRequirements = (rank: RankRow, standing: Standing) =>
-  standing.clanPoints >= rank.clanPointRequirement &&
-  (standing.diaryPoints >= rank.diaryPointRequirement || standing.masterDiaries >= rank.masterDiaryRequirement);
+export function hasMetRequirements(rank: RankRow, standing: Standing) {
+  return (
+    standing.clanPoints >= rank.clanPointRequirement &&
+    (standing.diaryPoints >= rank.diaryPointRequirement || standing.masterDiaries >= rank.masterDiaryRequirement)
+  );
+}
 
-export const toEarnedRank = (ranks: RankRow[], standing: Standing) =>
-  toActiveRanks(ranks).findLast((rank) => hasMetRequirements(rank, standing));
+export function toEarnedRank(ranks: RankRow[], standing: Standing) {
+  return toActiveRanks(ranks).findLast((rank) => hasMetRequirements(rank, standing));
+}
