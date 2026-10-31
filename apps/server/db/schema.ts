@@ -153,7 +153,8 @@ export const personalBests = pgTable(
     submittedAt: timestamp({ withTimezone: true }),
     reviewedBy: bigint({ mode: "bigint" }).references(() => members.id, { onDelete: "restrict" }),
     reviewedAt: timestamp({ withTimezone: true }),
-    reviewNote: text()
+    reviewNote: text(),
+    source: apiClient().notNull()
   },
   (table) => [index().on(table.memberId), index().on(table.contentId, table.scale, table.time)]
 );
@@ -259,7 +260,8 @@ export const submissions = pgTable(
     submittedAt: timestamp({ withTimezone: true }).notNull(),
     reviewedBy: bigint({ mode: "bigint" }).references(() => members.id, { onDelete: "restrict" }),
     reviewedAt: timestamp({ withTimezone: true }),
-    reviewNote: text()
+    reviewNote: text(),
+    source: apiClient().notNull()
   },
   (table) => [
     index().on(table.memberId),
