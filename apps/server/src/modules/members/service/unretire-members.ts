@@ -1,35 +1,48 @@
-import { recordAuditEntry } from "@/modules/audit/repository/record-audit-entry";
+import { db } from "@db/index";
+
+import type { ApplicationError } from "@/errors/error";
+import { recordAuditEntries } from "@/modules/audit/repository/record-audit-entries";
 import type { Auth } from "@/modules/auth/hooks/authenticate";
 import { QUIT_RANK_ID, RETIRED_RANK_ID } from "@/modules/ranks/constants";
 import { toRankSummary } from "@/modules/ranks/mapper";
 import { listRanks } from "@/modules/ranks/repository/list-ranks";
 import { toEarnedRank } from "@/modules/ranks/rules";
 
-import { findMemberStanding } from "../repository/find-member-standing";
-import { setMemberRank } from "../repository/set-member-rank";
-import type { AdminCommand } from "../request";
-import { executePerTaggedMember } from "./shared/execute-per-tagged-member";
+import { memberErrors } from "../errors";
+import { listMemberIdsByRef } from "../repository/list-member-ids-by-ref";
+import { listMemberStandings } from "../repository/list-member-standings";
+import { setMemberRanks } from "../repository/set-member-ranks";
+import type { MemberCommand } from "../request";
 
-export async function unretireMembers({ note, ...command }: AdminCommand, auth: Auth) {
+type MemberStanding = Awaited<ReturnType<typeof listMemberStandings>>[number];
+
+type RankSummary = ReturnType<typeof toRankSummary>;
+
+export async function unretireMembers({ members, note }: MemberCommand, auth: Auth) {
   const ranks = await listRanks();
 
-  return executePerTaggedMember(command, async (tx, member) => {
-    if (member.rankId === QUIT_RANK_ID) return { outcome: "has-quit" as const };
-    if (member.rankId !== RETIRED_RANK_ID) return { outcome: "not-retired" as const };
+  return db.transaction(async (tx) => {
+    const memberIds = await listMemberIdsByRef(tx, members);
+    const standings = await listMemberStandings(tx, memberIds);
 
-    const standing = await findMemberStanding(tx, member.id);
-    const earned = standing && toEarnedRank(ranks, standing);
-    if (!earned) return { outcome: "no-rank-earned" as const };
+    const changed: { member: MemberStanding; rank: RankSummary }[] = [];
+    const skipped: { member: MemberStanding; error: ApplicationError }[] = [];
 
-    await setMemberRank(tx, member.id, earned.id);
-    await recordAuditEntry(tx, {
-      actingMemberId: auth.member.id,
-      action: "rank_changed",
-      affects: [member.id],
-      note: note ?? `unretired as ${earned.name}`,
-      source: auth.client
-    });
+    for (const member of standings) {
+      const earned = toEarnedRank(ranks, member);
 
-    return { outcome: "unretired" as const, rank: toRankSummary(earned) };
+      if (member.rankId === QUIT_RANK_ID) skipped.push({ member, error: memberErrors.hasQuit() });
+      else if (member.rankId !== RETIRED_RANK_ID) skipped.push({ member, error: memberErrors.notRetired() });
+      else if (earned) changed.push({ member, rank: toRankSummary(earned) });
+      else skipped.push({ member, error: memberErrors.noRankEarned() });
+    }
+
+    await setMemberRanks(
+      tx,
+      changed.map(({ member, rank }) => ({ memberId: member.id, rankId: rank.id }))
+    );
+    await recordAuditEntries(tx, auth, "rank_changed", changed, ({ rank }) => note ?? `unretired as ${rank.name}`);
+
+    return { changed, skipped };
   });
 }

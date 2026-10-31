@@ -1,30 +1,45 @@
-import { recordAuditEntry } from "@/modules/audit/repository/record-audit-entry";
+import { db } from "@db/index";
+
+import type { ApplicationError } from "@/errors/error";
+import { recordAuditEntries } from "@/modules/audit/repository/record-audit-entries";
 import type { Auth } from "@/modules/auth/hooks/authenticate";
 import { TRIALIST_RANK_ID } from "@/modules/ranks/constants";
 import { toRankSummary } from "@/modules/ranks/mapper";
 import { listRanks } from "@/modules/ranks/repository/list-ranks";
 import { toActiveRanks } from "@/modules/ranks/rules";
 
-import { setMemberRank } from "../repository/set-member-rank";
-import type { AdminCommand } from "../request";
-import { executePerTaggedMember } from "./shared/execute-per-tagged-member";
+import { memberErrors } from "../errors";
+import { listMemberIdsByRef } from "../repository/list-member-ids-by-ref";
+import { listMembersById } from "../repository/list-members-by-id";
+import { setMemberRanks } from "../repository/set-member-ranks";
+import type { MemberCommand } from "../request";
 
-export async function passMembers({ note, ...command }: AdminCommand, auth: Auth) {
+type Member = Awaited<ReturnType<typeof listMembersById>>[number];
+
+export async function passMembers({ members, note }: MemberCommand, auth: Auth) {
   const [first] = toActiveRanks(await listRanks());
+  if (!first) throw memberErrors.noRankToGive();
 
-  return executePerTaggedMember(command, async (tx, member) => {
-    if (!first) return { outcome: "no-rank-to-give" as const };
-    if (member.rankId !== TRIALIST_RANK_ID) return { outcome: "not-a-trialist" as const };
+  const rank = toRankSummary(first);
 
-    await setMemberRank(tx, member.id, first.id);
-    await recordAuditEntry(tx, {
-      actingMemberId: auth.member.id,
-      action: "rank_changed",
-      affects: [member.id],
-      note: note ?? `passed trial as ${first.name}`,
-      source: auth.client
-    });
+  return db.transaction(async (tx) => {
+    const memberIds = await listMemberIdsByRef(tx, members);
+    const found = await listMembersById(tx, memberIds);
 
-    return { outcome: "passed" as const, rank: toRankSummary(first) };
+    const changed: { member: Member; rank: typeof rank }[] = [];
+    const skipped: { member: Member; error: ApplicationError }[] = [];
+
+    for (const member of found) {
+      if (member.rankId === TRIALIST_RANK_ID) changed.push({ member, rank });
+      else skipped.push({ member, error: memberErrors.notTrialist() });
+    }
+
+    await setMemberRanks(
+      tx,
+      changed.map(({ member }) => ({ memberId: member.id, rankId: rank.id }))
+    );
+    await recordAuditEntries(tx, auth, "rank_changed", changed, () => note ?? `passed trial as ${rank.name}`);
+
+    return { changed, skipped };
   });
 }

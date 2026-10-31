@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 import { contentFilters, personalBestSortFilters, top } from "@/modules/personal-bests/request";
+import { QUIT_RANK_ID, RETIRED_RANK_ID } from "@/modules/ranks/constants";
 import { submissionSortFilters } from "@/modules/submissions/request";
 import { bigIntString, booleanString } from "@/schema/codecs";
 import { pagination } from "@/schema/common";
@@ -46,8 +47,10 @@ export const memberSubmissionsQuery = z.object({
   ...submissionSortFilters.shape
 });
 
+const memberRef = z.union([z.object({ memberId: bigIntString }), z.object({ discordId: bigIntString })]);
+
 export const memberCommandBody = z.object({
-  taggedDiscordIds: z.array(bigIntString).min(1).max(50),
+  members: z.array(memberRef).min(1).max(50),
   note: z.string().trim().max(500).optional()
 });
 
@@ -58,7 +61,12 @@ const trialist = z.object({
   mainRsn: rsn
 });
 
-export const changeRankBody = memberCommandBody.extend({ rankId: z.number().int() });
+export const changeRankBody = memberCommandBody.extend({
+  rankId: z
+    .number()
+    .int()
+    .refine((rankId) => rankId !== QUIT_RANK_ID && rankId !== RETIRED_RANK_ID, "Use quit or retire for that rank")
+});
 
 export const changePluginAccessBody = memberCommandBody.extend({ revoked: z.boolean() });
 
@@ -81,10 +89,12 @@ export const updateMemberBody = z
   })
   .partial();
 
-export type AdminCommand = z.output<typeof memberCommandBody>;
+export type MemberCommand = z.output<typeof memberCommandBody>;
+export type MemberRef = z.output<typeof memberRef>;
 export type MemberListQuery = Partial<z.output<typeof memberListQuery>>;
 export type MemberSort = z.output<typeof memberSort>;
 export type NewMember = z.output<typeof trialist>;
 export type PluginAccessChange = z.output<typeof changePluginAccessBody>;
+export type RankChange = z.output<typeof changeRankBody>;
 export type RoleChange = z.output<typeof changeRoleBody>;
 export type TrialCommand = z.output<typeof trialBody>;

@@ -1,38 +1,53 @@
-import { recordAuditEntry } from "@/modules/audit/repository/record-audit-entry";
+import { db } from "@db/index";
+
+import type { ApplicationError } from "@/errors/error";
+import { recordAuditEntries } from "@/modules/audit/repository/record-audit-entries";
 import type { Auth } from "@/modules/auth/hooks/authenticate";
-import { QUIT_RANK_ID, RETIRED_RANK_ID } from "@/modules/ranks/constants";
+import { QUIT_RANK_ID } from "@/modules/ranks/constants";
 import { toRankSummary } from "@/modules/ranks/mapper";
 import { listRanks } from "@/modules/ranks/repository/list-ranks";
 
-import { setMemberRank } from "../repository/set-member-rank";
-import type { AdminCommand } from "../request";
-import { executePerTaggedMember } from "./shared/execute-per-tagged-member";
+import { memberErrors } from "../errors";
+import { listMemberIdsByRef } from "../repository/list-member-ids-by-ref";
+import { listMembersById } from "../repository/list-members-by-id";
+import { setMemberRanks } from "../repository/set-member-ranks";
+import type { RankChange } from "../request";
 
-export type RankChange = AdminCommand & { rankId: number };
+type Member = Awaited<ReturnType<typeof listMembersById>>[number];
 
-export async function changeMemberRanks({ note, rankId, ...command }: RankChange, auth: Auth) {
-  const rows = await listRanks();
-  const ranks = new Map(rows.map((rank) => [rank.id, rank]));
+export async function changeMemberRanks({ members, note, rankId }: RankChange, auth: Auth) {
+  const rankRows = await listRanks();
+  const ranks = new Map(rankRows.map((row) => [row.id, row]));
+  const target = ranks.get(rankId);
+  if (!target) throw memberErrors.unknownRank(rankId);
 
-  return executePerTaggedMember(command, async (tx, member) => {
-    if (rankId === QUIT_RANK_ID || rankId === RETIRED_RANK_ID) return { outcome: "not-a-rank-change" as const };
-    if (member.rankId === QUIT_RANK_ID) return { outcome: "has-quit" as const };
-    if (member.rankId === rankId) return { outcome: "unchanged" as const };
+  const rank = toRankSummary(target);
 
-    const rank = ranks.get(rankId);
-    if (!rank) return { outcome: "unknown-rank" as const };
+  return db.transaction(async (tx) => {
+    const memberIds = await listMemberIdsByRef(tx, members);
+    const found = await listMembersById(tx, memberIds);
 
-    const from = ranks.get(member.rankId);
-    await setMemberRank(tx, member.id, rankId);
+    const changed: { member: Member; rank: typeof rank }[] = [];
+    const skipped: { member: Member; error: ApplicationError }[] = [];
 
-    await recordAuditEntry(tx, {
-      actingMemberId: auth.member.id,
-      action: "rank_changed",
-      affects: [member.id],
-      note: note ?? `${from?.name ?? member.rankId} to ${rank.name}`,
-      source: auth.client
-    });
+    for (const member of found) {
+      if (member.rankId === QUIT_RANK_ID) skipped.push({ member, error: memberErrors.hasQuit() });
+      else if (member.rankId === rankId) skipped.push({ member, error: memberErrors.alreadyRank() });
+      else changed.push({ member, rank });
+    }
 
-    return { outcome: "ranked" as const, rank: toRankSummary(rank) };
+    await setMemberRanks(
+      tx,
+      changed.map(({ member }) => ({ memberId: member.id, rankId }))
+    );
+    await recordAuditEntries(
+      tx,
+      auth,
+      "rank_changed",
+      changed,
+      ({ member }) => note ?? `${ranks.get(member.rankId)?.name ?? member.rankId} to ${rank.name}`
+    );
+
+    return { changed, skipped };
   });
 }

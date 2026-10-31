@@ -22,7 +22,7 @@ import {
   trialBody,
   updateMemberBody
 } from "./request";
-import { commandOutcomes, member, memberProfile, rankProposals, trialOutcomes } from "./response";
+import { member, memberChanges, memberProfile, rankProposals, trialOutcomes } from "./response";
 import { changeMemberRanks } from "./service/change-member-ranks";
 import { changeMemberRoles } from "./service/change-member-roles";
 import { changePluginAccess } from "./service/change-plugin-access";
@@ -197,10 +197,10 @@ export const membersModule = defineModule([
     schema: {
       body: memberCommandBody,
       response: {
-        200: commandOutcomes
+        200: memberChanges
       }
     },
-    handler: async (req) => ({ results: await delayDemotions(req.body, req.auth) })
+    handler: async (req) => delayDemotions(req.body, req.auth)
   }),
 
   defineRoute({
@@ -215,10 +215,10 @@ export const membersModule = defineModule([
     schema: {
       body: memberCommandBody,
       response: {
-        200: commandOutcomes
+        200: memberChanges
       }
     },
-    handler: async (req) => ({ results: await passMembers(req.body, req.auth) })
+    handler: async (req) => passMembers(req.body, req.auth)
   }),
 
   defineRoute({
@@ -233,10 +233,10 @@ export const membersModule = defineModule([
     schema: {
       body: changePluginAccessBody,
       response: {
-        200: commandOutcomes
+        200: memberChanges
       }
     },
-    handler: async (req) => ({ results: await changePluginAccess(req.body, req.auth) })
+    handler: async (req) => changePluginAccess(req.body, req.auth)
   }),
 
   defineRoute({
@@ -251,10 +251,10 @@ export const membersModule = defineModule([
     schema: {
       body: memberCommandBody,
       response: {
-        200: commandOutcomes
+        200: memberChanges
       }
     },
-    handler: async (req) => ({ results: await quitMembers(req.body, req.auth) })
+    handler: async (req) => quitMembers(req.body, req.auth)
   }),
 
   defineRoute({
@@ -269,10 +269,10 @@ export const membersModule = defineModule([
     schema: {
       body: changeRankBody,
       response: {
-        200: commandOutcomes
+        200: memberChanges
       }
     },
-    handler: async (req) => ({ results: await changeMemberRanks(req.body, req.auth) })
+    handler: async (req) => changeMemberRanks(req.body, req.auth)
   }),
 
   defineRoute({
@@ -287,10 +287,10 @@ export const membersModule = defineModule([
     schema: {
       body: memberCommandBody,
       response: {
-        200: commandOutcomes
+        200: memberChanges
       }
     },
-    handler: async (req) => ({ results: await retireMembers(req.body, req.auth) })
+    handler: async (req) => retireMembers(req.body, req.auth)
   }),
 
   defineRoute({
@@ -305,10 +305,10 @@ export const membersModule = defineModule([
     schema: {
       body: changeRoleBody,
       response: {
-        200: commandOutcomes
+        200: memberChanges
       }
     },
-    handler: async (req) => ({ results: await changeMemberRoles(req.body, req.auth) })
+    handler: async (req) => changeMemberRoles(req.body, req.auth)
   }),
 
   defineRoute({
@@ -341,9 +341,9 @@ export const membersModule = defineModule([
     schema: {
       body: memberCommandBody,
       response: {
-        200: commandOutcomes
+        200: memberChanges
       }
     },
-    handler: async (req) => ({ results: await unretireMembers(req.body, req.auth) })
+    handler: async (req) => unretireMembers(req.body, req.auth)
   })
 ]);
