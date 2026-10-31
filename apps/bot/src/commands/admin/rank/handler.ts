@@ -28,7 +28,7 @@ const proposalField = (name: string, proposals: RankProposal[]) => ({
 
 const check = async (interaction: ChatInputCommandInteraction) => {
   const channel = await resolveTextChannel(interaction.client, "admin_review");
-  const { proposals } = await api.post("/v1/members/bulk-rank-check");
+  const { proposals } = await api.post("/v1/members/propose-rank-changes");
 
   const promotions = proposals.filter(({ direction }) => direction === "promotion");
   const demotions = proposals.filter(({ direction }) => direction === "demotion");
