@@ -51,6 +51,13 @@ export const errorResponse = z
   })
   .register(z.globalRegistry, { id: "ErrorResponse" });
 
+export const itemError = errorResponse
+  .pick({
+    code: true,
+    message: true
+  })
+  .register(z.globalRegistry, { id: "ItemError" });
+
 export const memberRef = z
   .object({
     id: bigIntString,
