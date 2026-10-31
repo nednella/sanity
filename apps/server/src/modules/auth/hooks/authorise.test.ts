@@ -64,6 +64,15 @@ describe("authorise", () => {
     await expect(authorise(requestWith(access, "bot", "admin"))).rejects.toMatchObject({ statusCode: 403 });
   });
 
+  it("forbids a reviewer on an admin route", async () => {
+    const access: RouteAccess = {
+      role: "admin",
+      clients: ["bot"]
+    };
+
+    await expect(authorise(requestWith(access, "bot", "reviewer"))).rejects.toMatchObject({ statusCode: 403 });
+  });
+
   it("forbids a client the route does not list", async () => {
     const access: RouteAccess = {
       role: "*",
