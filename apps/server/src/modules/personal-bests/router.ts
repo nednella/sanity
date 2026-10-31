@@ -87,7 +87,7 @@ export const personalBestsModule = defineModule([
     url: "/personal-bests/:id/review",
     config: {
       access: {
-        role: "admin",
+        role: "reviewer",
         clients: ["bot"]
       }
     },

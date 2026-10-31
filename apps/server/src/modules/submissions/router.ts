@@ -56,7 +56,7 @@ export const submissionsModule = defineModule([
     url: "/submissions/:id/review",
     config: {
       access: {
-        role: "admin",
+        role: "reviewer",
         clients: ["bot"]
       }
     },
