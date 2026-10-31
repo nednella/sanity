@@ -137,7 +137,8 @@ export const readPersonalBests = async (memberIds: MemberIds) => {
         submittedAt: toUtcInstant(row.submittedDate),
         reviewedBy: row.reviewedBy ? (memberIds.get(row.reviewedBy) ?? null) : null,
         reviewedAt: toUtcInstant(row.reviewedDate),
-        reviewNote: blankToNull(row.reviewNote)
+        reviewNote: blankToNull(row.reviewNote),
+        source: "bot" as const
       }
     ];
   });

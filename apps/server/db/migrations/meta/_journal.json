@@ -218,6 +218,13 @@
       "when": 1793487737046,
       "tag": "0030_omniscient_tempest",
       "breakpoints": true
+    },
+    {
+      "idx": 31,
+      "version": "7",
+      "when": 1793494283842,
+      "tag": "0031_slippery_ma_gnuci",
+      "breakpoints": true
     }
   ]
 }

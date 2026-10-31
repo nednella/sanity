@@ -23,6 +23,7 @@ export async function createPersonalBest({ participants, timeSeconds, ...persona
       {
         ...personalBest,
         memberId: auth.member.id,
+        source: auth.client,
         status: "submitted",
         submittedAt: new Date(),
         time: `${timeSeconds} seconds`
