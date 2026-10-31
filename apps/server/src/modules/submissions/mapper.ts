@@ -16,6 +16,7 @@ export function toSubmission({ item, submission, submittedBy }: SubmissionRow, p
     discordMessageUrl: submission.discordMessageUrl,
     submittedAt: submission.submittedAt,
     submittedBy,
+    source: submission.source,
     participants: participants.map(({ id, displayName, points }) => ({ id, displayName, points }))
   };
 }

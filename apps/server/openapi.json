@@ -290,6 +290,14 @@
           "submittedBy": {
             "$ref": "#/components/schemas/MemberRefInput"
           },
+          "source": {
+            "type": "string",
+            "enum": [
+              "bot",
+              "plugin",
+              "web"
+            ]
+          },
           "team": {
             "type": "array",
             "items": {
@@ -306,6 +314,7 @@
           "imageUrl",
           "submittedAt",
           "submittedBy",
+          "source",
           "team"
         ]
       },
@@ -366,6 +375,14 @@
           "submittedBy": {
             "$ref": "#/components/schemas/MemberRefInput"
           },
+          "source": {
+            "type": "string",
+            "enum": [
+              "bot",
+              "plugin",
+              "web"
+            ]
+          },
           "team": {
             "type": "array",
             "items": {
@@ -383,6 +400,7 @@
           "imageUrl",
           "submittedAt",
           "submittedBy",
+          "source",
           "team"
         ]
       },
@@ -625,6 +643,14 @@
           "submittedBy": {
             "$ref": "#/components/schemas/MemberRefInput"
           },
+          "source": {
+            "type": "string",
+            "enum": [
+              "bot",
+              "plugin",
+              "web"
+            ]
+          },
           "participants": {
             "type": "array",
             "items": {
@@ -660,6 +686,7 @@
           "discordMessageUrl",
           "submittedAt",
           "submittedBy",
+          "source",
           "participants"
         ]
       },
@@ -1883,6 +1910,14 @@
           "submittedBy": {
             "$ref": "#/components/schemas/MemberRef"
           },
+          "source": {
+            "type": "string",
+            "enum": [
+              "bot",
+              "plugin",
+              "web"
+            ]
+          },
           "team": {
             "type": "array",
             "items": {
@@ -1899,6 +1934,7 @@
           "imageUrl",
           "submittedAt",
           "submittedBy",
+          "source",
           "team"
         ],
         "additionalProperties": false
@@ -1960,6 +1996,14 @@
           "submittedBy": {
             "$ref": "#/components/schemas/MemberRef"
           },
+          "source": {
+            "type": "string",
+            "enum": [
+              "bot",
+              "plugin",
+              "web"
+            ]
+          },
           "team": {
             "type": "array",
             "items": {
@@ -1977,6 +2021,7 @@
           "imageUrl",
           "submittedAt",
           "submittedBy",
+          "source",
           "team"
         ],
         "additionalProperties": false
@@ -2229,6 +2274,14 @@
           "submittedBy": {
             "$ref": "#/components/schemas/MemberRef"
           },
+          "source": {
+            "type": "string",
+            "enum": [
+              "bot",
+              "plugin",
+              "web"
+            ]
+          },
           "participants": {
             "type": "array",
             "items": {
@@ -2265,6 +2318,7 @@
           "discordMessageUrl",
           "submittedAt",
           "submittedBy",
+          "source",
           "participants"
         ],
         "additionalProperties": false

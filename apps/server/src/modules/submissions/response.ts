@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+import { apiClient } from "@db/enums";
+
 import { isoDate } from "@/schema/codecs";
 import { memberRef, reviewStatus } from "@/schema/common";
 
@@ -24,6 +26,7 @@ export const submission = z
     discordMessageUrl: z.string().nullable(),
     submittedAt: isoDate,
     submittedBy: memberRef,
+    source: z.enum(apiClient.enumValues),
     participants: z.array(participant)
   })
   .register(z.globalRegistry, { id: "Submission" });
