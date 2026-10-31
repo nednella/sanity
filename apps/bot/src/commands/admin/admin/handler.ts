@@ -4,14 +4,15 @@ import { api } from "@/lib/api";
 import { runSubcommand } from "@/utils/commands";
 import { reply, replyError } from "@/utils/replies";
 
-import { NO_MEMBERS_TAGGED, outcomesEmbed, readTaggedMembers } from "../member/utils";
+import { NO_MEMBERS_TAGGED, changesEmbed, readTaggedMembers } from "../member/utils";
 
 async function changeRole(interaction: ChatInputCommandInteraction, role: "admin" | null, title: string) {
-  const body = readTaggedMembers(interaction);
-  if (body.taggedDiscordIds.length === 0) return replyError(interaction, NO_MEMBERS_TAGGED);
+  const { taggedDiscordIds, ...body } = readTaggedMembers(interaction);
+  if (taggedDiscordIds.length === 0) return replyError(interaction, NO_MEMBERS_TAGGED);
 
-  const { results } = await api.post("/v1/members/role", { body: { ...body, role } });
-  return reply(interaction, outcomesEmbed(title, results));
+  const changes = await api.post("/v1/members/role", { body: { ...body, role } });
+  const describe = () => (role === null ? "is no longer an admin" : "is now an admin");
+  return reply(interaction, changesEmbed(title, describe, changes, taggedDiscordIds));
 }
 
 const SUBCOMMANDS = {

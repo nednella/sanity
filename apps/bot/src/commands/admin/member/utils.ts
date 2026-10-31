@@ -1,64 +1,26 @@
-import {
-  type ChatInputCommandInteraction,
-  type SlashCommandStringOption,
-  TimestampStyles,
-  time,
-  userMention
-} from "discord.js";
+import { type ChatInputCommandInteraction, type SlashCommandStringOption, userMention } from "discord.js";
 
-import type { CommandOutcome } from "@sanity/api";
+import type { MemberChange, MemberSkip } from "@sanity/api";
 
-import { buildEmbed } from "@/utils/embeds";
+import { buildEmbed, fitLines } from "@/utils/embeds";
+
+const FIELD_LIMIT = 1024;
 
 const MENTIONED_USER_ID = /(?<=<@!?)\d{17,20}(?=>)/g;
 
-const CHANGES = new Set<CommandOutcome["outcome"]>([
-  "admin-given",
-  "admin-removed",
-  "delayed",
-  "passed",
-  "plugin-access-reinstated",
-  "plugin-access-revoked",
-  "quit",
-  "ranked",
-  "retired",
-  "unretired"
-]);
-
-// Maps each outcome to a line an admin can read.
-const DESCRIPTIONS: Record<CommandOutcome["outcome"], (result: CommandOutcome) => string> = {
-  "admin-given": () => "is now an admin",
-  "admin-removed": () => "is no longer an admin",
-  "already-admin": () => "is already an admin!",
-  "already-plugin-access-revoked": () => "already has no plugin access!",
-  "already-quit": () => "has already quit the clan!",
-  "already-retired": () => "is already retired",
-  delayed: ({ until }) => `demotion held until ${time(new Date(until!), TimestampStyles.LongDate)}`,
-  "has-plugin-access": () => "already has plugin access!",
-  "has-quit": () => "has now quit the clan",
-  "is-superuser": () => "is a superuser, so their role cannot change",
-  "no-rank-earned": () => "has not earned a rank",
-  "no-rank-to-give": () => "has no rank to pass into",
-  "not-a-member": () => "is not a member of this clan",
-  "not-a-rank-change": () => "needs /member retire or /member quit for that rank",
-  "not-a-trialist": () => "is not a trialist!",
-  "not-an-admin": () => "is not an admin!",
-  "not-retired": () => "is not retired!",
-  passed: ({ rank }) => `has passed their trial! Rank: ${rank!.name}`,
-  "plugin-access-reinstated": () => "has plugin access again, with a new key from /plugin-key",
-  "plugin-access-revoked": () => "has lost plugin access, and their key is revoked",
-  quit: () => "has now quit the clan",
-  ranked: ({ rank }) => `is now ${rank!.name}`,
-  retired: () => "has now been retired",
-  unchanged: () => "already has that rank!",
-  "unknown-rank": () => "cannot take a rank that does not exist",
-  unretired: ({ rank }) => `has been unretired! Rank: ${rank!.name}`
+type MemberChanges = {
+  changed: MemberChange[];
+  skipped: MemberSkip[];
 };
 
-const styleOf = (results: CommandOutcome[]) => {
-  const changed = results.filter(({ outcome }) => CHANGES.has(outcome)).length;
-  if (changed === results.length) return "success";
-  return changed === 0 ? "error" : "warning";
+const toNotMembers = ({ changed, skipped }: MemberChanges, taggedDiscordIds: string[]) => {
+  const found = new Set([...changed, ...skipped].map(({ member }) => member.discordId));
+  return taggedDiscordIds.filter((discordId) => !found.has(discordId));
+};
+
+const styleOfChanges = (changed: MemberChange[], skippedLines: string[]) => {
+  if (skippedLines.length === 0) return "success";
+  return changed.length === 0 ? "error" : "warning";
 };
 
 export const NO_MEMBERS_TAGGED = {
@@ -73,16 +35,40 @@ export const noteOption = (option: SlashCommandStringOption) =>
   option.setName("note").setDescription("Why, for the audit log").setMaxLength(500);
 
 // Members are tagged in a text option, because a user option holds only one member.
-export const readTaggedMembers = (interaction: ChatInputCommandInteraction) => ({
-  note: interaction.options.getString("note") ?? undefined,
-  taggedDiscordIds: interaction.options.getString("members", true).match(MENTIONED_USER_ID) ?? []
-});
+export const readTaggedMembers = (interaction: ChatInputCommandInteraction) => {
+  const taggedDiscordIds = interaction.options.getString("members", true).match(MENTIONED_USER_ID) ?? [];
 
-export const outcomesEmbed = (title: string, results: CommandOutcome[]) =>
-  buildEmbed({
-    style: styleOf(results),
+  return {
+    members: taggedDiscordIds.map((discordId) => ({ discordId })),
+    note: interaction.options.getString("note") ?? undefined,
+    taggedDiscordIds
+  };
+};
+
+export const changesEmbed = (
+  title: string,
+  describeChange: (change: MemberChange) => string,
+  changes: MemberChanges,
+  taggedDiscordIds: string[]
+) => {
+  const changedLines = changes.changed.map(
+    (change) => `${userMention(change.member.discordId)} ${describeChange(change)}`
+  );
+  const skippedLines = [
+    ...changes.skipped.map(({ error, member }) => `${userMention(member.discordId)} ${error.message}`),
+    ...toNotMembers(changes, taggedDiscordIds).map(
+      (discordId) => `${userMention(discordId)} is not a member of this clan`
+    )
+  ];
+
+  const fields = [
+    ...(changedLines.length > 0 ? [{ name: "Success", value: fitLines(changedLines, FIELD_LIMIT) }] : []),
+    ...(skippedLines.length > 0 ? [{ name: "Skipped", value: fitLines(skippedLines, FIELD_LIMIT) }] : [])
+  ];
+
+  return buildEmbed({
+    style: styleOfChanges(changes.changed, skippedLines),
     title,
-    description: results
-      .map((result) => `${userMention(result.discordId)} ${DESCRIPTIONS[result.outcome](result)}`)
-      .join("\n")
+    fields
   });
+};

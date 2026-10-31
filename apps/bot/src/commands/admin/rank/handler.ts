@@ -1,6 +1,6 @@
-import { type ChatInputCommandInteraction, channelMention, userMention } from "discord.js";
+import { type ChatInputCommandInteraction, TimestampStyles, channelMention, time, userMention } from "discord.js";
 
-import type { RankProposal } from "@sanity/api";
+import type { MemberChange, RankProposal } from "@sanity/api";
 
 import { api } from "@/lib/api";
 import { resolveTextChannel } from "@/lib/channels";
@@ -9,7 +9,7 @@ import { buildEmbed, fitLines } from "@/utils/embeds";
 import { capitalise } from "@/utils/format";
 import { reply, replyError } from "@/utils/replies";
 
-import { NO_MEMBERS_TAGGED, outcomesEmbed, readTaggedMembers } from "../member/utils";
+import { NO_MEMBERS_TAGGED, changesEmbed, readTaggedMembers } from "../member/utils";
 
 const FIELD_LIMIT = 1024;
 
@@ -56,17 +56,20 @@ const check = async (interaction: ChatInputCommandInteraction) => {
   );
 };
 
-const holdDemotion = async (interaction: ChatInputCommandInteraction) => {
-  const body = readTaggedMembers(interaction);
-  if (body.taggedDiscordIds.length === 0) return replyError(interaction, NO_MEMBERS_TAGGED);
+const describeDelay = ({ until }: MemberChange) =>
+  `demotion held until ${time(new Date(until!), TimestampStyles.LongDate)}`;
 
-  const { results } = await api.post("/v1/members/delay-demotion", { body });
-  return reply(interaction, outcomesEmbed("Hold demotion", results));
+const holdDemotion = async (interaction: ChatInputCommandInteraction) => {
+  const { taggedDiscordIds, ...body } = readTaggedMembers(interaction);
+  if (taggedDiscordIds.length === 0) return replyError(interaction, NO_MEMBERS_TAGGED);
+
+  const changes = await api.post("/v1/members/delay-demotion", { body });
+  return reply(interaction, changesEmbed("Hold demotion", describeDelay, changes, taggedDiscordIds));
 };
 
 const set = async (interaction: ChatInputCommandInteraction) => {
-  const body = readTaggedMembers(interaction);
-  if (body.taggedDiscordIds.length === 0) return replyError(interaction, NO_MEMBERS_TAGGED);
+  const { taggedDiscordIds, ...body } = readTaggedMembers(interaction);
+  if (taggedDiscordIds.length === 0) return replyError(interaction, NO_MEMBERS_TAGGED);
 
   const name = interaction.options.getString("rank", true);
   const ranks = await api.get("/v1/ranks");
@@ -78,8 +81,11 @@ const set = async (interaction: ChatInputCommandInteraction) => {
     });
   }
 
-  const { results } = await api.post("/v1/members/rank", { body: { ...body, rankId: rank.id } });
-  return reply(interaction, outcomesEmbed("Set rank", results));
+  const changes = await api.post("/v1/members/rank", { body: { ...body, rankId: rank.id } });
+  return reply(
+    interaction,
+    changesEmbed("Set rank", (change) => `is now ${change.rank!.name}`, changes, taggedDiscordIds)
+  );
 };
 
 const SUBCOMMANDS = {
