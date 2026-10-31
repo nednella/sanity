@@ -9,11 +9,11 @@ import { memberErrors } from "../errors";
 import { listMemberIdsByRef } from "../repository/list-member-ids-by-ref";
 import { listMembersById } from "../repository/list-members-by-id";
 import { setMemberRanks } from "../repository/set-member-ranks";
-import type { MemberCommand } from "../request";
+import type { MemberBatch } from "../request";
 
 type Member = Awaited<ReturnType<typeof listMembersById>>[number];
 
-export async function quitMembers({ members, note }: MemberCommand, auth: Auth) {
+export async function quitMembers({ members, note }: MemberBatch, auth: Auth) {
   return db.transaction(async (tx) => {
     const memberIds = await listMemberIdsByRef(tx, members);
     const found = await listMembersById(tx, memberIds);

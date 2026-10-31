@@ -45,7 +45,7 @@ async function findRequestingMember(request: FastifyRequest, key: ApiKey): Promi
       return await findMemberAccessById(key.memberId!);
     }
     case "bot": {
-      // bot commands on behalf of a user pass that user's Discord ID in a header
+      // the bot acts for a user by passing that user's Discord ID in a header
       const discordId = parseXDiscordUserIdHeader(request);
       if (discordId === undefined) return;
 

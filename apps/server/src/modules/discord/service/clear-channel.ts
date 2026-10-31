@@ -6,11 +6,11 @@ import type { Auth } from "@/modules/auth/hooks/authenticate";
 
 import { clearChannel } from "../repository/clear-channel";
 
-export type ClearChannelCommand = {
+export type DiscordChannelRef = {
   purpose: (typeof discordChannels.$inferInsert)["purpose"];
 };
 
-export async function clearDiscordChannel({ purpose }: ClearChannelCommand, auth: Auth) {
+export async function clearDiscordChannel({ purpose }: DiscordChannelRef, auth: Auth) {
   return db.transaction(async (tx) => {
     await clearChannel(tx, purpose);
     await recordAuditEntry(tx, {

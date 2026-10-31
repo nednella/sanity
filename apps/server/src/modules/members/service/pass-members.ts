@@ -12,11 +12,11 @@ import { memberErrors } from "../errors";
 import { listMemberIdsByRef } from "../repository/list-member-ids-by-ref";
 import { listMembersById } from "../repository/list-members-by-id";
 import { setMemberRanks } from "../repository/set-member-ranks";
-import type { MemberCommand } from "../request";
+import type { MemberBatch } from "../request";
 
 type Member = Awaited<ReturnType<typeof listMembersById>>[number];
 
-export async function passMembers({ members, note }: MemberCommand, auth: Auth) {
+export async function passMembers({ members, note }: MemberBatch, auth: Auth) {
   const [first] = toActiveRanks(await listRanks());
   if (!first) throw memberErrors.noRankToGive();
 

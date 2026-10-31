@@ -6,9 +6,9 @@ import type { Auth } from "@/modules/auth/hooks/authenticate";
 import { listMembersByDiscordId } from "../repository/list-members-by-discord-id";
 import { saveMember } from "../repository/save-member";
 import { startMemberTrial } from "../repository/start-member-trial";
-import type { TrialCommand } from "../request";
+import type { TrialistBatch } from "../request";
 
-export async function trialMembers({ trialists }: TrialCommand, auth: Auth) {
+export async function trialMembers({ trialists }: TrialistBatch, auth: Auth) {
   return db.transaction(async (tx) => {
     const found = await listMembersByDiscordId(
       tx,
