@@ -27,7 +27,7 @@ export async function changeMemberRoles({ members, note, role }: RoleChange, aut
 
     for (const member of found) {
       if (member.role === "superuser") skipped.push({ member, error: memberErrors.isSuperuser() });
-      else if (role === null && member.role === null) skipped.push({ member, error: memberErrors.notAdmin() });
+      else if (role === null && member.role !== "admin") skipped.push({ member, error: memberErrors.notAdmin() });
       else if (role === "admin" && member.role === "admin")
         skipped.push({ member, error: memberErrors.alreadyAdmin() });
       else if (role !== null && member.rankId === QUIT_RANK_ID) skipped.push({ member, error: memberErrors.hasQuit() });
