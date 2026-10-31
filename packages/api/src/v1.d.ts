@@ -1971,6 +1971,8 @@ export interface components {
             /** Format: date-time */
             submittedAt: string | null;
             submittedBy: components["schemas"]["MemberRefInput"];
+            /** @enum {string} */
+            source: "bot" | "plugin" | "web";
             team: components["schemas"]["MemberRefInput"][];
         };
         RankedPersonalBestInput: {
@@ -1989,6 +1991,8 @@ export interface components {
             /** Format: date-time */
             submittedAt: string | null;
             submittedBy: components["schemas"]["MemberRefInput"];
+            /** @enum {string} */
+            source: "bot" | "plugin" | "web";
             team: components["schemas"]["MemberRefInput"][];
         };
         DiaryInput: {
@@ -2049,6 +2053,8 @@ export interface components {
             /** Format: date-time */
             submittedAt: string;
             submittedBy: components["schemas"]["MemberRefInput"];
+            /** @enum {string} */
+            source: "bot" | "plugin" | "web";
             participants: {
                 id: string;
                 displayName: string;
@@ -2347,6 +2353,8 @@ export interface components {
             /** Format: date-time */
             submittedAt: string | null;
             submittedBy: components["schemas"]["MemberRef"];
+            /** @enum {string} */
+            source: "bot" | "plugin" | "web";
             team: components["schemas"]["MemberRef"][];
         };
         RankedPersonalBest: {
@@ -2365,6 +2373,8 @@ export interface components {
             /** Format: date-time */
             submittedAt: string | null;
             submittedBy: components["schemas"]["MemberRef"];
+            /** @enum {string} */
+            source: "bot" | "plugin" | "web";
             team: components["schemas"]["MemberRef"][];
         };
         Diary: {
@@ -2425,6 +2435,8 @@ export interface components {
             /** Format: date-time */
             submittedAt: string;
             submittedBy: components["schemas"]["MemberRef"];
+            /** @enum {string} */
+            source: "bot" | "plugin" | "web";
             participants: {
                 id: string;
                 displayName: string;

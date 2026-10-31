@@ -15,6 +15,7 @@ export function toRankedPersonalBest(
     imageUrl: personalBest.imageUrl,
     submittedAt: personalBest.submittedAt,
     submittedBy,
+    source: personalBest.source,
     team: team.map(({ id, displayName }) => ({ id, displayName }))
   };
 }

@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+import { apiClient } from "@db/enums";
+
 import { isoDate } from "@/schema/codecs";
 import { memberRef, reviewStatus } from "@/schema/common";
 
@@ -29,6 +31,7 @@ export const personalBest = z
     imageUrl: z.string().nullable(),
     submittedAt: isoDate.nullable(),
     submittedBy: memberRef,
+    source: z.enum(apiClient.enumValues),
     team: z.array(memberRef)
   })
   .register(z.globalRegistry, { id: "PersonalBest" });
