@@ -13,7 +13,7 @@ import { runSubcommand } from "@/utils/commands";
 import { buildEmbed } from "@/utils/embeds";
 import { reply, replyError } from "@/utils/replies";
 
-import { NO_MEMBERS_TAGGED, outcomesEmbed, readTaggedMembers } from "./utils";
+import { NO_MEMBERS_TAGGED, changesEmbed, readTaggedMembers } from "./utils";
 
 type AccountUpdate = (name: string, account: string) => { style: "error" | "success" | "warning"; description: string };
 
@@ -44,27 +44,36 @@ const discordId = async (interaction: ChatInputCommandInteraction) => {
 };
 
 const pass = async (interaction: ChatInputCommandInteraction) => {
-  const body = readTaggedMembers(interaction);
-  if (body.taggedDiscordIds.length === 0) return replyError(interaction, NO_MEMBERS_TAGGED);
+  const { taggedDiscordIds, ...body } = readTaggedMembers(interaction);
+  if (taggedDiscordIds.length === 0) return replyError(interaction, NO_MEMBERS_TAGGED);
 
-  const { results } = await api.post("/v1/members/pass-trial", { body });
-  return reply(interaction, outcomesEmbed("Pass trial", results));
+  const changes = await api.post("/v1/members/pass-trial", { body });
+  return reply(
+    interaction,
+    changesEmbed("Pass trial", ({ rank }) => `has passed their trial! Rank: ${rank!.name}`, changes, taggedDiscordIds)
+  );
 };
 
 const quit = async (interaction: ChatInputCommandInteraction) => {
-  const body = readTaggedMembers(interaction);
-  if (body.taggedDiscordIds.length === 0) return replyError(interaction, NO_MEMBERS_TAGGED);
+  const { taggedDiscordIds, ...body } = readTaggedMembers(interaction);
+  if (taggedDiscordIds.length === 0) return replyError(interaction, NO_MEMBERS_TAGGED);
 
-  const { results } = await api.post("/v1/members/quit", { body });
-  return reply(interaction, outcomesEmbed("Quit", results));
+  const changes = await api.post("/v1/members/quit", { body });
+  return reply(
+    interaction,
+    changesEmbed("Quit", () => "has now quit the clan", changes, taggedDiscordIds)
+  );
 };
 
 const retire = async (interaction: ChatInputCommandInteraction) => {
-  const body = readTaggedMembers(interaction);
-  if (body.taggedDiscordIds.length === 0) return replyError(interaction, NO_MEMBERS_TAGGED);
+  const { taggedDiscordIds, ...body } = readTaggedMembers(interaction);
+  if (taggedDiscordIds.length === 0) return replyError(interaction, NO_MEMBERS_TAGGED);
 
-  const { results } = await api.post("/v1/members/retire", { body });
-  return reply(interaction, outcomesEmbed("Retire", results));
+  const changes = await api.post("/v1/members/retire", { body });
+  return reply(
+    interaction,
+    changesEmbed("Retire", () => "has now been retired", changes, taggedDiscordIds)
+  );
 };
 
 const openTrialChannels = async (
@@ -143,11 +152,14 @@ const trial = async (interaction: ChatInputCommandInteraction) => {
 };
 
 const unretire = async (interaction: ChatInputCommandInteraction) => {
-  const body = readTaggedMembers(interaction);
-  if (body.taggedDiscordIds.length === 0) return replyError(interaction, NO_MEMBERS_TAGGED);
+  const { taggedDiscordIds, ...body } = readTaggedMembers(interaction);
+  if (taggedDiscordIds.length === 0) return replyError(interaction, NO_MEMBERS_TAGGED);
 
-  const { results } = await api.post("/v1/members/unretire", { body });
-  return reply(interaction, outcomesEmbed("Unretire", results));
+  const changes = await api.post("/v1/members/unretire", { body });
+  return reply(
+    interaction,
+    changesEmbed("Unretire", ({ rank }) => `has been unretired! Rank: ${rank!.name}`, changes, taggedDiscordIds)
+  );
 };
 
 const SUBCOMMANDS = {
