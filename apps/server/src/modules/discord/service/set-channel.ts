@@ -6,12 +6,12 @@ import type { Auth } from "@/modules/auth/hooks/authenticate";
 
 import { setChannel } from "../repository/set-channel";
 
-export type SetChannelCommand = {
+export type DiscordChannel = {
   channelId: bigint;
   purpose: (typeof discordChannels.$inferInsert)["purpose"];
 };
 
-export async function setDiscordChannel({ channelId, purpose }: SetChannelCommand, auth: Auth) {
+export async function setDiscordChannel({ channelId, purpose }: DiscordChannel, auth: Auth) {
   return db.transaction(async (tx) => {
     await setChannel(tx, purpose, channelId);
     await recordAuditEntry(tx, {

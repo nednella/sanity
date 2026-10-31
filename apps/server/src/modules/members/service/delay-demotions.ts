@@ -7,9 +7,9 @@ import { firstOfNextMonth } from "@/utils/dates";
 import { delayRankChange } from "../repository/delay-rank-change";
 import { listMemberIdsByRef } from "../repository/list-member-ids-by-ref";
 import { listMembersById } from "../repository/list-members-by-id";
-import type { MemberCommand } from "../request";
+import type { MemberBatch } from "../request";
 
-export async function delayDemotions({ members }: MemberCommand, auth: Auth) {
+export async function delayDemotions({ members }: MemberBatch, auth: Auth) {
   const until = firstOfNextMonth(new Date());
 
   return db.transaction(async (tx) => {

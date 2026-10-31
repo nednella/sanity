@@ -15,7 +15,7 @@ import {
   changeRankBody,
   giveAdminBody,
   giveRoleBody,
-  memberCommandBody,
+  memberBatchBody,
   memberListQuery,
   memberParams,
   memberPersonalBestsQuery,
@@ -196,7 +196,7 @@ export const membersModule = defineModule([
       }
     },
     schema: {
-      body: memberCommandBody,
+      body: memberBatchBody,
       response: {
         200: memberChanges
       }
@@ -232,7 +232,7 @@ export const membersModule = defineModule([
       }
     },
     schema: {
-      body: memberCommandBody,
+      body: memberBatchBody,
       response: {
         200: memberChanges
       }
@@ -250,7 +250,7 @@ export const membersModule = defineModule([
       }
     },
     schema: {
-      body: memberCommandBody,
+      body: memberBatchBody,
       response: {
         200: memberChanges
       }
@@ -286,7 +286,7 @@ export const membersModule = defineModule([
       }
     },
     schema: {
-      body: memberCommandBody,
+      body: memberBatchBody,
       response: {
         200: memberChanges
       }
@@ -322,7 +322,7 @@ export const membersModule = defineModule([
       }
     },
     schema: {
-      body: memberCommandBody,
+      body: memberBatchBody,
       response: {
         200: memberChanges
       }
@@ -340,7 +340,7 @@ export const membersModule = defineModule([
       }
     },
     schema: {
-      body: memberCommandBody,
+      body: memberBatchBody,
       response: {
         200: memberChanges
       }
@@ -394,7 +394,7 @@ export const membersModule = defineModule([
       }
     },
     schema: {
-      body: memberCommandBody,
+      body: memberBatchBody,
       response: {
         200: memberChanges
       }

@@ -19,7 +19,7 @@ const previousRsn = z.object({
   until: isoDate
 });
 
-const commandMember = z.object({
+const memberSummary = z.object({
   id: bigIntString,
   discordId: bigIntString,
   displayName: z.string()
@@ -27,7 +27,7 @@ const commandMember = z.object({
 
 const memberChange = z
   .object({
-    member: commandMember,
+    member: memberSummary,
     rank: rankSummary.optional(),
     until: isoDate.optional()
   })
@@ -35,7 +35,7 @@ const memberChange = z
 
 const memberSkip = z
   .object({
-    member: commandMember,
+    member: memberSummary,
     error: itemError
   })
   .register(z.globalRegistry, { id: "MemberSkip" });

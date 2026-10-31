@@ -12,13 +12,13 @@ import { memberErrors } from "../errors";
 import { listMemberIdsByRef } from "../repository/list-member-ids-by-ref";
 import { listMemberStandings } from "../repository/list-member-standings";
 import { setMemberRanks } from "../repository/set-member-ranks";
-import type { MemberCommand } from "../request";
+import type { MemberBatch } from "../request";
 
 type MemberStanding = Awaited<ReturnType<typeof listMemberStandings>>[number];
 
 type RankSummary = ReturnType<typeof toRankSummary>;
 
-export async function unretireMembers({ members, note }: MemberCommand, auth: Auth) {
+export async function unretireMembers({ members, note }: MemberBatch, auth: Auth) {
   const ranks = await listRanks();
 
   return db.transaction(async (tx) => {

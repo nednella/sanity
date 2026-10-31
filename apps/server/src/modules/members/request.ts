@@ -51,7 +51,7 @@ export const memberSubmissionsQuery = z.object({
 
 const memberRef = z.union([z.object({ memberId: bigIntString }), z.object({ discordId: bigIntString })]);
 
-export const memberCommandBody = z.object({
+export const memberBatchBody = z.object({
   members: z.array(memberRef).min(1).max(50),
   note: z.string().trim().max(500).optional()
 });
@@ -63,18 +63,18 @@ const trialist = z.object({
   mainRsn: rsn
 });
 
-export const giveAdminBody = memberCommandBody.extend({ role: z.enum(["admin"]) });
+export const giveAdminBody = memberBatchBody.extend({ role: z.enum(["admin"]) });
 
-export const giveRoleBody = memberCommandBody.extend({ role: z.enum(["reviewer"]) });
+export const giveRoleBody = memberBatchBody.extend({ role: z.enum(["reviewer"]) });
 
-export const changeRankBody = memberCommandBody.extend({
+export const changeRankBody = memberBatchBody.extend({
   rankId: z
     .number()
     .int()
     .refine((rankId) => rankId !== QUIT_RANK_ID && rankId !== RETIRED_RANK_ID, "Use quit or retire for that rank")
 });
 
-export const changePluginAccessBody = memberCommandBody.extend({ revoked: z.boolean() });
+export const changePluginAccessBody = memberBatchBody.extend({ revoked: z.boolean() });
 
 export const trialBody = z.object({ trialists: z.array(trialist).min(1).max(50) });
 
@@ -93,12 +93,12 @@ export const updateMemberBody = z
   })
   .partial();
 
-export type MemberCommand = z.output<typeof memberCommandBody>;
+export type MemberBatch = z.output<typeof memberBatchBody>;
 export type MemberRef = z.output<typeof memberRef>;
 export type MemberListQuery = Partial<z.output<typeof memberListQuery>>;
 export type MemberSort = z.output<typeof memberSort>;
 export type NewMember = z.output<typeof trialist>;
 export type PluginAccessChange = z.output<typeof changePluginAccessBody>;
 export type RankChange = z.output<typeof changeRankBody>;
-export type RoleChange = MemberCommand & { role: MemberRole | null };
-export type TrialCommand = z.output<typeof trialBody>;
+export type RoleChange = MemberBatch & { role: MemberRole | null };
+export type TrialistBatch = z.output<typeof trialBody>;

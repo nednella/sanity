@@ -8,16 +8,16 @@ import { listMembersByDisplayName } from "@/modules/members/repository/list-memb
 import { type DiscordAccount, toAvatarUrl } from "../mapper";
 import { setDiscordAccount } from "../repository/set-discord-account";
 
-export type UpdateDiscordAccountCommand = {
+export type DiscordAccountChange = {
   account: DiscordAccount;
   displayName: string;
 };
 
 /**
- * The member is named rather than tagged: the account being replaced may have left the server or
- * been banned, so a mention would not resolve.
+ * The member is found by display name, not Discord ID: the account being replaced may have left
+ * the server or been banned, so the caller may not know its ID.
  */
-export async function updateDiscordAccount({ account, displayName }: UpdateDiscordAccountCommand, auth: Auth) {
+export async function updateDiscordAccount({ account, displayName }: DiscordAccountChange, auth: Auth) {
   return db.transaction(async (tx) => {
     const matches = await listMembersByDisplayName(tx, displayName);
     const [member] = matches;
