@@ -226,7 +226,7 @@ export const membersModule = defineModule([
     url: "/members/plugin-access",
     config: {
       access: {
-        role: "*",
+        role: "admin",
         clients: ["bot"]
       }
     },
