@@ -1,4 +1,4 @@
-import { and, eq, inArray } from "drizzle-orm";
+import { eq, inArray } from "drizzle-orm";
 
 import type { Transaction } from "@db/index";
 import { discordAccounts, memberRankDelays, members } from "@db/schema";
@@ -25,5 +25,5 @@ export function listMemberStandings(tx: Transaction, memberIds?: bigint[]) {
     .innerJoin(discordAccounts, eq(discordAccounts.memberId, members.id))
     .leftJoin(diaryProgress, eq(diaryProgress.memberId, members.id))
     .leftJoin(memberRankDelays, eq(memberRankDelays.memberId, members.id))
-    .where(and(eq(members.isActive, true), memberIds && inArray(members.id, memberIds)));
+    .where(memberIds ? inArray(members.id, memberIds) : eq(members.isActive, true));
 }
