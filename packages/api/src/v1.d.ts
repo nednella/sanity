@@ -715,7 +715,7 @@ export interface paths {
         };
         trace?: never;
     };
-    "/v1/members/bulk-rank-check": {
+    "/v1/members/propose-rank-changes": {
         parameters: {
             query?: never;
             header?: never;
@@ -772,7 +772,11 @@ export interface paths {
             requestBody: {
                 content: {
                     "application/json": {
-                        taggedDiscordIds: string[];
+                        members: ({
+                            memberId: string;
+                        } | {
+                            discordId: string;
+                        })[];
                         note?: string;
                     };
                 };
@@ -785,7 +789,8 @@ export interface paths {
                     };
                     content: {
                         "application/json": {
-                            results: components["schemas"]["CommandOutcome"][];
+                            changed: components["schemas"]["MemberChange"][];
+                            skipped: components["schemas"]["MemberSkip"][];
                         };
                     };
                 };
@@ -816,7 +821,11 @@ export interface paths {
             requestBody: {
                 content: {
                     "application/json": {
-                        taggedDiscordIds: string[];
+                        members: ({
+                            memberId: string;
+                        } | {
+                            discordId: string;
+                        })[];
                         note?: string;
                     };
                 };
@@ -829,7 +838,8 @@ export interface paths {
                     };
                     content: {
                         "application/json": {
-                            results: components["schemas"]["CommandOutcome"][];
+                            changed: components["schemas"]["MemberChange"][];
+                            skipped: components["schemas"]["MemberSkip"][];
                         };
                     };
                 };
@@ -860,7 +870,11 @@ export interface paths {
             requestBody: {
                 content: {
                     "application/json": {
-                        taggedDiscordIds: string[];
+                        members: ({
+                            memberId: string;
+                        } | {
+                            discordId: string;
+                        })[];
                         note?: string;
                         revoked: boolean;
                     };
@@ -874,7 +888,8 @@ export interface paths {
                     };
                     content: {
                         "application/json": {
-                            results: components["schemas"]["CommandOutcome"][];
+                            changed: components["schemas"]["MemberChange"][];
+                            skipped: components["schemas"]["MemberSkip"][];
                         };
                     };
                 };
@@ -905,7 +920,11 @@ export interface paths {
             requestBody: {
                 content: {
                     "application/json": {
-                        taggedDiscordIds: string[];
+                        members: ({
+                            memberId: string;
+                        } | {
+                            discordId: string;
+                        })[];
                         note?: string;
                     };
                 };
@@ -918,7 +937,8 @@ export interface paths {
                     };
                     content: {
                         "application/json": {
-                            results: components["schemas"]["CommandOutcome"][];
+                            changed: components["schemas"]["MemberChange"][];
+                            skipped: components["schemas"]["MemberSkip"][];
                         };
                     };
                 };
@@ -949,7 +969,11 @@ export interface paths {
             requestBody: {
                 content: {
                     "application/json": {
-                        taggedDiscordIds: string[];
+                        members: ({
+                            memberId: string;
+                        } | {
+                            discordId: string;
+                        })[];
                         note?: string;
                         rankId: number;
                     };
@@ -963,7 +987,8 @@ export interface paths {
                     };
                     content: {
                         "application/json": {
-                            results: components["schemas"]["CommandOutcome"][];
+                            changed: components["schemas"]["MemberChange"][];
+                            skipped: components["schemas"]["MemberSkip"][];
                         };
                     };
                 };
@@ -994,7 +1019,11 @@ export interface paths {
             requestBody: {
                 content: {
                     "application/json": {
-                        taggedDiscordIds: string[];
+                        members: ({
+                            memberId: string;
+                        } | {
+                            discordId: string;
+                        })[];
                         note?: string;
                     };
                 };
@@ -1007,7 +1036,8 @@ export interface paths {
                     };
                     content: {
                         "application/json": {
-                            results: components["schemas"]["CommandOutcome"][];
+                            changed: components["schemas"]["MemberChange"][];
+                            skipped: components["schemas"]["MemberSkip"][];
                         };
                     };
                 };
@@ -1038,7 +1068,11 @@ export interface paths {
             requestBody: {
                 content: {
                     "application/json": {
-                        taggedDiscordIds: string[];
+                        members: ({
+                            memberId: string;
+                        } | {
+                            discordId: string;
+                        })[];
                         note?: string;
                         /** @enum {string|null} */
                         role: "admin" | null;
@@ -1053,7 +1087,8 @@ export interface paths {
                     };
                     content: {
                         "application/json": {
-                            results: components["schemas"]["CommandOutcome"][];
+                            changed: components["schemas"]["MemberChange"][];
+                            skipped: components["schemas"]["MemberSkip"][];
                         };
                     };
                 };
@@ -1140,7 +1175,11 @@ export interface paths {
             requestBody: {
                 content: {
                     "application/json": {
-                        taggedDiscordIds: string[];
+                        members: ({
+                            memberId: string;
+                        } | {
+                            discordId: string;
+                        })[];
                         note?: string;
                     };
                 };
@@ -1153,7 +1192,8 @@ export interface paths {
                     };
                     content: {
                         "application/json": {
-                            results: components["schemas"]["CommandOutcome"][];
+                            changed: components["schemas"]["MemberChange"][];
+                            skipped: components["schemas"]["MemberSkip"][];
                         };
                     };
                 };
@@ -1759,6 +1799,10 @@ export interface components {
             timestamp: string;
             url: string;
         };
+        ItemErrorInput: {
+            code: string;
+            message: string;
+        };
         MemberRefInput: {
             id: string;
             displayName: string;
@@ -1916,15 +1960,23 @@ export interface components {
                 masterDiaries: number;
             };
         };
-        CommandOutcomeInput: {
-            discordId: string;
-            displayName: string | null;
-            memberId: string | null;
-            /** @enum {string} */
-            outcome: "admin-given" | "admin-removed" | "already-admin" | "already-plugin-access-revoked" | "already-quit" | "already-retired" | "delayed" | "has-plugin-access" | "has-quit" | "is-superuser" | "no-rank-earned" | "no-rank-to-give" | "not-a-member" | "not-a-rank-change" | "not-a-trialist" | "not-an-admin" | "not-retired" | "passed" | "plugin-access-reinstated" | "plugin-access-revoked" | "quit" | "ranked" | "retired" | "unchanged" | "unknown-rank" | "unretired";
+        MemberChangeInput: {
+            member: {
+                id: string;
+                discordId: string;
+                displayName: string;
+            };
             rank?: components["schemas"]["RankSummaryInput"];
             /** Format: date-time */
             until?: string;
+        };
+        MemberSkipInput: {
+            member: {
+                id: string;
+                discordId: string;
+                displayName: string;
+            };
+            error: components["schemas"]["ItemErrorInput"];
         };
         RankProposalInput: {
             memberId: string;
@@ -2123,6 +2175,10 @@ export interface components {
             timestamp: string;
             url: string;
         };
+        ItemError: {
+            code: string;
+            message: string;
+        };
         MemberRef: {
             id: string;
             displayName: string;
@@ -2280,15 +2336,23 @@ export interface components {
                 masterDiaries: number;
             };
         };
-        CommandOutcome: {
-            discordId: string;
-            displayName: string | null;
-            memberId: string | null;
-            /** @enum {string} */
-            outcome: "admin-given" | "admin-removed" | "already-admin" | "already-plugin-access-revoked" | "already-quit" | "already-retired" | "delayed" | "has-plugin-access" | "has-quit" | "is-superuser" | "no-rank-earned" | "no-rank-to-give" | "not-a-member" | "not-a-rank-change" | "not-a-trialist" | "not-an-admin" | "not-retired" | "passed" | "plugin-access-reinstated" | "plugin-access-revoked" | "quit" | "ranked" | "retired" | "unchanged" | "unknown-rank" | "unretired";
+        MemberChange: {
+            member: {
+                id: string;
+                discordId: string;
+                displayName: string;
+            };
             rank?: components["schemas"]["RankSummary"];
             /** Format: date-time */
             until?: string;
+        };
+        MemberSkip: {
+            member: {
+                id: string;
+                discordId: string;
+                displayName: string;
+            };
+            error: components["schemas"]["ItemError"];
         };
         RankProposal: {
             memberId: string;

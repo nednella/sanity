@@ -1,24 +1,37 @@
-import { recordAuditEntry } from "@/modules/audit/repository/record-audit-entry";
+import { db } from "@db/index";
+
+import type { ApplicationError } from "@/errors/error";
+import { recordAuditEntries } from "@/modules/audit/repository/record-audit-entries";
 import type { Auth } from "@/modules/auth/hooks/authenticate";
 import { QUIT_RANK_ID } from "@/modules/ranks/constants";
 
-import { setMemberRank } from "../repository/set-member-rank";
-import type { AdminCommand } from "../request";
-import { executePerTaggedMember } from "./shared/execute-per-tagged-member";
+import { memberErrors } from "../errors";
+import { listMemberIdsByRef } from "../repository/list-member-ids-by-ref";
+import { listMembersById } from "../repository/list-members-by-id";
+import { setMemberRanks } from "../repository/set-member-ranks";
+import type { MemberCommand } from "../request";
 
-export async function quitMembers({ note, ...command }: AdminCommand, auth: Auth) {
-  return executePerTaggedMember(command, async (tx, member) => {
-    if (member.rankId === QUIT_RANK_ID) return { outcome: "already-quit" as const };
+type Member = Awaited<ReturnType<typeof listMembersById>>[number];
 
-    await setMemberRank(tx, member.id, QUIT_RANK_ID);
-    await recordAuditEntry(tx, {
-      actingMemberId: auth.member.id,
-      action: "member_left",
-      affects: [member.id],
-      note,
-      source: auth.client
-    });
+export async function quitMembers({ members, note }: MemberCommand, auth: Auth) {
+  return db.transaction(async (tx) => {
+    const memberIds = await listMemberIdsByRef(tx, members);
+    const found = await listMembersById(tx, memberIds);
 
-    return { outcome: "quit" as const };
+    const changed: { member: Member }[] = [];
+    const skipped: { member: Member; error: ApplicationError }[] = [];
+
+    for (const member of found) {
+      if (member.rankId === QUIT_RANK_ID) skipped.push({ member, error: memberErrors.alreadyQuit() });
+      else changed.push({ member });
+    }
+
+    await setMemberRanks(
+      tx,
+      changed.map(({ member }) => ({ memberId: member.id, rankId: QUIT_RANK_ID }))
+    );
+    await recordAuditEntries(tx, auth, "member_left", changed, () => note);
+
+    return { changed, skipped };
   });
 }

@@ -75,6 +75,21 @@
           "url"
         ]
       },
+      "ItemErrorInput": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "code",
+          "message"
+        ]
+      },
       "MemberRefInput": {
         "type": "object",
         "properties": {
@@ -746,51 +761,28 @@
           "requirements"
         ]
       },
-      "CommandOutcomeInput": {
+      "MemberChangeInput": {
         "type": "object",
         "properties": {
-          "discordId": {
-            "type": "string",
-            "pattern": "^\\d+$"
-          },
-          "displayName": {
-            "nullable": true,
-            "type": "string"
-          },
-          "memberId": {
-            "nullable": true,
-            "type": "string",
-            "pattern": "^\\d+$"
-          },
-          "outcome": {
-            "type": "string",
-            "enum": [
-              "admin-given",
-              "admin-removed",
-              "already-admin",
-              "already-plugin-access-revoked",
-              "already-quit",
-              "already-retired",
-              "delayed",
-              "has-plugin-access",
-              "has-quit",
-              "is-superuser",
-              "no-rank-earned",
-              "no-rank-to-give",
-              "not-a-member",
-              "not-a-rank-change",
-              "not-a-trialist",
-              "not-an-admin",
-              "not-retired",
-              "passed",
-              "plugin-access-reinstated",
-              "plugin-access-revoked",
-              "quit",
-              "ranked",
-              "retired",
-              "unchanged",
-              "unknown-rank",
-              "unretired"
+          "member": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^\\d+$"
+              },
+              "discordId": {
+                "type": "string",
+                "pattern": "^\\d+$"
+              },
+              "displayName": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "discordId",
+              "displayName"
             ]
           },
           "rank": {
@@ -807,10 +799,40 @@
           }
         },
         "required": [
-          "discordId",
-          "displayName",
-          "memberId",
-          "outcome"
+          "member"
+        ]
+      },
+      "MemberSkipInput": {
+        "type": "object",
+        "properties": {
+          "member": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^\\d+$"
+              },
+              "discordId": {
+                "type": "string",
+                "pattern": "^\\d+$"
+              },
+              "displayName": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "discordId",
+              "displayName"
+            ]
+          },
+          "error": {
+            "$ref": "#/components/schemas/ItemErrorInput"
+          }
+        },
+        "required": [
+          "member",
+          "error"
         ]
       },
       "RankProposalInput": {
@@ -1642,6 +1664,22 @@
         ],
         "additionalProperties": false
       },
+      "ItemError": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "code",
+          "message"
+        ],
+        "additionalProperties": false
+      },
       "MemberRef": {
         "type": "object",
         "properties": {
@@ -2332,52 +2370,30 @@
         ],
         "additionalProperties": false
       },
-      "CommandOutcome": {
+      "MemberChange": {
         "type": "object",
         "properties": {
-          "discordId": {
-            "type": "string",
-            "pattern": "^\\d+$"
-          },
-          "displayName": {
-            "nullable": true,
-            "type": "string"
-          },
-          "memberId": {
-            "nullable": true,
-            "type": "string",
-            "pattern": "^\\d+$"
-          },
-          "outcome": {
-            "type": "string",
-            "enum": [
-              "admin-given",
-              "admin-removed",
-              "already-admin",
-              "already-plugin-access-revoked",
-              "already-quit",
-              "already-retired",
-              "delayed",
-              "has-plugin-access",
-              "has-quit",
-              "is-superuser",
-              "no-rank-earned",
-              "no-rank-to-give",
-              "not-a-member",
-              "not-a-rank-change",
-              "not-a-trialist",
-              "not-an-admin",
-              "not-retired",
-              "passed",
-              "plugin-access-reinstated",
-              "plugin-access-revoked",
-              "quit",
-              "ranked",
-              "retired",
-              "unchanged",
-              "unknown-rank",
-              "unretired"
-            ]
+          "member": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^\\d+$"
+              },
+              "discordId": {
+                "type": "string",
+                "pattern": "^\\d+$"
+              },
+              "displayName": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "discordId",
+              "displayName"
+            ],
+            "additionalProperties": false
           },
           "rank": {
             "allOf": [
@@ -2392,10 +2408,42 @@
           }
         },
         "required": [
-          "discordId",
-          "displayName",
-          "memberId",
-          "outcome"
+          "member"
+        ],
+        "additionalProperties": false
+      },
+      "MemberSkip": {
+        "type": "object",
+        "properties": {
+          "member": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^\\d+$"
+              },
+              "discordId": {
+                "type": "string",
+                "pattern": "^\\d+$"
+              },
+              "displayName": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "discordId",
+              "displayName"
+            ],
+            "additionalProperties": false
+          },
+          "error": {
+            "$ref": "#/components/schemas/ItemError"
+          }
+        },
+        "required": [
+          "member",
+          "error"
         ],
         "additionalProperties": false
       },
@@ -4083,13 +4131,37 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "taggedDiscordIds": {
+                  "members": {
                     "minItems": 1,
                     "maxItems": 50,
                     "type": "array",
                     "items": {
-                      "type": "string",
-                      "pattern": "^\\d+$"
+                      "anyOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "memberId": {
+                              "type": "string",
+                              "pattern": "^\\d+$"
+                            }
+                          },
+                          "required": [
+                            "memberId"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "discordId": {
+                              "type": "string",
+                              "pattern": "^\\d+$"
+                            }
+                          },
+                          "required": [
+                            "discordId"
+                          ]
+                        }
+                      ]
                     }
                   },
                   "note": {
@@ -4098,7 +4170,7 @@
                   }
                 },
                 "required": [
-                  "taggedDiscordIds"
+                  "members"
                 ]
               }
             }
@@ -4112,15 +4184,22 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "results": {
+                    "changed": {
                       "type": "array",
                       "items": {
-                        "$ref": "#/components/schemas/CommandOutcome"
+                        "$ref": "#/components/schemas/MemberChange"
+                      }
+                    },
+                    "skipped": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/MemberSkip"
                       }
                     }
                   },
                   "required": [
-                    "results"
+                    "changed",
+                    "skipped"
                   ],
                   "additionalProperties": false
                 }
@@ -4139,13 +4218,37 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "taggedDiscordIds": {
+                  "members": {
                     "minItems": 1,
                     "maxItems": 50,
                     "type": "array",
                     "items": {
-                      "type": "string",
-                      "pattern": "^\\d+$"
+                      "anyOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "memberId": {
+                              "type": "string",
+                              "pattern": "^\\d+$"
+                            }
+                          },
+                          "required": [
+                            "memberId"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "discordId": {
+                              "type": "string",
+                              "pattern": "^\\d+$"
+                            }
+                          },
+                          "required": [
+                            "discordId"
+                          ]
+                        }
+                      ]
                     }
                   },
                   "note": {
@@ -4154,7 +4257,7 @@
                   }
                 },
                 "required": [
-                  "taggedDiscordIds"
+                  "members"
                 ]
               }
             }
@@ -4168,15 +4271,22 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "results": {
+                    "changed": {
                       "type": "array",
                       "items": {
-                        "$ref": "#/components/schemas/CommandOutcome"
+                        "$ref": "#/components/schemas/MemberChange"
+                      }
+                    },
+                    "skipped": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/MemberSkip"
                       }
                     }
                   },
                   "required": [
-                    "results"
+                    "changed",
+                    "skipped"
                   ],
                   "additionalProperties": false
                 }
@@ -4195,13 +4305,37 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "taggedDiscordIds": {
+                  "members": {
                     "minItems": 1,
                     "maxItems": 50,
                     "type": "array",
                     "items": {
-                      "type": "string",
-                      "pattern": "^\\d+$"
+                      "anyOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "memberId": {
+                              "type": "string",
+                              "pattern": "^\\d+$"
+                            }
+                          },
+                          "required": [
+                            "memberId"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "discordId": {
+                              "type": "string",
+                              "pattern": "^\\d+$"
+                            }
+                          },
+                          "required": [
+                            "discordId"
+                          ]
+                        }
+                      ]
                     }
                   },
                   "note": {
@@ -4213,7 +4347,7 @@
                   }
                 },
                 "required": [
-                  "taggedDiscordIds",
+                  "members",
                   "revoked"
                 ]
               }
@@ -4228,15 +4362,22 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "results": {
+                    "changed": {
                       "type": "array",
                       "items": {
-                        "$ref": "#/components/schemas/CommandOutcome"
+                        "$ref": "#/components/schemas/MemberChange"
+                      }
+                    },
+                    "skipped": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/MemberSkip"
                       }
                     }
                   },
                   "required": [
-                    "results"
+                    "changed",
+                    "skipped"
                   ],
                   "additionalProperties": false
                 }
@@ -4255,13 +4396,37 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "taggedDiscordIds": {
+                  "members": {
                     "minItems": 1,
                     "maxItems": 50,
                     "type": "array",
                     "items": {
-                      "type": "string",
-                      "pattern": "^\\d+$"
+                      "anyOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "memberId": {
+                              "type": "string",
+                              "pattern": "^\\d+$"
+                            }
+                          },
+                          "required": [
+                            "memberId"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "discordId": {
+                              "type": "string",
+                              "pattern": "^\\d+$"
+                            }
+                          },
+                          "required": [
+                            "discordId"
+                          ]
+                        }
+                      ]
                     }
                   },
                   "note": {
@@ -4270,7 +4435,7 @@
                   }
                 },
                 "required": [
-                  "taggedDiscordIds"
+                  "members"
                 ]
               }
             }
@@ -4284,15 +4449,22 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "results": {
+                    "changed": {
                       "type": "array",
                       "items": {
-                        "$ref": "#/components/schemas/CommandOutcome"
+                        "$ref": "#/components/schemas/MemberChange"
+                      }
+                    },
+                    "skipped": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/MemberSkip"
                       }
                     }
                   },
                   "required": [
-                    "results"
+                    "changed",
+                    "skipped"
                   ],
                   "additionalProperties": false
                 }
@@ -4311,13 +4483,37 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "taggedDiscordIds": {
+                  "members": {
                     "minItems": 1,
                     "maxItems": 50,
                     "type": "array",
                     "items": {
-                      "type": "string",
-                      "pattern": "^\\d+$"
+                      "anyOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "memberId": {
+                              "type": "string",
+                              "pattern": "^\\d+$"
+                            }
+                          },
+                          "required": [
+                            "memberId"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "discordId": {
+                              "type": "string",
+                              "pattern": "^\\d+$"
+                            }
+                          },
+                          "required": [
+                            "discordId"
+                          ]
+                        }
+                      ]
                     }
                   },
                   "note": {
@@ -4331,7 +4527,7 @@
                   }
                 },
                 "required": [
-                  "taggedDiscordIds",
+                  "members",
                   "rankId"
                 ]
               }
@@ -4346,15 +4542,22 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "results": {
+                    "changed": {
                       "type": "array",
                       "items": {
-                        "$ref": "#/components/schemas/CommandOutcome"
+                        "$ref": "#/components/schemas/MemberChange"
+                      }
+                    },
+                    "skipped": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/MemberSkip"
                       }
                     }
                   },
                   "required": [
-                    "results"
+                    "changed",
+                    "skipped"
                   ],
                   "additionalProperties": false
                 }
@@ -4373,13 +4576,37 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "taggedDiscordIds": {
+                  "members": {
                     "minItems": 1,
                     "maxItems": 50,
                     "type": "array",
                     "items": {
-                      "type": "string",
-                      "pattern": "^\\d+$"
+                      "anyOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "memberId": {
+                              "type": "string",
+                              "pattern": "^\\d+$"
+                            }
+                          },
+                          "required": [
+                            "memberId"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "discordId": {
+                              "type": "string",
+                              "pattern": "^\\d+$"
+                            }
+                          },
+                          "required": [
+                            "discordId"
+                          ]
+                        }
+                      ]
                     }
                   },
                   "note": {
@@ -4388,7 +4615,7 @@
                   }
                 },
                 "required": [
-                  "taggedDiscordIds"
+                  "members"
                 ]
               }
             }
@@ -4402,15 +4629,22 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "results": {
+                    "changed": {
                       "type": "array",
                       "items": {
-                        "$ref": "#/components/schemas/CommandOutcome"
+                        "$ref": "#/components/schemas/MemberChange"
+                      }
+                    },
+                    "skipped": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/MemberSkip"
                       }
                     }
                   },
                   "required": [
-                    "results"
+                    "changed",
+                    "skipped"
                   ],
                   "additionalProperties": false
                 }
@@ -4429,13 +4663,37 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "taggedDiscordIds": {
+                  "members": {
                     "minItems": 1,
                     "maxItems": 50,
                     "type": "array",
                     "items": {
-                      "type": "string",
-                      "pattern": "^\\d+$"
+                      "anyOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "memberId": {
+                              "type": "string",
+                              "pattern": "^\\d+$"
+                            }
+                          },
+                          "required": [
+                            "memberId"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "discordId": {
+                              "type": "string",
+                              "pattern": "^\\d+$"
+                            }
+                          },
+                          "required": [
+                            "discordId"
+                          ]
+                        }
+                      ]
                     }
                   },
                   "note": {
@@ -4451,7 +4709,7 @@
                   }
                 },
                 "required": [
-                  "taggedDiscordIds",
+                  "members",
                   "role"
                 ]
               }
@@ -4466,15 +4724,22 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "results": {
+                    "changed": {
                       "type": "array",
                       "items": {
-                        "$ref": "#/components/schemas/CommandOutcome"
+                        "$ref": "#/components/schemas/MemberChange"
+                      }
+                    },
+                    "skipped": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/MemberSkip"
                       }
                     }
                   },
                   "required": [
-                    "results"
+                    "changed",
+                    "skipped"
                   ],
                   "additionalProperties": false
                 }
@@ -4603,13 +4868,37 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "taggedDiscordIds": {
+                  "members": {
                     "minItems": 1,
                     "maxItems": 50,
                     "type": "array",
                     "items": {
-                      "type": "string",
-                      "pattern": "^\\d+$"
+                      "anyOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "memberId": {
+                              "type": "string",
+                              "pattern": "^\\d+$"
+                            }
+                          },
+                          "required": [
+                            "memberId"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "discordId": {
+                              "type": "string",
+                              "pattern": "^\\d+$"
+                            }
+                          },
+                          "required": [
+                            "discordId"
+                          ]
+                        }
+                      ]
                     }
                   },
                   "note": {
@@ -4618,7 +4907,7 @@
                   }
                 },
                 "required": [
-                  "taggedDiscordIds"
+                  "members"
                 ]
               }
             }
@@ -4632,15 +4921,22 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "results": {
+                    "changed": {
                       "type": "array",
                       "items": {
-                        "$ref": "#/components/schemas/CommandOutcome"
+                        "$ref": "#/components/schemas/MemberChange"
+                      }
+                    },
+                    "skipped": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/MemberSkip"
                       }
                     }
                   },
                   "required": [
-                    "results"
+                    "changed",
+                    "skipped"
                   ],
                   "additionalProperties": false
                 }
