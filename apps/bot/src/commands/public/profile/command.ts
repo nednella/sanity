@@ -8,8 +8,13 @@ import { handleProfile } from "./handler";
 export const profile = defineCommand({
   data: new SlashCommandBuilder()
     .setName("profile")
-    .setDescription("Show a member's profile")
-    .addUserOption(oneMemberOption),
+    .setDescription("See a member's profile")
+    .addSubcommand((subcommand) =>
+      subcommand.setName("drops").setDescription("Show a member's latest approved drops").addUserOption(oneMemberOption)
+    )
+    .addSubcommand((subcommand) =>
+      subcommand.setName("view").setDescription("Show a member's profile").addUserOption(oneMemberOption)
+    ),
   category: "Profile",
   execute: handleProfile
 });

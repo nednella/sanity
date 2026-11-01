@@ -15,12 +15,20 @@ const STYLES = {
 type EmbedOptions = {
   description?: string;
   fields?: APIEmbedField[];
+  image?: string;
   style?: keyof typeof STYLES;
   thumbnail?: string;
   title?: string;
 };
 
-export const buildEmbed = ({ description, fields, style = "brand", thumbnail, title = HEADER }: EmbedOptions) => {
+export const buildEmbed = ({
+  description,
+  fields,
+  image,
+  style = "brand",
+  thumbnail,
+  title = HEADER
+}: EmbedOptions) => {
   const { colour, icon } = STYLES[style];
   const embed = new EmbedBuilder()
     .setColor(colour)
@@ -29,6 +37,7 @@ export const buildEmbed = ({ description, fields, style = "brand", thumbnail, ti
     .setTimestamp();
   if (description) embed.setDescription(description);
   if (fields) embed.addFields(fields);
+  if (image) embed.setImage(image);
   if (thumbnail) embed.setThumbnail(thumbnail);
   return embed;
 };
