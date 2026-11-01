@@ -52,7 +52,7 @@ Run from the worktree root. There are no tests yet; these are the gate.
 Run on spare ports; the shell values win over each app's `.env`:
 
 ```
-PORT=3101 CORS_ORIGIN=http://localhost:5174 pnpm --filter @sanity/server start
+pnpm --filter @sanity/server build && PORT=3101 CORS_ORIGIN=http://localhost:5174 pnpm --filter @sanity/server start
 VITE_API_URL=http://localhost:3101 pnpm --filter @sanity/web exec vite --port 5174 --strictPort
 API_URL=http://localhost:3101 WEB_URL=http://localhost:5174 pnpm --filter @sanity/bot dev
 ```
