@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 
 import type { ApiClient, MemberRole } from "@db/enums";
 
-import { type RouteAccess, authorise } from "./authorise";
+import { type RouteAccess, authorise, isRoleAbove } from "./authorise";
 
 function requestWith(access: RouteAccess, client: ApiClient, role: MemberRole | null) {
   return {
@@ -80,5 +80,19 @@ describe("authorise", () => {
     };
 
     await expect(authorise(requestWith(access, "plugin", "superuser"))).rejects.toMatchObject({ statusCode: 403 });
+  });
+});
+
+describe("isRoleAbove", () => {
+  it("puts a role above a lower role and above no role", () => {
+    expect(isRoleAbove("superuser", "admin")).toBe(true);
+    expect(isRoleAbove("admin", "reviewer")).toBe(true);
+    expect(isRoleAbove("reviewer", null)).toBe(true);
+  });
+
+  it("does not put a role above itself or a higher role", () => {
+    expect(isRoleAbove("admin", "admin")).toBe(false);
+    expect(isRoleAbove("admin", "superuser")).toBe(false);
+    expect(isRoleAbove(null, null)).toBe(false);
   });
 });
