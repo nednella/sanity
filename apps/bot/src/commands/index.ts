@@ -10,6 +10,7 @@ import { member } from "./admin/member/command";
 import { plugin } from "./admin/plugin/command";
 import { rank } from "./admin/rank/command";
 import { reviewer } from "./admin/reviewer/command";
+import { birthday } from "./public/birthday/command";
 import { help } from "./public/help/command";
 import { pluginKey } from "./public/plugin-key/command";
 import { profile } from "./public/profile/command";
@@ -18,6 +19,7 @@ import { rsn } from "./public/rsn/command";
 const all: Command[] = [
   admin,
   adminHelp,
+  birthday,
   channels,
   health,
   help,
