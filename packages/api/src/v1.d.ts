@@ -2173,6 +2173,7 @@ export interface components {
                 points: number;
                 maxPoints: number;
                 masterDiaries: number;
+                maxMasterDiaries: number;
                 claimedTier: {
                     id: number;
                     name: string;
@@ -2229,6 +2230,7 @@ export interface components {
                 points: number;
                 maxPoints: number;
                 masterDiaries: number;
+                maxMasterDiaries: number;
                 claimedTier: {
                     id: number;
                     name: string;
@@ -2555,6 +2557,7 @@ export interface components {
                 points: number;
                 maxPoints: number;
                 masterDiaries: number;
+                maxMasterDiaries: number;
                 claimedTier: {
                     id: number;
                     name: string;
@@ -2611,6 +2614,7 @@ export interface components {
                 points: number;
                 maxPoints: number;
                 masterDiaries: number;
+                maxMasterDiaries: number;
                 claimedTier: {
                     id: number;
                     name: string;

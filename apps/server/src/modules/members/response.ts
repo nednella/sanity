@@ -90,6 +90,7 @@ const diary = z.object({
   points: z.number(),
   maxPoints: z.number(),
   masterDiaries: z.number(),
+  maxMasterDiaries: z.number(),
   claimedTier: diaryTier.nullable()
 });
 

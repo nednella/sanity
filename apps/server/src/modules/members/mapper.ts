@@ -2,7 +2,7 @@ import { TRIALIST_RANK_ID } from "@/modules/ranks/constants";
 import { toRankSummary } from "@/modules/ranks/mapper";
 import type { RankRow } from "@/modules/ranks/repository/list-ranks";
 import { RANK_IDS_OFF_LADDER, type Standing, hasMetRequirements, toActiveRanks } from "@/modules/ranks/rules";
-import { DIARY_POINTS_MAX } from "@/modules/speedrun-diary/constants";
+import { DIARY_COUNT, DIARY_POINTS_MAX } from "@/modules/speedrun-diary/constants";
 import type { SnapshotRows } from "@/modules/wom/repository/find-latest-snapshot";
 import type { NameChange } from "@/modules/wom/repository/list-name-changes";
 import { sortActivities, sortBosses, sortComputed, sortSkills } from "@/utils/metrics";
@@ -44,6 +44,7 @@ export function toMember({ member, discordAccount, rank, claimedDiaryTier, womPl
       points: diaryProgress?.diaryPoints ?? 0,
       maxPoints: DIARY_POINTS_MAX,
       masterDiaries: diaryProgress?.masterDiaries ?? 0,
+      maxMasterDiaries: DIARY_COUNT,
       claimedTier: claimedDiaryTier && { id: claimedDiaryTier.id, name: claimedDiaryTier.name }
     },
     wom: womPlayer && {
