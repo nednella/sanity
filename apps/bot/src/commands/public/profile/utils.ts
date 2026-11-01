@@ -58,6 +58,9 @@ export const profileLinks = ({ id, wom }: MemberProfile) =>
     ...(wom ? [linkButton("Wise Old Man", `${WOM_PLAYERS_URL}/${encodeURIComponent(wom.username)}`)] : [])
   );
 
+export const diaryLinks = () =>
+  new ActionRowBuilder<ButtonBuilder>().addComponents(linkButton("Diary", `${config.webUrl}/wiki/diary`));
+
 export const describeLatestDrop = (memberId: string, drop: Submission) => {
   const details = [
     drop.valueMillions !== null && `${bold(formatNumber(drop.valueMillions * 1_000_000, 0, "compact"))} value`,
