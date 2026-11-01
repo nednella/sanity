@@ -14,6 +14,7 @@ import {
   changePluginAccessBody,
   changeRankBody,
   giveAdminBody,
+  giveRoleBody,
   memberCommandBody,
   memberListQuery,
   memberParams,
@@ -327,6 +328,42 @@ export const membersModule = defineModule([
       }
     },
     handler: async (req) => retireMembers(req.body, req.auth)
+  }),
+
+  defineRoute({
+    method: "DELETE",
+    url: "/members/role",
+    config: {
+      access: {
+        role: "admin",
+        clients: ["bot"]
+      }
+    },
+    schema: {
+      body: memberCommandBody,
+      response: {
+        200: memberChanges
+      }
+    },
+    handler: async (req) => changeMemberRoles({ ...req.body, role: null }, req.auth)
+  }),
+
+  defineRoute({
+    method: "POST",
+    url: "/members/role",
+    config: {
+      access: {
+        role: "admin",
+        clients: ["bot"]
+      }
+    },
+    schema: {
+      body: giveRoleBody,
+      response: {
+        200: memberChanges
+      }
+    },
+    handler: async (req) => changeMemberRoles(req.body, req.auth)
   }),
 
   defineRoute({
