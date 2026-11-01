@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+import type { MemberRole } from "@db/enums";
+
 import { contentFilters, personalBestSortFilters, top } from "@/modules/personal-bests/request";
 import { QUIT_RANK_ID, RETIRED_RANK_ID } from "@/modules/ranks/constants";
 import { submissionSortFilters } from "@/modules/submissions/request";
@@ -61,6 +63,8 @@ const trialist = z.object({
   mainRsn: rsn
 });
 
+export const giveAdminBody = memberCommandBody.extend({ role: z.enum(["admin"]) });
+
 export const changeRankBody = memberCommandBody.extend({
   rankId: z
     .number()
@@ -69,8 +73,6 @@ export const changeRankBody = memberCommandBody.extend({
 });
 
 export const changePluginAccessBody = memberCommandBody.extend({ revoked: z.boolean() });
-
-export const changeRoleBody = memberCommandBody.extend({ role: z.enum(["admin"]).nullable() });
 
 export const trialBody = z.object({ trialists: z.array(trialist).min(1).max(50) });
 
@@ -96,5 +98,5 @@ export type MemberSort = z.output<typeof memberSort>;
 export type NewMember = z.output<typeof trialist>;
 export type PluginAccessChange = z.output<typeof changePluginAccessBody>;
 export type RankChange = z.output<typeof changeRankBody>;
-export type RoleChange = z.output<typeof changeRoleBody>;
+export type RoleChange = MemberCommand & { role: MemberRole | null };
 export type TrialCommand = z.output<typeof trialBody>;

@@ -13,7 +13,7 @@ import { defineRoute } from "@/utils/define-route";
 import {
   changePluginAccessBody,
   changeRankBody,
-  changeRoleBody,
+  giveAdminBody,
   memberCommandBody,
   memberListQuery,
   memberParams,
@@ -186,6 +186,42 @@ export const membersModule = defineModule([
   }),
 
   defineRoute({
+    method: "DELETE",
+    url: "/members/admin",
+    config: {
+      access: {
+        role: "superuser",
+        clients: ["bot"]
+      }
+    },
+    schema: {
+      body: memberCommandBody,
+      response: {
+        200: memberChanges
+      }
+    },
+    handler: async (req) => changeMemberRoles({ ...req.body, role: null }, req.auth)
+  }),
+
+  defineRoute({
+    method: "POST",
+    url: "/members/admin",
+    config: {
+      access: {
+        role: "superuser",
+        clients: ["bot"]
+      }
+    },
+    schema: {
+      body: giveAdminBody,
+      response: {
+        200: memberChanges
+      }
+    },
+    handler: async (req) => changeMemberRoles(req.body, req.auth)
+  }),
+
+  defineRoute({
     method: "POST",
     url: "/members/delay-demotion",
     config: {
@@ -291,24 +327,6 @@ export const membersModule = defineModule([
       }
     },
     handler: async (req) => retireMembers(req.body, req.auth)
-  }),
-
-  defineRoute({
-    method: "POST",
-    url: "/members/role",
-    config: {
-      access: {
-        role: "superuser",
-        clients: ["bot"]
-      }
-    },
-    schema: {
-      body: changeRoleBody,
-      response: {
-        200: memberChanges
-      }
-    },
-    handler: async (req) => changeMemberRoles(req.body, req.auth)
   }),
 
   defineRoute({
