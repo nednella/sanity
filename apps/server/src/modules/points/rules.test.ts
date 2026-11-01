@@ -1,6 +1,8 @@
 import { describe, expect, it } from "vitest";
 
-import { generatePointSplit } from "./rules";
+import { ELITE_TIER_ID } from "@/modules/speedrun-diary/constants";
+
+import { generateDiaryCarryAwards, generatePointSplit } from "./rules";
 
 const member = (memberId: bigint, isTrialist = false) => ({ isTrialist, memberId });
 
@@ -78,5 +80,32 @@ describe("generatePointSplit", () => {
       { memberId: 1n, points: 250 },
       { memberId: 2n, points: 200 }
     ]);
+  });
+});
+
+describe("generateDiaryCarryAwards", () => {
+  it("pays each holder per member carried", () => {
+    const awards = generateDiaryCarryAwards({
+      carried: [3n, 4n],
+      holders: [1n, 2n],
+      multiplier: 1,
+      tierId: ELITE_TIER_ID
+    });
+
+    expect(awards).toEqual([
+      { memberId: 1n, points: 50 },
+      { memberId: 2n, points: 50 }
+    ]);
+  });
+
+  it("raises the carry by the multiplier, rounding up", () => {
+    const [award] = generateDiaryCarryAwards({
+      carried: [2n],
+      holders: [1n],
+      multiplier: 1.1,
+      tierId: ELITE_TIER_ID
+    });
+
+    expect(award?.points).toBe(28);
   });
 });

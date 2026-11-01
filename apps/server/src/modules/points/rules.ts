@@ -8,6 +8,7 @@ const DIARY_CARRY_POINTS: Record<number, number> = { [ELITE_TIER_ID]: 25, [MASTE
 export type DiaryCarry = {
   carried: bigint[];
   holders: bigint[];
+  multiplier: number;
   tierId: number;
 };
 
@@ -65,10 +66,11 @@ export function generatePointSplit({
 /**
  * Carrying somebody into a diary tier pays the members who already held it, once per person they
  * carried. Elite and master are counted apart, since a run can clear both and a teammate may hold
- * one without the other. A first clear for the whole team pays nobody: there was no one to carry.
+ * one without the other. A first clear for the whole team pays nobody: there was no one to carry. A
+ * bonus multiplier raises the carry the same way it raises a drop.
  */
-export function generateDiaryCarryAwards({ carried, holders, tierId }: DiaryCarry): PointAward[] {
-  const points = (DIARY_CARRY_POINTS[tierId] ?? 0) * carried.length;
+export function generateDiaryCarryAwards({ carried, holders, multiplier, tierId }: DiaryCarry): PointAward[] {
+  const points = applyMultiplier((DIARY_CARRY_POINTS[tierId] ?? 0) * carried.length, multiplier);
   if (points === 0) return [];
 
   return holders.map((memberId) => ({ memberId, points }));
