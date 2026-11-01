@@ -5,4 +5,5 @@
 export const ELITE_TIER_ID = 4;
 export const MASTER_TIER_ID = 5;
 
+export const DIARY_COUNT = 12;
 export const DIARY_POINTS_MAX = 180;
