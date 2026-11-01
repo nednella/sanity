@@ -1,0 +1,32 @@
+shared: &shared
+  - .github/actions/setup/**
+  - .github/filters.yml
+  - .nvmrc
+  - eslint.config.js
+  - package.json
+  - pnpm-lock.yaml
+  - pnpm-workspace.yaml
+  - tsconfig.base.json
+
+bot:
+  - *shared
+  - .github/workflows/bot.yml
+  - apps/bot/**
+  - packages/**
+
+plugin:
+  - .github/filters.yml
+  - .github/workflows/plugin.yml
+  - apps/plugin/**
+
+server:
+  - *shared
+  - .github/workflows/server.yml
+  - apps/server/**
+  - packages/**
+
+web:
+  - *shared
+  - .github/workflows/web.yml
+  - apps/web/**
+  - packages/**
