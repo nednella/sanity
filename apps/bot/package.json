@@ -12,7 +12,8 @@
     "@sanity/api": "workspace:*",
     "@sanity/urls": "workspace:*",
     "discord.js": "^14.27.0",
-    "pino": "^10.4.0"
+    "pino": "^10.4.0",
+    "takumi-js": "2.19.0"
   },
   "devDependencies": {
     "@types/node": "^24.13.4",

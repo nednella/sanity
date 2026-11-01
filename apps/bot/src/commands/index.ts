@@ -12,8 +12,22 @@ import { rank } from "./admin/rank/command";
 import { reviewer } from "./admin/reviewer/command";
 import { help } from "./public/help/command";
 import { pluginKey } from "./public/plugin-key/command";
+import { profile } from "./public/profile/command";
 import { rsn } from "./public/rsn/command";
 
-const all: Command[] = [admin, adminHelp, channels, health, help, member, plugin, pluginKey, rank, reviewer, rsn];
+const all: Command[] = [
+  admin,
+  adminHelp,
+  channels,
+  health,
+  help,
+  member,
+  plugin,
+  pluginKey,
+  profile,
+  rank,
+  reviewer,
+  rsn
+];
 
 export const commands = new Collection(all.map((command) => [command.name, command]));
