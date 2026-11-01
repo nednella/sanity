@@ -16,6 +16,9 @@ export const profile = defineCommand({
         .addUserOption(oneMemberOption)
     )
     .addSubcommand((subcommand) =>
+      subcommand.setName("diary").setDescription("Show a member's speedrun diary").addUserOption(oneMemberOption)
+    )
+    .addSubcommand((subcommand) =>
       subcommand.setName("drops").setDescription("Show a member's latest approved drops").addUserOption(oneMemberOption)
     )
     .addSubcommand((subcommand) =>

@@ -1,18 +1,21 @@
 import { readFile } from "node:fs/promises";
 import { render } from "takumi-js";
 
-import type { MemberProfile, RankSummary } from "@sanity/api";
+import type { MemberDiary, MemberProfile, RankSummary } from "@sanity/api";
 import { CIRCLE_FLAG_CDN_URL } from "@sanity/urls";
 
 import { config } from "@config";
 
-import { formatDate, formatNumber } from "@/utils/format";
+import { formatDate, formatNumber, formatTickTime } from "@/utils/format";
 
 type NextRank = NonNullable<MemberProfile["progression"]["nextRank"]["points"]>;
 
 // Fixed card size to ensure clarity on the image without needing to expand it
 const HEIGHT = 750;
 const WIDTH = 1200;
+
+const DIARY_ROW_HEIGHT = 37;
+const DIARY_COLUMN_WIDTHS = ["40%", "12%", "14%", "16%", "18%"];
 
 const COLOURS = {
   background: "#0a0a0a",
@@ -88,8 +91,8 @@ const header = ({ displayName, membership, nationality, rsn }: MemberProfile, av
   </div>`;
 };
 
-const stat = (iconPath: string | null, label: string, value: string) => `
-  <div style="display:flex;align-items:center;gap:14px;width:23.9%;padding:16px;border:1px solid ${COLOURS.border};border-radius:3px">
+const stat = (iconPath: string | null, label: string, value: string, width = "23.9%") => `
+  <div style="display:flex;align-items:center;gap:14px;width:${width};padding:16px;border:1px solid ${COLOURS.border};border-radius:3px">
     ${
       iconPath
         ? `<img src="${webIconUrl(iconPath)}" style="width:28px;height:28px;object-fit:contain" />`
@@ -177,6 +180,44 @@ const rankProgression = (profile: MemberProfile) => {
   </div>`;
 };
 
+const teamName = (scale: number) => (scale === 1 ? "Solo" : `${scale}-man`);
+
+const tierBadge = (name: string) => `
+  <span style="display:flex;align-items:center;gap:8px">
+    <img src="${webIconUrl(`diary/${name.toLowerCase()}`)}" style="width:22px;height:22px;object-fit:contain" />
+    ${escape(name)}
+  </span>`;
+
+const diaryHeader = ({ diary, displayName }: MemberProfile, avatarUrl: string) => `
+  <div style="display:flex;flex-direction:column;gap:22px;margin-bottom:12px">
+    <div style="display:flex;align-items:center;gap:20px">
+      <img src="${escape(avatarUrl)}" style="width:72px;height:72px;border-radius:36px" />
+      <div style="display:flex;flex-direction:column;gap:4px">
+        <span style="font-size:36px;font-weight:700;letter-spacing:-0.5px">${escape(displayName)}</span>
+        ${overline("Speedrun diary")}
+      </div>
+    </div>
+    <div style="display:flex;justify-content:space-between">
+      ${stat("stats/diary-points", "Diary Points", `${formatNumber(diary.points)} / ${formatNumber(diary.maxPoints)}`, "32.6%")}
+      ${stat("diary/master", "Master Diaries", `${formatNumber(diary.masterDiaries)} / ${formatNumber(diary.maxMasterDiaries)}`, "32.6%")}
+      ${stat(diary.claimedTier && `diary/${diary.claimedTier.name.toLowerCase()}`, "Claimed Diary Tier", diary.claimedTier?.name ?? "—", "32.6%")}
+    </div>
+  </div>`;
+
+const diaryRow = (cells: string[], colour = COLOURS.text) => `
+  <div style="display:flex;align-items:center;height:${DIARY_ROW_HEIGHT}px;border-bottom:1px solid ${COLOURS.border};color:${colour}">
+    ${cells.map((cell, index) => `<div style="display:flex;width:${DIARY_COLUMN_WIDTHS[index]}">${cell}</div>`).join("")}
+  </div>`;
+
+const diaryEntry = ({ content, nextTier, pb, scale, tier }: MemberDiary) =>
+  diaryRow([
+    escape(content.name),
+    teamName(scale),
+    formatTickTime(pb?.timeSeconds),
+    tier ? tierBadge(tier.name) : "—",
+    `<span style="color:${COLOURS.faint}">${nextTier ? `${formatTickTime(nextTier.timeSeconds)} (${escape(nextTier.name)})` : "—"}</span>`
+  ]);
+
 // The avatar comes from Discord at render time, because the one saved with the member can be out of date.
 export const renderProfileCard = (profile: MemberProfile, avatarUrl: string) =>
   render(
@@ -184,6 +225,21 @@ export const renderProfileCard = (profile: MemberProfile, avatarUrl: string) =>
       ${header(profile, avatarUrl)}
       ${statBar(profile)}
       ${rankProgression(profile)}
+    </div>`,
+    {
+      width: WIDTH,
+      height: HEIGHT,
+      fonts: FONTS,
+      images: { throwOnError: false }
+    }
+  );
+
+export const renderDiaryCard = (profile: MemberProfile, entries: MemberDiary[], avatarUrl: string) =>
+  render(
+    `<div style="display:flex;flex-direction:column;width:100%;height:100%;padding:40px 44px;font-family:Inter;font-size:20px;color:${COLOURS.text};background:${COLOURS.background}">
+      ${diaryHeader(profile, avatarUrl)}
+      ${diaryRow(["Content", "Team", "PB", "Tier", "Next"], COLOURS.faint)}
+      ${entries.map((entry) => diaryEntry(entry)).join("")}
     </div>`,
     {
       width: WIDTH,

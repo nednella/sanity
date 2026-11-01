@@ -9,8 +9,8 @@ import { formatNumber } from "@/utils/format";
 import { findMember, taggedUser } from "@/utils/members";
 import { reply } from "@/utils/replies";
 
-import { renderProfileCard } from "./card";
-import { describeClanAge, describeEarlierDrops, describeLatestDrop, profileLinks } from "./utils";
+import { renderDiaryCard, renderProfileCard } from "./card";
+import { describeClanAge, describeEarlierDrops, describeLatestDrop, diaryLinks, profileLinks } from "./utils";
 
 const DROPS_SHOWN = 16;
 
@@ -64,6 +64,19 @@ const showDrops = async (interaction: ChatInputCommandInteraction) => {
   );
 };
 
+const showDiary = async (interaction: ChatInputCommandInteraction) => {
+  const member = await findMember(interaction);
+  if (!member) return;
+
+  const entries = await api.get("/v1/members/{id}/diary", { params: { path: { id: member.id } } });
+
+  const avatarUrl = taggedUser(interaction).displayAvatarURL({ extension: "png", size: 256 });
+  const card = new AttachmentBuilder(Buffer.from(await renderDiaryCard(member, entries, avatarUrl)), {
+    name: `${member.displayName}_diary.png`
+  });
+  await interaction.editReply({ files: [card], components: [diaryLinks()] });
+};
+
 const showAge = async (interaction: ChatInputCommandInteraction) => {
   const member = await findMember(interaction);
   if (!member) return;
@@ -80,6 +93,7 @@ const showAge = async (interaction: ChatInputCommandInteraction) => {
 
 const SUBCOMMANDS = {
   age: showAge,
+  diary: showDiary,
   drops: showDrops,
   view: showProfile
 };
