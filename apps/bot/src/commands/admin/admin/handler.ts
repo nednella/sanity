@@ -6,18 +6,31 @@ import { reply, replyError } from "@/utils/replies";
 
 import { NO_MEMBERS_TAGGED, changesEmbed, readTaggedMembers } from "../member/utils";
 
-async function changeRole(interaction: ChatInputCommandInteraction, role: "admin" | null, title: string) {
+async function addAdmin(interaction: ChatInputCommandInteraction) {
   const { taggedDiscordIds, ...body } = readTaggedMembers(interaction);
   if (taggedDiscordIds.length === 0) return replyError(interaction, NO_MEMBERS_TAGGED);
 
-  const changes = await api.post("/v1/members/role", { body: { ...body, role } });
-  const describe = () => (role === null ? "is no longer an admin" : "is now an admin");
-  return reply(interaction, changesEmbed(title, describe, changes, taggedDiscordIds));
+  const changes = await api.post("/v1/members/admin", { body: { ...body, role: "admin" } });
+  return reply(
+    interaction,
+    changesEmbed("Add admin", () => "is now an admin", changes, taggedDiscordIds)
+  );
+}
+
+async function removeAdmin(interaction: ChatInputCommandInteraction) {
+  const { taggedDiscordIds, ...body } = readTaggedMembers(interaction);
+  if (taggedDiscordIds.length === 0) return replyError(interaction, NO_MEMBERS_TAGGED);
+
+  const changes = await api.delete("/v1/members/admin", { body });
+  return reply(
+    interaction,
+    changesEmbed("Remove admin", () => "no longer has a role", changes, taggedDiscordIds)
+  );
 }
 
 const SUBCOMMANDS = {
-  add: (interaction: ChatInputCommandInteraction) => changeRole(interaction, "admin", "Add admin"),
-  remove: (interaction: ChatInputCommandInteraction) => changeRole(interaction, null, "Remove admin")
+  add: addAdmin,
+  remove: removeAdmin
 };
 
 export function handleAdmin(interaction: ChatInputCommandInteraction) {

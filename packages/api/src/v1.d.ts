@@ -753,6 +753,90 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/members/admin": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": {
+                        members: ({
+                            memberId: string;
+                        } | {
+                            discordId: string;
+                        })[];
+                        note?: string;
+                        /** @enum {string} */
+                        role: "admin";
+                    };
+                };
+            };
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            changed: components["schemas"]["MemberChange"][];
+                            skipped: components["schemas"]["MemberSkip"][];
+                        };
+                    };
+                };
+            };
+        };
+        delete: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": {
+                        members: ({
+                            memberId: string;
+                        } | {
+                            discordId: string;
+                        })[];
+                        note?: string;
+                    };
+                };
+            };
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            changed: components["schemas"]["MemberChange"][];
+                            skipped: components["schemas"]["MemberSkip"][];
+                        };
+                    };
+                };
+            };
+        };
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/members/delay-demotion": {
         parameters: {
             query?: never;
@@ -1025,57 +1109,6 @@ export interface paths {
                             discordId: string;
                         })[];
                         note?: string;
-                    };
-                };
-            };
-            responses: {
-                /** @description Default Response */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            changed: components["schemas"]["MemberChange"][];
-                            skipped: components["schemas"]["MemberSkip"][];
-                        };
-                    };
-                };
-            };
-        };
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/v1/members/role": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody: {
-                content: {
-                    "application/json": {
-                        members: ({
-                            memberId: string;
-                        } | {
-                            discordId: string;
-                        })[];
-                        note?: string;
-                        /** @enum {string|null} */
-                        role: "admin" | null;
                     };
                 };
             };

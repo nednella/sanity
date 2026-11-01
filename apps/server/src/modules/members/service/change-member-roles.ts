@@ -3,6 +3,7 @@ import { db } from "@db/index";
 import type { ApplicationError } from "@/errors/error";
 import { recordAuditEntries } from "@/modules/audit/repository/record-audit-entries";
 import type { Auth } from "@/modules/auth/hooks/authenticate";
+import { isRoleAbove } from "@/modules/auth/hooks/authorise";
 import { QUIT_RANK_ID } from "@/modules/ranks/constants";
 
 import { memberErrors } from "../errors";
@@ -14,8 +15,8 @@ import type { RoleChange } from "../request";
 type Member = Awaited<ReturnType<typeof listMembersById>>[number];
 
 /**
- * Gives or removes admin. A superuser is left alone, so that no superuser can
- * demote another.
+ * Gives a role, or removes any role when role is null. The caller can change
+ * only members they outrank, so that no admin can demote another.
  */
 export async function changeMemberRoles({ members, note, role }: RoleChange, auth: Auth) {
   return db.transaction(async (tx) => {
@@ -26,10 +27,10 @@ export async function changeMemberRoles({ members, note, role }: RoleChange, aut
     const skipped: { member: Member; error: ApplicationError }[] = [];
 
     for (const member of found) {
-      if (member.role === "superuser") skipped.push({ member, error: memberErrors.isSuperuser() });
-      else if (role === null && member.role !== "admin") skipped.push({ member, error: memberErrors.notAdmin() });
-      else if (role === "admin" && member.role === "admin")
-        skipped.push({ member, error: memberErrors.alreadyAdmin() });
+      if (!isRoleAbove(auth.member.role, member.role)) skipped.push({ member, error: memberErrors.roleTooHigh() });
+      else if (role === null && member.role === null) skipped.push({ member, error: memberErrors.hasNoRole() });
+      else if (role !== null && member.role === role)
+        skipped.push({ member, error: memberErrors.alreadyHasRole(role) });
       else if (role !== null && member.rankId === QUIT_RANK_ID) skipped.push({ member, error: memberErrors.hasQuit() });
       else changed.push({ member });
     }

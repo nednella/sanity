@@ -4122,6 +4122,185 @@
         }
       }
     },
+    "/v1/members/admin": {
+      "delete": {
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "members": {
+                    "minItems": 1,
+                    "maxItems": 50,
+                    "type": "array",
+                    "items": {
+                      "anyOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "memberId": {
+                              "type": "string",
+                              "pattern": "^\\d+$"
+                            }
+                          },
+                          "required": [
+                            "memberId"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "discordId": {
+                              "type": "string",
+                              "pattern": "^\\d+$"
+                            }
+                          },
+                          "required": [
+                            "discordId"
+                          ]
+                        }
+                      ]
+                    }
+                  },
+                  "note": {
+                    "type": "string",
+                    "maxLength": 500
+                  }
+                },
+                "required": [
+                  "members"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "changed": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/MemberChange"
+                      }
+                    },
+                    "skipped": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/MemberSkip"
+                      }
+                    }
+                  },
+                  "required": [
+                    "changed",
+                    "skipped"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "members": {
+                    "minItems": 1,
+                    "maxItems": 50,
+                    "type": "array",
+                    "items": {
+                      "anyOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "memberId": {
+                              "type": "string",
+                              "pattern": "^\\d+$"
+                            }
+                          },
+                          "required": [
+                            "memberId"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "discordId": {
+                              "type": "string",
+                              "pattern": "^\\d+$"
+                            }
+                          },
+                          "required": [
+                            "discordId"
+                          ]
+                        }
+                      ]
+                    }
+                  },
+                  "note": {
+                    "type": "string",
+                    "maxLength": 500
+                  },
+                  "role": {
+                    "type": "string",
+                    "enum": [
+                      "admin"
+                    ]
+                  }
+                },
+                "required": [
+                  "members",
+                  "role"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "changed": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/MemberChange"
+                      }
+                    },
+                    "skipped": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/MemberSkip"
+                      }
+                    }
+                  },
+                  "required": [
+                    "changed",
+                    "skipped"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/v1/members/delay-demotion": {
       "post": {
         "requestBody": {
@@ -4616,101 +4795,6 @@
                 },
                 "required": [
                   "members"
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Default Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "changed": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/MemberChange"
-                      }
-                    },
-                    "skipped": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/MemberSkip"
-                      }
-                    }
-                  },
-                  "required": [
-                    "changed",
-                    "skipped"
-                  ],
-                  "additionalProperties": false
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/v1/members/role": {
-      "post": {
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "members": {
-                    "minItems": 1,
-                    "maxItems": 50,
-                    "type": "array",
-                    "items": {
-                      "anyOf": [
-                        {
-                          "type": "object",
-                          "properties": {
-                            "memberId": {
-                              "type": "string",
-                              "pattern": "^\\d+$"
-                            }
-                          },
-                          "required": [
-                            "memberId"
-                          ]
-                        },
-                        {
-                          "type": "object",
-                          "properties": {
-                            "discordId": {
-                              "type": "string",
-                              "pattern": "^\\d+$"
-                            }
-                          },
-                          "required": [
-                            "discordId"
-                          ]
-                        }
-                      ]
-                    }
-                  },
-                  "note": {
-                    "type": "string",
-                    "maxLength": 500
-                  },
-                  "role": {
-                    "nullable": true,
-                    "type": "string",
-                    "enum": [
-                      "admin"
-                    ]
-                  }
-                },
-                "required": [
-                  "members",
-                  "role"
                 ]
               }
             }
