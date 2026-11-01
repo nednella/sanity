@@ -14,6 +14,9 @@ import { describeClanAge, describeEarlierDrops, describeLatestDrop, diaryLinks, 
 
 const DROPS_SHOWN = 16;
 
+const replyChanged = (interaction: ChatInputCommandInteraction, title: string, description: string) =>
+  reply(interaction, buildEmbed({ style: "success", title, description }));
+
 const showProfile = async (interaction: ChatInputCommandInteraction) => {
   const profile = await findMember(interaction);
   if (!profile) return;
@@ -91,10 +94,23 @@ const showAge = async (interaction: ChatInputCommandInteraction) => {
   );
 };
 
+const updateNationality = async (interaction: ChatInputCommandInteraction) => {
+  const nationality = interaction.options.getString("country", true).toUpperCase();
+  await api.patch("/v1/members/me", { body: { nationality } });
+  return replyChanged(interaction, "Nationality changed", `Your flag is now :flag_${nationality.toLowerCase()}:.`);
+};
+
+const removeNationality = async (interaction: ChatInputCommandInteraction) => {
+  await api.patch("/v1/members/me", { body: { nationality: null } });
+  return replyChanged(interaction, "Nationality removed", "You no longer have a flag on your profile.");
+};
+
 const SUBCOMMANDS = {
   age: showAge,
   diary: showDiary,
   drops: showDrops,
+  "nationality remove": removeNationality,
+  "nationality update": updateNationality,
   view: showProfile
 };
 
