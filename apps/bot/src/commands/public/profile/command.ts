@@ -10,6 +10,12 @@ export const profile = defineCommand({
     .setName("profile")
     .setDescription("See a member's profile")
     .addSubcommand((subcommand) =>
+      subcommand
+        .setName("age")
+        .setDescription("Show how long a member has been in the clan")
+        .addUserOption(oneMemberOption)
+    )
+    .addSubcommand((subcommand) =>
       subcommand.setName("drops").setDescription("Show a member's latest approved drops").addUserOption(oneMemberOption)
     )
     .addSubcommand((subcommand) =>

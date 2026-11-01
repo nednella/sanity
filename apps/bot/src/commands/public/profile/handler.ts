@@ -10,7 +10,7 @@ import { findMember, taggedUser } from "@/utils/members";
 import { reply } from "@/utils/replies";
 
 import { renderProfileCard } from "./card";
-import { describeEarlierDrops, describeLatestDrop, profileLinks } from "./utils";
+import { describeClanAge, describeEarlierDrops, describeLatestDrop, profileLinks } from "./utils";
 
 const DROPS_SHOWN = 16;
 
@@ -64,7 +64,22 @@ const showDrops = async (interaction: ChatInputCommandInteraction) => {
   );
 };
 
+const showAge = async (interaction: ChatInputCommandInteraction) => {
+  const member = await findMember(interaction);
+  if (!member) return;
+
+  await reply(
+    interaction,
+    buildEmbed({
+      title: `${member.displayName}'s clan age`,
+      description: describeClanAge(member),
+      thumbnail: taggedUser(interaction).displayAvatarURL()
+    })
+  );
+};
+
 const SUBCOMMANDS = {
+  age: showAge,
   drops: showDrops,
   view: showProfile
 };

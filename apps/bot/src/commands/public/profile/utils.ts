@@ -33,6 +33,25 @@ const pointsFor = (memberId: string, { participants }: Submission) =>
 const describePoints = (memberId: string, drop: Submission) =>
   `${inlineCode(formatNumber(pointsFor(memberId, drop)))} pts`;
 
+const count = (amount: number, unit: string) => `${amount} ${unit}${amount === 1 ? "" : "s"}`;
+
+const timeSince = (start: Date, end: Date) => {
+  let years = end.getUTCFullYear() - start.getUTCFullYear();
+  let months = end.getUTCMonth() - start.getUTCMonth();
+  let days = end.getUTCDate() - start.getUTCDate();
+
+  if (days < 0) {
+    months -= 1;
+    days += new Date(Date.UTC(end.getUTCFullYear(), end.getUTCMonth(), 0)).getUTCDate();
+  }
+  if (months < 0) {
+    years -= 1;
+    months += 12;
+  }
+
+  return [count(years, "year"), count(months, "month"), count(days, "day")].join(" ");
+};
+
 export const profileLinks = ({ id, wom }: MemberProfile) =>
   new ActionRowBuilder<ButtonBuilder>().addComponents(
     linkButton("Website", `${config.webUrl}/members/${id}`),
@@ -71,3 +90,10 @@ export const describeEarlierDrops = (memberId: string, drops: Submission[]) =>
       ].join(SEPARATOR)
     )
     .join("\n");
+
+export const describeClanAge = ({ displayName, membership }: MemberProfile) => {
+  if (!membership.joinedAt) return `${bold(displayName)} has no join date.`;
+
+  const joinedAt = new Date(membership.joinedAt);
+  return `${bold(displayName)} joined on ${time(joinedAt, TimestampStyles.LongDate)}, ${timeSince(joinedAt, new Date())} ago.`;
+};
