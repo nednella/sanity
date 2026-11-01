@@ -1,4 +1,4 @@
-import { and, eq, inArray, lte, max, sql, sum } from "drizzle-orm";
+import { type SQLWrapper, and, eq, inArray, lte, max, sql, sum } from "drizzle-orm";
 
 import { db } from "@db/index";
 import { personalBestParticipants, personalBests, speedrunDiaryTiers, speedrunDiaryTimes } from "@db/schema";
@@ -8,7 +8,7 @@ import { isApprovedRun } from "@/modules/personal-bests/repository/shared/filter
 // Diary progress is derived, never stored: each member's best approved time per diary earns every tier it
 // beats, so a changed threshold applies on the next read. Omitting memberIds computes it for every member,
 // so callers can join or sort on it.
-export function diaryProgressQueries(memberIds?: bigint[]) {
+export function diaryProgressQueries(memberIds?: bigint[] | SQLWrapper) {
   const isRequested = memberIds && inArray(personalBestParticipants.memberId, memberIds);
 
   const bestTimes = db.$with("best_times").as(
