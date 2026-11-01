@@ -50,6 +50,16 @@ jobs:
       - uses: ./.github/actions/setup
       - run: pnpm --filter @sanity/server test
 
+  build:
+    name: Build
+    needs: changes
+    if: needs.changes.outputs.server == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: ./.github/actions/setup
+      - run: pnpm --filter @sanity/server build
+
   openapi:
     name: OpenAPI
     needs: changes
