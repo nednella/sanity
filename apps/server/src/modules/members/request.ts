@@ -65,6 +65,8 @@ const trialist = z.object({
 
 export const giveAdminBody = memberCommandBody.extend({ role: z.enum(["admin"]) });
 
+export const giveRoleBody = memberCommandBody.extend({ role: z.enum(["reviewer"]) });
+
 export const changeRankBody = memberCommandBody.extend({
   rankId: z
     .number()
