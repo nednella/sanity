@@ -13,7 +13,7 @@ function describeRename(label: string, previous: string | null, next: string | n
 export async function editMemberProfile(auth: Auth, profile: ProfileChanges) {
   return db.transaction(async (tx) => {
     const previous = await updateMemberProfile(tx, auth.member.id, profile);
-    if (!previous) throw memberErrors.notFound(auth.member.id);
+    if (!previous) throw memberErrors.notFoundById(auth.member.id);
 
     const renames = [
       profile.mainRsn !== undefined && profile.mainRsn !== previous.mainRsn

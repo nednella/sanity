@@ -16,6 +16,7 @@ import {
   giveAdminBody,
   giveRoleBody,
   memberBatchBody,
+  memberDiscordParams,
   memberListQuery,
   memberParams,
   memberPersonalBestsQuery,
@@ -29,7 +30,7 @@ import { changeMemberRoles } from "./service/change-member-roles";
 import { changePluginAccess } from "./service/change-plugin-access";
 import { delayDemotions } from "./service/delay-demotions";
 import { editMemberProfile } from "./service/edit-member-profile";
-import { getMemberProfile } from "./service/get-member-profile";
+import { getMemberProfileByDiscordId, getMemberProfileById } from "./service/get-member-profile";
 import { getMembers } from "./service/get-members";
 import { passMembers } from "./service/pass-members";
 import { proposeRankChanges } from "./service/propose-rank-changes";
@@ -71,7 +72,23 @@ export const membersModule = defineModule([
         404: errorResponse
       }
     },
-    handler: async (req) => getMemberProfile(req.params.id)
+    handler: async (req) => getMemberProfileById(req.params.id)
+  }),
+
+  defineRoute({
+    method: "GET",
+    url: "/members/discord/:discordId",
+    config: {
+      access: "public"
+    },
+    schema: {
+      params: memberDiscordParams,
+      response: {
+        200: memberProfile,
+        404: errorResponse
+      }
+    },
+    handler: async (req) => getMemberProfileByDiscordId(req.params.discordId)
   }),
 
   defineRoute({
@@ -144,7 +161,7 @@ export const membersModule = defineModule([
         404: errorResponse
       }
     },
-    handler: async (req) => getMemberProfile(req.auth.member.id)
+    handler: async (req) => getMemberProfileById(req.auth.member.id)
   }),
 
   defineRoute({

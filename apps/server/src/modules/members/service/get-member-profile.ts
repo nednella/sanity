@@ -4,12 +4,10 @@ import { listNameChanges } from "@/modules/wom/repository/list-name-changes";
 
 import { memberErrors } from "../errors";
 import { toMemberProfile } from "../mapper";
-import { findMember } from "../repository/find-member";
+import { findMemberByDiscordId, findMemberById } from "../repository/find-member";
+import type { MemberRow } from "../repository/shared/select-members";
 
-export async function getMemberProfile(id: bigint) {
-  const row = await findMember(id);
-  if (!row) throw memberErrors.notFound(id);
-
+async function buildMemberProfile(row: MemberRow) {
   const [ranks, latestSnapshot, nameChanges] = await Promise.all([
     listRanks(),
     row.womPlayer ? findLatestSnapshot(row.womPlayer.womPlayerId) : undefined,
@@ -17,4 +15,18 @@ export async function getMemberProfile(id: bigint) {
   ]);
 
   return toMemberProfile(row, ranks, latestSnapshot, nameChanges);
+}
+
+export async function getMemberProfileById(id: bigint) {
+  const member = await findMemberById(id);
+  if (!member) throw memberErrors.notFoundById(id);
+
+  return buildMemberProfile(member);
+}
+
+export async function getMemberProfileByDiscordId(discordId: bigint) {
+  const member = await findMemberByDiscordId(discordId);
+  if (!member) throw memberErrors.notFoundByDiscordId(discordId);
+
+  return buildMemberProfile(member);
 }
