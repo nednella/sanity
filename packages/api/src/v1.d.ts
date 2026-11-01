@@ -645,6 +645,7 @@ export interface paths {
                 query?: {
                     limit?: number;
                     offset?: number;
+                    status?: "approved" | "approved_missing_member" | "pending" | "submitted";
                     sort?: components["schemas"]["SubmissionSortInput"];
                     order?: "asc" | "desc";
                 };

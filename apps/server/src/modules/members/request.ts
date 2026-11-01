@@ -4,7 +4,7 @@ import type { MemberRole } from "@db/enums";
 
 import { contentFilters, personalBestSortFilters, top } from "@/modules/personal-bests/request";
 import { QUIT_RANK_ID, RETIRED_RANK_ID } from "@/modules/ranks/constants";
-import { submissionSortFilters } from "@/modules/submissions/request";
+import { listedStatus, submissionSortFilters } from "@/modules/submissions/request";
 import { bigIntString, booleanString } from "@/schema/codecs";
 import { pagination } from "@/schema/common";
 
@@ -48,6 +48,7 @@ export const memberPersonalBestsQuery = z.object({
 
 export const memberSubmissionsQuery = z.object({
   ...pagination.shape,
+  status: listedStatus.optional(),
   ...submissionSortFilters.shape
 });
 
