@@ -1,4 +1,4 @@
-import { AttachmentBuilder, type ChatInputCommandInteraction, hyperlink } from "discord.js";
+import { AttachmentBuilder, type ChatInputCommandInteraction, hyperlink, inlineCode } from "discord.js";
 
 import { config } from "@config";
 
@@ -105,12 +105,28 @@ const removeNationality = async (interaction: ChatInputCommandInteraction) => {
   return replyChanged(interaction, "Nationality removed", "You no longer have a flag on your profile.");
 };
 
+const updateRsn = async (interaction: ChatInputCommandInteraction) => {
+  const account = interaction.options.getString("account", true);
+  const name = interaction.options.getString("name", true);
+  const body = account === "main" ? { mainRsn: name } : { altRsn: name };
+
+  await api.patch("/v1/members/me", { body });
+  return replyChanged(interaction, "RSN changed", `Your ${account} RSN is now ${inlineCode(name)}.`);
+};
+
+const removeRsn = async (interaction: ChatInputCommandInteraction) => {
+  await api.patch("/v1/members/me", { body: { altRsn: null } });
+  return replyChanged(interaction, "RSN removed", "You no longer have an alt RSN.");
+};
+
 const SUBCOMMANDS = {
   age: showAge,
   diary: showDiary,
   drops: showDrops,
   "nationality remove": removeNationality,
   "nationality update": updateNationality,
+  "rsn remove": removeRsn,
+  "rsn update": updateRsn,
   view: showProfile
 };
 
