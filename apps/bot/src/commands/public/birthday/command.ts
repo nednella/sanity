@@ -23,7 +23,7 @@ export const birthday = defineCommand({
         )
     )
     .addSubcommand((subcommand) => subcommand.setName("remove").setDescription("Remove your birthday")),
-  category: "Profile",
+  category: "Misc",
   selfOnly: true,
   execute: handleBirthday
 });

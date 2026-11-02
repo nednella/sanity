@@ -6,7 +6,7 @@ import { handlePluginKey } from "./handler";
 
 export const pluginKey = defineCommand({
   data: new SlashCommandBuilder().setName("plugin-key").setDescription("Get a new key for the Sanity RuneLite plugin"),
-  category: "Profile",
+  category: "Mainframe",
   selfOnly: true,
   execute: handlePluginKey
 });
