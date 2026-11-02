@@ -6,10 +6,16 @@ import { submissions } from "@db/schema";
 import type { Review } from "@/schema/common";
 
 // Only a submission still waiting can be reviewed, so a second approval cannot pay out twice.
-export async function reviewSubmission(tx: Transaction, id: number, review: Review, reviewedBy: bigint) {
+export async function reviewSubmission(
+  tx: Transaction,
+  id: number,
+  review: Review,
+  reviewedBy: bigint,
+  multiplierId: number | null
+) {
   const reviewed = await tx
     .update(submissions)
-    .set({ ...review, reviewedAt: new Date(), reviewedBy })
+    .set({ ...review, multiplierId, reviewedAt: new Date(), reviewedBy })
     .where(eq(submissions.id, id))
     .returning({ id: submissions.id });
 
