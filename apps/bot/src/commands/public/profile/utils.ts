@@ -12,10 +12,9 @@ import {
 
 import type { MemberProfile, Submission } from "@sanity/api";
 import { WOM_PLAYERS_URL } from "@sanity/urls";
+import { formatNumber, timeSince } from "@sanity/utils";
 
 import { config } from "@config";
-
-import { formatNumber } from "@/utils/format";
 
 const SEPARATOR = " - ";
 
@@ -32,25 +31,6 @@ const pointsFor = (memberId: string, { participants }: Submission) =>
 
 const describePoints = (memberId: string, drop: Submission) =>
   `${inlineCode(formatNumber(pointsFor(memberId, drop)))} pts`;
-
-const count = (amount: number, unit: string) => `${amount} ${unit}${amount === 1 ? "" : "s"}`;
-
-const timeSince = (start: Date, end: Date) => {
-  let years = end.getUTCFullYear() - start.getUTCFullYear();
-  let months = end.getUTCMonth() - start.getUTCMonth();
-  let days = end.getUTCDate() - start.getUTCDate();
-
-  if (days < 0) {
-    months -= 1;
-    days += new Date(Date.UTC(end.getUTCFullYear(), end.getUTCMonth(), 0)).getUTCDate();
-  }
-  if (months < 0) {
-    years -= 1;
-    months += 12;
-  }
-
-  return [count(years, "year"), count(months, "month"), count(days, "day")].join(" ");
-};
 
 export const profileLinks = ({ id, wom }: MemberProfile) =>
   new ActionRowBuilder<ButtonBuilder>().addComponents(

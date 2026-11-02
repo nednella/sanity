@@ -1,5 +1,6 @@
+import { formatDate, formatRelativeDate } from "@sanity/utils";
+
 import { Tooltip } from "@/lib/ui/tooltip";
-import { formatDate, formatRelativeDate } from "@/utils/dates";
 
 type RelativeDateProps = {
   value: string | null | undefined;

@@ -2,15 +2,13 @@ import { CalendarDays, Hourglass, Swords } from "lucide-react";
 import type { ReactNode } from "react";
 
 import type { Boss, MemberProfile } from "@sanity/api";
+import { DASH, formatNumber, metricName } from "@sanity/utils";
 
 import { MetricIcon } from "@/components/members/profile/overview/metric-icon";
 import { WomNoSync } from "@/components/members/profile/wom-no-sync";
 import { womEmptyMessage } from "@/lib/members/wom";
-import { metricName } from "@/lib/metrics";
 import { RelativeDate } from "@/lib/ui/relative-date";
-import { DASH } from "@/utils/dash";
 import { bossIconUrl, statIconUrl } from "@/utils/icons";
-import { formatNumber } from "@/utils/numbers";
 
 type BossStats = {
   totalKills: number;

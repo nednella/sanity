@@ -1,4 +1,4 @@
-import { formatNumber } from "@/utils/numbers";
+import { formatNumber } from "@sanity/utils";
 
 type ProgressBarProps = {
   label: string;

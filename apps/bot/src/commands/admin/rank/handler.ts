@@ -1,12 +1,12 @@
 import { type ChatInputCommandInteraction, TimestampStyles, channelMention, time, userMention } from "discord.js";
 
 import type { MemberChange, RankProposal } from "@sanity/api";
+import { capitalise } from "@sanity/utils";
 
 import { api } from "@/lib/api";
 import { resolveTextChannel } from "@/lib/channels";
 import { runSubcommand } from "@/utils/commands";
 import { buildEmbed, fitLines } from "@/utils/embeds";
-import { capitalise } from "@/utils/format";
 import { reply, replyError } from "@/utils/replies";
 
 import { NO_MEMBERS_TAGGED, changesEmbed, readTaggedMembers } from "../member/utils";

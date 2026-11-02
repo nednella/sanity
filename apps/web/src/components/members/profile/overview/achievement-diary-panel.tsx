@@ -1,11 +1,10 @@
 import type { MemberDiary } from "@sanity/api";
+import { DASH, formatTickTime, teamScale } from "@sanity/utils";
 
 import { MetricIcon } from "@/components/members/profile/overview/metric-icon";
 import { PanelEmptyMessage } from "@/components/panel";
 import { useMediaStore } from "@/lib/media/media.store";
 import { Tooltip } from "@/lib/ui/tooltip";
-import { DASH } from "@/utils/dash";
-import { formatTickTime } from "@/utils/dates";
 import { bossIconUrl, diaryTierIconUrl } from "@/utils/icons";
 
 type AchievementDiaryPanelProps = {
@@ -21,7 +20,7 @@ export function AchievementDiaryPanel({ diaries }: Readonly<AchievementDiaryPane
     if (!pb?.imageUrl) return;
 
     showMedia({
-      alt: `${content.name}, ${scale} man, in ${formatTickTime(pb.timeSeconds)}`,
+      alt: `${content.name}, ${teamScale(scale)}, in ${formatTickTime(pb.timeSeconds)}`,
       src: pb.imageUrl
     });
   };
@@ -52,7 +51,7 @@ export function AchievementDiaryPanel({ diaries }: Readonly<AchievementDiaryPane
                 <span className="inline-flex items-center gap-2">
                   {content.metric && <MetricIcon src={bossIconUrl(content.metric)} />}
                   {content.name}
-                  <span className="text-base-content/60">{scale} man</span>
+                  <span className="text-base-content/60">{teamScale(scale)}</span>
                 </span>
               </td>
               <td className="font-medium tabular-nums">

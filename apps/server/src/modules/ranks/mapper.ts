@@ -1,4 +1,4 @@
-import { osrsWikiImageUrl } from "@/utils/images";
+import { osrsWikiImageUrl } from "@sanity/utils";
 
 import type { RankRow } from "./repository/list-ranks";
 

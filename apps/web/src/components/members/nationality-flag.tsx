@@ -1,4 +1,5 @@
 import { CIRCLE_FLAG_CDN_URL, RECTANGLE_FLAG_CDN_URL } from "@sanity/urls";
+import { isCountryCode } from "@sanity/utils";
 
 import { Tooltip } from "@/lib/ui/tooltip";
 
@@ -12,8 +13,6 @@ type NationalityFlagProps = {
   countryCode: string;
   shape?: keyof typeof shapes;
 };
-
-const isCountryCode = (countryCode: string) => /^[a-z]{2}$/i.test(countryCode);
 
 export function NationalityFlag({ className, countryCode, shape = "rectangle" }: Readonly<NationalityFlagProps>) {
   if (!isCountryCode(countryCode))

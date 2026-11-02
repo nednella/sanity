@@ -2,9 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { Fragment } from "react";
 
 import type { MemberRef } from "@sanity/api";
-
-import { DASH } from "@/utils/dash";
-import { formatNumber } from "@/utils/numbers";
+import { DASH, formatNumber } from "@sanity/utils";
 
 type Participant = MemberRef & {
   points?: number | null;

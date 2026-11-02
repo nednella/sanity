@@ -2,6 +2,8 @@ import { useQuery } from "@tanstack/react-query";
 import { Swords, Users } from "lucide-react";
 import type { MouseEvent } from "react";
 
+import { teamScale } from "@sanity/utils";
+
 import { contentOptions } from "@/lib/api/queries/personal-bests";
 import { Dropdown } from "@/lib/ui/dropdown";
 
@@ -66,7 +68,7 @@ export function ContentFilter({ contentId, onChange, scale }: Readonly<ContentFi
           label={
             <>
               <Users className="size-4" />
-              {scale === undefined ? "Any scale" : `${scale} man`}
+              {scale === undefined ? "Any scale" : teamScale(scale)}
             </>
           }
         >
@@ -84,7 +86,7 @@ export function ContentFilter({ contentId, onChange, scale }: Readonly<ContentFi
                 type="button"
                 onClick={pick({ contentId: content.id, scale: option })}
               >
-                {option} man
+                {teamScale(option)}
               </button>
             </li>
           ))}

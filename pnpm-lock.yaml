@@ -235,6 +235,9 @@ importers:
       '@sanity/urls':
         specifier: workspace:*
         version: link:../../packages/urls
+      '@sanity/utils':
+        specifier: workspace:*
+        version: link:../../packages/utils
       discord.js:
         specifier: ^14.27.0
         version: 14.27.0
@@ -272,6 +275,9 @@ importers:
       '@sanity/urls':
         specifier: workspace:*
         version: link:../../packages/urls
+      '@sanity/utils':
+        specifier: workspace:*
+        version: link:../../packages/utils
       '@scalar/fastify-api-reference':
         specifier: ^1.73.0
         version: 1.73.0
@@ -327,6 +333,9 @@ importers:
       '@sanity/urls':
         specifier: workspace:*
         version: link:../../packages/urls
+      '@sanity/utils':
+        specifier: workspace:*
+        version: link:../../packages/utils
       '@tanstack/react-query':
         specifier: ^5.102.8
         version: 5.102.8(react@19.3.0)
@@ -336,9 +345,6 @@ importers:
       '@tanstack/react-table':
         specifier: ^9.2.4
         version: 9.2.4(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
-      '@wise-old-man/utils':
-        specifier: ^4.0.24
-        version: 4.0.24
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
@@ -442,6 +448,13 @@ importers:
         version: 6.0.3
 
   packages/utils:
+    dependencies:
+      '@sanity/urls':
+        specifier: workspace:*
+        version: link:../urls
+      '@wise-old-man/utils':
+        specifier: ^4.0.24
+        version: 4.0.24
     devDependencies:
       typescript:
         specifier: ~6.0.3

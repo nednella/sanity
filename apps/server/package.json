@@ -31,6 +31,7 @@
     "@fastify/rate-limit": "^11.2.1",
     "@fastify/swagger": "^9.8.1",
     "@sanity/urls": "workspace:*",
+    "@sanity/utils": "workspace:*",
     "@scalar/fastify-api-reference": "^1.73.0",
     "@wise-old-man/utils": "^4.0.24",
     "drizzle-orm": "^0.45.2",
