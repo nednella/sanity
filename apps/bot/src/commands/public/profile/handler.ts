@@ -1,11 +1,12 @@
 import { AttachmentBuilder, type ChatInputCommandInteraction, hyperlink, inlineCode } from "discord.js";
 
+import { formatNumber } from "@sanity/utils";
+
 import { config } from "@config";
 
 import { api } from "@/lib/api";
 import { runSubcommand } from "@/utils/commands";
 import { buildEmbed } from "@/utils/embeds";
-import { formatNumber } from "@/utils/format";
 import { findMember, taggedUser } from "@/utils/members";
 import { reply } from "@/utils/replies";
 

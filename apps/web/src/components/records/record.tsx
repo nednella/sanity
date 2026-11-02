@@ -3,6 +3,7 @@ import { ChevronRight } from "lucide-react";
 import { createContext, useContext, useState } from "react";
 
 import type { RankedPersonalBest } from "@sanity/api";
+import { formatTickTime, teamScale } from "@sanity/utils";
 
 import { Medal } from "@/components/records/medal";
 import { ParticipantList } from "@/components/shared/participant-list";
@@ -11,7 +12,6 @@ import { Button } from "@/lib/ui/button";
 import { RelativeDate } from "@/lib/ui/relative-date";
 import { H3 } from "@/lib/ui/typography/h3";
 import { Overline } from "@/lib/ui/typography/overline";
-import { formatTickTime } from "@/utils/dates";
 import { contentArtworkUrl } from "@/utils/icons";
 
 type Scale = {
@@ -68,7 +68,7 @@ function Header({ children, name }: Readonly<HeaderProps>) {
   return (
     <header className="flex items-start justify-between gap-4 border-b border-base-300 p-4">
       <div>
-        <Overline>{scale} man</Overline>
+        <Overline>{teamScale(scale)}</Overline>
         <H3>{name}</H3>
       </div>
 
@@ -115,7 +115,7 @@ function Item({ record }: Readonly<{ record: RankedPersonalBest }>) {
         <button
           type="button"
           className="absolute inset-0 cursor-zoom-in focus-visible:outline focus-visible:-outline-offset-2 focus-visible:outline-primary"
-          onClick={() => showMedia({ alt: `${content.name}, ${scale} man, in ${time}`, src: imageUrl })}
+          onClick={() => showMedia({ alt: `${content.name}, ${teamScale(scale)}, in ${time}`, src: imageUrl })}
         >
           <span className="sr-only">
             Screenshot of {content.name} in {time}

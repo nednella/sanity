@@ -1,8 +1,9 @@
+import { firstOfNextMonth } from "@sanity/utils";
+
 import { db } from "@db/index";
 
 import { recordAuditEntries } from "@/modules/audit/repository/record-audit-entries";
 import type { Auth } from "@/modules/auth/hooks/authenticate";
-import { firstOfNextMonth } from "@/utils/dates";
 
 import { delayRankChange } from "../repository/delay-rank-change";
 import { listMemberIdsByRef } from "../repository/list-member-ids-by-ref";

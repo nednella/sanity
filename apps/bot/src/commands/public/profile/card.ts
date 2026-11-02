@@ -3,10 +3,9 @@ import { render } from "takumi-js";
 
 import type { MemberDiary, MemberProfile, RankSummary } from "@sanity/api";
 import { CIRCLE_FLAG_CDN_URL } from "@sanity/urls";
+import { escapeHtml, formatDate, formatNumber, formatTickTime, isCountryCode, teamScale } from "@sanity/utils";
 
 import { config } from "@config";
-
-import { formatDate, formatNumber, formatTickTime } from "@/utils/format";
 
 type NextRank = NonNullable<MemberProfile["progression"]["nextRank"]["points"]>;
 
@@ -40,10 +39,6 @@ const FONTS = [
   }
 ];
 
-// Names and RSNs are typed by members, so they are escaped before they become markup.
-const escape = (text: string) =>
-  text.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;");
-
 const webIconUrl = (path: string) => `${config.webUrl}/icons/${path}.png`;
 
 const overline = (text: string) =>
@@ -51,19 +46,19 @@ const overline = (text: string) =>
 
 const rankBadge = ({ iconUrl, name }: RankSummary) => `
   <span style="display:flex;align-items:center;gap:10px">
-    ${iconUrl ? `<img src="${escape(iconUrl)}" style="width:22px;height:22px" />` : ""}
-    ${escape(name)}
+    ${iconUrl ? `<img src="${escapeHtml(iconUrl)}" style="width:22px;height:22px" />` : ""}
+    ${escapeHtml(name)}
   </span>`;
 
 const avatar = (avatarUrl: string, nationality: string | null) => {
   const flag =
-    nationality && /^[a-z]{2}$/i.test(nationality)
+    nationality && isCountryCode(nationality)
       ? `<img src="${CIRCLE_FLAG_CDN_URL}/${nationality.toLowerCase()}.svg" style="position:absolute;right:-4px;bottom:-4px;width:40px;height:40px;border-radius:20px;border:4px solid ${COLOURS.background}" />`
       : "";
 
   return `
   <div style="display:flex;position:relative;width:112px;height:112px">
-    <img src="${escape(avatarUrl)}" style="width:112px;height:112px;border-radius:56px" />
+    <img src="${escapeHtml(avatarUrl)}" style="width:112px;height:112px;border-radius:56px" />
     ${flag}
   </div>`;
 };
@@ -79,9 +74,9 @@ const header = ({ displayName, membership, nationality, rsn }: MemberProfile, av
     <div style="display:flex;align-items:center;gap:26px">
       ${avatar(avatarUrl, nationality)}
       <div style="display:flex;flex-direction:column;gap:6px">
-        <span style="font-size:54px;font-weight:700;letter-spacing:-1px;line-height:1.05">${escape(displayName)}</span>
+        <span style="font-size:54px;font-weight:700;letter-spacing:-1px;line-height:1.05">${escapeHtml(displayName)}</span>
         <span style="font-size:22px;color:${COLOURS.muted}">${rankBadge(membership.rank)}</span>
-        <span style="font-size:20px;color:${COLOURS.muted}">${escape(details.join("  ·  "))}</span>
+        <span style="font-size:20px;color:${COLOURS.muted}">${escapeHtml(details.join("  ·  "))}</span>
       </div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:2px">
@@ -100,7 +95,7 @@ const stat = (iconPath: string | null, label: string, value: string, width = "23
     }
     <div style="display:flex;flex-direction:column;gap:3px">
       <span style="font-size:16px;color:${COLOURS.muted}">${label}</span>
-      <span style="font-size:22px;font-weight:600">${escape(value)}</span>
+      <span style="font-size:22px;font-weight:600">${escapeHtml(value)}</span>
     </div>
   </div>`;
 
@@ -156,10 +151,10 @@ const nextRankCard = (title: string, nextRank: NextRank, { diary, membership }: 
 const standing = ({ membership, progression }: MemberProfile) => `
   <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;flex:1">
     <div style="display:flex;align-items:center;justify-content:center;width:104px;height:104px;border-radius:52px;border:1px solid ${COLOURS.border}">
-      ${membership.rank.iconUrl ? `<img src="${escape(membership.rank.iconUrl)}" style="width:52px;height:52px" />` : ""}
+      ${membership.rank.iconUrl ? `<img src="${escapeHtml(membership.rank.iconUrl)}" style="width:52px;height:52px" />` : ""}
     </div>
     ${overline(STANDINGS[progression.status])}
-    <span style="font-size:30px;font-weight:700">${escape(membership.rank.name)}</span>
+    <span style="font-size:30px;font-weight:700">${escapeHtml(membership.rank.name)}</span>
   </div>`;
 
 const rankProgression = (profile: MemberProfile) => {
@@ -180,20 +175,18 @@ const rankProgression = (profile: MemberProfile) => {
   </div>`;
 };
 
-const teamName = (scale: number) => (scale === 1 ? "Solo" : `${scale}-man`);
-
 const tierBadge = (name: string) => `
   <span style="display:flex;align-items:center;gap:8px">
     <img src="${webIconUrl(`diary/${name.toLowerCase()}`)}" style="width:22px;height:22px;object-fit:contain" />
-    ${escape(name)}
+    ${escapeHtml(name)}
   </span>`;
 
 const diaryHeader = ({ diary, displayName }: MemberProfile, avatarUrl: string) => `
   <div style="display:flex;flex-direction:column;gap:22px;margin-bottom:12px">
     <div style="display:flex;align-items:center;gap:20px">
-      <img src="${escape(avatarUrl)}" style="width:72px;height:72px;border-radius:36px" />
+      <img src="${escapeHtml(avatarUrl)}" style="width:72px;height:72px;border-radius:36px" />
       <div style="display:flex;flex-direction:column;gap:4px">
-        <span style="font-size:36px;font-weight:700;letter-spacing:-0.5px">${escape(displayName)}</span>
+        <span style="font-size:36px;font-weight:700;letter-spacing:-0.5px">${escapeHtml(displayName)}</span>
         ${overline("Speedrun diary")}
       </div>
     </div>
@@ -211,11 +204,11 @@ const diaryRow = (cells: string[], colour = COLOURS.text) => `
 
 const diaryEntry = ({ content, nextTier, pb, scale, tier }: MemberDiary) =>
   diaryRow([
-    escape(content.name),
-    teamName(scale),
+    escapeHtml(content.name),
+    teamScale(scale),
     formatTickTime(pb?.timeSeconds),
     tier ? tierBadge(tier.name) : "—",
-    `<span style="color:${COLOURS.faint}">${nextTier ? `${formatTickTime(nextTier.timeSeconds)} (${escape(nextTier.name)})` : "—"}</span>`
+    `<span style="color:${COLOURS.faint}">${nextTier ? `${formatTickTime(nextTier.timeSeconds)} (${escapeHtml(nextTier.name)})` : "—"}</span>`
   ]);
 
 // The avatar comes from Discord at render time, because the one saved with the member can be out of date.

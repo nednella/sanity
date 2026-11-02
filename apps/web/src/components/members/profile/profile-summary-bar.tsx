@@ -1,11 +1,10 @@
 import type { ReactNode } from "react";
 
 import type { MemberProfile } from "@sanity/api";
+import { DASH, formatNumber } from "@sanity/utils";
 
 import { Tooltip } from "@/lib/ui/tooltip";
-import { DASH } from "@/utils/dash";
 import { diaryTierIconUrl, statIconUrl } from "@/utils/icons";
-import { formatNumber } from "@/utils/numbers";
 
 type ProfileSummaryBarProps = {
   profile: MemberProfile;

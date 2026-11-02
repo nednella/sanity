@@ -1,10 +1,10 @@
 import type { ChatInputCommandInteraction } from "discord.js";
 
 import { ApiError, type Health, NetworkError } from "@sanity/api";
+import { capitalise, formatMs } from "@sanity/utils";
 
 import { api } from "@/lib/api";
 import { buildEmbed } from "@/utils/embeds";
-import { capitalise, formatMs } from "@/utils/format";
 import { reply } from "@/utils/replies";
 
 type Check = Omit<Health["checks"][number], "latencyMs"> & { latencyMs?: number };

@@ -1,3 +1,5 @@
+import { asRsn, sortActivities, sortBosses, sortComputed, sortSkills } from "@sanity/utils";
+
 import { TRIALIST_RANK_ID } from "@/modules/ranks/constants";
 import { toRankSummary } from "@/modules/ranks/mapper";
 import type { RankRow } from "@/modules/ranks/repository/list-ranks";
@@ -5,7 +7,6 @@ import { RANK_IDS_OFF_LADDER, type Standing, hasMetRequirements, toActiveRanks }
 import { DIARY_COUNT, DIARY_POINTS_MAX } from "@/modules/speedrun-diary/constants";
 import type { SnapshotRows } from "@/modules/wom/repository/find-latest-snapshot";
 import type { NameChange } from "@/modules/wom/repository/list-name-changes";
-import { sortActivities, sortBosses, sortComputed, sortSkills } from "@/utils/metrics";
 
 import type { MemberRow } from "./repository/shared/select-members";
 
@@ -102,10 +103,6 @@ function toProgression(currentRankId: number, ranks: RankRow[], standing: Standi
       diary: diary ? toNextRank(diary) : null
     }
   };
-}
-
-function asRsn(name: string) {
-  return name.toLowerCase().replaceAll(/[_-]/g, " ").trim();
 }
 
 function toPreviousNames(changes: NameChange[], current: string | null) {

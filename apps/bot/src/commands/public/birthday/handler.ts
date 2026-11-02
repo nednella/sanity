@@ -1,11 +1,11 @@
 import type { ChatInputCommandInteraction } from "discord.js";
 
 import { ApiError } from "@sanity/api";
+import { formatDate } from "@sanity/utils";
 
 import { api } from "@/lib/api";
 import { runSubcommand } from "@/utils/commands";
 import { buildEmbed } from "@/utils/embeds";
-import { formatDate } from "@/utils/format";
 import { reply, replyError } from "@/utils/replies";
 
 const pad = (value: number) => String(value).padStart(2, "0");

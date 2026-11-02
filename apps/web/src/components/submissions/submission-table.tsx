@@ -2,6 +2,7 @@ import { createColumnHelper } from "@tanstack/react-table";
 import type { ReactNode } from "react";
 
 import type { Page, Submission } from "@sanity/api";
+import { DASH, formatNumber, itemIconUrl } from "@sanity/utils";
 
 import { MetricIcon } from "@/components/members/profile/overview/metric-icon";
 import { ParticipantList } from "@/components/shared/participant-list";
@@ -12,9 +13,6 @@ import { useMediaStore } from "@/lib/media/media.store";
 import type { SubmissionsSearch } from "@/lib/submissions/search";
 import { useTableSearch } from "@/lib/table/use-table-search";
 import { RelativeDate } from "@/lib/ui/relative-date";
-import { DASH } from "@/utils/dash";
-import { itemIconUrl } from "@/utils/icons";
-import { formatNumber } from "@/utils/numbers";
 
 const columnHelper = createColumnHelper<DataTableFeatures, Submission>();
 

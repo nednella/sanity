@@ -2,6 +2,7 @@ import { Link, useNavigate } from "@tanstack/react-router";
 import { createColumnHelper } from "@tanstack/react-table";
 
 import type { Member, Page } from "@sanity/api";
+import { DASH, formatDate, formatNumber } from "@sanity/utils";
 
 import { MemberStatusFilter } from "@/components/members/member-status-filter";
 import { NationalityFlag } from "@/components/members/nationality-flag";
@@ -10,9 +11,6 @@ import { DataTable } from "@/components/table/data-table";
 import type { DataTableFeatures } from "@/components/table/table-features";
 import type { MembersSearch } from "@/lib/members/search";
 import { useTableSearch } from "@/lib/table/use-table-search";
-import { DASH } from "@/utils/dash";
-import { formatDate } from "@/utils/dates";
-import { formatNumber } from "@/utils/numbers";
 
 const columnHelper = createColumnHelper<DataTableFeatures, Member>();
 

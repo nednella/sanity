@@ -2,6 +2,7 @@ import { createColumnHelper } from "@tanstack/react-table";
 import type { ReactNode } from "react";
 
 import type { Page, RankedPersonalBest } from "@sanity/api";
+import { DASH, formatTickTime, teamScale } from "@sanity/utils";
 
 import { MetricIcon } from "@/components/members/profile/overview/metric-icon";
 import { ParticipantList } from "@/components/shared/participant-list";
@@ -12,8 +13,6 @@ import { useMediaStore } from "@/lib/media/media.store";
 import type { SubmissionsSearch } from "@/lib/submissions/search";
 import { useTableSearch } from "@/lib/table/use-table-search";
 import { RelativeDate } from "@/lib/ui/relative-date";
-import { DASH } from "@/utils/dash";
-import { formatTickTime } from "@/utils/dates";
 import { bossIconUrl } from "@/utils/icons";
 
 const columnHelper = createColumnHelper<DataTableFeatures, RankedPersonalBest>();
@@ -29,7 +28,7 @@ const buildColumns = (memberId?: string) =>
         <span className="inline-flex items-center gap-2 font-medium">
           {getValue().metric && <MetricIcon src={bossIconUrl(getValue().metric!)} />}
           {getValue().name}
-          <span className="font-normal text-base-content/60">{row.original.scale} man</span>
+          <span className="font-normal whitespace-nowrap text-base-content/60">{teamScale(row.original.scale)}</span>
         </span>
       )
     }),
@@ -109,7 +108,7 @@ export function PersonalBestTable({
   const openScreenshot = ({ content, imageUrl, scale, timeSeconds }: RankedPersonalBest) => {
     if (!imageUrl) return;
 
-    showMedia({ alt: `${content.name}, ${scale} man, in ${formatTickTime(timeSeconds)}`, src: imageUrl });
+    showMedia({ alt: `${content.name}, ${teamScale(scale)}, in ${formatTickTime(timeSeconds)}`, src: imageUrl });
   };
 
   return (

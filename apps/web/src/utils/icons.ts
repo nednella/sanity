@@ -1,5 +1,3 @@
-import { OSRS_ITEM_ICONS_URL } from "@sanity/urls";
-
 const iconUrl = (kind: string, metric: string) => `/icons/${kind}/${metric}.png`;
 
 export function activityIconUrl(metric: string) {
@@ -20,10 +18,6 @@ export function skillIconUrl(metric: string) {
 
 export function statIconUrl(stat: string) {
   return iconUrl("stats", stat);
-}
-
-export function itemIconUrl(osrsItemId: number) {
-  return `${OSRS_ITEM_ICONS_URL}/${osrsItemId}.png`;
 }
 
 export function contentArtworkUrl(metric: string) {

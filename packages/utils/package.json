@@ -9,6 +9,10 @@
   "scripts": {
     "typecheck": "tsc --noEmit"
   },
+  "dependencies": {
+    "@sanity/urls": "workspace:*",
+    "@wise-old-man/utils": "^4.0.24"
+  },
   "devDependencies": {
     "typescript": "~6.0.3"
   }

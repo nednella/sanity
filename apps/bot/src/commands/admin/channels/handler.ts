@@ -1,5 +1,7 @@
 import { type ChatInputCommandInteraction, type SendableChannels, channelMention, userMention } from "discord.js";
 
+import { capitalise } from "@sanity/utils";
+
 import { api } from "@/lib/api";
 import {
   CHANNELS,
@@ -11,7 +13,6 @@ import {
 } from "@/lib/channels";
 import { runSubcommand } from "@/utils/commands";
 import { buildEmbed } from "@/utils/embeds";
-import { capitalise } from "@/utils/format";
 import { reply } from "@/utils/replies";
 
 const GROUPS: Record<ChannelType, string> = {

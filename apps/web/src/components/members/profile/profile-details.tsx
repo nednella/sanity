@@ -2,11 +2,11 @@ import { ChevronDown } from "lucide-react";
 import { Fragment, type ReactNode } from "react";
 
 import type { MemberProfile } from "@sanity/api";
+import { formatDate } from "@sanity/utils";
 
 import { Dropdown } from "@/lib/ui/dropdown";
 import { RelativeDate } from "@/lib/ui/relative-date";
 import { Muted } from "@/lib/ui/typography/muted";
-import { formatDate } from "@/utils/dates";
 
 const SHOWN = 10;
 

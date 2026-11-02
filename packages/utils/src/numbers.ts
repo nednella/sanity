@@ -1,4 +1,4 @@
-import { DASH } from "@/utils/dash";
+import { DASH } from "./text";
 
 export function formatNumber(
   value: number | null | undefined,
@@ -12,4 +12,8 @@ export function formatNumber(
     maximumFractionDigits: notation === "compact" ? 1 : fractionDigits,
     minimumFractionDigits: notation === "compact" ? 0 : fractionDigits
   });
+}
+
+export function formatMs(ms: number) {
+  return `${ms} ms`;
 }
