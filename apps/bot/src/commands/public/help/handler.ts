@@ -11,7 +11,7 @@ import { SANITY_TEMPLE_URL, SANITY_WOM_URL, SANITY_X_URL } from "@sanity/urls";
 import { config } from "@config";
 
 import { commands } from "@/commands";
-import type { Command } from "@/types";
+import type { Category, Command } from "@/types";
 import { buildEmbed } from "@/utils/embeds";
 import { commandMention } from "@/utils/mentions";
 import { reply } from "@/utils/replies";
@@ -41,6 +41,12 @@ export const handleHelp = (interaction: ChatInputCommandInteraction) =>
     { components: [links] }
   );
 
+const byCategory = (a: Category, b: Category) => {
+  if (a === "Mainframe" || b === "Misc") return -1;
+  if (a === "Misc" || b === "Mainframe") return 1;
+  return a.localeCompare(b);
+};
+
 const filteredSections = (interaction: ChatInputCommandInteraction, isAdmin: boolean) => {
   const filteredCommands = commands
     // Filter admin commands & filter the calling command (/help)
@@ -50,7 +56,7 @@ const filteredSections = (interaction: ChatInputCommandInteraction, isAdmin: boo
 
   // Group and display commands by category
   return [...Map.groupBy(filteredCommands.values(), (command) => command.category)]
-    .toSorted(([a], [b]) => a.localeCompare(b))
+    .toSorted(([a], [b]) => byCategory(a, b))
     .map(([category, grouped]) => ({
       name: category,
       value: grouped.flatMap((command) => describeCommand(interaction, command)).join("\n")
