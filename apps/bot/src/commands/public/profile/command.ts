@@ -42,6 +42,27 @@ export const profile = defineCommand({
             )
         )
         .addSubcommand((subcommand) => subcommand.setName("remove").setDescription("Remove the flag from your profile"))
+    )
+    .addSubcommandGroup((group) =>
+      group
+        .setName("rsn")
+        .setDescription("Change your main or alt RSN")
+        .addSubcommand((subcommand) =>
+          subcommand
+            .setName("update")
+            .setDescription("Update your main or alt RSN")
+            .addStringOption((option) =>
+              option
+                .setName("account")
+                .setDescription("Which RSN to update")
+                .addChoices({ name: "Main", value: "main" }, { name: "Alt", value: "alt" })
+                .setRequired(true)
+            )
+            .addStringOption((option) =>
+              option.setName("name").setDescription("Your RSN").setMaxLength(12).setRequired(true)
+            )
+        )
+        .addSubcommand((subcommand) => subcommand.setName("remove").setDescription("Remove your alt RSN"))
     ),
   category: "Profile",
   execute: handleProfile

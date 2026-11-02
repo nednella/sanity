@@ -14,7 +14,6 @@ import { birthday } from "./public/birthday/command";
 import { help } from "./public/help/command";
 import { pluginKey } from "./public/plugin-key/command";
 import { profile } from "./public/profile/command";
-import { rsn } from "./public/rsn/command";
 
 const all: Command[] = [
   admin,
@@ -28,8 +27,7 @@ const all: Command[] = [
   pluginKey,
   profile,
   rank,
-  reviewer,
-  rsn
+  reviewer
 ];
 
 export const commands = new Collection(all.map((command) => [command.name, command]));
