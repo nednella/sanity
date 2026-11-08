@@ -1,4 +1,5 @@
 import type {
+  AutocompleteInteraction,
   ChatInputCommandInteraction,
   SlashCommandOptionsOnlyBuilder,
   SlashCommandSubcommandsOnlyBuilder
@@ -24,6 +25,8 @@ export type Category =
 
 export type Execute = (interaction: ChatInputCommandInteraction) => Promise<unknown>;
 
+export type Autocomplete = (interaction: AutocompleteInteraction) => Promise<unknown>;
+
 export type CommandData = SlashCommandOptionsOnlyBuilder | SlashCommandSubcommandsOnlyBuilder;
 
 export type Command = CommandData & {
@@ -31,4 +34,5 @@ export type Command = CommandData & {
   category: Category;
   selfOnly: boolean;
   execute: Execute;
+  autocomplete?: Autocomplete;
 };

@@ -1,6 +1,6 @@
 import type { ChatInputCommandInteraction } from "discord.js";
 
-import type { Category, Command, CommandData, Execute } from "@/types";
+import type { Autocomplete, Category, Command, CommandData, Execute } from "@/types";
 
 type Options = {
   admin?: boolean;
@@ -8,6 +8,7 @@ type Options = {
   data: CommandData;
   selfOnly?: boolean;
   execute: Execute;
+  autocomplete?: Autocomplete;
 };
 
 export const defineCommand = ({ admin = false, data, selfOnly = false, ...options }: Options): Command => {
