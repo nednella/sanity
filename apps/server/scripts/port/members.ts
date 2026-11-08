@@ -1,3 +1,5 @@
+import { NO_BIRTH_YEAR } from "@sanity/utils";
+
 import { blankToNull, dayToUtcMidnight, read, toBoolean } from "./source";
 
 type SourceRank = {
@@ -33,6 +35,9 @@ const toNationality = (value: string | null) => {
   if (nationality === "AQ") return null;
   return nationality === "Chile" ? "CL" : nationality;
 };
+
+// The old bot saved a birthday without a year as 1900, which has no 29 February.
+const toBirthday = (value: string | null) => (value?.startsWith("1900-") ? `${NO_BIRTH_YEAR}${value.slice(4)}` : value);
 
 // The old bot never mapped retired members to an in-game rank, so the mapping table has no row for it.
 const inGameNameFixes: Record<string, string> = { RETIRED: "Defiler" };
@@ -74,7 +79,7 @@ export const readMembers = async () => {
       isActive: toBoolean(user.isActive),
       joinedAt: dayToUtcMidnight(user.joinDate),
       leftAt: hasRejoined ? null : dayToUtcMidnight(user.leaveDate),
-      birthday: user.birthday,
+      birthday: toBirthday(user.birthday),
       nationality: toNationality(user.nationality),
       // 0 meant no tier claimed yet.
       claimedDiaryTierId: user.diaryTierClaimed || null
