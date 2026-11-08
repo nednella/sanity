@@ -17,6 +17,11 @@ export const page = z
   })
   .register(z.globalRegistry, { id: "Page" });
 
+export const timeframe = z.object({
+  from: z.iso.date(),
+  to: z.iso.date()
+});
+
 export function paginated<T extends z.ZodType>(item: T) {
   return z.object({ items: z.array(item), page });
 }
@@ -67,3 +72,4 @@ export const memberRef = z
 
 export type Page = z.output<typeof page>;
 export type Review = z.output<typeof reviewBody>;
+export type Timeframe = z.output<typeof timeframe>;
