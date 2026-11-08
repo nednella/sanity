@@ -26,6 +26,26 @@ export const profile = defineCommand({
     )
     .addSubcommandGroup((group) =>
       group
+        .setName("birthday")
+        .setDescription("Change your birthday")
+        .addSubcommand((subcommand) =>
+          subcommand
+            .setName("update")
+            .setDescription("Update your birthday")
+            .addIntegerOption((option) =>
+              option.setName("day").setDescription("Which day").setMinValue(1).setMaxValue(31).setRequired(true)
+            )
+            .addIntegerOption((option) =>
+              option.setName("month").setDescription("Which month").setMinValue(1).setMaxValue(12).setRequired(true)
+            )
+            .addIntegerOption((option) =>
+              option.setName("year").setDescription("Which year").setMinValue(1900).setMaxValue(9999).setRequired(true)
+            )
+        )
+        .addSubcommand((subcommand) => subcommand.setName("remove").setDescription("Remove your birthday"))
+    )
+    .addSubcommandGroup((group) =>
+      group
         .setName("nationality")
         .setDescription("Change the flag on your profile")
         .addSubcommand((subcommand) =>
