@@ -4,10 +4,9 @@ import type { Birthday } from "@sanity/api";
 import { formatDate, relativeDate, toIsoDate } from "@sanity/utils";
 
 import { api } from "@/lib/api";
+import { OLDEST_AGE_SHOWN } from "@/utils/birthdays";
 import { buildEmbed } from "@/utils/embeds";
 import { reply } from "@/utils/replies";
-
-const OLDEST_AGE_SHOWN = 99;
 
 const SUGGESTED_DAYS = [7, 30];
 
