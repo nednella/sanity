@@ -2,6 +2,7 @@ import type { components } from "./v1";
 
 type Schemas = components["schemas"];
 
+export type Birthday = Schemas["Birthday"];
 export type Member = Schemas["Member"];
 export type MemberProfile = Schemas["MemberProfile"];
 export type MemberChange = Schemas["MemberChange"];
