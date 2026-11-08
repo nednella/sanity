@@ -6,10 +6,11 @@ import { memberDiary } from "@/modules/speedrun-diary/response";
 import { getMemberDiary } from "@/modules/speedrun-diary/service/get-member-diary";
 import { submission } from "@/modules/submissions/response";
 import { getSubmissions } from "@/modules/submissions/service/get-submissions";
-import { errorResponse, paginated, toPage } from "@/schema/common";
+import { errorResponse, paginated, timeframe, toPage } from "@/schema/common";
 import { defineModule } from "@/utils/define-module";
 import { defineRoute } from "@/utils/define-route";
 
+import { listMemberBirthdays } from "./repository/list-member-birthdays";
 import {
   changePluginAccessBody,
   changeRankBody,
@@ -24,7 +25,7 @@ import {
   trialBody,
   updateMemberBody
 } from "./request";
-import { member, memberChanges, memberProfile, rankProposals, trialOutcomes } from "./response";
+import { birthdays, member, memberChanges, memberProfile, rankProposals, trialOutcomes } from "./response";
 import { changeMemberRanks } from "./service/change-member-ranks";
 import { changeMemberRoles } from "./service/change-member-roles";
 import { changePluginAccess } from "./service/change-plugin-access";
@@ -144,6 +145,24 @@ export const membersModule = defineModule([
       const { items, total } = await getSubmissions({ ...req.query, memberId: req.params.id });
       return { items, page: toPage({ limit, offset, total }) };
     }
+  }),
+
+  defineRoute({
+    method: "GET",
+    url: "/members/birthdays",
+    config: {
+      access: {
+        role: "*",
+        clients: ["bot"]
+      }
+    },
+    schema: {
+      querystring: timeframe,
+      response: {
+        200: birthdays
+      }
+    },
+    handler: async (req) => listMemberBirthdays(req.query)
   }),
 
   defineRoute({

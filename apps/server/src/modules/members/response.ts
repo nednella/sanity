@@ -25,6 +25,16 @@ const memberSummary = z.object({
   displayName: z.string()
 });
 
+const birthday = z
+  .object({
+    member: memberSummary,
+    date: z.iso.date(),
+    age: z.number()
+  })
+  .register(z.globalRegistry, { id: "Birthday" });
+
+export const birthdays = z.array(birthday);
+
 const memberChange = z
   .object({
     member: memberSummary,
