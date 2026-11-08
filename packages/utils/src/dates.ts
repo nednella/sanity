@@ -48,3 +48,39 @@ export function timeSince(start: Date, end: Date) {
 export function firstOfNextMonth(from: Date) {
   return new Date(Date.UTC(from.getUTCFullYear(), from.getUTCMonth() + 1, 1));
 }
+
+type RelativeDateUnits = {
+  years?: number;
+  months?: number;
+  weeks?: number;
+  days?: number;
+  hours?: number;
+  minutes?: number;
+  seconds?: number;
+  ms?: number;
+};
+
+export function toIsoDate(date: Date) {
+  return date.toISOString().slice(0, 10);
+}
+
+// Months and years keep the day of the month, or the last day of a shorter month.
+export function relativeDate(
+  { years = 0, months = 0, weeks = 0, days = 0, hours = 0, minutes = 0, seconds = 0, ms = 0 }: RelativeDateUnits,
+  reference: Date = new Date()
+) {
+  const date = new Date(reference);
+  date.setUTCMilliseconds(date.getUTCMilliseconds() + ms);
+  date.setUTCSeconds(date.getUTCSeconds() + seconds);
+  date.setUTCMinutes(date.getUTCMinutes() + minutes);
+  date.setUTCHours(date.getUTCHours() + hours);
+  date.setUTCDate(date.getUTCDate() + days + weeks * 7);
+
+  const totalMonths = date.getUTCMonth() + months + years * 12;
+  const year = date.getUTCFullYear() + Math.floor(totalMonths / 12);
+  const month = ((totalMonths % 12) + 12) % 12;
+  const lastDayOfMonth = new Date(Date.UTC(year, month + 1, 0)).getUTCDate();
+
+  date.setUTCFullYear(year, month, Math.min(date.getUTCDate(), lastDayOfMonth));
+  return date;
+}
