@@ -1,6 +1,7 @@
 import { AttachmentBuilder, type ChatInputCommandInteraction, hyperlink, inlineCode } from "discord.js";
 
-import { formatNumber } from "@sanity/utils";
+import { ApiError } from "@sanity/api";
+import { formatDate, formatNumber } from "@sanity/utils";
 
 import { config } from "@config";
 
@@ -8,12 +9,14 @@ import { api } from "@/lib/api";
 import { runSubcommand } from "@/utils/commands";
 import { buildEmbed } from "@/utils/embeds";
 import { findMember, taggedUser } from "@/utils/members";
-import { reply } from "@/utils/replies";
+import { reply, replyError } from "@/utils/replies";
 
 import { renderDiaryCard, renderProfileCard } from "./card";
 import { describeClanAge, describeEarlierDrops, describeLatestDrop, diaryLinks, profileLinks } from "./utils";
 
 const DROPS_SHOWN = 16;
+
+const pad = (value: number) => String(value).padStart(2, "0");
 
 const replyChanged = (interaction: ChatInputCommandInteraction, title: string, description: string) =>
   reply(interaction, buildEmbed({ style: "success", title, description }));
@@ -95,6 +98,27 @@ const showAge = async (interaction: ChatInputCommandInteraction) => {
   );
 };
 
+const updateBirthday = async (interaction: ChatInputCommandInteraction) => {
+  const day = interaction.options.getInteger("day", true);
+  const month = interaction.options.getInteger("month", true);
+  const year = interaction.options.getInteger("year", true);
+  const birthday = `${year}-${pad(month)}-${pad(day)}`;
+
+  try {
+    await api.patch("/v1/members/me", { body: { birthday } });
+  } catch (error) {
+    if (!(error instanceof ApiError && error.status === 400)) throw error;
+    return replyError(interaction, { title: "Invalid date", description: "That date does not exist." });
+  }
+
+  return replyChanged(interaction, "Birthday changed", `Your birthday is now ${formatDate(birthday)}.`);
+};
+
+const removeBirthday = async (interaction: ChatInputCommandInteraction) => {
+  await api.patch("/v1/members/me", { body: { birthday: null } });
+  return replyChanged(interaction, "Birthday removed", "You no longer have a birthday set.");
+};
+
 const updateNationality = async (interaction: ChatInputCommandInteraction) => {
   const nationality = interaction.options.getString("country", true).toUpperCase();
   await api.patch("/v1/members/me", { body: { nationality } });
@@ -122,6 +146,8 @@ const removeRsn = async (interaction: ChatInputCommandInteraction) => {
 
 const SUBCOMMANDS = {
   age: showAge,
+  "birthday remove": removeBirthday,
+  "birthday update": updateBirthday,
   diary: showDiary,
   drops: showDrops,
   "nationality remove": removeNationality,
