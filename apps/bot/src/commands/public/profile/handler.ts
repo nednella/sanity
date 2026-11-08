@@ -1,11 +1,12 @@
 import { AttachmentBuilder, type ChatInputCommandInteraction, hyperlink, inlineCode } from "discord.js";
 
 import { ApiError } from "@sanity/api";
-import { formatDate, formatNumber } from "@sanity/utils";
+import { NO_BIRTH_YEAR, formatNumber } from "@sanity/utils";
 
 import { config } from "@config";
 
 import { api } from "@/lib/api";
+import { formatBirthday } from "@/utils/birthdays";
 import { runSubcommand } from "@/utils/commands";
 import { buildEmbed } from "@/utils/embeds";
 import { findMember, taggedUser } from "@/utils/members";
@@ -101,7 +102,7 @@ const showAge = async (interaction: ChatInputCommandInteraction) => {
 const updateBirthday = async (interaction: ChatInputCommandInteraction) => {
   const day = interaction.options.getInteger("day", true);
   const month = interaction.options.getInteger("month", true);
-  const year = interaction.options.getInteger("year", true);
+  const year = interaction.options.getInteger("year") ?? NO_BIRTH_YEAR;
   const birthday = `${year}-${pad(month)}-${pad(day)}`;
 
   try {
@@ -111,7 +112,7 @@ const updateBirthday = async (interaction: ChatInputCommandInteraction) => {
     return replyError(interaction, { title: "Invalid date", description: "That date does not exist." });
   }
 
-  return replyChanged(interaction, "Birthday changed", `Your birthday is now ${formatDate(birthday)}.`);
+  return replyChanged(interaction, "Birthday changed", `Your birthday is now ${formatBirthday(birthday)}.`);
 };
 
 const removeBirthday = async (interaction: ChatInputCommandInteraction) => {

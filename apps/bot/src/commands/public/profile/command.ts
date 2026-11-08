@@ -1,5 +1,7 @@
 import { SlashCommandBuilder } from "discord.js";
 
+import { NO_BIRTH_YEAR } from "@sanity/utils";
+
 import { defineCommand } from "@/utils/commands";
 import { oneMemberOption } from "@/utils/members";
 
@@ -39,7 +41,11 @@ export const profile = defineCommand({
               option.setName("month").setDescription("Which month").setMinValue(1).setMaxValue(12).setRequired(true)
             )
             .addIntegerOption((option) =>
-              option.setName("year").setDescription("Which year").setMinValue(1900).setMaxValue(9999).setRequired(true)
+              option
+                .setName("year")
+                .setDescription("Which year (optional)")
+                .setMinValue(NO_BIRTH_YEAR + 1)
+                .setMaxValue(9999)
             )
         )
         .addSubcommand((subcommand) => subcommand.setName("remove").setDescription("Remove your birthday"))
