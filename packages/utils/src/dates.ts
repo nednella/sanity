@@ -49,6 +49,10 @@ export function firstOfNextMonth(from: Date) {
   return new Date(Date.UTC(from.getUTCFullYear(), from.getUTCMonth() + 1, 1));
 }
 
+// Providing your birth year is optional. In cases where a year is not provided,
+// we use 1904. We use this instead of 1900 as it's a leap year and allows 29 Feb.
+export const NO_BIRTH_YEAR = 1904;
+
 type RelativeDateUnits = {
   years?: number;
   months?: number;
