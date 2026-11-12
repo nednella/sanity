@@ -4,7 +4,7 @@ export default defineConfig({
   build: {
     sourcemap: true,
     ssr: "src/index.ts",
-    target: "node24"
+    target: "node26"
   },
   resolve: {
     tsconfigPaths: true
