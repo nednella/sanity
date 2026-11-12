@@ -2,7 +2,7 @@
 
 # AGENTS.md
 
-sanity: website, API and Discord bot for the Sanity OSRS clan. A pnpm workspace, Node 24.
+sanity: website, API and Discord bot for the Sanity OSRS clan. A pnpm workspace, Node 26.
 
 `apps/server` Fastify + Zod + Drizzle on Postgres (`docker-compose.yaml`) · `apps/web` Vite +
 React + TanStack Router/Query + daisyUI, deployed to Vercel · `apps/bot` discord.js 14 ·
