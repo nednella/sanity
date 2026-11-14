@@ -7,7 +7,7 @@ import { authErrors } from "../errors";
 export type RouteAccess =
   | "public"
   | {
-      role: MemberRole | "*";
+      role?: MemberRole | "*";
       clients: ApiClient[] | ["*"];
     };
 
@@ -18,11 +18,21 @@ export async function authorise(request: FastifyRequest) {
   if (typeof access !== "object") return;
 
   const { client, member } = request.auth;
-  const roleAllowed = access.role === "*" || hasRole(member.role, access.role);
-  if (!roleAllowed) throw authErrors.forbidden();
 
+  // Validate that the requesting client is allowed access this route.
   const clientAllowed = access.clients.some((c) => c === "*" || c === client);
   if (!clientAllowed) throw authErrors.forbidden();
+
+  // If the route doesn't require a role, there's nothing to authorise.
+  if (access.role === undefined) return;
+
+  // If a role is required and there's no associated member for the request,
+  // then we always reject.
+  if (member === undefined) throw authErrors.forbidden();
+
+  // Else validate the requesting member has the required permissions.
+  const roleAllowed = access.role === "*" || hasRole(member.role, access.role);
+  if (!roleAllowed) throw authErrors.forbidden();
 }
 
 function hasRole(role: MemberRole | null, needed: MemberRole) {

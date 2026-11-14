@@ -11,7 +11,9 @@ import type {
 } from "fastify";
 import type { FastifyPluginAsyncZod, ZodTypeProvider } from "fastify-type-provider-zod";
 
-import { authenticate } from "@/modules/auth/hooks/authenticate";
+import type { MemberRole } from "@db/enums";
+
+import { type ActingAuth, type Auth, authenticate } from "@/modules/auth/hooks/authenticate";
 import { type RouteAccess, authorise } from "@/modules/auth/hooks/authorise";
 
 type ZodApp = Parameters<FastifyPluginAsyncZod>[0];
@@ -27,14 +29,31 @@ type ZodRouteOptions<Schema extends FastifySchema> = RouteOptions<
   FastifyBaseLogger
 >;
 
-type RouteConfig = {
-  access: RouteAccess;
+type ZodHandler<Schema extends FastifySchema> = ZodRouteOptions<Schema>["handler"];
+
+type RouteConfig<Access extends RouteAccess = RouteAccess> = {
+  access: Access;
   rateLimit?: RateLimitOptions;
 };
 
+// A public route has no auth, a route with a role always has a member, and a
+// route with no role may have one.
+type RequestAuth<Access extends RouteAccess> = Access extends "public"
+  ? unknown
+  : { auth: Access extends { role: MemberRole | "*" } ? ActingAuth : Auth };
+
+type RouteHandler<Schema extends FastifySchema, Access extends RouteAccess> = (
+  request: Omit<Parameters<ZodHandler<Schema>>[0], "auth"> & RequestAuth<Access>,
+  reply: Parameters<ZodHandler<Schema>>[1]
+) => ReturnType<ZodHandler<Schema>>;
+
 // Require route access to be declared in each routes' config object!
-type RouteDefinition<Schema extends FastifySchema> = Omit<ZodRouteOptions<Schema>, "config" | "onRequest"> & {
-  config: RouteConfig;
+type RouteDefinition<Schema extends FastifySchema, Access extends RouteAccess> = Omit<
+  ZodRouteOptions<Schema>,
+  "config" | "handler" | "onRequest"
+> & {
+  config: RouteConfig<Access>;
+  handler: RouteHandler<Schema, Access>;
 };
 
 export type Route = (app: ZodApp) => void;
@@ -54,10 +73,14 @@ function guardRoute(access: RouteAccess) {
   return [authenticate, authorise];
 }
 
-export function defineRoute<const Schema extends FastifySchema>(route: RouteDefinition<Schema>): Route {
+export function defineRoute<const Schema extends FastifySchema, Access extends RouteAccess>(
+  route: RouteDefinition<Schema, Access>
+): Route {
   return function register(app) {
     app.route({
       ...route,
+      // guardRoute's hooks give request.auth the shape RequestAuth promises
+      handler: route.handler as unknown as ZodHandler<Schema>,
       config: { access: route.config.access },
       onRequest: [...limitRoute(app, route.config), ...guardRoute(route.config.access)]
     });

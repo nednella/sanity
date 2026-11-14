@@ -14,6 +14,12 @@ export type AuthMember = {
   role: MemberRole | null;
 };
 
+export type Auth = {
+  client: ApiClient;
+  // Machine clients do not always have to act on behalf of a member!
+  member?: AuthMember;
+};
+
 export type ActingAuth = {
   client: ApiClient;
   member: AuthMember;
@@ -26,13 +32,9 @@ export async function authenticate(request: FastifyRequest) {
   const key = await validateKey(hashKey(token));
   if (!key) throw authErrors.invalidApiKey();
 
-  // identify the acting user based on the key's client
-  const member = await findRequestingMember(request, key);
-  if (member === undefined) throw authErrors.invalidApiKey();
-
   request.auth = {
     client: key.client,
-    member
+    member: await findRequestingMember(request, key)
   };
 }
 
@@ -41,11 +43,16 @@ type ApiKey = NonNullable<Awaited<ReturnType<typeof validateKey>>>;
 async function findRequestingMember(request: FastifyRequest, key: ApiKey): Promise<AuthMember | undefined> {
   switch (key.client) {
     case "plugin": {
-      // plugin keys are unique to a member
-      return await findMemberAccessById(key.memberId!);
+      // Plugin keys are unique to an active member. If a valid member cannot
+      // be matched, then the key is invalid
+      const member = await findMemberAccessById(key.memberId!);
+      if (member === undefined) throw authErrors.invalidApiKey();
+
+      return member;
     }
     case "bot": {
-      // the bot acts for a user by passing that user's Discord ID in a header
+      // The bot may act on behalf of a user by passing that user's Discord ID
+      // in a header. If there's no user then it's a machine request.
       const discordId = parseXDiscordUserIdHeader(request);
       if (discordId === undefined) return;
 
