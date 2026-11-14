@@ -2,7 +2,8 @@
 
 # AGENTS.md
 
-sanity: website, API and Discord bot for the Sanity OSRS clan. A pnpm workspace, Node 26.
+sanity: website, API and Discord bot for the Sanity OSRS clan. A Bun workspace: Bun
+installs the packages and runs every app and tool.
 
 `apps/server` Fastify + Zod + Drizzle on Postgres (`docker-compose.yaml`) · `apps/web` Vite +
 React + TanStack Router/Query + daisyUI, deployed to Vercel · `apps/bot` discord.js 14 ·
@@ -28,7 +29,7 @@ git fetch origin
 git worktree add worktrees/issue-<n> -b issue-<n> origin/main
 cd worktrees/issue-<n>
 for app in bot server web; do cp ../../apps/$app/.env apps/$app/.env; done
-pnpm install
+bun install
 ```
 
 Branch from `origin/main`, never local `main`. Work only inside the worktree. `worktrees/` is in
@@ -38,23 +39,23 @@ Branch from `origin/main`, never local `main`. Work only inside the worktree. `w
 
 Run from the worktree root. There are no tests yet; these are the gate.
 
-| What                                      | Command                                                                     |
-| ----------------------------------------- | --------------------------------------------------------------------------- |
-| Typecheck all projects                    | `pnpm typecheck`                                                            |
-| Lint                                      | `pnpm lint`                                                                 |
-| Format check                              | `pnpm format` (fix: `pnpm format:fix`)                                      |
-| Build the web                             | `pnpm build`                                                                |
-| Regenerate API types after a route change | `pnpm --filter @sanity/server openapi && pnpm --filter @sanity/api openapi` |
-| Write a migration after a schema change   | `pnpm --filter @sanity/server db:generate`                                  |
+| What                                      | Command                                                                           |
+| ----------------------------------------- | --------------------------------------------------------------------------------- |
+| Typecheck all projects                    | `bun run typecheck`                                                               |
+| Lint                                      | `bun run lint`                                                                    |
+| Format check                              | `bun run format` (fix: `bun run format:fix`)                                      |
+| Build the web                             | `bun run build`                                                                   |
+| Regenerate API types after a route change | `bun run --filter @sanity/server openapi && bun run --filter @sanity/api openapi` |
+| Write a migration after a schema change   | `bun run --filter @sanity/server db:generate`                                     |
 
 ## Checking by hand
 
 Run on spare ports; the shell values win over each app's `.env`:
 
 ```
-pnpm --filter @sanity/server build && PORT=3101 CORS_ORIGIN=http://localhost:5174 pnpm --filter @sanity/server start
-VITE_API_URL=http://localhost:3101 pnpm --filter @sanity/web exec vite --port 5174 --strictPort
-API_URL=http://localhost:3101 WEB_URL=http://localhost:5174 pnpm --filter @sanity/bot dev
+bun run --filter @sanity/server build && PORT=3101 CORS_ORIGIN=http://localhost:5174 bun run --filter @sanity/server start
+VITE_API_URL=http://localhost:3101 bun run --cwd apps/web dev --port 5174 --strictPort
+API_URL=http://localhost:3101 WEB_URL=http://localhost:5174 bun run --filter @sanity/bot dev
 ```
 
 - API: `curl` the route on `http://localhost:3101`. Scalar docs are at `/docs`.
