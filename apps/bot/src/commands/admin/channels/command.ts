@@ -1,6 +1,6 @@
 import { ChannelType, SlashCommandBuilder } from "discord.js";
 
-import { purposeChoices } from "@/lib/channels";
+import { channelOptions } from "@/lib/channels";
 import { defineCommand } from "@/utils/commands";
 
 import { handleChannels } from "./handler";
@@ -18,7 +18,7 @@ export const channels = defineCommand({
             .setName("purpose")
             .setDescription("What the channel was used for")
             .setRequired(true)
-            .addChoices(...purposeChoices())
+            .addChoices(...channelOptions())
         )
     )
     .addSubcommand((subcommand) =>
@@ -37,7 +37,7 @@ export const channels = defineCommand({
                 .setName("purpose")
                 .setDescription("What the category is used for")
                 .setRequired(true)
-                .addChoices(...purposeChoices("category"))
+                .addChoices(...channelOptions("category"))
             )
             .addChannelOption((option) =>
               option
@@ -56,7 +56,7 @@ export const channels = defineCommand({
                 .setName("purpose")
                 .setDescription("What the channel is used for")
                 .setRequired(true)
-                .addChoices(...purposeChoices("text"))
+                .addChoices(...channelOptions("text"))
             )
             .addChannelOption((option) =>
               option
@@ -80,7 +80,7 @@ export const channels = defineCommand({
                 .setName("purpose")
                 .setDescription("The category to create the channel in")
                 .setRequired(true)
-                .addChoices(...purposeChoices("category"))
+                .addChoices(...channelOptions("category"))
             )
             .addStringOption((option) =>
               option.setName("name").setDescription("The name of the channel to create").setRequired(true)
@@ -95,7 +95,7 @@ export const channels = defineCommand({
                 .setName("purpose")
                 .setDescription("The channel to post in")
                 .setRequired(true)
-                .addChoices(...purposeChoices("text"))
+                .addChoices(...channelOptions("text"))
             )
         )
     ),

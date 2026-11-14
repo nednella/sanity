@@ -30,21 +30,21 @@ const TEXT_PERMISSIONS = [
 ];
 const CATEGORY_PERMISSIONS = [...TEXT_PERMISSIONS, PermissionFlagsBits.ManageChannels];
 
-export type ChannelPurpose = keyof typeof CHANNELS;
+export type ChannelIntent = keyof typeof CHANNELS;
 export type ChannelType = "category" | "text" | "voice";
 
 export class ChannelUnavailableError extends Error {
   constructor(
-    readonly purpose: ChannelPurpose,
+    readonly intent: ChannelIntent,
     readonly reason: "missing" | "no-access" | "not-set",
     readonly missingPermissions: string[] = []
   ) {
-    super(`${purpose} channel is ${reason}`);
+    super(`${intent} channel is ${reason}`);
     this.name = "ChannelUnavailableError";
   }
 }
 
-export const purposeChoices = (type?: ChannelType) =>
+export const channelOptions = (type?: ChannelType) =>
   Object.entries(CHANNELS)
     .filter(([, channel]) => !type || channel.type === type)
     .map(([value, { label }]) => ({ name: label, value }));
@@ -54,10 +54,10 @@ export const fetchChannels = async () => {
   return new Map(channels.map((channel) => [channel.purpose, channel.channelId]));
 };
 
-const fetchChannel = async (client: Client, purpose: ChannelPurpose) => {
+const fetchChannel = async (client: Client, intent: ChannelIntent) => {
   const channels = await fetchChannels();
-  const channelId = channels.get(purpose);
-  if (!channelId) throw new ChannelUnavailableError(purpose, "not-set");
+  const channelId = channels.get(intent);
+  if (!channelId) throw new ChannelUnavailableError(intent, "not-set");
 
   try {
     return await client.channels.fetch(channelId);
@@ -65,29 +65,29 @@ const fetchChannel = async (client: Client, purpose: ChannelPurpose) => {
     if (!(error instanceof DiscordAPIError)) throw error;
     if (error.code === RESTJSONErrorCodes.UnknownChannel) return null;
     if (error.code === RESTJSONErrorCodes.MissingAccess) {
-      throw new ChannelUnavailableError(purpose, "no-access", ["ViewChannel"]);
+      throw new ChannelUnavailableError(intent, "no-access", ["ViewChannel"]);
     }
     throw error;
   }
 };
 
-const checkAccess = <T extends GuildChannel>(channel: T, purpose: ChannelPurpose, needed: bigint[]) => {
+const checkAccess = <T extends GuildChannel>(channel: T, intent: ChannelIntent, needed: bigint[]) => {
   const permissions = channel.permissionsFor(channel.client.user);
   const missing = permissions ? permissions.missing(needed) : new PermissionsBitField(needed).toArray();
-  if (missing.length > 0) throw new ChannelUnavailableError(purpose, "no-access", missing);
+  if (missing.length > 0) throw new ChannelUnavailableError(intent, "no-access", missing);
   return channel;
 };
 
 // A command resolves its channel before the server changes anything, so an action that cannot finish in
 // Discord is refused whole.
-export const resolveCategory = async (client: Client, purpose: ChannelPurpose) => {
-  const channel = await fetchChannel(client, purpose);
-  if (!(channel instanceof CategoryChannel)) throw new ChannelUnavailableError(purpose, "missing");
-  return checkAccess(channel, purpose, CATEGORY_PERMISSIONS);
+export const resolveCategory = async (client: Client, intent: ChannelIntent) => {
+  const channel = await fetchChannel(client, intent);
+  if (!(channel instanceof CategoryChannel)) throw new ChannelUnavailableError(intent, "missing");
+  return checkAccess(channel, intent, CATEGORY_PERMISSIONS);
 };
 
-export const resolveTextChannel = async (client: Client, purpose: ChannelPurpose) => {
-  const channel = await fetchChannel(client, purpose);
-  if (!(channel instanceof TextChannel)) throw new ChannelUnavailableError(purpose, "missing");
-  return checkAccess(channel, purpose, TEXT_PERMISSIONS);
+export const resolveTextChannel = async (client: Client, intent: ChannelIntent) => {
+  const channel = await fetchChannel(client, intent);
+  if (!(channel instanceof TextChannel)) throw new ChannelUnavailableError(intent, "missing");
+  return checkAccess(channel, intent, TEXT_PERMISSIONS);
 };

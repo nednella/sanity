@@ -13,8 +13,8 @@ const NOUNS: Record<ChannelType, string> = {
   voice: "voice channel"
 };
 
-const describeChannelUnavailableError = ({ missingPermissions, purpose, reason }: ChannelUnavailableError) => {
-  const { label, type } = CHANNELS[purpose];
+const describeChannelUnavailableError = ({ missingPermissions, intent, reason }: ChannelUnavailableError) => {
+  const { label, type } = CHANNELS[intent];
   const name = `${label} ${NOUNS[type]}`;
   const setIt = `An admin can set it with ${inlineCode(`/channels set ${type}`)}.`;
 
