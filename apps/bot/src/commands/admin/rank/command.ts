@@ -26,7 +26,7 @@ export const rank = defineCommand({
         .addStringOption((option) => option.setName("rank").setDescription("The rank's name").setRequired(true))
         .addStringOption(noteOption)
     ),
-  category: "Membership",
+  category: "Rank",
   admin: true,
   execute: handleRank
 });

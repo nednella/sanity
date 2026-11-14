@@ -23,7 +23,7 @@ export const reviewer = defineCommand({
         .addStringOption(membersOption)
         .addStringOption(noteOption)
     ),
-  category: "Membership",
+  category: "Reviewer",
   admin: true,
   execute: handleReviewer
 });
