@@ -9,8 +9,7 @@ import {
   TextChannel
 } from "discord.js";
 
-import { api } from "@/lib/api";
-
+import { channelCache } from "./cache";
 import type { ChannelIntent } from "./channels";
 
 const CATEGORY_PERMISSIONS = [
@@ -65,18 +64,13 @@ const checkChannelPermissions = <T extends GuildChannel>(channel: T, intent: Cha
   return channel;
 };
 
-export const fetchChannels = async () => {
-  const channels = await api.get("/v1/discord/channels");
-  return new Map(channels.map((channel) => [channel.purpose, channel.channelId]));
-};
-
 /**
- * The ID of the channel set for an intent. It does not ask Discord, so use it
- * when only the ID matters, such as to check which category a channel is in.
+ * The ID of the channel set for an intent, from the cache. It does not ask
+ * Discord, so use it when only the ID matters, such as to check which category
+ * a channel is in.
  */
 export const resolveChannelId = async (intent: ChannelIntent) => {
-  const channels = await fetchChannels();
-  const channelId = channels.get(intent);
+  const channelId = await channelCache.channelId(intent);
   if (!channelId) throw new ChannelUnavailableError(intent, "channel-not-set");
   return channelId;
 };
