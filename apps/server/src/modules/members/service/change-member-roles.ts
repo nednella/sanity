@@ -2,7 +2,7 @@ import { db } from "@db/index";
 
 import type { ApplicationError } from "@/errors/error";
 import { recordAuditEntries } from "@/modules/audit/repository/record-audit-entries";
-import type { Auth } from "@/modules/auth/hooks/authenticate";
+import type { ActingAuth } from "@/modules/auth/hooks/authenticate";
 import { isRoleAbove } from "@/modules/auth/hooks/authorise";
 import { QUIT_RANK_ID } from "@/modules/ranks/constants";
 
@@ -18,7 +18,7 @@ type Member = Awaited<ReturnType<typeof listMembersById>>[number];
  * Gives a role, or removes any role when role is null. The caller can change
  * only members they outrank, so that no admin can demote another.
  */
-export async function changeMemberRoles({ members, note, role }: RoleChange, auth: Auth) {
+export async function changeMemberRoles({ members, note, role }: RoleChange, auth: ActingAuth) {
   return db.transaction(async (tx) => {
     const memberIds = await listMemberIdsByRef(tx, members);
     const found = await listMembersById(tx, memberIds);

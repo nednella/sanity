@@ -1,7 +1,7 @@
 import { db } from "@db/index";
 
 import { recordAuditEntry } from "@/modules/audit/repository/record-audit-entry";
-import type { Auth } from "@/modules/auth/hooks/authenticate";
+import type { ActingAuth } from "@/modules/auth/hooks/authenticate";
 
 import { awardPoints } from "../repository/award-points";
 
@@ -11,7 +11,7 @@ export type ManualAward = {
   points: number;
 };
 
-export async function awardManualPoints({ memberId, notes, points }: ManualAward, auth: Auth) {
+export async function awardManualPoints({ memberId, notes, points }: ManualAward, auth: ActingAuth) {
   return db.transaction(async (tx) => {
     const awarded = await awardPoints(tx, [{ memberId, points }], auth.member.id, null, notes);
 

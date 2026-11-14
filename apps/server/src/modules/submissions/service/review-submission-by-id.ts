@@ -1,7 +1,7 @@
 import { db } from "@db/index";
 
 import { recordAuditEntry } from "@/modules/audit/repository/record-audit-entry";
-import type { Auth } from "@/modules/auth/hooks/authenticate";
+import type { ActingAuth } from "@/modules/auth/hooks/authenticate";
 import { listTrialists } from "@/modules/members/repository/list-trialists";
 import { awardPoints } from "@/modules/points/repository/award-points";
 import { generatePointSplit } from "@/modules/points/rules";
@@ -18,7 +18,7 @@ import { reviewSubmission } from "../repository/review-submission";
  * submitter has confirmed it. Asking for the review it already has changes nothing, and any other review
  * of a pending or reviewed submission is refused, so it is never paid twice.
  */
-export async function reviewSubmissionById(id: number, review: Review, auth: Auth) {
+export async function reviewSubmissionById(id: number, review: Review, auth: ActingAuth) {
   return db.transaction(async (tx) => {
     const submission = await findSubmissionForReview(tx, id);
     if (!submission) throw submissionErrors.notFound(id);

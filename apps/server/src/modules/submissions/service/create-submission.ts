@@ -1,6 +1,6 @@
 import { db } from "@db/index";
 
-import type { Auth } from "@/modules/auth/hooks/authenticate";
+import type { ActingAuth } from "@/modules/auth/hooks/authenticate";
 
 import { type SubmissionRow, saveSubmission } from "../repository/save-submission";
 
@@ -10,7 +10,7 @@ export type NewSubmission = Omit<SubmissionRow, "memberId" | "source" | "status"
 
 // A submission arrives waiting for review. Nothing it claims is trusted until someone approves it,
 // and no points exist until then.
-export async function createSubmission({ participants, ...submission }: NewSubmission, auth: Auth) {
+export async function createSubmission({ participants, ...submission }: NewSubmission, auth: ActingAuth) {
   return db.transaction(async (tx) =>
     saveSubmission(
       tx,

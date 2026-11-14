@@ -1,7 +1,7 @@
 import { db } from "@db/index";
 
 import { recordAuditEntry } from "@/modules/audit/repository/record-audit-entry";
-import type { Auth } from "@/modules/auth/hooks/authenticate";
+import type { ActingAuth } from "@/modules/auth/hooks/authenticate";
 import { claimEarnedDiaryTiers } from "@/modules/members/service/shared/claim-earned-diary-tiers";
 import type { Review } from "@/schema/common";
 
@@ -18,7 +18,7 @@ import { payDiaryCarries } from "./shared/pay-diary-carries";
  * member's points over. A run reaches review once its submitter has confirmed it. Asking for the review
  * it already has changes nothing, and any other review of a pending or reviewed run is refused.
  */
-export async function reviewPersonalBestById(id: number, review: Review, auth: Auth) {
+export async function reviewPersonalBestById(id: number, review: Review, auth: ActingAuth) {
   return db.transaction(async (tx) => {
     const personalBest = await findPersonalBestForReview(tx, id);
     if (!personalBest) throw personalBestErrors.notFound(id);

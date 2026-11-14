@@ -1,7 +1,7 @@
 import type { Transaction } from "@db/index";
 
 import { recordAuditEntry } from "@/modules/audit/repository/record-audit-entry";
-import type { Auth } from "@/modules/auth/hooks/authenticate";
+import type { ActingAuth } from "@/modules/auth/hooks/authenticate";
 import { awardPoints } from "@/modules/points/repository/award-points";
 import { RANK_IDS_OFF_LADDER } from "@/modules/ranks/rules";
 import { listDiaryRewards } from "@/modules/speedrun-diary/repository/list-diary-rewards";
@@ -15,7 +15,7 @@ import { setClaimedDiaryTier } from "../../repository/set-claimed-diary-tier";
  * Trialists wait until they pass, as they did under the old loop: their next approved run claims
  * everything they have earned by then.
  */
-export async function claimEarnedDiaryTiers(tx: Transaction, memberIds: bigint[], auth: Auth) {
+export async function claimEarnedDiaryTiers(tx: Transaction, memberIds: bigint[], auth: ActingAuth) {
   const rewards = await listDiaryRewards(tx);
   const standings = await listMemberStandings(tx, memberIds);
 

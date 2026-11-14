@@ -1,6 +1,6 @@
 import type { Transaction } from "@db/index";
 
-import type { Auth } from "@/modules/auth/hooks/authenticate";
+import type { ActingAuth } from "@/modules/auth/hooks/authenticate";
 
 import { type AuditEntry, recordAuditEntry } from "./record-audit-entry";
 
@@ -9,7 +9,7 @@ type MemberChange = { member: { id: bigint } };
 // Members that share a note share one entry.
 export async function recordAuditEntries<Change extends MemberChange>(
   tx: Transaction,
-  auth: Auth,
+  auth: ActingAuth,
   action: AuditEntry["action"],
   changes: Change[],
   toNote: (change: Change) => string | undefined

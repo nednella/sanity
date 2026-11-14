@@ -2,7 +2,7 @@ import { db } from "@db/index";
 
 import type { ApplicationError } from "@/errors/error";
 import { recordAuditEntries } from "@/modules/audit/repository/record-audit-entries";
-import type { Auth } from "@/modules/auth/hooks/authenticate";
+import type { ActingAuth } from "@/modules/auth/hooks/authenticate";
 import { TRIALIST_RANK_ID } from "@/modules/ranks/constants";
 import { toRankSummary } from "@/modules/ranks/mapper";
 import { listRanks } from "@/modules/ranks/repository/list-ranks";
@@ -16,7 +16,7 @@ import type { MemberBatch } from "../request";
 
 type Member = Awaited<ReturnType<typeof listMembersById>>[number];
 
-export async function passMembers({ members, note }: MemberBatch, auth: Auth) {
+export async function passMembers({ members, note }: MemberBatch, auth: ActingAuth) {
   const [first] = toActiveRanks(await listRanks());
   if (!first) throw memberErrors.noRankToGive();
 
