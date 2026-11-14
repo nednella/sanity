@@ -18,6 +18,13 @@ function requestWith(access: RouteAccess, client: ApiClient, role: MemberRole | 
   } as unknown as FastifyRequest;
 }
 
+function requestWithNoMember(access: RouteAccess, client: ApiClient) {
+  return {
+    routeOptions: { config: { access } },
+    auth: { client }
+  } as unknown as FastifyRequest;
+}
+
 describe("authorise", () => {
   it("allows any client and role on a route open to all", async () => {
     const access: RouteAccess = {
@@ -80,6 +87,27 @@ describe("authorise", () => {
     };
 
     await expect(authorise(requestWith(access, "plugin", "superuser"))).rejects.toMatchObject({ statusCode: 403 });
+  });
+
+  it("forbids a route with a role when there is no member", async () => {
+    const access: RouteAccess = {
+      role: "*",
+      clients: ["bot"]
+    };
+
+    await expect(authorise(requestWithNoMember(access, "bot"))).rejects.toMatchObject({ statusCode: 403 });
+  });
+
+  it("allows a listed client with no member on a route with no role", async () => {
+    const access: RouteAccess = { clients: ["bot"] };
+
+    await expect(authorise(requestWithNoMember(access, "bot"))).resolves.toBeUndefined();
+  });
+
+  it("forbids a client the route does not list on a route with no role", async () => {
+    const access: RouteAccess = { clients: ["bot"] };
+
+    await expect(authorise(requestWithNoMember(access, "plugin"))).rejects.toMatchObject({ statusCode: 403 });
   });
 });
 

@@ -43,6 +43,16 @@ function buildTestApp() {
           }
         },
         handler: async (request) => ({ memberId: request.auth.member.id.toString() })
+      }),
+      defineRoute({
+        method: "GET",
+        url: "/client",
+        config: {
+          access: {
+            clients: ["bot"]
+          }
+        },
+        handler: async () => ({ ok: true })
       })
     ])
   );
@@ -171,6 +181,65 @@ describe("defineRoute guarding", () => {
     });
 
     expect(response.statusCode).toBe(403);
+  });
+
+  it("answers 403 on a guarded route for a bot key with no discord user header", async () => {
+    vi.mocked(validateKey).mockResolvedValue({
+      client: "bot",
+      memberId: null
+    });
+
+    const response = await buildTestApp().inject({
+      method: "GET",
+      url: "/guarded",
+      headers: { authorization: BOT_HEADERS.authorization }
+    });
+
+    expect(response.statusCode).toBe(403);
+  });
+
+  it("answers 401 on a client route with no key", async () => {
+    const response = await buildTestApp().inject({
+      method: "GET",
+      url: "/client"
+    });
+
+    expect(response.statusCode).toBe(401);
+  });
+
+  it("answers 403 on a client route for a client it does not list", async () => {
+    vi.mocked(validateKey).mockResolvedValue({
+      client: "plugin",
+      memberId: 1n
+    });
+    vi.mocked(findMemberAccessById).mockResolvedValue({
+      id: 1n,
+      role: null
+    });
+
+    const response = await buildTestApp().inject({
+      method: "GET",
+      url: "/client",
+      headers: { authorization: "Bearer sanity_plugin_secret" }
+    });
+
+    expect(response.statusCode).toBe(403);
+  });
+
+  it("runs a client route for a listed key with no discord user header", async () => {
+    vi.mocked(validateKey).mockResolvedValue({
+      client: "bot",
+      memberId: null
+    });
+
+    const response = await buildTestApp().inject({
+      method: "GET",
+      url: "/client",
+      headers: { authorization: BOT_HEADERS.authorization }
+    });
+
+    expect(response.statusCode).toBe(200);
+    expect(findMemberAccessByDiscordId).not.toHaveBeenCalled();
   });
 
   it("runs the handler as the member when the key and role are allowed", async () => {

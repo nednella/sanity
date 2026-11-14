@@ -106,20 +106,30 @@ describe("authenticate", () => {
     });
   });
 
-  it("rejects a bot key with no discord user header", async () => {
+  it("names no member for a bot key with no discord user header", async () => {
     mockKey("bot");
     const request = requestWith(bearer());
 
-    await expect(authenticate(request)).rejects.toMatchObject({ statusCode: 401 });
+    await authenticate(request);
+
     expect(findMemberAccessByDiscordId).not.toHaveBeenCalled();
+    expect(request.auth).toEqual({
+      client: "bot",
+      member: undefined
+    });
   });
 
-  it("rejects a bot key for a discord user who is not a member", async () => {
+  it("names no member for a discord user who is not a member", async () => {
     mockKey("bot");
     vi.mocked(findMemberAccessByDiscordId).mockResolvedValue(undefined);
     const request = botRequest();
 
-    await expect(authenticate(request)).rejects.toMatchObject({ statusCode: 401 });
+    await authenticate(request);
+
+    expect(request.auth).toEqual({
+      client: "bot",
+      member: undefined
+    });
   });
 
   it("forbids a web key", async () => {
