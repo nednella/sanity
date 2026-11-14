@@ -6,6 +6,7 @@ import type {
 } from "discord.js";
 
 export type Category =
+  | "Admin"
   | "Catalogue"
   | "Deaths"
   | "Diary"
@@ -20,7 +21,6 @@ export type Category =
   | "Profile"
   | "Rank"
   | "Records"
-  | "Reviewer"
   | "Roles"
   | "Setup"
   | "Submissions"
