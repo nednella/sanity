@@ -12,9 +12,11 @@ React + TanStack Router/Query + daisyUI, deployed to Vercel · `apps/bot` discor
 
 ## Hard rules
 
-- Never touch the database beyond reading it. A session may write a migration with
-  `db:generate`, but never runs `db:migrate`, `db:bootstrap`, `db:port`, any `catalogue:*`,
-  `wom:*` or `rank:check` script. The owner applies migrations by hand.
+- Write to the database only through the API. The dev database is an old snapshot kept as a
+  sandbox, so a session may change its data through the API while it checks by hand. A
+  session may write a migration with `db:generate`, but never runs `db:migrate`,
+  `db:bootstrap`, `db:port`, any `catalogue:*`, `wom:*` or `rank:check` script. The owner
+  applies migrations by hand.
 - Stop only the processes you started, by their PID. Never `pkill`, `killall` or kill by a
   name pattern: one killed the owner's dev server.
 - Never use the ports the owner's dev servers hold; use the spare ports below.
