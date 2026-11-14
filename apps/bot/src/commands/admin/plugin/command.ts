@@ -23,7 +23,7 @@ export const plugin = defineCommand({
         .addStringOption(membersOption)
         .addStringOption(noteOption)
     ),
-  category: "Membership",
+  category: "Plugin",
   admin: true,
   execute: handlePlugin
 });
