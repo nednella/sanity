@@ -28,7 +28,8 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: ./.github/actions/setup
-      - run: pnpm --filter "@sanity/web..." typecheck
+      # The trailing "..." also selects the workspace packages that @sanity/web depends on.
+      - run: bun run --filter "@sanity/web..." typecheck
 
   lint:
     name: Lint
@@ -38,7 +39,7 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: ./.github/actions/setup
-      - run: pnpm exec eslint apps/web packages
+      - run: bunx eslint apps/web packages
 
   build:
     name: Build
@@ -48,4 +49,4 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: ./.github/actions/setup
-      - run: pnpm --filter @sanity/web build
+      - run: bun run --filter @sanity/web build

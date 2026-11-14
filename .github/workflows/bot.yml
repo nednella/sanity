@@ -28,7 +28,8 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: ./.github/actions/setup
-      - run: pnpm --filter "@sanity/bot..." typecheck
+      # The trailing "..." also selects the workspace packages that @sanity/bot depends on.
+      - run: bun run --filter "@sanity/bot..." typecheck
 
   lint:
     name: Lint
@@ -38,4 +39,4 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: ./.github/actions/setup
-      - run: pnpm exec eslint apps/bot packages
+      - run: bunx eslint apps/bot packages

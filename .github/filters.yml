@@ -1,11 +1,10 @@
 shared: &shared
   - .github/actions/setup/**
   - .github/filters.yml
-  - .nvmrc
+  - bun.lock
+  - bunfig.toml
   - eslint.config.js
   - package.json
-  - pnpm-lock.yaml
-  - pnpm-workspace.yaml
   - tsconfig.base.json
 
 bot:
