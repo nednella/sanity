@@ -23,7 +23,7 @@ export const admin = defineCommand({
         .addStringOption(membersOption)
         .addStringOption(noteOption)
     ),
-  category: "Membership",
+  category: "Admin",
   admin: true,
   execute: handleAdmin
 });
