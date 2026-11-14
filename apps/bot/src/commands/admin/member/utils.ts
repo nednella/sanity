@@ -6,7 +6,7 @@ import { buildEmbed, fitLines } from "@/utils/embeds";
 
 const FIELD_LIMIT = 1024;
 
-const MENTIONED_USER_ID = /(?<=<@!?)\d{17,20}(?=>)/g;
+export const MENTIONED_USER_ID = /(?<=<@!?)\d{17,20}(?=>)/g;
 
 type MemberChanges = {
   changed: MemberChange[];

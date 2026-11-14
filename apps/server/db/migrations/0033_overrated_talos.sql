@@ -1,0 +1,1 @@
+ALTER TYPE "public"."audit_action" ADD VALUE 'point_multiplier_added' BEFORE 'points_awarded';

@@ -12,6 +12,7 @@ export async function findPersonalBestForReview(tx: Transaction, id: number) {
       contentId: personalBests.contentId,
       scale: personalBests.scale,
       status: personalBests.status,
+      submittedAt: personalBests.submittedAt,
       timeSeconds: epochSeconds(personalBests.time)
     })
     .from(personalBests)
