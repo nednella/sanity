@@ -18,7 +18,7 @@ const describeChannelUnavailableError = ({ missingPermissions, intent, reason }:
   const name = `${label} ${NOUNS[type]}`;
   const setIt = `An admin can set it with ${inlineCode(`/channels set ${type}`)}.`;
 
-  if (reason === "not-set") return { title: `${name} is not set`, description: setIt };
+  if (reason === "channel-not-set") return { title: `${name} is not set`, description: setIt };
   if (reason === "missing") {
     return { title: `${name} is missing`, description: `It was deleted or is the wrong type. ${setIt}` };
   }
