@@ -65,11 +65,13 @@ const filteredSections = (interaction: ChatInputCommandInteraction, isAdmin: boo
 
 // A command with subcommands can only be run through one of them, so each gets its own line.
 const describeCommand = (interaction: ChatInputCommandInteraction, command: Command) => {
-  const subcommands = (command.toJSON().options ?? []).flatMap((option) => {
-    if (option.type === ApplicationCommandOptionType.Subcommand) return [option];
-    if (option.type !== ApplicationCommandOptionType.SubcommandGroup) return [];
-    return (option.options ?? []).map((subcommand) => ({ ...subcommand, name: `${option.name} ${subcommand.name}` }));
-  });
+  const subcommands = (command.toJSON().options ?? [])
+    .flatMap((option) => {
+      if (option.type === ApplicationCommandOptionType.Subcommand) return [option];
+      if (option.type !== ApplicationCommandOptionType.SubcommandGroup) return [];
+      return (option.options ?? []).map((subcommand) => ({ ...subcommand, name: `${option.name} ${subcommand.name}` }));
+    })
+    .toSorted((a, b) => a.name.localeCompare(b.name));
   if (subcommands.length === 0) return [`${commandMention(interaction, command)} · ${command.description}`];
   return subcommands.map(
     (subcommand) => `${commandMention(interaction, command, subcommand.name)} · ${subcommand.description}`
