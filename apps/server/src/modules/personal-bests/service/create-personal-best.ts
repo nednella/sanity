@@ -1,6 +1,6 @@
 import { db } from "@db/index";
 
-import type { Auth } from "@/modules/auth/hooks/authenticate";
+import type { ActingAuth } from "@/modules/auth/hooks/authenticate";
 
 import { savePersonalBest } from "../repository/save-personal-best";
 
@@ -16,7 +16,10 @@ export type NewPersonalBest = {
  * A run arrives waiting for review, and its time is stored as an interval so Postgres holds the
  * hundredths the game reports rather than a float we would have to round back.
  */
-export async function createPersonalBest({ participants, timeSeconds, ...personalBest }: NewPersonalBest, auth: Auth) {
+export async function createPersonalBest(
+  { participants, timeSeconds, ...personalBest }: NewPersonalBest,
+  auth: ActingAuth
+) {
   return db.transaction(async (tx) =>
     savePersonalBest(
       tx,

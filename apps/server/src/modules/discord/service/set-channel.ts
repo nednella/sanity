@@ -2,7 +2,7 @@ import { db } from "@db/index";
 import type { discordChannels } from "@db/schema";
 
 import { recordAuditEntry } from "@/modules/audit/repository/record-audit-entry";
-import type { Auth } from "@/modules/auth/hooks/authenticate";
+import type { ActingAuth } from "@/modules/auth/hooks/authenticate";
 
 import { setChannel } from "../repository/set-channel";
 
@@ -11,7 +11,7 @@ export type DiscordChannel = {
   purpose: (typeof discordChannels.$inferInsert)["purpose"];
 };
 
-export async function setDiscordChannel({ channelId, purpose }: DiscordChannel, auth: Auth) {
+export async function setDiscordChannel({ channelId, purpose }: DiscordChannel, auth: ActingAuth) {
   return db.transaction(async (tx) => {
     await setChannel(tx, purpose, channelId);
     await recordAuditEntry(tx, {

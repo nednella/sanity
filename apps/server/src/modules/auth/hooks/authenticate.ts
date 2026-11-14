@@ -14,7 +14,7 @@ export type AuthMember = {
   role: MemberRole | null;
 };
 
-export type Auth = {
+export type ActingAuth = {
   client: ApiClient;
   member: AuthMember;
 };

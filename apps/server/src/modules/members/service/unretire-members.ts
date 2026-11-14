@@ -2,7 +2,7 @@ import { db } from "@db/index";
 
 import type { ApplicationError } from "@/errors/error";
 import { recordAuditEntries } from "@/modules/audit/repository/record-audit-entries";
-import type { Auth } from "@/modules/auth/hooks/authenticate";
+import type { ActingAuth } from "@/modules/auth/hooks/authenticate";
 import { QUIT_RANK_ID, RETIRED_RANK_ID } from "@/modules/ranks/constants";
 import { toRankSummary } from "@/modules/ranks/mapper";
 import { listRanks } from "@/modules/ranks/repository/list-ranks";
@@ -18,7 +18,7 @@ type MemberStanding = Awaited<ReturnType<typeof listMemberStandings>>[number];
 
 type RankSummary = ReturnType<typeof toRankSummary>;
 
-export async function unretireMembers({ members, note }: MemberBatch, auth: Auth) {
+export async function unretireMembers({ members, note }: MemberBatch, auth: ActingAuth) {
   const ranks = await listRanks();
 
   return db.transaction(async (tx) => {

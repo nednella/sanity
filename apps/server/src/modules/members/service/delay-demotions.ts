@@ -3,14 +3,14 @@ import { firstOfNextMonth } from "@sanity/utils";
 import { db } from "@db/index";
 
 import { recordAuditEntries } from "@/modules/audit/repository/record-audit-entries";
-import type { Auth } from "@/modules/auth/hooks/authenticate";
+import type { ActingAuth } from "@/modules/auth/hooks/authenticate";
 
 import { delayRankChange } from "../repository/delay-rank-change";
 import { listMemberIdsByRef } from "../repository/list-member-ids-by-ref";
 import { listMembersById } from "../repository/list-members-by-id";
 import type { MemberBatch } from "../request";
 
-export async function delayDemotions({ members }: MemberBatch, auth: Auth) {
+export async function delayDemotions({ members }: MemberBatch, auth: ActingAuth) {
   const until = firstOfNextMonth(new Date());
 
   return db.transaction(async (tx) => {

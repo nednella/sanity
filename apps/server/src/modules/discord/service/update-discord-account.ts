@@ -1,7 +1,7 @@
 import { db } from "@db/index";
 
 import { recordAuditEntry } from "@/modules/audit/repository/record-audit-entry";
-import type { Auth } from "@/modules/auth/hooks/authenticate";
+import type { ActingAuth } from "@/modules/auth/hooks/authenticate";
 import { findMemberIdByDiscordId } from "@/modules/members/repository/find-member-id-by-discord-id";
 import { listMembersByDisplayName } from "@/modules/members/repository/list-members-by-display-name";
 
@@ -17,7 +17,7 @@ export type DiscordAccountChange = {
  * The member is found by display name, not Discord ID: the account being replaced may have left
  * the server or been banned, so the caller may not know its ID.
  */
-export async function updateDiscordAccount({ account, displayName }: DiscordAccountChange, auth: Auth) {
+export async function updateDiscordAccount({ account, displayName }: DiscordAccountChange, auth: ActingAuth) {
   return db.transaction(async (tx) => {
     const matches = await listMembersByDisplayName(tx, displayName);
     const [member] = matches;

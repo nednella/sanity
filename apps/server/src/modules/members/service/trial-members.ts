@@ -1,14 +1,14 @@
 import { db } from "@db/index";
 
 import { recordAuditEntry } from "@/modules/audit/repository/record-audit-entry";
-import type { Auth } from "@/modules/auth/hooks/authenticate";
+import type { ActingAuth } from "@/modules/auth/hooks/authenticate";
 
 import { listMembersByDiscordId } from "../repository/list-members-by-discord-id";
 import { saveMember } from "../repository/save-member";
 import { startMemberTrial } from "../repository/start-member-trial";
 import type { TrialistBatch } from "../request";
 
-export async function trialMembers({ trialists }: TrialistBatch, auth: Auth) {
+export async function trialMembers({ trialists }: TrialistBatch, auth: ActingAuth) {
   return db.transaction(async (tx) => {
     const found = await listMembersByDiscordId(
       tx,

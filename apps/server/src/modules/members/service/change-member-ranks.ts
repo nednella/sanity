@@ -2,7 +2,7 @@ import { db } from "@db/index";
 
 import type { ApplicationError } from "@/errors/error";
 import { recordAuditEntries } from "@/modules/audit/repository/record-audit-entries";
-import type { Auth } from "@/modules/auth/hooks/authenticate";
+import type { ActingAuth } from "@/modules/auth/hooks/authenticate";
 import { QUIT_RANK_ID } from "@/modules/ranks/constants";
 import { toRankSummary } from "@/modules/ranks/mapper";
 import { listRanks } from "@/modules/ranks/repository/list-ranks";
@@ -15,7 +15,7 @@ import type { RankChange } from "../request";
 
 type Member = Awaited<ReturnType<typeof listMembersById>>[number];
 
-export async function changeMemberRanks({ members, note, rankId }: RankChange, auth: Auth) {
+export async function changeMemberRanks({ members, note, rankId }: RankChange, auth: ActingAuth) {
   const rankRows = await listRanks();
   const ranks = new Map(rankRows.map((row) => [row.id, row]));
   const target = ranks.get(rankId);

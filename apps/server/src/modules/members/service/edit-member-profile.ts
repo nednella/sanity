@@ -1,7 +1,7 @@
 import { db } from "@db/index";
 
 import { recordAuditEntry } from "@/modules/audit/repository/record-audit-entry";
-import type { Auth } from "@/modules/auth/hooks/authenticate";
+import type { ActingAuth } from "@/modules/auth/hooks/authenticate";
 
 import { memberErrors } from "../errors";
 import { type ProfileChanges, updateMemberProfile } from "../repository/update-member-profile";
@@ -10,7 +10,7 @@ function describeRename(label: string, previous: string | null, next: string | n
   return `${label} ${previous ?? "none"} to ${next ?? "none"}`;
 }
 
-export async function editMemberProfile(auth: Auth, profile: ProfileChanges) {
+export async function editMemberProfile(auth: ActingAuth, profile: ProfileChanges) {
   return db.transaction(async (tx) => {
     const previous = await updateMemberProfile(tx, auth.member.id, profile);
     if (!previous) throw memberErrors.notFoundById(auth.member.id);
