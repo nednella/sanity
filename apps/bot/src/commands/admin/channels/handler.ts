@@ -7,7 +7,7 @@ import {
   CHANNELS,
   type ChannelIntent,
   type ChannelType,
-  fetchChannels,
+  channelCache,
   resolveCategory,
   resolveTextChannel
 } from "@/lib/channels";
@@ -28,6 +28,7 @@ const clear = async (interaction: ChatInputCommandInteraction) => {
   const intent = intentOption(interaction);
 
   await api.delete("/v1/discord/channels/{purpose}", { params: { path: { purpose: intent } } });
+  channelCache.clearChannel(intent);
 
   await reply(
     interaction,
@@ -40,7 +41,7 @@ const clear = async (interaction: ChatInputCommandInteraction) => {
 };
 
 const list = async (interaction: ChatInputCommandInteraction) => {
-  const channels = await fetchChannels();
+  const channels = await channelCache.channels();
   const describe = (type: string) =>
     Object.entries(CHANNELS)
       .filter(([, channel]) => channel.type === type)
@@ -70,6 +71,7 @@ const set = async (interaction: ChatInputCommandInteraction) => {
     params: { path: { purpose: intent } },
     body: { channelId: channel.id }
   });
+  channelCache.setChannel(intent, channel.id);
 
   await reply(
     interaction,
