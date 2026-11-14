@@ -65,6 +65,28 @@ API_URL=http://localhost:3101 WEB_URL=http://localhost:5174 bun run --filter @sa
   screenshot with `agentos browser screenshot --caption "..."`.
 - Stop each by PID when done.
 
+## Checking the bot by hand
+
+Only one process can run on the dev bot token at a time, or both answer every command. The
+agentos browser stays logged in to Discord as `agentos`, a test account in the dev guild. The
+bot calls the API as the Discord user who ran the command, so a command that needs a member
+or an admin works only once that account has a member row at that role.
+
+1. Ask the owner to stop their dev bot, and wait for their yes.
+2. Start the server and the bot from the worktree as in "Checking by hand". Wait for
+   `Application ready!` in the bot's output.
+3. Open `#test`:
+   `agentos browser open https://discord.com/channels/1092819922217877554/1556346627646693497`.
+   Post only in `#test`; the other channels are the clan's.
+4. Type the command, then pick the option whose app is "Sanity Bot": other bots have
+   commands of the same name. Check the message box text before you press Enter.
+5. Click its buttons and fill its modals. Discord keeps unsent drafts, so clear the box with
+   Backspace; `fill` leaves the box out of step with Discord. An ephemeral reply goes when
+   the page reloads, so change channel by clicking, not with a new URL.
+6. File a screenshot with `agentos browser screenshot --caption "..."`.
+7. Stop the bot and the server by PID, and the child each `bun run` started
+   (`pgrep -P <pid>`). Tell the owner their dev bot can start again.
+
 ## Code
 
 - Server: modules under `src/modules/<name>` with `request.ts`, `response.ts`, `router.ts`,
