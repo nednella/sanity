@@ -1,13 +1,9 @@
 name: Setup
-description: Install pnpm, Node and the workspace dependencies
+description: Install Bun and the workspace dependencies
 
 runs:
   using: composite
   steps:
-    - uses: pnpm/action-setup@v4
-    - uses: actions/setup-node@v5
-      with:
-        node-version-file: .nvmrc
-        cache: pnpm
-    - run: pnpm install --frozen-lockfile
+    - uses: oven-sh/setup-bun@v2
+    - run: bun install --frozen-lockfile
       shell: bash

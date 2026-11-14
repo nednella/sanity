@@ -28,7 +28,8 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: ./.github/actions/setup
-      - run: pnpm --filter "@sanity/server..." typecheck
+      # The trailing "..." also selects the workspace packages that @sanity/server depends on.
+      - run: bun run --filter "@sanity/server..." typecheck
 
   lint:
     name: Lint
@@ -38,7 +39,7 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: ./.github/actions/setup
-      - run: pnpm exec eslint apps/server packages
+      - run: bunx eslint apps/server packages
 
   test:
     name: Test
@@ -48,7 +49,7 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: ./.github/actions/setup
-      - run: pnpm --filter @sanity/server test
+      - run: bun run --filter @sanity/server test
 
   build:
     name: Build
@@ -58,7 +59,7 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: ./.github/actions/setup
-      - run: pnpm --filter @sanity/server build
+      - run: bun run --filter @sanity/server build
 
   openapi:
     name: OpenAPI
@@ -77,6 +78,6 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: ./.github/actions/setup
-      - run: pnpm --filter @sanity/server openapi
-      - run: pnpm --filter @sanity/api openapi
+      - run: bun run --filter @sanity/server openapi
+      - run: bun run --filter @sanity/api openapi
       - run: git diff --exit-code apps/server/openapi.json packages/api/src/v1.d.ts

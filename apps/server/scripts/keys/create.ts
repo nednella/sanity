@@ -10,7 +10,7 @@ import { generateKey, hashKey } from "@/modules/auth/service/keys";
 const machineClient = z.enum(apiClient.enumValues).exclude(["plugin", "web"]);
 
 const parsed = machineClient.safeParse(process.argv[2]);
-if (!parsed.success) throw new Error(`usage: pnpm key:create <${machineClient.options.join("|")}>`);
+if (!parsed.success) throw new Error(`usage: bun run key:create <${machineClient.options.join("|")}>`);
 
 const key = generateKey(parsed.data);
 const id = await saveKey({ client: parsed.data, keyHash: hashKey(key) });
