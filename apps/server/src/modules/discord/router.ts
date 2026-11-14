@@ -17,7 +17,6 @@ export const discordModule = defineModule([
     url: "/discord/channels",
     config: {
       access: {
-        role: "admin",
         clients: ["bot"]
       }
     },
