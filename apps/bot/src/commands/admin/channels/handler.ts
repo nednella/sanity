@@ -5,7 +5,7 @@ import { capitalise } from "@sanity/utils";
 import { api } from "@/lib/api";
 import {
   CHANNELS,
-  type ChannelPurpose,
+  type ChannelIntent,
   type ChannelType,
   fetchChannels,
   resolveCategory,
@@ -21,20 +21,20 @@ const GROUPS: Record<ChannelType, string> = {
   category: "Categories"
 };
 
-const purposeOption = (interaction: ChatInputCommandInteraction) =>
-  interaction.options.getString("purpose", true) as ChannelPurpose;
+const intentOption = (interaction: ChatInputCommandInteraction) =>
+  interaction.options.getString("purpose", true) as ChannelIntent;
 
 const clear = async (interaction: ChatInputCommandInteraction) => {
-  const purpose = purposeOption(interaction);
+  const intent = intentOption(interaction);
 
-  await api.delete("/v1/discord/channels/{purpose}", { params: { path: { purpose } } });
+  await api.delete("/v1/discord/channels/{purpose}", { params: { path: { purpose: intent } } });
 
   await reply(
     interaction,
     buildEmbed({
       style: "success",
       title: "Channel cleared",
-      fields: [{ name: "Purpose", value: CHANNELS[purpose].label }]
+      fields: [{ name: "Purpose", value: CHANNELS[intent].label }]
     })
   );
 };
@@ -44,8 +44,8 @@ const list = async (interaction: ChatInputCommandInteraction) => {
   const describe = (type: string) =>
     Object.entries(CHANNELS)
       .filter(([, channel]) => channel.type === type)
-      .map(([purpose, { label }]) => {
-        const channelId = channels.get(purpose);
+      .map(([intent, { label }]) => {
+        const channelId = channels.get(intent);
         return `${label} · ${channelId ? channelMention(channelId) : "not set"}`;
       })
       .join("\n");
@@ -63,11 +63,11 @@ const list = async (interaction: ChatInputCommandInteraction) => {
 
 const set = async (interaction: ChatInputCommandInteraction) => {
   const kind = interaction.options.getSubcommand(true) === "text" ? "channel" : "category";
-  const purpose = purposeOption(interaction);
+  const intent = intentOption(interaction);
   const channel = interaction.options.getChannel(kind, true);
 
   await api.put("/v1/discord/channels/{purpose}", {
-    params: { path: { purpose } },
+    params: { path: { purpose: intent } },
     body: { channelId: channel.id }
   });
 
@@ -77,24 +77,20 @@ const set = async (interaction: ChatInputCommandInteraction) => {
       style: "success",
       title: `${capitalise(kind)} set`,
       fields: [
-        { name: "Purpose", value: CHANNELS[purpose].label, inline: true },
+        { name: "Purpose", value: CHANNELS[intent].label, inline: true },
         { name: capitalise(kind), value: channelMention(channel.id), inline: true }
       ]
     })
   );
 };
 
-const postTest = async (
-  interaction: ChatInputCommandInteraction,
-  purpose: ChannelPurpose,
-  channel: SendableChannels
-) => {
+const postTest = async (interaction: ChatInputCommandInteraction, intent: ChannelIntent, channel: SendableChannels) => {
   await channel.send({
     embeds: [
       buildEmbed({
         style: "info",
         title: "Test message",
-        description: `${CHANNELS[purpose].label} test from ${userMention(interaction.user.id)}.`
+        description: `${CHANNELS[intent].label} test from ${userMention(interaction.user.id)}.`
       })
     ]
   });
@@ -106,16 +102,16 @@ const postTest = async (
 };
 
 const testCategory = async (interaction: ChatInputCommandInteraction) => {
-  const purpose = purposeOption(interaction);
-  const category = await resolveCategory(interaction.client, purpose);
+  const intent = intentOption(interaction);
+  const category = await resolveCategory(interaction.client, intent);
   const channel = await category.children.create({ name: interaction.options.getString("name", true) });
-  await postTest(interaction, purpose, channel);
+  await postTest(interaction, intent, channel);
 };
 
 const testText = async (interaction: ChatInputCommandInteraction) => {
-  const purpose = purposeOption(interaction);
-  const channel = await resolveTextChannel(interaction.client, purpose);
-  await postTest(interaction, purpose, channel);
+  const intent = intentOption(interaction);
+  const channel = await resolveTextChannel(interaction.client, intent);
+  await postTest(interaction, intent, channel);
 };
 
 const SUBCOMMANDS = {
