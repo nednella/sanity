@@ -1,3 +1,5 @@
+import { titleCase } from "@sanity/utils";
+
 import { blankToNull, read, toUtcInstant } from "./source";
 
 /**
@@ -106,13 +108,9 @@ export async function readPointsTimelineEvents() {
 
   return rows
     .filter((row) => row.eventName !== null && row.date !== null)
-    .map((row) => ({ id: row.id, name: capitalise(row.eventName!), occurredAt: toUtcInstant(row.date)! }));
+    .map((row) => ({ id: row.id, name: titleCase(row.eventName!), occurredAt: toUtcInstant(row.date)! }));
 }
 
 function enumName(name: string) {
   return name.trim().toLowerCase().replaceAll(" ", "_");
-}
-
-function capitalise(name: string) {
-  return name.replaceAll(/\b\w/g, (letter) => letter.toUpperCase());
 }
