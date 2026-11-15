@@ -33,19 +33,6 @@ export const isListedRun = inArray(personalBests.status, [
   "submitted"
 ]);
 
-// Credit by team only. The submitter is often not the runner: one admin entered
-// thousands of other people's times, and is absent from his own team on almost
-// all of them.
-export function isInTeamOf(memberId: bigint) {
-  return inArray(
-    personalBests.id,
-    db
-      .select({ id: personalBestParticipants.personalBestId })
-      .from(personalBestParticipants)
-      .where(eq(personalBestParticipants.memberId, memberId))
-  );
-}
-
 // The speedrun diary sets a time for each content and team size it rewards, so
 // a run only counts toward it when both match a row.
 const matchesDiaryTime = and(
@@ -59,6 +46,19 @@ const isDiaryContent = exists(
     .from(speedrunDiaryTimes)
     .where(matchesDiaryTime)
 );
+
+// Credit by team only. The submitter is often not the runner: one admin entered
+// thousands of other people's times, and is absent from his own team on almost
+// all of them.
+export function isInTeamOf(memberId: bigint) {
+  return inArray(
+    personalBests.id,
+    db
+      .select({ id: personalBestParticipants.personalBestId })
+      .from(personalBestParticipants)
+      .where(eq(personalBestParticipants.memberId, memberId))
+  );
+}
 
 export function matchesContent({ contentId, diary, scale }: ContentFilters) {
   return and(

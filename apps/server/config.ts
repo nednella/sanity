@@ -11,12 +11,6 @@ type Config = {
   womUserAgent: string;
 };
 
-function required(name: string): string {
-  const value = process.env[name];
-  if (!value) throw new Error(`missing environment variable: ${name}`);
-  return value;
-}
-
 export const config: Config = {
   host: required("HOST"),
   port: Number(required("PORT")),
@@ -29,3 +23,9 @@ export const config: Config = {
   womApiKey: required("WOM_API_KEY"),
   womUserAgent: required("WOM_USER_AGENT")
 };
+
+function required(name: string): string {
+  const value = process.env[name];
+  if (!value) throw new Error(`missing environment variable: ${name}`);
+  return value;
+}

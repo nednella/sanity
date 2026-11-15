@@ -21,17 +21,11 @@ const MEMBER_SORTS = [
   "totalLevel"
 ] as const satisfies readonly MemberSort[];
 
-type Unlisted<T extends never> = T;
-export type UnlistedSort = Unlisted<Exclude<MemberSort, (typeof MEMBER_SORTS)[number]>>;
-
 const DEFAULT_LIMIT = 50;
 const PAGE_SIZES = [50, 100, 200];
 
-function toStatus(value: unknown): MemberStatus {
-  if (value === "all") return "all";
-  if (value === "inactive") return "inactive";
-  return "active";
-}
+type Unlisted<T extends never> = T;
+export type UnlistedSort = Unlisted<Exclude<MemberSort, (typeof MEMBER_SORTS)[number]>>;
 
 export type MembersSearch = {
   limit: number;
@@ -65,4 +59,10 @@ export function toMembersQueryParams(search: MembersSearch) {
     search: search.search,
     sort: search.sort
   };
+}
+
+function toStatus(value: unknown): MemberStatus {
+  if (value === "all") return "all";
+  if (value === "inactive") return "inactive";
+  return "active";
 }

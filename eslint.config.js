@@ -10,6 +10,8 @@ import { defineConfig, globalIgnores } from "eslint/config";
 import globals from "globals";
 import ts from "typescript-eslint";
 
+import { sanity } from "./eslint-rules/index.js";
+
 export default defineConfig([
   globalIgnores(["**/dist", "apps/web/src/routeTree.gen.ts", "packages/api/src/v1.d.ts"]),
   {
@@ -23,7 +25,8 @@ export default defineConfig([
     plugins: {
       "@stylistic": stylistic,
       import: eslintPluginImportX,
-      perfectionist
+      perfectionist,
+      sanity
     },
     languageOptions: {
       globals: globals.node
@@ -105,7 +108,11 @@ export default defineConfig([
 
       // a comment line starts a new sorted block
       // see: https://perfectionist.dev/rules/sort-object-types
-      "perfectionist/sort-object-types": ["error", { partitionByComment: true }]
+      "perfectionist/sort-object-types": ["error", { partitionByComment: true }],
+
+      // consts first, functions below them, exports first in each group
+      // see: eslint-rules/exports-first.js
+      "sanity/exports-first": "error"
     }
   },
   {

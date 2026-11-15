@@ -58,6 +58,20 @@ type RouteDefinition<Schema extends FastifySchema, Access extends RouteAccess> =
 
 export type Route = (app: ZodApp) => void;
 
+export function defineRoute<const Schema extends FastifySchema, Access extends RouteAccess>(
+  route: RouteDefinition<Schema, Access>
+): Route {
+  return function register(app) {
+    app.route({
+      ...route,
+      // guardRoute's hooks give request.auth the shape RequestAuth promises
+      handler: route.handler as unknown as ZodHandler<Schema>,
+      config: { access: route.config.access },
+      onRequest: [...limitRoute(app, route.config), ...guardRoute(route.config.access)]
+    });
+  };
+}
+
 // Apply the default rate limiting to all routes declared with public access!
 function limitRoute(app: ZodApp, { access, rateLimit }: RouteConfig) {
   if (access !== "public") return [];
@@ -71,18 +85,4 @@ function guardRoute(access: RouteAccess) {
   if (access === "public") return [];
 
   return [authenticate, authorise];
-}
-
-export function defineRoute<const Schema extends FastifySchema, Access extends RouteAccess>(
-  route: RouteDefinition<Schema, Access>
-): Route {
-  return function register(app) {
-    app.route({
-      ...route,
-      // guardRoute's hooks give request.auth the shape RequestAuth promises
-      handler: route.handler as unknown as ZodHandler<Schema>,
-      config: { access: route.config.access },
-      onRequest: [...limitRoute(app, route.config), ...guardRoute(route.config.access)]
-    });
-  };
 }

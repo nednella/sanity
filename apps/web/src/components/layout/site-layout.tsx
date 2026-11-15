@@ -4,11 +4,11 @@ import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
 import { Sidebar } from "@/components/layout/sidebar";
 
+const DRAWER_ID = "site-drawer";
+
 type SiteLayoutProps = {
   children: ReactNode;
 };
-
-const DRAWER_ID = "site-drawer";
 
 export function SiteLayout({ children }: Readonly<SiteLayoutProps>) {
   return (

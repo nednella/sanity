@@ -18,23 +18,6 @@ import { config } from "@config";
 
 const SEPARATOR = " - ";
 
-function linkButton(label: string, url: string) {
-  return new ButtonBuilder().setLabel(label).setStyle(ButtonStyle.Link).setURL(url);
-}
-
-function itemLink({ discordMessageUrl, item }: Submission) {
-  const name = escapeMarkdown(item.name ?? "Unknown item");
-  return discordMessageUrl ? hyperlink(name, discordMessageUrl) : name;
-}
-
-function pointsFor(memberId: string, { participants }: Submission) {
-  return participants.find((participant) => participant.id === memberId)?.points ?? 0;
-}
-
-function describePoints(memberId: string, drop: Submission) {
-  return `${inlineCode(formatNumber(pointsFor(memberId, drop)))} pts`;
-}
-
 export function profileLinks({ id, wom }: MemberProfile) {
   return new ActionRowBuilder<ButtonBuilder>().addComponents(
     linkButton("Website", `${config.webUrl}/members/${id}`),
@@ -85,4 +68,21 @@ export function describeClanAge({ displayName, membership }: MemberProfile) {
 
   const joinedAt = new Date(membership.joinedAt);
   return `${bold(displayName)} joined on ${time(joinedAt, TimestampStyles.LongDate)}, ${timeSince(joinedAt, new Date())} ago.`;
+}
+
+function linkButton(label: string, url: string) {
+  return new ButtonBuilder().setLabel(label).setStyle(ButtonStyle.Link).setURL(url);
+}
+
+function itemLink({ discordMessageUrl, item }: Submission) {
+  const name = escapeMarkdown(item.name ?? "Unknown item");
+  return discordMessageUrl ? hyperlink(name, discordMessageUrl) : name;
+}
+
+function pointsFor(memberId: string, { participants }: Submission) {
+  return participants.find((participant) => participant.id === memberId)?.points ?? 0;
+}
+
+function describePoints(memberId: string, drop: Submission) {
+  return `${inlineCode(formatNumber(pointsFor(memberId, drop)))} pts`;
 }

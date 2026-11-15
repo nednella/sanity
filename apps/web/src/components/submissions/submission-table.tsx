@@ -16,6 +16,55 @@ import { RelativeDate } from "@/lib/ui/relative-date";
 
 const columnHelper = createColumnHelper<DataTableFeatures, Submission>();
 
+type SubmissionTableProps = {
+  data: { items: Submission[]; page: Page } | undefined;
+  error: Error | null;
+  isLoading: boolean;
+  memberId?: string;
+  onRetry: () => void;
+  search: SubmissionsSearch;
+  toolbar: ReactNode;
+};
+
+export function SubmissionTable({
+  data,
+  error,
+  isLoading,
+  memberId,
+  onRetry,
+  search,
+  toolbar
+}: Readonly<SubmissionTableProps>) {
+  const { showMedia } = useMediaStore();
+  const table = useTableSearch(search);
+  const columns = buildColumns(memberId);
+
+  function openScreenshot({ imageUrl, item }: Submission) {
+    if (!imageUrl) return;
+
+    showMedia({ alt: item.name ?? "Drop submission", src: imageUrl });
+  }
+
+  return (
+    <DataTable
+      columns={columns}
+      data={data?.items}
+      emptyMessage="No drops submitted."
+      error={error}
+      filters={toolbar}
+      isLoading={isLoading}
+      onPaginationChange={table.onPaginationChange}
+      onRetry={onRetry}
+      onRowClick={openScreenshot}
+      onSortingChange={table.onSortingChange}
+      pagination={table.pagination}
+      rowCount={data?.page.total ?? 0}
+      rowCursor="zoom-in"
+      sorting={table.sorting}
+    />
+  );
+}
+
 function buildColumns(memberId?: string) {
   return columnHelper.columns([
     columnHelper.accessor("item.name", {
@@ -75,53 +124,4 @@ function buildColumns(memberId?: string) {
       cell: ({ getValue }) => <RelativeDate value={getValue()} />
     })
   ]);
-}
-
-type SubmissionTableProps = {
-  data: { items: Submission[]; page: Page } | undefined;
-  error: Error | null;
-  isLoading: boolean;
-  memberId?: string;
-  onRetry: () => void;
-  search: SubmissionsSearch;
-  toolbar: ReactNode;
-};
-
-export function SubmissionTable({
-  data,
-  error,
-  isLoading,
-  memberId,
-  onRetry,
-  search,
-  toolbar
-}: Readonly<SubmissionTableProps>) {
-  const { showMedia } = useMediaStore();
-  const table = useTableSearch(search);
-  const columns = buildColumns(memberId);
-
-  function openScreenshot({ imageUrl, item }: Submission) {
-    if (!imageUrl) return;
-
-    showMedia({ alt: item.name ?? "Drop submission", src: imageUrl });
-  }
-
-  return (
-    <DataTable
-      columns={columns}
-      data={data?.items}
-      emptyMessage="No drops submitted."
-      error={error}
-      filters={toolbar}
-      isLoading={isLoading}
-      onPaginationChange={table.onPaginationChange}
-      onRetry={onRetry}
-      onRowClick={openScreenshot}
-      onSortingChange={table.onSortingChange}
-      pagination={table.pagination}
-      rowCount={data?.page.total ?? 0}
-      rowCursor="zoom-in"
-      sorting={table.sorting}
-    />
-  );
 }

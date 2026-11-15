@@ -98,8 +98,11 @@ or an admin works only once that account has a member row at that role.
   `handler.ts`, via `defineCommand`. Register it in `commands/index.ts`. Stubs wait in `commands/todo`.
 - Web: route files name their component `Page` or `Layout`.
 - Base URLs go in named constants in `packages/urls`.
-- Private declarations first, exports last. Objects with two or more entries span lines.
-  Sort register calls, contract keys and similar lists alphabetically.
+- Consts first, functions below them, and exports first in each group. Objects with two or
+  more entries span lines.
+  Sort object keys, register calls, contract keys and similar lists alphabetically, unless
+  the order means something: a route or schema definition, a table row, or the order a
+  reader sees.
 - No comments, except for a non-obvious why.
 
 ## Commits

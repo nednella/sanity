@@ -9,10 +9,6 @@ import names from "./names.json" with { type: "json" };
 
 const ours: Record<string, string> = names;
 
-function toDisplayName(metric: (typeof BOSSES)[number]) {
-  return ours[metric] ?? MetricProps[metric].name.replaceAll(" Of ", " of ");
-}
-
 const rates = await wom.efficiency.getEHBRates("main");
 const ratePerBoss = new Map(rates.map(({ boss, rate }) => [boss, rate]));
 
@@ -27,3 +23,7 @@ const saved = await importBosses(
 console.log(`${saved} bosses saved, ${rates.length} with a wom rate`);
 
 await client.end();
+
+function toDisplayName(metric: (typeof BOSSES)[number]) {
+  return ours[metric] ?? MetricProps[metric].name.replaceAll(" Of ", " of ");
+}

@@ -2,10 +2,6 @@ import { useEffect, useRef } from "react";
 
 const VIDEO_EXTENSIONS = [".mp4", ".webm", ".mov"];
 
-function isVideo(source: string) {
-  return VIDEO_EXTENSIONS.some((extension) => new URL(source).pathname.endsWith(extension));
-}
-
 type MediaDialogProps = {
   alt: string;
   onClose: () => void;
@@ -55,4 +51,8 @@ export function MediaDialog({ alt, onClose, src }: Readonly<MediaDialogProps>) {
       </form>
     </dialog>
   );
+}
+
+function isVideo(source: string) {
+  return VIDEO_EXTENSIONS.some((extension) => new URL(source).pathname.endsWith(extension));
 }

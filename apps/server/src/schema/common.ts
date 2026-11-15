@@ -22,20 +22,6 @@ export const timeframe = z.object({
   to: z.iso.date()
 });
 
-export function paginated<T extends z.ZodType>(item: T) {
-  return z.object({ items: z.array(item), page });
-}
-
-export function toPage({ limit, offset, total }: { limit: number; offset: number; total: number }) {
-  return {
-    limit,
-    offset,
-    total,
-    hasNext: offset + limit < total,
-    hasPrevious: offset > 0
-  };
-}
-
 // Every status a review can reach. What a list returns is the repository's
 // business, not the shape's.
 export const reviewStatus = z
@@ -75,3 +61,17 @@ export const memberRef = z
 export type Page = z.output<typeof page>;
 export type Review = z.output<typeof reviewBody>;
 export type Timeframe = z.output<typeof timeframe>;
+
+export function paginated<T extends z.ZodType>(item: T) {
+  return z.object({ items: z.array(item), page });
+}
+
+export function toPage({ limit, offset, total }: { limit: number; offset: number; total: number }) {
+  return {
+    limit,
+    offset,
+    total,
+    hasNext: offset + limit < total,
+    hasPrevious: offset > 0
+  };
+}

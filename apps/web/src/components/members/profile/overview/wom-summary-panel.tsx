@@ -16,25 +16,6 @@ type BossStats = {
   totalKills: number;
 };
 
-function bossStats(bosses: Boss[]): BossStats {
-  const totals: BossStats = { totalKills: 0, mostEhb: null, mostKilled: null };
-
-  for (const boss of bosses) {
-    totals.totalKills += boss.kills;
-    if (!totals.mostEhb || boss.ehb > totals.mostEhb.ehb) totals.mostEhb = boss;
-    if (!totals.mostKilled || boss.kills > totals.mostKilled.kills) totals.mostKilled = boss;
-  }
-
-  return totals;
-}
-
-// Wise Old Man reports EHP to maxed and 200m, so nothing left means completed.
-function formatRemaining(hours: number | null, completed: string) {
-  if (hours === null) return DASH;
-  if (hours === 0) return completed;
-  return `${formatNumber(hours)}h`;
-}
-
 type WomSummaryPanelProps = {
   profile: MemberProfile;
 };
@@ -109,6 +90,25 @@ export function WomSummaryPanel({ profile }: Readonly<WomSummaryPanelProps>) {
       )}
     </div>
   );
+}
+
+function bossStats(bosses: Boss[]): BossStats {
+  const totals: BossStats = { totalKills: 0, mostEhb: null, mostKilled: null };
+
+  for (const boss of bosses) {
+    totals.totalKills += boss.kills;
+    if (!totals.mostEhb || boss.ehb > totals.mostEhb.ehb) totals.mostEhb = boss;
+    if (!totals.mostKilled || boss.kills > totals.mostKilled.kills) totals.mostKilled = boss;
+  }
+
+  return totals;
+}
+
+// Wise Old Man reports EHP to maxed and 200m, so nothing left means completed.
+function formatRemaining(hours: number | null, completed: string) {
+  if (hours === null) return DASH;
+  if (hours === 0) return completed;
+  return `${formatNumber(hours)}h`;
 }
 
 type FactRowProps = {

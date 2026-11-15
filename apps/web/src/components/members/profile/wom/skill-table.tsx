@@ -10,33 +10,6 @@ import { skillIconUrl, statIconUrl } from "@/utils/icons";
 
 const EHP = "ehp";
 
-type SkillRow = {
-  ehp: number;
-  experience: number | null;
-  level: number | null;
-  metric: string;
-  rank: number | null;
-};
-
-// Total EHP is a computed metric rather than a skill, so it rides along as a
-// row of its own.
-function toRows(snapshot: Snapshot | undefined): SkillRow[] | undefined {
-  if (!snapshot) return undefined;
-
-  const totalEhp = snapshot.computed.find(({ metric }) => metric === EHP);
-
-  return [
-    ...(totalEhp ? [{ metric: EHP, level: null, experience: null, rank: totalEhp.rank, ehp: totalEhp.value }] : []),
-    ...snapshot.skills.map(({ skill, level, experience, rank, ehp }) => ({
-      metric: skill,
-      level,
-      experience,
-      rank,
-      ehp
-    }))
-  ];
-}
-
 const columnHelper = createColumnHelper<DataTableFeatures, SkillRow>();
 
 const columns = columnHelper.columns([
@@ -96,6 +69,14 @@ const columns = columnHelper.columns([
   })
 ]);
 
+type SkillRow = {
+  ehp: number;
+  experience: number | null;
+  level: number | null;
+  metric: string;
+  rank: number | null;
+};
+
 type SkillTableProps = {
   emptyMessage: string;
   snapshot: Snapshot | undefined;
@@ -111,4 +92,23 @@ export function SkillTable({ emptyMessage, snapshot }: Readonly<SkillTableProps>
       stickyHeader
     />
   );
+}
+
+// Total EHP is a computed metric rather than a skill, so it rides along as a
+// row of its own.
+function toRows(snapshot: Snapshot | undefined): SkillRow[] | undefined {
+  if (!snapshot) return undefined;
+
+  const totalEhp = snapshot.computed.find(({ metric }) => metric === EHP);
+
+  return [
+    ...(totalEhp ? [{ metric: EHP, level: null, experience: null, rank: totalEhp.rank, ehp: totalEhp.value }] : []),
+    ...snapshot.skills.map(({ skill, level, experience, rank, ehp }) => ({
+      metric: skill,
+      level,
+      experience,
+      rank,
+      ehp
+    }))
+  ];
 }

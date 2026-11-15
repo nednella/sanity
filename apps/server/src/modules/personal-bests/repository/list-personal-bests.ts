@@ -7,12 +7,7 @@ import type { PersonalBestSort } from "../request";
 import { type PersonalBestFilters, matchesPersonalBest } from "./shared/filters";
 import { selectRankedPersonalBests } from "./shared/select-ranked-personal-bests";
 
-export type ListPersonalBestsOptions = PersonalBestFilters & {
-  limit: number;
-  offset: number;
-  order: "asc" | "desc";
-  sort: PersonalBestSort;
-};
+export type PersonalBestRow = Awaited<ReturnType<typeof listPersonalBests>>[number];
 
 const sortColumns: Record<PersonalBestSort, PgColumn> = {
   content: bosses.name,
@@ -21,12 +16,12 @@ const sortColumns: Record<PersonalBestSort, PgColumn> = {
   time: personalBests.time
 };
 
-// A run is only ever one member's best for a content and team size, so the
-// sorted column decides the order on its own and content name breaks any tie.
-function toOrderBy(sort: PersonalBestSort, order: "asc" | "desc") {
-  const direction = order === "asc" ? asc : desc;
-  return [direction(sortColumns[sort]), asc(bosses.name), asc(personalBests.scale)];
-}
+export type ListPersonalBestsOptions = PersonalBestFilters & {
+  limit: number;
+  offset: number;
+  order: "asc" | "desc";
+  sort: PersonalBestSort;
+};
 
 export function listPersonalBests({ limit, offset, order, sort, ...filters }: ListPersonalBestsOptions) {
   return selectRankedPersonalBests(matchesPersonalBest(filters), filters.top, toOrderBy(sort, order))
@@ -34,4 +29,9 @@ export function listPersonalBests({ limit, offset, order, sort, ...filters }: Li
     .offset(offset);
 }
 
-export type PersonalBestRow = Awaited<ReturnType<typeof listPersonalBests>>[number];
+// A run is only ever one member's best for a content and team size, so the
+// sorted column decides the order on its own and content name breaks any tie.
+function toOrderBy(sort: PersonalBestSort, order: "asc" | "desc") {
+  const direction = order === "asc" ? asc : desc;
+  return [direction(sortColumns[sort]), asc(bosses.name), asc(personalBests.scale)];
+}

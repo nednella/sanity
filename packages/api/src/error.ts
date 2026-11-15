@@ -2,16 +2,6 @@ import type { components } from "./v1";
 
 type ErrorBody = Partial<components["schemas"]["ErrorResponse"]>;
 
-// A failed response is not always JSON: a proxy or a crashed server can answer
-// with anything.
-async function parseBody(response: Response) {
-  try {
-    return await response.clone().json();
-  } catch {
-    return;
-  }
-}
-
 // Every failure a caller sees is an Error, so it can be handled without first
 // working out what it was handed. The message is written by the server for
 // people to read, so a caller shows it as it is. Code and status are for a
@@ -38,6 +28,16 @@ class NetworkError extends Error {
   constructor(cause: unknown) {
     super("network_error", { cause });
     this.name = "NetworkError";
+  }
+}
+
+// A failed response is not always JSON: a proxy or a crashed server can answer
+// with anything.
+async function parseBody(response: Response) {
+  try {
+    return await response.clone().json();
+  } catch {
+    return;
   }
 }
 

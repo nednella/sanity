@@ -1,27 +1,6 @@
 import type { DiaryTimeRow } from "./repository/list-diary-times";
 import type { MemberBestTimeRow } from "./repository/list-member-best-times";
 
-function toContent({ contentId, contentName, contentMetric, contentImageUrl }: DiaryTimeRow) {
-  return {
-    id: contentId,
-    name: contentName,
-    metric: contentMetric,
-    imageUrl: contentImageUrl
-  };
-}
-
-function toTier({ tierId, tierName, tierPoints }: DiaryTimeRow) {
-  return {
-    id: tierId,
-    name: tierName,
-    points: tierPoints
-  };
-}
-
-function toTierTime(row: DiaryTimeRow) {
-  return { ...toTier(row), timeSeconds: row.timeSeconds };
-}
-
 export function toDiary(rows: [DiaryTimeRow, ...DiaryTimeRow[]]) {
   return {
     content: toContent(rows[0]),
@@ -53,4 +32,25 @@ export function toMemberDiary([first, ...rest]: [DiaryTimeRow, ...DiaryTimeRow[]
     tier: reached ? toTier(reached) : null,
     nextTier: next ? toTierTime(next) : null
   };
+}
+
+function toContent({ contentId, contentName, contentMetric, contentImageUrl }: DiaryTimeRow) {
+  return {
+    id: contentId,
+    name: contentName,
+    metric: contentMetric,
+    imageUrl: contentImageUrl
+  };
+}
+
+function toTier({ tierId, tierName, tierPoints }: DiaryTimeRow) {
+  return {
+    id: tierId,
+    name: tierName,
+    points: tierPoints
+  };
+}
+
+function toTierTime(row: DiaryTimeRow) {
+  return { ...toTier(row), timeSeconds: row.timeSeconds };
 }

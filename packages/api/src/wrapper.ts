@@ -5,7 +5,13 @@ import { type ApiClient, createApiClient } from "./client";
 import { NetworkError } from "./error";
 import type { paths } from "./v1";
 
+export type WrappedApiClient = ReturnType<typeof createWrappedApiClient>;
+
 const DEFAULT_TIMEOUT_MS = 10_000;
+
+const unavailable: Middleware = {
+  onError: ({ error }) => new NetworkError(error)
+};
 
 type Init<I> = RequiredKeysOf<I> extends never ? [I?] : [I];
 
@@ -13,28 +19,6 @@ type ApiOptions = {
   middleware?: Middleware[];
   timeoutMs?: number;
 };
-
-function timeout(ms: number): Middleware {
-  return {
-    onRequest: ({ request }) => new Request(request, { signal: AbortSignal.timeout(ms) })
-  };
-}
-
-const unavailable: Middleware = {
-  onError: ({ error }) => new NetworkError(error)
-};
-
-// Failures throw, so a call that returns always has data. The raw client still
-// types it as optional.
-function unwrapped<M extends HttpMethod>(client: ApiClient, method: M) {
-  return async <P extends ClientPathsWithMethod<ApiClient, M>, I extends MaybeOptionalInit<paths[P], M>>(
-    url: P,
-    ...init: Init<I>
-  ) => {
-    const { data } = await client.request(method, url, ...(init as unknown as never[]));
-    return data as MethodResponse<ApiClient, M, P, I>;
-  };
-}
 
 // For callers without a UI of their own, such as the bot: every call either
 // returns data or throws, and a server that never answers is told apart from
@@ -55,4 +39,20 @@ export function createWrappedApiClient(
   };
 }
 
-export type WrappedApiClient = ReturnType<typeof createWrappedApiClient>;
+function timeout(ms: number): Middleware {
+  return {
+    onRequest: ({ request }) => new Request(request, { signal: AbortSignal.timeout(ms) })
+  };
+}
+
+// Failures throw, so a call that returns always has data. The raw client still
+// types it as optional.
+function unwrapped<M extends HttpMethod>(client: ApiClient, method: M) {
+  return async <P extends ClientPathsWithMethod<ApiClient, M>, I extends MaybeOptionalInit<paths[P], M>>(
+    url: P,
+    ...init: Init<I>
+  ) => {
+    const { data } = await client.request(method, url, ...(init as unknown as never[]));
+    return data as MethodResponse<ApiClient, M, P, I>;
+  };
+}

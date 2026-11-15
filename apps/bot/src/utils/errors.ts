@@ -13,6 +13,11 @@ const NOUNS: Record<ChannelType, string> = {
   voice: "voice channel"
 };
 
+export async function handleCommandInteractionError(interaction: ChatInputCommandInteraction, error: unknown) {
+  logger.error(error, `/${interaction.commandName} failed`);
+  await replyError(interaction, describeError(error));
+}
+
 function describeChannelUnavailableError({ missingPermissions, intent, reason }: ChannelUnavailableError) {
   const { label, type } = CHANNELS[intent];
   const name = `${label} ${NOUNS[type]}`;
@@ -54,9 +59,4 @@ function describeError(error: unknown) {
   if (error instanceof ApiError) return describeApiError(error);
   if (error instanceof NetworkError) return describeNetworkError();
   return describeUnexpectedError();
-}
-
-export async function handleCommandInteractionError(interaction: ChatInputCommandInteraction, error: unknown) {
-  logger.error(error, `/${interaction.commandName} failed`);
-  await replyError(interaction, describeError(error));
 }

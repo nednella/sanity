@@ -4,22 +4,22 @@ import type { PersonalBestSort, SubmissionSort } from "@sanity/api";
 
 import { toLimit, toOffset, toOrder, toPositiveInteger, toSort } from "@/lib/table/search";
 
+type Unlisted<T extends never> = T;
+export type UnlistedSubmissionSort = Unlisted<Exclude<SubmissionSort, (typeof SUBMISSION_SORTS)[number]>>;
+export type UnlistedPersonalBestSort = Unlisted<Exclude<PersonalBestSort, (typeof PERSONAL_BEST_SORTS)[number]>>;
+
+// The two tables share a page, so the same params drive both and the table
+// decides what a sort means.
+export const SUBMISSION_TYPES = ["drops", "personalBests"] as const;
+
 // The generated unions are the source of truth; these lists are what validate a
 // sort arriving in the URL, and the assertions below fail to compile if the API
 // grows one a list is missing.
 const SUBMISSION_SORTS = ["item", "submittedAt", "valueMillions"] as const satisfies readonly SubmissionSort[];
 const PERSONAL_BEST_SORTS = ["content", "scale", "submittedAt", "time"] as const satisfies readonly PersonalBestSort[];
 
-type Unlisted<T extends never> = T;
-export type UnlistedSubmissionSort = Unlisted<Exclude<SubmissionSort, (typeof SUBMISSION_SORTS)[number]>>;
-export type UnlistedPersonalBestSort = Unlisted<Exclude<PersonalBestSort, (typeof PERSONAL_BEST_SORTS)[number]>>;
-
 const DEFAULT_LIMIT = 50;
 const PAGE_SIZES = [50, 100, 200];
-
-// The two tables share a page, so the same params drive both and the table
-// decides what a sort means.
-export const SUBMISSION_TYPES = ["drops", "personalBests"] as const;
 
 export type SubmissionType = (typeof SUBMISSION_TYPES)[number];
 

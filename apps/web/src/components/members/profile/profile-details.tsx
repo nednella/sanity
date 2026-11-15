@@ -10,10 +10,6 @@ import { Muted } from "@/lib/ui/typography/muted";
 
 const SHOWN = 10;
 
-function formatRsn({ main, alt }: { alt: string | null; main: string | null }) {
-  return [main, alt].filter(Boolean).join(" / ");
-}
-
 type ProfileDetailsProps = {
   profile: MemberProfile;
 };
@@ -48,6 +44,10 @@ export function ProfileDetails({ profile }: Readonly<ProfileDetailsProps>) {
       ))}
     </Muted>
   );
+}
+
+function formatRsn({ main, alt }: { alt: string | null; main: string | null }) {
+  return [main, alt].filter(Boolean).join(" / ");
 }
 
 type PreviousNamesProps = {

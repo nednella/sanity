@@ -3,27 +3,6 @@ import { bosses } from "@db/schema";
 
 import { blankToNull, clockToInterval, read, toUtcInstant } from "./source";
 
-type MemberIds = Map<string, bigint>;
-
-type SourcePersonalBest = {
-  bossId: number;
-  imageUrl: string | null;
-  members: string | null;
-  reviewedBy: string | null;
-  reviewedDate: string | null;
-  reviewNote: string | null;
-  scale: number;
-  status: number;
-  submissionId: number;
-  submittedDate: string | null;
-  submitterUserId: string;
-  time: string;
-};
-
-function enumName(name: string) {
-  return name.trim().toLowerCase().replaceAll(" ", "_");
-}
-
 /**
  * Which boss each piece of diary content is, by Wise Old Man metric. The old
  * table named its content in free text, so this is the only thing tying the two
@@ -39,6 +18,30 @@ const metricByContentId: Record<number, string> = {
   7: "tombs_of_amascut",
   40: "the_corrupted_gauntlet",
   43: "sol_heredit"
+};
+
+/**
+ * The source stored each requirement as a percentage of the maximum diary
+ * points. Each tier now requires the points for completing every diary at that
+ * tier.
+ */
+const requiredDiaryPoints: Record<number, number> = { 1: 12, 2: 36, 3: 72, 4: 120, 5: 180 };
+
+type MemberIds = Map<string, bigint>;
+
+type SourcePersonalBest = {
+  bossId: number;
+  imageUrl: string | null;
+  members: string | null;
+  reviewedBy: string | null;
+  reviewedDate: string | null;
+  reviewNote: string | null;
+  scale: number;
+  status: number;
+  submissionId: number;
+  submittedDate: string | null;
+  submitterUserId: string;
+  time: string;
 };
 
 export async function readSpeedrunContent() {
@@ -103,13 +106,6 @@ export async function readSpeedrunDiaryTimes() {
   );
 }
 
-/**
- * The source stored each requirement as a percentage of the maximum diary
- * points. Each tier now requires the points for completing every diary at that
- * tier.
- */
-const requiredDiaryPoints: Record<number, number> = { 1: 12, 2: 36, 3: 72, 4: 120, 5: 180 };
-
 export async function readSpeedrunDiaryRewards() {
   const rows = await read<{ diaryTier: number; points: number }>("diaryrewards", "diaryTier");
 
@@ -170,4 +166,8 @@ export async function readPersonalBestParticipants(memberIds: MemberIds, keptIds
       return [{ personalBestId: row.submissionId, memberId }];
     });
   });
+}
+
+function enumName(name: string) {
+  return name.trim().toLowerCase().replaceAll(" ", "_");
 }

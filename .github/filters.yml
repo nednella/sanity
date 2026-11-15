@@ -3,6 +3,7 @@ shared: &shared
   - .github/filters.yml
   - bun.lock
   - bunfig.toml
+  - eslint-rules/**
   - eslint.config.js
   - package.json
   - tsconfig.base.json

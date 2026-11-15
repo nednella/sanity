@@ -16,19 +16,6 @@ type Plan = {
 
 const { remove, merge, ids, unlink } = plan as Plan;
 
-async function unlinkSubmissions(tx: Transaction, name: string) {
-  const [item] = await tx.select({ id: items.id }).from(items).where(eq(items.name, name));
-  if (!item) return;
-
-  const unlinked = await tx
-    .update(submissions)
-    .set({ itemId: null })
-    .where(eq(submissions.itemId, item.id))
-    .returning({ id: submissions.id });
-
-  return { item, unlinked: unlinked.length };
-}
-
 for (const name of remove) {
   await db.transaction(async (tx) => {
     const removed = await unlinkSubmissions(tx, name);
@@ -104,3 +91,16 @@ console.log(`${remaining.length} items left without a game item:`);
 for (const item of remaining) console.log(`  ${String(item.uses).padStart(5)}  ${item.name}`);
 
 await client.end();
+
+async function unlinkSubmissions(tx: Transaction, name: string) {
+  const [item] = await tx.select({ id: items.id }).from(items).where(eq(items.name, name));
+  if (!item) return;
+
+  const unlinked = await tx
+    .update(submissions)
+    .set({ itemId: null })
+    .where(eq(submissions.itemId, item.id))
+    .returning({ id: submissions.id });
+
+  return { item, unlinked: unlinked.length };
+}

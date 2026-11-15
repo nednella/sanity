@@ -4,15 +4,24 @@ import type { ReviewStatus, SubmissionEvent } from "@db/enums";
 import { db } from "@db/index";
 import { submissionParticipants, submissions } from "@db/schema";
 
+// Denied and deleted submissions stay hidden; everything else is either counted
+// or waiting to be.
+const isListed = inArray(submissions.status, ["approved", "approved_missing_member", "pending", "submitted"]);
+
 export type SubmissionFilters = {
   event?: SubmissionEvent;
   memberId?: bigint;
   status?: ReviewStatus;
 };
 
-// Denied and deleted submissions stay hidden; everything else is either counted
-// or waiting to be.
-const isListed = inArray(submissions.status, ["approved", "approved_missing_member", "pending", "submitted"]);
+export function matchesSubmission({ memberId, event, status }: SubmissionFilters): SQL | undefined {
+  return and(
+    isListed,
+    isCreditedTo(memberId),
+    event && eq(submissions.event, event),
+    status && eq(submissions.status, status)
+  );
+}
 
 // Credit by team, the same way personal bests do: the submitter is often not
 // who the drop belongs to.
@@ -26,13 +35,4 @@ function isCreditedTo(memberId: bigint | undefined) {
           .from(submissionParticipants)
           .where(eq(submissionParticipants.memberId, memberId))
       );
-}
-
-export function matchesSubmission({ memberId, event, status }: SubmissionFilters): SQL | undefined {
-  return and(
-    isListed,
-    isCreditedTo(memberId),
-    event && eq(submissions.event, event),
-    status && eq(submissions.status, status)
-  );
 }
