@@ -1,10 +1,10 @@
 import type { PlayerResponse } from "@wise-old-man/utils";
 import { isNotNull } from "drizzle-orm";
 
+import { normaliseRsn } from "@sanity/utils";
+
 import { db } from "@db/index";
 import { members, womPlayers } from "@db/schema";
-
-import { normaliseRsn } from "./shared/normalise-rsn";
 
 export async function loadMemberMatcher() {
   const linked = await db
