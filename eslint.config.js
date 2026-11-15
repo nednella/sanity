@@ -86,7 +86,11 @@ export default defineConfig([
           ignoreTemplateLiterals: true,
           ignoreRegExpLiterals: true
         }
-      ]
+      ],
+
+      // a space after the comment marker
+      // see: https://eslint.style/rules/spaced-comment
+      "@stylistic/spaced-comment": ["error", "always"]
     }
   },
   {
