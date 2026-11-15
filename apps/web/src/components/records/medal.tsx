@@ -29,7 +29,7 @@ export function Medal({ position }: Readonly<MedalProps>) {
             boxShadow: `inset 0 0 0 1px ${metal.rim}`,
             color: metal.ink
           }}
-        ></div>
+        />
       ) : (
         <span className="text-xs text-base-content/40 tabular-nums">{position}</span>
       )}

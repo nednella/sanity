@@ -98,6 +98,11 @@ export default defineConfig([
     extends: [eslintPluginReactHooks.configs.flat.recommended, eslintPluginReactRefresh.configs.vite],
     languageOptions: {
       globals: globals.browser
+    },
+    rules: {
+      // an element with no children closes itself
+      // see: https://eslint.style/rules/jsx-self-closing-comp
+      "@stylistic/jsx-self-closing-comp": "error"
     }
   },
   {
