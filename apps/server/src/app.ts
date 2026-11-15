@@ -19,7 +19,7 @@ import { routes } from "./routes";
 
 const { corsOrigin, isProduction, logLevel, trustProxy } = config;
 
-export const buildApp = () => {
+export function buildApp() {
   const app = Fastify({
     logger: {
       level: logLevel,
@@ -56,4 +56,4 @@ export const buildApp = () => {
   app.register(routes, { prefix: "/v1" });
 
   return app;
-};
+}

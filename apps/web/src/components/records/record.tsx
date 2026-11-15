@@ -21,12 +21,12 @@ type Scale = {
 
 const ScaleContext = createContext<Scale | null>(null);
 
-const useScale = () => {
+function useScale() {
   const scale = useContext(ScaleContext);
   if (!scale) throw new Error("Record parts must be rendered inside a Record");
 
   return scale;
-};
+}
 
 type RootProps = {
   children: React.ReactNode;

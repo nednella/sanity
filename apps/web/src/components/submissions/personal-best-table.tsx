@@ -17,8 +17,8 @@ import { bossIconUrl } from "@/utils/icons";
 
 const columnHelper = createColumnHelper<DataTableFeatures, RankedPersonalBest>();
 
-const buildColumns = (memberId?: string) =>
-  columnHelper.columns([
+function buildColumns(memberId?: string) {
+  return columnHelper.columns([
     columnHelper.accessor("content", {
       id: "content",
       header: "Content",
@@ -81,6 +81,7 @@ const buildColumns = (memberId?: string) =>
       cell: ({ getValue }) => <RelativeDate value={getValue()} />
     })
   ]);
+}
 
 type PersonalBestTableProps = {
   data: { items: RankedPersonalBest[]; page: Page } | undefined;
@@ -105,11 +106,11 @@ export function PersonalBestTable({
   const table = useTableSearch(search);
   const columns = buildColumns(memberId);
 
-  const openScreenshot = ({ content, imageUrl, scale, timeSeconds }: RankedPersonalBest) => {
+  function openScreenshot({ content, imageUrl, scale, timeSeconds }: RankedPersonalBest) {
     if (!imageUrl) return;
 
     showMedia({ alt: `${content.name}, ${teamScale(scale)}, in ${formatTickTime(timeSeconds)}`, src: imageUrl });
-  };
+  }
 
   return (
     <DataTable

@@ -17,20 +17,22 @@ type SourceSubmission = {
   reviewNote: string | null;
 };
 
-const enumName = (name: string) => name.trim().toLowerCase().replaceAll(" ", "_");
+function enumName(name: string) {
+  return name.trim().toLowerCase().replaceAll(" ", "_");
+}
 
 /**
 0 is neither; the old bot wrote 1 for bingo and 2 for leagues.
 */
 const events: Record<number, "bingo" | "leagues" | null> = { 0: null, 1: "bingo", 2: "leagues" };
 
-export const readItems = async () => {
+export async function readItems() {
   const rows = await read<{ id: number; name: string }>("drops", "id");
 
   return rows.map((item) => ({ id: item.id, name: item.name }));
-};
+}
 
-export const readSubmissions = async (memberIds: MemberIds, itemIds: Map<string, number>) => {
+export async function readSubmissions(memberIds: MemberIds, itemIds: Map<string, number>) {
   const statusRows = await read<{ id: number; name: string }>("submissionstatus");
   const statuses = new Map(statusRows.map((row) => [row.id, enumName(row.name)]));
   const rows = await read<SourceSubmission>("submissions", "Id");
@@ -56,9 +58,9 @@ export const readSubmissions = async (memberIds: MemberIds, itemIds: Map<string,
       source: "bot" as const
     };
   });
-};
+}
 
-export const readSubmissionParticipants = async (memberIds: MemberIds) => {
+export async function readSubmissionParticipants(memberIds: MemberIds) {
   const rows = await read<{ dropId: number | null; userId: string | null }>("submission_participants", "id");
   const seen = new Set<string>();
 
@@ -75,7 +77,7 @@ export const readSubmissionParticipants = async (memberIds: MemberIds) => {
 
     return [{ submissionId: row.dropId, memberId }];
   });
-};
+}
 
 type SourcePoint = {
   Id: number;
@@ -86,7 +88,7 @@ type SourcePoint = {
   date: string;
 };
 
-export const readPoints = async (memberIds: MemberIds) => {
+export async function readPoints(memberIds: MemberIds) {
   const rows = await read<SourcePoint>("pointtracker", "Id");
 
   return rows.map((row) => ({
@@ -97,11 +99,13 @@ export const readPoints = async (memberIds: MemberIds) => {
     notes: blankToNull(row.notes),
     awardedAt: toUtcInstant(row.date)!
   }));
-};
+}
 
-const capitalise = (name: string) => name.replaceAll(/\b\w/g, (letter) => letter.toUpperCase());
+function capitalise(name: string) {
+  return name.replaceAll(/\b\w/g, (letter) => letter.toUpperCase());
+}
 
-export const readPointsTimelineEvents = async () => {
+export async function readPointsTimelineEvents() {
   const rows = await read<{ id: number; eventName: string | null; date: string | null }>(
     "pointtrackerOverTimeEvents",
     "id"
@@ -110,4 +114,4 @@ export const readPointsTimelineEvents = async () => {
   return rows
     .filter((row) => row.eventName !== null && row.date !== null)
     .map((row) => ({ id: row.id, name: capitalise(row.eventName!), occurredAt: toUtcInstant(row.date)! }));
-};
+}

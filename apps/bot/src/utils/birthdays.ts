@@ -4,12 +4,14 @@ import { NO_BIRTH_YEAR, formatDate } from "@sanity/utils";
 // To avoid returning ages of these members as 100+, we hide them instead.
 export const OLDEST_AGE_SHOWN = 99;
 
-export const formatDayMonth = (date: string) =>
-  new Date(date).toLocaleDateString("en-GB", {
+export function formatDayMonth(date: string) {
+  return new Date(date).toLocaleDateString("en-GB", {
     day: "2-digit",
     month: "short",
     timeZone: "UTC"
   });
+}
 
-export const formatBirthday = (birthday: string) =>
-  new Date(birthday).getUTCFullYear() === NO_BIRTH_YEAR ? formatDayMonth(birthday) : formatDate(birthday);
+export function formatBirthday(birthday: string) {
+  return new Date(birthday).getUTCFullYear() === NO_BIRTH_YEAR ? formatDayMonth(birthday) : formatDate(birthday);
+}

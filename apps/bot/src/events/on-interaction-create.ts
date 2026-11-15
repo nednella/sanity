@@ -5,15 +5,15 @@ import { runAsDiscordUserId } from "@/lib/api";
 import { logger } from "@/lib/logger";
 import { handleCommandInteractionError } from "@/utils/errors";
 
-const onAutocomplete = async (interaction: AutocompleteInteraction) => {
+async function onAutocomplete(interaction: AutocompleteInteraction) {
   try {
     await commands.get(interaction.commandName)?.autocomplete?.(interaction);
   } catch (error) {
     logger.error(error, `/${interaction.commandName} autocomplete failed`);
   }
-};
+}
 
-export const onInteractionCreate = async (interaction: Interaction) => {
+export async function onInteractionCreate(interaction: Interaction) {
   if (interaction.isAutocomplete()) return onAutocomplete(interaction);
   if (!interaction.isChatInputCommand()) return;
 
@@ -29,4 +29,4 @@ export const onInteractionCreate = async (interaction: Interaction) => {
   } catch (error) {
     await handleCommandInteractionError(interaction, error);
   }
-};
+}

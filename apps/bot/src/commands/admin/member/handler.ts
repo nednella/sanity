@@ -25,7 +25,7 @@ const ACCOUNT_UPDATES = {
   unchanged: (name, account) => ({ style: "warning", description: `${name} already uses ${account}.` })
 } satisfies Record<string, AccountUpdate>;
 
-const discordId = async (interaction: ChatInputCommandInteraction) => {
+async function discordId(interaction: ChatInputCommandInteraction) {
   const name = interaction.options.getString("name", true);
   const account = interaction.options.getUser("account", true);
 
@@ -41,9 +41,9 @@ const discordId = async (interaction: ChatInputCommandInteraction) => {
 
   const update = ACCOUNT_UPDATES[outcome](member?.displayName ?? name, userMention(account.id));
   await reply(interaction, buildEmbed({ title: "Discord account", ...update }));
-};
+}
 
-const pass = async (interaction: ChatInputCommandInteraction) => {
+async function pass(interaction: ChatInputCommandInteraction) {
   const { taggedDiscordIds, ...body } = readTaggedMembers(interaction);
   if (taggedDiscordIds.length === 0) return replyError(interaction, NO_MEMBERS_TAGGED);
 
@@ -52,9 +52,9 @@ const pass = async (interaction: ChatInputCommandInteraction) => {
     interaction,
     changesEmbed("Pass trial", ({ rank }) => `has passed their trial! Rank: ${rank!.name}`, changes, taggedDiscordIds)
   );
-};
+}
 
-const quit = async (interaction: ChatInputCommandInteraction) => {
+async function quit(interaction: ChatInputCommandInteraction) {
   const { taggedDiscordIds, ...body } = readTaggedMembers(interaction);
   if (taggedDiscordIds.length === 0) return replyError(interaction, NO_MEMBERS_TAGGED);
 
@@ -63,9 +63,9 @@ const quit = async (interaction: ChatInputCommandInteraction) => {
     interaction,
     changesEmbed("Quit", () => "has now quit the clan", changes, taggedDiscordIds)
   );
-};
+}
 
-const retire = async (interaction: ChatInputCommandInteraction) => {
+async function retire(interaction: ChatInputCommandInteraction) {
   const { taggedDiscordIds, ...body } = readTaggedMembers(interaction);
   if (taggedDiscordIds.length === 0) return replyError(interaction, NO_MEMBERS_TAGGED);
 
@@ -74,23 +74,23 @@ const retire = async (interaction: ChatInputCommandInteraction) => {
     interaction,
     changesEmbed("Retire", () => "has now been retired", changes, taggedDiscordIds)
   );
-};
+}
 
-const openTrialChannels = async (
+async function openTrialChannels(
   applicationCategory: CategoryChannel,
   feedbackCategory: CategoryChannel,
   displayName: string,
   application: string
-) => {
+) {
   const applicationChannel = await applicationCategory.children.create({ name: displayName });
   await applicationChannel.send({
     embeds: [buildEmbed({ title: `${displayName}'s application`, description: application })]
   });
   const feedbackChannel = await feedbackCategory.children.create({ name: `${displayName}-feedback` });
   return { applicationChannel, feedbackChannel };
-};
+}
 
-const trial = async (interaction: ChatInputCommandInteraction) => {
+async function trial(interaction: ChatInputCommandInteraction) {
   const user = interaction.options.getUser("member", true);
   const member = interaction.options.getMember("member");
   const displayName = member instanceof GuildMember ? member.displayName : user.displayName;
@@ -149,9 +149,9 @@ const trial = async (interaction: ChatInputCommandInteraction) => {
       })
     );
   }
-};
+}
 
-const unretire = async (interaction: ChatInputCommandInteraction) => {
+async function unretire(interaction: ChatInputCommandInteraction) {
   const { taggedDiscordIds, ...body } = readTaggedMembers(interaction);
   if (taggedDiscordIds.length === 0) return replyError(interaction, NO_MEMBERS_TAGGED);
 
@@ -160,7 +160,7 @@ const unretire = async (interaction: ChatInputCommandInteraction) => {
     interaction,
     changesEmbed("Unretire", ({ rank }) => `has been unretired! Rank: ${rank!.name}`, changes, taggedDiscordIds)
   );
-};
+}
 
 const SUBCOMMANDS = {
   discord_id: discordId,
@@ -171,4 +171,6 @@ const SUBCOMMANDS = {
   unretire
 };
 
-export const handleMember = (interaction: ChatInputCommandInteraction) => runSubcommand(interaction, SUBCOMMANDS);
+export function handleMember(interaction: ChatInputCommandInteraction) {
+  return runSubcommand(interaction, SUBCOMMANDS);
+}

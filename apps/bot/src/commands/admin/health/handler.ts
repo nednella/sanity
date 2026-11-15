@@ -9,7 +9,7 @@ import { reply } from "@/utils/replies";
 
 type Check = Omit<Health["checks"][number], "latencyMs"> & { latencyMs?: number };
 
-export const handleHealth = async (interaction: ChatInputCommandInteraction) => {
+export async function handleHealth(interaction: ChatInputCommandInteraction) {
   const started = Date.now();
   const health = await fetchHealth();
   const serverPing = Date.now() - started;
@@ -32,11 +32,11 @@ export const handleHealth = async (interaction: ChatInputCommandInteraction) => 
       ]
     })
   );
-};
+}
 
 // A failing check answers 503 with the same body, which is still a report worth showing. No answer
 // at all is the server's own check failing, with nothing to say about the rest.
-const fetchHealth = async () => {
+async function fetchHealth() {
   try {
     return await api.get("/v1/health");
   } catch (error) {
@@ -44,10 +44,11 @@ const fetchHealth = async () => {
     if (error instanceof NetworkError) return null;
     throw error;
   }
-};
+}
 
 // The server's own time is the ping above, so its line carries status alone.
-const describe = ({ latencyMs, name, status }: Check) =>
-  [capitalise(name), status.toUpperCase(), latencyMs === undefined ? null : formatMs(latencyMs)]
+function describe({ latencyMs, name, status }: Check) {
+  return [capitalise(name), status.toUpperCase(), latencyMs === undefined ? null : formatMs(latencyMs)]
     .filter(Boolean)
     .join(" · ");
+}

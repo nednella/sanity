@@ -27,11 +27,13 @@ import {
 // empties every table it fills first. Not a migration; migrations build the
 // shape, this moves data into it once, at cutover.
 
-const report = (table: string, rows: unknown[]) => console.log(`${String(rows.length).padStart(6)}  ${table}`);
+function report(table: string, rows: unknown[]) {
+  console.log(`${String(rows.length).padStart(6)}  ${table}`);
+}
 
 // Postgres allows 65535 parameters per statement, and every column of every row
 // is one, so wide tables need smaller batches.
-const insertAll = async <T extends PgTable>(tx: Transaction, table: T, rows: InferInsertModel<T>[], name: string) => {
+async function insertAll<T extends PgTable>(tx: Transaction, table: T, rows: InferInsertModel<T>[], name: string) {
   if (rows.length > 0) {
     const size = Math.max(1, Math.floor(64_000 / Object.keys(rows[0]!).length));
     for (let index = 0; index < rows.length; index += size) {
@@ -39,7 +41,7 @@ const insertAll = async <T extends PgTable>(tx: Transaction, table: T, rows: Inf
     }
   }
   report(name, rows);
-};
+}
 
 await db.transaction(async (tx) => {
   // Live audit entries exist only here. The old database cannot replay them, so a re-run after

@@ -10,8 +10,9 @@ import { Muted } from "@/lib/ui/typography/muted";
 
 const SHOWN = 10;
 
-const formatRsn = ({ main, alt }: { main: string | null; alt: string | null }) =>
-  [main, alt].filter(Boolean).join(" / ");
+function formatRsn({ main, alt }: { main: string | null; alt: string | null }) {
+  return [main, alt].filter(Boolean).join(" / ");
+}
 
 type ProfileDetailsProps = {
   profile: MemberProfile;

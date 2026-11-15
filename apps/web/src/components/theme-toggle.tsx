@@ -10,17 +10,17 @@ type ThemeToggleProps = {
 export function ThemeToggle({ className }: Readonly<ThemeToggleProps>) {
   const { theme: activeTheme, setTheme } = useThemeStore();
 
-  const cycleTheme = () => {
+  function cycleTheme() {
     if (activeTheme === "light") setTheme("dark");
     else if (activeTheme === "dark") setTheme("system");
     else setTheme("light");
-  };
+  }
 
-  const getThemeIcon = () => {
+  function getThemeIcon() {
     if (activeTheme === "light") return <Sun className="size-4" />;
     if (activeTheme === "dark") return <Moon className="size-4" />;
     return <Monitor className="size-4" />;
-  };
+  }
 
   return (
     <Button

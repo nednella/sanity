@@ -13,12 +13,13 @@ export type CellLayout = {
   pinned?: boolean;
 };
 
-const layoutClasses = ({ align, numeric, pinned }: CellLayout = {}) =>
-  cn(
+function layoutClasses({ align, numeric, pinned }: CellLayout = {}) {
+  return cn(
     numeric && "tabular-nums",
     (numeric || align === "right") && "text-right",
     pinned && "sticky left-0 border-r border-base-content/5 bg-inherit"
   );
+}
 
 // The stack a data table sits in: chrome above, the table itself, pagination below.
 function Shell({ children }: Readonly<{ children: React.ReactNode }>) {
@@ -70,11 +71,11 @@ function HeadRow({ className, ...props }: Readonly<React.ComponentPropsWithRef<"
 }
 
 // Undefined means the column cannot be sorted at all, which is not the same as sortable and unsorted.
-const toAriaSort = (sorted: Sorted | undefined) => {
+function toAriaSort(sorted: Sorted | undefined) {
   if (sorted === undefined) return;
   if (!sorted) return "none";
   return sorted === "asc" ? "ascending" : "descending";
-};
+}
 
 type HeadCellProps = React.ComponentPropsWithRef<"th"> & {
   layout?: CellLayout;
@@ -146,8 +147,9 @@ function Body(props: Readonly<React.ComponentPropsWithRef<"tbody">>) {
   return <tbody {...props} />;
 }
 
-const isInteractiveTarget = (target: EventTarget | null) =>
-  target instanceof HTMLElement && target.closest("a, button") !== null;
+function isInteractiveTarget(target: EventTarget | null) {
+  return target instanceof HTMLElement && target.closest("a, button") !== null;
+}
 
 const cursors = {
   pointer: "cursor-pointer",

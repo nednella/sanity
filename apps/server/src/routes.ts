@@ -1,4 +1,4 @@
-import type { FastifyPluginAsync } from "fastify";
+import type { FastifyInstance } from "fastify";
 
 import { authModule } from "@/modules/auth/router";
 import { discordModule } from "@/modules/discord/router";
@@ -11,7 +11,7 @@ import { speedrunDiaryModule } from "@/modules/speedrun-diary/router";
 import { submissionsModule } from "@/modules/submissions/router";
 import { womModule } from "@/modules/wom/router";
 
-export const routes: FastifyPluginAsync = async (app) => {
+export async function routes(app: FastifyInstance) {
   app.register(authModule);
   app.register(discordModule);
   app.register(healthModule);
@@ -22,4 +22,4 @@ export const routes: FastifyPluginAsync = async (app) => {
   app.register(speedrunDiaryModule);
   app.register(submissionsModule);
   app.register(womModule);
-};
+}

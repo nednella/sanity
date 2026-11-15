@@ -30,19 +30,21 @@ type SourceUser = {
 The old system defaulted a missing nationality to AQ, so the value means nothing. One member has the
 free text 'Chile' where a country code belongs.
 */
-const toNationality = (value: string | null) => {
+function toNationality(value: string | null) {
   const nationality = value?.trim() || null;
   if (nationality === "AQ") return null;
   return nationality === "Chile" ? "CL" : nationality;
-};
+}
 
 // The old bot saved a birthday without a year as 1900, which has no 29 February.
-const toBirthday = (value: string | null) => (value?.startsWith("1900-") ? `${NO_BIRTH_YEAR}${value.slice(4)}` : value);
+function toBirthday(value: string | null) {
+  return value?.startsWith("1900-") ? `${NO_BIRTH_YEAR}${value.slice(4)}` : value;
+}
 
 // The old bot never mapped retired members to an in-game rank, so the mapping table has no row for it.
 const inGameNameFixes: Record<string, string> = { RETIRED: "Defiler" };
 
-export const readRanks = async () => {
+export async function readRanks() {
   const mappings = await read<{ osrsName: string | null; discordRankId: number | null }>("osrsRankMapping", "id");
   const inGameNames = new Map(mappings.map((row) => [row.discordRankId, row.osrsName]));
   const rows = await read<SourceRank>("ranks", "id");
@@ -57,9 +59,9 @@ export const readRanks = async () => {
     diaryPointRequirement: rank.diaryPointRequirement ?? 0,
     masterDiaryRequirement: rank.masterDiaryRequirement ?? 0
   }));
-};
+}
 
-export const readMembers = async () => {
+export async function readMembers() {
   const avatarRows = await read<{ userId: string; discordProfileImageUrl: string | null }>("discordProfileImageUrl");
   const avatars = new Map(avatarRows.map((row) => [row.userId, row.discordProfileImageUrl]));
   const users = await read<SourceUser>("users", "userId");
@@ -91,4 +93,4 @@ export const readMembers = async () => {
 
     return { member, discordAccount };
   });
-};
+}

@@ -19,7 +19,7 @@ type SkillRow = {
 };
 
 // Total EHP is a computed metric rather than a skill, so it rides along as a row of its own.
-const toRows = (snapshot: Snapshot | undefined): SkillRow[] | undefined => {
+function toRows(snapshot: Snapshot | undefined): SkillRow[] | undefined {
   if (!snapshot) return undefined;
 
   const totalEhp = snapshot.computed.find(({ metric }) => metric === EHP);
@@ -34,7 +34,7 @@ const toRows = (snapshot: Snapshot | undefined): SkillRow[] | undefined => {
       ehp
     }))
   ];
-};
+}
 
 const columnHelper = createColumnHelper<DataTableFeatures, SkillRow>();
 

@@ -31,7 +31,7 @@ export type SubmissionsSearch = {
   type: SubmissionType;
 };
 
-export const validateSubmissionsSearch = (search: Record<string, unknown> & SearchSchemaInput): SubmissionsSearch => {
+export function validateSubmissionsSearch(search: Record<string, unknown> & SearchSchemaInput): SubmissionsSearch {
   const type = SUBMISSION_TYPES.find((value) => value === search.type) ?? "drops";
 
   // An order without a sort would sit in the URL doing nothing, and each table sorts on its own columns.
@@ -50,20 +50,24 @@ export const validateSubmissionsSearch = (search: Record<string, unknown> & Sear
     sort,
     type
   };
-};
+}
 
-export const toDropsQueryParams = ({ limit, offset, order, sort }: SubmissionsSearch) => ({
-  limit,
-  offset,
-  order,
-  sort: sort as SubmissionSort | undefined
-});
+export function toDropsQueryParams({ limit, offset, order, sort }: SubmissionsSearch) {
+  return {
+    limit,
+    offset,
+    order,
+    sort: sort as SubmissionSort | undefined
+  };
+}
 
-export const toPersonalBestsQueryParams = ({ contentId, limit, offset, order, scale, sort }: SubmissionsSearch) => ({
-  contentId,
-  limit,
-  offset,
-  order,
-  scale,
-  sort: sort as PersonalBestSort | undefined
-});
+export function toPersonalBestsQueryParams({ contentId, limit, offset, order, scale, sort }: SubmissionsSearch) {
+  return {
+    contentId,
+    limit,
+    offset,
+    order,
+    scale,
+    sort: sort as PersonalBestSort | undefined
+  };
+}

@@ -10,7 +10,7 @@ export type RecordGroup = {
   scales: RecordWithScale[];
 };
 
-export const toRecordGroups = (records: RankedPersonalBest[]) => {
+export function toRecordGroups(records: RankedPersonalBest[]) {
   const groups = new Map<number, RecordGroup>();
   const ordered: RecordGroup[] = [];
 
@@ -34,4 +34,4 @@ export const toRecordGroups = (records: RankedPersonalBest[]) => {
   for (const group of ordered) group.scales = group.scales.toSorted((a, b) => a.scale - b.scale);
 
   return ordered.toSorted((a, b) => a.content.name.localeCompare(b.content.name));
-};
+}

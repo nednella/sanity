@@ -9,8 +9,9 @@ import names from "./names.json" with { type: "json" };
 
 const ours: Record<string, string> = names;
 
-const toDisplayName = (metric: (typeof BOSSES)[number]) =>
-  ours[metric] ?? MetricProps[metric].name.replaceAll(" Of ", " of ");
+function toDisplayName(metric: (typeof BOSSES)[number]) {
+  return ours[metric] ?? MetricProps[metric].name.replaceAll(" Of ", " of ");
+}
 
 const rates = await wom.efficiency.getEHBRates("main");
 const ratePerBoss = new Map(rates.map(({ boss, rate }) => [boss, rate]));

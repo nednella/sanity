@@ -17,12 +17,15 @@ import { describeClanAge, describeEarlierDrops, describeLatestDrop, diaryLinks, 
 
 const DROPS_SHOWN = 16;
 
-const pad = (value: number) => String(value).padStart(2, "0");
+function pad(value: number) {
+  return String(value).padStart(2, "0");
+}
 
-const replyChanged = (interaction: ChatInputCommandInteraction, title: string, description: string) =>
-  reply(interaction, buildEmbed({ style: "success", title, description }));
+function replyChanged(interaction: ChatInputCommandInteraction, title: string, description: string) {
+  return reply(interaction, buildEmbed({ style: "success", title, description }));
+}
 
-const showProfile = async (interaction: ChatInputCommandInteraction) => {
+async function showProfile(interaction: ChatInputCommandInteraction) {
   const profile = await findMember(interaction);
   if (!profile) return;
 
@@ -31,9 +34,9 @@ const showProfile = async (interaction: ChatInputCommandInteraction) => {
     name: `${profile.displayName}_profile.png`
   });
   await interaction.editReply({ files: [card], components: [profileLinks(profile)] });
-};
+}
 
-const showDrops = async (interaction: ChatInputCommandInteraction) => {
+async function showDrops(interaction: ChatInputCommandInteraction) {
   const member = await findMember(interaction);
   if (!member) return;
 
@@ -70,9 +73,9 @@ const showDrops = async (interaction: ChatInputCommandInteraction) => {
       thumbnail: taggedUser(interaction).displayAvatarURL()
     })
   );
-};
+}
 
-const showDiary = async (interaction: ChatInputCommandInteraction) => {
+async function showDiary(interaction: ChatInputCommandInteraction) {
   const member = await findMember(interaction);
   if (!member) return;
 
@@ -83,9 +86,9 @@ const showDiary = async (interaction: ChatInputCommandInteraction) => {
     name: `${member.displayName}_diary.png`
   });
   await interaction.editReply({ files: [card], components: [diaryLinks()] });
-};
+}
 
-const showAge = async (interaction: ChatInputCommandInteraction) => {
+async function showAge(interaction: ChatInputCommandInteraction) {
   const member = await findMember(interaction);
   if (!member) return;
 
@@ -97,9 +100,9 @@ const showAge = async (interaction: ChatInputCommandInteraction) => {
       thumbnail: taggedUser(interaction).displayAvatarURL()
     })
   );
-};
+}
 
-const updateBirthday = async (interaction: ChatInputCommandInteraction) => {
+async function updateBirthday(interaction: ChatInputCommandInteraction) {
   const day = interaction.options.getInteger("day", true);
   const month = interaction.options.getInteger("month", true);
   const year = interaction.options.getInteger("year") ?? NO_BIRTH_YEAR;
@@ -113,37 +116,37 @@ const updateBirthday = async (interaction: ChatInputCommandInteraction) => {
   }
 
   return replyChanged(interaction, "Birthday changed", `Your birthday is now ${formatBirthday(birthday)}.`);
-};
+}
 
-const removeBirthday = async (interaction: ChatInputCommandInteraction) => {
+async function removeBirthday(interaction: ChatInputCommandInteraction) {
   await api.patch("/v1/members/me", { body: { birthday: null } });
   return replyChanged(interaction, "Birthday removed", "You no longer have a birthday set.");
-};
+}
 
-const updateNationality = async (interaction: ChatInputCommandInteraction) => {
+async function updateNationality(interaction: ChatInputCommandInteraction) {
   const nationality = interaction.options.getString("country", true).toUpperCase();
   await api.patch("/v1/members/me", { body: { nationality } });
   return replyChanged(interaction, "Nationality changed", `Your flag is now :flag_${nationality.toLowerCase()}:.`);
-};
+}
 
-const removeNationality = async (interaction: ChatInputCommandInteraction) => {
+async function removeNationality(interaction: ChatInputCommandInteraction) {
   await api.patch("/v1/members/me", { body: { nationality: null } });
   return replyChanged(interaction, "Nationality removed", "You no longer have a flag on your profile.");
-};
+}
 
-const updateRsn = async (interaction: ChatInputCommandInteraction) => {
+async function updateRsn(interaction: ChatInputCommandInteraction) {
   const account = interaction.options.getString("account", true);
   const name = interaction.options.getString("name", true);
   const body = account === "main" ? { mainRsn: name } : { altRsn: name };
 
   await api.patch("/v1/members/me", { body });
   return replyChanged(interaction, "RSN changed", `Your ${account} RSN is now ${inlineCode(name)}.`);
-};
+}
 
-const removeRsn = async (interaction: ChatInputCommandInteraction) => {
+async function removeRsn(interaction: ChatInputCommandInteraction) {
   await api.patch("/v1/members/me", { body: { altRsn: null } });
   return replyChanged(interaction, "RSN removed", "You no longer have an alt RSN.");
-};
+}
 
 const SUBCOMMANDS = {
   age: showAge,
@@ -158,4 +161,6 @@ const SUBCOMMANDS = {
   view: showProfile
 };
 
-export const handleProfile = (interaction: ChatInputCommandInteraction) => runSubcommand(interaction, SUBCOMMANDS);
+export function handleProfile(interaction: ChatInputCommandInteraction) {
+  return runSubcommand(interaction, SUBCOMMANDS);
+}

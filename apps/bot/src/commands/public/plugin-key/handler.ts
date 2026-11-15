@@ -9,7 +9,7 @@ const PASTE_INSTRUCTIONS =
 
 const KEEP_SECRET = "Keep it to yourself. If it leaks, run this command again: a new key revokes the old one.";
 
-export const handlePluginKey = async (interaction: ChatInputCommandInteraction) => {
+export async function handlePluginKey(interaction: ChatInputCommandInteraction) {
   const { key } = await api.post("/v1/auth/plugin-key");
 
   await reply(
@@ -20,4 +20,4 @@ export const handlePluginKey = async (interaction: ChatInputCommandInteraction) 
       description: `${codeBlock(key)}\n${PASTE_INSTRUCTIONS}\n\n${KEEP_SECRET}`
     })
   );
-};
+}

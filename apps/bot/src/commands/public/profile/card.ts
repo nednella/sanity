@@ -39,18 +39,23 @@ const FONTS = [
   }
 ];
 
-const webIconUrl = (path: string) => `${config.webUrl}/icons/${path}.png`;
+function webIconUrl(path: string) {
+  return `${config.webUrl}/icons/${path}.png`;
+}
 
-const overline = (text: string) =>
-  `<span style="font-size:15px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:${COLOURS.faint}">${text}</span>`;
+function overline(text: string) {
+  return `<span style="font-size:15px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:${COLOURS.faint}">${text}</span>`;
+}
 
-const rankBadge = ({ iconUrl, name }: RankSummary) => `
+function rankBadge({ iconUrl, name }: RankSummary) {
+  return `
   <span style="display:flex;align-items:center;gap:10px">
     ${iconUrl ? `<img src="${escapeHtml(iconUrl)}" style="width:22px;height:22px" />` : ""}
     ${escapeHtml(name)}
   </span>`;
+}
 
-const avatar = (avatarUrl: string, nationality: string | null) => {
+function avatar(avatarUrl: string, nationality: string | null) {
   const flag =
     nationality && isCountryCode(nationality)
       ? `<img src="${CIRCLE_FLAG_CDN_URL}/${nationality.toLowerCase()}.svg" style="position:absolute;right:-4px;bottom:-4px;width:40px;height:40px;border-radius:20px;border:4px solid ${COLOURS.background}" />`
@@ -61,9 +66,9 @@ const avatar = (avatarUrl: string, nationality: string | null) => {
     <img src="${escapeHtml(avatarUrl)}" style="width:112px;height:112px;border-radius:56px" />
     ${flag}
   </div>`;
-};
+}
 
-const header = ({ displayName, membership, nationality, rsn }: MemberProfile, avatarUrl: string) => {
+function header({ displayName, membership, nationality, rsn }: MemberProfile, avatarUrl: string) {
   const details = [
     [rsn.main, rsn.alt].filter((name) => name !== null).join(" / "),
     membership.joinedAt && `Joined ${formatDate(membership.joinedAt)}`
@@ -84,9 +89,10 @@ const header = ({ displayName, membership, nationality, rsn }: MemberProfile, av
       <span style="font-size:12px;font-weight:500;letter-spacing:3px;color:${COLOURS.faint}">THE SANITY WIKI</span>
     </div>
   </div>`;
-};
+}
 
-const stat = (iconPath: string | null, label: string, value: string, width = "23.9%") => `
+function stat(iconPath: string | null, label: string, value: string, width = "23.9%") {
+  return `
   <div style="display:flex;align-items:center;gap:14px;width:${width};padding:16px;border:1px solid ${COLOURS.border};border-radius:3px">
     ${
       iconPath
@@ -98,8 +104,10 @@ const stat = (iconPath: string | null, label: string, value: string, width = "23
       <span style="font-size:22px;font-weight:600">${escapeHtml(value)}</span>
     </div>
   </div>`;
+}
 
-const statBar = ({ diary, membership, wom }: MemberProfile) => `
+function statBar({ diary, membership, wom }: MemberProfile) {
+  return `
   <div style="display:flex;flex-wrap:wrap;justify-content:space-between;row-gap:12px">
     ${stat("stats/clan-points", "Clan Points", formatNumber(membership.points))}
     ${stat("stats/diary-points", "Diary Points", `${formatNumber(diary.points)} / ${formatNumber(diary.maxPoints)}`)}
@@ -110,8 +118,10 @@ const statBar = ({ diary, membership, wom }: MemberProfile) => `
     ${stat("stats/ehp", "EHP", formatNumber(wom?.totalEhp, 1))}
     ${stat("stats/ehb", "EHB", formatNumber(wom?.totalEhb, 1))}
   </div>`;
+}
 
-const progressBar = (label: string, value: number, target: number) => `
+function progressBar(label: string, value: number, target: number) {
+  return `
   <div style="display:flex;flex-direction:column;gap:7px">
     <div style="display:flex;justify-content:space-between;font-size:18px;color:${COLOURS.muted}">
       <span>${label}</span>
@@ -121,9 +131,10 @@ const progressBar = (label: string, value: number, target: number) => `
       <div style="width:${Math.min(100, (value / target) * 100)}%;border-radius:4px;background:${COLOURS.progress}"></div>
     </div>
   </div>`;
+}
 
 // A diary rank is earned with clan points plus either diary target, as on the website.
-const nextRankCard = (title: string, nextRank: NextRank, { diary, membership }: MemberProfile) => {
+function nextRankCard(title: string, nextRank: NextRank, { diary, membership }: MemberProfile) {
   const { requirements } = nextRank;
   const eitherOr = [
     requirements.diaryPoints > 0 && progressBar("Diary Points", diary.points, requirements.diaryPoints),
@@ -146,9 +157,10 @@ const nextRankCard = (title: string, nextRank: NextRank, { diary, membership }: 
         : ""
     }
   </div>`;
-};
+}
 
-const standing = ({ membership, progression }: MemberProfile) => `
+function standing({ membership, progression }: MemberProfile) {
+  return `
   <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;flex:1">
     <div style="display:flex;align-items:center;justify-content:center;width:104px;height:104px;border-radius:52px;border:1px solid ${COLOURS.border}">
       ${membership.rank.iconUrl ? `<img src="${escapeHtml(membership.rank.iconUrl)}" style="width:52px;height:52px" />` : ""}
@@ -156,8 +168,9 @@ const standing = ({ membership, progression }: MemberProfile) => `
     ${overline(STANDINGS[progression.status])}
     <span style="font-size:30px;font-weight:700">${escapeHtml(membership.rank.name)}</span>
   </div>`;
+}
 
-const rankProgression = (profile: MemberProfile) => {
+function rankProgression(profile: MemberProfile) {
   const { points, diary } = profile.progression.nextRank;
   const cards = [
     points && nextRankCard("Next Rank (Clan Points)", points, profile),
@@ -173,15 +186,18 @@ const rankProgression = (profile: MemberProfile) => {
         : standing(profile)
     }
   </div>`;
-};
+}
 
-const tierBadge = (name: string) => `
+function tierBadge(name: string) {
+  return `
   <span style="display:flex;align-items:center;gap:8px">
     <img src="${webIconUrl(`diary/${name.toLowerCase()}`)}" style="width:22px;height:22px;object-fit:contain" />
     ${escapeHtml(name)}
   </span>`;
+}
 
-const diaryHeader = ({ diary, displayName }: MemberProfile, avatarUrl: string) => `
+function diaryHeader({ diary, displayName }: MemberProfile, avatarUrl: string) {
+  return `
   <div style="display:flex;flex-direction:column;gap:22px;margin-bottom:12px">
     <div style="display:flex;align-items:center;gap:20px">
       <img src="${escapeHtml(avatarUrl)}" style="width:72px;height:72px;border-radius:36px" />
@@ -196,24 +212,28 @@ const diaryHeader = ({ diary, displayName }: MemberProfile, avatarUrl: string) =
       ${stat(diary.claimedTier && `diary/${diary.claimedTier.name.toLowerCase()}`, "Claimed Diary Tier", diary.claimedTier?.name ?? "—", "32.6%")}
     </div>
   </div>`;
+}
 
-const diaryRow = (cells: string[], colour = COLOURS.text) => `
+function diaryRow(cells: string[], colour = COLOURS.text) {
+  return `
   <div style="display:flex;align-items:center;height:${DIARY_ROW_HEIGHT}px;border-bottom:1px solid ${COLOURS.border};color:${colour}">
     ${cells.map((cell, index) => `<div style="display:flex;width:${DIARY_COLUMN_WIDTHS[index]}">${cell}</div>`).join("")}
   </div>`;
+}
 
-const diaryEntry = ({ content, nextTier, pb, scale, tier }: MemberDiary) =>
-  diaryRow([
+function diaryEntry({ content, nextTier, pb, scale, tier }: MemberDiary) {
+  return diaryRow([
     escapeHtml(content.name),
     teamScale(scale),
     formatTickTime(pb?.timeSeconds),
     tier ? tierBadge(tier.name) : "—",
     `<span style="color:${COLOURS.faint}">${nextTier ? `${formatTickTime(nextTier.timeSeconds)} (${escapeHtml(nextTier.name)})` : "—"}</span>`
   ]);
+}
 
 // The avatar comes from Discord at render time, because the one saved with the member can be out of date.
-export const renderProfileCard = (profile: MemberProfile, avatarUrl: string) =>
-  render(
+export function renderProfileCard(profile: MemberProfile, avatarUrl: string) {
+  return render(
     `<div style="display:flex;flex-direction:column;gap:24px;width:100%;height:100%;padding:40px 44px;font-family:Inter;color:${COLOURS.text};background:${COLOURS.background}">
       ${header(profile, avatarUrl)}
       ${statBar(profile)}
@@ -226,9 +246,10 @@ export const renderProfileCard = (profile: MemberProfile, avatarUrl: string) =>
       images: { throwOnError: false }
     }
   );
+}
 
-export const renderDiaryCard = (profile: MemberProfile, entries: MemberDiary[], avatarUrl: string) =>
-  render(
+export function renderDiaryCard(profile: MemberProfile, entries: MemberDiary[], avatarUrl: string) {
+  return render(
     `<div style="display:flex;flex-direction:column;width:100%;height:100%;padding:40px 44px;font-family:Inter;font-size:20px;color:${COLOURS.text};background:${COLOURS.background}">
       ${diaryHeader(profile, avatarUrl)}
       ${diaryRow(["Content", "Team", "PB", "Tier", "Next"], COLOURS.faint)}
@@ -241,3 +262,4 @@ export const renderDiaryCard = (profile: MemberProfile, entries: MemberDiary[], 
       images: { throwOnError: false }
     }
   );
+}

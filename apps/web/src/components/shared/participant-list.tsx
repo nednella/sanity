@@ -16,10 +16,10 @@ type ParticipantListProps = {
 export function ParticipantList({ memberId, participants }: Readonly<ParticipantListProps>) {
   if (participants.length === 0) return DASH;
 
-  const emphasis = (id: string) => {
+  function emphasis(id: string) {
     if (memberId === undefined) return "";
     return id === memberId ? "font-medium" : "text-base-content/60";
-  };
+  }
 
   return participants.map(({ displayName, id, points }, index) => (
     <Fragment key={id}>

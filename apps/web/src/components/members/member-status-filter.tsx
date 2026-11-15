@@ -14,11 +14,11 @@ const labels: Record<MemberStatus, string> = {
   inactive: "Inactive"
 };
 
-const toStatus = (isActive: boolean, isInactive: boolean): MemberStatus => {
+function toStatus(isActive: boolean, isInactive: boolean): MemberStatus {
   if (isActive && isInactive) return "all";
   if (isInactive) return "inactive";
   return "active";
-};
+}
 
 export function MemberStatusFilter({ status, onChange }: Readonly<MemberStatusFilterProps>) {
   const isActive = status !== "inactive";

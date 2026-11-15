@@ -18,30 +18,35 @@ import { config } from "@config";
 
 const SEPARATOR = " - ";
 
-const linkButton = (label: string, url: string) =>
-  new ButtonBuilder().setLabel(label).setStyle(ButtonStyle.Link).setURL(url);
+function linkButton(label: string, url: string) {
+  return new ButtonBuilder().setLabel(label).setStyle(ButtonStyle.Link).setURL(url);
+}
 
-const itemLink = ({ discordMessageUrl, item }: Submission) => {
+function itemLink({ discordMessageUrl, item }: Submission) {
   const name = escapeMarkdown(item.name ?? "Unknown item");
   return discordMessageUrl ? hyperlink(name, discordMessageUrl) : name;
-};
+}
 
-const pointsFor = (memberId: string, { participants }: Submission) =>
-  participants.find((participant) => participant.id === memberId)?.points ?? 0;
+function pointsFor(memberId: string, { participants }: Submission) {
+  return participants.find((participant) => participant.id === memberId)?.points ?? 0;
+}
 
-const describePoints = (memberId: string, drop: Submission) =>
-  `${inlineCode(formatNumber(pointsFor(memberId, drop)))} pts`;
+function describePoints(memberId: string, drop: Submission) {
+  return `${inlineCode(formatNumber(pointsFor(memberId, drop)))} pts`;
+}
 
-export const profileLinks = ({ id, wom }: MemberProfile) =>
-  new ActionRowBuilder<ButtonBuilder>().addComponents(
+export function profileLinks({ id, wom }: MemberProfile) {
+  return new ActionRowBuilder<ButtonBuilder>().addComponents(
     linkButton("Website", `${config.webUrl}/members/${id}`),
     ...(wom ? [linkButton("Wise Old Man", `${WOM_PLAYERS_URL}/${encodeURIComponent(wom.username)}`)] : [])
   );
+}
 
-export const diaryLinks = () =>
-  new ActionRowBuilder<ButtonBuilder>().addComponents(linkButton("Diary", `${config.webUrl}/wiki/diary`));
+export function diaryLinks() {
+  return new ActionRowBuilder<ButtonBuilder>().addComponents(linkButton("Diary", `${config.webUrl}/wiki/diary`));
+}
 
-export const describeLatestDrop = (memberId: string, drop: Submission) => {
+export function describeLatestDrop(memberId: string, drop: Submission) {
   const details = [
     drop.valueMillions !== null && `${bold(formatNumber(drop.valueMillions * 1_000_000, 0, "compact"))} value`,
     `${bold(formatNumber(pointsFor(memberId, drop)))} pts`,
@@ -61,10 +66,10 @@ export const describeLatestDrop = (memberId: string, drop: Submission) => {
 
   const quote = lines.map((line) => `> ${line}`).join("\n");
   return `### Latest\n${quote}`;
-};
+}
 
-export const describeEarlierDrops = (memberId: string, drops: Submission[]) =>
-  drops
+export function describeEarlierDrops(memberId: string, drops: Submission[]) {
+  return drops
     .map((drop) =>
       [
         itemLink(drop),
@@ -73,10 +78,11 @@ export const describeEarlierDrops = (memberId: string, drops: Submission[]) =>
       ].join(SEPARATOR)
     )
     .join("\n");
+}
 
-export const describeClanAge = ({ displayName, membership }: MemberProfile) => {
+export function describeClanAge({ displayName, membership }: MemberProfile) {
   if (!membership.joinedAt) return `${bold(displayName)} has no join date.`;
 
   const joinedAt = new Date(membership.joinedAt);
   return `${bold(displayName)} joined on ${time(joinedAt, TimestampStyles.LongDate)}, ${timeSince(joinedAt, new Date())} ago.`;
-};
+}

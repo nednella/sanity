@@ -25,7 +25,9 @@ export async function payDiaryCarries(tx: Transaction, run: ApprovedRun, memberI
   for (const tier of tiers) {
     if (run.timeSeconds > tier.timeSeconds) continue;
 
-    const hasDiaryTier = (memberId: bigint) => (bestTimes.get(memberId) ?? Infinity) <= tier.timeSeconds;
+    function hasDiaryTier(memberId: bigint) {
+      return (bestTimes.get(memberId) ?? Infinity) <= tier.timeSeconds;
+    }
 
     const awards = generateDiaryCarryAwards({
       carried: memberIds.filter((memberId) => !hasDiaryTier(memberId)),

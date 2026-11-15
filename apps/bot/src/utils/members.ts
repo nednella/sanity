@@ -6,14 +6,16 @@ import { api } from "@/lib/api";
 
 import { replyError } from "./replies";
 
-export const taggedUser = (interaction: ChatInputCommandInteraction) =>
-  interaction.options.getUser("member") ?? interaction.user;
+export function taggedUser(interaction: ChatInputCommandInteraction) {
+  return interaction.options.getUser("member") ?? interaction.user;
+}
 
-export const oneMemberOption = (option: SlashCommandUserOption) =>
-  option.setName("member").setDescription("Tag a member, or leave it empty for yourself");
+export function oneMemberOption(option: SlashCommandUserOption) {
+  return option.setName("member").setDescription("Tag a member, or leave it empty for yourself");
+}
 
 // Replies for the caller when the tagged user has no member, so a handler only has to stop.
-export const findMember = async (interaction: ChatInputCommandInteraction) => {
+export async function findMember(interaction: ChatInputCommandInteraction) {
   const user = taggedUser(interaction);
 
   try {
@@ -27,4 +29,4 @@ export const findMember = async (interaction: ChatInputCommandInteraction) => {
     });
     return null;
   }
-};
+}
