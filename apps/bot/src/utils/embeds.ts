@@ -1,5 +1,7 @@
 import { type APIEmbedField, Colors, EmbedBuilder } from "discord.js";
 
+export const EMBED_FIELD_MAX_LENGTH = 1024;
+
 const HEADER = "Bald Bot";
 const FOOTER = "Powered by the Sanity Mainframe";
 const OVERFLOW_LINE_ROOM = 20;
