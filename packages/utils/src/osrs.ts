@@ -2,7 +2,7 @@ import { ACTIVITIES, BOSSES, COMPUTED_METRICS, MetricProps, SKILLS, isMetric } f
 
 import { OSRS_ITEM_ICONS_URL, OSRS_WIKI_IMAGES_URL } from "@sanity/urls";
 
-import { DASH } from "./text";
+import { DASH } from "./strings";
 
 export const sortActivities = inOrder(ACTIVITIES, "activity");
 export const sortBosses = inOrder(BOSSES, "boss");

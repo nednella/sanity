@@ -1,4 +1,4 @@
-import { DASH } from "./text";
+import { DASH } from "./strings";
 
 export function formatNumber(
   value: number | null | undefined,
