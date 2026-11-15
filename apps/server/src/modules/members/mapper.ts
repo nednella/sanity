@@ -1,4 +1,4 @@
-import { asRsn, sortActivities, sortBosses, sortComputed, sortSkills } from "@sanity/utils";
+import { normaliseRsn, sortActivities, sortBosses, sortComputed, sortSkills } from "@sanity/utils";
 
 import { TRIALIST_RANK_ID } from "@/modules/ranks/constants";
 import { toRankSummary } from "@/modules/ranks/mapper";
@@ -128,10 +128,10 @@ function toProgression(currentRankId: number, ranks: RankRow[], standing: Standi
 }
 
 function toPreviousNames(changes: NameChange[], current: string | null) {
-  const seen = new Set([current ? asRsn(current) : ""]);
+  const seen = new Set([current ? normaliseRsn(current) : ""]);
 
   return changes.filter(({ name }) => {
-    const rsn = asRsn(name);
+    const rsn = normaliseRsn(name);
     if (seen.has(rsn)) return false;
 
     seen.add(rsn);
