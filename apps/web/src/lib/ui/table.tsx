@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 import { cn } from "@/lib/ui/utils";
 
-export type Sorted = false | "asc" | "desc";
+export type Sorted = "asc" | "desc" | false;
 
 export type CellLayout = {
   align?: "left" | "right";

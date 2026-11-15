@@ -5,7 +5,7 @@ type Config = {
   corsOrigin: string;
   logLevel: string;
   isProduction: boolean;
-  trustProxy: string | false;
+  trustProxy: false | string;
   womGroupId: string;
   womApiKey: string;
   womUserAgent: string;

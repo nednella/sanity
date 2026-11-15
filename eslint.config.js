@@ -97,7 +97,11 @@ export default defineConfig([
 
       // a space after the comment marker
       // see: https://eslint.style/rules/spaced-comment
-      "@stylistic/spaced-comment": ["error", "always"]
+      "@stylistic/spaced-comment": ["error", "always"],
+
+      // null and undefined go last
+      // see: https://perfectionist.dev/rules/sort-union-types
+      "perfectionist/sort-union-types": ["error", { groups: ["unknown", "nullish"] }]
     }
   },
   {

@@ -40,7 +40,7 @@ type RouteConfig<Access extends RouteAccess = RouteAccess> = {
 // route with no role may have one.
 type RequestAuth<Access extends RouteAccess> = Access extends "public"
   ? unknown
-  : { auth: Access extends { role: MemberRole | "*" } ? ActingAuth : Auth };
+  : { auth: Access extends { role: "*" | MemberRole } ? ActingAuth : Auth };
 
 type RouteHandler<Schema extends FastifySchema, Access extends RouteAccess> = (
   request: Omit<Parameters<ZodHandler<Schema>>[0], "auth"> & RequestAuth<Access>,
