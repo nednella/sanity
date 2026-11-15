@@ -12,7 +12,8 @@ type Options = {
 };
 
 export function defineCommand({ admin = false, data, selfOnly = false, ...options }: Options): Command {
-  // Hide admin commands by default - the server decides access using the integration settings
+  // Hide admin commands by default - the server decides access using the
+  // integration settings
   if (admin) data.setDefaultMemberPermissions(0);
   return Object.assign(data, { admin, selfOnly, ...options });
 }

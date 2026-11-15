@@ -10,10 +10,12 @@ export type SubmissionFilters = {
   status?: ReviewStatus;
 };
 
-// Denied and deleted submissions stay hidden; everything else is either counted or waiting to be.
+// Denied and deleted submissions stay hidden; everything else is either counted
+// or waiting to be.
 const isListed = inArray(submissions.status, ["approved", "approved_missing_member", "pending", "submitted"]);
 
-// Credit by team, the same way personal bests do: the submitter is often not who the drop belongs to.
+// Credit by team, the same way personal bests do: the submitter is often not
+// who the drop belongs to.
 function isCreditedTo(memberId: bigint | undefined) {
   return memberId === undefined
     ? undefined

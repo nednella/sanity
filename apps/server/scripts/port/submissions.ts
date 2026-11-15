@@ -70,7 +70,8 @@ export async function readSubmissionParticipants(memberIds: MemberIds) {
     const memberId = memberIds.get(row.userId);
     if (memberId === undefined) return [];
 
-    // The source let a member appear twice on one submission; the key forbids it.
+    // The source let a member appear twice on one submission; the key forbids
+    // it.
     const key = `${row.dropId}:${memberId}`;
     if (seen.has(key)) return [];
     seen.add(key);

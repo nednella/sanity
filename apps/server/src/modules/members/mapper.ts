@@ -11,9 +11,10 @@ import type { NameChange } from "@/modules/wom/repository/list-name-changes";
 import type { MemberRow } from "./repository/shared/select-members";
 
 /**
- * Why a member has no next rank, since the panel says something different for each: a trialist earns
- * their place on the ladder by passing trial, a quit or retired member has stepped off it, and the top
- * rank has run out of ladder to climb.
+ * Why a member has no next rank, since the panel says something different for
+ * each: a trialist earns their place on the ladder by passing trial, a quit or
+ * retired member has stepped off it, and the top rank has run out of ladder to
+ * climb.
  */
 function toProgressionStatus(currentRankId: number, isOnLadder: boolean, hasHigherRanks: boolean) {
   if (currentRankId === TRIALIST_RANK_ID) return "trial" as const;
@@ -83,8 +84,9 @@ function requiresDiaries(rank: RankRow) {
   return rank.diaryPointRequirement > 0 || rank.masterDiaryRequirement > 0;
 }
 
-// Promotion is manual, so a member can already qualify for a rank several places above their own. Next ranks are
-// counted from whichever is higher: the rank they hold or the best rank they qualify for.
+// Promotion is manual, so a member can already qualify for a rank several
+// places above their own. Next ranks are counted from whichever is higher: the
+// rank they hold or the best rank they qualify for.
 function toProgression(currentRankId: number, ranks: RankRow[], standing: Standing) {
   const ladder = RANK_IDS_OFF_LADDER.has(currentRankId) ? [] : toActiveRanks(ranks);
 

@@ -13,8 +13,9 @@ export type NewPersonalBest = {
 };
 
 /**
- * A run arrives waiting for review, and its time is stored as an interval so Postgres holds the
- * hundredths the game reports rather than a float we would have to round back.
+ * A run arrives waiting for review, and its time is stored as an interval so
+ * Postgres holds the hundredths the game reports rather than a float we would
+ * have to round back.
  */
 export async function createPersonalBest(
   { participants, timeSeconds, ...personalBest }: NewPersonalBest,

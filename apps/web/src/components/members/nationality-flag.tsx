@@ -21,8 +21,9 @@ export function NationalityFlag({ className, countryCode, shape = "rectangle" }:
   const code = countryCode.toLowerCase();
   const { cdn, className: shapeClassName, height } = shapes[shape];
 
-  // The wrapper carries the placement: `.tooltip` is positioned, so anything absolute inside it
-  // would settle against the tooltip rather than against the avatar.
+  // The wrapper carries the placement: `.tooltip` is positioned, so anything
+  // absolute inside it would settle against the tooltip rather than against the
+  // avatar.
   return (
     <Tooltip
       tip={countryCode.toUpperCase()}

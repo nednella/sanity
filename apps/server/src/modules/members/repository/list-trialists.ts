@@ -5,8 +5,8 @@ import { members } from "@db/schema";
 
 import { TRIALIST_RANK_ID } from "@/modules/ranks/constants";
 
-// Trial status is read when the drop is approved, not when it was submitted, so a member who has
-// since been ranked up is paid as a member.
+// Trial status is read when the drop is approved, not when it was submitted, so
+// a member who has since been ranked up is paid as a member.
 export async function listTrialists(tx: Transaction, memberIds: bigint[]) {
   if (memberIds.length === 0) return new Set<bigint>();
 

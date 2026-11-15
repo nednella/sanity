@@ -13,7 +13,8 @@ export function listMemberBirthdays({ from, to }: Timeframe) {
   const isBirthdayBeforeFrom = sql`(${birthdayInYearOfFrom} < ${from}::date)::int`;
 
   const nextAge = sql<number>`${ageInYearOfFrom} + ${isBirthdayBeforeFrom}`;
-  // Adding years to 29 February gives 28 February in the years without that day.
+  // Adding years to 29 February gives 28 February in the years without that
+  // day.
   const nextBirthday = sql<string>`(${birthday} + make_interval(years => ${nextAge}))::date`;
 
   return db

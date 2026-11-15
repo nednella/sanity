@@ -55,9 +55,9 @@ export function toBoolean(value: Buffer | number | null) {
 }
 
 /**
- * Times are minutes, seconds and hundredths, and can pass an hour, so '64:52.00'
- * is 64 minutes. Postgres would read that as 64 hours, so the parts are pulled
- * apart. Two of 5683 rows separate the hundredths with a colon.
+ * Times are minutes, seconds and hundredths, and can pass an hour, so
+ * '64:52.00' is 64 minutes. Postgres would read that as 64 hours, so the parts
+ * are pulled apart. Two of 5683 rows separate the hundredths with a colon.
  */
 export function clockToInterval(value: string) {
   const parts = /^(\d+):(\d+)(?:[.:](\d+))?$/.exec(value.trim());

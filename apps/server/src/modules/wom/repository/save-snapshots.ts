@@ -9,12 +9,13 @@ import {
   womSnapshots
 } from "@db/schema";
 
-// Postgres takes at most 65,535 parameters in one statement, and the bosses of one snapshot alone can
-// use about 350.
+// Postgres takes at most 65,535 parameters in one statement, and the bosses of
+// one snapshot alone can use about 350.
 const SNAPSHOTS_PER_BATCH = 100;
 
-// Wise Old Man reports -1 for a value it doesn't know: a rank or count below the hiscore threshold, or
-// efficiency on snapshots older than its rates. Unknown counts are left out rather than stored as -1.
+// Wise Old Man reports -1 for a value it doesn't know: a rank or count below
+// the hiscore threshold, or efficiency on snapshots older than its rates.
+// Unknown counts are left out rather than stored as -1.
 function unknownAsNull(value: number) {
   return value === -1 ? null : value;
 }
@@ -65,7 +66,8 @@ async function saveSnapshotBatch(tx: Transaction, snapshots: SnapshotResponse[])
   return saved.length;
 }
 
-// Snapshots already stored are skipped, so overlapping pulls are safe. Returns how many were new.
+// Snapshots already stored are skipped, so overlapping pulls are safe. Returns
+// how many were new.
 export async function saveSnapshots(tx: Transaction, snapshots: SnapshotResponse[]) {
   let saved = 0;
   for (let start = 0; start < snapshots.length; start += SNAPSHOTS_PER_BATCH) {

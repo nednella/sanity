@@ -9,7 +9,8 @@ import { buildEmbed } from "./embeds";
 
 type ReplyOptions = { components?: ActionRowBuilder<MessageActionRowComponentBuilder>[] };
 
-// Every command is deferred before it runs, so a reply is always an edit of that deferral.
+// Every command is deferred before it runs, so a reply is always an edit of
+// that deferral.
 export function reply(
   interaction: ChatInputCommandInteraction,
   embed: EmbedBuilder,

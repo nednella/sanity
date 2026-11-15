@@ -5,8 +5,9 @@ import type { MemberSort } from "@sanity/api";
 import { type MemberStatus, toActive } from "@/lib/members/status";
 import { toLimit, toOffset, toOrder, toSort } from "@/lib/table/search";
 
-// The generated union is the source of truth; this list is what validates a sort arriving in the
-// URL, and the assertion below fails to compile if the API grows one this list is missing.
+// The generated union is the source of truth; this list is what validates a
+// sort arriving in the URL, and the assertion below fails to compile if the API
+// grows one this list is missing.
 const MEMBER_SORTS = [
   "clanPoints",
   "diaryPoints",

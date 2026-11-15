@@ -6,8 +6,9 @@ import { personalBestParticipants, personalBests } from "@db/schema";
 import { isApprovedRun } from "@/modules/personal-bests/repository/shared/filters";
 import { epochSeconds } from "@/utils/sql";
 
-// Credited by team, matching how the diary itself is scored. The whole run comes back rather than its time
-// alone, so the screenshot that proves it is one field away.
+// Credited by team, matching how the diary itself is scored. The whole run
+// comes back rather than its time alone, so the screenshot that proves it is
+// one field away.
 export function listMemberBestTimes(memberId: bigint) {
   return db
     .selectDistinctOn([personalBests.contentId, personalBests.scale], {

@@ -33,9 +33,10 @@ export const Route = createFileRoute("/(site)/members/$memberId")({
 function Layout() {
   const { memberId } = Route.useParams();
 
-  // The route loader fetches the initial data and populates it's own cache. Subscribing here is what lets
-  // a mutation invalidate the profile query and have the page subscribe to the background refetch.
-  // The route loader doesn't do that on it's own!
+  // The route loader fetches the initial data and populates it's own cache.
+  // Subscribing here is what lets a mutation invalidate the profile query and
+  // have the page subscribe to the background refetch. The route loader doesn't
+  // do that on it's own!
   const { data: profile } = useQuery({ ...memberProfileOptions(memberId), initialData: Route.useLoaderData() });
 
   return (

@@ -9,20 +9,23 @@ export type ContentFilters = {
   scale?: number;
 };
 
-// Content the clan has stopped scoring keeps its submissions for history, but no read returns them.
+// Content the clan has stopped scoring keeps its submissions for history, but
+// no read returns them.
 export const isActiveContent = inArray(
   personalBests.contentId,
   db.select({ id: speedrunContent.id }).from(speedrunContent).where(eq(speedrunContent.isActive, true))
 );
 
-// The old bot marks a run approved_missing_member when its team is short, usually because a teammate has
-// since left. It still counts as approved, and so still earns the diary tier it beat.
+// The old bot marks a run approved_missing_member when its team is short,
+// usually because a teammate has since left. It still counts as approved, and
+// so still earns the diary tier it beat.
 export const isApprovedRun = inArray(personalBests.status, ["approved", "approved_missing_member"]);
 
 // Only a run with its whole team still on it can stand as the clan's record.
 export const isClanRecord = eq(personalBests.status, "approved");
 
-// Everything a list shows: the approved runs, plus the ones still waiting on a submitter or a reviewer.
+// Everything a list shows: the approved runs, plus the ones still waiting on a
+// submitter or a reviewer.
 export const isListedRun = inArray(personalBests.status, [
   "approved",
   "approved_missing_member",
@@ -30,8 +33,9 @@ export const isListedRun = inArray(personalBests.status, [
   "submitted"
 ]);
 
-// Credit by team only. The submitter is often not the runner: one admin entered thousands of other people's
-// times, and is absent from his own team on almost all of them.
+// Credit by team only. The submitter is often not the runner: one admin entered
+// thousands of other people's times, and is absent from his own team on almost
+// all of them.
 export function isInTeamOf(memberId: bigint) {
   return inArray(
     personalBests.id,
@@ -42,8 +46,8 @@ export function isInTeamOf(memberId: bigint) {
   );
 }
 
-// The speedrun diary sets a time for each content and team size it rewards, so a run only counts toward it
-// when both match a row.
+// The speedrun diary sets a time for each content and team size it rewards, so
+// a run only counts toward it when both match a row.
 const matchesDiaryTime = and(
   eq(speedrunDiaryTimes.contentId, personalBests.contentId),
   eq(speedrunDiaryTimes.scale, personalBests.scale)

@@ -10,10 +10,11 @@ import { listMemberStandings } from "../../repository/list-member-standings";
 import { setClaimedDiaryTier } from "../../repository/set-claimed-diary-tier";
 
 /**
- * A tier is claimed once, when a member's diary points first reach it, and pays its clan points
- * then. Clearing several tiers at once claims each in turn, since each pays its own reward.
- * Trialists wait until they pass, as they did under the old loop: their next approved run claims
- * everything they have earned by then.
+ * A tier is claimed once, when a member's diary points first reach it, and pays
+ * its clan points then. Clearing several tiers at once claims each in turn,
+ * since each pays its own reward. Trialists wait until they pass, as they did
+ * under the old loop: their next approved run claims everything they have
+ * earned by then.
  */
 export async function claimEarnedDiaryTiers(tx: Transaction, memberIds: bigint[], auth: ActingAuth) {
   const rewards = await listDiaryRewards(tx);

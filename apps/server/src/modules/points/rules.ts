@@ -28,9 +28,10 @@ export type PointAward = {
 };
 
 /**
- * A drop is worth a point per million, split by head count and including the people on it who are
- * not in the clan, and each share is capped. Teaming with a trialist pays the members double, which
- * is the point of it; the trialist only doubles their own share when another trialist is with them.
+ * A drop is worth a point per million, split by head count and including the
+ * people on it who are not in the clan, and each share is capped. Teaming with
+ * a trialist pays the members double, which is the point of it; the trialist
+ * only doubles their own share when another trialist is with them.
  */
 export function generatePointSplit({ nonClanCount, participants, valueMillions }: SubmissionSplit): PointAward[] {
   const headCount = participants.length + nonClanCount;
@@ -47,9 +48,10 @@ export function generatePointSplit({ nonClanCount, participants, valueMillions }
 }
 
 /**
- * Carrying somebody into a diary tier pays the members who already held it, once per person they
- * carried. Elite and master are counted apart, since a run can clear both and a teammate may hold
- * one without the other. A first clear for the whole team pays nobody: there was no one to carry.
+ * Carrying somebody into a diary tier pays the members who already held it,
+ * once per person they carried. Elite and master are counted apart, since a run
+ * can clear both and a teammate may hold one without the other. A first clear
+ * for the whole team pays nobody: there was no one to carry.
  */
 export function generateDiaryCarryAwards({ carried, holders, tierId }: DiaryCarry): PointAward[] {
   const points = (DIARY_CARRY_POINTS[tierId] ?? 0) * carried.length;

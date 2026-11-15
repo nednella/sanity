@@ -44,9 +44,10 @@ async function insertAll<T extends PgTable>(tx: Transaction, table: T, rows: Inf
 }
 
 await db.transaction(async (tx) => {
-  // Live audit entries exist only here. The old database cannot replay them, so a re-run after
-  // cutover would erase history nothing can restore. Catalogue changes are the exception: the seed
-  // scripts write them, and they have to run before this one.
+  // Live audit entries exist only here. The old database cannot replay them, so
+  // a re-run after cutover would erase history nothing can restore. Catalogue
+  // changes are the exception: the seed scripts write them, and they have to
+  // run before this one.
   const [live] = await tx
     .select({ value: sql<number>`count(*)::int` })
     .from(schema.auditLog)
@@ -56,9 +57,9 @@ await db.transaction(async (tx) => {
     throw new Error(`refusing to run: ${live?.value} audit entries were written after the port`);
   }
 
-  // Named in full rather than cascaded. Truncate follows every foreign key when told to cascade, which
-  // reaches the Wise Old Man tables this script never refills; without it, a table we forget is an
-  // error rather than silent loss.
+  // Named in full rather than cascaded. Truncate follows every foreign key when
+  // told to cascade, which reaches the Wise Old Man tables this script never
+  // refills; without it, a table we forget is an error rather than silent loss.
   await tx.execute(sql`
     truncate audit_log, audit_log_members, boss_uniques, discord_accounts, items, member_rank_delays,
              members, personal_best_participants, personal_bests, points,
@@ -73,8 +74,9 @@ await db.transaction(async (tx) => {
   await insertAll(tx, schema.ranks, await readRanks(), "ranks");
   await insertAll(tx, schema.speedrunDiaryTiers, await readSpeedrunDiaryTiers(), "speedrun_diary_tiers");
 
-  // Everything downstream references members by the new id, not the snowflake. Each member is
-  // inserted alone so its generated id pairs with its Discord account.
+  // Everything downstream references members by the new id, not the snowflake.
+  // Each member is inserted alone so its generated id pairs with its Discord
+  // account.
   const sourceMembers = await readMembers();
   const memberIds = new Map<string, bigint>();
   for (const { member, discordAccount } of sourceMembers) {
@@ -123,8 +125,8 @@ await db.transaction(async (tx) => {
     "audit_log_members"
   );
 
-  // Rows carrying their source id leave the identity sequence behind, so the next
-  // insert would collide. Move each one past the highest id present.
+  // Rows carrying their source id leave the identity sequence behind, so the
+  // next insert would collide. Move each one past the highest id present.
   for (const table of [
     "audit_log",
     "items",

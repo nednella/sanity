@@ -6,7 +6,8 @@ export function isActive(active: boolean | undefined) {
   return active === undefined ? undefined : eq(members.isActive, active);
 }
 
-// A member is found by any of the names they go by, so one box searches all three.
+// A member is found by any of the names they go by, so one box searches all
+// three.
 export function matchesSearch(search: string | undefined) {
   if (!search) return;
 

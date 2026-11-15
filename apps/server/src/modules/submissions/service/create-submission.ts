@@ -8,8 +8,8 @@ export type NewSubmission = Omit<SubmissionRow, "memberId" | "source" | "status"
   participants: bigint[];
 };
 
-// A submission arrives waiting for review. Nothing it claims is trusted until someone approves it,
-// and no points exist until then.
+// A submission arrives waiting for review. Nothing it claims is trusted until
+// someone approves it, and no points exist until then.
 export async function createSubmission({ participants, ...submission }: NewSubmission, auth: ActingAuth) {
   return db.transaction(async (tx) =>
     saveSubmission(

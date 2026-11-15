@@ -27,21 +27,23 @@ type SourceUser = {
 };
 
 /**
-The old system defaulted a missing nationality to AQ, so the value means nothing. One member has the
-free text 'Chile' where a country code belongs.
-*/
+ * he old system defaulted a missing nationality to AQ, so the value means
+ * nothing. One member has the ree text 'Chile' where a country code belongs.
+ */
 function toNationality(value: string | null) {
   const nationality = value?.trim() || null;
   if (nationality === "AQ") return null;
   return nationality === "Chile" ? "CL" : nationality;
 }
 
-// The old bot saved a birthday without a year as 1900, which has no 29 February.
+// The old bot saved a birthday without a year as 1900, which has no 29
+// February.
 function toBirthday(value: string | null) {
   return value?.startsWith("1900-") ? `${NO_BIRTH_YEAR}${value.slice(4)}` : value;
 }
 
-// The old bot never mapped retired members to an in-game rank, so the mapping table has no row for it.
+// The old bot never mapped retired members to an in-game rank, so the mapping
+// table has no row for it.
 const inGameNameFixes: Record<string, string> = { RETIRED: "Defiler" };
 
 export async function readRanks() {
@@ -67,11 +69,12 @@ export async function readMembers() {
   const users = await read<SourceUser>("users", "userId");
 
   return users.map((user) => {
-    // Rejoining overwrote the join date but kept the old leave date, so a leave before the join is stale.
+    // Rejoining overwrote the join date but kept the old leave date, so a leave
+    // before the join is stale.
     const hasRejoined = user.leaveDate !== null && user.joinDate !== null && user.leaveDate < user.joinDate;
 
-    // custom_quote is not carried: the old system leaked the nationality default
-    // into it, so all 52 non-null values read 'AQ'.
+    // custom_quote is not carried: the old system leaked the nationality
+    // default into it, so all 52 non-null values read 'AQ'.
     const member = {
       displayName: user.displayName,
       mainRsn: blankToNull(user.mainRSN),

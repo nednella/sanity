@@ -21,7 +21,8 @@ function layoutClasses({ align, numeric, pinned }: CellLayout = {}) {
   );
 }
 
-// The stack a data table sits in: chrome above, the table itself, pagination below.
+// The stack a data table sits in: chrome above, the table itself, pagination
+// below.
 function Shell({ children }: Readonly<{ children: React.ReactNode }>) {
   return <div className="flex flex-col gap-3">{children}</div>;
 }
@@ -41,8 +42,8 @@ function Toolbar({ actions, children }: Readonly<ToolbarProps>) {
 }
 
 type RootProps = React.ComponentPropsWithRef<"table"> & {
-  // A scroll container is its own sticky context, so a table whose header sticks to the page cannot
-  // also scroll sideways.
+  // A scroll container is its own sticky context, so a table whose header
+  // sticks to the page cannot also scroll sideways.
   scroll?: boolean;
 };
 
@@ -70,7 +71,8 @@ function HeadRow({ className, ...props }: Readonly<React.ComponentPropsWithRef<"
   );
 }
 
-// Undefined means the column cannot be sorted at all, which is not the same as sortable and unsorted.
+// Undefined means the column cannot be sorted at all, which is not the same as
+// sortable and unsorted.
 function toAriaSort(sorted: Sorted | undefined) {
   if (sorted === undefined) return;
   if (!sorted) return "none";
@@ -79,7 +81,8 @@ function toAriaSort(sorted: Sorted | undefined) {
 
 type HeadCellProps = React.ComponentPropsWithRef<"th"> & {
   layout?: CellLayout;
-  // A cell with a handler sorts the column when clicked, and says which way it is sorted now.
+  // A cell with a handler sorts the column when clicked, and says which way it
+  // is sorted now.
   onSort?: React.MouseEventHandler<HTMLButtonElement>;
   sorted?: Sorted;
   // Sticks to the top of the page, offset by the height of the site header.
@@ -119,7 +122,8 @@ function HeadCell({ children, className, layout, onSort, sorted, sticky, ...prop
 type SortButtonProps = {
   children: React.ReactNode;
   onClick: React.MouseEventHandler<HTMLButtonElement>;
-  // A right-aligned column reads better with the icon on the left, beside the numbers.
+  // A right-aligned column reads better with the icon on the left, beside the
+  // numbers.
   reverse?: boolean;
   sorted: Sorted;
 };
@@ -161,8 +165,8 @@ type RowProps = React.ComponentPropsWithRef<"tr"> & {
   onSelect?: () => void;
 };
 
-// A row that does something is reachable by keyboard, and a click landing on a link or button inside
-// it belongs to that control rather than the row.
+// A row that does something is reachable by keyboard, and a click landing on a
+// link or button inside it belongs to that control rather than the row.
 function Row({ className, cursor = "pointer", onSelect, ...props }: Readonly<RowProps>) {
   return (
     <tr
@@ -245,14 +249,14 @@ type SearchProps = {
   value: string;
 };
 
-// The value lives in the URL, but typing shouldn't navigate on every keystroke, so the input holds
-// its own state until the typing stops.
+// The value lives in the URL, but typing shouldn't navigate on every keystroke,
+// so the input holds its own state until the typing stops.
 function Search({ onChange, placeholder = "Search", value }: Readonly<SearchProps>) {
   const [typed, setTyped] = useState(value);
   const [committed, setCommitted] = useState(value);
 
-  // The URL owns the value, so adopt it when it changes elsewhere: a back navigation, or a filter
-  // that resets the search.
+  // The URL owns the value, so adopt it when it changes elsewhere: a back
+  // navigation, or a filter that resets the search.
   if (value !== committed) {
     setCommitted(value);
     setTyped(value);

@@ -52,7 +52,8 @@ export function firstOfNextMonth(from: Date) {
 }
 
 // Providing your birth year is optional. In cases where a year is not provided,
-// we use 1904. We use this instead of 1900 as it's a leap year and allows 29 Feb.
+// we use 1904. We use this instead of 1900 as it's a leap year and allows 29
+// Feb.
 export const NO_BIRTH_YEAR = 1904;
 
 type RelativeDateUnits = {
@@ -70,7 +71,8 @@ export function toIsoDate(date: Date) {
   return date.toISOString().slice(0, 10);
 }
 
-// Months and years keep the day of the month, or the last day of a shorter month.
+// Months and years keep the day of the month, or the last day of a shorter
+// month.
 export function relativeDate(
   { years = 0, months = 0, weeks = 0, days = 0, hours = 0, minutes = 0, seconds = 0, ms = 0 }: RelativeDateUnits,
   reference: Date = new Date()

@@ -29,8 +29,8 @@ export async function awardPoints(
     }))
   );
 
-  // One statement rather than one per member: a five man team earning two tiers would otherwise
-  // spend ten round trips inside the transaction.
+  // One statement rather than one per member: a five man team earning two tiers
+  // would otherwise spend ten round trips inside the transaction.
   const totals = sql.join(
     earned.map(({ memberId, points: value }) => sql`(${memberId}::bigint, ${value}::int)`),
     sql`, `

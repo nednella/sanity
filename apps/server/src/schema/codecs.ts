@@ -1,6 +1,7 @@
 import { z } from "zod";
 
-// Discord snowflake IDs exceed Number.MAX_SAFE_INTEGER, so we map bigint into string.
+// Discord snowflake IDs exceed Number.MAX_SAFE_INTEGER, so we map bigint into
+// string.
 export const bigIntString = z.codec(z.string().regex(/^\d+$/), z.bigint(), {
   decode: BigInt,
   encode: (value) => value.toString()
@@ -18,8 +19,9 @@ export const booleanString = z.codec(z.enum(["true", "false"]), z.boolean(), {
   encode: (value) => (value ? "true" : "false")
 });
 
-// A response schema is converted from its output side, where a codec has already decoded into a
-// bigint or a Date. Neither exists in JSON, so this restores what actually travels on the wire.
+// A response schema is converted from its output side, where a codec has
+// already decoded into a bigint or a Date. Neither exists in JSON, so this
+// restores what actually travels on the wire.
 export function jsonSchemaOverride({
   zodSchema,
   jsonSchema

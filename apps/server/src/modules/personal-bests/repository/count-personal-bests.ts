@@ -5,7 +5,8 @@ import { db } from "@db/index";
 import { type PersonalBestFilters, matchesPersonalBest } from "./shared/filters";
 import { selectRankedPersonalBests } from "./shared/select-ranked-personal-bests";
 
-// Counted through the same ranked selection the list uses, so a `top` filter narrows both alike.
+// Counted through the same ranked selection the list uses, so a `top` filter
+// narrows both alike.
 export async function countPersonalBests(filters: PersonalBestFilters) {
   const ranked = selectRankedPersonalBests(matchesPersonalBest(filters), filters.top).as("personal_bests");
 

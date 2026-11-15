@@ -19,10 +19,12 @@ import { type Sorted, Table } from "@/lib/ui/table";
 
 const DEFAULT_PAGE_SIZE_OPTIONS = [50, 100, 200];
 
-// Enough rows that a table the server doesn't paginate shows everything it was given.
+// Enough rows that a table the server doesn't paginate shows everything it was
+// given.
 const UNPAGINATED_PAGE_SIZE = 10_000;
 
-// A stable reference, so a table waiting on its first page doesn't remount its rows.
+// A stable reference, so a table waiting on its first page doesn't remount its
+// rows.
 const NO_ROWS: never[] = [];
 
 type DataTableProps<TData extends RowData> = {
@@ -49,9 +51,10 @@ type DataTableProps<TData extends RowData> = {
   toolbar?: ReactNode;
 };
 
-// Passing a state slice and its change handler is what hands that slice to the server; leaving both
-// out lets the table manage it. They stay conditional because an explicit `undefined` would wipe out
-// the handler the table defaults to.
+// Passing a state slice and its change handler is what hands that slice to the
+// server; leaving both out lets the table manage it. They stay conditional
+// because an explicit `undefined` would wipe out the handler the table defaults
+// to.
 export function DataTable<TData extends RowData>({
   columns,
   data = NO_ROWS,
@@ -74,8 +77,9 @@ export function DataTable<TData extends RowData>({
   stickyHeader = false,
   toolbar
 }: Readonly<DataTableProps<TData>>) {
-  // The React Compiler cannot see state read through the table's builder methods, so the slices the
-  // header and rows render from are selected explicitly to trigger re-renders.
+  // The React Compiler cannot see state read through the table's builder
+  // methods, so the slices the header and rows render from are selected
+  // explicitly to trigger re-renders.
   const table = useTable<DataTableFeatures, TData, TableState<DataTableFeatures>>(
     {
       columns,
@@ -215,8 +219,9 @@ function Rows<TData extends RowData>({
   }
 
   const rows = table.getRowModel().rows;
-  // Sorting only moves the loose rows. Pinned ones keep the order they arrived in, which row.index
-  // still holds after the sorted row model has reordered them.
+  // Sorting only moves the loose rows. Pinned ones keep the order they arrived
+  // in, which row.index still holds after the sorted row model has reordered
+  // them.
   const pinned = pinRow ? rows.filter((row) => pinRow(row.original)).toSorted((a, b) => a.index - b.index) : [];
   const ordered = pinRow ? [...pinned, ...rows.filter((row) => !pinRow(row.original))] : rows;
 

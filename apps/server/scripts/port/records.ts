@@ -25,9 +25,9 @@ function enumName(name: string) {
 }
 
 /**
- * Which boss each piece of diary content is, by Wise Old Man metric. The old table named its
- * content in free text, so this is the only thing tying the two together. Content missing here is
- * content the clan no longer scores.
+ * Which boss each piece of diary content is, by Wise Old Man metric. The old
+ * table named its content in free text, so this is the only thing tying the two
+ * together. Content missing here is content the clan no longer scores.
  */
 const metricByContentId: Record<number, string> = {
   1: "chambers_of_xeric",
@@ -64,7 +64,8 @@ export async function readSpeedrunContent() {
 }
 
 /**
- * Points are earned per tier reached, so a master time on one diary is worth 1 + 2 + 3 + 4 + 5 = 15.
+ * Points are earned per tier reached, so a master time on one diary is worth 1
+ * + 2 + 3 + 4 + 5 = 15.
  */
 export async function readSpeedrunDiaryTiers() {
   const rows = await read<{ difficulty: number; diaryPoints: number; flavourText: string }>("diarytypes", "difficulty");
@@ -84,8 +85,8 @@ type SourceDiaryTime = {
 };
 
 /**
- * One row per content and scale, with a column per tier. A diary with fewer tiers sets maxDifficulty lower,
- * and a placeholder row sets it to 0.
+ * One row per content and scale, with a column per tier. A diary with fewer
+ * tiers sets maxDifficulty lower, and a placeholder row sets it to 0.
  */
 export async function readSpeedrunDiaryTimes() {
   const rows = await read<SourceDiaryTime>("diarytimes", "diaryId");
@@ -103,8 +104,9 @@ export async function readSpeedrunDiaryTimes() {
 }
 
 /**
- * The source stored each requirement as a percentage of the maximum diary points. Each tier now requires the
- * points for completing every diary at that tier.
+ * The source stored each requirement as a percentage of the maximum diary
+ * points. Each tier now requires the points for completing every diary at that
+ * tier.
  */
 const requiredDiaryPoints: Record<number, number> = { 1: 12, 2: 36, 3: 72, 4: 120, 5: 180 };
 

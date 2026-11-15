@@ -4,8 +4,9 @@ import type { PersonalBestSort, SubmissionSort } from "@sanity/api";
 
 import { toLimit, toOffset, toOrder, toPositiveInteger, toSort } from "@/lib/table/search";
 
-// The generated unions are the source of truth; these lists are what validate a sort arriving in the
-// URL, and the assertions below fail to compile if the API grows one a list is missing.
+// The generated unions are the source of truth; these lists are what validate a
+// sort arriving in the URL, and the assertions below fail to compile if the API
+// grows one a list is missing.
 const SUBMISSION_SORTS = ["item", "submittedAt", "valueMillions"] as const satisfies readonly SubmissionSort[];
 const PERSONAL_BEST_SORTS = ["content", "scale", "submittedAt", "time"] as const satisfies readonly PersonalBestSort[];
 
@@ -16,7 +17,8 @@ export type UnlistedPersonalBestSort = Unlisted<Exclude<PersonalBestSort, (typeo
 const DEFAULT_LIMIT = 50;
 const PAGE_SIZES = [50, 100, 200];
 
-// The two tables share a page, so the same params drive both and the table decides what a sort means.
+// The two tables share a page, so the same params drive both and the table
+// decides what a sort means.
 export const SUBMISSION_TYPES = ["drops", "personalBests"] as const;
 
 export type SubmissionType = (typeof SUBMISSION_TYPES)[number];
@@ -34,10 +36,12 @@ export type SubmissionsSearch = {
 export function validateSubmissionsSearch(search: Record<string, unknown> & SearchSchemaInput): SubmissionsSearch {
   const type = SUBMISSION_TYPES.find((value) => value === search.type) ?? "drops";
 
-  // An order without a sort would sit in the URL doing nothing, and each table sorts on its own columns.
+  // An order without a sort would sit in the URL doing nothing, and each table
+  // sorts on its own columns.
   const sort = toSort(search.sort, type === "drops" ? SUBMISSION_SORTS : PERSONAL_BEST_SORTS);
 
-  // Content is the personal best vocabulary, so it never rides along with the drops table.
+  // Content is the personal best vocabulary, so it never rides along with the
+  // drops table.
   const content = type === "drops" ? {} : { contentId: toPositiveInteger(search.contentId) };
   const scale = content.contentId === undefined ? undefined : toPositiveInteger(search.scale);
 
