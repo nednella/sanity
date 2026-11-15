@@ -11,7 +11,17 @@ import { reply, replyError } from "@/utils/replies";
 
 import { NO_MEMBERS_TAGGED, changesEmbed, readTaggedMembers } from "../member/utils";
 
+const SUBCOMMANDS = {
+  check,
+  hold_demotion: holdDemotion,
+  set
+};
+
 const FIELD_LIMIT = 1024;
+
+export function handleRank(interaction: ChatInputCommandInteraction) {
+  return runSubcommand(interaction, SUBCOMMANDS);
+}
 
 function rankName(name: string) {
   return capitalise(name.toLowerCase());
@@ -92,14 +102,4 @@ async function set(interaction: ChatInputCommandInteraction) {
     interaction,
     changesEmbed("Set rank", (change) => `is now ${change.rank!.name}`, changes, taggedDiscordIds)
   );
-}
-
-const SUBCOMMANDS = {
-  check,
-  hold_demotion: holdDemotion,
-  set
-};
-
-export function handleRank(interaction: ChatInputCommandInteraction) {
-  return runSubcommand(interaction, SUBCOMMANDS);
 }

@@ -7,8 +7,6 @@ import { escapeHtml, formatDate, formatNumber, formatTickTime, isCountryCode, te
 
 import { config } from "@config";
 
-type NextRank = NonNullable<MemberProfile["progression"]["nextRank"]["points"]>;
-
 // Fixed card size to ensure clarity on the image without needing to expand it
 const HEIGHT = 750;
 const WIDTH = 1200;
@@ -38,6 +36,42 @@ const FONTS = [
     data: await readFile(new URL("../../../../assets/fonts/Inter.ttf", import.meta.url))
   }
 ];
+
+type NextRank = NonNullable<MemberProfile["progression"]["nextRank"]["points"]>;
+
+// The avatar comes from Discord at render time, because the one saved with the
+// member can be out of date.
+export function renderProfileCard(profile: MemberProfile, avatarUrl: string) {
+  return render(
+    `<div style="display:flex;flex-direction:column;gap:24px;width:100%;height:100%;padding:40px 44px;font-family:Inter;color:${COLOURS.text};background:${COLOURS.background}">
+      ${header(profile, avatarUrl)}
+      ${statBar(profile)}
+      ${rankProgression(profile)}
+    </div>`,
+    {
+      width: WIDTH,
+      height: HEIGHT,
+      fonts: FONTS,
+      images: { throwOnError: false }
+    }
+  );
+}
+
+export function renderDiaryCard(profile: MemberProfile, entries: MemberDiary[], avatarUrl: string) {
+  return render(
+    `<div style="display:flex;flex-direction:column;width:100%;height:100%;padding:40px 44px;font-family:Inter;font-size:20px;color:${COLOURS.text};background:${COLOURS.background}">
+      ${diaryHeader(profile, avatarUrl)}
+      ${diaryRow(["Content", "Team", "PB", "Tier", "Next"], COLOURS.faint)}
+      ${entries.map((entry) => diaryEntry(entry)).join("")}
+    </div>`,
+    {
+      width: WIDTH,
+      height: HEIGHT,
+      fonts: FONTS,
+      images: { throwOnError: false }
+    }
+  );
+}
 
 function webIconUrl(path: string) {
   return `${config.webUrl}/icons/${path}.png`;
@@ -230,38 +264,4 @@ function diaryEntry({ content, nextTier, pb, scale, tier }: MemberDiary) {
     tier ? tierBadge(tier.name) : "—",
     `<span style="color:${COLOURS.faint}">${nextTier ? `${formatTickTime(nextTier.timeSeconds)} (${escapeHtml(nextTier.name)})` : "—"}</span>`
   ]);
-}
-
-// The avatar comes from Discord at render time, because the one saved with the
-// member can be out of date.
-export function renderProfileCard(profile: MemberProfile, avatarUrl: string) {
-  return render(
-    `<div style="display:flex;flex-direction:column;gap:24px;width:100%;height:100%;padding:40px 44px;font-family:Inter;color:${COLOURS.text};background:${COLOURS.background}">
-      ${header(profile, avatarUrl)}
-      ${statBar(profile)}
-      ${rankProgression(profile)}
-    </div>`,
-    {
-      width: WIDTH,
-      height: HEIGHT,
-      fonts: FONTS,
-      images: { throwOnError: false }
-    }
-  );
-}
-
-export function renderDiaryCard(profile: MemberProfile, entries: MemberDiary[], avatarUrl: string) {
-  return render(
-    `<div style="display:flex;flex-direction:column;width:100%;height:100%;padding:40px 44px;font-family:Inter;font-size:20px;color:${COLOURS.text};background:${COLOURS.background}">
-      ${diaryHeader(profile, avatarUrl)}
-      ${diaryRow(["Content", "Team", "PB", "Tier", "Next"], COLOURS.faint)}
-      ${entries.map((entry) => diaryEntry(entry)).join("")}
-    </div>`,
-    {
-      width: WIDTH,
-      height: HEIGHT,
-      fonts: FONTS,
-      images: { throwOnError: false }
-    }
-  );
 }

@@ -15,7 +15,24 @@ import { reply, replyError } from "@/utils/replies";
 import { renderDiaryCard, renderProfileCard } from "./card";
 import { describeClanAge, describeEarlierDrops, describeLatestDrop, diaryLinks, profileLinks } from "./utils";
 
+const SUBCOMMANDS = {
+  age: showAge,
+  "birthday remove": removeBirthday,
+  "birthday update": updateBirthday,
+  diary: showDiary,
+  drops: showDrops,
+  "nationality remove": removeNationality,
+  "nationality update": updateNationality,
+  "rsn remove": removeRsn,
+  "rsn update": updateRsn,
+  view: showProfile
+};
+
 const DROPS_SHOWN = 16;
+
+export function handleProfile(interaction: ChatInputCommandInteraction) {
+  return runSubcommand(interaction, SUBCOMMANDS);
+}
 
 function pad(value: number) {
   return String(value).padStart(2, "0");
@@ -146,21 +163,4 @@ async function updateRsn(interaction: ChatInputCommandInteraction) {
 async function removeRsn(interaction: ChatInputCommandInteraction) {
   await api.patch("/v1/members/me", { body: { altRsn: null } });
   return replyChanged(interaction, "RSN removed", "You no longer have an alt RSN.");
-}
-
-const SUBCOMMANDS = {
-  age: showAge,
-  "birthday remove": removeBirthday,
-  "birthday update": updateBirthday,
-  diary: showDiary,
-  drops: showDrops,
-  "nationality remove": removeNationality,
-  "nationality update": updateNationality,
-  "rsn remove": removeRsn,
-  "rsn update": updateRsn,
-  view: showProfile
-};
-
-export function handleProfile(interaction: ChatInputCommandInteraction) {
-  return runSubcommand(interaction, SUBCOMMANDS);
 }

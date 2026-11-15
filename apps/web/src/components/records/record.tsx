@@ -21,13 +21,6 @@ type Scale = {
 
 const ScaleContext = createContext<Scale | null>(null);
 
-function useScale() {
-  const scale = useContext(ScaleContext);
-  if (!scale) throw new Error("Record parts must be rendered inside a Record");
-
-  return scale;
-}
-
 type RootProps = {
   children: React.ReactNode;
   defaultScale: number;
@@ -43,6 +36,13 @@ export function Record({ children, defaultScale }: Readonly<RootProps>) {
       </article>
     </ScaleContext>
   );
+}
+
+function useScale() {
+  const scale = useContext(ScaleContext);
+  if (!scale) throw new Error("Record parts must be rendered inside a Record");
+
+  return scale;
 }
 
 function Artwork({ metric }: Readonly<{ metric: string | null }>) {

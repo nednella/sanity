@@ -3,6 +3,8 @@ import createFetchClient, { type Client, type Middleware } from "openapi-fetch";
 import { ApiError } from "./error";
 import type { paths } from "./v1";
 
+export type ApiClient = Client<paths>;
+
 // Throwing here rather than returning an error body means every failure a
 // caller sees is an Error, whichever layer it came from.
 const throwOnError: Middleware = {
@@ -18,5 +20,3 @@ export function createApiClient(baseUrl: string) {
   client.use(throwOnError);
   return client;
 }
-
-export type ApiClient = Client<paths>;

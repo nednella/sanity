@@ -6,6 +6,15 @@ import { reply, replyError } from "@/utils/replies";
 
 import { NO_MEMBERS_TAGGED, changesEmbed, readTaggedMembers } from "../member/utils";
 
+const SUBCOMMANDS = {
+  add: addReviewer,
+  remove: removeReviewer
+};
+
+export function handleReviewer(interaction: ChatInputCommandInteraction) {
+  return runSubcommand(interaction, SUBCOMMANDS);
+}
+
 async function addReviewer(interaction: ChatInputCommandInteraction) {
   const { taggedDiscordIds, ...body } = readTaggedMembers(interaction);
   if (taggedDiscordIds.length === 0) return replyError(interaction, NO_MEMBERS_TAGGED);
@@ -26,13 +35,4 @@ async function removeReviewer(interaction: ChatInputCommandInteraction) {
     interaction,
     changesEmbed("Remove reviewer", () => "no longer has a role", changes, taggedDiscordIds)
   );
-}
-
-const SUBCOMMANDS = {
-  add: addReviewer,
-  remove: removeReviewer
-};
-
-export function handleReviewer(interaction: ChatInputCommandInteraction) {
-  return runSubcommand(interaction, SUBCOMMANDS);
 }

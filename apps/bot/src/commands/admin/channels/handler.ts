@@ -15,11 +15,24 @@ import { runSubcommand } from "@/utils/commands";
 import { buildEmbed } from "@/utils/embeds";
 import { reply } from "@/utils/replies";
 
+const SUBCOMMANDS = {
+  clear,
+  list,
+  "set category": set,
+  "set text": set,
+  "test category": testCategory,
+  "test text": testText
+} satisfies Record<string, (interaction: ChatInputCommandInteraction) => Promise<void>>;
+
 const GROUPS: Record<ChannelType, string> = {
   text: "Text channels",
   voice: "Voice channels",
   category: "Categories"
 };
+
+export function handleChannels(interaction: ChatInputCommandInteraction) {
+  return runSubcommand(interaction, SUBCOMMANDS);
+}
 
 function intentOption(interaction: ChatInputCommandInteraction) {
   return interaction.options.getString("purpose", true) as ChannelIntent;
@@ -116,17 +129,4 @@ async function testText(interaction: ChatInputCommandInteraction) {
   const intent = intentOption(interaction);
   const channel = await resolveTextChannel(interaction.client, intent);
   await postTest(interaction, intent, channel);
-}
-
-const SUBCOMMANDS = {
-  clear,
-  list,
-  "set category": set,
-  "set text": set,
-  "test category": testCategory,
-  "test text": testText
-} satisfies Record<string, (interaction: ChatInputCommandInteraction) => Promise<void>>;
-
-export function handleChannels(interaction: ChatInputCommandInteraction) {
-  return runSubcommand(interaction, SUBCOMMANDS);
 }

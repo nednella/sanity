@@ -15,7 +15,14 @@ import { reply, replyError } from "@/utils/replies";
 
 import { NO_MEMBERS_TAGGED, changesEmbed, readTaggedMembers } from "./utils";
 
-type AccountUpdate = (name: string, account: string) => { description: string; style: "error" | "success" | "warning" };
+const SUBCOMMANDS = {
+  discord_id: discordId,
+  pass,
+  quit,
+  retire,
+  trial,
+  unretire
+};
 
 const ACCOUNT_UPDATES = {
   "discord-account-changed": (name, account) => ({ style: "success", description: `${name} now uses ${account}.` }),
@@ -24,6 +31,12 @@ const ACCOUNT_UPDATES = {
   "not-a-member": (name) => ({ style: "error", description: `No member is named ${name}.` }),
   unchanged: (name, account) => ({ style: "warning", description: `${name} already uses ${account}.` })
 } satisfies Record<string, AccountUpdate>;
+
+type AccountUpdate = (name: string, account: string) => { description: string; style: "error" | "success" | "warning" };
+
+export function handleMember(interaction: ChatInputCommandInteraction) {
+  return runSubcommand(interaction, SUBCOMMANDS);
+}
 
 async function discordId(interaction: ChatInputCommandInteraction) {
   const name = interaction.options.getString("name", true);
@@ -160,17 +173,4 @@ async function unretire(interaction: ChatInputCommandInteraction) {
     interaction,
     changesEmbed("Unretire", ({ rank }) => `has been unretired! Rank: ${rank!.name}`, changes, taggedDiscordIds)
   );
-}
-
-const SUBCOMMANDS = {
-  discord_id: discordId,
-  pass,
-  quit,
-  retire,
-  trial,
-  unretire
-};
-
-export function handleMember(interaction: ChatInputCommandInteraction) {
-  return runSubcommand(interaction, SUBCOMMANDS);
 }

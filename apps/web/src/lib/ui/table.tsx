@@ -13,33 +13,17 @@ export type CellLayout = {
   pinned?: boolean;
 };
 
-function layoutClasses({ align, numeric, pinned }: CellLayout = {}) {
-  return cn(
-    numeric && "tabular-nums",
-    (numeric || align === "right") && "text-right",
-    pinned && "sticky left-0 border-r border-base-content/5 bg-inherit"
-  );
-}
+const cursors = {
+  pointer: "cursor-pointer",
+  "zoom-in": "cursor-zoom-in"
+};
 
-// The stack a data table sits in: chrome above, the table itself, pagination
-// below.
-function Shell({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <div className="flex flex-col gap-3">{children}</div>;
-}
+const DEBOUNCE_MS = 300;
 
 type ToolbarProps = {
   actions?: React.ReactNode;
   children?: React.ReactNode;
 };
-
-function Toolbar({ actions, children }: Readonly<ToolbarProps>) {
-  return (
-    <div className="flex flex-wrap items-center gap-3">
-      {children}
-      <div className="flex flex-wrap items-center gap-3 md:ms-auto">{actions}</div>
-    </div>
-  );
-}
 
 type RootProps = React.ComponentPropsWithRef<"table"> & {
   // A scroll container is its own sticky context, so a table whose header
@@ -54,6 +38,29 @@ export function Table({ className, scroll = true, ...props }: Readonly<RootProps
         className={cn("table min-w-full [overflow-anchor:none]", className)}
         {...props}
       />
+    </div>
+  );
+}
+
+function layoutClasses({ align, numeric, pinned }: CellLayout = {}) {
+  return cn(
+    numeric && "tabular-nums",
+    (numeric || align === "right") && "text-right",
+    pinned && "sticky left-0 border-r border-base-content/5 bg-inherit"
+  );
+}
+
+// The stack a data table sits in: chrome above, the table itself, pagination
+// below.
+function Shell({ children }: Readonly<{ children: React.ReactNode }>) {
+  return <div className="flex flex-col gap-3">{children}</div>;
+}
+
+function Toolbar({ actions, children }: Readonly<ToolbarProps>) {
+  return (
+    <div className="flex flex-wrap items-center gap-3">
+      {children}
+      <div className="flex flex-wrap items-center gap-3 md:ms-auto">{actions}</div>
     </div>
   );
 }
@@ -155,11 +162,6 @@ function isInteractiveTarget(target: EventTarget | null) {
   return target instanceof HTMLElement && target.closest("a, button") !== null;
 }
 
-const cursors = {
-  pointer: "cursor-pointer",
-  "zoom-in": "cursor-zoom-in"
-};
-
 type RowProps = React.ComponentPropsWithRef<"tr"> & {
   cursor?: keyof typeof cursors;
   onSelect?: () => void;
@@ -240,8 +242,6 @@ function Skeleton({ columnCount, rowCount = 10 }: Readonly<SkeletonProps>) {
     </tr>
   ));
 }
-
-const DEBOUNCE_MS = 300;
 
 type SearchProps = {
   onChange: (value: string) => void;

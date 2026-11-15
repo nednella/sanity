@@ -3,6 +3,9 @@ import type { ReactNode } from "react";
 
 import { cn } from "@/lib/ui/utils";
 
+// eslint-disable-next-line react-refresh/only-export-components
+export const Tab = createLink(TabAnchor);
+
 type TabsProps = {
   actions?: ReactNode;
   children: ReactNode;
@@ -30,6 +33,3 @@ function TabAnchor({ className, ...props }: Readonly<React.ComponentPropsWithRef
     />
   );
 }
-
-// eslint-disable-next-line react-refresh/only-export-components
-export const Tab = createLink(TabAnchor);

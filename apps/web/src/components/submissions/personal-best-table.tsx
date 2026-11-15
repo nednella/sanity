@@ -17,6 +17,55 @@ import { bossIconUrl } from "@/utils/icons";
 
 const columnHelper = createColumnHelper<DataTableFeatures, RankedPersonalBest>();
 
+type PersonalBestTableProps = {
+  data: { items: RankedPersonalBest[]; page: Page } | undefined;
+  error: Error | null;
+  isLoading: boolean;
+  memberId?: string;
+  onRetry: () => void;
+  search: SubmissionsSearch;
+  toolbar: ReactNode;
+};
+
+export function PersonalBestTable({
+  data,
+  error,
+  isLoading,
+  memberId,
+  onRetry,
+  search,
+  toolbar
+}: Readonly<PersonalBestTableProps>) {
+  const { showMedia } = useMediaStore();
+  const table = useTableSearch(search);
+  const columns = buildColumns(memberId);
+
+  function openScreenshot({ content, imageUrl, scale, timeSeconds }: RankedPersonalBest) {
+    if (!imageUrl) return;
+
+    showMedia({ alt: `${content.name}, ${teamScale(scale)}, in ${formatTickTime(timeSeconds)}`, src: imageUrl });
+  }
+
+  return (
+    <DataTable
+      columns={columns}
+      data={data?.items}
+      emptyMessage="No personal bests recorded."
+      error={error}
+      filters={toolbar}
+      isLoading={isLoading}
+      onPaginationChange={table.onPaginationChange}
+      onRetry={onRetry}
+      onRowClick={openScreenshot}
+      onSortingChange={table.onSortingChange}
+      pagination={table.pagination}
+      rowCount={data?.page.total ?? 0}
+      rowCursor="zoom-in"
+      sorting={table.sorting}
+    />
+  );
+}
+
 function buildColumns(memberId?: string) {
   return columnHelper.columns([
     columnHelper.accessor("content", {
@@ -82,53 +131,4 @@ function buildColumns(memberId?: string) {
       cell: ({ getValue }) => <RelativeDate value={getValue()} />
     })
   ]);
-}
-
-type PersonalBestTableProps = {
-  data: { items: RankedPersonalBest[]; page: Page } | undefined;
-  error: Error | null;
-  isLoading: boolean;
-  memberId?: string;
-  onRetry: () => void;
-  search: SubmissionsSearch;
-  toolbar: ReactNode;
-};
-
-export function PersonalBestTable({
-  data,
-  error,
-  isLoading,
-  memberId,
-  onRetry,
-  search,
-  toolbar
-}: Readonly<PersonalBestTableProps>) {
-  const { showMedia } = useMediaStore();
-  const table = useTableSearch(search);
-  const columns = buildColumns(memberId);
-
-  function openScreenshot({ content, imageUrl, scale, timeSeconds }: RankedPersonalBest) {
-    if (!imageUrl) return;
-
-    showMedia({ alt: `${content.name}, ${teamScale(scale)}, in ${formatTickTime(timeSeconds)}`, src: imageUrl });
-  }
-
-  return (
-    <DataTable
-      columns={columns}
-      data={data?.items}
-      emptyMessage="No personal bests recorded."
-      error={error}
-      filters={toolbar}
-      isLoading={isLoading}
-      onPaginationChange={table.onPaginationChange}
-      onRetry={onRetry}
-      onRowClick={openScreenshot}
-      onSortingChange={table.onSortingChange}
-      pagination={table.pagination}
-      rowCount={data?.page.total ?? 0}
-      rowCursor="zoom-in"
-      sorting={table.sorting}
-    />
-  );
 }

@@ -1,5 +1,10 @@
 import { DASH } from "./text";
 
+// Providing your birth year is optional. In cases where a year is not provided,
+// we use 1904. We use this instead of 1900 as it's a leap year and allows 29
+// Feb.
+export const NO_BIRTH_YEAR = 1904;
+
 const RELATIVE_UNITS_IN_MS = [
   { unit: "year" as const, ms: 365 * 24 * 60 * 60 * 1000 },
   { unit: "month" as const, ms: 30 * 24 * 60 * 60 * 1000 },
@@ -7,10 +12,6 @@ const RELATIVE_UNITS_IN_MS = [
   { unit: "hour" as const, ms: 60 * 60 * 1000 },
   { unit: "minute" as const, ms: 60 * 1000 }
 ];
-
-function pluralise(value: number, unit: string) {
-  return `${value} ${unit}${value === 1 ? "" : "s"}`;
-}
 
 export function formatDate(value: string | null | undefined) {
   if (value == null) return DASH;
@@ -51,11 +52,6 @@ export function firstOfNextMonth(from: Date) {
   return new Date(Date.UTC(from.getUTCFullYear(), from.getUTCMonth() + 1, 1));
 }
 
-// Providing your birth year is optional. In cases where a year is not provided,
-// we use 1904. We use this instead of 1900 as it's a leap year and allows 29
-// Feb.
-export const NO_BIRTH_YEAR = 1904;
-
 type RelativeDateUnits = {
   days?: number;
   hours?: number;
@@ -91,4 +87,8 @@ export function relativeDate(
 
   date.setUTCFullYear(year, month, Math.min(date.getUTCDate(), lastDayOfMonth));
   return date;
+}
+
+function pluralise(value: number, unit: string) {
+  return `${value} ${unit}${value === 1 ? "" : "s"}`;
 }

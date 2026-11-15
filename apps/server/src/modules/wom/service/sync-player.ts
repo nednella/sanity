@@ -6,6 +6,19 @@ import { womErrors } from "../errors";
 import { savePlayer } from "../repository/save-player";
 import { saveSnapshots } from "../repository/save-snapshots";
 
+export async function syncPlayer(username: string) {
+  const player = await updatePlayer(username);
+  if (!player) throw new Error("wise old man returned nothing");
+
+  const didStoreUpdate = await db.transaction(async (tx) => {
+    const stored = await savePlayer(tx, player, player.latestSnapshot);
+    if (stored && player.latestSnapshot) await saveSnapshots(tx, [player.latestSnapshot]);
+
+    return stored;
+  });
+  if (!didStoreUpdate) throw womErrors.notTracked(username);
+}
+
 /**
  * Refreshes a single WOM player on demand and stores the fresh snapshot if one
  * was returned.
@@ -20,17 +33,4 @@ async function updatePlayer(username: string) {
   } catch (error) {
     throw womErrors.fromRefusal(error);
   }
-}
-
-export async function syncPlayer(username: string) {
-  const player = await updatePlayer(username);
-  if (!player) throw new Error("wise old man returned nothing");
-
-  const didStoreUpdate = await db.transaction(async (tx) => {
-    const stored = await savePlayer(tx, player, player.latestSnapshot);
-    if (stored && player.latestSnapshot) await saveSnapshots(tx, [player.latestSnapshot]);
-
-    return stored;
-  });
-  if (!didStoreUpdate) throw womErrors.notTracked(username);
 }

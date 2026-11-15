@@ -10,26 +10,6 @@ import { bossIconUrl, statIconUrl } from "@/utils/icons";
 
 const EHB = "ehb";
 
-type BossRow = {
-  ehb: number;
-  kills: number | null;
-  metric: string;
-  rank: number | null;
-};
-
-// Total EHB is a computed metric rather than a boss, so it rides along as a row
-// of its own.
-function toRows(snapshot: Snapshot | undefined): BossRow[] | undefined {
-  if (!snapshot) return undefined;
-
-  const totalEhb = snapshot.computed.find(({ metric }) => metric === EHB);
-
-  return [
-    ...(totalEhb ? [{ metric: EHB, kills: null, rank: totalEhb.rank, ehb: totalEhb.value }] : []),
-    ...snapshot.bosses.map(({ boss, kills, rank, ehb }) => ({ metric: boss, kills, rank, ehb }))
-  ];
-}
-
 const columnHelper = createColumnHelper<DataTableFeatures, BossRow>();
 
 const columns = columnHelper.columns([
@@ -80,6 +60,13 @@ const columns = columnHelper.columns([
   })
 ]);
 
+type BossRow = {
+  ehb: number;
+  kills: number | null;
+  metric: string;
+  rank: number | null;
+};
+
 type BossTableProps = {
   emptyMessage: string;
   snapshot: Snapshot | undefined;
@@ -95,4 +82,17 @@ export function BossTable({ emptyMessage, snapshot }: Readonly<BossTableProps>) 
       stickyHeader
     />
   );
+}
+
+// Total EHB is a computed metric rather than a boss, so it rides along as a row
+// of its own.
+function toRows(snapshot: Snapshot | undefined): BossRow[] | undefined {
+  if (!snapshot) return undefined;
+
+  const totalEhb = snapshot.computed.find(({ metric }) => metric === EHB);
+
+  return [
+    ...(totalEhb ? [{ metric: EHB, kills: null, rank: totalEhb.rank, ehb: totalEhb.value }] : []),
+    ...snapshot.bosses.map(({ boss, kills, rank, ehb }) => ({ metric: boss, kills, rank, ehb }))
+  ];
 }

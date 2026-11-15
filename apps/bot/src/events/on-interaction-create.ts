@@ -5,14 +5,6 @@ import { runAsDiscordUserId } from "@/lib/api";
 import { logger } from "@/lib/logger";
 import { handleCommandInteractionError } from "@/utils/errors";
 
-async function onAutocomplete(interaction: AutocompleteInteraction) {
-  try {
-    await commands.get(interaction.commandName)?.autocomplete?.(interaction);
-  } catch (error) {
-    logger.error(error, `/${interaction.commandName} autocomplete failed`);
-  }
-}
-
 export async function onInteractionCreate(interaction: Interaction) {
   if (interaction.isAutocomplete()) return onAutocomplete(interaction);
   if (!interaction.isChatInputCommand()) return;
@@ -28,5 +20,13 @@ export async function onInteractionCreate(interaction: Interaction) {
     await runAsDiscordUserId(interaction.user.id, () => command.execute(interaction));
   } catch (error) {
     await handleCommandInteractionError(interaction, error);
+  }
+}
+
+async function onAutocomplete(interaction: AutocompleteInteraction) {
+  try {
+    await commands.get(interaction.commandName)?.autocomplete?.(interaction);
+  } catch (error) {
+    logger.error(error, `/${interaction.commandName} autocomplete failed`);
   }
 }

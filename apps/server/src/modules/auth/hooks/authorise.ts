@@ -35,13 +35,13 @@ export async function authorise(request: FastifyRequest) {
   if (!roleAllowed) throw authErrors.forbidden();
 }
 
-function hasRole(role: MemberRole | null, needed: MemberRole) {
-  if (role === null) return false;
-  return memberRole.enumValues.indexOf(role) >= memberRole.enumValues.indexOf(needed);
-}
-
 export function isRoleAbove(role: MemberRole | null, other: MemberRole | null) {
   if (role === null) return false;
   if (other === null) return true;
   return memberRole.enumValues.indexOf(role) > memberRole.enumValues.indexOf(other);
+}
+
+function hasRole(role: MemberRole | null, needed: MemberRole) {
+  if (role === null) return false;
+  return memberRole.enumValues.indexOf(role) >= memberRole.enumValues.indexOf(needed);
 }

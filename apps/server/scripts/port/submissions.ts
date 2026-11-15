@@ -1,5 +1,10 @@
 import { blankToNull, read, toUtcInstant } from "./source";
 
+/**
+0 is neither; the old bot wrote 1 for bingo and 2 for leagues.
+*/
+const events: Record<number, "bingo" | "leagues" | null> = { 0: null, 1: "bingo", 2: "leagues" };
+
 type MemberIds = Map<string, bigint>;
 
 type SourceSubmission = {
@@ -16,15 +21,6 @@ type SourceSubmission = {
   userId: string;
   value: number | null;
 };
-
-function enumName(name: string) {
-  return name.trim().toLowerCase().replaceAll(" ", "_");
-}
-
-/**
-0 is neither; the old bot wrote 1 for bingo and 2 for leagues.
-*/
-const events: Record<number, "bingo" | "leagues" | null> = { 0: null, 1: "bingo", 2: "leagues" };
 
 export async function readItems() {
   const rows = await read<{ id: number; name: string }>("drops", "id");
@@ -102,10 +98,6 @@ export async function readPoints(memberIds: MemberIds) {
   }));
 }
 
-function capitalise(name: string) {
-  return name.replaceAll(/\b\w/g, (letter) => letter.toUpperCase());
-}
-
 export async function readPointsTimelineEvents() {
   const rows = await read<{ date: string | null; eventName: string | null; id: number }>(
     "pointtrackerOverTimeEvents",
@@ -115,4 +107,12 @@ export async function readPointsTimelineEvents() {
   return rows
     .filter((row) => row.eventName !== null && row.date !== null)
     .map((row) => ({ id: row.id, name: capitalise(row.eventName!), occurredAt: toUtcInstant(row.date)! }));
+}
+
+function enumName(name: string) {
+  return name.trim().toLowerCase().replaceAll(" ", "_");
+}
+
+function capitalise(name: string) {
+  return name.replaceAll(/\b\w/g, (letter) => letter.toUpperCase());
 }

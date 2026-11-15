@@ -32,7 +32,8 @@
       "eslint --fix",
       "prettier --write"
     ],
-    "!(*.ts|*.tsx)": "prettier --write --ignore-unknown"
+    "!(*.ts|*.tsx)": "prettier --write --ignore-unknown",
+    "eslint-rules/*.js": "bun test eslint-rules"
   },
   "devDependencies": {
     "@commitlint/cli": "^21.2.2",

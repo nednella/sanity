@@ -4,29 +4,19 @@ import type { MemberChange, MemberSkip } from "@sanity/api";
 
 import { buildEmbed, fitLines } from "@/utils/embeds";
 
-const FIELD_LIMIT = 1024;
-
-const MENTIONED_USER_ID = /(?<=<@!?)\d{17,20}(?=>)/g;
-
 type MemberChanges = {
   changed: MemberChange[];
   skipped: MemberSkip[];
 };
 
-function toNotMembers({ changed, skipped }: MemberChanges, taggedDiscordIds: string[]) {
-  const found = new Set([...changed, ...skipped].map(({ member }) => member.discordId));
-  return taggedDiscordIds.filter((discordId) => !found.has(discordId));
-}
-
-function styleOfChanges(changed: MemberChange[], skippedLines: string[]) {
-  if (skippedLines.length === 0) return "success";
-  return changed.length === 0 ? "error" : "warning";
-}
-
 export const NO_MEMBERS_TAGGED = {
   title: "No members tagged",
   description: "Tag at least one member."
 };
+
+const FIELD_LIMIT = 1024;
+
+const MENTIONED_USER_ID = /(?<=<@!?)\d{17,20}(?=>)/g;
 
 export function membersOption(option: SlashCommandStringOption) {
   return option.setName("members").setDescription("Tag the members").setRequired(true);
@@ -74,4 +64,14 @@ export function changesEmbed(
     title,
     fields
   });
+}
+
+function toNotMembers({ changed, skipped }: MemberChanges, taggedDiscordIds: string[]) {
+  const found = new Set([...changed, ...skipped].map(({ member }) => member.discordId));
+  return taggedDiscordIds.filter((discordId) => !found.has(discordId));
+}
+
+function styleOfChanges(changed: MemberChange[], skippedLines: string[]) {
+  if (skippedLines.length === 0) return "success";
+  return changed.length === 0 ? "error" : "warning";
 }

@@ -9,28 +9,6 @@ const PAGE_SIZE = 50;
 
 type NameChange = Awaited<ReturnType<typeof wom.groups.getGroupNameChanges>>[number];
 
-// Wise Old Man resolves a change some time after it happens, and only then is
-// it ours to record.
-function resolvedAt(change: NameChange) {
-  return change.resolvedAt ?? change.updatedAt;
-}
-
-async function readGroupNameChanges(pages: number) {
-  const changes: NameChange[] = [];
-
-  for (let page = 0; page < pages; page++) {
-    const batch = await wom.groups.getGroupNameChanges(Number(config.womGroupId), {
-      limit: PAGE_SIZE,
-      offset: page * PAGE_SIZE
-    });
-
-    changes.push(...batch);
-    if (batch.length < PAGE_SIZE) break;
-  }
-
-  return changes;
-}
-
 /**
  * Builds the history of names behind every linked member, for their profile to
  * show.
@@ -58,4 +36,26 @@ export async function syncNameChanges(pages: number) {
   );
 
   return { read: changes.length, recorded };
+}
+
+// Wise Old Man resolves a change some time after it happens, and only then is
+// it ours to record.
+function resolvedAt(change: NameChange) {
+  return change.resolvedAt ?? change.updatedAt;
+}
+
+async function readGroupNameChanges(pages: number) {
+  const changes: NameChange[] = [];
+
+  for (let page = 0; page < pages; page++) {
+    const batch = await wom.groups.getGroupNameChanges(Number(config.womGroupId), {
+      limit: PAGE_SIZE,
+      offset: page * PAGE_SIZE
+    });
+
+    changes.push(...batch);
+    if (batch.length < PAGE_SIZE) break;
+  }
+
+  return changes;
 }

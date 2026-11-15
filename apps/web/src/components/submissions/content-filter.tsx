@@ -18,12 +18,6 @@ type ContentFilterProps = {
   scale?: number;
 };
 
-// A menu item is not a form control, so picking one has to dismiss the popover
-// it sits in.
-function close(event: MouseEvent<HTMLElement>) {
-  event.currentTarget.closest<HTMLElement>("[popover]")?.hidePopover();
-}
-
 export function ContentFilter({ contentId, onChange, scale }: Readonly<ContentFilterProps>) {
   const { data } = useQuery(contentOptions());
   const content = data?.find((entry) => entry.id === contentId);
@@ -100,4 +94,10 @@ export function ContentFilter({ contentId, onChange, scale }: Readonly<ContentFi
       )}
     </>
   );
+}
+
+// A menu item is not a form control, so picking one has to dismiss the popover
+// it sits in.
+function close(event: MouseEvent<HTMLElement>) {
+  event.currentTarget.closest<HTMLElement>("[popover]")?.hidePopover();
 }

@@ -9,12 +9,6 @@ type Config = {
   webUrl: string;
 };
 
-function required(name: string): string {
-  const value = process.env[name];
-  if (!value) throw new Error(`missing environment variable: ${name}`);
-  return value;
-}
-
 export const config: Config = {
   apiKey: required("API_KEY"),
   apiUrl: required("API_URL"),
@@ -25,3 +19,9 @@ export const config: Config = {
   logLevel: required("LOG_LEVEL"),
   webUrl: required("WEB_URL")
 };
+
+function required(name: string): string {
+  const value = process.env[name];
+  if (!value) throw new Error(`missing environment variable: ${name}`);
+  return value;
+}

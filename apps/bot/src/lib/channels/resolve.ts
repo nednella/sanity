@@ -12,19 +12,6 @@ import {
 import { channelCache } from "./cache";
 import type { ChannelIntent } from "./channels";
 
-const CATEGORY_PERMISSIONS = [
-  PermissionFlagsBits.ViewChannel,
-  PermissionFlagsBits.SendMessages,
-  PermissionFlagsBits.EmbedLinks,
-  PermissionFlagsBits.ManageChannels
-];
-
-const TEXT_CHANNEL_PERMISSIONS = [
-  PermissionFlagsBits.ViewChannel,
-  PermissionFlagsBits.SendMessages,
-  PermissionFlagsBits.EmbedLinks
-];
-
 /**
  * A channel cannot be used. The reason is one of:
  * - `channel-not-set`: no channel is set for the intent.
@@ -42,27 +29,18 @@ export class ChannelUnavailableError extends Error {
   }
 }
 
-async function fetchChannel(client: Client, intent: ChannelIntent) {
-  const channelId = await resolveChannelId(intent);
+const CATEGORY_PERMISSIONS = [
+  PermissionFlagsBits.ViewChannel,
+  PermissionFlagsBits.SendMessages,
+  PermissionFlagsBits.EmbedLinks,
+  PermissionFlagsBits.ManageChannels
+];
 
-  try {
-    return await client.channels.fetch(channelId);
-  } catch (error) {
-    if (!(error instanceof DiscordAPIError)) throw error;
-    if (error.code === RESTJSONErrorCodes.UnknownChannel) return null;
-    if (error.code === RESTJSONErrorCodes.MissingAccess) {
-      throw new ChannelUnavailableError(intent, "no-access", ["ViewChannel"]);
-    }
-    throw error;
-  }
-}
-
-function checkChannelPermissions<T extends GuildChannel>(channel: T, intent: ChannelIntent, needed: bigint[]) {
-  const permissions = channel.permissionsFor(channel.client.user);
-  const missing = permissions ? permissions.missing(needed) : new PermissionsBitField(needed).toArray();
-  if (missing.length > 0) throw new ChannelUnavailableError(intent, "no-access", missing);
-  return channel;
-}
+const TEXT_CHANNEL_PERMISSIONS = [
+  PermissionFlagsBits.ViewChannel,
+  PermissionFlagsBits.SendMessages,
+  PermissionFlagsBits.EmbedLinks
+];
 
 /**
  * The ID of the channel set for an intent, from the cache. It does not ask
@@ -96,4 +74,26 @@ export async function resolveTextChannel(client: Client, intent: ChannelIntent) 
   const channel = await fetchChannel(client, intent);
   if (!(channel instanceof TextChannel)) throw new ChannelUnavailableError(intent, "missing");
   return checkChannelPermissions(channel, intent, TEXT_CHANNEL_PERMISSIONS);
+}
+
+async function fetchChannel(client: Client, intent: ChannelIntent) {
+  const channelId = await resolveChannelId(intent);
+
+  try {
+    return await client.channels.fetch(channelId);
+  } catch (error) {
+    if (!(error instanceof DiscordAPIError)) throw error;
+    if (error.code === RESTJSONErrorCodes.UnknownChannel) return null;
+    if (error.code === RESTJSONErrorCodes.MissingAccess) {
+      throw new ChannelUnavailableError(intent, "no-access", ["ViewChannel"]);
+    }
+    throw error;
+  }
+}
+
+function checkChannelPermissions<T extends GuildChannel>(channel: T, intent: ChannelIntent, needed: bigint[]) {
+  const permissions = channel.permissionsFor(channel.client.user);
+  const missing = permissions ? permissions.missing(needed) : new PermissionsBitField(needed).toArray();
+  if (missing.length > 0) throw new ChannelUnavailableError(intent, "no-access", missing);
+  return channel;
 }

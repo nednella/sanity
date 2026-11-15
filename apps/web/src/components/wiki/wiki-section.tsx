@@ -10,6 +10,26 @@ type CollapsibleProps = {
   title: string;
 };
 
+export function WikiSection({ section }: Readonly<{ section: WikiSection }>) {
+  return (
+    <section className="mb-10 flow-root">
+      <Collapsible
+        id={section.id}
+        level="h2"
+        title={section.title}
+      >
+        {section.content}
+        {section.subsections?.map((subsection) => (
+          <WikiSubsection
+            key={subsection.id}
+            {...subsection}
+          />
+        ))}
+      </Collapsible>
+    </section>
+  );
+}
+
 function Collapsible({ id, title, level: Heading, children }: Readonly<CollapsibleProps>) {
   return (
     <details
@@ -44,25 +64,5 @@ function WikiSubsection({ id, title, content }: Readonly<WikiSubsection>) {
         {content}
       </Collapsible>
     </div>
-  );
-}
-
-export function WikiSection({ section }: Readonly<{ section: WikiSection }>) {
-  return (
-    <section className="mb-10 flow-root">
-      <Collapsible
-        id={section.id}
-        level="h2"
-        title={section.title}
-      >
-        {section.content}
-        {section.subsections?.map((subsection) => (
-          <WikiSubsection
-            key={subsection.id}
-            {...subsection}
-          />
-        ))}
-      </Collapsible>
-    </section>
   );
 }

@@ -3,22 +3,16 @@ import { Users } from "lucide-react";
 import type { MemberStatus } from "@/lib/members/status";
 import { Dropdown } from "@/lib/ui/dropdown";
 
-type MemberStatusFilterProps = {
-  onChange: (status: MemberStatus) => void;
-  status: MemberStatus;
-};
-
 const labels: Record<MemberStatus, string> = {
   active: "Active",
   all: "All",
   inactive: "Inactive"
 };
 
-function toStatus(isActive: boolean, isInactive: boolean): MemberStatus {
-  if (isActive && isInactive) return "all";
-  if (isInactive) return "inactive";
-  return "active";
-}
+type MemberStatusFilterProps = {
+  onChange: (status: MemberStatus) => void;
+  status: MemberStatus;
+};
 
 export function MemberStatusFilter({ status, onChange }: Readonly<MemberStatusFilterProps>) {
   const isActive = status !== "inactive";
@@ -57,4 +51,10 @@ export function MemberStatusFilter({ status, onChange }: Readonly<MemberStatusFi
       </li>
     </Dropdown>
   );
+}
+
+function toStatus(isActive: boolean, isInactive: boolean): MemberStatus {
+  if (isActive && isInactive) return "all";
+  if (isInactive) return "inactive";
+  return "active";
 }

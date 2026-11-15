@@ -10,18 +10,6 @@ import type { NameChange } from "@/modules/wom/repository/list-name-changes";
 
 import type { MemberRow } from "./repository/shared/select-members";
 
-/**
- * Why a member has no next rank, since the panel says something different for
- * each: a trialist earns their place on the ladder by passing trial, a quit or
- * retired member has stepped off it, and the top rank has run out of ladder to
- * climb.
- */
-function toProgressionStatus(currentRankId: number, isOnLadder: boolean, hasHigherRanks: boolean) {
-  if (currentRankId === TRIALIST_RANK_ID) return "trial" as const;
-  if (!isOnLadder) return "manual" as const;
-  return hasHigherRanks ? ("climbing" as const) : ("maxed" as const);
-}
-
 export function toMember({ member, discordAccount, rank, claimedDiaryTier, womPlayer, diaryProgress }: MemberRow) {
   return {
     id: member.id,
@@ -67,6 +55,38 @@ export function toMember({ member, discordAccount, rank, claimedDiaryTier, womPl
       syncedAt: womPlayer.syncedAt
     }
   };
+}
+
+export function toMemberProfile(
+  row: MemberRow,
+  ranks: RankRow[],
+  latestSnapshot: SnapshotRows | undefined,
+  nameChanges: NameChange[]
+) {
+  const { wom, ...member } = toMember(row);
+
+  return {
+    ...member,
+    rsn: { ...member.rsn, previous: toPreviousNames(nameChanges, member.rsn.main) },
+    progression: toProgression(row.rank.id, ranks, {
+      clanPoints: member.membership.points,
+      diaryPoints: member.diary.points,
+      masterDiaries: member.diary.masterDiaries
+    }),
+    wom: wom && { ...wom, latestSnapshot: latestSnapshot && toSnapshot(latestSnapshot) }
+  };
+}
+
+/**
+ * Why a member has no next rank, since the panel says something different for
+ * each: a trialist earns their place on the ladder by passing trial, a quit or
+ * retired member has stepped off it, and the top rank has run out of ladder to
+ * climb.
+ */
+function toProgressionStatus(currentRankId: number, isOnLadder: boolean, hasHigherRanks: boolean) {
+  if (currentRankId === TRIALIST_RANK_ID) return "trial" as const;
+  if (!isOnLadder) return "manual" as const;
+  return hasHigherRanks ? ("climbing" as const) : ("maxed" as const);
 }
 
 function toNextRank(rank: RankRow) {
@@ -128,25 +148,5 @@ function toSnapshot({ snapshot, computed, skills, bosses, activities }: Snapshot
     ),
     bosses: sortBosses(bosses.map(({ boss, kills, rank, ehb }) => ({ boss, kills, rank, ehb }))),
     activities: sortActivities(activities.map(({ activity, score, rank }) => ({ activity, score, rank })))
-  };
-}
-
-export function toMemberProfile(
-  row: MemberRow,
-  ranks: RankRow[],
-  latestSnapshot: SnapshotRows | undefined,
-  nameChanges: NameChange[]
-) {
-  const { wom, ...member } = toMember(row);
-
-  return {
-    ...member,
-    rsn: { ...member.rsn, previous: toPreviousNames(nameChanges, member.rsn.main) },
-    progression: toProgression(row.rank.id, ranks, {
-      clanPoints: member.membership.points,
-      diaryPoints: member.diary.points,
-      masterDiaries: member.diary.masterDiaries
-    }),
-    wom: wom && { ...wom, latestSnapshot: latestSnapshot && toSnapshot(latestSnapshot) }
   };
 }

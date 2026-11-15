@@ -7,17 +7,19 @@ import { items, members, submissions } from "@db/schema";
 import type { SubmissionSort } from "../request";
 import { type SubmissionFilters, matchesSubmission } from "./shared/filters";
 
-export type ListSubmissionsOptions = SubmissionFilters & {
-  limit: number;
-  offset: number;
-  order: "asc" | "desc";
-  sort: SubmissionSort;
-};
+export type SubmissionRow = Awaited<ReturnType<typeof listSubmissions>>[number];
 
 const sortColumns: Record<SubmissionSort, PgColumn> = {
   item: submissions.itemName,
   submittedAt: submissions.submittedAt,
   valueMillions: submissions.valueMillions
+};
+
+export type ListSubmissionsOptions = SubmissionFilters & {
+  limit: number;
+  offset: number;
+  order: "asc" | "desc";
+  sort: SubmissionSort;
 };
 
 export function listSubmissions({ limit, offset, order, sort, ...filters }: ListSubmissionsOptions) {
@@ -37,5 +39,3 @@ export function listSubmissions({ limit, offset, order, sort, ...filters }: List
     .limit(limit)
     .offset(offset);
 }
-
-export type SubmissionRow = Awaited<ReturnType<typeof listSubmissions>>[number];

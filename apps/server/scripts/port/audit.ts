@@ -2,15 +2,6 @@ import type { AuditAction, AuditSource } from "@db/enums";
 
 import { read, toUtcInstant } from "./source";
 
-type SourceAuditLog = {
-  actionDate: string;
-  actionNote: string | null;
-  actionType: number;
-  affectedUsers: string | null;
-  id: number;
-  userId: string;
-};
-
 const DROP_ACCEPT = 7;
 const EMBED_ACTION = 3;
 const LOOP = 8;
@@ -19,16 +10,6 @@ const WEBSITE = 10;
 // The accounts a scheduled job logged itself under. Any other actor on a loop
 // row is a real person.
 const BOT_ACCOUNTS = new Set(["228143014168625153", "979856389868494898"]);
-
-/**
- * A personal best was logged as content, team size and a clock: 'Theatre of
- * Blood:2:21:58.20'. A drop was logged as item and value: 'Abyssal Orphan:100'.
- * Nothing else in the table uses colons.
- */
-function isPersonalBestNote(note: string) {
-  const parts = note.split(":");
-  return parts.length >= 4 && /^\d+$/.test(parts[1]!.trim());
-}
 
 const matchers: [RegExp, AuditAction][] = [
   [/rank ?(id)? from/i, "rank_changed"],
@@ -47,6 +28,15 @@ const matchers: [RegExp, AuditAction][] = [
   [/^trail started/i, "member_joined"]
 ];
 
+type SourceAuditLog = {
+  actionDate: string;
+  actionNote: string | null;
+  actionType: number;
+  affectedUsers: string | null;
+  id: number;
+  userId: string;
+};
+
 /**
  * What the note says wins over how the row arrived: the drop-accept button was
  * reused for quits, value edits and role changes, so trusting its type alone
@@ -63,13 +53,6 @@ export function toAction(actionType: number, note: string | null): AuditAction {
   if (actionType === EMBED_ACTION) return "personal_best_reviewed";
 
   return "other";
-}
-
-function toSource(actionType: number): AuditSource {
-  if (actionType === LOOP) return "worker";
-  if (actionType === WEBSITE) return "web";
-
-  return "bot";
 }
 
 export async function readAuditLog(memberIds: Map<string, bigint>) {
@@ -98,4 +81,21 @@ export async function readAuditLog(memberIds: Map<string, bigint>) {
       )
     ]
   }));
+}
+
+/**
+ * A personal best was logged as content, team size and a clock: 'Theatre of
+ * Blood:2:21:58.20'. A drop was logged as item and value: 'Abyssal Orphan:100'.
+ * Nothing else in the table uses colons.
+ */
+function isPersonalBestNote(note: string) {
+  const parts = note.split(":");
+  return parts.length >= 4 && /^\d+$/.test(parts[1]!.trim());
+}
+
+function toSource(actionType: number): AuditSource {
+  if (actionType === LOOP) return "worker";
+  if (actionType === WEBSITE) return "web";
+
+  return "bot";
 }

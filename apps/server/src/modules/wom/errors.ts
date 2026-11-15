@@ -12,6 +12,12 @@ const REFUSALS = {
   429: { code: "WOM_UPDATED_RECENTLY", message: "Updated less than a minute ago, try again shortly." }
 } as const;
 
+export const womErrors = {
+  fromRefusal,
+  notTracked: (username: string) =>
+    new ApplicationError("WOM_PLAYER_NOT_TRACKED", 404, `RSN ${username} is not tracked by Sanity.`)
+};
+
 function isRefusal(status: number | undefined): status is keyof typeof REFUSALS {
   return status !== undefined && Object.hasOwn(REFUSALS, status);
 }
@@ -23,9 +29,3 @@ function fromRefusal(error: unknown) {
   const { code, message } = REFUSALS[statusCode];
   return new ApplicationError(code, statusCode, message);
 }
-
-export const womErrors = {
-  fromRefusal,
-  notTracked: (username: string) =>
-    new ApplicationError("WOM_PLAYER_NOT_TRACKED", 404, `RSN ${username} is not tracked by Sanity.`)
-};
