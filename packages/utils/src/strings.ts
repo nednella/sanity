@@ -15,3 +15,7 @@ export function isCountryCode(text: string) {
 export function pad(value: number) {
   return String(value).padStart(2, "0");
 }
+
+export function titleCase(text: string) {
+  return text.replaceAll(/\b\w/g, (letter) => letter.toUpperCase());
+}
