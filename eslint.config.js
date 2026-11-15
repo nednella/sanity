@@ -25,7 +25,8 @@ export default defineConfig([
       globals: globals.node
     },
     rules: {
-      // allow idiomatic TS and server names, see: https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/name-replacements.md
+      // allow idiomatic TS and server names
+      // see: https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/name-replacements.md
       "unicorn/name-replacements": [
         "error",
         {
@@ -51,13 +52,20 @@ export default defineConfig([
           }
         }
       ],
+
       // see: https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-null.md
       "unicorn/no-null": "off",
-      // TypeScript already errors on unresolved imports, see: https://github.com/un-ts/eslint-plugin-import-x/blob/master/docs/rules/no-unresolved.md#when-not-to-use-it
+
+      // TypeScript already errors on unresolved imports
+      // see: https://github.com/un-ts/eslint-plugin-import-x/blob/master/docs/rules/no-unresolved.md#when-not-to-use-it
       "import/no-unresolved": "off",
-      // disable default exporting, see: https://github.com/un-ts/eslint-plugin-import-x/blob/master/docs/rules/no-default-export.md
+
+      // disable default exporting
+      // see: https://github.com/un-ts/eslint-plugin-import-x/blob/master/docs/rules/no-default-export.md
       "import/no-default-export": "error",
-      // one import per module, types inline, see: https://github.com/un-ts/eslint-plugin-import-x/blob/master/docs/rules/no-duplicates.md
+
+      // one import per module, types inline
+      // see: https://github.com/un-ts/eslint-plugin-import-x/blob/master/docs/rules/no-duplicates.md
       "import/no-duplicates": ["error", { "prefer-inline": true }]
     }
   },
@@ -71,7 +79,8 @@ export default defineConfig([
   {
     files: ["apps/web/src/routes/**/*.tsx"],
     rules: {
-      // the router plugin splits route components into their own modules, which handle fast refresh, see: https://tanstack.com/router/latest/docs/framework/react/guide/automatic-code-splitting
+      // the router plugin splits route components into their own modules, which handle fast refresh
+      // see: https://tanstack.com/router/latest/docs/framework/react/guide/automatic-code-splitting
       "react-refresh/only-export-components": "off"
     }
   },
