@@ -22,17 +22,17 @@ export function ErrorState({
 
   return (
     <Hero
+      className="flex h-full items-center justify-center"
+      description={description}
+      reducedMotion
       size="sm"
       title={title}
-      description={description}
-      className="flex h-full items-center justify-center"
-      reducedMotion
     >
       <div className="flex flex-col items-center gap-8">
         <Button
+          onClick={onRetry ?? (() => location.reload())}
           size="sm"
           variant="outline"
-          onClick={onRetry ?? (() => location.reload())}
         >
           Try again
         </Button>

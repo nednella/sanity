@@ -17,8 +17,8 @@ export function ProgressBar({ label, value, target }: Readonly<ProgressBarProps>
       </div>
       <progress
         className="progress h-1.5 progress-primary"
-        value={Math.min(value, target)}
         max={target}
+        value={Math.min(value, target)}
       />
     </div>
   );

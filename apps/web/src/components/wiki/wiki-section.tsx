@@ -13,13 +13,13 @@ type CollapsibleProps = {
 function Collapsible({ id, title, level: Heading, children }: Readonly<CollapsibleProps>) {
   return (
     <details
-      open
       className="group"
+      open
     >
       <summary className="mb-4 flex cursor-pointer list-none items-baseline justify-between gap-3 border-b border-base-300 pb-2 [&::-webkit-details-marker]:hidden">
         <Heading
-          id={id}
           className={cn("scroll-mt-20", Heading === "h2" ? "text-2xl font-bold" : "text-lg font-bold")}
+          id={id}
         >
           {title}
         </Heading>
@@ -38,8 +38,8 @@ function WikiSubsection({ id, title, content }: Readonly<WikiSubsection>) {
     <div className="mt-8 flow-root">
       <Collapsible
         id={id}
-        title={title}
         level="h3"
+        title={title}
       >
         {content}
       </Collapsible>
@@ -52,8 +52,8 @@ export function WikiSection({ section }: Readonly<{ section: WikiSection }>) {
     <section className="mb-10 flow-root">
       <Collapsible
         id={section.id}
-        title={section.title}
         level="h2"
+        title={section.title}
       >
         {section.content}
         {section.subsections?.map((subsection) => (

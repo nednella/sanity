@@ -119,15 +119,15 @@ export function PersonalBestTable({
       data={data?.items}
       emptyMessage="No personal bests recorded."
       error={error}
+      filters={toolbar}
       isLoading={isLoading}
       onPaginationChange={table.onPaginationChange}
       onRetry={onRetry}
       onRowClick={openScreenshot}
-      rowCursor="zoom-in"
       onSortingChange={table.onSortingChange}
       pagination={table.pagination}
       rowCount={data?.page.total ?? 0}
-      filters={toolbar}
+      rowCursor="zoom-in"
       sorting={table.sorting}
     />
   );

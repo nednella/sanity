@@ -36,10 +36,10 @@ export function MemberStatusFilter({ status, onChange }: Readonly<MemberStatusFi
       <li>
         <label className="flex items-center gap-2">
           <input
-            type="checkbox"
-            className="checkbox checkbox-sm"
             checked={isActive}
+            className="checkbox checkbox-sm"
             onChange={(event) => onChange(toStatus(event.target.checked, isInactive))}
+            type="checkbox"
           />
           Active
         </label>
@@ -47,10 +47,10 @@ export function MemberStatusFilter({ status, onChange }: Readonly<MemberStatusFi
       <li>
         <label className="flex items-center gap-2">
           <input
-            type="checkbox"
-            className="checkbox checkbox-sm"
             checked={isInactive}
+            className="checkbox checkbox-sm"
             onChange={(event) => onChange(toStatus(isActive, event.target.checked))}
+            type="checkbox"
           />
           Inactive
         </label>

@@ -26,8 +26,8 @@ export function DataTablePagination<TData extends RowData>({
         <select
           aria-label="Rows per page"
           className="select w-auto select-sm"
-          value={pageSize}
           onChange={(event) => table.setPageSize(Number(event.target.value))}
+          value={pageSize}
         >
           {pageSizeOptions.map((size) => (
             <option
@@ -40,38 +40,38 @@ export function DataTablePagination<TData extends RowData>({
         </select>
         <div className="join">
           <button
-            type="button"
             aria-label="First page"
             className="btn join-item btn-sm"
             disabled={!table.getCanPreviousPage()}
             onClick={() => table.firstPage()}
+            type="button"
           >
             <ChevronsLeft className="size-4" />
           </button>
           <button
-            type="button"
             aria-label="Previous page"
             className="btn join-item btn-sm"
             disabled={!table.getCanPreviousPage()}
             onClick={() => table.previousPage()}
+            type="button"
           >
             <ChevronLeft className="size-4" />
           </button>
           <button
-            type="button"
             aria-label="Next page"
             className="btn join-item btn-sm"
             disabled={!table.getCanNextPage()}
             onClick={() => table.nextPage()}
+            type="button"
           >
             <ChevronRight className="size-4" />
           </button>
           <button
-            type="button"
             aria-label="Last page"
             className="btn join-item btn-sm"
             disabled={!table.getCanNextPage()}
             onClick={() => table.lastPage()}
+            type="button"
           >
             <ChevronsRight className="size-4" />
           </button>

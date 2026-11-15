@@ -22,8 +22,8 @@ export function Avatar({ className, src }: Readonly<AvatarProps>) {
     <div className={cn("avatar", className)}>
       <div className="size-16 rounded-full">
         <img
-          src={src}
           alt=""
+          src={src}
         />
       </div>
     </div>

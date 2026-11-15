@@ -22,10 +22,10 @@ export function WomSyncButton({ memberId, username }: Readonly<WomSyncButtonProp
 
   return (
     <Button
-      size="sm"
-      variant="outline"
       disabled={sync.isPending}
       onClick={() => sync.mutate({ params: { path: { username } } })}
+      size="sm"
+      variant="outline"
     >
       <RefreshCw className={cn("size-4", sync.isPending && "animate-spin")} />
       Sync

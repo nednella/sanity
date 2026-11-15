@@ -9,9 +9,9 @@ export function RankBadge({ rank }: Readonly<RankBadgeProps>) {
     <span className="inline-flex items-center gap-2">
       {rank.iconUrl && (
         <img
-          src={rank.iconUrl}
           alt={rank.name}
           className="size-4"
+          src={rank.iconUrl}
         />
       )}
       {rank.name}

@@ -86,9 +86,9 @@ type StatIconProps = {
 function StatIcon({ src }: Readonly<StatIconProps>) {
   return (
     <img
-      src={src}
       alt=""
       className="size-5 object-contain"
+      src={src}
     />
   );
 }

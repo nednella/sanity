@@ -27,8 +27,8 @@ function Page() {
       <div className="grid gap-4 xl:grid-cols-2">
         {groups.map(({ content, scales }) => (
           <Record
-            key={content.id}
             defaultScale={scales[0]!.scale}
+            key={content.id}
           >
             <Record.Artwork metric={content.metric} />
             <Record.Header name={content.name}>

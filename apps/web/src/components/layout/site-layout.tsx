@@ -14,9 +14,9 @@ export function SiteLayout({ children }: Readonly<SiteLayoutProps>) {
   return (
     <div className="drawer lg:drawer-open">
       <input
+        className="drawer-toggle"
         id={DRAWER_ID}
         type="checkbox"
-        className="drawer-toggle"
       />
       <div className="drawer-content flex min-h-screen flex-col">
         <Header drawerId={DRAWER_ID} />
@@ -25,9 +25,9 @@ export function SiteLayout({ children }: Readonly<SiteLayoutProps>) {
       </div>
       <div className="drawer-side z-40">
         <label
-          htmlFor={DRAWER_ID}
           aria-label="Close sidebar"
           className="drawer-overlay"
+          htmlFor={DRAWER_ID}
         />
         <Sidebar />
       </div>

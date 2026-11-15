@@ -32,15 +32,15 @@ export function RankProgressionPanel({ profile }: Readonly<RankProgressionPanelP
       {canRankUp ? (
         <div className="flex flex-col gap-6">
           <NextRankCard
-            title="Next Rank (Clan Points)"
             nextRank={nextRank.points}
             standing={standing}
+            title="Next Rank (Clan Points)"
           />
           {nextRank.points && nextRank.diary && <Separator />}
           <NextRankCard
-            title="Next Rank (Clan Points + Diaries)"
             nextRank={nextRank.diary}
             standing={standing}
+            title="Next Rank (Clan Points + Diaries)"
           />
         </div>
       ) : (
@@ -65,8 +65,8 @@ function Standing({ rank, status }: Readonly<StandingProps>) {
     return (
       <RankStanding
         celebrate
-        rank={rank}
         overline="Maxed rank"
+        rank={rank}
       />
     );
   }
@@ -74,16 +74,16 @@ function Standing({ rank, status }: Readonly<StandingProps>) {
   if (status === "trial") {
     return (
       <RankStanding
-        rank={rank}
         overline="On trial"
+        rank={rank}
       />
     );
   }
 
   return (
     <RankStanding
-      rank={rank}
       overline="Off the ladder"
+      rank={rank}
     />
   );
 }
@@ -130,8 +130,8 @@ function NextRankCard({ title, nextRank, standing }: Readonly<NextRankCardProps>
       {requirements.clanPoints > 0 && (
         <ProgressBar
           label="Clan Points"
-          value={standing.clanPoints}
           target={requirements.clanPoints}
+          value={standing.clanPoints}
         />
       )}
 

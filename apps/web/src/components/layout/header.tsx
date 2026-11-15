@@ -13,9 +13,9 @@ export function Header({ drawerId }: Readonly<HeaderProps>) {
     <header className="navbar sticky top-0 z-30 min-h-12 bg-base-100 px-4 py-1 lg:px-8">
       <div className="navbar-start">
         <label
-          htmlFor={drawerId}
           aria-label="Open sidebar"
           className="btn btn-square btn-ghost btn-sm lg:hidden"
+          htmlFor={drawerId}
         >
           <Menu className="size-5" />
         </label>

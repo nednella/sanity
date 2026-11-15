@@ -25,10 +25,10 @@ export function DataTableColumnToggle<TData extends RowData>({ table }: Readonly
         <li key={column.id}>
           <label className="flex items-center gap-2">
             <input
-              type="checkbox"
-              className="checkbox checkbox-sm"
               checked={column.getIsVisible()}
+              className="checkbox checkbox-sm"
               onChange={column.getToggleVisibilityHandler()}
+              type="checkbox"
             />
             {typeof column.columnDef.header === "string" ? column.columnDef.header : column.id}
           </label>

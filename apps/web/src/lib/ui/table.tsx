@@ -92,7 +92,6 @@ type HeadCellProps = React.ComponentPropsWithRef<"th"> & {
 function HeadCell({ children, className, layout, onSort, sorted, sticky, ...props }: Readonly<HeadCellProps>) {
   return (
     <th
-      scope="col"
       aria-sort={toAriaSort(sorted)}
       className={cn(
         "whitespace-nowrap",
@@ -101,6 +100,7 @@ function HeadCell({ children, className, layout, onSort, sorted, sticky, ...prop
         sticky && "sticky top-12 z-20 bg-base-100",
         className
       )}
+      scope="col"
       style={{ minWidth: layout?.minWidth && `${layout.minWidth}rem` }}
       {...props}
     >
@@ -131,9 +131,9 @@ type SortButtonProps = {
 function SortButton({ children, onClick, reverse = false, sorted }: Readonly<SortButtonProps>) {
   return (
     <button
-      type="button"
       className={cn("inline-flex items-center gap-1 hover:text-base-content", reverse && "flex-row-reverse")}
       onClick={onClick}
+      type="button"
     >
       <span className="whitespace-nowrap">{children}</span>
       <SortIcon sorted={sorted} />
@@ -170,7 +170,6 @@ type RowProps = React.ComponentPropsWithRef<"tr"> & {
 function Row({ className, cursor = "pointer", onSelect, ...props }: Readonly<RowProps>) {
   return (
     <tr
-      tabIndex={onSelect ? 0 : undefined}
       className={cn(
         "h-12 bg-base-100 hover:bg-base-200",
         onSelect && cursors[cursor],
@@ -192,6 +191,7 @@ function Row({ className, cursor = "pointer", onSelect, ...props }: Readonly<Row
           onSelect();
         })
       }
+      tabIndex={onSelect ? 0 : undefined}
       {...props}
     />
   );
@@ -215,8 +215,8 @@ function Message({ children, colSpan }: Readonly<MessageProps>) {
   return (
     <tr>
       <td
-        colSpan={colSpan}
         className="py-10 text-center text-base-content/60"
+        colSpan={colSpan}
       >
         {children}
       </td>
@@ -273,18 +273,18 @@ function Search({ onChange, placeholder = "Search", value }: Readonly<SearchProp
     <label className="input w-full max-w-64 rounded-xs input-sm">
       <SearchIcon className="size-4 shrink-0 text-base-content/60" />
       <input
-        type="search"
-        value={typed}
-        placeholder={placeholder}
         className="[&::-webkit-search-cancel-button]:appearance-none"
         onChange={(event) => setTyped(event.target.value)}
+        placeholder={placeholder}
+        type="search"
+        value={typed}
       />
       {typed && (
         <button
-          type="button"
           aria-label="Clear search"
           className="cursor-pointer text-base-content/60 hover:text-base-content"
           onClick={() => setTyped("")}
+          type="button"
         >
           <X className="size-4" />
         </button>

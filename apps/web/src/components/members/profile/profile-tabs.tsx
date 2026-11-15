@@ -8,33 +8,33 @@ export function ProfileTabs({ memberId }: Readonly<ProfileTabsProps>) {
   return (
     <Tabs>
       <Tab
-        to="/members/$memberId"
-        params={{ memberId }}
         activeOptions={{ exact: true, includeSearch: false }}
+        params={{ memberId }}
+        to="/members/$memberId"
       >
         Overview
       </Tab>
       <Tab
-        to="/members/$memberId/submissions"
         params={{ memberId }}
+        to="/members/$memberId/submissions"
       >
         Submissions
       </Tab>
       <Tab
-        to="/members/$memberId/skills"
         params={{ memberId }}
+        to="/members/$memberId/skills"
       >
         Skills
       </Tab>
       <Tab
-        to="/members/$memberId/bosses"
         params={{ memberId }}
+        to="/members/$memberId/bosses"
       >
         Bosses
       </Tab>
       <Tab
-        to="/members/$memberId/activities"
         params={{ memberId }}
+        to="/members/$memberId/activities"
       >
         Activities
       </Tab>

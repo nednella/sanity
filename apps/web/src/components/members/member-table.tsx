@@ -32,9 +32,9 @@ const columns = columnHelper.columns([
         <div className="flex flex-col gap-0.5 py-1">
           <span className="inline-flex items-center gap-2 font-medium">
             <Link
-              to="/members/$memberId"
-              params={{ memberId: id }}
               className="link link-hover"
+              params={{ memberId: id }}
+              to="/members/$memberId"
             >
               {displayName}
             </Link>
@@ -175,8 +175,8 @@ export function MemberTable({ data, error, isLoading, onRetry, search }: Readonl
       }}
       toolbar={
         <MemberStatusFilter
-          status={search.status}
           onChange={(status) => replaceSearch({ offset: 0, status })}
+          status={search.status}
         />
       }
     />

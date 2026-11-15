@@ -24,10 +24,10 @@ export function ThemeToggle({ className }: Readonly<ThemeToggleProps>) {
 
   return (
     <Button
-      size="icon"
-      variant="ghost"
       className={className}
       onClick={cycleTheme}
+      size="icon"
+      variant="ghost"
     >
       {getThemeIcon()}
     </Button>
