@@ -1,6 +1,6 @@
 type Channel = {
-  type: ChannelType;
   label: string;
+  type: ChannelType;
 };
 
 export type ChannelIntent = keyof typeof CHANNELS;

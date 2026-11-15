@@ -4,8 +4,8 @@ import { H4 } from "@/lib/ui/typography/h4";
 import { Muted } from "@/lib/ui/typography/muted";
 
 type PanelProps = {
-  title: string;
   children: ReactNode;
+  title: string;
 };
 
 export function Panel({ title, children }: Readonly<PanelProps>) {

@@ -10,12 +10,12 @@ import { isActive, matchesSearch } from "./shared/filters";
 import { selectMembers } from "./shared/select-members";
 
 export type ListMembersOptions = {
+  active?: boolean;
   limit: number;
   offset: number;
-  active?: boolean;
+  order: "asc" | "desc";
   search?: string;
   sort: MemberSort;
-  order: "asc" | "desc";
 };
 
 export function listMembers({ limit, offset, active, search, sort, order }: ListMembersOptions) {

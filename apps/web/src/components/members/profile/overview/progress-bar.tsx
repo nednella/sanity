@@ -2,8 +2,8 @@ import { formatNumber } from "@sanity/utils";
 
 type ProgressBarProps = {
   label: string;
-  value: number;
   target: number;
+  value: number;
 };
 
 export function ProgressBar({ label, value, target }: Readonly<ProgressBarProps>) {

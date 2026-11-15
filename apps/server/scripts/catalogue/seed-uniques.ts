@@ -8,7 +8,7 @@ import { importUniques } from "@/modules/catalogue/service/import-uniques";
 
 import catalogue from "./uniques.json" with { type: "json" };
 
-type Catalogue = { boss: string; killsPerHour?: number; uniques: { name: string; dropRate: number }[] }[];
+type Catalogue = { boss: string; killsPerHour?: number; uniques: { dropRate: number; name: string }[] }[];
 
 const seed = catalogue as Catalogue;
 

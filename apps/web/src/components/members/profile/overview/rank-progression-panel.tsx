@@ -89,13 +89,13 @@ function Standing({ rank, status }: Readonly<StandingProps>) {
 }
 
 type NextRankCardProps = {
-  title: string;
   nextRank: NextRank | null;
   standing: {
     clanPoints: number;
     diaryPoints: number;
     masterDiaries: number;
   };
+  title: string;
 };
 
 function NextRankCard({ title, nextRank, standing }: Readonly<NextRankCardProps>) {

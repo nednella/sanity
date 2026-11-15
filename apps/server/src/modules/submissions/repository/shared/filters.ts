@@ -5,8 +5,8 @@ import { db } from "@db/index";
 import { submissionParticipants, submissions } from "@db/schema";
 
 export type SubmissionFilters = {
-  memberId?: bigint;
   event?: SubmissionEvent;
+  memberId?: bigint;
   status?: ReviewStatus;
 };
 

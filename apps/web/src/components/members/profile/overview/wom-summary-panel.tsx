@@ -11,9 +11,9 @@ import { RelativeDate } from "@/lib/ui/relative-date";
 import { bossIconUrl, statIconUrl } from "@/utils/icons";
 
 type BossStats = {
-  totalKills: number;
   mostEhb: Boss | null;
   mostKilled: Boss | null;
+  totalKills: number;
 };
 
 function bossStats(bosses: Boss[]): BossStats {

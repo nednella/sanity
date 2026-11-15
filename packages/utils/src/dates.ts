@@ -57,14 +57,14 @@ export function firstOfNextMonth(from: Date) {
 export const NO_BIRTH_YEAR = 1904;
 
 type RelativeDateUnits = {
-  years?: number;
-  months?: number;
-  weeks?: number;
   days?: number;
   hours?: number;
   minutes?: number;
-  seconds?: number;
+  months?: number;
   ms?: number;
+  seconds?: number;
+  weeks?: number;
+  years?: number;
 };
 
 export function toIsoDate(date: Date) {

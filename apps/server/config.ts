@@ -1,13 +1,13 @@
 type Config = {
-  host: string;
-  port: number;
-  databaseUrl: string;
   corsOrigin: string;
-  logLevel: string;
+  databaseUrl: string;
+  host: string;
   isProduction: boolean;
+  logLevel: string;
+  port: number;
   trustProxy: false | string;
-  womGroupId: string;
   womApiKey: string;
+  womGroupId: string;
   womUserAgent: string;
 };
 

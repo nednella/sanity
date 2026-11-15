@@ -6,18 +6,18 @@ import { blankToNull, clockToInterval, read, toUtcInstant } from "./source";
 type MemberIds = Map<string, bigint>;
 
 type SourcePersonalBest = {
-  submissionId: number;
-  submitterUserId: string;
-  members: string | null;
-  status: number;
   bossId: number;
-  scale: number;
-  time: string;
   imageUrl: string | null;
-  submittedDate: string | null;
+  members: string | null;
   reviewedBy: string | null;
   reviewedDate: string | null;
   reviewNote: string | null;
+  scale: number;
+  status: number;
+  submissionId: number;
+  submittedDate: string | null;
+  submitterUserId: string;
+  time: string;
 };
 
 function enumName(name: string) {
@@ -49,7 +49,7 @@ export async function readSpeedrunContent() {
     throw new Error("no bosses to link content to: run catalogue:bosses before the port");
   }
 
-  const rows = await read<{ id: number; name: string; imageUrl: string | null }>("bosses", "id");
+  const rows = await read<{ id: number; imageUrl: string | null; name: string }>("bosses", "id");
 
   return rows.map((content) => {
     const metric = metricByContentId[content.id];
@@ -68,20 +68,20 @@ export async function readSpeedrunContent() {
  * + 2 + 3 + 4 + 5 = 15.
  */
 export async function readSpeedrunDiaryTiers() {
-  const rows = await read<{ difficulty: number; diaryPoints: number; flavourText: string }>("diarytypes", "difficulty");
+  const rows = await read<{ diaryPoints: number; difficulty: number; flavourText: string }>("diarytypes", "difficulty");
 
   return rows.map((tier) => ({ id: tier.difficulty, name: tier.flavourText, points: tier.diaryPoints }));
 }
 
 type SourceDiaryTime = {
   bossId: number;
-  scale: number;
   maxDifficulty: number;
+  scale: number;
   timeEasy: string;
-  timeMedium: string;
-  timeHard: string;
   timeElite: string;
+  timeHard: string;
   timeMaster: string;
+  timeMedium: string;
 };
 
 /**
@@ -153,7 +153,7 @@ export async function readPersonalBests(memberIds: MemberIds) {
  * people who were never members are dropped, since the row must reference one.
  */
 export async function readPersonalBestParticipants(memberIds: MemberIds, keptIds: Set<number>) {
-  const rows = await read<{ submissionId: number; members: string | null }>("personalbests", "submissionId");
+  const rows = await read<{ members: string | null; submissionId: number }>("personalbests", "submissionId");
   const seen = new Set<string>();
 
   return rows.flatMap((row) => {

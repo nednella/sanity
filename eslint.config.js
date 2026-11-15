@@ -101,7 +101,11 @@ export default defineConfig([
 
       // null and undefined go last
       // see: https://perfectionist.dev/rules/sort-union-types
-      "perfectionist/sort-union-types": ["error", { groups: ["unknown", "nullish"] }]
+      "perfectionist/sort-union-types": ["error", { groups: ["unknown", "nullish"] }],
+
+      // a comment line starts a new sorted block
+      // see: https://perfectionist.dev/rules/sort-object-types
+      "perfectionist/sort-object-types": ["error", { partitionByComment: true }]
     }
   },
   {

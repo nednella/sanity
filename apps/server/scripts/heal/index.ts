@@ -8,9 +8,9 @@ import { saveItems } from "@/modules/catalogue/repository/save-items";
 import plan from "./items.json" with { type: "json" };
 
 type Plan = {
-  remove: string[];
-  merge: Record<string, string>;
   ids: Record<string, number>;
+  merge: Record<string, string>;
+  remove: string[];
   unlink: string[];
 };
 

@@ -3,9 +3,9 @@ import type { FastifyReply, FastifyRequest } from "fastify";
 import type { ApplicationError } from "./error";
 
 type ErrorResponseOptions = {
-  request: FastifyRequest;
-  reply: FastifyReply;
   error: ApplicationError;
+  reply: FastifyReply;
+  request: FastifyRequest;
 };
 
 export function errorResponse({ request, reply, error }: ErrorResponseOptions) {

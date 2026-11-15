@@ -4,10 +4,10 @@ import type { WikiSection, WikiSubsection } from "@/components/wiki/types";
 import { cn } from "@/lib/ui/utils";
 
 type CollapsibleProps = {
-  id: string;
-  title: string;
-  level: "h2" | "h3";
   children: React.ReactNode;
+  id: string;
+  level: "h2" | "h3";
+  title: string;
 };
 
 function Collapsible({ id, title, level: Heading, children }: Readonly<CollapsibleProps>) {

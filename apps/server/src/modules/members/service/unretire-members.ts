@@ -26,7 +26,7 @@ export async function unretireMembers({ members, note }: MemberBatch, auth: Acti
     const standings = await listMemberStandings(tx, memberIds);
 
     const changed: { member: MemberStanding; rank: RankSummary }[] = [];
-    const skipped: { member: MemberStanding; error: ApplicationError }[] = [];
+    const skipped: { error: ApplicationError; member: MemberStanding }[] = [];
 
     for (const member of standings) {
       const earned = toEarnedRank(ranks, member);

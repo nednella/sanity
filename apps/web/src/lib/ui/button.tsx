@@ -22,12 +22,12 @@ type Variant = keyof typeof variants;
 type Size = keyof typeof sizes;
 
 type ButtonProps = React.ComponentProps<"button"> & {
-  variant?: Variant;
-  size?: Size;
   asChild?: boolean;
+  size?: Size;
+  variant?: Variant;
 };
 
-function buttonVariants({ variant = "default", size = "default" }: { variant?: Variant; size?: Size } = {}) {
+function buttonVariants({ variant = "default", size = "default" }: { size?: Size; variant?: Variant } = {}) {
   return cn("btn text-sm font-medium", variants[variant], sizes[size]);
 }
 

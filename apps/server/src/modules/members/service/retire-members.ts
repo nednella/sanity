@@ -19,7 +19,7 @@ export async function retireMembers({ members, note }: MemberBatch, auth: Acting
     const found = await listMembersById(tx, memberIds);
 
     const changed: { member: Member }[] = [];
-    const skipped: { member: Member; error: ApplicationError }[] = [];
+    const skipped: { error: ApplicationError; member: Member }[] = [];
 
     for (const member of found) {
       if (member.rankId === QUIT_RANK_ID) skipped.push({ member, error: memberErrors.hasQuit() });

@@ -26,8 +26,8 @@ export function jsonSchemaOverride({
   zodSchema,
   jsonSchema
 }: {
-  zodSchema: { _zod: { def: { type: string } } };
   jsonSchema: Record<string, unknown>;
+  zodSchema: { _zod: { def: { type: string } } };
 }) {
   if (zodSchema._zod.def.type === "bigint") {
     jsonSchema.type = "string";

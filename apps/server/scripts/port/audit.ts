@@ -3,12 +3,12 @@ import type { AuditAction, AuditSource } from "@db/enums";
 import { read, toUtcInstant } from "./source";
 
 type SourceAuditLog = {
+  actionDate: string;
+  actionNote: string | null;
+  actionType: number;
+  affectedUsers: string | null;
   id: number;
   userId: string;
-  affectedUsers: string | null;
-  actionType: number;
-  actionNote: string | null;
-  actionDate: string;
 };
 
 const DROP_ACCEPT = 7;

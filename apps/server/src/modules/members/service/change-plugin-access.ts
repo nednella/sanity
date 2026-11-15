@@ -24,7 +24,7 @@ export async function changePluginAccess({ members, note, revoked }: PluginAcces
     const found = await listMembersById(tx, memberIds);
 
     const changed: { member: Member }[] = [];
-    const skipped: { member: Member; error: ApplicationError }[] = [];
+    const skipped: { error: ApplicationError; member: Member }[] = [];
 
     for (const member of found) {
       const isRevoked = member.pluginAccessRevokedAt !== null;

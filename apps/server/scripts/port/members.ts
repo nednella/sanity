@@ -3,27 +3,27 @@ import { NO_BIRTH_YEAR } from "@sanity/utils";
 import { blankToNull, dayToUtcMidnight, read, toBoolean } from "./source";
 
 type SourceRank = {
+  diaryPointRequirement: number | null;
+  discordRoleId: string | null;
   id: number;
+  masterDiaryRequirement: number | null;
   name: string;
   pointRequirement: number | null;
-  diaryPointRequirement: number | null;
-  masterDiaryRequirement: number | null;
-  discordRoleId: string | null;
 };
 
 type SourceUser = {
-  userId: string;
-  displayName: string;
-  mainRSN: string | null;
   altRSN: string | null;
-  rankId: number;
-  points: number;
+  birthday: string | null;
+  diaryTierClaimed: number | null;
+  displayName: string;
   isActive: Buffer | number | null;
   joinDate: string | null;
   leaveDate: string | null;
-  birthday: string | null;
+  mainRSN: string | null;
   nationality: string | null;
-  diaryTierClaimed: number | null;
+  points: number;
+  rankId: number;
+  userId: string;
 };
 
 /**
@@ -47,7 +47,7 @@ function toBirthday(value: string | null) {
 const inGameNameFixes: Record<string, string> = { RETIRED: "Defiler" };
 
 export async function readRanks() {
-  const mappings = await read<{ osrsName: string | null; discordRankId: number | null }>("osrsRankMapping", "id");
+  const mappings = await read<{ discordRankId: number | null; osrsName: string | null }>("osrsRankMapping", "id");
   const inGameNames = new Map(mappings.map((row) => [row.discordRankId, row.osrsName]));
   const rows = await read<SourceRank>("ranks", "id");
 
@@ -64,7 +64,7 @@ export async function readRanks() {
 }
 
 export async function readMembers() {
-  const avatarRows = await read<{ userId: string; discordProfileImageUrl: string | null }>("discordProfileImageUrl");
+  const avatarRows = await read<{ discordProfileImageUrl: string | null; userId: string }>("discordProfileImageUrl");
   const avatars = new Map(avatarRows.map((row) => [row.userId, row.discordProfileImageUrl]));
   const users = await read<SourceUser>("users", "userId");
 

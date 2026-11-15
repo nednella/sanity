@@ -11,10 +11,10 @@ import { bossIconUrl, statIconUrl } from "@/utils/icons";
 const EHB = "ehb";
 
 type BossRow = {
-  metric: string;
-  kills: number | null;
-  rank: number | null;
   ehb: number;
+  kills: number | null;
+  metric: string;
+  rank: number | null;
 };
 
 // Total EHB is a computed metric rather than a boss, so it rides along as a row

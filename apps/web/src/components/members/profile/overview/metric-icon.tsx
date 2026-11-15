@@ -1,8 +1,8 @@
 import { useState } from "react";
 
 type MetricIconProps = {
-  src: string;
   size?: number;
+  src: string;
 };
 
 export function MetricIcon({ src, size = 16 }: Readonly<MetricIconProps>) {

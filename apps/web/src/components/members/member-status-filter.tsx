@@ -4,8 +4,8 @@ import type { MemberStatus } from "@/lib/members/status";
 import { Dropdown } from "@/lib/ui/dropdown";
 
 type MemberStatusFilterProps = {
-  status: MemberStatus;
   onChange: (status: MemberStatus) => void;
+  status: MemberStatus;
 };
 
 const labels: Record<MemberStatus, string> = {
