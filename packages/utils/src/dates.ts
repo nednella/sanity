@@ -15,7 +15,12 @@ const RELATIVE_UNITS_IN_MS = [
 
 export function formatDate(value: string | null | undefined) {
   if (value == null) return DASH;
-  return new Date(value).toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" });
+  return new Date(value).toLocaleDateString("en-GB", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+    timeZone: "UTC"
+  });
 }
 
 export function formatRelativeDate(value: string | null | undefined) {
