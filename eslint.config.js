@@ -102,7 +102,17 @@ export default defineConfig([
       // the router plugin splits route components into their own modules, which
       // handle fast refresh
       // see: https://tanstack.com/router/latest/docs/framework/react/guide/automatic-code-splitting
-      "react-refresh/only-export-components": "off"
+      "react-refresh/only-export-components": "off",
+
+      // see: https://eslint.org/docs/latest/rules/no-restricted-syntax
+      "no-restricted-syntax": [
+        "error",
+        {
+          selector:
+            "VariableDeclarator[id.name='Route'] > CallExpression > ObjectExpression > Property[key.name='component']:not([value.name=/^(Page|Layout)$/])",
+          message: "Name the route component Page or Layout."
+        }
+      ]
     }
   },
   {
