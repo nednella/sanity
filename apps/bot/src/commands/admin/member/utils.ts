@@ -2,14 +2,12 @@ import { type ChatInputCommandInteraction, type SlashCommandStringOption, userMe
 
 import type { MemberChange, MemberSkip } from "@sanity/api";
 
-import { buildEmbed, fitLines } from "@/utils/embeds";
+import { EMBED_FIELD_MAX_LENGTH, buildEmbed, fitLines } from "@/utils/embeds";
 
 export const NO_MEMBERS_TAGGED = {
   title: "No members tagged",
   description: "Tag at least one member."
 };
-
-const FIELD_LIMIT = 1024;
 
 const MENTIONED_USER_ID = /(?<=<@!?)\d{17,20}(?=>)/g;
 
@@ -55,8 +53,8 @@ export function changesEmbed(
   ];
 
   const fields = [
-    ...(changedLines.length > 0 ? [{ name: "Success", value: fitLines(changedLines, FIELD_LIMIT) }] : []),
-    ...(skippedLines.length > 0 ? [{ name: "Skipped", value: fitLines(skippedLines, FIELD_LIMIT) }] : [])
+    ...(changedLines.length > 0 ? [{ name: "Success", value: fitLines(changedLines, EMBED_FIELD_MAX_LENGTH) }] : []),
+    ...(skippedLines.length > 0 ? [{ name: "Skipped", value: fitLines(skippedLines, EMBED_FIELD_MAX_LENGTH) }] : [])
   ];
 
   return buildEmbed({

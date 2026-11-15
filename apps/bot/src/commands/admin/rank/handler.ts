@@ -6,7 +6,7 @@ import { capitalise } from "@sanity/utils";
 import { api } from "@/lib/api";
 import { resolveTextChannel } from "@/lib/channels";
 import { runSubcommand } from "@/utils/commands";
-import { buildEmbed, fitLines } from "@/utils/embeds";
+import { EMBED_FIELD_MAX_LENGTH, buildEmbed, fitLines } from "@/utils/embeds";
 import { reply, replyError } from "@/utils/replies";
 
 import { NO_MEMBERS_TAGGED, changesEmbed, readTaggedMembers } from "../member/utils";
@@ -16,8 +16,6 @@ const SUBCOMMANDS = {
   hold_demotion: holdDemotion,
   set
 };
-
-const FIELD_LIMIT = 1024;
 
 export function handleRank(interaction: ChatInputCommandInteraction) {
   return runSubcommand(interaction, SUBCOMMANDS);
@@ -36,7 +34,7 @@ function proposalField(name: string, proposals: RankProposal[]) {
     name: `${name} (${proposals.length})`,
     value: fitLines(
       proposals.map((proposal) => describeProposal(proposal)),
-      FIELD_LIMIT
+      EMBED_FIELD_MAX_LENGTH
     )
   };
 }
