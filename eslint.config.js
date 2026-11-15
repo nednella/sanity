@@ -1,4 +1,5 @@
 import js from "@eslint/js";
+import stylistic from "@stylistic/eslint-plugin";
 import eslintConfigPrettier from "eslint-config-prettier";
 import eslintPluginImportX from "eslint-plugin-import-x";
 import eslintPluginReactHooks from "eslint-plugin-react-hooks";
@@ -19,6 +20,7 @@ export default defineConfig([
       eslintConfigPrettier // must be last
     ],
     plugins: {
+      "@stylistic": stylistic,
       import: eslintPluginImportX
     },
     languageOptions: {
@@ -70,7 +72,21 @@ export default defineConfig([
 
       // named functions are declarations, arrows only for anonymous ones
       // see: https://eslint.org/docs/latest/rules/func-style
-      "func-style": ["error", "declaration"]
+      "func-style": ["error", "declaration"],
+
+      // code matches the Prettier print width, comments wrap at 80
+      // see: https://eslint.style/rules/max-len
+      "@stylistic/max-len": [
+        "error",
+        {
+          code: 120,
+          comments: 80,
+          ignoreUrls: true,
+          ignoreStrings: true,
+          ignoreTemplateLiterals: true,
+          ignoreRegExpLiterals: true
+        }
+      ]
     }
   },
   {
@@ -83,7 +99,8 @@ export default defineConfig([
   {
     files: ["apps/web/src/routes/**/*.tsx"],
     rules: {
-      // the router plugin splits route components into their own modules, which handle fast refresh
+      // the router plugin splits route components into their own modules, which
+      // handle fast refresh
       // see: https://tanstack.com/router/latest/docs/framework/react/guide/automatic-code-splitting
       "react-refresh/only-export-components": "off"
     }
@@ -91,7 +108,8 @@ export default defineConfig([
   {
     files: ["**/*.config.ts"],
     rules: {
-      "import/no-default-export": "off" // tooling configs require a default export
+      // tooling configs require a default export
+      "import/no-default-export": "off"
     }
   }
 ]);

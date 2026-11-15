@@ -5,8 +5,8 @@ export type PageSearch = {
   offset: number;
 };
 
-// No sort in the URL means the caller hasn't picked one, so no column shows as sorted and the
-// server falls back to its own order.
+// No sort in the URL means the caller hasn't picked one, so no column shows as
+// sorted and the server falls back to its own order.
 export type SortSearch<TSort extends string> = {
   order?: "asc" | "desc";
   sort?: TSort;

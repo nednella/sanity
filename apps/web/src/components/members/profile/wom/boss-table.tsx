@@ -17,7 +17,8 @@ type BossRow = {
   ehb: number;
 };
 
-// Total EHB is a computed metric rather than a boss, so it rides along as a row of its own.
+// Total EHB is a computed metric rather than a boss, so it rides along as a row
+// of its own.
 function toRows(snapshot: Snapshot | undefined): BossRow[] | undefined {
   if (!snapshot) return undefined;
 

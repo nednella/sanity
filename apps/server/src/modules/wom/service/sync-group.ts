@@ -9,12 +9,13 @@ import { saveSnapshots } from "../repository/save-snapshots";
 import { changeMainRsn } from "./shared/change-main-rsn";
 
 /**
- * Reads every tracked clan member in one request and stores the snapshot each one carries, skipping
- * any snapshot we already hold. Only players Wise Old Man ties to one of our members are stored,
- * and only once each, since a member with two accounts in the group would otherwise be saved twice.
+ * Reads every tracked clan member in one request and stores the snapshot each
+ * one carries, skipping any snapshot we already hold. Only players Wise Old Man
+ * ties to one of our members are stored, and only once each, since a member
+ * with two accounts in the group would otherwise be saved twice.
  *
- * Wise Old Man reflects the hiscores, so the name it reports for a linked player is the member's
- * real RSN and replaces whatever we hold.
+ * Wise Old Man reflects the hiscores, so the name it reports for a linked
+ * player is the member's real RSN and replaces whatever we hold.
  */
 export async function syncGroup() {
   const entries = await wom.groups.getGroupBulkHiscores(Number(config.womGroupId));

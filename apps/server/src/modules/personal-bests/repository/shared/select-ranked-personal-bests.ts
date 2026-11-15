@@ -6,9 +6,10 @@ import { bosses, members, personalBests, speedrunContent } from "@db/schema";
 import { columns } from "./columns";
 import { isActiveContent, isClanRecord } from "./filters";
 
-// Ranks every run eligible to be a clan record within its content and team size, fastest first and the
-// earlier submission winning a tie. A run whose team is incomplete is not eligible, so it comes back
-// without a rank rather than displacing the runs that are.
+// Ranks every run eligible to be a clan record within its content and team
+// size, fastest first and the earlier submission winning a tie. A run whose
+// team is incomplete is not eligible, so it comes back without a rank rather
+// than displacing the runs that are.
 export function selectRankedPersonalBests(matches: SQL | undefined, top: number | undefined, orderBy?: SQL[]) {
   const ranked = db.$with("ranked").as(
     db

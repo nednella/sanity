@@ -36,7 +36,8 @@ export function noteOption(option: SlashCommandStringOption) {
   return option.setName("note").setDescription("Why, for the audit log").setMaxLength(500);
 }
 
-// Members are tagged in a text option, because a user option holds only one member.
+// Members are tagged in a text option, because a user option holds only one
+// member.
 export function readTaggedMembers(interaction: ChatInputCommandInteraction) {
   const taggedDiscordIds = interaction.options.getString("members", true).match(MENTIONED_USER_ID) ?? [];
 

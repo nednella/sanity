@@ -124,8 +124,8 @@ function Item({ record }: Readonly<{ record: RankedPersonalBest }>) {
       )}
 
       <Medal position={position} />
-      {/* Above the overlay so the links stay reachable, but only the links: the rest of the cell
-          lets the click through to the screenshot. */}
+      {/* Above the overlay so the links stay reachable, but only the links: the
+          rest of the cell lets the click through to the screenshot. */}
       <span className="pointer-events-none relative min-w-0 flex-1 truncate [&_a]:pointer-events-auto">
         <ParticipantList participants={team} />
       </span>

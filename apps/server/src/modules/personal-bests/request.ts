@@ -46,7 +46,8 @@ export const createPersonalBestBody = z
     imageUrl: z.url().nullable().default(null),
     participants: z.array(bigIntString).min(1)
   })
-  // The team is who the run is credited to, so it cannot hold more people than the run had.
+  // The team is who the run is credited to, so it cannot hold more people than
+  // the run had.
   .refine(({ participants, scale }) => participants.length <= scale, {
     message: "More members than the team size allows",
     path: ["participants"]

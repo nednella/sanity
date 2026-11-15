@@ -14,7 +14,8 @@ export function oneMemberOption(option: SlashCommandUserOption) {
   return option.setName("member").setDescription("Tag a member, or leave it empty for yourself");
 }
 
-// Replies for the caller when the tagged user has no member, so a handler only has to stop.
+// Replies for the caller when the tagged user has no member, so a handler only
+// has to stop.
 export async function findMember(interaction: ChatInputCommandInteraction) {
   const user = taggedUser(interaction);
 

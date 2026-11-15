@@ -2,7 +2,8 @@ import type { components } from "./v1";
 
 type ErrorBody = Partial<components["schemas"]["ErrorResponse"]>;
 
-// A failed response is not always JSON: a proxy or a crashed server can answer with anything.
+// A failed response is not always JSON: a proxy or a crashed server can answer
+// with anything.
 async function parseBody(response: Response) {
   try {
     return await response.clone().json();
@@ -11,9 +12,10 @@ async function parseBody(response: Response) {
   }
 }
 
-// Every failure a caller sees is an Error, so it can be handled without first working out what it
-// was handed. The message is written by the server for people to read, so a caller shows it as it is.
-// Code and status are for a caller that has to act differently, not to write its own text.
+// Every failure a caller sees is an Error, so it can be handled without first
+// working out what it was handed. The message is written by the server for
+// people to read, so a caller shows it as it is. Code and status are for a
+// caller that has to act differently, not to write its own text.
 class ApiError extends Error {
   static async from(response: Response) {
     return new ApiError(response, await parseBody(response));

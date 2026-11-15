@@ -18,7 +18,8 @@ type ContentFilterProps = {
   scale?: number;
 };
 
-// A menu item is not a form control, so picking one has to dismiss the popover it sits in.
+// A menu item is not a form control, so picking one has to dismiss the popover
+// it sits in.
 function close(event: MouseEvent<HTMLElement>) {
   event.currentTarget.closest<HTMLElement>("[popover]")?.hidePopover();
 }
@@ -57,7 +58,8 @@ export function ContentFilter({ contentId, onChange, scale }: Readonly<ContentFi
           <li key={entry.id}>
             <button
               type="button"
-              // A diary run at one team size only has nothing to choose, so the size comes with it.
+              // A diary run at one team size only has nothing to choose, so the
+              // size comes with it.
               onClick={pick({ contentId: entry.id, scale: entry.scales.length === 1 ? entry.scales[0] : undefined })}
             >
               {entry.name}

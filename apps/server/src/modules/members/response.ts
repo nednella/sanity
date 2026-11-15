@@ -201,7 +201,8 @@ export const member = z
   })
   .register(z.globalRegistry, { id: "Member" });
 
-// Built rather than extended, because extend() would put progression after wom in the response.
+// Built rather than extended, because extend() would put progression after wom
+// in the response.
 export const memberProfile = z
   .object({
     ...member.omit({ wom: true }).shape,

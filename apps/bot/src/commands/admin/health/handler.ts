@@ -34,8 +34,9 @@ export async function handleHealth(interaction: ChatInputCommandInteraction) {
   );
 }
 
-// A failing check answers 503 with the same body, which is still a report worth showing. No answer
-// at all is the server's own check failing, with nothing to say about the rest.
+// A failing check answers 503 with the same body, which is still a report worth
+// showing. No answer at all is the server's own check failing, with nothing to
+// say about the rest.
 async function fetchHealth() {
   try {
     return await api.get("/v1/health");

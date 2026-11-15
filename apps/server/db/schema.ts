@@ -250,8 +250,9 @@ export const submissions = pgTable(
     itemId: integer().references(() => items.id, { onDelete: "restrict" }),
     itemName: text(),
     valueMillions: integer(),
-    // People on the drop who are not in the clan. They take a share, so the split needs them, and
-    // the old bot only ever kept this in the Discord message it posted.
+    // People on the drop who are not in the clan. They take a share, so the
+    // split needs them, and the old bot only ever kept this in the Discord
+    // message it posted.
     nonClanCount: integer().notNull().default(0),
     imageUrl: text(),
     discordMessageUrl: text(),

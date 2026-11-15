@@ -12,13 +12,15 @@ type RankStandingProps = {
 };
 
 /**
- * Where a member stands when there is no next rank to work toward: maxed, on trial, or off the ladder.
+ * Where a member stands when there is no next rank to work toward: maxed, on
+ * trial, or off the ladder.
  */
 export function RankStanding({ celebrate = false, overline, rank }: Readonly<RankStandingProps>) {
   return (
     <div className="relative flex flex-1 flex-col items-center justify-center gap-4 text-center">
       {celebrate && (
-        // A gradient rather than a blurred shape, so the glow fades out instead of meeting a clipped edge.
+        // A gradient rather than a blurred shape, so the glow fades out instead
+        // of meeting a clipped edge.
         <div
           aria-hidden="true"
           className="pointer-events-none absolute -inset-4 bg-[radial-gradient(circle_at_center,var(--color-base-300),transparent_65%)] opacity-50"

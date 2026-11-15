@@ -12,11 +12,13 @@ import { reviewPersonalBest } from "../repository/review-personal-best";
 import { payDiaryCarries } from "./shared/pay-diary-carries";
 
 /**
- * Approving a run earns no points for the run itself: the speedrun diary reads the times, so a
- * member's standing follows from the approval. What it can pay is a carry, to the members who
- * already held a tier the run has just given somebody else, and any diary tier the run pushes a
- * member's points over. A run reaches review once its submitter has confirmed it. Asking for the review
- * it already has changes nothing, and any other review of a pending or reviewed run is refused.
+ * Approving a run earns no points for the run itself: the speedrun diary reads
+ * the times, so a member's standing follows from the approval. What it can pay
+ * is a carry, to the members who already held a tier the run has just given
+ * somebody else, and any diary tier the run pushes a member's points over. A
+ * run reaches review once its submitter has confirmed it. Asking for the review
+ * it already has changes nothing, and any other review of a pending or reviewed
+ * run is refused.
  */
 export async function reviewPersonalBestById(id: number, review: Review, auth: ActingAuth) {
   return db.transaction(async (tx) => {

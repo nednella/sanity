@@ -14,7 +14,8 @@ const labels: Record<SubmissionType, string> = {
   personalBests: "Personal Bests"
 };
 
-// Two tables, so the control is the switch between them rather than a list to pick from.
+// Two tables, so the control is the switch between them rather than a list to
+// pick from.
 export function SubmissionTypeToggle({ onChange, type }: Readonly<SubmissionTypeToggleProps>) {
   const next = type === "drops" ? "personalBests" : "drops";
 

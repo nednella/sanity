@@ -21,8 +21,8 @@ const sortColumns: Record<PersonalBestSort, PgColumn> = {
   time: personalBests.time
 };
 
-// A run is only ever one member's best for a content and team size, so the sorted column decides the order
-// on its own and content name breaks any tie.
+// A run is only ever one member's best for a content and team size, so the
+// sorted column decides the order on its own and content name breaks any tie.
 function toOrderBy(sort: PersonalBestSort, order: "asc" | "desc") {
   const direction = order === "asc" ? asc : desc;
   return [direction(sortColumns[sort]), asc(bosses.name), asc(personalBests.scale)];

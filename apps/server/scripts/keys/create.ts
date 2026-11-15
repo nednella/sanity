@@ -6,7 +6,8 @@ import { client } from "@db/index";
 import { saveKey } from "@/modules/auth/repository/save-key";
 import { generateKey, hashKey } from "@/modules/auth/service/keys";
 
-// A plugin key belongs to a member, and the web signs in through Discord, so neither is made by hand.
+// A plugin key belongs to a member, and the web signs in through Discord, so
+// neither is made by hand.
 const machineClient = z.enum(apiClient.enumValues).exclude(["plugin", "web"]);
 
 const parsed = machineClient.safeParse(process.argv[2]);

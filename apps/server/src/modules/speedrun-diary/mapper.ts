@@ -35,8 +35,9 @@ export function toDiary(rows: [DiaryTimeRow, ...DiaryTimeRow[]]) {
 /**
  * Turns one diary's thresholds into the member's standing on it.
  *
- * Thresholds arrive ordered by tier, and a faster time beats every tier below it, so the last one the
- * member's best beats is the tier they hold and the one after it is what they are chasing.
+ * Thresholds arrive ordered by tier, and a faster time beats every tier below
+ * it, so the last one the member's best beats is the tier they hold and the one
+ * after it is what they are chasing.
  */
 export function toMemberDiary([first, ...rest]: [DiaryTimeRow, ...DiaryTimeRow[]], pb: MemberBestTimeRow | undefined) {
   const thresholds = [first, ...rest];

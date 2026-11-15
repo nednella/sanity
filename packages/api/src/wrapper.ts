@@ -24,7 +24,8 @@ const unavailable: Middleware = {
   onError: ({ error }) => new NetworkError(error)
 };
 
-// Failures throw, so a call that returns always has data. The raw client still types it as optional.
+// Failures throw, so a call that returns always has data. The raw client still
+// types it as optional.
 function unwrapped<M extends HttpMethod>(client: ApiClient, method: M) {
   return async <P extends ClientPathsWithMethod<ApiClient, M>, I extends MaybeOptionalInit<paths[P], M>>(
     url: P,
@@ -35,8 +36,9 @@ function unwrapped<M extends HttpMethod>(client: ApiClient, method: M) {
   };
 }
 
-// For callers without a UI of their own, such as the bot: every call either returns data or throws,
-// and a server that never answers is told apart from one that answered with an error.
+// For callers without a UI of their own, such as the bot: every call either
+// returns data or throws, and a server that never answers is told apart from
+// one that answered with an error.
 export function createWrappedApiClient(
   baseUrl: string,
   { middleware = [], timeoutMs = DEFAULT_TIMEOUT_MS }: ApiOptions = {}

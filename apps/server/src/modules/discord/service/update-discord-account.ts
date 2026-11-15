@@ -14,8 +14,9 @@ export type DiscordAccountChange = {
 };
 
 /**
- * The member is found by display name, not Discord ID: the account being replaced may have left
- * the server or been banned, so the caller may not know its ID.
+ * The member is found by display name, not Discord ID: the account being
+ * replaced may have left the server or been banned, so the caller may not know
+ * its ID.
  */
 export async function updateDiscordAccount({ account, displayName }: DiscordAccountChange, auth: ActingAuth) {
   return db.transaction(async (tx) => {

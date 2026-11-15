@@ -7,10 +7,12 @@ import { savePlayer } from "../repository/save-player";
 import { saveSnapshots } from "../repository/save-snapshots";
 
 /**
- * Refreshes a single WOM player on demand and stores the fresh snapshot if one was returned.
+ * Refreshes a single WOM player on demand and stores the fresh snapshot if one
+ * was returned.
  *
- * We don't need to know what clan member the RSN belongs to, because we are expecting that
- * we already track the clan member's WOM player id tied to their main RSN.
+ * We don't need to know what clan member the RSN belongs to, because we are
+ * expecting that we already track the clan member's WOM player id tied to their
+ * main RSN.
  */
 async function updatePlayer(username: string) {
   try {

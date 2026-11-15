@@ -65,7 +65,8 @@ function filteredSections(interaction: ChatInputCommandInteraction, isAdmin: boo
     }));
 }
 
-// A command with subcommands can only be run through one of them, so each gets its own line.
+// A command with subcommands can only be run through one of them, so each gets
+// its own line.
 function describeCommand(interaction: ChatInputCommandInteraction, command: Command) {
   const subcommands = (command.toJSON().options ?? [])
     .flatMap((option) => {

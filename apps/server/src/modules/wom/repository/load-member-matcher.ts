@@ -19,6 +19,7 @@ export async function loadMemberMatcher() {
   const byPlayerId = new Map(linked.map((row) => [row.womPlayerId, row.memberId]));
   const byRsn = new Map(named.map((row) => [normaliseRsn(row.mainRsn!), row.id]));
 
-  // The player id survives a name change, so an existing link wins over the RSN.
+  // The player id survives a name change, so an existing link wins over the
+  // RSN.
   return (player: PlayerResponse) => byPlayerId.get(player.id) ?? byRsn.get(normaliseRsn(player.username));
 }

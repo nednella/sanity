@@ -133,7 +133,8 @@ function progressBar(label: string, value: number, target: number) {
   </div>`;
 }
 
-// A diary rank is earned with clan points plus either diary target, as on the website.
+// A diary rank is earned with clan points plus either diary target, as on the
+// website.
 function nextRankCard(title: string, nextRank: NextRank, { diary, membership }: MemberProfile) {
   const { requirements } = nextRank;
   const eitherOr = [
@@ -231,7 +232,8 @@ function diaryEntry({ content, nextTier, pb, scale, tier }: MemberDiary) {
   ]);
 }
 
-// The avatar comes from Discord at render time, because the one saved with the member can be out of date.
+// The avatar comes from Discord at render time, because the one saved with the
+// member can be out of date.
 export function renderProfileCard(profile: MemberProfile, avatarUrl: string) {
   return render(
     `<div style="display:flex;flex-direction:column;gap:24px;width:100%;height:100%;padding:40px 44px;font-family:Inter;color:${COLOURS.text};background:${COLOURS.background}">

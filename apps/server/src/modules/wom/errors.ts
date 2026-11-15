@@ -1,8 +1,9 @@
 import { ApplicationError } from "@/errors/error";
 
 /**
- * Wise Old Man refuses a player it updated in the last minute, one the hiscores don't return data
- * for, or one who opted out of being tracked. Its status code says which.
+ * Wise Old Man refuses a player it updated in the last minute, one the hiscores
+ * don't return data for, or one who opted out of being tracked. Its status code
+ * says which.
  */
 const REFUSALS = {
   400: { code: "WOM_NOT_ON_HISCORES", message: "That RSN isn't on the hiscores." },

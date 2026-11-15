@@ -10,17 +10,19 @@ import {
   toSortingState
 } from "@/lib/table/search";
 
-// A server-driven table keeps its page and sort in the URL, so this is the one place that translates
-// between the table's state and the route's search params. Any other param the route declares can be
-// written through `replaceSearch`, which is how a filter or a search box updates the URL.
+// A server-driven table keeps its page and sort in the URL, so this is the one
+// place that translates between the table's state and the route's search
+// params. Any other param the route declares can be written through
+// `replaceSearch`, which is how a filter or a search box updates the URL.
 export function useTableSearch<TSearch extends PageSearch & SortSearch<string>>(search: TSearch) {
   const navigate = useNavigate();
 
   const pagination = toPaginationState(search);
   const sorting = toSortingState(search);
 
-  // useNavigate() outside a route can't know which search schema applies, and this hook is generic
-  // over the caller's. What goes in is typed by TSearch; the cast only crosses that gap.
+  // useNavigate() outside a route can't know which search schema applies, and
+  // this hook is generic over the caller's. What goes in is typed by TSearch;
+  // the cast only crosses that gap.
   function replaceSearch(next: Partial<TSearch>) {
     return navigate({ replace: true, search: ((previous: object) => ({ ...previous, ...next })) as never });
   }
@@ -29,7 +31,8 @@ export function useTableSearch<TSearch extends PageSearch & SortSearch<string>>(
     replaceSearch(fromPaginationState(functionalUpdate(updater, pagination)) as Partial<TSearch>);
   }
 
-  // Clearing a column's sort drops both params, rather than writing an empty one.
+  // Clearing a column's sort drops both params, rather than writing an empty
+  // one.
   function onSortingChange(updater: Updater<SortingState>) {
     const [next] = functionalUpdate(updater, sorting);
     const sort = next

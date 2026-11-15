@@ -10,7 +10,8 @@ import {
 
 import type { CellLayout } from "@/lib/ui/table";
 
-// The column meta is the cell layout, so a column declares once how its cells look.
+// The column meta is the cell layout, so a column declares once how its cells
+// look.
 export type DataTableColumnMeta = CellLayout;
 
 export const dataTableFeatures = tableFeatures({

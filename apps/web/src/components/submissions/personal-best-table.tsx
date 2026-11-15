@@ -49,7 +49,8 @@ function buildColumns(memberId?: string) {
         minWidth: 4,
         numeric: true
       },
-      // A run whose team is incomplete is not eligible for a clan record, so it holds no rank.
+      // A run whose team is incomplete is not eligible for a clan record, so it
+      // holds no rank.
       cell: ({ getValue }) => getValue() ?? DASH
     }),
     columnHelper.accessor("team", {

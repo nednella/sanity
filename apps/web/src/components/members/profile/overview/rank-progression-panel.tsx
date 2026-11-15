@@ -58,7 +58,8 @@ type StandingProps = {
   status: MemberProfile["progression"]["status"];
 };
 
-// Each of these is a dead end on the ladder, for a different reason, and the member should be told which.
+// Each of these is a dead end on the ladder, for a different reason, and the
+// member should be told which.
 function Standing({ rank, status }: Readonly<StandingProps>) {
   if (status === "maxed") {
     return (
@@ -102,7 +103,8 @@ function NextRankCard({ title, nextRank, standing }: Readonly<NextRankCardProps>
 
   const { requirements } = nextRank;
 
-  // A diary rank is earned with clan points plus either target, so whichever the member reaches first promotes them.
+  // A diary rank is earned with clan points plus either target, so whichever
+  // the member reaches first promotes them.
   const eitherOr = [
     requirements.diaryPoints > 0 && {
       label: "Diary Points",

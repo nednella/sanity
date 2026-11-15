@@ -4,7 +4,8 @@ import { useThemeStore } from "@/lib/theme/theme.store";
 import { applyTheme, onSystemThemeChange } from "@/lib/theme/utils";
 
 /**
- * This provider should be nested within the provider tree next to the application's entry point.
+ * This provider should be nested within the provider tree next to the
+ * application's entry point.
  */
 export function ThemeProvider() {
   const { theme } = useThemeStore();

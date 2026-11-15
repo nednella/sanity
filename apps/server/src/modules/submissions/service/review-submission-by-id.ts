@@ -13,10 +13,11 @@ import { listParticipantIds } from "../repository/list-participant-ids";
 import { reviewSubmission } from "../repository/review-submission";
 
 /**
- * Approving is what pays out, so the read of the submission, the points and the members' totals all
- * happen in one transaction, and the row is locked while it runs. A submission reaches review once its
- * submitter has confirmed it. Asking for the review it already has changes nothing, and any other review
- * of a pending or reviewed submission is refused, so it is never paid twice.
+ * Approving is what pays out, so the read of the submission, the points and the
+ * members' totals all happen in one transaction, and the row is locked while it
+ * runs. A submission reaches review once its submitter has confirmed it. Asking
+ * for the review it already has changes nothing, and any other review of a
+ * pending or reviewed submission is refused, so it is never paid twice.
  */
 export async function reviewSubmissionById(id: number, review: Review, auth: ActingAuth) {
   return db.transaction(async (tx) => {

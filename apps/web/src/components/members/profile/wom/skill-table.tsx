@@ -18,7 +18,8 @@ type SkillRow = {
   ehp: number;
 };
 
-// Total EHP is a computed metric rather than a skill, so it rides along as a row of its own.
+// Total EHP is a computed metric rather than a skill, so it rides along as a
+// row of its own.
 function toRows(snapshot: Snapshot | undefined): SkillRow[] | undefined {
   if (!snapshot) return undefined;
 

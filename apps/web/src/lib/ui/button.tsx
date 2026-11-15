@@ -31,7 +31,8 @@ function buttonVariants({ variant = "default", size = "default" }: { variant?: V
   return cn("btn text-sm font-medium", variants[variant], sizes[size]);
 }
 
-// With asChild, the button's classes go on its only child, so a link can look like a button.
+// With asChild, the button's classes go on its only child, so a link can look
+// like a button.
 export function Button({ className, variant, size, asChild = false, children, ...props }: Readonly<ButtonProps>) {
   const classes = cn(
     buttonVariants({

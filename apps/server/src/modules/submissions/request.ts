@@ -5,7 +5,8 @@ import { pagination } from "@/schema/common";
 
 import { event } from "./response";
 
-// Narrower than every status a review can reach: a list only ever shows the ones a member can see.
+// Narrower than every status a review can reach: a list only ever shows the
+// ones a member can see.
 export const listedStatus = z.enum(["approved", "approved_missing_member", "pending", "submitted"]);
 
 const submissionFilters = z.object({

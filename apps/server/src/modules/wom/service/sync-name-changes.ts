@@ -9,7 +9,8 @@ const PAGE_SIZE = 50;
 
 type NameChange = Awaited<ReturnType<typeof wom.groups.getGroupNameChanges>>[number];
 
-// Wise Old Man resolves a change some time after it happens, and only then is it ours to record.
+// Wise Old Man resolves a change some time after it happens, and only then is
+// it ours to record.
 function resolvedAt(change: NameChange) {
   return change.resolvedAt ?? change.updatedAt;
 }
@@ -31,10 +32,12 @@ async function readGroupNameChanges(pages: number) {
 }
 
 /**
- * Builds the history of names behind every linked member, for their profile to show.
+ * Builds the history of names behind every linked member, for their profile to
+ * show.
  *
- * It does not touch a member's current RSN: the group sync reads that from the hiscores for every
- * linked player on every run, which reaches members this feed never mentions.
+ * It does not touch a member's current RSN: the group sync reads that from the
+ * hiscores for every linked player on every run, which reaches members this
+ * feed never mentions.
  */
 export async function syncNameChanges(pages: number) {
   const memberIdByPlayerId = await loadTrackedPlayers();
