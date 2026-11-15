@@ -21,8 +21,8 @@ function Page() {
 
   return (
     <SkillTable
-      snapshot={profile.wom?.latestSnapshot}
       emptyMessage={womEmptyMessage(profile)}
+      snapshot={profile.wom?.latestSnapshot}
     />
   );
 }

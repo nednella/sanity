@@ -25,31 +25,31 @@ export function MediaDialog({ alt, onClose, src }: Readonly<MediaDialogProps>) {
 
   return (
     <dialog
-      ref={dialogRef}
       className="modal"
       onClose={onClose}
+      ref={dialogRef}
     >
       <div className="modal-box max-w-4xl rounded-xs border border-base-300 bg-base-100 p-2">
         {src &&
           (isVideo(src) ? (
             <video
-              src={src}
-              controls
               className="max-h-[80vh] w-full"
+              controls
+              src={src}
             >
               <track kind="captions" />
             </video>
           ) : (
             <img
-              src={src}
               alt={alt}
               className="max-h-[80vh] w-full object-contain"
+              src={src}
             />
           ))}
       </div>
       <form
-        method="dialog"
         className="modal-backdrop"
+        method="dialog"
       >
         <button type="submit">Close</button>
       </form>

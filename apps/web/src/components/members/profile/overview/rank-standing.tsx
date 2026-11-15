@@ -36,9 +36,9 @@ export function RankStanding({ celebrate = false, overline, rank }: Readonly<Ran
         )}
         {rank.iconUrl && (
           <img
-            src={rank.iconUrl}
             alt=""
             className="size-10 object-contain [image-rendering:pixelated]"
+            src={rank.iconUrl}
           />
         )}
       </div>

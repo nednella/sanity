@@ -26,16 +26,16 @@ export function NationalityFlag({ className, countryCode, shape = "rectangle" }:
   // avatar.
   return (
     <Tooltip
-      tip={countryCode.toUpperCase()}
       className={className}
+      tip={countryCode.toUpperCase()}
     >
       <img
+        alt={countryCode.toUpperCase()}
+        className={shapeClassName}
+        height={height}
+        loading="lazy"
         src={`${cdn}/${code}.svg`}
         width={16}
-        height={height}
-        alt={countryCode.toUpperCase()}
-        loading="lazy"
-        className={shapeClassName}
       />
     </Tooltip>
   );

@@ -50,9 +50,9 @@ function Artwork({ metric }: Readonly<{ metric: string | null }>) {
 
   return (
     <img
-      src={contentArtworkUrl(metric)}
       alt=""
       className="pointer-events-none absolute -top-4 -right-8 -z-10 h-48 object-contain opacity-15 select-none"
+      src={contentArtworkUrl(metric)}
     />
   );
 }
@@ -83,9 +83,9 @@ function ScaleButton({ value }: Readonly<{ value: number }>) {
   return (
     <Button
       className="join-item"
+      onClick={() => setScale(value)}
       size="sm"
       variant={value === scale ? "default" : "custom"}
-      onClick={() => setScale(value)}
     >
       {value}
     </Button>
@@ -113,9 +113,9 @@ function Item({ record }: Readonly<{ record: RankedPersonalBest }>) {
     <li className="relative flex items-center gap-3 px-4 py-2.5 text-sm">
       {imageUrl && (
         <button
-          type="button"
           className="absolute inset-0 cursor-zoom-in focus-visible:outline focus-visible:-outline-offset-2 focus-visible:outline-primary"
           onClick={() => showMedia({ alt: `${content.name}, ${teamScale(scale)}, in ${time}`, src: imageUrl })}
+          type="button"
         >
           <span className="sr-only">
             Screenshot of {content.name} in {time}
@@ -146,9 +146,9 @@ function More({ contentId, scale }: Readonly<MoreProps>) {
   return (
     <li>
       <Link
-        to="/submissions"
-        search={{ contentId, order: "asc", scale, sort: "time", type: "personalBests" }}
         className="flex items-center justify-center gap-1 px-4 py-2.5 text-xs text-base-content/60 hover:text-base-content"
+        search={{ contentId, order: "asc", scale, sort: "time", type: "personalBests" }}
+        to="/submissions"
       >
         See more
         <ChevronRight className="size-3" />

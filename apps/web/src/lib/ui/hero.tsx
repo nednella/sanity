@@ -54,31 +54,31 @@ export function Hero({
   return (
     <section className={className}>
       <motion.div
-        variants={containerVariants}
-        initial="hidden"
         animate="visible"
         className="container mx-auto px-4 text-center lg:max-w-5xl"
+        initial="hidden"
+        variants={containerVariants}
       >
         <motion.h1
-          variants={itemVariants}
           className={cn(
             "mb-4 scroll-m-20 font-bold tracking-tight text-balance",
             scale.title,
             overlay && "text-white drop-shadow-md"
           )}
+          variants={itemVariants}
         >
           {title}
         </motion.h1>
 
         {description && (
           <motion.p
-            variants={itemVariants}
             className={cn(
               "text-base-content/60",
               scale.description,
               children && scale.gap,
               overlay && "text-white/90 drop-shadow-md"
             )}
+            variants={itemVariants}
           >
             {description}
           </motion.p>
@@ -86,8 +86,8 @@ export function Hero({
 
         {children && (
           <motion.div
-            variants={itemVariants}
             className="flex flex-col items-center justify-center gap-4 sm:flex-row"
+            variants={itemVariants}
           >
             {children}
           </motion.div>

@@ -23,21 +23,21 @@ export function Dropdown({ align = "start", label, children, className, triggerC
   return (
     <>
       <button
-        type="button"
-        popoverTarget={id}
         className={cn("btn btn-sm", triggerClassName)}
+        popoverTarget={id}
         style={{ anchorName: anchor } as React.CSSProperties}
+        type="button"
       >
         {label}
       </button>
       <ul
-        id={id}
-        popover=""
         className={cn(
           "menu dropdown w-56 rounded-xs border border-base-300 bg-base-100 p-2 shadow-sm",
           alignments[align],
           className
         )}
+        id={id}
+        popover=""
         style={{ positionAnchor: anchor } as React.CSSProperties}
       >
         {children}

@@ -11,13 +11,13 @@ export function MetricIcon({ src, size = 16 }: Readonly<MetricIconProps>) {
 
   return (
     <img
-      src={src}
       alt=""
-      width={size}
-      height={size}
-      style={{ width: size, height: size }}
       className="shrink-0 object-contain"
+      height={size}
       onError={() => setHasError(true)}
+      src={src}
+      style={{ width: size, height: size }}
+      width={size}
     />
   );
 }

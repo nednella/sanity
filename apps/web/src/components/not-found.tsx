@@ -17,11 +17,11 @@ export function NotFound({
 }: Readonly<NotFoundProps>) {
   return (
     <Hero
+      className={cn("flex items-center justify-center", fullScreen ? "min-h-screen" : "min-h-[60vh]")}
+      description={description}
+      reducedMotion
       size="sm"
       title={title}
-      description={description}
-      className={cn("flex items-center justify-center", fullScreen ? "min-h-screen" : "min-h-[60vh]")}
-      reducedMotion
     >
       <Button
         asChild

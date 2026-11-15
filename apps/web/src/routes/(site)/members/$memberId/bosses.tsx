@@ -21,8 +21,8 @@ function Page() {
 
   return (
     <BossTable
-      snapshot={profile.wom?.latestSnapshot}
       emptyMessage={womEmptyMessage(profile)}
+      snapshot={profile.wom?.latestSnapshot}
     />
   );
 }

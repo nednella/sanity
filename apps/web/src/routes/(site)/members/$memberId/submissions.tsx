@@ -31,8 +31,8 @@ function Page() {
 
   const toolbar = (
     <SubmissionsToolbar
-      search={search}
       onChange={(next) => navigate({ replace: true, search: next })}
+      search={search}
     />
   );
 

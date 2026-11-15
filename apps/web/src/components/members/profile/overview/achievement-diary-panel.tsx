@@ -41,11 +41,11 @@ export function AchievementDiaryPanel({ diaries }: Readonly<AchievementDiaryPane
 
           return (
             <tr
-              key={`${content.id}:${scale}`}
-              tabIndex={hasScreenshot ? 0 : undefined}
               className={hasScreenshot ? "cursor-zoom-in hover:bg-base-200" : undefined}
+              key={`${content.id}:${scale}`}
               onClick={() => openScreenshot(diary)}
               onKeyDown={(event) => openScreenshotOnKey(event, diary)}
+              tabIndex={hasScreenshot ? 0 : undefined}
             >
               <td>
                 <span className="inline-flex items-center gap-2">

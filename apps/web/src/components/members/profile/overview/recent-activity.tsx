@@ -25,8 +25,8 @@ export function RecentActivity() {
       <ul className="flex flex-col divide-y divide-base-content/5">
         {PLACEHOLDER_ACTIVITY.map((entry) => (
           <li
-            key={entry.description}
             className="flex items-center gap-3 py-2 text-sm"
+            key={entry.description}
           >
             <entry.icon className="size-4 shrink-0 text-base-content/60" />
             <span className="flex-1">{entry.description}</span>

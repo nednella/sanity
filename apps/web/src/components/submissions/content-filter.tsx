@@ -48,8 +48,8 @@ export function ContentFilter({ contentId, onChange, scale }: Readonly<ContentFi
       >
         <li>
           <button
-            type="button"
             onClick={pick({ contentId: undefined, scale: undefined })}
+            type="button"
           >
             Any content
           </button>
@@ -57,10 +57,10 @@ export function ContentFilter({ contentId, onChange, scale }: Readonly<ContentFi
         {data?.map((entry) => (
           <li key={entry.id}>
             <button
-              type="button"
               // A diary run at one team size only has nothing to choose, so the
               // size comes with it.
               onClick={pick({ contentId: entry.id, scale: entry.scales.length === 1 ? entry.scales[0] : undefined })}
+              type="button"
             >
               {entry.name}
             </button>
@@ -80,8 +80,8 @@ export function ContentFilter({ contentId, onChange, scale }: Readonly<ContentFi
         >
           <li>
             <button
-              type="button"
               onClick={pick({ contentId: content.id, scale: undefined })}
+              type="button"
             >
               Any scale
             </button>
@@ -89,8 +89,8 @@ export function ContentFilter({ contentId, onChange, scale }: Readonly<ContentFi
           {content.scales.map((option) => (
             <li key={option}>
               <button
-                type="button"
                 onClick={pick({ contentId: content.id, scale: option })}
+                type="button"
               >
                 {teamScale(option)}
               </button>

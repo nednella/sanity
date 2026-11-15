@@ -64,13 +64,13 @@ function PreviousNames({ rsn }: Readonly<PreviousNamesProps>) {
   return (
     <Dropdown
       className="w-64"
-      triggerClassName="btn-ghost h-auto min-h-0 gap-1 px-1 py-0 text-sm font-normal text-base-content/60"
       label={
         <>
           {name}
           <ChevronDown className="size-3" />
         </>
       }
+      triggerClassName="btn-ghost h-auto min-h-0 gap-1 px-1 py-0 text-sm font-normal text-base-content/60"
     >
       <li className="menu-title px-2 py-1">Previously</li>
       {shown.map(({ name: previous, until }) => (

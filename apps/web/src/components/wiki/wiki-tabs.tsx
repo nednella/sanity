@@ -13,23 +13,23 @@ export function WikiTabs({ article }: Readonly<WikiTabsProps>) {
         <label className="input -mb-px h-9 rounded-b-none border-base-300">
           <Search className="size-3.5 opacity-50" />
           <input
-            type="search"
-            placeholder="Search the Sanity wiki"
             aria-label="Search the Sanity wiki"
+            placeholder="Search the Sanity wiki"
+            type="search"
           />
         </label>
       }
     >
       <Tab
-        to="/wiki/$article"
-        params={{ article }}
         activeOptions={{ exact: true }}
+        params={{ article }}
+        to="/wiki/$article"
       >
         Article
       </Tab>
       <Tab
-        to="/wiki/$article/discussion"
         params={{ article }}
+        to="/wiki/$article/discussion"
       >
         Discussion
       </Tab>

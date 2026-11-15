@@ -25,16 +25,16 @@ export function Dialog({ ref, title, children, className }: Readonly<DialogProps
 
   return (
     <dialog
-      ref={dialogRef}
       className="modal"
+      ref={dialogRef}
     >
       <div className={cn("modal-box rounded-xs border border-base-300", className)}>
         <H3>{title}</H3>
         <div className="py-4">{children}</div>
       </div>
       <form
-        method="dialog"
         className="modal-backdrop"
+        method="dialog"
       >
         <button type="submit">Close</button>
       </form>

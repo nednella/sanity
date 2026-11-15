@@ -17,15 +17,15 @@ export const Route = createFileRoute("/(site)/members/$memberId")({
   },
   notFoundComponent: () => (
     <NotFound
-      title="Member not found"
       description="This member doesn't exist, or the link is broken."
+      title="Member not found"
     />
   ),
   errorComponent: ({ error }) => (
     <ErrorState
-      title="Couldn't load this member"
       error={error}
       tag="member-profile"
+      title="Couldn't load this member"
     />
   )
 });

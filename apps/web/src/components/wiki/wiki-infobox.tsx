@@ -14,10 +14,10 @@ export function WikiInfobox({ title, image, caption, rows }: Readonly<WikiInfobo
       <div className="bg-neutral py-2 text-center font-semibold text-neutral-content">{title}</div>
       {image && (
         <img
-          src={image.src}
           alt={image.alt}
-          loading="lazy"
           className="mx-auto max-h-56 w-full bg-base-100 object-contain p-3"
+          loading="lazy"
+          src={image.src}
         />
       )}
       {caption && (
@@ -29,8 +29,8 @@ export function WikiInfobox({ title, image, caption, rows }: Readonly<WikiInfobo
             {rows.map((row) => (
               <tr key={row.label}>
                 <th
-                  scope="row"
                   className="w-2/5 font-medium text-base-content/60"
+                  scope="row"
                 >
                   {row.label}
                 </th>

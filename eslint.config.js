@@ -2,6 +2,7 @@ import js from "@eslint/js";
 import stylistic from "@stylistic/eslint-plugin";
 import eslintConfigPrettier from "eslint-config-prettier";
 import eslintPluginImportX from "eslint-plugin-import-x";
+import perfectionist from "eslint-plugin-perfectionist";
 import eslintPluginReactHooks from "eslint-plugin-react-hooks";
 import eslintPluginReactRefresh from "eslint-plugin-react-refresh";
 import eslintPluginUnicorn from "eslint-plugin-unicorn";
@@ -21,10 +22,16 @@ export default defineConfig([
     ],
     plugins: {
       "@stylistic": stylistic,
-      import: eslintPluginImportX
+      import: eslintPluginImportX,
+      perfectionist
     },
     languageOptions: {
       globals: globals.node
+    },
+    settings: {
+      perfectionist: {
+        type: "natural"
+      }
     },
     rules: {
       // allow idiomatic TS and server names
@@ -106,7 +113,10 @@ export default defineConfig([
 
       // no braces around a plain string prop or child
       // see: https://eslint.style/rules/jsx-curly-brace-presence
-      "@stylistic/jsx-curly-brace-presence": ["error", { props: "never", children: "never" }]
+      "@stylistic/jsx-curly-brace-presence": ["error", { props: "never", children: "never" }],
+
+      // see: https://perfectionist.dev/rules/sort-jsx-props
+      "perfectionist/sort-jsx-props": "error"
     }
   },
   {

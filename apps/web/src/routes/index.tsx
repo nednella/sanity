@@ -26,26 +26,26 @@ function Page() {
       <div className="fixed top-4 right-4 z-10 flex gap-2">
         <Button
           asChild
+          className={floatingButton}
           size="icon"
           variant="ghost"
-          className={floatingButton}
         >
           <ExternalLink
-            href={SANITY_DISCORD_URL}
             aria-label="Join our Discord"
+            href={SANITY_DISCORD_URL}
           >
             <DiscordLogo className="size-4 fill-current" />
           </ExternalLink>
         </Button>
         <Button
           asChild
+          className={floatingButton}
           size="icon"
           variant="ghost"
-          className={floatingButton}
         >
           <ExternalLink
-            href={SANITY_X_URL}
             aria-label="Follow us on X"
+            href={SANITY_X_URL}
           >
             <TwitterLogo className="size-4 fill-current" />
           </ExternalLink>
@@ -54,9 +54,9 @@ function Page() {
         {!config.isProduction && (
           <Button
             asChild
+            className={floatingButton}
             size="lg"
             variant="outline"
-            className={floatingButton}
           >
             <Link to="/login">
               <span>Log in</span>
@@ -65,24 +65,24 @@ function Page() {
         )}
       </div>
       <Hero
-        title="Welcome to Sanity"
-        description="an elite Old School RuneScape PvM clan home to some of the best players in the game"
         className="relative flex min-h-screen items-start justify-center overflow-hidden pt-[12vh]"
+        description="an elite Old School RuneScape PvM clan home to some of the best players in the game"
         overlay
+        title="Welcome to Sanity"
       >
         {config.isProduction ? (
           <Badge
-            variant="outline"
             className={cn("badge-lg", floatingButton)}
+            variant="outline"
           >
             Coming soon
           </Badge>
         ) : (
           <Button
             asChild
+            className={cn("w-full max-w-48", floatingButton)}
             size="lg"
             variant="outline"
-            className={cn("w-full max-w-48", floatingButton)}
           >
             <Link to="/wiki">
               <span>Enter</span>

@@ -22,9 +22,9 @@ export function SubmissionTypeToggle({ onChange, type }: Readonly<SubmissionType
   return (
     <Tooltip tip={`Show ${labels[next].toLowerCase()}`}>
       <Button
+        onClick={() => onChange(next)}
         size="sm"
         variant="custom"
-        onClick={() => onChange(next)}
       >
         <ArrowLeftRight className="size-4" />
         {labels[type]}

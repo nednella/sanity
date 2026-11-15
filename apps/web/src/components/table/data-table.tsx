@@ -168,8 +168,8 @@ export function DataTable<TData extends RowData>({
 
       {pagination && (
         <DataTablePagination
-          table={table}
           pageSizeOptions={pageSizeOptions}
+          table={table}
         />
       )}
     </Table.Shell>
@@ -207,9 +207,9 @@ function Rows<TData extends RowData>({
         <p>{error.message}</p>
         {onRetry && (
           <Button
+            onClick={onRetry}
             size="sm"
             variant="custom"
-            onClick={onRetry}
           >
             Retry
           </Button>
@@ -229,8 +229,8 @@ function Rows<TData extends RowData>({
 
   return ordered.map((row) => (
     <Table.Row
-      key={row.id}
       cursor={rowCursor}
+      key={row.id}
       onSelect={onRowClick && (() => onRowClick(row.original))}
     >
       {row.getVisibleCells().map((cell) => (

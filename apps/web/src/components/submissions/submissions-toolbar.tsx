@@ -18,15 +18,15 @@ export function SubmissionsToolbar({ onChange, search }: Readonly<SubmissionsToo
   return (
     <>
       <SubmissionTypeToggle
-        type={search.type}
         onChange={switchTo}
+        type={search.type}
       />
 
       {search.type === "personalBests" && (
         <ContentFilter
           contentId={search.contentId}
-          scale={search.scale}
           onChange={filterBy}
+          scale={search.scale}
         />
       )}
     </>

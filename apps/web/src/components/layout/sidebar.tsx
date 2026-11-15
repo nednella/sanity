@@ -67,8 +67,8 @@ export function Sidebar() {
   return (
     <div className="flex min-h-full w-60 flex-col gap-4 bg-base-100 p-4 lg:sticky lg:top-0 lg:h-screen lg:overflow-y-auto">
       <Link
-        to="/"
         className="block px-2 py-1"
+        to="/"
       >
         <H2 className="font-black">Sanity</H2>
         <Overline>The Sanity Wiki</Overline>
@@ -93,11 +93,11 @@ export function Sidebar() {
                 <li key={title}>
                   <Link
                     {...link}
-                    activeProps={{ className: "menu-active" }}
                     activeOptions={{
                       exact: true,
                       includeSearch: false
                     }}
+                    activeProps={{ className: "menu-active" }}
                   >
                     {title}
                   </Link>

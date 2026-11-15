@@ -26,8 +26,8 @@ export function LabelledSeparator({
 }: Readonly<LabelledSeparatorProps>) {
   return (
     <div
-      role="separator"
       className={cn("divider", className)}
+      role="separator"
       {...props}
     >
       {children && <span className={cn("text-sm", childrenClassName)}>{children}</span>}

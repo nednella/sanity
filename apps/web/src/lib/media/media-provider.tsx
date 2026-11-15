@@ -11,8 +11,8 @@ export function MediaProvider() {
   return (
     <MediaDialog
       alt={media?.alt ?? ""}
-      src={media?.src ?? null}
       onClose={closeMedia}
+      src={media?.src ?? null}
     />
   );
 }
