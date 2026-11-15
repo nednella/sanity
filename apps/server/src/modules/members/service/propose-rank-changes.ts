@@ -12,7 +12,9 @@ export async function proposeRankChanges() {
   const rankById = new Map(ranks.map((rank) => [rank.id, rank]));
   const now = new Date();
 
-  const toRank = (id: number) => toRankSummary(rankById.get(id)!);
+  function toRank(id: number) {
+    return toRankSummary(rankById.get(id)!);
+  }
 
   const proposals = standings.flatMap((standing) => {
     if (RANK_IDS_OFF_LADDER.has(standing.rankId)) return [];

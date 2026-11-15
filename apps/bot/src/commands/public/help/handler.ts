@@ -20,8 +20,8 @@ const EMBED_DESCRIPTION = "Can you help me box, what's the command?";
 const GETTING_STARTED =
   "My commands are available with the `/` prefix. Some commands are channel restricted, and the commands themselves redirect you if needed.\n\n";
 
-export const handleAdminHelp = (interaction: ChatInputCommandInteraction) =>
-  reply(
+export function handleAdminHelp(interaction: ChatInputCommandInteraction) {
+  return reply(
     interaction,
     buildEmbed({
       description: EMBED_DESCRIPTION,
@@ -29,9 +29,10 @@ export const handleAdminHelp = (interaction: ChatInputCommandInteraction) =>
       thumbnail: interaction.client.user.displayAvatarURL()
     })
   );
+}
 
-export const handleHelp = (interaction: ChatInputCommandInteraction) =>
-  reply(
+export function handleHelp(interaction: ChatInputCommandInteraction) {
+  return reply(
     interaction,
     buildEmbed({
       description: EMBED_DESCRIPTION,
@@ -40,14 +41,15 @@ export const handleHelp = (interaction: ChatInputCommandInteraction) =>
     }),
     { components: [links] }
   );
+}
 
-const byCategory = (a: Category, b: Category) => {
+function byCategory(a: Category, b: Category) {
   if (a === "Mainframe" || b === "Misc") return -1;
   if (a === "Misc" || b === "Mainframe") return 1;
   return a.localeCompare(b);
-};
+}
 
-const filteredSections = (interaction: ChatInputCommandInteraction, isAdmin: boolean) => {
+function filteredSections(interaction: ChatInputCommandInteraction, isAdmin: boolean) {
   const filteredCommands = commands
     // Filter admin commands & filter the calling command (/help)
     .filter((command) => command.admin === isAdmin && command.name !== interaction.commandName)
@@ -61,10 +63,10 @@ const filteredSections = (interaction: ChatInputCommandInteraction, isAdmin: boo
       name: category,
       value: grouped.flatMap((command) => describeCommand(interaction, command)).join("\n")
     }));
-};
+}
 
 // A command with subcommands can only be run through one of them, so each gets its own line.
-const describeCommand = (interaction: ChatInputCommandInteraction, command: Command) => {
+function describeCommand(interaction: ChatInputCommandInteraction, command: Command) {
   const subcommands = (command.toJSON().options ?? [])
     .flatMap((option) => {
       if (option.type === ApplicationCommandOptionType.Subcommand) return [option];
@@ -76,7 +78,7 @@ const describeCommand = (interaction: ChatInputCommandInteraction, command: Comm
   return subcommands.map(
     (subcommand) => `${commandMention(interaction, command, subcommand.name)} · ${subcommand.description}`
   );
-};
+}
 
 const links = new ActionRowBuilder<ButtonBuilder>().addComponents(
   new ButtonBuilder().setLabel("Website").setStyle(ButtonStyle.Link).setURL(config.webUrl),

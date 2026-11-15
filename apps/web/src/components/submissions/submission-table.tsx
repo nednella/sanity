@@ -16,8 +16,8 @@ import { RelativeDate } from "@/lib/ui/relative-date";
 
 const columnHelper = createColumnHelper<DataTableFeatures, Submission>();
 
-const buildColumns = (memberId?: string) =>
-  columnHelper.columns([
+function buildColumns(memberId?: string) {
+  return columnHelper.columns([
     columnHelper.accessor("item.name", {
       id: "item",
       header: "Item",
@@ -75,6 +75,7 @@ const buildColumns = (memberId?: string) =>
       cell: ({ getValue }) => <RelativeDate value={getValue()} />
     })
   ]);
+}
 
 type SubmissionTableProps = {
   data: { items: Submission[]; page: Page } | undefined;
@@ -99,11 +100,11 @@ export function SubmissionTable({
   const table = useTableSearch(search);
   const columns = buildColumns(memberId);
 
-  const openScreenshot = ({ imageUrl, item }: Submission) => {
+  function openScreenshot({ imageUrl, item }: Submission) {
     if (!imageUrl) return;
 
     showMedia({ alt: item.name ?? "Drop submission", src: imageUrl });
-  };
+  }
 
   return (
     <DataTable

@@ -8,8 +8,12 @@ type SubmissionsToolbarProps = {
 };
 
 export function SubmissionsToolbar({ onChange, search }: Readonly<SubmissionsToolbarProps>) {
-  const switchTo = (type: SubmissionType) => onChange({ limit: search.limit, offset: 0, type });
-  const filterBy = (selection: ContentSelection) => onChange({ ...search, ...selection, offset: 0 });
+  function switchTo(type: SubmissionType) {
+    return onChange({ limit: search.limit, offset: 0, type });
+  }
+  function filterBy(selection: ContentSelection) {
+    return onChange({ ...search, ...selection, offset: 0 });
+  }
 
   return (
     <>

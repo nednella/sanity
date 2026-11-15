@@ -27,8 +27,9 @@ type ButtonProps = React.ComponentProps<"button"> & {
   asChild?: boolean;
 };
 
-const buttonVariants = ({ variant = "default", size = "default" }: { variant?: Variant; size?: Size } = {}) =>
-  cn("btn text-sm font-medium", variants[variant], sizes[size]);
+function buttonVariants({ variant = "default", size = "default" }: { variant?: Variant; size?: Size } = {}) {
+  return cn("btn text-sm font-medium", variants[variant], sizes[size]);
+}
 
 // With asChild, the button's classes go on its only child, so a link can look like a button.
 export function Button({ className, variant, size, asChild = false, children, ...props }: Readonly<ButtonProps>) {

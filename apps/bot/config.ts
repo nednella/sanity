@@ -9,11 +9,11 @@ type Config = {
   webUrl: string;
 };
 
-const required = (name: string): string => {
+function required(name: string): string {
   const value = process.env[name];
   if (!value) throw new Error(`missing environment variable: ${name}`);
   return value;
-};
+}
 
 export const config: Config = {
   apiKey: required("API_KEY"),

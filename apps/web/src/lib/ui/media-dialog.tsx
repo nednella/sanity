@@ -2,7 +2,9 @@ import { useEffect, useRef } from "react";
 
 const VIDEO_EXTENSIONS = [".mp4", ".webm", ".mov"];
 
-const isVideo = (source: string) => VIDEO_EXTENSIONS.some((extension) => new URL(source).pathname.endsWith(extension));
+function isVideo(source: string) {
+  return VIDEO_EXTENSIONS.some((extension) => new URL(source).pathname.endsWith(extension));
+}
 
 type MediaDialogProps = {
   alt: string;

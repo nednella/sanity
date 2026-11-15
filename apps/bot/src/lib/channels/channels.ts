@@ -24,7 +24,8 @@ export const CHANNELS = {
  * e.g. `/channel set category` cannot point to one of the text channel options
  * like `audit_log`, `submission_review`.
  */
-export const channelOptions = (type?: ChannelType) =>
-  Object.entries(CHANNELS)
+export function channelOptions(type?: ChannelType) {
+  return Object.entries(CHANNELS)
     .filter(([, channel]) => !type || channel.type === type)
     .map(([value, { label }]) => ({ name: label, value }));
+}

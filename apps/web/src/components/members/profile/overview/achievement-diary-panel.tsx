@@ -16,21 +16,21 @@ export function AchievementDiaryPanel({ diaries }: Readonly<AchievementDiaryPane
 
   if (!diaries || diaries.length === 0) return <PanelEmptyMessage>No diaries are being tracked.</PanelEmptyMessage>;
 
-  const openScreenshot = ({ content, scale, pb }: MemberDiary) => {
+  function openScreenshot({ content, scale, pb }: MemberDiary) {
     if (!pb?.imageUrl) return;
 
     showMedia({
       alt: `${content.name}, ${teamScale(scale)}, in ${formatTickTime(pb.timeSeconds)}`,
       src: pb.imageUrl
     });
-  };
+  }
 
-  const openScreenshotOnKey = (event: React.KeyboardEvent, diary: MemberDiary) => {
+  function openScreenshotOnKey(event: React.KeyboardEvent, diary: MemberDiary) {
     if (event.key !== "Enter" && event.key !== " ") return;
 
     event.preventDefault();
     openScreenshot(diary);
-  };
+  }
 
   return (
     <table className="table table-sm">

@@ -29,11 +29,11 @@ function bossStats(bosses: Boss[]): BossStats {
 }
 
 // Wise Old Man reports EHP to maxed and 200m, so nothing left means completed.
-const formatRemaining = (hours: number | null, completed: string) => {
+function formatRemaining(hours: number | null, completed: string) {
   if (hours === null) return DASH;
   if (hours === 0) return completed;
   return `${formatNumber(hours)}h`;
-};
+}
 
 type WomSummaryPanelProps = {
   profile: MemberProfile;

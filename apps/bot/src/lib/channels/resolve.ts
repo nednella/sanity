@@ -42,7 +42,7 @@ export class ChannelUnavailableError extends Error {
   }
 }
 
-const fetchChannel = async (client: Client, intent: ChannelIntent) => {
+async function fetchChannel(client: Client, intent: ChannelIntent) {
   const channelId = await resolveChannelId(intent);
 
   try {
@@ -55,25 +55,25 @@ const fetchChannel = async (client: Client, intent: ChannelIntent) => {
     }
     throw error;
   }
-};
+}
 
-const checkChannelPermissions = <T extends GuildChannel>(channel: T, intent: ChannelIntent, needed: bigint[]) => {
+function checkChannelPermissions<T extends GuildChannel>(channel: T, intent: ChannelIntent, needed: bigint[]) {
   const permissions = channel.permissionsFor(channel.client.user);
   const missing = permissions ? permissions.missing(needed) : new PermissionsBitField(needed).toArray();
   if (missing.length > 0) throw new ChannelUnavailableError(intent, "no-access", missing);
   return channel;
-};
+}
 
 /**
  * The ID of the channel set for an intent, from the cache. It does not ask
  * Discord, so use it when only the ID matters, such as to check which category
  * a channel is in.
  */
-export const resolveChannelId = async (intent: ChannelIntent) => {
+export async function resolveChannelId(intent: ChannelIntent) {
   const channelId = await channelCache.channelId(intent);
   if (!channelId) throw new ChannelUnavailableError(intent, "channel-not-set");
   return channelId;
-};
+}
 
 /**
  * The category set for an intent, once the bot has checked it can make and post
@@ -82,18 +82,18 @@ export const resolveChannelId = async (intent: ChannelIntent) => {
  * Resolve the channel before the server changes anything, so an action that
  * cannot finish in Discord is refused whole.
  */
-export const resolveCategory = async (client: Client, intent: ChannelIntent) => {
+export async function resolveCategory(client: Client, intent: ChannelIntent) {
   const channel = await fetchChannel(client, intent);
   if (!(channel instanceof CategoryChannel)) throw new ChannelUnavailableError(intent, "missing");
   return checkChannelPermissions(channel, intent, CATEGORY_PERMISSIONS);
-};
+}
 
 /**
  * The text channel set for an intent, once the bot has checked it can post
  * there.
  */
-export const resolveTextChannel = async (client: Client, intent: ChannelIntent) => {
+export async function resolveTextChannel(client: Client, intent: ChannelIntent) {
   const channel = await fetchChannel(client, intent);
   if (!(channel instanceof TextChannel)) throw new ChannelUnavailableError(intent, "missing");
   return checkChannelPermissions(channel, intent, TEXT_CHANNEL_PERMISSIONS);
-};
+}

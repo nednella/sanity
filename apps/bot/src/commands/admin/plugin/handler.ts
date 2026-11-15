@@ -11,10 +11,11 @@ async function changeAccess(interaction: ChatInputCommandInteraction, isRevoked:
   if (taggedDiscordIds.length === 0) return replyError(interaction, NO_MEMBERS_TAGGED);
 
   const changes = await api.post("/v1/members/plugin-access", { body: { ...body, revoked: isRevoked } });
-  const describe = () =>
-    isRevoked
+  function describe() {
+    return isRevoked
       ? "has lost plugin access, and their key is revoked"
       : "has plugin access again, with a new key from /plugin-key";
+  }
   return reply(interaction, changesEmbed(title, describe, changes, taggedDiscordIds));
 }
 

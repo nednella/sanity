@@ -16,7 +16,7 @@ type Plan = {
 
 const { remove, merge, ids, unlink } = plan as Plan;
 
-const unlinkSubmissions = async (tx: Transaction, name: string) => {
+async function unlinkSubmissions(tx: Transaction, name: string) {
   const [item] = await tx.select({ id: items.id }).from(items).where(eq(items.name, name));
   if (!item) return;
 
@@ -27,7 +27,7 @@ const unlinkSubmissions = async (tx: Transaction, name: string) => {
     .returning({ id: submissions.id });
 
   return { item, unlinked: unlinked.length };
-};
+}
 
 for (const name of remove) {
   await db.transaction(async (tx) => {

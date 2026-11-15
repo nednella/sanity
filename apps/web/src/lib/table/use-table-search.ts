@@ -1,5 +1,5 @@
 import { useNavigate } from "@tanstack/react-router";
-import { type OnChangeFn, type PaginationState, type SortingState, functionalUpdate } from "@tanstack/react-table";
+import { type PaginationState, type SortingState, type Updater, functionalUpdate } from "@tanstack/react-table";
 
 import {
   type PageSearch,
@@ -21,20 +21,22 @@ export function useTableSearch<TSearch extends PageSearch & SortSearch<string>>(
 
   // useNavigate() outside a route can't know which search schema applies, and this hook is generic
   // over the caller's. What goes in is typed by TSearch; the cast only crosses that gap.
-  const replaceSearch = (next: Partial<TSearch>) =>
-    navigate({ replace: true, search: ((previous: object) => ({ ...previous, ...next })) as never });
+  function replaceSearch(next: Partial<TSearch>) {
+    return navigate({ replace: true, search: ((previous: object) => ({ ...previous, ...next })) as never });
+  }
 
-  const onPaginationChange: OnChangeFn<PaginationState> = (updater) =>
+  function onPaginationChange(updater: Updater<PaginationState>) {
     replaceSearch(fromPaginationState(functionalUpdate(updater, pagination)) as Partial<TSearch>);
+  }
 
   // Clearing a column's sort drops both params, rather than writing an empty one.
-  const onSortingChange: OnChangeFn<SortingState> = (updater) => {
+  function onSortingChange(updater: Updater<SortingState>) {
     const [next] = functionalUpdate(updater, sorting);
     const sort = next
       ? fromSortingState<NonNullable<TSearch["sort"]>>(next)
       : { offset: 0, order: undefined, sort: undefined };
     replaceSearch(sort as Partial<TSearch>);
-  };
+  }
 
   return { onPaginationChange, onSortingChange, pagination, replaceSearch, sorting };
 }

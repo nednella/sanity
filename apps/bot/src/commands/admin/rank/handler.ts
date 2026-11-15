@@ -13,20 +13,25 @@ import { NO_MEMBERS_TAGGED, changesEmbed, readTaggedMembers } from "../member/ut
 
 const FIELD_LIMIT = 1024;
 
-const rankName = (name: string) => capitalise(name.toLowerCase());
+function rankName(name: string) {
+  return capitalise(name.toLowerCase());
+}
 
-const describeProposal = ({ discordId, from, to }: RankProposal) =>
-  `${userMention(discordId)} ${rankName(from.name)} → ${rankName(to.name)}`;
+function describeProposal({ discordId, from, to }: RankProposal) {
+  return `${userMention(discordId)} ${rankName(from.name)} → ${rankName(to.name)}`;
+}
 
-const proposalField = (name: string, proposals: RankProposal[]) => ({
-  name: `${name} (${proposals.length})`,
-  value: fitLines(
-    proposals.map((proposal) => describeProposal(proposal)),
-    FIELD_LIMIT
-  )
-});
+function proposalField(name: string, proposals: RankProposal[]) {
+  return {
+    name: `${name} (${proposals.length})`,
+    value: fitLines(
+      proposals.map((proposal) => describeProposal(proposal)),
+      FIELD_LIMIT
+    )
+  };
+}
 
-const check = async (interaction: ChatInputCommandInteraction) => {
+async function check(interaction: ChatInputCommandInteraction) {
   const channel = await resolveTextChannel(interaction.client, "admin_review");
   const { proposals } = await api.post("/v1/members/propose-rank-changes");
 
@@ -54,20 +59,21 @@ const check = async (interaction: ChatInputCommandInteraction) => {
       description: `[See it](${message.url}) in ${channelMention(channel.id)}.`
     })
   );
-};
+}
 
-const describeDelay = ({ until }: MemberChange) =>
-  `demotion held until ${time(new Date(until!), TimestampStyles.LongDate)}`;
+function describeDelay({ until }: MemberChange) {
+  return `demotion held until ${time(new Date(until!), TimestampStyles.LongDate)}`;
+}
 
-const holdDemotion = async (interaction: ChatInputCommandInteraction) => {
+async function holdDemotion(interaction: ChatInputCommandInteraction) {
   const { taggedDiscordIds, ...body } = readTaggedMembers(interaction);
   if (taggedDiscordIds.length === 0) return replyError(interaction, NO_MEMBERS_TAGGED);
 
   const changes = await api.post("/v1/members/delay-demotion", { body });
   return reply(interaction, changesEmbed("Hold demotion", describeDelay, changes, taggedDiscordIds));
-};
+}
 
-const set = async (interaction: ChatInputCommandInteraction) => {
+async function set(interaction: ChatInputCommandInteraction) {
   const { taggedDiscordIds, ...body } = readTaggedMembers(interaction);
   if (taggedDiscordIds.length === 0) return replyError(interaction, NO_MEMBERS_TAGGED);
 
@@ -86,7 +92,7 @@ const set = async (interaction: ChatInputCommandInteraction) => {
     interaction,
     changesEmbed("Set rank", (change) => `is now ${change.rank!.name}`, changes, taggedDiscordIds)
   );
-};
+}
 
 const SUBCOMMANDS = {
   check,
@@ -94,4 +100,6 @@ const SUBCOMMANDS = {
   set
 };
 
-export const handleRank = (interaction: ChatInputCommandInteraction) => runSubcommand(interaction, SUBCOMMANDS);
+export function handleRank(interaction: ChatInputCommandInteraction) {
+  return runSubcommand(interaction, SUBCOMMANDS);
+}

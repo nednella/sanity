@@ -42,7 +42,9 @@ function applyTheme(theme: Theme) {
 function onSystemThemeChange(callback: () => void) {
   const mq = PREFERS_DARK_MODE_MQ;
 
-  const handleChange = () => callback();
+  function handleChange() {
+    return callback();
+  }
 
   mq.addEventListener("change", handleChange);
   return () => mq.removeEventListener("change", handleChange);

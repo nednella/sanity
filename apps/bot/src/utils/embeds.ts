@@ -21,14 +21,7 @@ type EmbedOptions = {
   title?: string;
 };
 
-export const buildEmbed = ({
-  description,
-  fields,
-  image,
-  style = "brand",
-  thumbnail,
-  title = HEADER
-}: EmbedOptions) => {
+export function buildEmbed({ description, fields, image, style = "brand", thumbnail, title = HEADER }: EmbedOptions) {
   const { colour, icon } = STYLES[style];
   const embed = new EmbedBuilder()
     .setColor(colour)
@@ -40,7 +33,7 @@ export const buildEmbed = ({
   if (image) embed.setImage(image);
   if (thumbnail) embed.setThumbnail(thumbnail);
   return embed;
-};
+}
 
 // A long list stops short of the limit and counts the lines it leaves out.
 export function fitLines(lines: string[], limit: number) {

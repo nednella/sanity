@@ -8,7 +8,9 @@ const RELATIVE_UNITS_IN_MS = [
   { unit: "minute" as const, ms: 60 * 1000 }
 ];
 
-const pluralise = (value: number, unit: string) => `${value} ${unit}${value === 1 ? "" : "s"}`;
+function pluralise(value: number, unit: string) {
+  return `${value} ${unit}${value === 1 ? "" : "s"}`;
+}
 
 export function formatDate(value: string | null | undefined) {
   if (value == null) return DASH;

@@ -23,10 +23,10 @@ const BOT_ACCOUNTS = new Set(["228143014168625153", "979856389868494898"]);
  * A personal best was logged as content, team size and a clock: 'Theatre of Blood:2:21:58.20'. A drop
  * was logged as item and value: 'Abyssal Orphan:100'. Nothing else in the table uses colons.
  */
-const isPersonalBestNote = (note: string) => {
+function isPersonalBestNote(note: string) {
   const parts = note.split(":");
   return parts.length >= 4 && /^\d+$/.test(parts[1]!.trim());
-};
+}
 
 const matchers: [RegExp, AuditAction][] = [
   [/rank ?(id)? from/i, "rank_changed"],
@@ -49,7 +49,7 @@ const matchers: [RegExp, AuditAction][] = [
  * What the note says wins over how the row arrived: the drop-accept button was reused for quits,
  * value edits and role changes, so trusting its type alone files all of those as drop approvals.
  */
-export const toAction = (actionType: number, note: string | null): AuditAction => {
+export function toAction(actionType: number, note: string | null): AuditAction {
   if (!note) return "other";
   if (isPersonalBestNote(note)) return "personal_best_reviewed";
 
@@ -60,16 +60,16 @@ export const toAction = (actionType: number, note: string | null): AuditAction =
   if (actionType === EMBED_ACTION) return "personal_best_reviewed";
 
   return "other";
-};
+}
 
-const toSource = (actionType: number): AuditSource => {
+function toSource(actionType: number): AuditSource {
   if (actionType === LOOP) return "worker";
   if (actionType === WEBSITE) return "web";
 
   return "bot";
-};
+}
 
-export const readAuditLog = async (memberIds: Map<string, bigint>) => {
+export async function readAuditLog(memberIds: Map<string, bigint>) {
   const rows = await read<SourceAuditLog>("auditlogs", "id");
 
   return rows.map((row) => ({
@@ -93,4 +93,4 @@ export const readAuditLog = async (memberIds: Map<string, bigint>) => {
       )
     ]
   }));
-};
+}

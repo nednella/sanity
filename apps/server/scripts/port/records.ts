@@ -20,7 +20,9 @@ type SourcePersonalBest = {
   reviewNote: string | null;
 };
 
-const enumName = (name: string) => name.trim().toLowerCase().replaceAll(" ", "_");
+function enumName(name: string) {
+  return name.trim().toLowerCase().replaceAll(" ", "_");
+}
 
 /**
  * Which boss each piece of diary content is, by Wise Old Man metric. The old table named its
@@ -39,7 +41,7 @@ const metricByContentId: Record<number, string> = {
   43: "sol_heredit"
 };
 
-export const readSpeedrunContent = async () => {
+export async function readSpeedrunContent() {
   const stored = await db.select({ id: bosses.id, womMetric: bosses.womMetric }).from(bosses);
   const bossIdByMetric = new Map(stored.flatMap(({ id, womMetric }) => (womMetric ? [[womMetric, id] as const] : [])));
 
@@ -59,16 +61,16 @@ export const readSpeedrunContent = async () => {
       isActive: metric !== undefined
     };
   });
-};
+}
 
 /**
  * Points are earned per tier reached, so a master time on one diary is worth 1 + 2 + 3 + 4 + 5 = 15.
  */
-export const readSpeedrunDiaryTiers = async () => {
+export async function readSpeedrunDiaryTiers() {
   const rows = await read<{ difficulty: number; diaryPoints: number; flavourText: string }>("diarytypes", "difficulty");
 
   return rows.map((tier) => ({ id: tier.difficulty, name: tier.flavourText, points: tier.diaryPoints }));
-};
+}
 
 type SourceDiaryTime = {
   bossId: number;
@@ -85,7 +87,7 @@ type SourceDiaryTime = {
  * One row per content and scale, with a column per tier. A diary with fewer tiers sets maxDifficulty lower,
  * and a placeholder row sets it to 0.
  */
-export const readSpeedrunDiaryTimes = async () => {
+export async function readSpeedrunDiaryTimes() {
   const rows = await read<SourceDiaryTime>("diarytimes", "diaryId");
 
   return rows.flatMap((row) =>
@@ -98,7 +100,7 @@ export const readSpeedrunDiaryTimes = async () => {
         time: clockToInterval(clock)!
       }))
   );
-};
+}
 
 /**
  * The source stored each requirement as a percentage of the maximum diary points. Each tier now requires the
@@ -106,7 +108,7 @@ export const readSpeedrunDiaryTimes = async () => {
  */
 const requiredDiaryPoints: Record<number, number> = { 1: 12, 2: 36, 3: 72, 4: 120, 5: 180 };
 
-export const readSpeedrunDiaryRewards = async () => {
+export async function readSpeedrunDiaryRewards() {
   const rows = await read<{ diaryTier: number; points: number }>("diaryrewards", "diaryTier");
 
   return rows.map((reward) => ({
@@ -114,9 +116,9 @@ export const readSpeedrunDiaryRewards = async () => {
     requiredDiaryPoints: requiredDiaryPoints[reward.diaryTier]!,
     clanPoints: reward.points
   }));
-};
+}
 
-export const readPersonalBests = async (memberIds: MemberIds) => {
+export async function readPersonalBests(memberIds: MemberIds) {
   const statusRows = await read<{ id: number; name: string }>("submissionstatus");
   const statuses = new Map(statusRows.map((row) => [row.id, enumName(row.name)]));
   const rows = await read<SourcePersonalBest>("personalbests", "submissionId");
@@ -142,13 +144,13 @@ export const readPersonalBests = async (memberIds: MemberIds) => {
       }
     ];
   });
-};
+}
 
 /**
  * The team came from a comma-separated column of Discord ids. Ids belonging to
  * people who were never members are dropped, since the row must reference one.
  */
-export const readPersonalBestParticipants = async (memberIds: MemberIds, keptIds: Set<number>) => {
+export async function readPersonalBestParticipants(memberIds: MemberIds, keptIds: Set<number>) {
   const rows = await read<{ submissionId: number; members: string | null }>("personalbests", "submissionId");
   const seen = new Set<string>();
 
@@ -166,4 +168,4 @@ export const readPersonalBestParticipants = async (memberIds: MemberIds, keptIds
       return [{ personalBestId: row.submissionId, memberId }];
     });
   });
-};
+}

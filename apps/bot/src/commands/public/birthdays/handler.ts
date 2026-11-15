@@ -20,27 +20,29 @@ const SEPARATOR = " · ";
 
 const SUGGESTED_DAYS = [7, 30];
 
-const formatDays = (days: number) => (days === 1 ? "1 day" : `${days} days`);
+function formatDays(days: number) {
+  return days === 1 ? "1 day" : `${days} days`;
+}
 
-const formatCountdown = (date: string, from: string) => {
+function formatCountdown(date: string, from: string) {
   const days = Math.round((Date.parse(date) - Date.parse(from)) / DAY_MS);
   if (days === 0) return "today";
   if (days === 1) return "tomorrow";
   return `in ${formatDays(days)}`;
-};
+}
 
-const describeBirthday = ({ member, date, age }: Birthday, from: string) => {
+function describeBirthday({ member, date, age }: Birthday, from: string) {
   const parts = [
     `${inlineCode(formatDayMonth(date))} ${bold(escapeMarkdown(member.displayName))}`,
     formatCountdown(date, from)
   ];
   if (age > 0 && age <= OLDEST_AGE_SHOWN) parts.push(`turns ${age}`);
   return parts.join(SEPARATOR);
-};
+}
 
 export const MAX_DAYS = 366;
 
-export const handleBirthdays = async (interaction: ChatInputCommandInteraction) => {
+export async function handleBirthdays(interaction: ChatInputCommandInteraction) {
   const days = interaction.options.getInteger("days", true);
   const today = new Date();
   const from = toIsoDate(today);
@@ -62,12 +64,12 @@ export const handleBirthdays = async (interaction: ChatInputCommandInteraction) 
       : birthdays.map((birthday) => describeBirthday(birthday, from)).join("\n");
 
   return reply(interaction, buildEmbed({ title, description }));
-};
+}
 
-export const suggestDays = (interaction: AutocompleteInteraction) => {
+export function suggestDays(interaction: AutocompleteInteraction) {
   const typed = Number(interaction.options.getFocused());
   const isValid = Number.isSafeInteger(typed) && typed >= 1 && typed <= MAX_DAYS;
   const days = isValid ? [typed] : SUGGESTED_DAYS;
 
   return interaction.respond(days.map((value) => ({ name: `Next ${formatDays(value)}`, value })));
-};
+}

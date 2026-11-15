@@ -1,4 +1,6 @@
-const iconUrl = (kind: string, metric: string) => `/icons/${kind}/${metric}.png`;
+function iconUrl(kind: string, metric: string) {
+  return `/icons/${kind}/${metric}.png`;
+}
 
 export function activityIconUrl(metric: string) {
   return iconUrl("activities", metric);

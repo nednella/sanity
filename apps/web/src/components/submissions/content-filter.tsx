@@ -19,16 +19,20 @@ type ContentFilterProps = {
 };
 
 // A menu item is not a form control, so picking one has to dismiss the popover it sits in.
-const close = (event: MouseEvent<HTMLElement>) => event.currentTarget.closest<HTMLElement>("[popover]")?.hidePopover();
+function close(event: MouseEvent<HTMLElement>) {
+  event.currentTarget.closest<HTMLElement>("[popover]")?.hidePopover();
+}
 
 export function ContentFilter({ contentId, onChange, scale }: Readonly<ContentFilterProps>) {
   const { data } = useQuery(contentOptions());
   const content = data?.find((entry) => entry.id === contentId);
 
-  const pick = (selection: ContentSelection) => (event: MouseEvent<HTMLElement>) => {
-    close(event);
-    onChange(selection);
-  };
+  function pick(selection: ContentSelection) {
+    return (event: MouseEvent<HTMLElement>) => {
+      close(event);
+      onChange(selection);
+    };
+  }
 
   return (
     <>

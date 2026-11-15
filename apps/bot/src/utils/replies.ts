@@ -10,19 +10,23 @@ import { buildEmbed } from "./embeds";
 type ReplyOptions = { components?: ActionRowBuilder<MessageActionRowComponentBuilder>[] };
 
 // Every command is deferred before it runs, so a reply is always an edit of that deferral.
-export const reply = (
+export function reply(
   interaction: ChatInputCommandInteraction,
   embed: EmbedBuilder,
   { components }: ReplyOptions = {}
-) => interaction.editReply({ embeds: [embed], components });
+) {
+  return interaction.editReply({ embeds: [embed], components });
+}
 
-export const replyError = (
+export function replyError(
   interaction: ChatInputCommandInteraction,
   { title, description }: { title: string; description: string }
-) => reply(interaction, buildEmbed({ description, style: "error", title }));
+) {
+  return reply(interaction, buildEmbed({ description, style: "error", title }));
+}
 
-export const replyNotImplemented = (interaction: ChatInputCommandInteraction) =>
-  reply(
+export function replyNotImplemented(interaction: ChatInputCommandInteraction) {
+  return reply(
     interaction,
     buildEmbed({
       description: `\`/${interaction.commandName}\` is not implemented yet.`,
@@ -30,3 +34,4 @@ export const replyNotImplemented = (interaction: ChatInputCommandInteraction) =>
       title: "Not implemented"
     })
   );
+}

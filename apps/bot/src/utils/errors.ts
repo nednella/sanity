@@ -13,7 +13,7 @@ const NOUNS: Record<ChannelType, string> = {
   voice: "voice channel"
 };
 
-const describeChannelUnavailableError = ({ missingPermissions, intent, reason }: ChannelUnavailableError) => {
+function describeChannelUnavailableError({ missingPermissions, intent, reason }: ChannelUnavailableError) {
   const { label, type } = CHANNELS[intent];
   const name = `${label} ${NOUNS[type]}`;
   const setIt = `An admin can set it with ${inlineCode(`/channels set ${type}`)}.`;
@@ -26,37 +26,37 @@ const describeChannelUnavailableError = ({ missingPermissions, intent, reason }:
     title: `I cannot use the ${name}`,
     description: `I need ${missingPermissions.map((permission) => inlineCode(permission)).join(", ")} there.`
   };
-};
+}
 
-const describeApiError = ({ code, message, status }: ApiError) => {
+function describeApiError({ code, message, status }: ApiError) {
   return {
     title: "Server Error",
     description: `${inlineCode(code ?? `HTTP ${status}`)}\n${message}`
   };
-};
+}
 
-const describeNetworkError = () => {
+function describeNetworkError() {
   return {
     title: "Mainframe offline",
     description: "The mainframe did not answer. Please try again in a moment."
   };
-};
+}
 
-const describeUnexpectedError = () => {
+function describeUnexpectedError() {
   return {
     title: "Something went wrong",
     description: "Please try again later."
   };
-};
+}
 
-const describeError = (error: unknown) => {
+function describeError(error: unknown) {
   if (error instanceof ChannelUnavailableError) return describeChannelUnavailableError(error);
   if (error instanceof ApiError) return describeApiError(error);
   if (error instanceof NetworkError) return describeNetworkError();
   return describeUnexpectedError();
-};
+}
 
-export const handleCommandInteractionError = async (interaction: ChatInputCommandInteraction, error: unknown) => {
+export async function handleCommandInteractionError(interaction: ChatInputCommandInteraction, error: unknown) {
   logger.error(error, `/${interaction.commandName} failed`);
   await replyError(interaction, describeError(error));
-};
+}

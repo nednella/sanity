@@ -13,10 +13,10 @@ const throwOnError: Middleware = {
   }
 };
 
-export const createApiClient = (baseUrl: string) => {
+export function createApiClient(baseUrl: string) {
   const client = createFetchClient<paths>({ baseUrl });
   client.use(throwOnError);
   return client;
-};
+}
 
 export type ApiClient = Client<paths>;

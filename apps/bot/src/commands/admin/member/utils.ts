@@ -13,29 +13,31 @@ type MemberChanges = {
   skipped: MemberSkip[];
 };
 
-const toNotMembers = ({ changed, skipped }: MemberChanges, taggedDiscordIds: string[]) => {
+function toNotMembers({ changed, skipped }: MemberChanges, taggedDiscordIds: string[]) {
   const found = new Set([...changed, ...skipped].map(({ member }) => member.discordId));
   return taggedDiscordIds.filter((discordId) => !found.has(discordId));
-};
+}
 
-const styleOfChanges = (changed: MemberChange[], skippedLines: string[]) => {
+function styleOfChanges(changed: MemberChange[], skippedLines: string[]) {
   if (skippedLines.length === 0) return "success";
   return changed.length === 0 ? "error" : "warning";
-};
+}
 
 export const NO_MEMBERS_TAGGED = {
   title: "No members tagged",
   description: "Tag at least one member."
 };
 
-export const membersOption = (option: SlashCommandStringOption) =>
-  option.setName("members").setDescription("Tag the members").setRequired(true);
+export function membersOption(option: SlashCommandStringOption) {
+  return option.setName("members").setDescription("Tag the members").setRequired(true);
+}
 
-export const noteOption = (option: SlashCommandStringOption) =>
-  option.setName("note").setDescription("Why, for the audit log").setMaxLength(500);
+export function noteOption(option: SlashCommandStringOption) {
+  return option.setName("note").setDescription("Why, for the audit log").setMaxLength(500);
+}
 
 // Members are tagged in a text option, because a user option holds only one member.
-export const readTaggedMembers = (interaction: ChatInputCommandInteraction) => {
+export function readTaggedMembers(interaction: ChatInputCommandInteraction) {
   const taggedDiscordIds = interaction.options.getString("members", true).match(MENTIONED_USER_ID) ?? [];
 
   return {
@@ -43,14 +45,14 @@ export const readTaggedMembers = (interaction: ChatInputCommandInteraction) => {
     note: interaction.options.getString("note") ?? undefined,
     taggedDiscordIds
   };
-};
+}
 
-export const changesEmbed = (
+export function changesEmbed(
   title: string,
   describeChange: (change: MemberChange) => string,
   changes: MemberChanges,
   taggedDiscordIds: string[]
-) => {
+) {
   const changedLines = changes.changed.map(
     (change) => `${userMention(change.member.discordId)} ${describeChange(change)}`
   );
@@ -71,4 +73,4 @@ export const changesEmbed = (
     title,
     fields
   });
-};
+}

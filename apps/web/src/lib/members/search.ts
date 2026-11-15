@@ -26,11 +26,11 @@ export type UnlistedSort = Unlisted<Exclude<MemberSort, (typeof MEMBER_SORTS)[nu
 const DEFAULT_LIMIT = 50;
 const PAGE_SIZES = [50, 100, 200];
 
-const toStatus = (value: unknown): MemberStatus => {
+function toStatus(value: unknown): MemberStatus {
   if (value === "all") return "all";
   if (value === "inactive") return "inactive";
   return "active";
-};
+}
 
 export type MembersSearch = {
   limit: number;
@@ -41,7 +41,7 @@ export type MembersSearch = {
   status: MemberStatus;
 };
 
-export const validateMembersSearch = (search: Record<string, unknown> & SearchSchemaInput): MembersSearch => {
+export function validateMembersSearch(search: Record<string, unknown> & SearchSchemaInput): MembersSearch {
   // An order without a sort would sit in the URL doing nothing.
   const sort = toSort(search.sort, MEMBER_SORTS);
 
@@ -53,13 +53,15 @@ export const validateMembersSearch = (search: Record<string, unknown> & SearchSc
     sort,
     status: toStatus(search.status)
   };
-};
+}
 
-export const toMembersQueryParams = (search: MembersSearch) => ({
-  active: toActive(search.status),
-  limit: search.limit,
-  offset: search.offset,
-  order: search.order,
-  search: search.search,
-  sort: search.sort
-});
+export function toMembersQueryParams(search: MembersSearch) {
+  return {
+    active: toActive(search.status),
+    limit: search.limit,
+    offset: search.offset,
+    order: search.order,
+    search: search.search,
+    sort: search.sort
+  };
+}

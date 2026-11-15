@@ -66,7 +66,11 @@ export default defineConfig([
 
       // one import per module, types inline
       // see: https://github.com/un-ts/eslint-plugin-import-x/blob/master/docs/rules/no-duplicates.md
-      "import/no-duplicates": ["error", { "prefer-inline": true }]
+      "import/no-duplicates": ["error", { "prefer-inline": true }],
+
+      // named functions are declarations, arrows only for anonymous ones
+      // see: https://eslint.org/docs/latest/rules/func-style
+      "func-style": ["error", "declaration"]
     }
   },
   {

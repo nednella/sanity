@@ -18,7 +18,7 @@ type BossRow = {
 };
 
 // Total EHB is a computed metric rather than a boss, so it rides along as a row of its own.
-const toRows = (snapshot: Snapshot | undefined): BossRow[] | undefined => {
+function toRows(snapshot: Snapshot | undefined): BossRow[] | undefined {
   if (!snapshot) return undefined;
 
   const totalEhb = snapshot.computed.find(({ metric }) => metric === EHB);
@@ -27,7 +27,7 @@ const toRows = (snapshot: Snapshot | undefined): BossRow[] | undefined => {
     ...(totalEhb ? [{ metric: EHB, kills: null, rank: totalEhb.rank, ehb: totalEhb.value }] : []),
     ...snapshot.bosses.map(({ boss, kills, rank, ehb }) => ({ metric: boss, kills, rank, ehb }))
   ];
-};
+}
 
 const columnHelper = createColumnHelper<DataTableFeatures, BossRow>();
 
