@@ -7,7 +7,7 @@ import { errorResponse } from "./response";
 
 const { isProduction } = config;
 
-export function handleError(error: FastifyError | ApplicationError, request: FastifyRequest, reply: FastifyReply) {
+export function handleError(error: ApplicationError | FastifyError, request: FastifyRequest, reply: FastifyReply) {
   // Handle ApplicationError
   if (error instanceof ApplicationError)
     return errorResponse({

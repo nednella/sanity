@@ -34,7 +34,7 @@ const TEXT_CHANNEL_PERMISSIONS = [
 export class ChannelUnavailableError extends Error {
   constructor(
     readonly intent: ChannelIntent,
-    readonly reason: "missing" | "no-access" | "channel-not-set",
+    readonly reason: "channel-not-set" | "missing" | "no-access",
     readonly missingPermissions: string[] = []
   ) {
     super(`${intent} channel is ${reason}`);
