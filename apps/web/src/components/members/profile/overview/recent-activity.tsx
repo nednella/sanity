@@ -2,8 +2,8 @@ import { Skull, Sparkles, Swords, TrendingUp, Trophy, UserPlus } from "lucide-re
 import type { ComponentType } from "react";
 
 type PlaceholderEntry = {
-  icon: ComponentType<{ className?: string }>;
   description: string;
+  icon: ComponentType<{ className?: string }>;
   timeAgo: string;
 };
 

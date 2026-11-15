@@ -11,11 +11,11 @@ import { skillIconUrl, statIconUrl } from "@/utils/icons";
 const EHP = "ehp";
 
 type SkillRow = {
-  metric: string;
-  level: number | null;
-  experience: number | null;
-  rank: number | null;
   ehp: number;
+  experience: number | null;
+  level: number | null;
+  metric: string;
+  rank: number | null;
 };
 
 // Total EHP is a computed metric rather than a skill, so it rides along as a

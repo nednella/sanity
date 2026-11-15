@@ -10,7 +10,7 @@ import { Muted } from "@/lib/ui/typography/muted";
 
 const SHOWN = 10;
 
-function formatRsn({ main, alt }: { main: string | null; alt: string | null }) {
+function formatRsn({ main, alt }: { alt: string | null; main: string | null }) {
   return [main, alt].filter(Boolean).join(" / ");
 }
 

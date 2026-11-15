@@ -7,8 +7,8 @@ import { authErrors } from "../errors";
 export type RouteAccess =
   | "public"
   | {
-      role?: "*" | MemberRole;
       clients: ["*"] | ApiClient[];
+      role?: "*" | MemberRole;
     };
 
 // Hook is async even though it doesn't await - Fastify identifies a hook as ran

@@ -3,18 +3,18 @@ import { blankToNull, read, toUtcInstant } from "./source";
 type MemberIds = Map<string, bigint>;
 
 type SourceSubmission = {
+  bingo: number | null;
   Id: number;
-  userId: string;
-  status: number;
-  value: number | null;
-  notes: string | null;
   imageUrl: string | null;
   messageUrl: string | null;
-  bingo: number | null;
-  submittedDate: string;
+  notes: string | null;
   reviewedBy: string | null;
   reviewedDate: string | null;
   reviewNote: string | null;
+  status: number;
+  submittedDate: string;
+  userId: string;
+  value: number | null;
 };
 
 function enumName(name: string) {
@@ -81,12 +81,12 @@ export async function readSubmissionParticipants(memberIds: MemberIds) {
 }
 
 type SourcePoint = {
-  Id: number;
-  userId: string;
-  dropId: number | null;
-  points: number;
-  notes: string | null;
   date: string;
+  dropId: number | null;
+  Id: number;
+  notes: string | null;
+  points: number;
+  userId: string;
 };
 
 export async function readPoints(memberIds: MemberIds) {
@@ -107,7 +107,7 @@ function capitalise(name: string) {
 }
 
 export async function readPointsTimelineEvents() {
-  const rows = await read<{ id: number; eventName: string | null; date: string | null }>(
+  const rows = await read<{ date: string | null; eventName: string | null; id: number }>(
     "pointtrackerOverTimeEvents",
     "id"
   );

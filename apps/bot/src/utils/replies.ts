@@ -21,7 +21,7 @@ export function reply(
 
 export function replyError(
   interaction: ChatInputCommandInteraction,
-  { title, description }: { title: string; description: string }
+  { title, description }: { description: string; title: string }
 ) {
   return reply(interaction, buildEmbed({ description, style: "error", title }));
 }

@@ -4,11 +4,11 @@ import type { Autocomplete, Category, Command, CommandData, Execute } from "@/ty
 
 type Options = {
   admin?: boolean;
+  autocomplete?: Autocomplete;
   category: Category;
   data: CommandData;
-  selfOnly?: boolean;
   execute: Execute;
-  autocomplete?: Autocomplete;
+  selfOnly?: boolean;
 };
 
 export function defineCommand({ admin = false, data, selfOnly = false, ...options }: Options): Command {

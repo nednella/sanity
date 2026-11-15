@@ -10,9 +10,9 @@ const alignments = {
 
 type DropdownProps = {
   align?: keyof typeof alignments;
-  label: React.ReactNode;
   children: React.ReactNode;
   className?: string;
+  label: React.ReactNode;
   triggerClassName?: string;
 };
 

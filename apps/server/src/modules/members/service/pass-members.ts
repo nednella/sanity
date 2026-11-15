@@ -27,7 +27,7 @@ export async function passMembers({ members, note }: MemberBatch, auth: ActingAu
     const found = await listMembersById(tx, memberIds);
 
     const changed: { member: Member; rank: typeof rank }[] = [];
-    const skipped: { member: Member; error: ApplicationError }[] = [];
+    const skipped: { error: ApplicationError; member: Member }[] = [];
 
     for (const member of found) {
       if (member.rankId === TRIALIST_RANK_ID) changed.push({ member, rank });

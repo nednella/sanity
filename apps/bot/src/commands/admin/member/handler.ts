@@ -15,7 +15,7 @@ import { reply, replyError } from "@/utils/replies";
 
 import { NO_MEMBERS_TAGGED, changesEmbed, readTaggedMembers } from "./utils";
 
-type AccountUpdate = (name: string, account: string) => { style: "error" | "success" | "warning"; description: string };
+type AccountUpdate = (name: string, account: string) => { description: string; style: "error" | "success" | "warning" };
 
 const ACCOUNT_UPDATES = {
   "discord-account-changed": (name, account) => ({ style: "success", description: `${name} now uses ${account}.` }),

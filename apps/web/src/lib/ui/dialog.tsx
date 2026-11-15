@@ -9,10 +9,10 @@ export type DialogHandle = {
 };
 
 type DialogProps = {
-  ref: React.Ref<DialogHandle>;
-  title: string;
   children: React.ReactNode;
   className?: string;
+  ref: React.Ref<DialogHandle>;
+  title: string;
 };
 
 export function Dialog({ ref, title, children, className }: Readonly<DialogProps>) {

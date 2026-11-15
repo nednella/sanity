@@ -8,11 +8,11 @@ const alignments = {
 };
 
 type WikiImageProps = {
-  src: string;
+  align?: keyof typeof alignments;
   alt: string;
   caption?: string;
-  align?: keyof typeof alignments;
   className?: string;
+  src: string;
 };
 
 export function WikiImage({ src, alt, caption, align = "right", className }: Readonly<WikiImageProps>) {

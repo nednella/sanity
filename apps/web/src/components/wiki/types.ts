@@ -6,34 +6,34 @@ type WikiInfoboxRow = {
 };
 
 type WikiInfoboxImage = {
-  src: string;
   alt: string;
+  src: string;
 };
 
 type WikiInfobox = {
-  title: string;
-  image?: WikiInfoboxImage;
   caption?: string;
+  image?: WikiInfoboxImage;
   rows: WikiInfoboxRow[];
+  title: string;
 };
 
 type WikiSubsection = {
+  content: ReactNode;
   id: string;
   title: string;
-  content: ReactNode;
 };
 
 type WikiSection = {
-  id: string;
-  title: string;
   content: ReactNode;
+  id: string;
   subsections?: WikiSubsection[];
+  title: string;
 };
 
 type WikiArticle = {
-  title: string;
-  sections: WikiSection[];
   infobox?: WikiInfobox;
+  sections: WikiSection[];
+  title: string;
 };
 
 export type { WikiArticle, WikiInfobox, WikiInfoboxImage, WikiInfoboxRow, WikiSection, WikiSubsection };

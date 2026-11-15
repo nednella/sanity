@@ -24,7 +24,7 @@ export async function changeMemberRoles({ members, note, role }: RoleChange, aut
     const found = await listMembersById(tx, memberIds);
 
     const changed: { member: Member }[] = [];
-    const skipped: { member: Member; error: ApplicationError }[] = [];
+    const skipped: { error: ApplicationError; member: Member }[] = [];
 
     for (const member of found) {
       if (!isRoleAbove(auth.member.role, member.role)) skipped.push({ member, error: memberErrors.roleTooHigh() });

@@ -34,8 +34,8 @@ export type CommandData = SlashCommandOptionsOnlyBuilder | SlashCommandSubcomman
 
 export type Command = CommandData & {
   admin: boolean;
-  category: Category;
-  selfOnly: boolean;
-  execute: Execute;
   autocomplete?: Autocomplete;
+  category: Category;
+  execute: Execute;
+  selfOnly: boolean;
 };
