@@ -102,7 +102,11 @@ export default defineConfig([
     rules: {
       // an element with no children closes itself
       // see: https://eslint.style/rules/jsx-self-closing-comp
-      "@stylistic/jsx-self-closing-comp": "error"
+      "@stylistic/jsx-self-closing-comp": "error",
+
+      // no braces around a plain string prop or child
+      // see: https://eslint.style/rules/jsx-curly-brace-presence
+      "@stylistic/jsx-curly-brace-presence": ["error", { props: "never", children: "never" }]
     }
   },
   {
