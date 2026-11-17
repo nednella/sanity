@@ -28,15 +28,6 @@ const matchers: [RegExp, AuditAction][] = [
   [/^trail started/i, "member_joined"]
 ];
 
-type SourceAuditLog = {
-  actionDate: string;
-  actionNote: string | null;
-  actionType: number;
-  affectedUsers: string | null;
-  id: number;
-  userId: string;
-};
-
 /**
  * What the note says wins over how the row arrived: the drop-accept button was
  * reused for quits, value edits and role changes, so trusting its type alone
@@ -54,6 +45,15 @@ export function toAction(actionType: number, note: string | null): AuditAction {
 
   return "other";
 }
+
+type SourceAuditLog = {
+  actionDate: string;
+  actionNote: string | null;
+  actionType: number;
+  affectedUsers: string | null;
+  id: number;
+  userId: string;
+};
 
 export async function readAuditLog(memberIds: Map<string, bigint>) {
   const rows = await read<SourceAuditLog>("auditlogs", "id");

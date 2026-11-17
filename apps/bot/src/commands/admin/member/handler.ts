@@ -24,6 +24,8 @@ const SUBCOMMANDS = {
   unretire
 };
 
+type AccountUpdate = (name: string, account: string) => { description: string; style: "error" | "success" | "warning" };
+
 const ACCOUNT_UPDATES = {
   "discord-account-changed": (name, account) => ({ style: "success", description: `${name} now uses ${account}.` }),
   "discord-id-taken": (_, account) => ({ style: "error", description: `${account} belongs to another member.` }),
@@ -31,8 +33,6 @@ const ACCOUNT_UPDATES = {
   "not-a-member": (name) => ({ style: "error", description: `No member is named ${name}.` }),
   unchanged: (name, account) => ({ style: "warning", description: `${name} already uses ${account}.` })
 } satisfies Record<string, AccountUpdate>;
-
-type AccountUpdate = (name: string, account: string) => { description: string; style: "error" | "success" | "warning" };
 
 export function handleMember(interaction: ChatInputCommandInteraction) {
   return runSubcommand(interaction, SUBCOMMANDS);

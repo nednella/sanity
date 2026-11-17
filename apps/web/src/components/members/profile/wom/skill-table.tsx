@@ -10,6 +10,14 @@ import { skillIconUrl, statIconUrl } from "@/utils/icons";
 
 const EHP = "ehp";
 
+type SkillRow = {
+  ehp: number;
+  experience: number | null;
+  level: number | null;
+  metric: string;
+  rank: number | null;
+};
+
 const columnHelper = createColumnHelper<DataTableFeatures, SkillRow>();
 
 const columns = columnHelper.columns([
@@ -68,14 +76,6 @@ const columns = columnHelper.columns([
     cell: ({ getValue }) => formatNumber(getValue(), 1)
   })
 ]);
-
-type SkillRow = {
-  ehp: number;
-  experience: number | null;
-  level: number | null;
-  metric: string;
-  rank: number | null;
-};
 
 type SkillTableProps = {
   emptyMessage: string;

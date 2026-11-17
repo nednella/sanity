@@ -20,11 +20,6 @@ const cursors = {
 
 const DEBOUNCE_MS = 300;
 
-type ToolbarProps = {
-  actions?: React.ReactNode;
-  children?: React.ReactNode;
-};
-
 type RootProps = React.ComponentPropsWithRef<"table"> & {
   // A scroll container is its own sticky context, so a table whose header
   // sticks to the page cannot also scroll sideways.
@@ -55,6 +50,11 @@ function layoutClasses({ align, numeric, pinned }: CellLayout = {}) {
 function Shell({ children }: Readonly<{ children: React.ReactNode }>) {
   return <div className="flex flex-col gap-3">{children}</div>;
 }
+
+type ToolbarProps = {
+  actions?: React.ReactNode;
+  children?: React.ReactNode;
+};
 
 function Toolbar({ actions, children }: Readonly<ToolbarProps>) {
   return (

@@ -9,8 +9,6 @@ import { Separator } from "@/lib/ui/separator";
 import { Overline } from "@/lib/ui/typography/overline";
 import { Small } from "@/lib/ui/typography/small";
 
-type NextRank = NonNullable<MemberProfile["progression"]["nextRank"]["points"]>;
-
 type RankProgressionPanelProps = {
   profile: MemberProfile;
 };
@@ -87,6 +85,8 @@ function Standing({ rank, status }: Readonly<StandingProps>) {
     />
   );
 }
+
+type NextRank = NonNullable<MemberProfile["progression"]["nextRank"]["points"]>;
 
 type NextRankCardProps = {
   nextRank: NextRank | null;

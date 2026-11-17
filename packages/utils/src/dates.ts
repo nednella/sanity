@@ -52,6 +52,10 @@ export function firstOfNextMonth(from: Date) {
   return new Date(Date.UTC(from.getUTCFullYear(), from.getUTCMonth() + 1, 1));
 }
 
+export function toIsoDate(date: Date) {
+  return date.toISOString().slice(0, 10);
+}
+
 type RelativeDateUnits = {
   days?: number;
   hours?: number;
@@ -62,10 +66,6 @@ type RelativeDateUnits = {
   weeks?: number;
   years?: number;
 };
-
-export function toIsoDate(date: Date) {
-  return date.toISOString().slice(0, 10);
-}
 
 // Months and years keep the day of the month, or the last day of a shorter
 // month.

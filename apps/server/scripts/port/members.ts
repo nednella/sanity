@@ -15,21 +15,6 @@ type SourceRank = {
   pointRequirement: number | null;
 };
 
-type SourceUser = {
-  altRSN: string | null;
-  birthday: string | null;
-  diaryTierClaimed: number | null;
-  displayName: string;
-  isActive: Buffer | number | null;
-  joinDate: string | null;
-  leaveDate: string | null;
-  mainRSN: string | null;
-  nationality: string | null;
-  points: number;
-  rankId: number;
-  userId: string;
-};
-
 export async function readRanks() {
   const mappings = await read<{ discordRankId: number | null; osrsName: string | null }>("osrsRankMapping", "id");
   const inGameNames = new Map(mappings.map((row) => [row.discordRankId, row.osrsName]));
@@ -46,6 +31,21 @@ export async function readRanks() {
     masterDiaryRequirement: rank.masterDiaryRequirement ?? 0
   }));
 }
+
+type SourceUser = {
+  altRSN: string | null;
+  birthday: string | null;
+  diaryTierClaimed: number | null;
+  displayName: string;
+  isActive: Buffer | number | null;
+  joinDate: string | null;
+  leaveDate: string | null;
+  mainRSN: string | null;
+  nationality: string | null;
+  points: number;
+  rankId: number;
+  userId: string;
+};
 
 export async function readMembers() {
   const avatarRows = await read<{ discordProfileImageUrl: string | null; userId: string }>("discordProfileImageUrl");

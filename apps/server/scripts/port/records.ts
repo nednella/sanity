@@ -27,23 +27,6 @@ const metricByContentId: Record<number, string> = {
  */
 const requiredDiaryPoints: Record<number, number> = { 1: 12, 2: 36, 3: 72, 4: 120, 5: 180 };
 
-type MemberIds = Map<string, bigint>;
-
-type SourcePersonalBest = {
-  bossId: number;
-  imageUrl: string | null;
-  members: string | null;
-  reviewedBy: string | null;
-  reviewedDate: string | null;
-  reviewNote: string | null;
-  scale: number;
-  status: number;
-  submissionId: number;
-  submittedDate: string | null;
-  submitterUserId: string;
-  time: string;
-};
-
 export async function readSpeedrunContent() {
   const stored = await db.select({ id: bosses.id, womMetric: bosses.womMetric }).from(bosses);
   const bossIdByMetric = new Map(stored.flatMap(({ id, womMetric }) => (womMetric ? [[womMetric, id] as const] : [])));
@@ -115,6 +98,23 @@ export async function readSpeedrunDiaryRewards() {
     clanPoints: reward.points
   }));
 }
+
+type MemberIds = Map<string, bigint>;
+
+type SourcePersonalBest = {
+  bossId: number;
+  imageUrl: string | null;
+  members: string | null;
+  reviewedBy: string | null;
+  reviewedDate: string | null;
+  reviewNote: string | null;
+  scale: number;
+  status: number;
+  submissionId: number;
+  submittedDate: string | null;
+  submitterUserId: string;
+  time: string;
+};
 
 export async function readPersonalBests(memberIds: MemberIds) {
   const statusRows = await read<{ id: number; name: string }>("submissionstatus");

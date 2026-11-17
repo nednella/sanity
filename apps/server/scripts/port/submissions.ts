@@ -5,6 +5,12 @@ import { blankToNull, read, toUtcInstant } from "./source";
 */
 const events: Record<number, "bingo" | "leagues" | null> = { 0: null, 1: "bingo", 2: "leagues" };
 
+export async function readItems() {
+  const rows = await read<{ id: number; name: string }>("drops", "id");
+
+  return rows.map((item) => ({ id: item.id, name: item.name }));
+}
+
 type MemberIds = Map<string, bigint>;
 
 type SourceSubmission = {
@@ -21,12 +27,6 @@ type SourceSubmission = {
   userId: string;
   value: number | null;
 };
-
-export async function readItems() {
-  const rows = await read<{ id: number; name: string }>("drops", "id");
-
-  return rows.map((item) => ({ id: item.id, name: item.name }));
-}
 
 export async function readSubmissions(memberIds: MemberIds, itemIds: Map<string, number>) {
   const statusRows = await read<{ id: number; name: string }>("submissionstatus");

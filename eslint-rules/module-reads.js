@@ -26,6 +26,16 @@ export function moduleReads(sourceCode, program) {
   return { atLoad, anywhere };
 }
 
+/**
+ * The top-level statements that use a type, in source order.
+ */
+export function typeReaders(sourceCode, declaration) {
+  const moduleScope = sourceCode.scopeManager.globalScope.childScopes.find((scope) => scope.type === "module");
+  const variable = moduleScope?.set.get(declaration.id.name);
+  const readers = (variable?.references ?? []).map((reference) => topLevelStatement(reference.identifier));
+  return [...new Set(readers)].filter((reader) => reader !== declaration).toSorted((a, b) => a.range[0] - b.range[0]);
+}
+
 export function declaredNames(statement) {
   const declaration = statement.type === "ExportNamedDeclaration" ? statement.declaration : statement;
   if (!declaration) return [];

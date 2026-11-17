@@ -13,8 +13,6 @@ const unavailable: Middleware = {
   onError: ({ error }) => new NetworkError(error)
 };
 
-type Init<I> = RequiredKeysOf<I> extends never ? [I?] : [I];
-
 type ApiOptions = {
   middleware?: Middleware[];
   timeoutMs?: number;
@@ -44,6 +42,8 @@ function timeout(ms: number): Middleware {
     onRequest: ({ request }) => new Request(request, { signal: AbortSignal.timeout(ms) })
   };
 }
+
+type Init<I> = RequiredKeysOf<I> extends never ? [I?] : [I];
 
 // Failures throw, so a call that returns always has data. The raw client still
 // types it as optional.
