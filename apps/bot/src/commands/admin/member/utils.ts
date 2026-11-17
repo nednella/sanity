@@ -4,11 +4,6 @@ import type { MemberChange, MemberSkip } from "@sanity/api";
 
 import { buildEmbed, fitLines } from "@/utils/embeds";
 
-type MemberChanges = {
-  changed: MemberChange[];
-  skipped: MemberSkip[];
-};
-
 export const NO_MEMBERS_TAGGED = {
   title: "No members tagged",
   description: "Tag at least one member."
@@ -37,6 +32,11 @@ export function readTaggedMembers(interaction: ChatInputCommandInteraction) {
     taggedDiscordIds
   };
 }
+
+type MemberChanges = {
+  changed: MemberChange[];
+  skipped: MemberSkip[];
+};
 
 export function changesEmbed(
   title: string,

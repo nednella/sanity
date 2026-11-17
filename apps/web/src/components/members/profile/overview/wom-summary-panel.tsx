@@ -10,12 +10,6 @@ import { womEmptyMessage } from "@/lib/members/wom";
 import { RelativeDate } from "@/lib/ui/relative-date";
 import { bossIconUrl, statIconUrl } from "@/utils/icons";
 
-type BossStats = {
-  mostEhb: Boss | null;
-  mostKilled: Boss | null;
-  totalKills: number;
-};
-
 type WomSummaryPanelProps = {
   profile: MemberProfile;
 };
@@ -91,6 +85,12 @@ export function WomSummaryPanel({ profile }: Readonly<WomSummaryPanelProps>) {
     </div>
   );
 }
+
+type BossStats = {
+  mostEhb: Boss | null;
+  mostKilled: Boss | null;
+  totalKills: number;
+};
 
 function bossStats(bosses: Boss[]): BossStats {
   const totals: BossStats = { totalKills: 0, mostEhb: null, mostKilled: null };

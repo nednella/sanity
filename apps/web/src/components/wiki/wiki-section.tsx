@@ -3,13 +3,6 @@ import { ChevronDown } from "lucide-react";
 import type { WikiSection, WikiSubsection } from "@/components/wiki/types";
 import { cn } from "@/lib/ui/utils";
 
-type CollapsibleProps = {
-  children: React.ReactNode;
-  id: string;
-  level: "h2" | "h3";
-  title: string;
-};
-
 export function WikiSection({ section }: Readonly<{ section: WikiSection }>) {
   return (
     <section className="mb-10 flow-root">
@@ -29,6 +22,13 @@ export function WikiSection({ section }: Readonly<{ section: WikiSection }>) {
     </section>
   );
 }
+
+type CollapsibleProps = {
+  children: React.ReactNode;
+  id: string;
+  level: "h2" | "h3";
+  title: string;
+};
 
 function Collapsible({ id, title, level: Heading, children }: Readonly<CollapsibleProps>) {
   return (

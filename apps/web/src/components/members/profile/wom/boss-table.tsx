@@ -10,6 +10,13 @@ import { bossIconUrl, statIconUrl } from "@/utils/icons";
 
 const EHB = "ehb";
 
+type BossRow = {
+  ehb: number;
+  kills: number | null;
+  metric: string;
+  rank: number | null;
+};
+
 const columnHelper = createColumnHelper<DataTableFeatures, BossRow>();
 
 const columns = columnHelper.columns([
@@ -59,13 +66,6 @@ const columns = columnHelper.columns([
     cell: ({ getValue }) => formatNumber(getValue(), 1)
   })
 ]);
-
-type BossRow = {
-  ehb: number;
-  kills: number | null;
-  metric: string;
-  rank: number | null;
-};
 
 type BossTableProps = {
   emptyMessage: string;

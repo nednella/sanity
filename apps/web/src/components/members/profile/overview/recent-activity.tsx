@@ -1,6 +1,12 @@
 import { Skull, Sparkles, Swords, TrendingUp, Trophy, UserPlus } from "lucide-react";
 import type { ComponentType } from "react";
 
+type PlaceholderEntry = {
+  description: string;
+  icon: ComponentType<{ className?: string }>;
+  timeAgo: string;
+};
+
 // Placeholder until an activity feed endpoint exists.
 const PLACEHOLDER_ACTIVITY: PlaceholderEntry[] = [
   { icon: Trophy, description: "Reached level 99 in Woodcutting", timeAgo: "2 hours ago" },
@@ -10,12 +16,6 @@ const PLACEHOLDER_ACTIVITY: PlaceholderEntry[] = [
   { icon: Swords, description: "Recorded a new personal best at Theatre of Blood", timeAgo: "1 week ago" },
   { icon: UserPlus, description: "Joined the clan", timeAgo: "3 months ago" }
 ];
-
-type PlaceholderEntry = {
-  description: string;
-  icon: ComponentType<{ className?: string }>;
-  timeAgo: string;
-};
 
 export function RecentActivity() {
   return (

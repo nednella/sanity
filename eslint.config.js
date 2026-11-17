@@ -112,7 +112,11 @@ export default defineConfig([
 
       // consts first, functions below them, exports first in each group
       // see: eslint-rules/exports-first.js
-      "sanity/exports-first": "error"
+      "sanity/exports-first": "error",
+
+      // a private type sits right above the first statement that uses it
+      // see: eslint-rules/type-above-first-use.js
+      "sanity/type-above-first-use": "error"
     }
   },
   {

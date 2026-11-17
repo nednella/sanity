@@ -7,8 +7,6 @@ import { saveNameChanges } from "../repository/save-name-changes";
 
 const PAGE_SIZE = 50;
 
-type NameChange = Awaited<ReturnType<typeof wom.groups.getGroupNameChanges>>[number];
-
 /**
  * Builds the history of names behind every linked member, for their profile to
  * show.
@@ -37,6 +35,8 @@ export async function syncNameChanges(pages: number) {
 
   return { read: changes.length, recorded };
 }
+
+type NameChange = Awaited<ReturnType<typeof wom.groups.getGroupNameChanges>>[number];
 
 // Wise Old Man resolves a change some time after it happens, and only then is
 // it ours to record.

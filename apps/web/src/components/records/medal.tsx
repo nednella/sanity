@@ -1,15 +1,15 @@
-const metals: Record<number, Metal> = {
-  1: { base: "#f2c94c", dark: "#9a6c12", ink: "#6b4708", light: "#fff6cf", rim: "#e0a92b" },
-  2: { base: "#d6dde6", dark: "#7c8794", ink: "#4a5463", light: "#ffffff", rim: "#b7c0cb" },
-  3: { base: "#cd8341", dark: "#7a3f16", ink: "#5a2f10", light: "#f7d2a8", rim: "#b06a2c" }
-};
-
 type Metal = {
   base: string;
   dark: string;
   ink: string;
   light: string;
   rim: string;
+};
+
+const metals: Record<number, Metal> = {
+  1: { base: "#f2c94c", dark: "#9a6c12", ink: "#6b4708", light: "#fff6cf", rim: "#e0a92b" },
+  2: { base: "#d6dde6", dark: "#7c8794", ink: "#4a5463", light: "#ffffff", rim: "#b7c0cb" },
+  3: { base: "#cd8341", dark: "#7a3f16", ink: "#5a2f10", light: "#f7d2a8", rim: "#b06a2c" }
 };
 
 type MedalProps = {

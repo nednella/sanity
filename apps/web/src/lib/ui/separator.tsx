@@ -4,10 +4,6 @@ type SeparatorProps = React.ComponentProps<"hr"> & {
   orientation?: "horizontal" | "vertical";
 };
 
-type LabelledSeparatorProps = React.ComponentProps<"div"> & {
-  childrenClassName?: string;
-};
-
 export function Separator({ className, orientation = "horizontal", ...props }: Readonly<SeparatorProps>) {
   return (
     <hr
@@ -17,6 +13,10 @@ export function Separator({ className, orientation = "horizontal", ...props }: R
     />
   );
 }
+
+type LabelledSeparatorProps = React.ComponentProps<"div"> & {
+  childrenClassName?: string;
+};
 
 export function LabelledSeparator({
   className,

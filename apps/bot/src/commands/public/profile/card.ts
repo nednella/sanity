@@ -37,8 +37,6 @@ const FONTS = [
   }
 ];
 
-type NextRank = NonNullable<MemberProfile["progression"]["nextRank"]["points"]>;
-
 // The avatar comes from Discord at render time, because the one saved with the
 // member can be out of date.
 export function renderProfileCard(profile: MemberProfile, avatarUrl: string) {
@@ -166,6 +164,8 @@ function progressBar(label: string, value: number, target: number) {
     </div>
   </div>`;
 }
+
+type NextRank = NonNullable<MemberProfile["progression"]["nextRank"]["points"]>;
 
 // A diary rank is earned with clan points plus either diary target, as on the
 // website.
