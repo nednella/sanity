@@ -6,7 +6,7 @@ import { memberDiary } from "@/modules/speedrun-diary/response";
 import { getMemberDiary } from "@/modules/speedrun-diary/service/get-member-diary";
 import { submission } from "@/modules/submissions/response";
 import { getSubmissions } from "@/modules/submissions/service/get-submissions";
-import { errorResponse, paginated, timeframe, toPage } from "@/schema/common";
+import { errorResponse, paginated, timeframe, toPaginated } from "@/schema/common";
 import { defineModule } from "@/utils/define-module";
 import { defineRoute } from "@/utils/define-route";
 
@@ -54,9 +54,8 @@ export const membersModule = defineModule([
       }
     },
     handler: async (req) => {
-      const { limit, offset } = req.query;
-      const { items, total } = await getMembers(req.query);
-      return { items, page: toPage({ limit, offset, total }) };
+      const result = await getMembers(req.query);
+      return toPaginated(result, req.query);
     }
   }),
 
@@ -121,9 +120,8 @@ export const membersModule = defineModule([
       }
     },
     handler: async (req) => {
-      const { limit, offset } = req.query;
-      const { items, total } = await getPersonalBests({ ...req.query, memberId: req.params.id });
-      return { items, page: toPage({ limit, offset, total }) };
+      const result = await getPersonalBests({ ...req.query, memberId: req.params.id });
+      return toPaginated(result, req.query);
     }
   }),
 
@@ -141,9 +139,8 @@ export const membersModule = defineModule([
       }
     },
     handler: async (req) => {
-      const { limit, offset } = req.query;
-      const { items, total } = await getSubmissions({ ...req.query, memberId: req.params.id });
-      return { items, page: toPage({ limit, offset, total }) };
+      const result = await getSubmissions({ ...req.query, memberId: req.params.id });
+      return toPaginated(result, req.query);
     }
   }),
 

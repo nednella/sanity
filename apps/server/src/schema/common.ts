@@ -59,6 +59,7 @@ export const memberRef = z
   .register(z.globalRegistry, { id: "MemberRef" });
 
 export type Page = z.output<typeof page>;
+export type Pagination = z.output<typeof pagination>;
 export type Review = z.output<typeof reviewBody>;
 export type Timeframe = z.output<typeof timeframe>;
 
@@ -66,12 +67,15 @@ export function paginated<T extends z.ZodType>(item: T) {
   return z.object({ items: z.array(item), page });
 }
 
-export function toPage({ limit, offset, total }: { limit: number; offset: number; total: number }) {
+export function toPaginated<T>({ items, total }: { items: T[]; total: number }, { limit, offset }: Pagination) {
   return {
-    limit,
-    offset,
-    total,
-    hasNext: offset + limit < total,
-    hasPrevious: offset > 0
+    items,
+    page: {
+      limit,
+      offset,
+      total,
+      hasNext: offset + limit < total,
+      hasPrevious: offset > 0
+    }
   };
 }
