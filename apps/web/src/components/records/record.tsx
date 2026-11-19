@@ -8,6 +8,7 @@ import { formatTickTime, teamScale } from "@sanity/utils";
 import { Medal } from "@/components/records/medal";
 import { ParticipantList } from "@/components/shared/participant-list";
 import { useMediaStore } from "@/lib/media/media.store";
+import { screenshotAlt } from "@/lib/records/screenshot";
 import { Button } from "@/lib/ui/button";
 import { RelativeDate } from "@/lib/ui/relative-date";
 import { H3 } from "@/lib/ui/typography/h3";
@@ -114,7 +115,7 @@ function Item({ record }: Readonly<{ record: RankedPersonalBest }>) {
       {imageUrl && (
         <button
           className="absolute inset-0 cursor-zoom-in focus-visible:outline focus-visible:-outline-offset-2 focus-visible:outline-primary"
-          onClick={() => showMedia({ alt: `${content.name}, ${teamScale(scale)}, in ${time}`, src: imageUrl })}
+          onClick={() => showMedia({ alt: screenshotAlt(content.name, scale, timeSeconds), src: imageUrl })}
           type="button"
         >
           <span className="sr-only">
