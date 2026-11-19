@@ -7,7 +7,7 @@ import {
 } from "discord.js";
 
 import type { Birthday } from "@sanity/api";
-import { formatDayMonth, relativeDate, toIsoDate } from "@sanity/utils";
+import { formatDayMonth, pluralise, relativeDate, toIsoDate } from "@sanity/utils";
 
 import { api } from "@/lib/api";
 import { OLDEST_AGE_SHOWN } from "@/utils/birthdays";
@@ -36,7 +36,7 @@ export async function handleBirthdays(interaction: ChatInputCommandInteraction) 
     }
   });
 
-  const title = `Birthdays in the next ${formatDays(days)}`;
+  const title = `Birthdays in the next ${pluralise(days, "day")}`;
 
   const description =
     birthdays.length === 0
@@ -51,18 +51,14 @@ export function suggestDays(interaction: AutocompleteInteraction) {
   const isValid = Number.isSafeInteger(typed) && typed >= 1 && typed <= MAX_DAYS;
   const days = isValid ? [typed] : SUGGESTED_DAYS;
 
-  return interaction.respond(days.map((value) => ({ name: `Next ${formatDays(value)}`, value })));
-}
-
-function formatDays(days: number) {
-  return days === 1 ? "1 day" : `${days} days`;
+  return interaction.respond(days.map((value) => ({ name: `Next ${pluralise(value, "day")}`, value })));
 }
 
 function formatCountdown(date: string, from: string) {
   const days = Math.round((Date.parse(date) - Date.parse(from)) / DAY_MS);
   if (days === 0) return "today";
   if (days === 1) return "tomorrow";
-  return `in ${formatDays(days)}`;
+  return `in ${pluralise(days, "day")}`;
 }
 
 function describeBirthday({ member, date, age }: Birthday, from: string) {
