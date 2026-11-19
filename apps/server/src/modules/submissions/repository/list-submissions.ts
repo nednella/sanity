@@ -1,8 +1,10 @@
-import { asc, desc, eq } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 import type { PgColumn } from "drizzle-orm/pg-core";
 
 import { db } from "@db/index";
 import { items, members, submissions } from "@db/schema";
+
+import { sortBy } from "@/utils/sql";
 
 import type { SubmissionSort } from "../request";
 import { type SubmissionFilters, matchesSubmission } from "./shared/filters";
@@ -23,8 +25,6 @@ export type ListSubmissionsOptions = SubmissionFilters & {
 };
 
 export function listSubmissions({ limit, offset, order, sort, ...filters }: ListSubmissionsOptions) {
-  const direction = order === "asc" ? asc : desc;
-
   return db
     .select({
       submission: submissions,
@@ -35,7 +35,7 @@ export function listSubmissions({ limit, offset, order, sort, ...filters }: List
     .innerJoin(members, eq(members.id, submissions.memberId))
     .leftJoin(items, eq(items.id, submissions.itemId))
     .where(matchesSubmission(filters))
-    .orderBy(direction(sortColumns[sort]), desc(submissions.id))
+    .orderBy(sortBy(sortColumns[sort], order), desc(submissions.id))
     .limit(limit)
     .offset(offset);
 }
