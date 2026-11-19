@@ -3,6 +3,8 @@ export const SANITY_TEMPLE_URL = "https://templeosrs.com/groups/overview.php?id=
 export const SANITY_WOM_URL = "https://wiseoldman.net/groups/230";
 export const SANITY_X_URL = "https://x.com/sanityosrs";
 
+export const DISCORD_API_URL = "https://discord.com/api/v10";
+export const DISCORD_AUTHORIZE_URL = "https://discord.com/oauth2/authorize";
 export const DISCORD_CDN_URL = "https://cdn.discordapp.com";
 
 export const WOM_PLAYERS_URL = "https://wiseoldman.net/players";
