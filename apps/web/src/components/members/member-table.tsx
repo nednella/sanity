@@ -2,7 +2,7 @@ import { Link, useNavigate } from "@tanstack/react-router";
 import { createColumnHelper } from "@tanstack/react-table";
 
 import type { Member, Page } from "@sanity/api";
-import { DASH, formatDate, formatNumber } from "@sanity/utils";
+import { DASH, formatDate, formatNumber, formatRsn } from "@sanity/utils";
 
 import { MemberStatusFilter } from "@/components/members/member-status-filter";
 import { NationalityFlag } from "@/components/members/nationality-flag";
@@ -26,7 +26,7 @@ const columns = columnHelper.columns([
     },
     cell: ({ row }) => {
       const { displayName, id, nationality, rsn } = row.original;
-      const rsnLine = [rsn.main, rsn.alt].filter(Boolean).join(" / ");
+      const rsnLine = formatRsn(rsn);
 
       return (
         <div className="flex flex-col gap-0.5 py-1">

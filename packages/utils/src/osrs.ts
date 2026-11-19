@@ -40,6 +40,10 @@ export function formatTickTime(seconds: number | null | undefined) {
   return hours > 0 ? `${hours}:${pad(minutes)}:${remainder}` : `${minutes}:${remainder}`;
 }
 
+export function formatRsn({ alt, main }: { alt: string | null; main: string | null }) {
+  return [main, alt].filter(Boolean).join(" / ");
+}
+
 export function itemIconUrl(osrsItemId: number) {
   return `${OSRS_ITEM_ICONS_URL}/${osrsItemId}.png`;
 }
