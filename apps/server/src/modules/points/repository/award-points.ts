@@ -3,14 +3,11 @@ import { sql } from "drizzle-orm";
 import type { Transaction } from "@db/index";
 import { members, points } from "@db/schema";
 
-export type Award = {
-  memberId: bigint;
-  points: number;
-};
+import type { PointAward } from "../rules";
 
 export async function awardPoints(
   tx: Transaction,
-  awards: Award[],
+  awards: PointAward[],
   awardedBy: bigint,
   submissionId: number | null,
   notes: string
