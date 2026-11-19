@@ -2,7 +2,7 @@ import { ChevronDown } from "lucide-react";
 import { Fragment, type ReactNode } from "react";
 
 import type { MemberProfile } from "@sanity/api";
-import { formatDate } from "@sanity/utils";
+import { formatDate, formatRsn } from "@sanity/utils";
 
 import { Dropdown } from "@/lib/ui/dropdown";
 import { RelativeDate } from "@/lib/ui/relative-date";
@@ -44,10 +44,6 @@ export function ProfileDetails({ profile }: Readonly<ProfileDetailsProps>) {
       ))}
     </Muted>
   );
-}
-
-function formatRsn({ main, alt }: { alt: string | null; main: string | null }) {
-  return [main, alt].filter(Boolean).join(" / ");
 }
 
 type PreviousNamesProps = {

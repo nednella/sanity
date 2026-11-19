@@ -3,7 +3,16 @@ import { render } from "takumi-js";
 
 import type { MemberDiary, MemberProfile, RankSummary } from "@sanity/api";
 import { CIRCLE_FLAG_CDN_URL } from "@sanity/urls";
-import { DASH, escapeHtml, formatDate, formatNumber, formatTickTime, isCountryCode, teamScale } from "@sanity/utils";
+import {
+  DASH,
+  escapeHtml,
+  formatDate,
+  formatNumber,
+  formatRsn,
+  formatTickTime,
+  isCountryCode,
+  teamScale
+} from "@sanity/utils";
 
 import { config } from "@config";
 
@@ -101,10 +110,7 @@ function avatar(avatarUrl: string, nationality: string | null) {
 }
 
 function header({ displayName, membership, nationality, rsn }: MemberProfile, avatarUrl: string) {
-  const details = [
-    [rsn.main, rsn.alt].filter((name) => name !== null).join(" / "),
-    membership.joinedAt && `Joined ${formatDate(membership.joinedAt)}`
-  ].filter(Boolean);
+  const details = [formatRsn(rsn), membership.joinedAt && `Joined ${formatDate(membership.joinedAt)}`].filter(Boolean);
 
   return `
   <div style="display:flex;justify-content:space-between;align-items:flex-start">
