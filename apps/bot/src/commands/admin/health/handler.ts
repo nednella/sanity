@@ -1,6 +1,6 @@
 import type { ChatInputCommandInteraction } from "discord.js";
 
-import { ApiError, type Health, NetworkError } from "@sanity/api";
+import { type Health, NetworkError, isApiError } from "@sanity/api";
 import { capitalise, formatMs } from "@sanity/utils";
 
 import { api } from "@/lib/api";
@@ -44,7 +44,7 @@ async function fetchHealth() {
   try {
     return await api.get("/v1/health");
   } catch (error) {
-    if (error instanceof ApiError && error.status === 503) return error.body as Health;
+    if (isApiError(error, 503)) return error.body as Health;
     if (error instanceof NetworkError) return null;
     throw error;
   }
