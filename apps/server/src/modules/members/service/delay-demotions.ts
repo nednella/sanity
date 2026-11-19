@@ -1,4 +1,4 @@
-import { firstOfNextMonth } from "@sanity/utils";
+import { firstOfNextMonth, toIsoDate } from "@sanity/utils";
 
 import { db } from "@db/index";
 
@@ -19,13 +19,7 @@ export async function delayDemotions({ members }: MemberBatch, auth: ActingAuth)
     const changed = found.map((member) => ({ member, until }));
 
     await delayRankChange(tx, memberIds, until);
-    await recordAuditEntries(
-      tx,
-      auth,
-      "rank_changed",
-      changed,
-      () => `demotion delayed until ${until.toISOString().slice(0, 10)}`
-    );
+    await recordAuditEntries(tx, auth, "rank_changed", changed, () => `demotion delayed until ${toIsoDate(until)}`);
 
     return { changed, skipped: [] };
   });
