@@ -6,6 +6,13 @@ export function membersOptions(search: MembersSearch) {
   return api.queryOptions("get", "/v1/members", { params: { query: toMembersQueryParams(search) } });
 }
 
+export function signedInMemberOptions() {
+  return {
+    ...api.queryOptions("get", "/v1/members/me"),
+    retry: false
+  };
+}
+
 export function memberProfileOptions(memberId: string) {
   return api.queryOptions("get", "/v1/members/{id}", { params: { path: { id: memberId } } });
 }

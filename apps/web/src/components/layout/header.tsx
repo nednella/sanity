@@ -1,8 +1,7 @@
-import { Link } from "@tanstack/react-router";
 import { Menu } from "lucide-react";
 
+import { AccountMenu } from "@/components/layout/account-menu";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { Button } from "@/lib/ui/button";
 
 type HeaderProps = {
   drawerId: string;
@@ -22,21 +21,7 @@ export function Header({ drawerId }: Readonly<HeaderProps>) {
       </div>
       <div className="navbar-end gap-1">
         <ThemeToggle />
-        <Button
-          asChild
-          size="sm"
-          variant="ghost"
-        >
-          <Link
-            search={(previous) => ({
-              ...previous,
-              signIn: "open"
-            })}
-            to="."
-          >
-            Log in
-          </Link>
-        </Button>
+        <AccountMenu />
       </div>
     </header>
   );

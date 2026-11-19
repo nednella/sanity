@@ -9,7 +9,8 @@ import { networkErrorMiddleware } from "@/lib/api/middleware";
 export const api = createQueryClient(createClient());
 
 function createClient() {
-  const client = createApiClient(config.apiUrl);
+  // The API is on another origin, so the session cookie needs "include".
+  const client = createApiClient(config.apiUrl, "include");
   client.use(networkErrorMiddleware);
   return client;
 }
