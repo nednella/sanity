@@ -1,7 +1,7 @@
 import { db } from "@db/index";
 import { bosses } from "@db/schema";
 
-import { blankToNull, clockToInterval, read, toUtcInstant } from "./source";
+import { type MemberIds, blankToNull, clockToInterval, read, readStatuses, toUtcInstant } from "./source";
 
 /**
  * Which boss each piece of diary content is, by Wise Old Man metric. The old
@@ -99,8 +99,6 @@ export async function readSpeedrunDiaryRewards() {
   }));
 }
 
-type MemberIds = Map<string, bigint>;
-
 type SourcePersonalBest = {
   bossId: number;
   imageUrl: string | null;
@@ -117,8 +115,7 @@ type SourcePersonalBest = {
 };
 
 export async function readPersonalBests(memberIds: MemberIds) {
-  const statusRows = await read<{ id: number; name: string }>("submissionstatus");
-  const statuses = new Map(statusRows.map((row) => [row.id, enumName(row.name)]));
+  const statuses = await readStatuses();
   const rows = await read<SourcePersonalBest>("personalbests", "submissionId");
 
   return rows.flatMap((row) => {
@@ -166,8 +163,4 @@ export async function readPersonalBestParticipants(memberIds: MemberIds, keptIds
       return [{ personalBestId: row.submissionId, memberId }];
     });
   });
-}
-
-function enumName(name: string) {
-  return name.trim().toLowerCase().replaceAll(" ", "_");
 }

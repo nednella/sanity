@@ -1,6 +1,6 @@
 import type { AuditAction, AuditSource } from "@db/enums";
 
-import { read, toUtcInstant } from "./source";
+import { type MemberIds, read, toUtcInstant } from "./source";
 
 const DROP_ACCEPT = 7;
 const EMBED_ACTION = 3;
@@ -55,7 +55,7 @@ type SourceAuditLog = {
   userId: string;
 };
 
-export async function readAuditLog(memberIds: Map<string, bigint>) {
+export async function readAuditLog(memberIds: MemberIds) {
   const rows = await read<SourceAuditLog>("auditlogs", "id");
 
   return rows.map((row) => ({
