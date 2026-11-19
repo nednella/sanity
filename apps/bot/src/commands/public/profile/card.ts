@@ -141,13 +141,36 @@ function stat(iconPath: string | null, label: string, value: string, width = "23
   </div>`;
 }
 
+function diaryStats(diary: MemberProfile["diary"], width?: string) {
+  const { claimedTier } = diary;
+
+  return [
+    stat(
+      "stats/diary-points",
+      "Diary Points",
+      `${formatNumber(diary.points)} / ${formatNumber(diary.maxPoints)}`,
+      width
+    ),
+    stat(
+      "diary/master",
+      "Master Diaries",
+      `${formatNumber(diary.masterDiaries)} / ${formatNumber(diary.maxMasterDiaries)}`,
+      width
+    ),
+    stat(
+      claimedTier && `diary/${claimedTier.name.toLowerCase()}`,
+      "Claimed Diary Tier",
+      claimedTier?.name ?? DASH,
+      width
+    )
+  ].join("");
+}
+
 function statBar({ diary, membership, wom }: MemberProfile) {
   return `
   <div style="display:flex;flex-wrap:wrap;justify-content:space-between;row-gap:12px">
     ${stat("stats/clan-points", "Clan Points", formatNumber(membership.points))}
-    ${stat("stats/diary-points", "Diary Points", `${formatNumber(diary.points)} / ${formatNumber(diary.maxPoints)}`)}
-    ${stat("diary/master", "Master Diaries", `${formatNumber(diary.masterDiaries)} / ${formatNumber(diary.maxMasterDiaries)}`)}
-    ${stat(diary.claimedTier && `diary/${diary.claimedTier.name.toLowerCase()}`, "Claimed Diary Tier", diary.claimedTier?.name ?? DASH)}
+    ${diaryStats(diary)}
     ${stat("stats/overall", "Total Level", formatNumber(wom?.totalLevel))}
     ${stat("stats/overall", "Total XP", formatNumber(wom?.totalExp, 0, "compact"))}
     ${stat("stats/ehp", "EHP", formatNumber(wom?.totalEhp, 1))}
@@ -245,9 +268,7 @@ function diaryHeader({ diary, displayName }: MemberProfile, avatarUrl: string) {
       </div>
     </div>
     <div style="display:flex;justify-content:space-between">
-      ${stat("stats/diary-points", "Diary Points", `${formatNumber(diary.points)} / ${formatNumber(diary.maxPoints)}`, "32.6%")}
-      ${stat("diary/master", "Master Diaries", `${formatNumber(diary.masterDiaries)} / ${formatNumber(diary.maxMasterDiaries)}`, "32.6%")}
-      ${stat(diary.claimedTier && `diary/${diary.claimedTier.name.toLowerCase()}`, "Claimed Diary Tier", diary.claimedTier?.name ?? DASH, "32.6%")}
+      ${diaryStats(diary, "32.6%")}
     </div>
   </div>`;
 }
