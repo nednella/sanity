@@ -7,10 +7,10 @@ import {
 } from "discord.js";
 
 import type { Birthday } from "@sanity/api";
-import { relativeDate, toIsoDate } from "@sanity/utils";
+import { formatDayMonth, relativeDate, toIsoDate } from "@sanity/utils";
 
 import { api } from "@/lib/api";
-import { OLDEST_AGE_SHOWN, formatDayMonth } from "@/utils/birthdays";
+import { OLDEST_AGE_SHOWN } from "@/utils/birthdays";
 import { buildEmbed } from "@/utils/embeds";
 import { reply } from "@/utils/replies";
 
