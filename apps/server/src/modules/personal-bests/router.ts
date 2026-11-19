@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { errorResponse, paginated, reviewBody, toPage } from "@/schema/common";
+import { errorResponse, paginated, reviewBody, toPaginated } from "@/schema/common";
 import { defineModule } from "@/utils/define-module";
 import { defineRoute } from "@/utils/define-route";
 
@@ -26,9 +26,8 @@ export const personalBestsModule = defineModule([
       }
     },
     handler: async (req) => {
-      const { limit, offset } = req.query;
-      const { items, total } = await getPersonalBests(req.query);
-      return { items, page: toPage({ limit, offset, total }) };
+      const result = await getPersonalBests(req.query);
+      return toPaginated(result, req.query);
     }
   }),
 
