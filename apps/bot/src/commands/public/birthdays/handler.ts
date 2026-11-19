@@ -11,14 +11,12 @@ import { formatDayMonth, pluralise, relativeDate, toIsoDate } from "@sanity/util
 
 import { api } from "@/lib/api";
 import { OLDEST_AGE_SHOWN } from "@/utils/birthdays";
-import { buildEmbed } from "@/utils/embeds";
+import { LIST_SEPARATOR, buildEmbed } from "@/utils/embeds";
 import { reply } from "@/utils/replies";
 
 export const MAX_DAYS = 366;
 
 const DAY_MS = 24 * 60 * 60 * 1000;
-
-const SEPARATOR = " · ";
 
 const SUGGESTED_DAYS = [7, 30];
 
@@ -67,5 +65,5 @@ function describeBirthday({ member, date, age }: Birthday, from: string) {
     formatCountdown(date, from)
   ];
   if (age > 0 && age <= OLDEST_AGE_SHOWN) parts.push(`turns ${age}`);
-  return parts.join(SEPARATOR);
+  return parts.join(LIST_SEPARATOR);
 }

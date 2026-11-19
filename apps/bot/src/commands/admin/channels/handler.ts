@@ -12,7 +12,7 @@ import {
   resolveTextChannel
 } from "@/lib/channels";
 import { runSubcommand } from "@/utils/commands";
-import { buildEmbed } from "@/utils/embeds";
+import { LIST_SEPARATOR, buildEmbed } from "@/utils/embeds";
 import { reply } from "@/utils/replies";
 
 const SUBCOMMANDS = {
@@ -61,7 +61,7 @@ async function list(interaction: ChatInputCommandInteraction) {
       .filter(([, channel]) => channel.type === type)
       .map(([intent, { label }]) => {
         const channelId = channels.get(intent);
-        return `${label} · ${channelId ? channelMention(channelId) : "not set"}`;
+        return `${label}${LIST_SEPARATOR}${channelId ? channelMention(channelId) : "not set"}`;
       })
       .join("\n");
   }

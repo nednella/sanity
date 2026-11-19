@@ -12,7 +12,7 @@ import { config } from "@config";
 import { commands } from "@/commands";
 import type { Category, Command } from "@/types";
 import { linkButton } from "@/utils/buttons";
-import { buildEmbed } from "@/utils/embeds";
+import { LIST_SEPARATOR, buildEmbed } from "@/utils/embeds";
 import { commandMention } from "@/utils/mentions";
 import { reply } from "@/utils/replies";
 
@@ -82,8 +82,9 @@ function describeCommand(interaction: ChatInputCommandInteraction, command: Comm
       return (option.options ?? []).map((subcommand) => ({ ...subcommand, name: `${option.name} ${subcommand.name}` }));
     })
     .toSorted((a, b) => a.name.localeCompare(b.name));
-  if (subcommands.length === 0) return [`${commandMention(interaction, command)} · ${command.description}`];
+  if (subcommands.length === 0)
+    return [`${commandMention(interaction, command)}${LIST_SEPARATOR}${command.description}`];
   return subcommands.map(
-    (subcommand) => `${commandMention(interaction, command, subcommand.name)} · ${subcommand.description}`
+    (subcommand) => `${commandMention(interaction, command, subcommand.name)}${LIST_SEPARATOR}${subcommand.description}`
   );
 }
