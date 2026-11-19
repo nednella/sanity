@@ -31,6 +31,10 @@ class NetworkError extends Error {
   }
 }
 
+function isApiError(error: unknown, status: number): error is ApiError {
+  return error instanceof ApiError && error.status === status;
+}
+
 // A failed response is not always JSON: a proxy or a crashed server can answer
 // with anything.
 async function parseBody(response: Response) {
@@ -41,4 +45,4 @@ async function parseBody(response: Response) {
   }
 }
 
-export { ApiError, NetworkError };
+export { ApiError, NetworkError, isApiError };

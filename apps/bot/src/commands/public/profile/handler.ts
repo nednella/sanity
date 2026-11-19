@@ -1,6 +1,6 @@
 import { AttachmentBuilder, type ChatInputCommandInteraction, hyperlink, inlineCode } from "discord.js";
 
-import { ApiError } from "@sanity/api";
+import { isApiError } from "@sanity/api";
 import { NO_BIRTH_YEAR, formatNumber, pad } from "@sanity/utils";
 
 import { config } from "@config";
@@ -124,7 +124,7 @@ async function updateBirthday(interaction: ChatInputCommandInteraction) {
   try {
     await api.patch("/v1/members/me", { body: { birthday } });
   } catch (error) {
-    if (!(error instanceof ApiError && error.status === 400)) throw error;
+    if (!isApiError(error, 400)) throw error;
     return replyError(interaction, { title: "Invalid date", description: "That date does not exist." });
   }
 

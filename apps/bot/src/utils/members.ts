@@ -1,6 +1,6 @@
 import { type ChatInputCommandInteraction, type SlashCommandUserOption, userMention } from "discord.js";
 
-import { ApiError } from "@sanity/api";
+import { isApiError } from "@sanity/api";
 
 import { api } from "@/lib/api";
 
@@ -22,7 +22,7 @@ export async function findMember(interaction: ChatInputCommandInteraction) {
   try {
     return await api.get("/v1/members/discord/{discordId}", { params: { path: { discordId: user.id } } });
   } catch (error) {
-    if (!(error instanceof ApiError && error.status === 404)) throw error;
+    if (!isApiError(error, 404)) throw error;
 
     await replyError(interaction, {
       title: "Not a member",
