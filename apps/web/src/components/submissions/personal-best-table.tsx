@@ -1,7 +1,7 @@
 import { createColumnHelper } from "@tanstack/react-table";
 import type { ReactNode } from "react";
 
-import type { Page, RankedPersonalBest } from "@sanity/api";
+import type { Paginated, RankedPersonalBest } from "@sanity/api";
 import { DASH, formatTickTime, teamScale } from "@sanity/utils";
 
 import { MetricIcon } from "@/components/members/profile/overview/metric-icon";
@@ -19,7 +19,7 @@ import { bossIconUrl } from "@/utils/icons";
 const columnHelper = createColumnHelper<DataTableFeatures, RankedPersonalBest>();
 
 type PersonalBestTableProps = {
-  data: { items: RankedPersonalBest[]; page: Page } | undefined;
+  data: Paginated<RankedPersonalBest> | undefined;
   error: Error | null;
   isLoading: boolean;
   memberId?: string;

@@ -1,7 +1,7 @@
 import { createColumnHelper } from "@tanstack/react-table";
 import type { ReactNode } from "react";
 
-import type { Page, Submission } from "@sanity/api";
+import type { Paginated, Submission } from "@sanity/api";
 import { DASH, formatNumber, itemIconUrl } from "@sanity/utils";
 
 import { MetricIcon } from "@/components/members/profile/overview/metric-icon";
@@ -17,7 +17,7 @@ import { RelativeDate } from "@/lib/ui/relative-date";
 const columnHelper = createColumnHelper<DataTableFeatures, Submission>();
 
 type SubmissionTableProps = {
-  data: { items: Submission[]; page: Page } | undefined;
+  data: Paginated<Submission> | undefined;
   error: Error | null;
   isLoading: boolean;
   memberId?: string;
