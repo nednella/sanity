@@ -1,13 +1,18 @@
 import type { FastifyRequest } from "fastify";
 
+import { config } from "@config";
 import type { ApiClient, MemberRole } from "@db/enums";
 
 import { findMemberAccessByDiscordId, findMemberAccessById } from "@/modules/members/repository/find-member-access";
 import { parseAuthorizationHeader, parseXDiscordUserIdHeader } from "@/utils/headers";
 
+import { SESSION_COOKIE } from "../constants";
 import { authErrors } from "../errors";
 import { validateKey } from "../repository/validate-key";
+import { validateSession } from "../repository/validate-session";
 import { hashKey } from "../service/keys";
+
+const SAFE_METHODS = new Set(["GET", "HEAD", "OPTIONS"]);
 
 export type AuthMember = {
   id: bigint;
@@ -27,12 +32,25 @@ export type ActingAuth = {
 
 export async function authenticate(request: FastifyRequest) {
   const token = parseAuthorizationHeader(request);
-  if (!token) throw authErrors.invalidApiKey();
+  if (token !== undefined) {
+    request.auth = await authenticateKey(request, token);
+    return;
+  }
 
+  const secret = request.cookies[SESSION_COOKIE];
+  if (secret !== undefined) {
+    request.auth = await authenticateSession(request, secret);
+    return;
+  }
+
+  throw authErrors.invalidApiKey();
+}
+
+async function authenticateKey(request: FastifyRequest, token: string): Promise<Auth> {
   const key = await validateKey(hashKey(token));
   if (!key) throw authErrors.invalidApiKey();
 
-  request.auth = {
+  return {
     client: key.client,
     member: await findRequestingMember(request, key)
   };
@@ -59,8 +77,28 @@ async function findRequestingMember(request: FastifyRequest, key: ApiKey): Promi
       return await findMemberAccessByDiscordId(discordId);
     }
     case "web": {
-      // web client support not implemented yet
+      // The web client signs in with a session cookie, never with a key.
       throw authErrors.forbidden();
     }
   }
+}
+
+async function authenticateSession(request: FastifyRequest, secret: string): Promise<ActingAuth> {
+  // The browser sends the cookie with any request to the API, so a request
+  // that changes data must come from the web client's own pages.
+  if (!SAFE_METHODS.has(request.method) && request.headers.origin !== config.corsOrigin) {
+    throw authErrors.forbidden();
+  }
+
+  const session = await validateSession(hashKey(secret));
+  if (!session) throw authErrors.invalidSession();
+
+  // A member who has left the clan loses access, even with a live session.
+  const member = await findMemberAccessById(session.memberId);
+  if (member === undefined) throw authErrors.invalidSession();
+
+  return {
+    client: "web",
+    member
+  };
 }

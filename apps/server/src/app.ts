@@ -1,3 +1,4 @@
+import cookie from "@fastify/cookie";
 import cors from "@fastify/cors";
 import rateLimit from "@fastify/rate-limit";
 import swagger from "@fastify/swagger";
@@ -28,7 +29,10 @@ export function buildApp() {
     trustProxy
   });
 
+  app.register(cookie);
+
   app.register(cors, {
+    credentials: true,
     origin: corsOrigin,
     methods: ["DELETE", "GET", "HEAD", "PATCH", "POST"]
   });

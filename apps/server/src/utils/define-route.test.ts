@@ -1,3 +1,4 @@
+import cookie from "@fastify/cookie";
 import rateLimit from "@fastify/rate-limit";
 import Fastify from "fastify";
 import { beforeEach, describe, expect, it, vi } from "vitest";
@@ -8,7 +9,9 @@ import { findMemberAccessByDiscordId, findMemberAccessById } from "@/modules/mem
 import { defineModule } from "./define-module";
 import { defineRoute } from "./define-route";
 
+vi.mock("@config", () => ({ config: { corsOrigin: "https://sanity.test" } }));
 vi.mock("@/modules/auth/repository/validate-key", () => ({ validateKey: vi.fn() }));
+vi.mock("@/modules/auth/repository/validate-session", () => ({ validateSession: vi.fn() }));
 vi.mock("@/modules/members/repository/find-member-access", () => ({
   findMemberAccessByDiscordId: vi.fn(),
   findMemberAccessById: vi.fn()
@@ -22,6 +25,7 @@ const BOT_HEADERS = {
 function buildTestApp() {
   const app = Fastify();
 
+  app.register(cookie);
   app.register(rateLimit, { global: false });
   app.register(
     defineModule([
