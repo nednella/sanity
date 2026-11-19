@@ -5,6 +5,12 @@ import { DASH } from "./strings";
 // Feb.
 export const NO_BIRTH_YEAR = 1904;
 
+const DAY_AND_MONTH: Intl.DateTimeFormatOptions = {
+  day: "2-digit",
+  month: "short",
+  timeZone: "UTC"
+};
+
 const RELATIVE_UNITS_IN_MS = [
   { unit: "year" as const, ms: 365 * 24 * 60 * 60 * 1000 },
   { unit: "month" as const, ms: 30 * 24 * 60 * 60 * 1000 },
@@ -15,12 +21,11 @@ const RELATIVE_UNITS_IN_MS = [
 
 export function formatDate(value: string | null | undefined) {
   if (value == null) return DASH;
-  return new Date(value).toLocaleDateString("en-GB", {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-    timeZone: "UTC"
-  });
+  return new Date(value).toLocaleDateString("en-GB", { ...DAY_AND_MONTH, year: "numeric" });
+}
+
+export function formatDayMonth(value: string) {
+  return new Date(value).toLocaleDateString("en-GB", DAY_AND_MONTH);
 }
 
 export function formatRelativeDate(value: string | null | undefined) {
