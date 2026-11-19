@@ -42,12 +42,12 @@
       "ReviewStatusInput": {
         "type": "string",
         "enum": [
+          "pending",
+          "submitted",
           "approved",
           "approved_missing_member",
           "denied",
-          "deleted_by_user",
-          "pending",
-          "submitted"
+          "deleted_by_user"
         ]
       },
       "ErrorResponseInput": {
@@ -1704,12 +1704,12 @@
       "ReviewStatus": {
         "type": "string",
         "enum": [
+          "pending",
+          "submitted",
           "approved",
           "approved_missing_member",
           "denied",
-          "deleted_by_user",
-          "pending",
-          "submitted"
+          "deleted_by_user"
         ]
       },
       "ErrorResponse": {

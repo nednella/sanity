@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+import { reviewStatus as reviewStatusEnum } from "@db/enums";
+
 import { bigIntString } from "./codecs";
 
 export const pagination = z.object({
@@ -24,9 +26,7 @@ export const timeframe = z.object({
 
 // Every status a review can reach. What a list returns is the repository's
 // business, not the shape's.
-export const reviewStatus = z
-  .enum(["approved", "approved_missing_member", "denied", "deleted_by_user", "pending", "submitted"])
-  .register(z.globalRegistry, { id: "ReviewStatus" });
+export const reviewStatus = z.enum(reviewStatusEnum.enumValues).register(z.globalRegistry, { id: "ReviewStatus" });
 
 // Drops and personal bests are reviewed the same way, so they are asked for the
 // same thing.
