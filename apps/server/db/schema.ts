@@ -204,6 +204,22 @@ export const ranks = pgTable("ranks", {
   masterDiaryRequirement: integer().notNull().default(0)
 });
 
+export const sessions = pgTable(
+  "sessions",
+  {
+    id: integer().generatedAlwaysAsIdentity().primaryKey(),
+    memberId: bigint({ mode: "bigint" })
+      .notNull()
+      .references(() => members.id, { onDelete: "cascade" }),
+    secretHash: text().notNull().unique("sessions_secret_hash_unique"),
+    userAgent: text(),
+    createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
+    lastUsedAt: timestamp({ withTimezone: true }),
+    expiresAt: timestamp({ withTimezone: true }).notNull()
+  },
+  (table) => [index().on(table.memberId)]
+);
+
 export const speedrunContent = pgTable("speedrun_content", {
   id: integer().generatedByDefaultAsIdentity().primaryKey(),
   bossId: integer().references(() => bosses.id, { onDelete: "restrict" }),
