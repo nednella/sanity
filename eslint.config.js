@@ -12,6 +12,11 @@ import ts from "typescript-eslint";
 
 import { sanity } from "./eslint-rules/index.js";
 
+const OBJECT_FUNCTION_TYPES = {
+  selector: "TSTypeAliasDeclaration > TSFunctionType",
+  message: "Write the function type as an object type with a call signature."
+};
+
 export default defineConfig([
   globalIgnores(["**/dist", "apps/web/src/routeTree.gen.ts", "packages/api/src/v1.d.ts"]),
   {
@@ -84,6 +89,10 @@ export default defineConfig([
       // see: https://eslint.org/docs/latest/rules/func-style
       "func-style": ["error", "declaration"],
 
+      // a named function type is an object type with a call signature
+      // see: https://eslint.org/docs/latest/rules/no-restricted-syntax
+      "no-restricted-syntax": ["error", OBJECT_FUNCTION_TYPES],
+
       // code matches the Prettier print width, comments wrap at 80
       // see: https://eslint.style/rules/max-len
       "@stylistic/max-len": [
@@ -146,9 +155,12 @@ export default defineConfig([
       // see: https://tanstack.com/router/latest/docs/framework/react/guide/automatic-code-splitting
       "react-refresh/only-export-components": "off",
 
+      // a block's no-restricted-syntax replaces the one above, so it repeats
+      // the shared selectors
       // see: https://eslint.org/docs/latest/rules/no-restricted-syntax
       "no-restricted-syntax": [
         "error",
+        OBJECT_FUNCTION_TYPES,
         {
           selector:
             "VariableDeclarator[id.name='Route'] > CallExpression > ObjectExpression > Property[key.name='component']:not([value.name=/^(Page|Layout)$/])",

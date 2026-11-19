@@ -26,9 +26,13 @@ export type Category =
   | "Submissions"
   | "Voice";
 
-export type Execute = (interaction: ChatInputCommandInteraction) => Promise<unknown>;
+export type Execute = {
+  (interaction: ChatInputCommandInteraction): Promise<unknown>;
+};
 
-export type Autocomplete = (interaction: AutocompleteInteraction) => Promise<unknown>;
+export type Autocomplete = {
+  (interaction: AutocompleteInteraction): Promise<unknown>;
+};
 
 export type CommandData = SlashCommandOptionsOnlyBuilder | SlashCommandSubcommandsOnlyBuilder;
 

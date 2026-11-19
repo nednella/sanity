@@ -24,7 +24,9 @@ const SUBCOMMANDS = {
   unretire
 };
 
-type AccountUpdate = (name: string, account: string) => { description: string; style: "error" | "success" | "warning" };
+type AccountUpdate = {
+  (name: string, account: string): { description: string; style: "error" | "success" | "warning" };
+};
 
 const ACCOUNT_UPDATES = {
   "discord-account-changed": (name, account) => ({ style: "success", description: `${name} now uses ${account}.` }),

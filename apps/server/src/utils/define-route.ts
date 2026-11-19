@@ -42,10 +42,12 @@ type RequestAuth<Access extends RouteAccess> = Access extends "public"
   ? unknown
   : { auth: Access extends { role: "*" | MemberRole } ? ActingAuth : Auth };
 
-type RouteHandler<Schema extends FastifySchema, Access extends RouteAccess> = (
-  request: Omit<Parameters<ZodHandler<Schema>>[0], "auth"> & RequestAuth<Access>,
-  reply: Parameters<ZodHandler<Schema>>[1]
-) => ReturnType<ZodHandler<Schema>>;
+type RouteHandler<Schema extends FastifySchema, Access extends RouteAccess> = {
+  (
+    request: Omit<Parameters<ZodHandler<Schema>>[0], "auth"> & RequestAuth<Access>,
+    reply: Parameters<ZodHandler<Schema>>[1]
+  ): ReturnType<ZodHandler<Schema>>;
+};
 
 // Require route access to be declared in each routes' config object!
 type RouteDefinition<Schema extends FastifySchema, Access extends RouteAccess> = Omit<
@@ -56,7 +58,9 @@ type RouteDefinition<Schema extends FastifySchema, Access extends RouteAccess> =
   handler: RouteHandler<Schema, Access>;
 };
 
-export type Route = (app: ZodApp) => void;
+export type Route = {
+  (app: ZodApp): void;
+};
 
 export function defineRoute<const Schema extends FastifySchema, Access extends RouteAccess>(
   route: RouteDefinition<Schema, Access>
