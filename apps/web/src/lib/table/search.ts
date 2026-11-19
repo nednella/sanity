@@ -1,5 +1,11 @@
 import type { PaginationState, SortingState } from "@tanstack/react-table";
 
+export const PAGE_SIZES = [50, 100, 200];
+
+const DEFAULT_PAGE_SIZE = 50;
+
+export type Unlisted<T extends never> = T;
+
 export type PageSearch = {
   limit: number;
   offset: number;
@@ -12,9 +18,9 @@ export type SortSearch<TSort extends string> = {
   sort?: TSort;
 };
 
-export function toLimit(value: unknown, sizes: readonly number[], fallback: number) {
+export function toLimit(value: unknown) {
   const parsed = Number(value);
-  return sizes.includes(parsed) ? parsed : fallback;
+  return PAGE_SIZES.includes(parsed) ? parsed : DEFAULT_PAGE_SIZE;
 }
 
 export function toOffset(value: unknown) {

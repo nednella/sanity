@@ -3,7 +3,15 @@ import type { SearchSchemaInput } from "@tanstack/react-router";
 import type { MemberSort } from "@sanity/api";
 
 import { type MemberStatus, toActive } from "@/lib/members/status";
-import { toLimit, toOffset, toOrder, toSort } from "@/lib/table/search";
+import {
+  type PageSearch,
+  type SortSearch,
+  type Unlisted,
+  toLimit,
+  toOffset,
+  toOrder,
+  toSort
+} from "@/lib/table/search";
 
 // The generated union is the source of truth; this list is what validates a
 // sort arriving in the URL, and the assertion below fails to compile if the API
@@ -21,27 +29,20 @@ const MEMBER_SORTS = [
   "totalLevel"
 ] as const satisfies readonly MemberSort[];
 
-const DEFAULT_LIMIT = 50;
-const PAGE_SIZES = [50, 100, 200];
-
-type Unlisted<T extends never> = T;
 export type UnlistedSort = Unlisted<Exclude<MemberSort, (typeof MEMBER_SORTS)[number]>>;
 
-export type MembersSearch = {
-  limit: number;
-  offset: number;
-  order?: "asc" | "desc";
-  search: string;
-  sort?: MemberSort;
-  status: MemberStatus;
-};
+export type MembersSearch = PageSearch &
+  SortSearch<MemberSort> & {
+    search: string;
+    status: MemberStatus;
+  };
 
 export function validateMembersSearch(search: Record<string, unknown> & SearchSchemaInput): MembersSearch {
   // An order without a sort would sit in the URL doing nothing.
   const sort = toSort(search.sort, MEMBER_SORTS);
 
   return {
-    limit: toLimit(search.limit, PAGE_SIZES, DEFAULT_LIMIT),
+    limit: toLimit(search.limit),
     offset: toOffset(search.offset),
     order: sort && toOrder(search.order),
     search: typeof search.search === "string" ? search.search : "",
