@@ -22,6 +22,10 @@ export type MemberRef = Schemas["MemberRef"];
 export type Submission = Schemas["Submission"];
 export type Health = Schemas["Health"];
 export type Page = Schemas["Page"];
+export type Paginated<T> = {
+  items: T[];
+  page: Page;
+};
 export type MemberSort = Schemas["MemberSort"];
 export type PersonalBestSort = Schemas["PersonalBestSort"];
 export type SubmissionSort = Schemas["SubmissionSort"];

@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "@tanstack/react-router";
 import { createColumnHelper } from "@tanstack/react-table";
 
-import type { Member, Page } from "@sanity/api";
+import type { Member, Paginated } from "@sanity/api";
 import { DASH, formatDate, formatNumber, formatRsn } from "@sanity/utils";
 
 import { MemberStatusFilter } from "@/components/members/member-status-filter";
@@ -145,7 +145,7 @@ const defaultColumnVisibility = {
 };
 
 type MemberTableProps = {
-  data: { items: Member[]; page: Page } | undefined;
+  data: Paginated<Member> | undefined;
   error: Error | null;
   isLoading: boolean;
   onRetry: () => void;
