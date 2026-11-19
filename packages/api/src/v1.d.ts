@@ -1993,7 +1993,7 @@ export interface components {
             hasPrevious: boolean;
         };
         /** @enum {string} */
-        ReviewStatusInput: "approved" | "approved_missing_member" | "denied" | "deleted_by_user" | "pending" | "submitted";
+        ReviewStatusInput: "pending" | "submitted" | "approved" | "approved_missing_member" | "denied" | "deleted_by_user";
         ErrorResponseInput: {
             code: string;
             message: string;
@@ -2387,7 +2387,7 @@ export interface components {
             hasPrevious: boolean;
         };
         /** @enum {string} */
-        ReviewStatus: "approved" | "approved_missing_member" | "denied" | "deleted_by_user" | "pending" | "submitted";
+        ReviewStatus: "pending" | "submitted" | "approved" | "approved_missing_member" | "denied" | "deleted_by_user";
         ErrorResponse: {
             code: string;
             message: string;

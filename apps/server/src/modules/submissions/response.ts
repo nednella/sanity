@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { apiClient } from "@db/enums";
+import { apiClient, submissionEvent } from "@db/enums";
 
 import { isoDate } from "@/schema/codecs";
 import { memberRef, reviewStatus } from "@/schema/common";
@@ -13,7 +13,7 @@ const item = z.object({
 
 const participant = memberRef.extend({ points: z.number().nullable() });
 
-export const event = z.enum(["bingo", "leagues"]);
+export const event = z.enum(submissionEvent.enumValues);
 
 export const submission = z
   .object({
