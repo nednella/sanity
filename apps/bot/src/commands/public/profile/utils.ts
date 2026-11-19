@@ -1,7 +1,6 @@
 import {
   ActionRowBuilder,
-  ButtonBuilder,
-  ButtonStyle,
+  type ButtonBuilder,
   TimestampStyles,
   bold,
   escapeMarkdown,
@@ -15,6 +14,8 @@ import { WOM_PLAYERS_URL } from "@sanity/urls";
 import { formatNumber, timeSince } from "@sanity/utils";
 
 import { config } from "@config";
+
+import { linkButton } from "@/utils/buttons";
 
 const SEPARATOR = " - ";
 
@@ -68,10 +69,6 @@ export function describeClanAge({ displayName, membership }: MemberProfile) {
 
   const joinedAt = new Date(membership.joinedAt);
   return `${bold(displayName)} joined on ${time(joinedAt, TimestampStyles.LongDate)}, ${timeSince(joinedAt, new Date())} ago.`;
-}
-
-function linkButton(label: string, url: string) {
-  return new ButtonBuilder().setLabel(label).setStyle(ButtonStyle.Link).setURL(url);
 }
 
 function itemLink({ discordMessageUrl, item }: Submission) {
