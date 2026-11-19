@@ -27,7 +27,15 @@ export function Header({ drawerId }: Readonly<HeaderProps>) {
           size="sm"
           variant="ghost"
         >
-          <Link to="/login">Log in</Link>
+          <Link
+            search={(previous) => ({
+              ...previous,
+              signIn: "open"
+            })}
+            to="."
+          >
+            Log in
+          </Link>
         </Button>
       </div>
     </header>

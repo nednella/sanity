@@ -58,7 +58,13 @@ function Page() {
             size="lg"
             variant="outline"
           >
-            <Link to="/login">
+            <Link
+              search={(previous) => ({
+                ...previous,
+                signIn: "open"
+              })}
+              to="."
+            >
               <span>Log in</span>
             </Link>
           </Button>

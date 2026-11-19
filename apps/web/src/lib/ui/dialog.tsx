@@ -11,11 +11,12 @@ export type DialogHandle = {
 type DialogProps = {
   children: React.ReactNode;
   className?: string;
+  onClose?: () => void;
   ref: React.Ref<DialogHandle>;
   title: string;
 };
 
-export function Dialog({ ref, title, children, className }: Readonly<DialogProps>) {
+export function Dialog({ ref, title, children, className, onClose }: Readonly<DialogProps>) {
   const dialogRef = useRef<HTMLDialogElement>(null);
 
   useImperativeHandle(ref, () => ({
@@ -26,6 +27,7 @@ export function Dialog({ ref, title, children, className }: Readonly<DialogProps
   return (
     <dialog
       className="modal"
+      onClose={onClose}
       ref={dialogRef}
     >
       <div className={cn("modal-box rounded-xs border border-base-300", className)}>
