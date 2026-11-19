@@ -1,8 +1,7 @@
 import {
   ActionRowBuilder,
   ApplicationCommandOptionType,
-  ButtonBuilder,
-  ButtonStyle,
+  type ButtonBuilder,
   type ChatInputCommandInteraction
 } from "discord.js";
 
@@ -12,6 +11,7 @@ import { config } from "@config";
 
 import { commands } from "@/commands";
 import type { Category, Command } from "@/types";
+import { linkButton } from "@/utils/buttons";
 import { buildEmbed } from "@/utils/embeds";
 import { commandMention } from "@/utils/mentions";
 import { reply } from "@/utils/replies";
@@ -21,10 +21,10 @@ const GETTING_STARTED =
   "My commands are available with the `/` prefix. Some commands are channel restricted, and the commands themselves redirect you if needed.\n\n";
 
 const links = new ActionRowBuilder<ButtonBuilder>().addComponents(
-  new ButtonBuilder().setLabel("Website").setStyle(ButtonStyle.Link).setURL(config.webUrl),
-  new ButtonBuilder().setLabel("X").setStyle(ButtonStyle.Link).setURL(SANITY_X_URL),
-  new ButtonBuilder().setLabel("Temple").setStyle(ButtonStyle.Link).setURL(SANITY_TEMPLE_URL),
-  new ButtonBuilder().setLabel("WOM").setStyle(ButtonStyle.Link).setURL(SANITY_WOM_URL)
+  linkButton("Website", config.webUrl),
+  linkButton("X", SANITY_X_URL),
+  linkButton("Temple", SANITY_TEMPLE_URL),
+  linkButton("WOM", SANITY_WOM_URL)
 );
 
 export function handleAdminHelp(interaction: ChatInputCommandInteraction) {
