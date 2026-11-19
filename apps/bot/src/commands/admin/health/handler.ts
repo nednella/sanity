@@ -4,7 +4,7 @@ import { ApiError, type Health, NetworkError } from "@sanity/api";
 import { capitalise, formatMs } from "@sanity/utils";
 
 import { api } from "@/lib/api";
-import { buildEmbed } from "@/utils/embeds";
+import { LIST_SEPARATOR, buildEmbed } from "@/utils/embeds";
 import { reply } from "@/utils/replies";
 
 type Check = Omit<Health["checks"][number], "latencyMs"> & { latencyMs?: number };
@@ -27,7 +27,10 @@ export async function handleHealth(interaction: ChatInputCommandInteraction) {
       description: failing === 0 ? "I'm alive mate" : `${failing} of ${checks.length} checks failing`,
       thumbnail: interaction.client.user.displayAvatarURL(),
       fields: [
-        { name: "Latency", value: `Discord ping · ${formatMs(discordPing)}\nServer ping · ${formatMs(serverPing)}` },
+        {
+          name: "Latency",
+          value: `Discord ping${LIST_SEPARATOR}${formatMs(discordPing)}\nServer ping${LIST_SEPARATOR}${formatMs(serverPing)}`
+        },
         { name: "Health", value: checks.map((check) => describe(check)).join("\n") }
       ]
     })
@@ -51,5 +54,5 @@ async function fetchHealth() {
 function describe({ latencyMs, name, status }: Check) {
   return [capitalise(name), status.toUpperCase(), latencyMs === undefined ? null : formatMs(latencyMs)]
     .filter(Boolean)
-    .join(" · ");
+    .join(LIST_SEPARATOR);
 }

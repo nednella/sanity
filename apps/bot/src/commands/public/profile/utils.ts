@@ -16,8 +16,7 @@ import { formatNumber, timeSince } from "@sanity/utils";
 import { config } from "@config";
 
 import { linkButton } from "@/utils/buttons";
-
-const SEPARATOR = " - ";
+import { LIST_SEPARATOR } from "@/utils/embeds";
 
 export function profileLinks({ id, wom }: MemberProfile) {
   return new ActionRowBuilder<ButtonBuilder>().addComponents(
@@ -38,7 +37,7 @@ export function describeLatestDrop(memberId: string, drop: Submission) {
     time(new Date(drop.submittedAt), TimestampStyles.LongDate)
   ]
     .filter(Boolean)
-    .join(SEPARATOR);
+    .join(LIST_SEPARATOR);
   const teammates = drop.participants
     .filter((participant) => participant.id !== memberId)
     .map((participant) => escapeMarkdown(participant.displayName));
@@ -59,7 +58,7 @@ export function describeEarlierDrops(memberId: string, drops: Submission[]) {
         itemLink(drop),
         describePoints(memberId, drop),
         time(new Date(drop.submittedAt), TimestampStyles.RelativeTime)
-      ].join(SEPARATOR)
+      ].join(LIST_SEPARATOR)
     )
     .join("\n");
 }
