@@ -46,6 +46,13 @@ const FONTS = [
   }
 ];
 
+const RENDER_OPTIONS = {
+  width: WIDTH,
+  height: HEIGHT,
+  fonts: FONTS,
+  images: { throwOnError: false }
+};
+
 // The avatar comes from Discord at render time, because the one saved with the
 // member can be out of date.
 export function renderProfileCard(profile: MemberProfile, avatarUrl: string) {
@@ -55,12 +62,7 @@ export function renderProfileCard(profile: MemberProfile, avatarUrl: string) {
       ${statBar(profile)}
       ${rankProgression(profile)}
     </div>`,
-    {
-      width: WIDTH,
-      height: HEIGHT,
-      fonts: FONTS,
-      images: { throwOnError: false }
-    }
+    RENDER_OPTIONS
   );
 }
 
@@ -71,12 +73,7 @@ export function renderDiaryCard(profile: MemberProfile, entries: MemberDiary[], 
       ${diaryRow(["Content", "Team", "PB", "Tier", "Next"], COLOURS.faint)}
       ${entries.map((entry) => diaryEntry(entry)).join("")}
     </div>`,
-    {
-      width: WIDTH,
-      height: HEIGHT,
-      fonts: FONTS,
-      images: { throwOnError: false }
-    }
+    RENDER_OPTIONS
   );
 }
 
