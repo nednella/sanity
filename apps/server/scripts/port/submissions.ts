@@ -1,6 +1,6 @@
 import { titleCase } from "@sanity/utils";
 
-import { blankToNull, read, toUtcInstant } from "./source";
+import { type MemberIds, blankToNull, read, readStatuses, toUtcInstant } from "./source";
 
 /**
 0 is neither; the old bot wrote 1 for bingo and 2 for leagues.
@@ -12,8 +12,6 @@ export async function readItems() {
 
   return rows.map((item) => ({ id: item.id, name: item.name }));
 }
-
-type MemberIds = Map<string, bigint>;
 
 type SourceSubmission = {
   bingo: number | null;
@@ -31,8 +29,7 @@ type SourceSubmission = {
 };
 
 export async function readSubmissions(memberIds: MemberIds, itemIds: Map<string, number>) {
-  const statusRows = await read<{ id: number; name: string }>("submissionstatus");
-  const statuses = new Map(statusRows.map((row) => [row.id, enumName(row.name)]));
+  const statuses = await readStatuses();
   const rows = await read<SourceSubmission>("submissions", "Id");
 
   return rows.map((row) => {
@@ -109,8 +106,4 @@ export async function readPointsTimelineEvents() {
   return rows
     .filter((row) => row.eventName !== null && row.date !== null)
     .map((row) => ({ id: row.id, name: titleCase(row.eventName!), occurredAt: toUtcInstant(row.date)! }));
-}
-
-function enumName(name: string) {
-  return name.trim().toLowerCase().replaceAll(" ", "_");
 }

@@ -20,6 +20,13 @@ export async function read<T>(table: string, orderBy?: string) {
   return rows as T[];
 }
 
+export type MemberIds = Map<string, bigint>;
+
+export async function readStatuses() {
+  const rows = await read<{ id: number; name: string }>("submissionstatus");
+  return new Map(rows.map((row) => [row.id, row.name.trim().toLowerCase().replaceAll(" ", "_")]));
+}
+
 /**
 The source stored these as DATE, so there is no time of day to invent.
 */
