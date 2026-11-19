@@ -3,7 +3,7 @@ import { render } from "takumi-js";
 
 import type { MemberDiary, MemberProfile, RankSummary } from "@sanity/api";
 import { CIRCLE_FLAG_CDN_URL } from "@sanity/urls";
-import { escapeHtml, formatDate, formatNumber, formatTickTime, isCountryCode, teamScale } from "@sanity/utils";
+import { DASH, escapeHtml, formatDate, formatNumber, formatTickTime, isCountryCode, teamScale } from "@sanity/utils";
 
 import { config } from "@config";
 
@@ -144,7 +144,7 @@ function statBar({ diary, membership, wom }: MemberProfile) {
     ${stat("stats/clan-points", "Clan Points", formatNumber(membership.points))}
     ${stat("stats/diary-points", "Diary Points", `${formatNumber(diary.points)} / ${formatNumber(diary.maxPoints)}`)}
     ${stat("diary/master", "Master Diaries", `${formatNumber(diary.masterDiaries)} / ${formatNumber(diary.maxMasterDiaries)}`)}
-    ${stat(diary.claimedTier && `diary/${diary.claimedTier.name.toLowerCase()}`, "Claimed Diary Tier", diary.claimedTier?.name ?? "—")}
+    ${stat(diary.claimedTier && `diary/${diary.claimedTier.name.toLowerCase()}`, "Claimed Diary Tier", diary.claimedTier?.name ?? DASH)}
     ${stat("stats/overall", "Total Level", formatNumber(wom?.totalLevel))}
     ${stat("stats/overall", "Total XP", formatNumber(wom?.totalExp, 0, "compact"))}
     ${stat("stats/ehp", "EHP", formatNumber(wom?.totalEhp, 1))}
@@ -244,7 +244,7 @@ function diaryHeader({ diary, displayName }: MemberProfile, avatarUrl: string) {
     <div style="display:flex;justify-content:space-between">
       ${stat("stats/diary-points", "Diary Points", `${formatNumber(diary.points)} / ${formatNumber(diary.maxPoints)}`, "32.6%")}
       ${stat("diary/master", "Master Diaries", `${formatNumber(diary.masterDiaries)} / ${formatNumber(diary.maxMasterDiaries)}`, "32.6%")}
-      ${stat(diary.claimedTier && `diary/${diary.claimedTier.name.toLowerCase()}`, "Claimed Diary Tier", diary.claimedTier?.name ?? "—", "32.6%")}
+      ${stat(diary.claimedTier && `diary/${diary.claimedTier.name.toLowerCase()}`, "Claimed Diary Tier", diary.claimedTier?.name ?? DASH, "32.6%")}
     </div>
   </div>`;
 }
@@ -261,7 +261,7 @@ function diaryEntry({ content, nextTier, pb, scale, tier }: MemberDiary) {
     escapeHtml(content.name),
     teamScale(scale),
     formatTickTime(pb?.timeSeconds),
-    tier ? tierBadge(tier.name) : "—",
-    `<span style="color:${COLOURS.faint}">${nextTier ? `${formatTickTime(nextTier.timeSeconds)} (${escapeHtml(nextTier.name)})` : "—"}</span>`
+    tier ? tierBadge(tier.name) : DASH,
+    `<span style="color:${COLOURS.faint}">${nextTier ? `${formatTickTime(nextTier.timeSeconds)} (${escapeHtml(nextTier.name)})` : DASH}</span>`
   ]);
 }
