@@ -10,6 +10,7 @@ import { ReviewStatusBadge } from "@/components/submissions/review-status-badge"
 import { DataTable } from "@/components/table/data-table";
 import type { DataTableFeatures } from "@/components/table/table-features";
 import { useMediaStore } from "@/lib/media/media.store";
+import { screenshotAlt } from "@/lib/records/screenshot";
 import type { SubmissionsSearch } from "@/lib/submissions/search";
 import { useTableSearch } from "@/lib/table/use-table-search";
 import { RelativeDate } from "@/lib/ui/relative-date";
@@ -43,7 +44,7 @@ export function PersonalBestTable({
   function openScreenshot({ content, imageUrl, scale, timeSeconds }: RankedPersonalBest) {
     if (!imageUrl) return;
 
-    showMedia({ alt: `${content.name}, ${teamScale(scale)}, in ${formatTickTime(timeSeconds)}`, src: imageUrl });
+    showMedia({ alt: screenshotAlt(content.name, scale, timeSeconds), src: imageUrl });
   }
 
   return (

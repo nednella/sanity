@@ -4,6 +4,7 @@ import { DASH, formatTickTime, teamScale } from "@sanity/utils";
 import { MetricIcon } from "@/components/members/profile/overview/metric-icon";
 import { PanelEmptyMessage } from "@/components/panel";
 import { useMediaStore } from "@/lib/media/media.store";
+import { screenshotAlt } from "@/lib/records/screenshot";
 import { Tooltip } from "@/lib/ui/tooltip";
 import { bossIconUrl, diaryTierIconUrl } from "@/utils/icons";
 
@@ -20,7 +21,7 @@ export function AchievementDiaryPanel({ diaries }: Readonly<AchievementDiaryPane
     if (!pb?.imageUrl) return;
 
     showMedia({
-      alt: `${content.name}, ${teamScale(scale)}, in ${formatTickTime(pb.timeSeconds)}`,
+      alt: screenshotAlt(content.name, scale, pb.timeSeconds),
       src: pb.imageUrl
     });
   }
