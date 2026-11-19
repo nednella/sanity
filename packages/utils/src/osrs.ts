@@ -2,7 +2,7 @@ import { ACTIVITIES, BOSSES, COMPUTED_METRICS, MetricProps, SKILLS, isMetric } f
 
 import { OSRS_ITEM_ICONS_URL, OSRS_WIKI_IMAGES_URL } from "@sanity/urls";
 
-import { DASH } from "./strings";
+import { DASH, pad } from "./strings";
 
 export const sortActivities = inOrder(ACTIVITIES, "activity");
 export const sortBosses = inOrder(BOSSES, "boss");
@@ -56,10 +56,6 @@ export function osrsWikiImageUrl(fileName: string) {
 
 export function teamScale(scale: number) {
   return TEAM_NAMES[scale] ?? `${scale}-man`;
-}
-
-function pad(value: number) {
-  return String(value).padStart(2, "0");
 }
 
 /**

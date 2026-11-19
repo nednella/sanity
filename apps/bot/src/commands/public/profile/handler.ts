@@ -1,7 +1,7 @@
 import { AttachmentBuilder, type ChatInputCommandInteraction, hyperlink, inlineCode } from "discord.js";
 
 import { ApiError } from "@sanity/api";
-import { NO_BIRTH_YEAR, formatNumber } from "@sanity/utils";
+import { NO_BIRTH_YEAR, formatNumber, pad } from "@sanity/utils";
 
 import { config } from "@config";
 
@@ -32,10 +32,6 @@ const DROPS_SHOWN = 16;
 
 export function handleProfile(interaction: ChatInputCommandInteraction) {
   return runSubcommand(interaction, SUBCOMMANDS);
-}
-
-function pad(value: number) {
-  return String(value).padStart(2, "0");
 }
 
 function replyChanged(interaction: ChatInputCommandInteraction, title: string, description: string) {
