@@ -168,7 +168,7 @@ export const membersModule = defineModule([
     config: {
       access: {
         role: "*",
-        clients: ["bot", "plugin"]
+        clients: ["bot", "plugin", "web"]
       }
     },
     schema: {
