@@ -1,4 +1,4 @@
-import { DASH } from "./strings";
+import { DASH, pluralise } from "./strings";
 
 // Providing your birth year is optional. In cases where a year is not provided,
 // we use 1904. We use this instead of 1900 as it's a leap year and allows 29
@@ -97,8 +97,4 @@ export function relativeDate(
 
   date.setUTCFullYear(year, month, Math.min(date.getUTCDate(), lastDayOfMonth));
   return date;
-}
-
-function pluralise(value: number, unit: string) {
-  return `${value} ${unit}${value === 1 ? "" : "s"}`;
 }
