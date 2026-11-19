@@ -1,9 +1,10 @@
-import { type SQL, and, asc, desc, sql } from "drizzle-orm";
+import { type SQL, and, sql } from "drizzle-orm";
 import type { PgColumn } from "drizzle-orm/pg-core";
 
 import { members, ranks, womPlayers } from "@db/schema";
 
 import { diaryProgressQueries } from "@/modules/speedrun-diary/repository/diary-progress-queries";
+import { sortBy } from "@/utils/sql";
 
 import type { MemberSort } from "../request";
 import { isActive, matchesSearch } from "./shared/filters";
@@ -21,7 +22,6 @@ export type ListMembersOptions = {
 export function listMembers({ limit, offset, active, search, sort, order }: ListMembersOptions) {
   const progress = diaryProgressQueries();
   const { diaryTotals } = progress;
-  const direction = order === "asc" ? asc : desc;
 
   const sortColumns: Record<MemberSort, PgColumn | SQL> = {
     clanPoints: members.clanPoints,
@@ -38,7 +38,7 @@ export function listMembers({ limit, offset, active, search, sort, order }: List
 
   return selectMembers(progress)
     .where(and(isActive(active), matchesSearch(search)))
-    .orderBy(direction(sortColumns[sort]), members.id)
+    .orderBy(sortBy(sortColumns[sort], order), members.id)
     .limit(limit)
     .offset(offset);
 }
