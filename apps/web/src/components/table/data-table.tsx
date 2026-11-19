@@ -14,10 +14,9 @@ import type { ReactNode } from "react";
 import { DataTableColumnToggle } from "@/components/table/data-table-column-toggle";
 import { DataTablePagination } from "@/components/table/data-table-pagination";
 import { type DataTableFeatures, dataTableFeatures } from "@/components/table/table-features";
+import { PAGE_SIZES } from "@/lib/table/search";
 import { Button } from "@/lib/ui/button";
 import { type Sorted, Table } from "@/lib/ui/table";
-
-const DEFAULT_PAGE_SIZE_OPTIONS = [50, 100, 200];
 
 // Enough rows that a table the server doesn't paginate shows everything it was
 // given.
@@ -67,7 +66,7 @@ export function DataTable<TData extends RowData>({
   onRetry,
   onRowClick,
   onSortingChange,
-  pageSizeOptions = DEFAULT_PAGE_SIZE_OPTIONS,
+  pageSizeOptions = PAGE_SIZES,
   pagination,
   pinRow,
   rowCount,

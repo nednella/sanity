@@ -2,9 +2,17 @@ import type { SearchSchemaInput } from "@tanstack/react-router";
 
 import type { PersonalBestSort, SubmissionSort } from "@sanity/api";
 
-import { toLimit, toOffset, toOrder, toPositiveInteger, toSort } from "@/lib/table/search";
+import {
+  type PageSearch,
+  type SortSearch,
+  type Unlisted,
+  toLimit,
+  toOffset,
+  toOrder,
+  toPositiveInteger,
+  toSort
+} from "@/lib/table/search";
 
-type Unlisted<T extends never> = T;
 export type UnlistedSubmissionSort = Unlisted<Exclude<SubmissionSort, (typeof SUBMISSION_SORTS)[number]>>;
 export type UnlistedPersonalBestSort = Unlisted<Exclude<PersonalBestSort, (typeof PERSONAL_BEST_SORTS)[number]>>;
 
@@ -18,20 +26,14 @@ export const SUBMISSION_TYPES = ["drops", "personalBests"] as const;
 const SUBMISSION_SORTS = ["item", "submittedAt", "valueMillions"] as const satisfies readonly SubmissionSort[];
 const PERSONAL_BEST_SORTS = ["content", "scale", "submittedAt", "time"] as const satisfies readonly PersonalBestSort[];
 
-const DEFAULT_LIMIT = 50;
-const PAGE_SIZES = [50, 100, 200];
-
 export type SubmissionType = (typeof SUBMISSION_TYPES)[number];
 
-export type SubmissionsSearch = {
-  contentId?: number;
-  limit: number;
-  offset: number;
-  order?: "asc" | "desc";
-  scale?: number;
-  sort?: PersonalBestSort | SubmissionSort;
-  type: SubmissionType;
-};
+export type SubmissionsSearch = PageSearch &
+  SortSearch<PersonalBestSort | SubmissionSort> & {
+    contentId?: number;
+    scale?: number;
+    type: SubmissionType;
+  };
 
 export function validateSubmissionsSearch(search: Record<string, unknown> & SearchSchemaInput): SubmissionsSearch {
   const type = SUBMISSION_TYPES.find((value) => value === search.type) ?? "drops";
@@ -47,7 +49,7 @@ export function validateSubmissionsSearch(search: Record<string, unknown> & Sear
 
   return {
     ...content,
-    limit: toLimit(search.limit, PAGE_SIZES, DEFAULT_LIMIT),
+    limit: toLimit(search.limit),
     offset: toOffset(search.offset),
     order: sort && toOrder(search.order),
     scale,
