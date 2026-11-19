@@ -11,3 +11,7 @@ export function escapeHtml(text: string) {
 export function isCountryCode(text: string) {
   return /^[a-z]{2}$/i.test(text);
 }
+
+export function pad(value: number) {
+  return String(value).padStart(2, "0");
+}
