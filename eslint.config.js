@@ -85,6 +85,11 @@ export default defineConfig([
       // see: https://github.com/un-ts/eslint-plugin-import-x/blob/master/docs/rules/no-duplicates.md
       "import/no-duplicates": ["error", { "prefer-inline": true }],
 
+      // names inside one import sort by character code, as the Prettier plugin
+      // did; oxfmt sorts only the import lines
+      // see: https://eslint.org/docs/latest/rules/sort-imports
+      "sort-imports": ["error", { ignoreDeclarationSort: true }],
+
       // named functions are declarations, arrows only for anonymous ones
       // see: https://eslint.org/docs/latest/rules/func-style
       "func-style": ["error", "declaration"],

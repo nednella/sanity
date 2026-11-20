@@ -1,0 +1,40 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "printWidth": 120,
+  "tabWidth": 2,
+  "semi": true,
+  "singleQuote": false,
+  "jsxSingleQuote": false,
+  "trailingComma": "none",
+  "bracketSpacing": true,
+  "singleAttributePerLine": true,
+  "sortImports": {
+    "customGroups": [
+      {
+        "groupName": "sanity",
+        "elementNamePattern": ["@sanity/**"]
+      },
+      {
+        "groupName": "server-alias",
+        "elementNamePattern": ["@config", "@db/**"]
+      }
+    ],
+    "groups": [["builtin", "external"], "sanity", "server-alias", "internal", ["parent", "sibling", "index"]],
+    "internalPattern": ["@/"],
+    "sortSideEffects": true
+  },
+  "sortPackageJson": false,
+  "sortTailwindcss": {
+    "stylesheet": "./apps/web/src/main.css"
+  },
+  "ignorePatterns": [
+    ".claude/skills",
+    "apps/plugin/build",
+    "apps/server/db/migrations",
+    "apps/server/openapi.json",
+    "apps/web/src/routeTree.gen.ts",
+    "bun.lock",
+    "dist",
+    "packages/api/src/v1.d.ts"
+  ]
+}
