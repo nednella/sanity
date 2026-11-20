@@ -1,10 +1,11 @@
 shared: &shared
   - .github/actions/setup/**
   - .github/filters.yml
+  - .oxfmtrc.json
+  - .oxlintrc.json
   - bun.lock
   - bunfig.toml
   - eslint-rules/**
-  - eslint.config.js
   - package.json
   - tsconfig.base.json
 

@@ -1,13 +1,12 @@
-import { describe, it } from "bun:test";
-import { RuleTester } from "eslint";
-import ts from "typescript-eslint";
+import { describe, it } from "node:test";
+import { RuleTester } from "oxlint/plugins-dev";
 
 import { exportsFirst } from "./exports-first.js";
 
 RuleTester.describe = describe;
 RuleTester.it = it;
 
-const ruleTester = new RuleTester({ languageOptions: { parser: ts.parser } });
+const ruleTester = new RuleTester({ languageOptions: { parserOptions: { lang: "ts" } } });
 
 ruleTester.run("exports-first", exportsFirst, {
   valid: [
