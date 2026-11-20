@@ -5,7 +5,6 @@ shared: &shared
   - .oxlintrc.json
   - bun.lock
   - bunfig.toml
-  - eslint-rules/**
   - package.json
   - tsconfig.base.json
 

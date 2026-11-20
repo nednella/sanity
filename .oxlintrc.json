@@ -1,7 +1,7 @@
 {
   "$schema": "./node_modules/oxlint/configuration_schema.json",
   "plugins": ["import", "typescript", "unicorn"],
-  "jsPlugins": ["@stylistic/eslint-plugin", "eslint-plugin-perfectionist", "./eslint-rules/index.js"],
+  "jsPlugins": ["@sanity/lint", "@stylistic/eslint-plugin", "eslint-plugin-perfectionist"],
   "categories": {
     "correctness": "off"
   },
