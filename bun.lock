@@ -7,6 +7,7 @@
       "devDependencies": {
         "@commitlint/cli": "^21.2.2",
         "@commitlint/config-conventional": "^21.2.2",
+        "@sanity/lint": "workspace:*",
         "@stylistic/eslint-plugin": "^5.10.0",
         "@types/node": "^26.6.6",
         "eslint-plugin-perfectionist": "~5.13.0",
@@ -111,6 +112,13 @@
         "openapi-typescript": "^7.13.0",
         "openapi-typescript-helpers": "^0.1.0",
         "typescript": "~6.0.3",
+      },
+    },
+    "packages/lint": {
+      "name": "@sanity/lint",
+      "version": "1.0.0",
+      "devDependencies": {
+        "oxlint": "^1.94.0",
       },
     },
     "packages/urls": {
@@ -464,6 +472,8 @@
     "@sanity/api": ["@sanity/api@workspace:packages/api"],
 
     "@sanity/bot": ["@sanity/bot@workspace:apps/bot"],
+
+    "@sanity/lint": ["@sanity/lint@workspace:packages/lint"],
 
     "@sanity/server": ["@sanity/server@workspace:apps/server"],
 
