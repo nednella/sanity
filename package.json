@@ -23,16 +23,16 @@
     "test": "bun run --filter '*' test",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "format": "prettier . --check",
-    "format:fix": "prettier . --write",
+    "format": "oxfmt --check",
+    "format:fix": "oxfmt",
     "prepare": "husky"
   },
   "lint-staged": {
     "*.{ts,tsx}": [
       "eslint --fix",
-      "prettier --write"
+      "oxfmt --no-error-on-unmatched-pattern"
     ],
-    "!(*.ts|*.tsx)": "prettier --write --ignore-unknown",
+    "!(*.ts|*.tsx)": "oxfmt --no-error-on-unmatched-pattern",
     "eslint-rules/*.js": "bun test eslint-rules"
   },
   "devDependencies": {
@@ -40,7 +40,6 @@
     "@commitlint/config-conventional": "^21.2.2",
     "@eslint/js": "^10.0.1",
     "@stylistic/eslint-plugin": "^5.10.0",
-    "@trivago/prettier-plugin-sort-imports": "^6.0.2",
     "@types/node": "^26.6.6",
     "eslint": "^10.10.0",
     "eslint-config-prettier": "^10.1.8",
@@ -52,8 +51,7 @@
     "globals": "^17.12.0",
     "husky": "^9.1.7",
     "lint-staged": "^17.5.1",
-    "prettier": "^3.9.6",
-    "prettier-plugin-tailwindcss": "^0.8.1",
+    "oxfmt": "^0.79.0",
     "typescript": "~6.0.3",
     "typescript-eslint": "^8.70.0"
   }
