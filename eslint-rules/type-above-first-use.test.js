@@ -1,13 +1,12 @@
-import { describe, it } from "bun:test";
-import { RuleTester } from "eslint";
-import ts from "typescript-eslint";
+import { describe, it } from "node:test";
+import { RuleTester } from "oxlint/plugins-dev";
 
 import { typeAboveFirstUse } from "./type-above-first-use.js";
 
 RuleTester.describe = describe;
 RuleTester.it = it;
 
-const ruleTester = new RuleTester({ languageOptions: { parser: ts.parser } });
+const ruleTester = new RuleTester({ languageOptions: { parserOptions: { lang: "ts" } } });
 
 ruleTester.run("type-above-first-use", typeAboveFirstUse, {
   valid: [

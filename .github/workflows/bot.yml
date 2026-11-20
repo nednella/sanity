@@ -39,4 +39,4 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: ./.github/actions/setup
-      - run: bunx eslint apps/bot packages
+      - run: bunx --bun oxlint apps/bot packages
