@@ -219,8 +219,7 @@
             "allowConstantExport": true
           }
         ],
-        "react/react-in-jsx-scope": "off",
-        "react/unsupported-syntax": "warn"
+        "react/react-in-jsx-scope": "off"
       }
     },
     // tanstack router
