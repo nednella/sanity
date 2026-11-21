@@ -6,13 +6,17 @@ import { type AuditEntry, recordAuditEntry } from "./record-audit-entry";
 
 type MemberChange = { member: { id: bigint } };
 
+type AuditEntryOptions<Change extends MemberChange> = {
+  action: AuditEntry["action"];
+  changes: Change[];
+  toNote: (change: Change) => string | undefined;
+};
+
 // Members that share a note share one entry.
 export async function recordAuditEntries<Change extends MemberChange>(
   tx: Transaction,
   auth: ActingAuth,
-  action: AuditEntry["action"],
-  changes: Change[],
-  toNote: (change: Change) => string | undefined
+  { action, changes, toNote }: AuditEntryOptions<Change>
 ) {
   const changesByNote = Map.groupBy(changes, toNote);
 

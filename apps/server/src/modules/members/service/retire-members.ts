@@ -30,7 +30,11 @@ export async function retireMembers({ members, note }: MemberBatch, auth: Acting
       tx,
       changed.map(({ member }) => ({ memberId: member.id, rankId: RETIRED_RANK_ID }))
     );
-    await recordAuditEntries(tx, auth, "rank_changed", changed, () => note ?? "retired");
+    await recordAuditEntries(tx, auth, {
+      action: "rank_changed",
+      changes: changed,
+      toNote: () => note ?? "retired"
+    });
 
     return { changed, skipped };
   });

@@ -25,13 +25,11 @@ export async function changePluginAccess({ members, note, revoked }: PluginAcces
 
     await setPluginAccessRevokedAt(tx, changedIds, revoked ? new Date() : null);
     if (revoked) await revokePluginKeys(tx, changedIds);
-    await recordAuditEntries(
-      tx,
-      auth,
-      "plugin_access_changed",
-      changed,
-      () => note ?? (revoked ? "plugin access revoked" : "plugin access reinstated")
-    );
+    await recordAuditEntries(tx, auth, {
+      action: "plugin_access_changed",
+      changes: changed,
+      toNote: () => note ?? (revoked ? "plugin access revoked" : "plugin access reinstated")
+    });
 
     return { changed, skipped };
   });

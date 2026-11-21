@@ -18,7 +18,11 @@ export async function delayDemotions({ members }: MemberBatch, auth: ActingAuth)
     const changed = found.map((member) => ({ member, until }));
 
     await delayRankChange(tx, memberIds, until);
-    await recordAuditEntries(tx, auth, "rank_changed", changed, () => `demotion delayed until ${toIsoDate(until)}`);
+    await recordAuditEntries(tx, auth, {
+      action: "rank_changed",
+      changes: changed,
+      toNote: () => `demotion delayed until ${toIsoDate(until)}`
+    });
 
     return { changed, skipped: [] };
   });

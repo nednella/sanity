@@ -29,7 +29,11 @@ export async function quitMembers({ members, note }: MemberBatch, auth: ActingAu
       tx,
       changed.map(({ member }) => ({ memberId: member.id, rankId: QUIT_RANK_ID }))
     );
-    await recordAuditEntries(tx, auth, "member_left", changed, () => note);
+    await recordAuditEntries(tx, auth, {
+      action: "member_left",
+      changes: changed,
+      toNote: () => note
+    });
 
     return { changed, skipped };
   });

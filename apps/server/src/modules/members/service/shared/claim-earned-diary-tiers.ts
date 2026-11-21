@@ -31,7 +31,11 @@ export async function claimEarnedDiaryTiers(tx: Transaction, memberIds: bigint[]
       const tier = `${tierName.toLowerCase()} diary tier`;
 
       await setClaimedDiaryTier(tx, standing.id, tierId);
-      await awardPoints(tx, [{ memberId: standing.id, points: clanPoints }], auth.member.id, null, tier);
+      await awardPoints(tx, [{ memberId: standing.id, points: clanPoints }], {
+        awardedBy: auth.member.id,
+        notes: tier,
+        submissionId: null
+      });
       await recordAuditEntry(tx, {
         action: "diary_tier_claimed",
         affects: [standing.id],

@@ -31,6 +31,10 @@ export async function payDiaryCarries(tx: Transaction, run: ApprovedRun, memberI
       tierId: tier.tierId
     });
 
-    await awardPoints(tx, awards, awardedBy, null, `${tier.tierName.toLowerCase()} diary carry - pb #${run.id}`);
+    await awardPoints(tx, awards, {
+      awardedBy,
+      notes: `${tier.tierName.toLowerCase()} diary carry - pb #${run.id}`,
+      submissionId: null
+    });
   }
 }

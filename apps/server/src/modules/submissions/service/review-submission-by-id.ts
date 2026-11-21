@@ -62,5 +62,9 @@ async function paySubmission(tx: Transaction, { awardedBy, memberIds, submission
   });
 
   const note = [submission.itemName, valueMillions, memberIds.length + submission.nonClanCount].join(",");
-  await awardPoints(tx, awards, awardedBy, submission.id, note);
+  await awardPoints(tx, awards, {
+    awardedBy,
+    notes: note,
+    submissionId: submission.id
+  });
 }
