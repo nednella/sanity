@@ -108,7 +108,8 @@ export function DataTable<TData extends RowData>({
 
   function sortedOf(columnId: string): Sorted {
     const entry = table.state.sorting?.find((sort) => sort.id === columnId);
-    return entry ? (entry.desc ? "desc" : "asc") : false;
+    if (!entry) return false;
+    return entry.desc ? "desc" : "asc";
   }
 
   const canToggleColumns = table.getAllLeafColumns().some((column) => column.getCanHide());

@@ -68,7 +68,6 @@
     "no-continue": "off",
     "no-eq-null": "off",
     "no-magic-numbers": "off",
-    "no-nested-ternary": "off",
     "no-plusplus": "off",
     "no-redeclare": "off",
     "no-shadow": "off",
