@@ -22,7 +22,7 @@ export function ContentFilter({ contentId, onChange, scale }: Readonly<ContentFi
   const { data } = useQuery(contentOptions());
   const content = data?.find((entry) => entry.id === contentId);
 
-  function pick(selection: ContentSelection) {
+  function handleSelect(selection: ContentSelection) {
     return (event: MouseEvent<HTMLElement>) => {
       close(event);
       onChange(selection);
@@ -42,7 +42,7 @@ export function ContentFilter({ contentId, onChange, scale }: Readonly<ContentFi
       >
         <li>
           <button
-            onClick={pick({ contentId: undefined, scale: undefined })}
+            onClick={handleSelect({ contentId: undefined, scale: undefined })}
             type="button"
           >
             Any content
@@ -53,7 +53,10 @@ export function ContentFilter({ contentId, onChange, scale }: Readonly<ContentFi
             <button
               // A diary run at one team size only has nothing to choose, so the
               // size comes with it.
-              onClick={pick({ contentId: entry.id, scale: entry.scales.length === 1 ? entry.scales[0] : undefined })}
+              onClick={handleSelect({
+                contentId: entry.id,
+                scale: entry.scales.length === 1 ? entry.scales[0] : undefined
+              })}
               type="button"
             >
               {entry.name}
@@ -63,36 +66,64 @@ export function ContentFilter({ contentId, onChange, scale }: Readonly<ContentFi
       </Dropdown>
 
       {content && content.scales.length > 1 && (
-        <Dropdown
-          className="w-40"
-          label={
-            <>
-              <Users className="size-4" />
-              {scale === undefined ? "Any scale" : teamScale(scale)}
-            </>
-          }
-        >
-          <li>
-            <button
-              onClick={pick({ contentId: content.id, scale: undefined })}
-              type="button"
-            >
-              Any scale
-            </button>
-          </li>
-          {content.scales.map((option) => (
-            <li key={option}>
-              <button
-                onClick={pick({ contentId: content.id, scale: option })}
-                type="button"
-              >
-                {teamScale(option)}
-              </button>
-            </li>
-          ))}
-        </Dropdown>
+        <ScaleFilter
+          contentId={content.id}
+          onChange={onChange}
+          scale={scale}
+          scales={content.scales}
+        />
       )}
     </>
+  );
+}
+
+type ScaleFilterProps = {
+  contentId: number;
+  onChange: (selection: ContentSelection) => void;
+  scale?: number;
+  scales: number[];
+};
+
+function ScaleFilter({ contentId, onChange, scale, scales }: Readonly<ScaleFilterProps>) {
+  function handleSelect(selected: number | undefined) {
+    return (event: MouseEvent<HTMLElement>) => {
+      close(event);
+      onChange({
+        contentId,
+        scale: selected
+      });
+    };
+  }
+
+  return (
+    <Dropdown
+      className="w-40"
+      label={
+        <>
+          <Users className="size-4" />
+          {scale === undefined ? "Any scale" : teamScale(scale)}
+        </>
+      }
+    >
+      <li>
+        <button
+          onClick={handleSelect(undefined)}
+          type="button"
+        >
+          Any scale
+        </button>
+      </li>
+      {scales.map((option) => (
+        <li key={option}>
+          <button
+            onClick={handleSelect(option)}
+            type="button"
+          >
+            {teamScale(option)}
+          </button>
+        </li>
+      ))}
+    </Dropdown>
   );
 }
 

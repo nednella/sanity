@@ -26,61 +26,73 @@ export function AchievementDiaryPanel({ diaries }: Readonly<AchievementDiaryPane
     });
   }
 
-  function openScreenshotOnKey(event: React.KeyboardEvent, diary: MemberDiary) {
-    if (event.key !== "Enter" && event.key !== " ") return;
-
-    event.preventDefault();
-    openScreenshot(diary);
-  }
-
   return (
     <table className="table table-sm">
       <tbody>
-        {diaries.map((diary) => {
-          const { content, scale, pb, tier, nextTier } = diary;
-          const hasScreenshot = Boolean(pb?.imageUrl);
-
-          return (
-            <tr
-              className={hasScreenshot ? `
-                cursor-zoom-in
-                hover:bg-base-200
-              ` : undefined}
-              key={`${content.id}:${scale}`}
-              onClick={() => openScreenshot(diary)}
-              onKeyDown={(event) => openScreenshotOnKey(event, diary)}
-              tabIndex={hasScreenshot ? 0 : undefined}
-            >
-              <td>
-                <span className="inline-flex items-center gap-2">
-                  {content.metric && <MetricIcon src={bossIconUrl(content.metric)} />}
-                  {content.name}
-                  <span className="text-base-content/60">{teamScale(scale)}</span>
-                </span>
-              </td>
-              <td className="font-medium tabular-nums">
-                {nextTier ? (
-                  <Tooltip tip={`${nextTier.name} at ${formatTickTime(nextTier.timeSeconds)}`}>
-                    {formatTickTime(pb?.timeSeconds)}
-                  </Tooltip>
-                ) : (
-                  formatTickTime(pb?.timeSeconds)
-                )}
-              </td>
-              <td>
-                {tier ? (
-                  <span className="inline-flex items-center gap-2">
-                    <MetricIcon src={diaryTierIconUrl(tier.name)} />
-                    {tier.name}
-                  </span>
-                ) : (
-                  DASH
-                )}
-              </td>
-            </tr>
-          );
-        })}
+        {diaries.map((diary) => (
+          <DiaryRow
+            diary={diary}
+            key={`${diary.content.id}:${diary.scale}`}
+            onOpenScreenshot={() => openScreenshot(diary)}
+          />
+        ))}
       </tbody>
     </table>
+  );
+}
+
+type DiaryRowProps = {
+  diary: MemberDiary;
+  onOpenScreenshot: () => void;
+};
+
+function DiaryRow({ diary, onOpenScreenshot }: Readonly<DiaryRowProps>) {
+  const { content, scale, pb, tier, nextTier } = diary;
+  const hasScreenshot = Boolean(pb?.imageUrl);
+
+  function openScreenshotOnKey(event: React.KeyboardEvent) {
+    if (event.key !== "Enter" && event.key !== " ") return;
+
+    event.preventDefault();
+    onOpenScreenshot();
+  }
+
+  return (
+    <tr
+      className={hasScreenshot ? `
+        cursor-zoom-in
+        hover:bg-base-200
+      ` : undefined}
+      onClick={onOpenScreenshot}
+      onKeyDown={openScreenshotOnKey}
+      tabIndex={hasScreenshot ? 0 : undefined}
+    >
+      <td>
+        <span className="inline-flex items-center gap-2">
+          {content.metric && <MetricIcon src={bossIconUrl(content.metric)} />}
+          {content.name}
+          <span className="text-base-content/60">{teamScale(scale)}</span>
+        </span>
+      </td>
+      <td className="font-medium tabular-nums">
+        {nextTier ? (
+          <Tooltip tip={`${nextTier.name} at ${formatTickTime(nextTier.timeSeconds)}`}>
+            {formatTickTime(pb?.timeSeconds)}
+          </Tooltip>
+        ) : (
+          formatTickTime(pb?.timeSeconds)
+        )}
+      </td>
+      <td>
+        {tier ? (
+          <span className="inline-flex items-center gap-2">
+            <MetricIcon src={diaryTierIconUrl(tier.name)} />
+            {tier.name}
+          </span>
+        ) : (
+          DASH
+        )}
+      </td>
+    </tr>
   );
 }

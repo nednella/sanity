@@ -59,7 +59,7 @@
     "import/prefer-default-export": "off",
     "import/unambiguous": "off",
     "max-lines": "off",
-    "max-lines-per-function": "off",
+    "max-lines-per-function": ["error", { "max": 70, "skipBlankLines": true, "skipComments": true }],
     "max-params": "off",
     "max-statements": "off",
     "new-cap": ["error", { "capIsNewExceptions": ["Fastify"] }],
@@ -148,6 +148,13 @@
       "rules": {
         "node/no-process-env": "off",
         "node/no-top-level-await": "off"
+      }
+    },
+    // test suites and one-off scripts run long
+    {
+      "files": ["**/*.test.ts", "apps/server/scripts/**/*.ts"],
+      "rules": {
+        "max-lines-per-function": "off"
       }
     },
     // scripts report to the terminal

@@ -17,72 +17,78 @@ type WomSummaryPanelProps = {
 export function WomSummaryPanel({ profile }: Readonly<WomSummaryPanelProps>) {
   const { wom } = profile;
 
-  const bosses = wom?.latestSnapshot?.bosses ?? [];
+  return (
+    <div className="flex flex-1 flex-col gap-2">
+      {wom ? <WomFacts wom={wom} /> : <WomNoSync message={womEmptyMessage(profile)} />}
+    </div>
+  );
+}
+
+type WomFactsProps = {
+  wom: NonNullable<MemberProfile["wom"]>;
+};
+
+function WomFacts({ wom }: Readonly<WomFactsProps>) {
+  const bosses = wom.latestSnapshot?.bosses ?? [];
   const { totalKills, mostEhb, mostKilled } = bossStats(bosses);
 
   return (
-    <div className="flex flex-1 flex-col gap-2">
-      {wom ? (
-        <>
-          <FactRow
-            icon={<CalendarDays className="size-4" />}
-            label="Last Active"
-            value={<RelativeDate value={wom.lastChangedAt} />}
-          />
-          <FactRow
-            icon={<Hourglass className="size-4" />}
-            label="Time to Max"
-            value={formatRemaining(wom.timeToMax, "Maxed")}
-          />
-          <FactRow
-            icon={<Hourglass className="size-4" />}
-            label="Time to 200m All"
-            value={formatRemaining(wom.timeTo200m, "Complete")}
-          />
-          <FactRow
-            icon={<MetricIcon src={statIconUrl("overall")} />}
-            label="Total Level"
-            value={formatNumber(wom.totalLevel)}
-          />
-          <FactRow
-            icon={<MetricIcon src={statIconUrl("overall")} />}
-            label="Total XP"
-            value={formatNumber(wom.totalExp)}
-          />
-          <FactRow
-            icon={<MetricIcon src={statIconUrl("ehp")} />}
-            label="EHP"
-            value={formatNumber(wom.totalEhp, 1)}
-          />
-          <FactRow
-            icon={<MetricIcon src={statIconUrl("ehb")} />}
-            label="EHB"
-            value={formatNumber(wom.totalEhb, 1)}
-          />
-          <FactRow
-            icon={<Swords className="size-4" />}
-            label="Boss Kills"
-            value={formatNumber(totalKills)}
-          />
-          {mostEhb && (
-            <FactRow
-              icon={<MetricIcon src={bossIconUrl(mostEhb.boss)} />}
-              label="Most EHB"
-              value={`${metricName(mostEhb.boss)} (${formatNumber(mostEhb.ehb, 1)})`}
-            />
-          )}
-          {mostKilled && (
-            <FactRow
-              icon={<MetricIcon src={bossIconUrl(mostKilled.boss)} />}
-              label="Most Killed"
-              value={`${metricName(mostKilled.boss)} (${formatNumber(mostKilled.kills)})`}
-            />
-          )}
-        </>
-      ) : (
-        <WomNoSync message={womEmptyMessage(profile)} />
+    <>
+      <FactRow
+        icon={<CalendarDays className="size-4" />}
+        label="Last Active"
+        value={<RelativeDate value={wom.lastChangedAt} />}
+      />
+      <FactRow
+        icon={<Hourglass className="size-4" />}
+        label="Time to Max"
+        value={formatRemaining(wom.timeToMax, "Maxed")}
+      />
+      <FactRow
+        icon={<Hourglass className="size-4" />}
+        label="Time to 200m All"
+        value={formatRemaining(wom.timeTo200m, "Complete")}
+      />
+      <FactRow
+        icon={<MetricIcon src={statIconUrl("overall")} />}
+        label="Total Level"
+        value={formatNumber(wom.totalLevel)}
+      />
+      <FactRow
+        icon={<MetricIcon src={statIconUrl("overall")} />}
+        label="Total XP"
+        value={formatNumber(wom.totalExp)}
+      />
+      <FactRow
+        icon={<MetricIcon src={statIconUrl("ehp")} />}
+        label="EHP"
+        value={formatNumber(wom.totalEhp, 1)}
+      />
+      <FactRow
+        icon={<MetricIcon src={statIconUrl("ehb")} />}
+        label="EHB"
+        value={formatNumber(wom.totalEhb, 1)}
+      />
+      <FactRow
+        icon={<Swords className="size-4" />}
+        label="Boss Kills"
+        value={formatNumber(totalKills)}
+      />
+      {mostEhb && (
+        <FactRow
+          icon={<MetricIcon src={bossIconUrl(mostEhb.boss)} />}
+          label="Most EHB"
+          value={`${metricName(mostEhb.boss)} (${formatNumber(mostEhb.ehb, 1)})`}
+        />
       )}
-    </div>
+      {mostKilled && (
+        <FactRow
+          icon={<MetricIcon src={bossIconUrl(mostKilled.boss)} />}
+          label="Most Killed"
+          value={`${metricName(mostKilled.boss)} (${formatNumber(mostKilled.kills)})`}
+        />
+      )}
+    </>
   );
 }
 
