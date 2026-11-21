@@ -2,7 +2,7 @@ import type { FastifyRequest } from "fastify";
 
 import { bigIntString } from "@/schema/codecs";
 
-const BEARER_TOKEN = /^Bearer (\S+)$/i;
+const BEARER_TOKEN = /^Bearer (\S+)$/iu;
 
 /**
  * Reads the token from an `Authorization: Bearer <token>` header.

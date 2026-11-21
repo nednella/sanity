@@ -14,6 +14,6 @@ export const updateDiscordAccountBody = z.object({
   displayName: z.string().trim().min(1).max(32)
 });
 
-export const channelParams = z.object({ purpose: z.string().regex(/^[a-z_]{1,50}$/) });
+export const channelParams = z.object({ purpose: z.string().regex(/^[a-z_]{1,50}$/u) });
 
 export const setChannelBody = z.object({ channelId: bigIntString });

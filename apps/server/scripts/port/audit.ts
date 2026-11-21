@@ -12,20 +12,20 @@ const WEBSITE = 10;
 const BOT_ACCOUNTS = new Set(["228143014168625153", "979856389868494898"]);
 
 const matchers: [RegExp, AuditAction][] = [
-  [/rank ?(id)? from/i, "rank_changed"],
-  [/name from/i, "rsn_changed"],
-  [/nitro points/i, "points_awarded"],
-  [/diary time entry|diarytime/i, "catalogue_changed"],
-  [/^add_points/i, "points_awarded"],
-  [/^changed rsn/i, "rsn_changed"],
-  [/^diarytierclaimed/i, "diary_tier_claimed"],
-  [/role/i, "role_changed"],
-  [/^(addboss|adddrop|removedrop|addchannel|updated drop|updated bingo items)/i, "catalogue_changed"],
-  [/bingo winner|^updated rank #|:\d+->\d+$/i, "catalogue_changed"],
-  [/^removed bingo flag/i, "submission_reviewed"],
-  [/^pbid /i, "personal_best_reviewed"],
-  [/quitto|^quitted |has left disc/i, "member_left"],
-  [/^trail started/i, "member_joined"]
+  [/rank ?(id)? from/iu, "rank_changed"],
+  [/name from/iu, "rsn_changed"],
+  [/nitro points/iu, "points_awarded"],
+  [/diary time entry|diarytime/iu, "catalogue_changed"],
+  [/^add_points/iu, "points_awarded"],
+  [/^changed rsn/iu, "rsn_changed"],
+  [/^diarytierclaimed/iu, "diary_tier_claimed"],
+  [/role/iu, "role_changed"],
+  [/^(addboss|adddrop|removedrop|addchannel|updated drop|updated bingo items)/iu, "catalogue_changed"],
+  [/bingo winner|^updated rank #|:\d+->\d+$/iu, "catalogue_changed"],
+  [/^removed bingo flag/iu, "submission_reviewed"],
+  [/^pbid /iu, "personal_best_reviewed"],
+  [/quitto|^quitted |has left disc/iu, "member_left"],
+  [/^trail started/iu, "member_joined"]
 ];
 
 /**
@@ -75,7 +75,7 @@ export async function readAuditLog(memberIds: MemberIds) {
         // needs stripping before it will match. Anything else in the column is
         // free text and no member at all.
         (row.affectedUsers ?? "").split(",").flatMap((listed) => {
-          const memberId = memberIds.get(listed.replaceAll(/\D/g, ""));
+          const memberId = memberIds.get(listed.replaceAll(/\D/gu, ""));
           return memberId === undefined ? [] : [memberId];
         })
       )
@@ -90,7 +90,7 @@ export async function readAuditLog(memberIds: MemberIds) {
  */
 function isPersonalBestNote(note: string) {
   const parts = note.split(":");
-  return parts.length >= 4 && /^\d+$/.test(parts[1]!.trim());
+  return parts.length >= 4 && /^\d+$/u.test(parts[1]!.trim());
 }
 
 function toSource(actionType: number): AuditSource {
