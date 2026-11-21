@@ -41,7 +41,7 @@ async function parseBody(response: Response) {
   try {
     return await response.clone().json();
   } catch {
-    return;
+    return null;
   }
 }
 
