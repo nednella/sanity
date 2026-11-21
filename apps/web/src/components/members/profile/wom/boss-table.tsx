@@ -75,11 +75,13 @@ type BossTableProps = {
 export function BossTable({ emptyMessage, snapshot }: Readonly<BossTableProps>) {
   return (
     <DataTable
-      columns={columns}
-      data={toRows(snapshot)}
       emptyMessage={emptyMessage}
       pinRow={(row) => row.metric === EHB}
       stickyHeader
+      tableOptions={{
+        columns,
+        data: toRows(snapshot)
+      }}
     />
   );
 }

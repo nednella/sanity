@@ -53,10 +53,12 @@ type ActivityTableProps = {
 export function ActivityTable({ activities, emptyMessage }: Readonly<ActivityTableProps>) {
   return (
     <DataTable
-      columns={columns}
-      data={activities}
       emptyMessage={emptyMessage}
       stickyHeader
+      tableOptions={{
+        columns,
+        data: activities
+      }}
     />
   );
 }

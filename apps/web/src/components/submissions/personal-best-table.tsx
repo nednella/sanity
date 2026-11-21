@@ -49,20 +49,22 @@ export function PersonalBestTable({
 
   return (
     <DataTable
-      columns={columns}
-      data={data?.items}
       emptyMessage="No personal bests recorded."
       error={error}
       filters={toolbar}
       isLoading={isLoading}
-      onPaginationChange={table.onPaginationChange}
       onRetry={onRetry}
       onRowClick={openScreenshot}
-      onSortingChange={table.onSortingChange}
-      pagination={table.pagination}
-      rowCount={data?.page.total ?? 0}
       rowCursor="zoom-in"
-      sorting={table.sorting}
+      tableOptions={{
+        columns,
+        data: data?.items,
+        onPaginationChange: table.onPaginationChange,
+        onSortingChange: table.onSortingChange,
+        pagination: table.pagination,
+        rowCount: data?.page.total ?? 0,
+        sorting: table.sorting
+      }}
     />
   );
 }
