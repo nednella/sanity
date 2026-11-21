@@ -1,11 +1,11 @@
-import { db } from "@db/index";
+import { type Transaction, db } from "@db/index";
 
 import { recordAuditEntry } from "@/modules/audit/repository/record-audit-entry";
 import type { ActingAuth } from "@/modules/auth/hooks/authenticate";
 import { listMembersByDiscordId } from "@/modules/members/repository/list-members-by-discord-id";
 import { saveMember } from "@/modules/members/repository/save-member";
 import { startMemberTrial } from "@/modules/members/repository/start-member-trial";
-import type { TrialistBatch } from "@/modules/members/request";
+import type { NewMember, TrialistBatch } from "@/modules/members/request";
 
 export async function trialMembers({ trialists }: TrialistBatch, auth: ActingAuth) {
   return db.transaction(async (tx) => {
@@ -18,37 +18,47 @@ export async function trialMembers({ trialists }: TrialistBatch, auth: ActingAut
     for (const trialist of trialists) {
       const existing = found.get(trialist.discordId);
 
-      if (!existing) {
-        const memberId = await saveMember(tx, trialist);
-        await recordAuditEntry(tx, {
-          actingMemberId: auth.member.id,
-          action: "member_joined",
-          affects: [memberId],
-          note: `${trialist.displayName} has joined the clan`,
-          source: auth.client
-        });
-
+      if (existing) {
+        const pointsCleared = await rejoinClan(tx, existing, auth);
+        results.push({ ...trialist, memberId: existing.id, outcome: "retrialling" as const, pointsCleared });
+      } else {
+        const memberId = await joinClan(tx, trialist, auth);
         results.push({ ...trialist, memberId, outcome: "trialling" as const, pointsCleared: 0 });
-        continue;
       }
-
-      const restarted = await startMemberTrial(tx, existing.id);
-      await recordAuditEntry(tx, {
-        actingMemberId: auth.member.id,
-        action: "member_joined",
-        affects: [existing.id],
-        note: `${existing.displayName} has rejoined the clan, clearing ${restarted?.pointsCleared ?? 0} points`,
-        source: auth.client
-      });
-
-      results.push({
-        ...trialist,
-        memberId: existing.id,
-        outcome: "retrialling" as const,
-        pointsCleared: restarted?.pointsCleared ?? 0
-      });
     }
 
     return results;
   });
+}
+
+async function joinClan(tx: Transaction, trialist: NewMember, auth: ActingAuth) {
+  const memberId = await saveMember(tx, trialist);
+  await recordAuditEntry(tx, {
+    actingMemberId: auth.member.id,
+    action: "member_joined",
+    affects: [memberId],
+    note: `${trialist.displayName} has joined the clan`,
+    source: auth.client
+  });
+
+  return memberId;
+}
+
+type FormerMember = {
+  displayName: string;
+  id: bigint;
+};
+
+async function rejoinClan(tx: Transaction, member: FormerMember, auth: ActingAuth) {
+  const restarted = await startMemberTrial(tx, member.id);
+  const pointsCleared = restarted?.pointsCleared ?? 0;
+  await recordAuditEntry(tx, {
+    actingMemberId: auth.member.id,
+    action: "member_joined",
+    affects: [member.id],
+    note: `${member.displayName} has rejoined the clan, clearing ${pointsCleared} points`,
+    source: auth.client
+  });
+
+  return pointsCleared;
 }

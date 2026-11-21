@@ -22,19 +22,10 @@ export function moduleReads(sourceCode: SourceCode, program: ESTree.Program): Mo
   const moduleScope = findModuleScope(sourceCode);
 
   for (const variable of moduleScope?.variables ?? []) {
-    const declaration = declaringStatement(variable);
-    if (!declaration) continue;
-
-    for (const reference of variable.references) {
-      const isValueReference = "isValueReference" in reference && reference.isValueReference;
-      if (!isValueReference || isInTypeQuery(reference.identifier)) continue;
-
-      const reader = topLevelStatement(reference.identifier);
-      if (reader === declaration) continue;
-
-      anywhere.get(reader)?.add(declaration);
-      if (!isInFunction(reference.from, moduleScope)) atLoad.get(reader)?.add(declaration);
-    }
+    addReadsOf(variable, moduleScope, {
+      anywhere,
+      atLoad
+    });
   }
 
   return { atLoad, anywhere };
@@ -63,6 +54,22 @@ export function declaredNames(statement: TopLevelStatement): string[] {
 
 function findModuleScope(sourceCode: SourceCode): Scope | undefined {
   return sourceCode.scopeManager.globalScope?.childScopes.find((scope) => scope.type === "module");
+}
+
+function addReadsOf(variable: Variable, moduleScope: Scope | undefined, reads: ModuleReads) {
+  const declaration = declaringStatement(variable);
+  if (!declaration) return;
+
+  for (const reference of variable.references) {
+    const isValueReference = "isValueReference" in reference && reference.isValueReference;
+    if (!isValueReference || isInTypeQuery(reference.identifier)) continue;
+
+    const reader = topLevelStatement(reference.identifier);
+    if (reader === declaration) continue;
+
+    reads.anywhere.get(reader)?.add(declaration);
+    if (!isInFunction(reference.from, moduleScope)) reads.atLoad.get(reader)?.add(declaration);
+  }
 }
 
 function topLevelStatement(node: ESTree.Node): TopLevelStatement {

@@ -10,8 +10,6 @@ import { listMembersById } from "@/modules/members/repository/list-members-by-id
 import { setPluginAccessRevokedAt } from "@/modules/members/repository/set-plugin-access-revoked-at";
 import type { PluginAccessChange } from "@/modules/members/request";
 
-type Member = Awaited<ReturnType<typeof listMembersById>>[number];
-
 /**
  * Revokes or reinstates members' plugin access. A revoke also revokes the
  * member's live plugin key. After a reinstate, the member gets a new key with
@@ -21,17 +19,7 @@ export async function changePluginAccess({ members, note, revoked }: PluginAcces
   return db.transaction(async (tx) => {
     const memberIds = await listMemberIdsByRef(tx, members);
     const found = await listMembersById(tx, memberIds);
-
-    const changed: { member: Member }[] = [];
-    const skipped: { error: ApplicationError; member: Member }[] = [];
-
-    for (const member of found) {
-      const isRevoked = member.pluginAccessRevokedAt !== null;
-
-      if (revoked && isRevoked) skipped.push({ member, error: memberErrors.pluginAccessRevoked() });
-      else if (!revoked && !isRevoked) skipped.push({ member, error: memberErrors.hasPluginAccess() });
-      else changed.push({ member });
-    }
+    const { changed, skipped } = splitByPluginAccess(found, revoked);
 
     const changedIds = changed.map(({ member }) => member.id);
 
@@ -47,4 +35,21 @@ export async function changePluginAccess({ members, note, revoked }: PluginAcces
 
     return { changed, skipped };
   });
+}
+
+type Member = Awaited<ReturnType<typeof listMembersById>>[number];
+
+function splitByPluginAccess(found: Member[], revoked: boolean) {
+  const changed: { member: Member }[] = [];
+  const skipped: { error: ApplicationError; member: Member }[] = [];
+
+  for (const member of found) {
+    const isRevoked = member.pluginAccessRevokedAt !== null;
+
+    if (revoked && isRevoked) skipped.push({ member, error: memberErrors.pluginAccessRevoked() });
+    else if (!revoked && !isRevoked) skipped.push({ member, error: memberErrors.hasPluginAccess() });
+    else changed.push({ member });
+  }
+
+  return { changed, skipped };
 }

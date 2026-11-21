@@ -61,7 +61,7 @@
     "max-lines": "off",
     "max-lines-per-function": ["error", { "max": 70, "skipBlankLines": true, "skipComments": true }],
     "max-params": "off",
-    "max-statements": "off",
+    "max-statements": ["error", { "max": 12 }],
     "new-cap": ["error", { "capIsNewExceptions": ["Fastify"] }],
     "no-await-in-loop": "off",
     "no-continue": "off",
@@ -154,7 +154,8 @@
     {
       "files": ["**/*.test.ts", "apps/server/scripts/**/*.ts"],
       "rules": {
-        "max-lines-per-function": "off"
+        "max-lines-per-function": "off",
+        "max-statements": "off"
       }
     },
     // scripts report to the terminal

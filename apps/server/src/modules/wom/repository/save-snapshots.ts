@@ -58,20 +58,28 @@ async function saveSnapshotBatch(tx: Transaction, snapshots: SnapshotResponse[])
       createdAt: womSnapshots.createdAt
     });
 
-  const idFor = new Map(saved.map(({ id, womPlayerId, createdAt }) => [`${womPlayerId}:${createdAt.getTime()}`, id]));
-  const rows = snapshots.flatMap(({ playerId, createdAt, data }) => {
-    const id = idFor.get(`${playerId}:${createdAt.getTime()}`);
-    return id === undefined ? [] : [toSnapshotRows(id, data)];
-  });
-
-  const computed = rows.flatMap((row) => row.computed);
-  const skills = rows.flatMap((row) => row.skills);
-  const bosses = rows.flatMap((row) => row.bosses);
-  const activities = rows.flatMap((row) => row.activities);
+  const { activities, bosses, computed, skills } = toNewSnapshotRows(snapshots, saved);
   if (computed.length > 0) await tx.insert(womSnapshotComputed).values(computed);
   if (skills.length > 0) await tx.insert(womSnapshotSkills).values(skills);
   if (bosses.length > 0) await tx.insert(womSnapshotBosses).values(bosses);
   if (activities.length > 0) await tx.insert(womSnapshotActivities).values(activities);
 
   return saved.length;
+}
+
+type SavedSnapshot = Pick<typeof womSnapshots.$inferSelect, "createdAt" | "id" | "womPlayerId">;
+
+function toNewSnapshotRows(snapshots: SnapshotResponse[], saved: SavedSnapshot[]) {
+  const idFor = new Map(saved.map(({ id, womPlayerId, createdAt }) => [`${womPlayerId}:${createdAt.getTime()}`, id]));
+  const rows = snapshots.flatMap(({ playerId, createdAt, data }) => {
+    const id = idFor.get(`${playerId}:${createdAt.getTime()}`);
+    return id === undefined ? [] : [toSnapshotRows(id, data)];
+  });
+
+  return {
+    activities: rows.flatMap((row) => row.activities),
+    bosses: rows.flatMap((row) => row.bosses),
+    computed: rows.flatMap((row) => row.computed),
+    skills: rows.flatMap((row) => row.skills)
+  };
 }

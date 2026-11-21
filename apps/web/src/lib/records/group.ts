@@ -12,26 +12,39 @@ export type RecordGroup = {
 
 export function toRecordGroups(records: RankedPersonalBest[]) {
   const groups = new Map<number, RecordGroup>();
-  const ordered: RecordGroup[] = [];
 
   for (const record of records) {
-    let group = groups.get(record.content.id);
-    if (!group) {
-      group = { content: record.content, scales: [] };
-      groups.set(record.content.id, group);
-      ordered.push(group);
-    }
-
-    let scale = group.scales.find((entry) => entry.scale === record.scale);
-    if (!scale) {
-      scale = { records: [], scale: record.scale };
-      group.scales.push(scale);
-    }
-
+    const group = findOrAddGroup(groups, record.content);
+    const scale = findOrAddScale(group, record.scale);
     scale.records.push(record);
   }
 
+  const ordered = [...groups.values()];
   for (const group of ordered) group.scales = group.scales.toSorted((a, b) => a.scale - b.scale);
 
   return ordered.toSorted((a, b) => a.content.name.localeCompare(b.content.name));
+}
+
+function findOrAddGroup(groups: Map<number, RecordGroup>, content: RecordGroup["content"]) {
+  const existing = groups.get(content.id);
+  if (existing) return existing;
+
+  const group: RecordGroup = {
+    content,
+    scales: []
+  };
+  groups.set(content.id, group);
+  return group;
+}
+
+function findOrAddScale(group: RecordGroup, scale: number) {
+  const existing = group.scales.find((entry) => entry.scale === scale);
+  if (existing) return existing;
+
+  const added: RecordWithScale = {
+    records: [],
+    scale
+  };
+  group.scales.push(added);
+  return added;
 }

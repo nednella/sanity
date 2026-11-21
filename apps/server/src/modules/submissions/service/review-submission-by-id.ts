@@ -1,4 +1,4 @@
-import { db } from "@db/index";
+import { type Transaction, db } from "@db/index";
 
 import { recordAuditEntry } from "@/modules/audit/repository/record-audit-entry";
 import type { ActingAuth } from "@/modules/auth/hooks/authenticate";
@@ -37,16 +37,30 @@ export async function reviewSubmissionById(id: number, review: Review, auth: Act
 
     if (review.status === "denied") return;
 
-    const trialists = await listTrialists(tx, memberIds);
-    const valueMillions = submission.valueMillions ?? 0;
-
-    const awards = generatePointSplit({
-      nonClanCount: submission.nonClanCount,
-      participants: memberIds.map((memberId) => ({ isTrialist: trialists.has(memberId), memberId })),
-      valueMillions
+    await paySubmission(tx, {
+      awardedBy: auth.member.id,
+      memberIds,
+      submission
     });
-
-    const note = [submission.itemName, valueMillions, memberIds.length + submission.nonClanCount].join(",");
-    await awardPoints(tx, awards, auth.member.id, id, note);
   });
+}
+
+type SubmissionOptions = {
+  awardedBy: bigint;
+  memberIds: bigint[];
+  submission: NonNullable<Awaited<ReturnType<typeof findSubmissionForReview>>>;
+};
+
+async function paySubmission(tx: Transaction, { awardedBy, memberIds, submission }: SubmissionOptions) {
+  const trialists = await listTrialists(tx, memberIds);
+  const valueMillions = submission.valueMillions ?? 0;
+
+  const awards = generatePointSplit({
+    nonClanCount: submission.nonClanCount,
+    participants: memberIds.map((memberId) => ({ isTrialist: trialists.has(memberId), memberId })),
+    valueMillions
+  });
+
+  const note = [submission.itemName, valueMillions, memberIds.length + submission.nonClanCount].join(",");
+  await awardPoints(tx, awards, awardedBy, submission.id, note);
 }
