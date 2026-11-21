@@ -85,11 +85,13 @@ type SkillTableProps = {
 export function SkillTable({ emptyMessage, snapshot }: Readonly<SkillTableProps>) {
   return (
     <DataTable
-      columns={columns}
-      data={toRows(snapshot)}
       emptyMessage={emptyMessage}
       pinRow={(row) => row.metric === EHP}
       stickyHeader
+      tableOptions={{
+        columns,
+        data: toRows(snapshot)
+      }}
     />
   );
 }

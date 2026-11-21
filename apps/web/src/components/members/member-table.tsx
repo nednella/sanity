@@ -154,28 +154,33 @@ type MemberTableProps = {
 
 export function MemberTable({ data, error, isLoading, onRetry, search }: Readonly<MemberTableProps>) {
   const navigate = useNavigate();
-  const { replaceSearch, ...table } = useTableSearch(search);
+  const table = useTableSearch(search);
 
   return (
     <DataTable
-      {...table}
-      columns={columns}
-      data={data?.items}
       emptyMessage="No members found."
       error={error}
-      initialColumnVisibility={defaultColumnVisibility}
       isLoading={isLoading}
       onRetry={onRetry}
       onRowClick={(member) => navigate({ to: "/members/$memberId", params: { memberId: member.id } })}
-      rowCount={data?.page.total ?? 0}
       search={{
-        onChange: (value) => replaceSearch({ offset: 0, search: value }),
+        onChange: (value) => table.replaceSearch({ offset: 0, search: value }),
         placeholder: "Search by name or RSN",
         value: search.search
       }}
+      tableOptions={{
+        columns,
+        data: data?.items,
+        initialColumnVisibility: defaultColumnVisibility,
+        onPaginationChange: table.onPaginationChange,
+        onSortingChange: table.onSortingChange,
+        pagination: table.pagination,
+        rowCount: data?.page.total ?? 0,
+        sorting: table.sorting
+      }}
       toolbar={
         <MemberStatusFilter
-          onChange={(status) => replaceSearch({ offset: 0, status })}
+          onChange={(status) => table.replaceSearch({ offset: 0, status })}
           status={search.status}
         />
       }

@@ -26,60 +26,104 @@ const UNPAGINATED_PAGE_SIZE = 10_000;
 // rows.
 const NO_ROWS: never[] = [];
 
-type DataTableProps<TData extends RowData> = {
+type TableOptions<TData extends RowData> = {
   columns: ColumnDef<DataTableFeatures, TData>[];
   data: TData[] | undefined;
+  initialColumnVisibility?: ColumnVisibilityState;
+  onPaginationChange?: OnChangeFn<PaginationState>;
+  onSortingChange?: OnChangeFn<SortingState>;
+  pagination?: PaginationState;
+  rowCount?: number;
+  sorting?: SortingState;
+};
+
+type DataTableProps<TData extends RowData> = {
   emptyMessage?: string;
   error?: Error | null;
   filters?: ReactNode;
-  initialColumnVisibility?: ColumnVisibilityState;
   isLoading?: boolean;
-  onPaginationChange?: OnChangeFn<PaginationState>;
   onRetry?: () => void;
   onRowClick?: (row: TData) => void;
-  onSortingChange?: OnChangeFn<SortingState>;
   pageSizeOptions?: number[];
-  pagination?: PaginationState;
   pinRow?: (row: TData) => boolean;
-  rowCount?: number;
   // What a click on a row does: follow it, or open the picture it carries.
   rowCursor?: "pointer" | "zoom-in";
   search?: { onChange: (value: string) => void; placeholder?: string; value: string };
-  sorting?: SortingState;
   stickyHeader?: boolean;
+  tableOptions: TableOptions<TData>;
   toolbar?: ReactNode;
 };
+
+export function DataTable<TData extends RowData>({
+  emptyMessage = "No results.",
+  error = null,
+  filters,
+  isLoading = false,
+  onRetry,
+  onRowClick,
+  pageSizeOptions = PAGE_SIZES,
+  pinRow,
+  rowCursor,
+  search,
+  stickyHeader = false,
+  tableOptions,
+  toolbar
+}: Readonly<DataTableProps<TData>>) {
+  const table = useDataTable(tableOptions);
+
+  return (
+    <Table.Shell>
+      <DataTableToolbar
+        filters={filters}
+        search={search}
+        table={table}
+        toolbar={toolbar}
+      />
+
+      <DataTableGrid
+        stickyHeader={stickyHeader}
+        table={table}
+      >
+        <Rows
+          emptyMessage={emptyMessage}
+          error={error}
+          isLoading={isLoading}
+          onRetry={onRetry}
+          onRowClick={onRowClick}
+          pinRow={pinRow}
+          rowCursor={rowCursor}
+          table={table}
+        />
+      </DataTableGrid>
+
+      {tableOptions.pagination && (
+        <DataTablePagination
+          pageSizeOptions={pageSizeOptions}
+          table={table}
+        />
+      )}
+    </Table.Shell>
+  );
+}
 
 // Passing a state slice and its change handler is what hands that slice to the
 // server; leaving both out lets the table manage it. They stay conditional
 // because an explicit `undefined` would wipe out the handler the table defaults
 // to.
-export function DataTable<TData extends RowData>({
+function useDataTable<TData extends RowData>({
   columns,
   data = NO_ROWS,
-  emptyMessage = "No results.",
-  error = null,
-  filters,
   initialColumnVisibility = {},
-  isLoading = false,
   onPaginationChange,
-  onRetry,
-  onRowClick,
   onSortingChange,
-  pageSizeOptions = PAGE_SIZES,
   pagination,
-  pinRow,
   rowCount,
-  rowCursor,
-  search,
-  sorting,
-  stickyHeader = false,
-  toolbar
-}: Readonly<DataTableProps<TData>>) {
+  sorting
+}: Readonly<TableOptions<TData>>) {
   // The React Compiler cannot see state read through the table's builder
   // methods, so the slices the header and rows render from are selected
   // explicitly to trigger re-renders.
-  const table = useTable<DataTableFeatures, TData, TableState<DataTableFeatures>>(
+  return useTable<DataTableFeatures, TData, TableState<DataTableFeatures>>(
     {
       columns,
       data,
@@ -105,74 +149,79 @@ export function DataTable<TData extends RowData>({
       sorting: state.sorting
     })
   );
+}
 
+type DataTableToolbarProps<TData extends RowData> = {
+  filters?: ReactNode;
+  search?: DataTableProps<TData>["search"];
+  table: ReactTable<DataTableFeatures, TData>;
+  toolbar?: ReactNode;
+};
+
+function DataTableToolbar<TData extends RowData>({
+  filters,
+  search,
+  table,
+  toolbar
+}: Readonly<DataTableToolbarProps<TData>>) {
+  const canToggleColumns = table.getAllLeafColumns().some((column) => column.getCanHide());
+  const hasControls = Boolean(search || filters || toolbar || canToggleColumns);
+
+  if (!hasControls) return null;
+
+  return (
+    <Table.Toolbar
+      actions={
+        <>
+          {toolbar}
+          {canToggleColumns && <DataTableColumnToggle table={table} />}
+        </>
+      }
+    >
+      {search && <Table.Search {...search} />}
+      {filters}
+    </Table.Toolbar>
+  );
+}
+
+type DataTableGridProps<TData extends RowData> = {
+  children: ReactNode;
+  stickyHeader: boolean;
+  table: ReactTable<DataTableFeatures, TData>;
+};
+
+function DataTableGrid<TData extends RowData>({ children, stickyHeader, table }: Readonly<DataTableGridProps<TData>>) {
   function sortedOf(columnId: string): Sorted {
     const entry = table.state.sorting?.find((sort) => sort.id === columnId);
     if (!entry) return false;
     return entry.desc ? "desc" : "asc";
   }
 
-  const canToggleColumns = table.getAllLeafColumns().some((column) => column.getCanHide());
-
   return (
-    <Table.Shell>
-      {(search || filters || toolbar || canToggleColumns) && (
-        <Table.Toolbar
-          actions={
-            <>
-              {toolbar}
-              {canToggleColumns && <DataTableColumnToggle table={table} />}
-            </>
-          }
-        >
-          {search && <Table.Search {...search} />}
-          {filters}
-        </Table.Toolbar>
-      )}
+    <Table scroll={!stickyHeader}>
+      <Table.Head>
+        {table.getHeaderGroups().map((headerGroup) => (
+          <Table.HeadRow key={headerGroup.id}>
+            {headerGroup.headers.map((header) => {
+              const sortable = header.column.getCanSort();
 
-      <Table scroll={!stickyHeader}>
-        <Table.Head>
-          {table.getHeaderGroups().map((headerGroup) => (
-            <Table.HeadRow key={headerGroup.id}>
-              {headerGroup.headers.map((header) => {
-                const sortable = header.column.getCanSort();
-
-                return (
-                  <Table.HeadCell
-                    key={header.id}
-                    layout={header.column.columnDef.meta}
-                    onSort={sortable ? header.column.getToggleSortingHandler() : undefined}
-                    sorted={sortable ? sortedOf(header.column.id) : undefined}
-                    sticky={stickyHeader}
-                  >
-                    <table.FlexRender header={header} />
-                  </Table.HeadCell>
-                );
-              })}
-            </Table.HeadRow>
-          ))}
-        </Table.Head>
-        <Table.Body>
-          <Rows
-            emptyMessage={emptyMessage}
-            error={error}
-            isLoading={isLoading}
-            onRetry={onRetry}
-            onRowClick={onRowClick}
-            pinRow={pinRow}
-            rowCursor={rowCursor}
-            table={table}
-          />
-        </Table.Body>
-      </Table>
-
-      {pagination && (
-        <DataTablePagination
-          pageSizeOptions={pageSizeOptions}
-          table={table}
-        />
-      )}
-    </Table.Shell>
+              return (
+                <Table.HeadCell
+                  key={header.id}
+                  layout={header.column.columnDef.meta}
+                  onSort={sortable ? header.column.getToggleSortingHandler() : undefined}
+                  sorted={sortable ? sortedOf(header.column.id) : undefined}
+                  sticky={stickyHeader}
+                >
+                  <table.FlexRender header={header} />
+                </Table.HeadCell>
+              );
+            })}
+          </Table.HeadRow>
+        ))}
+      </Table.Head>
+      <Table.Body>{children}</Table.Body>
+    </Table>
   );
 }
 
