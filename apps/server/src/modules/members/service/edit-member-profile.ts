@@ -2,9 +2,8 @@ import { db } from "@db/index";
 
 import { recordAuditEntry } from "@/modules/audit/repository/record-audit-entry";
 import type { ActingAuth } from "@/modules/auth/hooks/authenticate";
-
-import { memberErrors } from "../errors";
-import { type ProfileChanges, updateMemberProfile } from "../repository/update-member-profile";
+import { memberErrors } from "@/modules/members/errors";
+import { type ProfileChanges, updateMemberProfile } from "@/modules/members/repository/update-member-profile";
 
 export async function editMemberProfile(auth: ActingAuth, profile: ProfileChanges) {
   return db.transaction(async (tx) => {

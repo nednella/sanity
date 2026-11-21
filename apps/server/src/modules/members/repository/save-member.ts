@@ -1,9 +1,8 @@
 import type { Transaction } from "@db/index";
 import { discordAccounts, members } from "@db/schema";
 
+import type { NewMember } from "@/modules/members/request";
 import { TRIALIST_RANK_ID } from "@/modules/ranks/constants";
-
-import type { NewMember } from "../request";
 
 export async function saveMember(tx: Transaction, { discordId, ...member }: NewMember) {
   const [inserted] = await tx

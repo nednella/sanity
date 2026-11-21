@@ -1,6 +1,6 @@
-import { toMemberDiary } from "../mapper";
-import { type DiaryTimeRow, listDiaryTimes } from "../repository/list-diary-times";
-import { listMemberBestTimes } from "../repository/list-member-best-times";
+import { toMemberDiary } from "@/modules/speedrun-diary/mapper";
+import { type DiaryTimeRow, listDiaryTimes } from "@/modules/speedrun-diary/repository/list-diary-times";
+import { listMemberBestTimes } from "@/modules/speedrun-diary/repository/list-member-best-times";
 
 /**
  * Every diary the clan tracks, whether or not the member has a time on it.

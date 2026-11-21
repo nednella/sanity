@@ -3,16 +3,15 @@ import { db } from "@db/index";
 import type { ApplicationError } from "@/errors/error";
 import { recordAuditEntries } from "@/modules/audit/repository/record-audit-entries";
 import type { ActingAuth } from "@/modules/auth/hooks/authenticate";
+import { memberErrors } from "@/modules/members/errors";
+import { listMemberIdsByRef } from "@/modules/members/repository/list-member-ids-by-ref";
+import { listMemberStandings } from "@/modules/members/repository/list-member-standings";
+import { setMemberRanks } from "@/modules/members/repository/set-member-ranks";
+import type { MemberBatch } from "@/modules/members/request";
 import { QUIT_RANK_ID, RETIRED_RANK_ID } from "@/modules/ranks/constants";
 import { toRankSummary } from "@/modules/ranks/mapper";
 import { listRanks } from "@/modules/ranks/repository/list-ranks";
 import { toEarnedRank } from "@/modules/ranks/rules";
-
-import { memberErrors } from "../errors";
-import { listMemberIdsByRef } from "../repository/list-member-ids-by-ref";
-import { listMemberStandings } from "../repository/list-member-standings";
-import { setMemberRanks } from "../repository/set-member-ranks";
-import type { MemberBatch } from "../request";
 
 type MemberStanding = Awaited<ReturnType<typeof listMemberStandings>>[number];
 

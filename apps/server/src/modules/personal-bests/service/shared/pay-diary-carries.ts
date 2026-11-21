@@ -1,10 +1,9 @@
 import type { Transaction } from "@db/index";
 
+import { listBestTimes } from "@/modules/personal-bests/repository/list-best-times";
 import { awardPoints } from "@/modules/points/repository/award-points";
 import { generateDiaryCarryAwards } from "@/modules/points/rules";
 import { getEliteAndMasterDiaryTimes } from "@/modules/speedrun-diary/repository/get-elite-and-master-diary-times";
-
-import { listBestTimes } from "../../repository/list-best-times";
 
 export type ApprovedRun = {
   contentId: number;

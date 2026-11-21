@@ -3,13 +3,12 @@ import { type ChatInputCommandInteraction, TimestampStyles, channelMention, time
 import type { MemberChange, RankProposal } from "@sanity/api";
 import { capitalise } from "@sanity/utils";
 
+import { NO_MEMBERS_TAGGED, changesEmbed, readTaggedMembers } from "@/commands/admin/member/utils";
 import { api } from "@/lib/api";
 import { resolveTextChannel } from "@/lib/channels";
 import { runSubcommand } from "@/utils/commands";
 import { EMBED_FIELD_MAX_LENGTH, buildEmbed, fitLines } from "@/utils/embeds";
 import { reply, replyError } from "@/utils/replies";
-
-import { NO_MEMBERS_TAGGED, changesEmbed, readTaggedMembers } from "../member/utils";
 
 const SUBCOMMANDS = {
   check,

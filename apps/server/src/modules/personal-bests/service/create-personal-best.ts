@@ -1,8 +1,7 @@
 import { db } from "@db/index";
 
 import type { ActingAuth } from "@/modules/auth/hooks/authenticate";
-
-import { savePersonalBest } from "../repository/save-personal-best";
+import { savePersonalBest } from "@/modules/personal-bests/repository/save-personal-best";
 
 export type NewPersonalBest = {
   contentId: number;

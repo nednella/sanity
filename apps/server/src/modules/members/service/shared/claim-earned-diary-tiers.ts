@@ -2,12 +2,11 @@ import type { Transaction } from "@db/index";
 
 import { recordAuditEntry } from "@/modules/audit/repository/record-audit-entry";
 import type { ActingAuth } from "@/modules/auth/hooks/authenticate";
+import { listMemberStandings } from "@/modules/members/repository/list-member-standings";
+import { setClaimedDiaryTier } from "@/modules/members/repository/set-claimed-diary-tier";
 import { awardPoints } from "@/modules/points/repository/award-points";
 import { RANK_IDS_OFF_LADDER } from "@/modules/ranks/rules";
 import { listDiaryRewards } from "@/modules/speedrun-diary/repository/list-diary-rewards";
-
-import { listMemberStandings } from "../../repository/list-member-standings";
-import { setClaimedDiaryTier } from "../../repository/set-claimed-diary-tier";
 
 /**
  * A tier is claimed once, when a member's diary points first reach it, and pays

@@ -4,9 +4,9 @@ import type { PgColumn } from "drizzle-orm/pg-core";
 import { db } from "@db/index";
 import { items, members, submissions } from "@db/schema";
 
+import type { SubmissionSort } from "@/modules/submissions/request";
 import { sortBy } from "@/utils/sql";
 
-import type { SubmissionSort } from "../request";
 import { type SubmissionFilters, matchesSubmission } from "./shared/filters";
 
 export type SubmissionRow = Awaited<ReturnType<typeof listSubmissions>>[number];

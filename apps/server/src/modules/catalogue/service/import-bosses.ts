@@ -1,8 +1,7 @@
 import { db } from "@db/index";
 
 import { recordAuditEntry } from "@/modules/audit/repository/record-audit-entry";
-
-import { type BossRow, saveBosses } from "../repository/save-bosses";
+import { type BossRow, saveBosses } from "@/modules/catalogue/repository/save-bosses";
 
 export async function importBosses(rows: BossRow[]) {
   if (rows.length === 0) return 0;

@@ -3,9 +3,9 @@ import type { PgColumn } from "drizzle-orm/pg-core";
 
 import { bosses, personalBests } from "@db/schema";
 
+import type { PersonalBestSort } from "@/modules/personal-bests/request";
 import { sortBy } from "@/utils/sql";
 
-import type { PersonalBestSort } from "../request";
 import { type PersonalBestFilters, matchesPersonalBest } from "./shared/filters";
 import { selectRankedPersonalBests } from "./shared/select-ranked-personal-bests";
 

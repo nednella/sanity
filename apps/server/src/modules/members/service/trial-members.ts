@@ -2,11 +2,10 @@ import { db } from "@db/index";
 
 import { recordAuditEntry } from "@/modules/audit/repository/record-audit-entry";
 import type { ActingAuth } from "@/modules/auth/hooks/authenticate";
-
-import { listMembersByDiscordId } from "../repository/list-members-by-discord-id";
-import { saveMember } from "../repository/save-member";
-import { startMemberTrial } from "../repository/start-member-trial";
-import type { TrialistBatch } from "../request";
+import { listMembersByDiscordId } from "@/modules/members/repository/list-members-by-discord-id";
+import { saveMember } from "@/modules/members/repository/save-member";
+import { startMemberTrial } from "@/modules/members/repository/start-member-trial";
+import type { TrialistBatch } from "@/modules/members/request";
 
 export async function trialMembers({ trialists }: TrialistBatch, auth: ActingAuth) {
   return db.transaction(async (tx) => {

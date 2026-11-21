@@ -1,4 +1,4 @@
-import { pingDatabase } from "../repository/ping-database";
+import { pingDatabase } from "@/modules/health/repository/ping-database";
 
 export async function checkHealth() {
   const checks = [await runCheck("database", pingDatabase)];

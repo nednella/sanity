@@ -4,13 +4,12 @@ import type { ApplicationError } from "@/errors/error";
 import { recordAuditEntries } from "@/modules/audit/repository/record-audit-entries";
 import type { ActingAuth } from "@/modules/auth/hooks/authenticate";
 import { isRoleAbove } from "@/modules/auth/hooks/authorise";
+import { memberErrors } from "@/modules/members/errors";
+import { listMemberIdsByRef } from "@/modules/members/repository/list-member-ids-by-ref";
+import { listMembersById } from "@/modules/members/repository/list-members-by-id";
+import { setMemberRoles } from "@/modules/members/repository/set-member-roles";
+import type { RoleChange } from "@/modules/members/request";
 import { QUIT_RANK_ID } from "@/modules/ranks/constants";
-
-import { memberErrors } from "../errors";
-import { listMemberIdsByRef } from "../repository/list-member-ids-by-ref";
-import { listMembersById } from "../repository/list-members-by-id";
-import { setMemberRoles } from "../repository/set-member-roles";
-import type { RoleChange } from "../request";
 
 type Member = Awaited<ReturnType<typeof listMembersById>>[number];
 

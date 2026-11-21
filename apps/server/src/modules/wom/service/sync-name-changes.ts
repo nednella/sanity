@@ -1,9 +1,8 @@
 import { config } from "@config";
 
 import { wom } from "@/integrations/wom";
-
-import { loadTrackedPlayers } from "../repository/load-tracked-players";
-import { saveNameChanges } from "../repository/save-name-changes";
+import { loadTrackedPlayers } from "@/modules/wom/repository/load-tracked-players";
+import { saveNameChanges } from "@/modules/wom/repository/save-name-changes";
 
 const PAGE_SIZE = 50;
 

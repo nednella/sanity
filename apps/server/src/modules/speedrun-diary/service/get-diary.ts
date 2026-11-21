@@ -1,5 +1,5 @@
-import { toDiary } from "../mapper";
-import { type DiaryTimeRow, listDiaryTimes } from "../repository/list-diary-times";
+import { toDiary } from "@/modules/speedrun-diary/mapper";
+import { type DiaryTimeRow, listDiaryTimes } from "@/modules/speedrun-diary/repository/list-diary-times";
 
 export async function getDiary() {
   const times = await listDiaryTimes();

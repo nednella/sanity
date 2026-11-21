@@ -2,8 +2,7 @@ import { db } from "@db/index";
 
 import { recordAuditEntry } from "@/modules/audit/repository/record-audit-entry";
 import type { ActingAuth } from "@/modules/auth/hooks/authenticate";
-
-import { awardPoints } from "../repository/award-points";
+import { awardPoints } from "@/modules/points/repository/award-points";
 
 export type ManualAward = {
   memberId: bigint;

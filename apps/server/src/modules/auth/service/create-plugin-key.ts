@@ -1,6 +1,7 @@
-import { authErrors } from "../errors";
-import type { ActingAuth } from "../hooks/authenticate";
-import { replacePluginKey } from "../repository/replace-plugin-key";
+import { authErrors } from "@/modules/auth/errors";
+import type { ActingAuth } from "@/modules/auth/hooks/authenticate";
+import { replacePluginKey } from "@/modules/auth/repository/replace-plugin-key";
+
 import { generateKey, hashKey } from "./keys";
 
 /**

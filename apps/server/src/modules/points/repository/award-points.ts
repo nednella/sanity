@@ -3,7 +3,7 @@ import { sql } from "drizzle-orm";
 import type { Transaction } from "@db/index";
 import { members, points } from "@db/schema";
 
-import type { PointAward } from "../rules";
+import type { PointAward } from "@/modules/points/rules";
 
 export async function awardPoints(
   tx: Transaction,

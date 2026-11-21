@@ -1,10 +1,9 @@
 import type { ChatInputCommandInteraction } from "discord.js";
 
+import { NO_MEMBERS_TAGGED, changesEmbed, readTaggedMembers } from "@/commands/admin/member/utils";
 import { api } from "@/lib/api";
 import { runSubcommand } from "@/utils/commands";
 import { reply, replyError } from "@/utils/replies";
-
-import { NO_MEMBERS_TAGGED, changesEmbed, readTaggedMembers } from "../member/utils";
 
 const SUBCOMMANDS = {
   add: addReviewer,

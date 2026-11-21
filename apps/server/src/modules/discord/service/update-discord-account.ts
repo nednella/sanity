@@ -2,11 +2,10 @@ import { db } from "@db/index";
 
 import { recordAuditEntry } from "@/modules/audit/repository/record-audit-entry";
 import type { ActingAuth } from "@/modules/auth/hooks/authenticate";
+import { type DiscordAccount, toAvatarUrl } from "@/modules/discord/mapper";
+import { setDiscordAccount } from "@/modules/discord/repository/set-discord-account";
 import { findMemberIdByDiscordId } from "@/modules/members/repository/find-member-id-by-discord-id";
 import { listMembersByDisplayName } from "@/modules/members/repository/list-members-by-display-name";
-
-import { type DiscordAccount, toAvatarUrl } from "../mapper";
-import { setDiscordAccount } from "../repository/set-discord-account";
 
 export type DiscordAccountChange = {
   account: DiscordAccount;
