@@ -1,3 +1,4 @@
+// oxlint-disable max-lines -- every table in one schema file
 import { sql } from "drizzle-orm";
 import {
   bigint,
