@@ -57,7 +57,7 @@ export async function readMembers() {
     // before the join is stale.
     const hasRejoined = user.leaveDate !== null && user.joinDate !== null && user.leaveDate < user.joinDate;
 
-    // custom_quote is not carried: the old system leaked the nationality
+    // `custom_quote` is not carried: the old system leaked the nationality
     // default into it, so all 52 non-null values read 'AQ'.
     const member = {
       displayName: user.displayName,
@@ -83,7 +83,7 @@ export async function readMembers() {
 }
 
 /**
- * he old system defaulted a missing nationality to AQ, so the value means
+ * The old system defaulted a missing nationality to AQ, so the value means
  * nothing. One member has the ree text 'Chile' where a country code belongs.
  */
 function toNationality(value: string | null) {

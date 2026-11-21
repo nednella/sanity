@@ -68,7 +68,7 @@ export function defineRoute<const Schema extends FastifySchema, Access extends R
   return function register(app) {
     app.route({
       ...route,
-      // guardRoute's hooks give request.auth the shape RequestAuth promises
+      // `guardRoute`'s hooks give request.auth the shape RequestAuth promises
       handler: route.handler as unknown as ZodHandler<Schema>,
       config: { access: route.config.access },
       onRequest: [...limitRoute(app, route.config), ...guardRoute(route.config.access)]

@@ -58,7 +58,7 @@ async function findRequestingMember(request: FastifyRequest, key: ApiKey): Promi
       return await findMemberAccessByDiscordId(discordId);
     }
     case "web": {
-      // web client support not implemented yet
+      // Web client support not implemented yet
       throw authErrors.forbidden();
     }
   }
