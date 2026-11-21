@@ -12,7 +12,7 @@ const WEBSITE = 10;
 const BOT_ACCOUNTS = new Set(["228143014168625153", "979856389868494898"]);
 
 const matchers: [RegExp, AuditAction][] = [
-  [/rank ?(id)? from/iu, "rank_changed"],
+  [/rank ?(?:id)? from/iu, "rank_changed"],
   [/name from/iu, "rsn_changed"],
   [/nitro points/iu, "points_awarded"],
   [/diary time entry|diarytime/iu, "catalogue_changed"],
@@ -20,7 +20,7 @@ const matchers: [RegExp, AuditAction][] = [
   [/^changed rsn/iu, "rsn_changed"],
   [/^diarytierclaimed/iu, "diary_tier_claimed"],
   [/role/iu, "role_changed"],
-  [/^(addboss|adddrop|removedrop|addchannel|updated drop|updated bingo items)/iu, "catalogue_changed"],
+  [/^(?:addboss|adddrop|removedrop|addchannel|updated drop|updated bingo items)/iu, "catalogue_changed"],
   [/bingo winner|^updated rank #|:\d+->\d+$/iu, "catalogue_changed"],
   [/^removed bingo flag/iu, "submission_reviewed"],
   [/^pbid /iu, "personal_best_reviewed"],
