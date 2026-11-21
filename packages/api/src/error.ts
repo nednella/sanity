@@ -1,3 +1,4 @@
+// oxlint-disable max-classes-per-file -- the error types of the client
 import type { components } from "./v1";
 
 type ErrorBody = Partial<components["schemas"]["ErrorResponse"]>;
