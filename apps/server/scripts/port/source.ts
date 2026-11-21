@@ -5,8 +5,8 @@ import mysql from "mysql2/promise";
 const sourceUrl = process.env.SOURCE_DATABASE_URL;
 if (!sourceUrl) throw new Error("missing environment variable: SOURCE_DATABASE_URL");
 
-// dateStrings keeps DATE and DATETIME as text. supportBigNumbers keeps Discord
-// snowflakes exact, which a JS number cannot hold.
+// `dateStrings` keeps DATE and DATETIME as text. `supportBigNumbers` keeps
+// Discord snowflakes exact, which a JS number cannot hold.
 export const source = await mysql.createConnection({
   uri: sourceUrl,
   supportBigNumbers: true,
@@ -53,7 +53,7 @@ export function blankToNull(value: string | null) {
 }
 
 /**
- * bit(1) holds a raw 0 or 1, but binary(1) holds the characters "0" and "1",
+ * `bit(1)` holds a raw 0 or 1, but binary(1) holds the characters "0" and "1",
  * bytes 0x30 and 0x31. Reading only the first form turns every binary(1) false.
  */
 export function toBoolean(value: Buffer | number | null) {

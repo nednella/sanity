@@ -33,7 +33,7 @@ export function buildApp() {
     methods: ["DELETE", "GET", "HEAD", "PATCH", "POST"]
   });
 
-  // register a default rate limit of 60/min per IP address. with global =
+  // Register a default rate limit of 60/min per IP address. With global =
   // false, it applies only to routes that ask for it (see:
   // utils/define-route.ts)
   app.register(rateLimit, {

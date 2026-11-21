@@ -20,7 +20,7 @@ export function useTableSearch<TSearch extends PageSearch & SortSearch<string>>(
   const pagination = toPaginationState(search);
   const sorting = toSortingState(search);
 
-  // useNavigate() outside a route can't know which search schema applies, and
+  // `useNavigate()` outside a route can't know which search schema applies, and
   // this hook is generic over the caller's. What goes in is typed by TSearch;
   // the cast only crosses that gap.
   function replaceSearch(next: Partial<TSearch>) {

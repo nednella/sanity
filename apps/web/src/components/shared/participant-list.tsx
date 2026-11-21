@@ -9,7 +9,7 @@ type Participant = MemberRef & {
 };
 
 type ParticipantListProps = {
-  // we use this on the member profile to highlight a user in the list
+  // We use this on the member profile to highlight a user in the list
   memberId?: string;
   participants: Participant[];
 };

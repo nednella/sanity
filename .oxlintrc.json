@@ -35,7 +35,7 @@
       }
     ],
     "@stylistic/spaced-comment": ["error", "always"],
-    "capitalized-comments": "off",
+    "capitalized-comments": ["error", "always", { "ignoreConsecutiveComments": true }],
     "complexity": "off",
     "curly": "off",
     "default-case": "off",
