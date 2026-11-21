@@ -1,4 +1,4 @@
-import { motion, useReducedMotion } from "motion/react";
+import { type Variants, motion, useReducedMotion } from "motion/react";
 import type { ReactNode } from "react";
 
 import { cn } from "@/lib/ui/utils";
@@ -45,8 +45,6 @@ export function Hero({
   size = "lg",
   title
 }: Readonly<HeroProps>) {
-  const scale = sizes[size];
-
   const isStill = useReducedMotion() || reducedMotion;
   const containerVariants = isStill ? undefined : container;
   const itemVariants = isStill ? undefined : item;
@@ -62,43 +60,94 @@ export function Hero({
         initial="hidden"
         variants={containerVariants}
       >
-        <motion.h1
-          className={cn(
-            "mb-4 scroll-m-20 font-bold tracking-tight text-balance",
-            scale.title,
-            overlay && "text-white drop-shadow-md"
-          )}
+        <HeroTitle
+          overlay={overlay}
+          size={size}
           variants={itemVariants}
         >
           {title}
-        </motion.h1>
+        </HeroTitle>
 
         {description && (
-          <motion.p
-            className={cn(
-              "text-base-content/60",
-              scale.description,
-              children && scale.gap,
-              overlay && "text-white/90 drop-shadow-md"
-            )}
+          <HeroDescription
+            hasActions={Boolean(children)}
+            overlay={overlay}
+            size={size}
             variants={itemVariants}
           >
             {description}
-          </motion.p>
+          </HeroDescription>
         )}
 
-        {children && (
-          <motion.div
-            className="
-              flex flex-col items-center justify-center gap-4
-              sm:flex-row
-            "
-            variants={itemVariants}
-          >
-            {children}
-          </motion.div>
-        )}
+        {children && <HeroActions variants={itemVariants}>{children}</HeroActions>}
       </motion.div>
     </section>
+  );
+}
+
+type HeroTitleProps = {
+  children: ReactNode;
+  overlay: boolean;
+  size: keyof typeof sizes;
+  variants: Variants | undefined;
+};
+
+function HeroTitle({ children, overlay, size, variants }: Readonly<HeroTitleProps>) {
+  return (
+    <motion.h1
+      className={cn(
+        "mb-4 scroll-m-20 font-bold tracking-tight text-balance",
+        sizes[size].title,
+        overlay && "text-white drop-shadow-md"
+      )}
+      variants={variants}
+    >
+      {children}
+    </motion.h1>
+  );
+}
+
+type HeroDescriptionProps = {
+  children: ReactNode;
+  hasActions: boolean;
+  overlay: boolean;
+  size: keyof typeof sizes;
+  variants: Variants | undefined;
+};
+
+function HeroDescription({ children, hasActions, overlay, size, variants }: Readonly<HeroDescriptionProps>) {
+  const scale = sizes[size];
+
+  return (
+    <motion.p
+      className={cn(
+        "text-base-content/60",
+        scale.description,
+        hasActions && scale.gap,
+        overlay && "text-white/90 drop-shadow-md"
+      )}
+      variants={variants}
+    >
+      {children}
+    </motion.p>
+  );
+}
+
+type HeroActionsProps = {
+  children: ReactNode;
+  variants: Variants | undefined;
+};
+
+function HeroActions({ children, variants }: Readonly<HeroActionsProps>) {
+  return (
+    <motion.div
+      className="
+        flex flex-col items-center justify-center gap-4
+        sm:flex-row
+      "
+      variants={variants}
+    >
+      {children}
+    </motion.div>
   );
 }

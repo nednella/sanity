@@ -38,45 +38,55 @@ export function DataTablePagination<TData extends RowData>({
             </option>
           ))}
         </select>
-        <div className="join">
-          <button
-            aria-label="First page"
-            className="btn join-item btn-sm"
-            disabled={!table.getCanPreviousPage()}
-            onClick={() => table.firstPage()}
-            type="button"
-          >
-            <ChevronsLeft className="size-4" />
-          </button>
-          <button
-            aria-label="Previous page"
-            className="btn join-item btn-sm"
-            disabled={!table.getCanPreviousPage()}
-            onClick={() => table.previousPage()}
-            type="button"
-          >
-            <ChevronLeft className="size-4" />
-          </button>
-          <button
-            aria-label="Next page"
-            className="btn join-item btn-sm"
-            disabled={!table.getCanNextPage()}
-            onClick={() => table.nextPage()}
-            type="button"
-          >
-            <ChevronRight className="size-4" />
-          </button>
-          <button
-            aria-label="Last page"
-            className="btn join-item btn-sm"
-            disabled={!table.getCanNextPage()}
-            onClick={() => table.lastPage()}
-            type="button"
-          >
-            <ChevronsRight className="size-4" />
-          </button>
-        </div>
+        <PageNavigation table={table} />
       </div>
+    </div>
+  );
+}
+
+type PageNavigationProps<TData extends RowData> = {
+  table: ReactTable<DataTableFeatures, TData>;
+};
+
+function PageNavigation<TData extends RowData>({ table }: Readonly<PageNavigationProps<TData>>) {
+  return (
+    <div className="join">
+      <button
+        aria-label="First page"
+        className="btn join-item btn-sm"
+        disabled={!table.getCanPreviousPage()}
+        onClick={() => table.firstPage()}
+        type="button"
+      >
+        <ChevronsLeft className="size-4" />
+      </button>
+      <button
+        aria-label="Previous page"
+        className="btn join-item btn-sm"
+        disabled={!table.getCanPreviousPage()}
+        onClick={() => table.previousPage()}
+        type="button"
+      >
+        <ChevronLeft className="size-4" />
+      </button>
+      <button
+        aria-label="Next page"
+        className="btn join-item btn-sm"
+        disabled={!table.getCanNextPage()}
+        onClick={() => table.nextPage()}
+        type="button"
+      >
+        <ChevronRight className="size-4" />
+      </button>
+      <button
+        aria-label="Last page"
+        className="btn join-item btn-sm"
+        disabled={!table.getCanNextPage()}
+        onClick={() => table.lastPage()}
+        type="button"
+      >
+        <ChevronsRight className="size-4" />
+      </button>
     </div>
   );
 }

@@ -3,7 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import { Record } from "@/components/records/record";
 import { recordsOptions } from "@/lib/api/queries/personal-bests";
-import { toRecordGroups } from "@/lib/records/group";
+import { type RecordGroup, toRecordGroups } from "@/lib/records/group";
 import { Muted } from "@/lib/ui/typography/muted";
 
 export const Route = createFileRoute("/(site)/records")({
@@ -30,42 +30,54 @@ function Page() {
           xl:grid-cols-2
         "
       >
-        {groups.map(({ content, scales }) => (
-          <Record
-            defaultScale={scales[0]!.scale}
-            key={content.id}
-          >
-            <Record.Artwork metric={content.metric} />
-            <Record.Header name={content.name}>
-              {scales.length > 1 &&
-                scales.map(({ scale }) => (
-                  <Record.Scale
-                    key={scale}
-                    value={scale}
-                  />
-                ))}
-            </Record.Header>
-
-            {scales.map(({ records, scale }) => (
-              <Record.List
-                key={scale}
-                value={scale}
-              >
-                {records.map((record) => (
-                  <Record.Item
-                    key={record.id}
-                    record={record}
-                  />
-                ))}
-                <Record.More
-                  contentId={content.id}
-                  scale={scale}
-                />
-              </Record.List>
-            ))}
-          </Record>
+        {groups.map((group) => (
+          <ContentRecords
+            group={group}
+            key={group.content.id}
+          />
         ))}
       </div>
     </div>
+  );
+}
+
+type ContentRecordsProps = {
+  group: RecordGroup;
+};
+
+function ContentRecords({ group }: Readonly<ContentRecordsProps>) {
+  const { content, scales } = group;
+
+  return (
+    <Record defaultScale={scales[0]!.scale}>
+      <Record.Artwork metric={content.metric} />
+      <Record.Header name={content.name}>
+        {scales.length > 1 &&
+          scales.map(({ scale }) => (
+            <Record.Scale
+              key={scale}
+              value={scale}
+            />
+          ))}
+      </Record.Header>
+
+      {scales.map(({ records, scale }) => (
+        <Record.List
+          key={scale}
+          value={scale}
+        >
+          {records.map((record) => (
+            <Record.Item
+              key={record.id}
+              record={record}
+            />
+          ))}
+          <Record.More
+            contentId={content.id}
+            scale={scale}
+          />
+        </Record.List>
+      ))}
+    </Record>
   );
 }

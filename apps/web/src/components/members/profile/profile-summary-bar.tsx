@@ -21,6 +21,20 @@ export function ProfileSummaryBar({ profile }: Readonly<ProfileSummaryBarProps>)
         2xl:grid-cols-8
       "
     >
+      <ClanStats
+        diary={diary}
+        membership={membership}
+      />
+      <AccountStats wom={wom} />
+    </dl>
+  );
+}
+
+type ClanStatsProps = Pick<MemberProfile, "diary" | "membership">;
+
+function ClanStats({ diary, membership }: Readonly<ClanStatsProps>) {
+  return (
+    <>
       <Stat
         icon={<StatIcon src={statIconUrl("clan-points")} />}
         label="Clan Points"
@@ -41,6 +55,15 @@ export function ProfileSummaryBar({ profile }: Readonly<ProfileSummaryBarProps>)
         label="Claimed Diary Tier"
         value={diary.claimedTier?.name ?? DASH}
       />
+    </>
+  );
+}
+
+type AccountStatsProps = Pick<MemberProfile, "wom">;
+
+function AccountStats({ wom }: Readonly<AccountStatsProps>) {
+  return (
+    <>
       <Stat
         icon={<StatIcon src={statIconUrl("overall")} />}
         label="Total Level"
@@ -62,7 +85,7 @@ export function ProfileSummaryBar({ profile }: Readonly<ProfileSummaryBarProps>)
         label="EHB"
         value={formatNumber(wom?.totalEhb, 1)}
       />
-    </dl>
+    </>
   );
 }
 
