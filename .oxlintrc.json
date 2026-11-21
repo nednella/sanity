@@ -128,6 +128,7 @@
     "typescript/no-inferrable-types": "off",
     "typescript/no-non-null-assertion": "off",
     "typescript/prefer-function-type": "off",
+    "unicorn/max-nested-calls": ["error", { "max": 4 }],
     "unicorn/no-null": "off",
     "unicorn/no-useless-iterator-to-array": "error",
     "unicorn/no-useless-undefined": ["error", { "checkArguments": false }],
