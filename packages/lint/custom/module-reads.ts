@@ -72,7 +72,7 @@ function topLevelStatement(node: ESTree.Node): TopLevelStatement {
 }
 
 function declaringStatement(variable: Variable): TopLevelStatement | undefined {
-  const definition = variable.defs[0];
+  const [definition] = variable.defs;
   if (!definition || definition.type === "ImportBinding") return;
   return topLevelStatement(definition.node);
 }

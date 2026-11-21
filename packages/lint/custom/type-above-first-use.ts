@@ -24,7 +24,7 @@ export const typeAboveFirstUse = defineRule({
         for (const [index, statement] of program.body.entries()) {
           if (!isType(statement) || statement.declare) continue;
 
-          const firstUse = typeReaders(context.sourceCode, statement)[0];
+          const [firstUse] = typeReaders(context.sourceCode, statement);
           if (!firstUse) continue;
 
           const between = program.body.slice(index + 1, program.body.indexOf(firstUse));

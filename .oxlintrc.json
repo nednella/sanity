@@ -114,7 +114,6 @@
         "ignoreReadBeforeAssign": false
       }
     ],
-    "prefer-destructuring": "off",
     "promise/prefer-await-to-callbacks": "off",
     "require-await": "off",
     "sanity/exports-first": "error",

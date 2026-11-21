@@ -217,7 +217,7 @@ function Rows<TData extends RowData>({
     );
   }
 
-  const rows = table.getRowModel().rows;
+  const { rows } = table.getRowModel();
   // Sorting only moves the loose rows. Pinned ones keep the order they arrived
   // in, which row.index still holds after the sorted row model has reordered
   // them.
