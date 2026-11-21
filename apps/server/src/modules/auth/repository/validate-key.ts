@@ -6,7 +6,7 @@ import { apiKeys } from "@db/schema";
 /**
  * Finds the live key with the given hash and stamps its `last_used_at`.
  *
- * Returns the key's associated client and member id, else `undefined` when no
+ * Returns the key's associated client and member ID, else `undefined` when no
  * key is found, or the key is revoked.
  */
 export async function validateKey(keyHash: string) {
