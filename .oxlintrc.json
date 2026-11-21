@@ -10,6 +10,12 @@
     "es2026": true,
     "node": true
   },
+  "settings": {
+    "better-tailwindcss": {
+      "cwd": "apps/web",
+      "entryPoint": "src/main.css"
+    }
+  },
   "ignorePatterns": ["**/*.js", "**/dist", "apps/web/src/routeTree.gen.ts", "packages/api/src/v1.d.ts"],
   "rules": {
     "@stylistic/max-len": [
@@ -276,8 +282,26 @@
         "browser": true
       },
       "files": ["apps/web/**/*.{ts,tsx}"],
+      "jsPlugins": ["eslint-plugin-better-tailwindcss"],
       "plugins": ["react"],
       "rules": {
+        "better-tailwindcss/enforce-canonical-classes": "error",
+        "better-tailwindcss/enforce-consistent-important-position": "error",
+        "better-tailwindcss/enforce-consistent-line-wrapping": [
+          "error",
+          {
+            "printWidth": 120,
+            "strictness": "loose"
+          }
+        ],
+        "better-tailwindcss/enforce-consistent-variable-syntax": "error",
+        "better-tailwindcss/enforce-consistent-variant-order": "error",
+        "better-tailwindcss/no-concatenated-classes": "error",
+        "better-tailwindcss/no-conflicting-classes": "error",
+        "better-tailwindcss/no-deprecated-classes": "error",
+        "better-tailwindcss/no-duplicate-classes": "error",
+        "better-tailwindcss/no-unknown-classes": "error",
+        "better-tailwindcss/no-unnecessary-whitespace": "error",
         "perfectionist/sort-jsx-props": [
           "error",
           {

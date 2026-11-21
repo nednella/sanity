@@ -14,7 +14,13 @@ export function ProfileSummaryBar({ profile }: Readonly<ProfileSummaryBarProps>)
   const { diary, membership, wom } = profile;
 
   return (
-    <dl className="grid grid-cols-2 gap-2 sm:grid-cols-4 2xl:grid-cols-8">
+    <dl
+      className="
+        grid grid-cols-2 gap-2
+        sm:grid-cols-4
+        2xl:grid-cols-8
+      "
+    >
       <Stat
         icon={<StatIcon src={statIconUrl("clan-points")} />}
         label="Clan Points"

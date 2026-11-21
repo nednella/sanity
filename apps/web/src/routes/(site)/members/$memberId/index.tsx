@@ -31,7 +31,12 @@ function Page() {
     <div className="flex flex-col gap-8">
       <ProfileSummaryBar profile={profile} />
 
-      <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+      <div
+        className="
+          grid grid-cols-1 gap-8
+          lg:grid-cols-2
+        "
+      >
         <Panel title="Account Summary">
           <WomSummaryPanel profile={profile} />
         </Panel>

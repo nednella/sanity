@@ -15,8 +15,20 @@ export function ProfileHeader({ profile }: Readonly<ProfileHeaderProps>) {
   const { discord, displayName, id, membership, nationality, rsn } = profile;
 
   return (
-    <div className="grid grid-cols-1 items-center gap-8 sm:grid-cols-[1fr_auto]">
-      <div className="self-end *:w-full sm:col-start-2 sm:*:w-auto">
+    <div
+      className="
+        grid grid-cols-1 items-center gap-8
+        sm:grid-cols-[1fr_auto]
+      "
+    >
+      <div
+        className="
+          self-end
+          *:w-full
+          sm:col-start-2
+          sm:*:w-auto
+        "
+      >
         {rsn.main && (
           <WomSyncButton
             memberId={id}
@@ -25,7 +37,12 @@ export function ProfileHeader({ profile }: Readonly<ProfileHeaderProps>) {
         )}
       </div>
 
-      <div className="flex min-w-0 items-center gap-x-6 sm:col-start-1 sm:row-start-1">
+      <div
+        className="
+          flex min-w-0 items-center gap-x-6
+          sm:col-start-1 sm:row-start-1
+        "
+      >
         <AvatarWithNationality
           avatarUrl={discord.avatarUrl}
           countryCode={nationality}

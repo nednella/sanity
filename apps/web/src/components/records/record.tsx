@@ -114,7 +114,10 @@ function Item({ record }: Readonly<{ record: RankedPersonalBest }>) {
     <li className="relative flex items-center gap-3 px-4 py-2.5 text-sm">
       {imageUrl && (
         <button
-          className="absolute inset-0 cursor-zoom-in focus-visible:outline focus-visible:-outline-offset-2 focus-visible:outline-primary"
+          className="
+            absolute inset-0 cursor-zoom-in
+            focus-visible:outline focus-visible:-outline-offset-2 focus-visible:outline-primary
+          "
           onClick={() => showMedia({ alt: screenshotAlt(content.name, scale, timeSeconds), src: imageUrl })}
           type="button"
         >
@@ -127,7 +130,12 @@ function Item({ record }: Readonly<{ record: RankedPersonalBest }>) {
       <Medal position={position} />
       {/* Above the overlay so the links stay reachable, but only the links: the
           rest of the cell lets the click through to the screenshot. */}
-      <span className="pointer-events-none relative min-w-0 flex-1 truncate [&_a]:pointer-events-auto">
+      <span
+        className="
+          pointer-events-none relative min-w-0 flex-1 truncate
+          [&_a]:pointer-events-auto
+        "
+      >
         <ParticipantList participants={team} />
       </span>
       <span className="w-24 shrink-0 text-right font-medium tabular-nums">{time}</span>
@@ -147,7 +155,10 @@ function More({ contentId, scale }: Readonly<MoreProps>) {
   return (
     <li>
       <Link
-        className="flex items-center justify-center gap-1 px-4 py-2.5 text-xs text-base-content/60 hover:text-base-content"
+        className="
+          flex items-center justify-center gap-1 px-4 py-2.5 text-xs text-base-content/60
+          hover:text-base-content
+        "
         search={{ contentId, order: "asc", scale, sort: "time", type: "personalBests" }}
         to="/submissions"
       >

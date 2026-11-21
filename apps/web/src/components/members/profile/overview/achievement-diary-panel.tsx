@@ -42,7 +42,10 @@ export function AchievementDiaryPanel({ diaries }: Readonly<AchievementDiaryPane
 
           return (
             <tr
-              className={hasScreenshot ? "cursor-zoom-in hover:bg-base-200" : undefined}
+              className={hasScreenshot ? `
+                cursor-zoom-in
+                hover:bg-base-200
+              ` : undefined}
               key={`${content.id}:${scale}`}
               onClick={() => openScreenshot(diary)}
               onKeyDown={(event) => openScreenshotOnKey(event, diary)}

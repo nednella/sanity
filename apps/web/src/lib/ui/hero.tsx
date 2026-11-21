@@ -55,7 +55,10 @@ export function Hero({
     <section className={className}>
       <motion.div
         animate="visible"
-        className="container mx-auto px-4 text-center lg:max-w-5xl"
+        className="
+          container mx-auto px-4 text-center
+          lg:max-w-5xl
+        "
         initial="hidden"
         variants={containerVariants}
       >
@@ -86,7 +89,10 @@ export function Hero({
 
         {children && (
           <motion.div
-            className="flex flex-col items-center justify-center gap-4 sm:flex-row"
+            className="
+              flex flex-col items-center justify-center gap-4
+              sm:flex-row
+            "
             variants={itemVariants}
           >
             {children}

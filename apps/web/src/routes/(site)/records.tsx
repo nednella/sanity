@@ -24,7 +24,12 @@ function Page() {
         <Muted className="mt-1">The five fastest times the clan has recorded for each speedrun diary.</Muted>
       </div>
 
-      <div className="grid gap-4 xl:grid-cols-2">
+      <div
+        className="
+          grid gap-4
+          xl:grid-cols-2
+        "
+      >
         {groups.map(({ content, scales }) => (
           <Record
             defaultScale={scales[0]!.scale}

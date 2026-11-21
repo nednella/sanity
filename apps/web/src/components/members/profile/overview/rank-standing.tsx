@@ -23,7 +23,10 @@ export function RankStanding({ celebrate = false, overline, rank }: Readonly<Ran
         // of meeting a clipped edge.
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute -inset-4 bg-[radial-gradient(circle_at_center,var(--color-base-300),transparent_65%)] opacity-50"
+          className="
+            pointer-events-none absolute -inset-4
+            bg-[radial-gradient(circle_at_center,var(--color-base-300),transparent_65%)] opacity-50
+          "
         />
       )}
 
@@ -31,7 +34,10 @@ export function RankStanding({ celebrate = false, overline, rank }: Readonly<Ran
         {celebrate && (
           <Sparkles
             aria-hidden="true"
-            className="absolute top-0 right-1 size-4 text-primary/70 motion-safe:animate-pulse"
+            className="
+              absolute top-0 right-1 size-4 text-primary/70
+              motion-safe:animate-pulse
+            "
           />
         )}
         {rank.iconUrl && (
