@@ -2,12 +2,11 @@ import type { FastifyRequest } from "fastify";
 
 import type { ApiClient, MemberRole } from "@db/enums";
 
+import { authErrors } from "@/modules/auth/errors";
+import { validateKey } from "@/modules/auth/repository/validate-key";
+import { hashKey } from "@/modules/auth/service/keys";
 import { findMemberAccessByDiscordId, findMemberAccessById } from "@/modules/members/repository/find-member-access";
 import { parseAuthorizationHeader, parseXDiscordUserIdHeader } from "@/utils/headers";
-
-import { authErrors } from "../errors";
-import { validateKey } from "../repository/validate-key";
-import { hashKey } from "../service/keys";
 
 export type AuthMember = {
   id: bigint;

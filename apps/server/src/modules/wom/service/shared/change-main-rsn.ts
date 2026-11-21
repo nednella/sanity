@@ -1,8 +1,7 @@
 import type { Transaction } from "@db/index";
 
 import { recordAuditEntry } from "@/modules/audit/repository/record-audit-entry";
-
-import { renameMember } from "../../repository/rename-member";
+import { renameMember } from "@/modules/wom/repository/rename-member";
 
 export async function changeMainRsn(tx: Transaction, memberId: bigint, mainRsn: string) {
   const renamed = await renameMember(tx, memberId, mainRsn);

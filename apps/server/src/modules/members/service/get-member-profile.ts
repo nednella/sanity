@@ -1,11 +1,10 @@
+import { memberErrors } from "@/modules/members/errors";
+import { toMemberProfile } from "@/modules/members/mapper";
+import { findMemberByDiscordId, findMemberById } from "@/modules/members/repository/find-member";
+import type { MemberRow } from "@/modules/members/repository/shared/select-members";
 import { listRanks } from "@/modules/ranks/repository/list-ranks";
 import { findLatestSnapshot } from "@/modules/wom/repository/find-latest-snapshot";
 import { listNameChanges } from "@/modules/wom/repository/list-name-changes";
-
-import { memberErrors } from "../errors";
-import { toMemberProfile } from "../mapper";
-import { findMemberByDiscordId, findMemberById } from "../repository/find-member";
-import type { MemberRow } from "../repository/shared/select-members";
 
 export async function getMemberProfileById(id: bigint) {
   const member = await findMemberById(id);

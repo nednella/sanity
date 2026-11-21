@@ -1,10 +1,9 @@
 import { db } from "@db/index";
 
 import { wom } from "@/integrations/wom";
-
-import { womErrors } from "../errors";
-import { savePlayer } from "../repository/save-player";
-import { saveSnapshots } from "../repository/save-snapshots";
+import { womErrors } from "@/modules/wom/errors";
+import { savePlayer } from "@/modules/wom/repository/save-player";
+import { saveSnapshots } from "@/modules/wom/repository/save-snapshots";
 
 export async function syncPlayer(username: string) {
   const player = await updatePlayer(username);

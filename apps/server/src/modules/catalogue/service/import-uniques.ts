@@ -1,8 +1,7 @@
 import { db } from "@db/index";
 
 import { recordAuditEntry } from "@/modules/audit/repository/record-audit-entry";
-
-import { type UniqueRow, saveUniques } from "../repository/save-uniques";
+import { type UniqueRow, saveUniques } from "@/modules/catalogue/repository/save-uniques";
 
 export async function importUniques(rows: UniqueRow[]) {
   if (rows.length === 0) return 0;

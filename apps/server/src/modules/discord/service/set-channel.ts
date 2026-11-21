@@ -3,8 +3,7 @@ import type { discordChannels } from "@db/schema";
 
 import { recordAuditEntry } from "@/modules/audit/repository/record-audit-entry";
 import type { ActingAuth } from "@/modules/auth/hooks/authenticate";
-
-import { setChannel } from "../repository/set-channel";
+import { setChannel } from "@/modules/discord/repository/set-channel";
 
 export type DiscordChannel = {
   channelId: bigint;

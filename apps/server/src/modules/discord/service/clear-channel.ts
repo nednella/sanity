@@ -3,8 +3,7 @@ import type { discordChannels } from "@db/schema";
 
 import { recordAuditEntry } from "@/modules/audit/repository/record-audit-entry";
 import type { ActingAuth } from "@/modules/auth/hooks/authenticate";
-
-import { clearChannel } from "../repository/clear-channel";
+import { clearChannel } from "@/modules/discord/repository/clear-channel";
 
 export type DiscordChannelRef = {
   purpose: (typeof discordChannels.$inferInsert)["purpose"];

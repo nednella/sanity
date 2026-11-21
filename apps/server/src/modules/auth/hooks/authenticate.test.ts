@@ -3,10 +3,10 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import type { ApiClient } from "@db/enums";
 
+import { validateKey } from "@/modules/auth/repository/validate-key";
+import { hashKey } from "@/modules/auth/service/keys";
 import { findMemberAccessByDiscordId, findMemberAccessById } from "@/modules/members/repository/find-member-access";
 
-import { validateKey } from "../repository/validate-key";
-import { hashKey } from "../service/keys";
 import { authenticate } from "./authenticate";
 
 vi.mock("@/modules/members/repository/find-member-access", () => ({

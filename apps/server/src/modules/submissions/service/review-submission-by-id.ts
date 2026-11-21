@@ -5,12 +5,11 @@ import type { ActingAuth } from "@/modules/auth/hooks/authenticate";
 import { listTrialists } from "@/modules/members/repository/list-trialists";
 import { awardPoints } from "@/modules/points/repository/award-points";
 import { generatePointSplit } from "@/modules/points/rules";
+import { submissionErrors } from "@/modules/submissions/errors";
+import { findSubmissionForReview } from "@/modules/submissions/repository/find-submission-for-review";
+import { listParticipantIds } from "@/modules/submissions/repository/list-participant-ids";
+import { reviewSubmission } from "@/modules/submissions/repository/review-submission";
 import type { Review } from "@/schema/common";
-
-import { submissionErrors } from "../errors";
-import { findSubmissionForReview } from "../repository/find-submission-for-review";
-import { listParticipantIds } from "../repository/list-participant-ids";
-import { reviewSubmission } from "../repository/review-submission";
 
 /**
  * Approving is what pays out, so the read of the submission, the points and the

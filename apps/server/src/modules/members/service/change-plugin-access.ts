@@ -4,12 +4,11 @@ import type { ApplicationError } from "@/errors/error";
 import { recordAuditEntries } from "@/modules/audit/repository/record-audit-entries";
 import type { ActingAuth } from "@/modules/auth/hooks/authenticate";
 import { revokePluginKeys } from "@/modules/auth/repository/revoke-plugin-keys";
-
-import { memberErrors } from "../errors";
-import { listMemberIdsByRef } from "../repository/list-member-ids-by-ref";
-import { listMembersById } from "../repository/list-members-by-id";
-import { setPluginAccessRevokedAt } from "../repository/set-plugin-access-revoked-at";
-import type { PluginAccessChange } from "../request";
+import { memberErrors } from "@/modules/members/errors";
+import { listMemberIdsByRef } from "@/modules/members/repository/list-member-ids-by-ref";
+import { listMembersById } from "@/modules/members/repository/list-members-by-id";
+import { setPluginAccessRevokedAt } from "@/modules/members/repository/set-plugin-access-revoked-at";
+import type { PluginAccessChange } from "@/modules/members/request";
 
 type Member = Awaited<ReturnType<typeof listMembersById>>[number];
 

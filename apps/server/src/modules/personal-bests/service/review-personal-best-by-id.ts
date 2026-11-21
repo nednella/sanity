@@ -3,12 +3,12 @@ import { db } from "@db/index";
 import { recordAuditEntry } from "@/modules/audit/repository/record-audit-entry";
 import type { ActingAuth } from "@/modules/auth/hooks/authenticate";
 import { claimEarnedDiaryTiers } from "@/modules/members/service/shared/claim-earned-diary-tiers";
+import { personalBestErrors } from "@/modules/personal-bests/errors";
+import { findPersonalBestForReview } from "@/modules/personal-bests/repository/find-personal-best-for-review";
+import { listParticipantIds } from "@/modules/personal-bests/repository/list-participant-ids";
+import { reviewPersonalBest } from "@/modules/personal-bests/repository/review-personal-best";
 import type { Review } from "@/schema/common";
 
-import { personalBestErrors } from "../errors";
-import { findPersonalBestForReview } from "../repository/find-personal-best-for-review";
-import { listParticipantIds } from "../repository/list-participant-ids";
-import { reviewPersonalBest } from "../repository/review-personal-best";
 import { payDiaryCarries } from "./shared/pay-diary-carries";
 
 /**

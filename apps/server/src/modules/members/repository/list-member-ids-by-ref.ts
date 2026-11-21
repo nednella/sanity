@@ -3,7 +3,7 @@ import { eq, inArray, or } from "drizzle-orm";
 import type { Transaction } from "@db/index";
 import { discordAccounts, members } from "@db/schema";
 
-import type { MemberRef } from "../request";
+import type { MemberRef } from "@/modules/members/request";
 
 // Some clients are limited to what data they have available to them. E.g. the
 // Discord bot doesn't know a member ID, only the members' Discord user ID,

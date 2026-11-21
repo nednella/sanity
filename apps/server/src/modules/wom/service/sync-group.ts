@@ -2,10 +2,10 @@ import { config } from "@config";
 import { db } from "@db/index";
 
 import { wom } from "@/integrations/wom";
+import { loadMemberMatcher } from "@/modules/wom/repository/load-member-matcher";
+import { savePlayers } from "@/modules/wom/repository/save-players";
+import { saveSnapshots } from "@/modules/wom/repository/save-snapshots";
 
-import { loadMemberMatcher } from "../repository/load-member-matcher";
-import { savePlayers } from "../repository/save-players";
-import { saveSnapshots } from "../repository/save-snapshots";
 import { changeMainRsn } from "./shared/change-main-rsn";
 
 /**

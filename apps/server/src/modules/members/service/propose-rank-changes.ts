@@ -1,10 +1,9 @@
 import { db } from "@db/index";
 
+import { listMemberStandings } from "@/modules/members/repository/list-member-standings";
 import { toRankSummary } from "@/modules/ranks/mapper";
 import { listRanks } from "@/modules/ranks/repository/list-ranks";
 import { RANK_IDS_OFF_LADDER, toEarnedRank } from "@/modules/ranks/rules";
-
-import { listMemberStandings } from "../repository/list-member-standings";
 
 export async function proposeRankChanges() {
   const ranks = await listRanks();

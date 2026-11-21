@@ -1,4 +1,5 @@
-import { saveKey } from "../repository/save-key";
+import { saveKey } from "@/modules/auth/repository/save-key";
+
 import { generateKey, hashKey } from "./keys";
 
 /**

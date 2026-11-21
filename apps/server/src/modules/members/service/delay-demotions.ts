@@ -4,11 +4,10 @@ import { db } from "@db/index";
 
 import { recordAuditEntries } from "@/modules/audit/repository/record-audit-entries";
 import type { ActingAuth } from "@/modules/auth/hooks/authenticate";
-
-import { delayRankChange } from "../repository/delay-rank-change";
-import { listMemberIdsByRef } from "../repository/list-member-ids-by-ref";
-import { listMembersById } from "../repository/list-members-by-id";
-import type { MemberBatch } from "../request";
+import { delayRankChange } from "@/modules/members/repository/delay-rank-change";
+import { listMemberIdsByRef } from "@/modules/members/repository/list-member-ids-by-ref";
+import { listMembersById } from "@/modules/members/repository/list-members-by-id";
+import type { MemberBatch } from "@/modules/members/request";
 
 export async function delayDemotions({ members }: MemberBatch, auth: ActingAuth) {
   const until = firstOfNextMonth(new Date());

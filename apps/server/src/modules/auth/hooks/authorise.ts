@@ -2,7 +2,7 @@ import type { FastifyRequest } from "fastify";
 
 import { type ApiClient, type MemberRole, memberRole } from "@db/enums";
 
-import { authErrors } from "../errors";
+import { authErrors } from "@/modules/auth/errors";
 
 export type RouteAccess =
   | "public"

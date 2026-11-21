@@ -1,8 +1,8 @@
 import { SlashCommandBuilder } from "discord.js";
 
+import { membersOption, noteOption } from "@/commands/admin/member/utils";
 import { defineCommand } from "@/utils/commands";
 
-import { membersOption, noteOption } from "../member/utils";
 import { handleReviewer } from "./handler";
 
 export const reviewer = defineCommand({

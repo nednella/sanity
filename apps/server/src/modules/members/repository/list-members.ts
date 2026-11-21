@@ -3,10 +3,10 @@ import type { PgColumn } from "drizzle-orm/pg-core";
 
 import { members, ranks, womPlayers } from "@db/schema";
 
+import type { MemberSort } from "@/modules/members/request";
 import { diaryProgressQueries } from "@/modules/speedrun-diary/repository/diary-progress-queries";
 import { sortBy } from "@/utils/sql";
 
-import type { MemberSort } from "../request";
 import { isActive, matchesSearch } from "./shared/filters";
 import { selectMembers } from "./shared/select-members";
 

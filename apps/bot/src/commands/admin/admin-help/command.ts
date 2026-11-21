@@ -1,8 +1,7 @@
 import { SlashCommandBuilder } from "discord.js";
 
+import { handleAdminHelp } from "@/commands/public/help/handler";
 import { defineCommand } from "@/utils/commands";
-
-import { handleAdminHelp } from "../../public/help/handler";
 
 export const adminHelp = defineCommand({
   data: new SlashCommandBuilder()

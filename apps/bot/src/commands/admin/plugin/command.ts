@@ -1,8 +1,8 @@
 import { SlashCommandBuilder } from "discord.js";
 
+import { membersOption, noteOption } from "@/commands/admin/member/utils";
 import { defineCommand } from "@/utils/commands";
 
-import { membersOption, noteOption } from "../member/utils";
 import { handlePlugin } from "./handler";
 
 export const plugin = defineCommand({

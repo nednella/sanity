@@ -1,4 +1,4 @@
-import { listTeams } from "../repository/list-teams";
+import { listTeams } from "@/modules/personal-bests/repository/list-teams";
 
 // Every personal best carries its team, so the rows are fetched once and
 // grouped per best.

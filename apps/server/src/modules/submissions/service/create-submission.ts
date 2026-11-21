@@ -1,8 +1,7 @@
 import { db } from "@db/index";
 
 import type { ActingAuth } from "@/modules/auth/hooks/authenticate";
-
-import { type SubmissionRow, saveSubmission } from "../repository/save-submission";
+import { type SubmissionRow, saveSubmission } from "@/modules/submissions/repository/save-submission";
 
 export type NewSubmission = Omit<SubmissionRow, "memberId" | "source" | "status" | "submittedAt"> & {
   participants: bigint[];
