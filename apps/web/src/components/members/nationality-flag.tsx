@@ -15,8 +15,9 @@ type NationalityFlagProps = {
 };
 
 export function NationalityFlag({ className, countryCode, shape = "rectangle" }: Readonly<NationalityFlagProps>) {
-  if (!isCountryCode(countryCode))
+  if (!isCountryCode(countryCode)) {
     return <span className="text-xs font-normal text-base-content/60">{countryCode}</span>;
+  }
 
   const code = countryCode.toLowerCase();
   const { cdn, className: shapeClassName, height } = shapes[shape];

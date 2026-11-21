@@ -37,7 +37,7 @@
     "@stylistic/spaced-comment": ["error", "always"],
     "capitalized-comments": ["error", "always", { "ignoreConsecutiveComments": true }],
     "complexity": "off",
-    "curly": "off",
+    "curly": ["error", "multi-line"],
     "default-case": "off",
     "eqeqeq": ["error", "always", { "null": "ignore" }],
     "func-style": ["error", "declaration"],

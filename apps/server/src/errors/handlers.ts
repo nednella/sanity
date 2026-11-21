@@ -9,12 +9,13 @@ const { isProduction } = config;
 
 export function handleError(error: ApplicationError | FastifyError, request: FastifyRequest, reply: FastifyReply) {
   // Handle ApplicationError
-  if (error instanceof ApplicationError)
+  if (error instanceof ApplicationError) {
     return errorResponse({
       request,
       reply,
       error
     });
+  }
 
   const { code, message, statusCode = 500 } = error;
 
