@@ -68,7 +68,7 @@
     "no-continue": "off",
     "no-eq-null": "off",
     "no-magic-numbers": "off",
-    "no-plusplus": "off",
+    "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
     "no-redeclare": "off",
     "no-shadow": ["error", { "allow": ["_"] }],
     "no-ternary": "off",

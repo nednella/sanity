@@ -40,7 +40,7 @@ export async function syncGroup() {
 
     let renamed = 0;
     for (const { memberId, player } of players) {
-      if (await changeMainRsn(tx, memberId, player.displayName)) renamed++;
+      if (await changeMainRsn(tx, memberId, player.displayName)) renamed += 1;
     }
 
     return { linked: players.length, members: entries.length, renamed, saved };
