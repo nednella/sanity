@@ -1,4 +1,6 @@
-import { declaredNames, moduleReads } from "./module-reads.js";
+import { type ESTree, defineRule } from "@oxlint/plugins";
+
+import { type ModuleReads, type TopLevelStatement, declaredNames, moduleReads } from "./module-reads.ts";
 
 /**
  * A module puts its values (const, let, class, enum) first and its functions
@@ -7,7 +9,7 @@ import { declaredNames, moduleReads } from "./module-reads.js";
  * because moving it below would read it before it exists. Function
  * declarations are hoisted, so they can always sit below the values.
  */
-export const exportsFirst = {
+export const exportsFirst = defineRule({
   meta: {
     type: "suggestion",
     docs: {
@@ -49,30 +51,42 @@ export const exportsFirst = {
       }
     };
   }
-};
+});
 
 const VALUE_TYPES = new Set(["ClassDeclaration", "TSEnumDeclaration", "VariableDeclaration"]);
 
 const FUNCTION_TYPES = new Set(["FunctionDeclaration", "TSDeclareFunction"]);
 
-function groupOf(statement) {
+type Group = "functions" | "values";
+
+function groupOf(statement: TopLevelStatement): Group | undefined {
   if (statement.type === "ExportDefaultDeclaration" && !FUNCTION_TYPES.has(statement.declaration.type)) return "values";
 
-  const declaration = statement.type.startsWith("Export") ? statement.declaration : statement;
-  if (!declaration || declaration.declare) return;
+  const declaration =
+    statement.type === "ExportDefaultDeclaration" || statement.type === "ExportNamedDeclaration"
+      ? statement.declaration
+      : statement;
+  if (!declaration || ("declare" in declaration && declaration.declare)) return;
   if (VALUE_TYPES.has(declaration.type)) return "values";
   if (FUNCTION_TYPES.has(declaration.type)) return "functions";
 }
 
-function isExport(statement, exportedNames) {
+function isExport(statement: TopLevelStatement, exportedNames: Set<string>): boolean {
   return statement.type.startsWith("Export") || declaredNames(statement).some((name) => exportedNames.has(name));
 }
 
-function listedExportNames(program) {
-  const lists = program.body.filter(
-    (statement) => statement.type === "ExportNamedDeclaration" && !statement.declaration && !statement.source
+function listedExportNames(program: ESTree.Program): Set<string> {
+  return new Set(
+    program.body.flatMap((statement) =>
+      statement.type === "ExportNamedDeclaration" && !statement.declaration && !statement.source
+        ? statement.specifiers.map((specifier) => exportedName(specifier.local))
+        : []
+    )
   );
-  return new Set(lists.flatMap((list) => list.specifiers.map((specifier) => specifier.local.name)));
+}
+
+function exportedName(name: ESTree.ModuleExportName): string {
+  return name.type === "Literal" ? name.value : name.name;
 }
 
 /**
@@ -80,13 +94,13 @@ function listedExportNames(program) {
  * that runs at load time reads everything in its body then too. A function
  * declaration is hoisted, so it never needs to stay above.
  */
-function readAtLoad(exports, reads) {
-  const needed = new Set();
-  const visited = new Set();
+function readAtLoad(exports: TopLevelStatement[], reads: ModuleReads): Set<TopLevelStatement> {
+  const needed = new Set<TopLevelStatement>();
+  const visited = new Set<TopLevelStatement>();
   const pending = exports.map((statement) => reads.atLoad.get(statement));
 
   while (pending.length > 0) {
-    for (const statement of pending.pop()) {
+    for (const statement of pending.pop() ?? []) {
       if (visited.has(statement)) continue;
       visited.add(statement);
 

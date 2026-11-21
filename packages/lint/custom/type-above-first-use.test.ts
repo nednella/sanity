@@ -1,7 +1,7 @@
 import { describe, it } from "node:test";
 import { RuleTester } from "oxlint/plugins-dev";
 
-import { typeAboveFirstUse } from "./type-above-first-use.js";
+import { typeAboveFirstUse } from "./type-above-first-use.ts";
 
 RuleTester.describe = describe;
 RuleTester.it = it;

@@ -1,7 +1,7 @@
 import { describe, it } from "node:test";
 import { RuleTester } from "oxlint/plugins-dev";
 
-import { exportsFirst } from "./exports-first.js";
+import { exportsFirst } from "./exports-first.ts";
 
 RuleTester.describe = describe;
 RuleTester.it = it;

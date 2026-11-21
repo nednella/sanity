@@ -1,4 +1,6 @@
-export const routeComponentName = {
+import { defineRule } from "@oxlint/plugins";
+
+export const routeComponentName = defineRule({
   meta: {
     type: "suggestion",
     docs: {
@@ -21,4 +23,4 @@ export const routeComponentName = {
       }
     };
   }
-};
+});
