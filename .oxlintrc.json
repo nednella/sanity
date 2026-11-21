@@ -190,7 +190,6 @@
             "type": "natural"
           }
         ],
-        "react/button-has-type": "off",
         "react/exhaustive-deps": "warn",
         "react/forbid-component-props": "off",
         "react/incompatible-library": "warn",

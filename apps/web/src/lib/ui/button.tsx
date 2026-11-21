@@ -45,6 +45,7 @@ export function Button({ className, variant, size, asChild = false, children, ..
   return (
     <button
       className={classes}
+      type="button"
       {...props}
     >
       {children}
