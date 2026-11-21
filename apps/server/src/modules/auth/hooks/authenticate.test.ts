@@ -3,7 +3,9 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import type { ApiClient } from "@db/enums";
 
+import { SESSION_COOKIE_NAME } from "@/modules/auth/constants";
 import { validateKey } from "@/modules/auth/repository/validate-key";
+import { validateSession } from "@/modules/auth/repository/validate-session";
 import { hashKey } from "@/modules/auth/service/keys";
 import { findMemberAccessByDiscordId, findMemberAccessById } from "@/modules/members/repository/find-member-access";
 
@@ -13,17 +15,27 @@ vi.mock("@/modules/members/repository/find-member-access", () => ({
   findMemberAccessByDiscordId: vi.fn(),
   findMemberAccessById: vi.fn()
 }));
-vi.mock("../repository/validate-key", () => ({ validateKey: vi.fn() }));
+vi.mock("@/modules/auth/repository/validate-key", () => ({ validateKey: vi.fn() }));
+vi.mock("@/modules/auth/repository/validate-session", () => ({ validateSession: vi.fn() }));
 
 const TOKEN = "sanity_bot_secret";
+const SECRET = "sanity_web_secret";
+const SESSION_ID = 7;
 const DISCORD_ID = 123_456_789_012_345_678n;
 const MEMBER = {
   id: 1n,
   role: null
 };
 
-function requestWith(headers: Record<string, string>) {
-  return { headers } as FastifyRequest;
+function requestWith(headers: Record<string, string>, cookies: Record<string, string> = {}) {
+  return {
+    cookies,
+    headers
+  } as unknown as FastifyRequest;
+}
+
+function sessionRequest() {
+  return requestWith({}, { [SESSION_COOKIE_NAME]: SECRET });
 }
 
 function bearer() {
@@ -34,6 +46,13 @@ function botRequest() {
   return requestWith({
     ...bearer(),
     "x-discord-user-id": DISCORD_ID.toString()
+  });
+}
+
+function mockSession() {
+  vi.mocked(validateSession).mockResolvedValue({
+    id: SESSION_ID,
+    memberId: MEMBER.id
   });
 }
 
@@ -137,5 +156,46 @@ describe("authenticate", () => {
     const request = requestWith(bearer());
 
     await expect(authenticate(request)).rejects.toMatchObject({ statusCode: 403 });
+  });
+
+  it("acts as the member who owns a session cookie", async () => {
+    mockSession();
+    vi.mocked(findMemberAccessById).mockResolvedValue(MEMBER);
+    const request = sessionRequest();
+
+    await authenticate(request);
+
+    expect(validateSession).toHaveBeenCalledWith(hashKey(SECRET));
+    expect(request.auth).toEqual({
+      client: "web",
+      member: MEMBER,
+      sessionId: SESSION_ID
+    });
+  });
+
+  it("rejects an unknown or expired session", async () => {
+    vi.mocked(validateSession).mockResolvedValue(undefined);
+    const request = sessionRequest();
+
+    await expect(authenticate(request)).rejects.toMatchObject({ statusCode: 401 });
+    expect(findMemberAccessById).not.toHaveBeenCalled();
+  });
+
+  it("rejects a session whose member has quit", async () => {
+    mockSession();
+    vi.mocked(findMemberAccessById).mockResolvedValue(undefined);
+    const request = sessionRequest();
+
+    await expect(authenticate(request)).rejects.toMatchObject({ statusCode: 401 });
+  });
+
+  it("uses the authorization header over a session cookie", async () => {
+    mockKey("bot");
+    const request = requestWith(bearer(), { [SESSION_COOKIE_NAME]: SECRET });
+
+    await authenticate(request);
+
+    expect(validateSession).not.toHaveBeenCalled();
+    expect(request.auth.client).toBe("bot");
   });
 });
