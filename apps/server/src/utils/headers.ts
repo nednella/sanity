@@ -2,7 +2,7 @@ import type { FastifyRequest } from "fastify";
 
 import { bigIntString } from "@/schema/codecs";
 
-const BEARER_TOKEN = /^Bearer (\S+)$/iu;
+const BEARER_TOKEN = /^Bearer (?<token>\S+)$/iu;
 
 /**
  * Reads the token from an `Authorization: Bearer <token>` header.
@@ -11,7 +11,7 @@ const BEARER_TOKEN = /^Bearer (\S+)$/iu;
  */
 export function parseAuthorizationHeader(request: FastifyRequest) {
   const match = BEARER_TOKEN.exec(request.headers.authorization ?? "");
-  return match?.[1];
+  return match?.groups?.token;
 }
 
 /**
