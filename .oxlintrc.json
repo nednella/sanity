@@ -126,7 +126,6 @@
     "typescript/explicit-function-return-type": "off",
     "typescript/explicit-member-accessibility": ["error", { "accessibility": "no-public" }],
     "typescript/explicit-module-boundary-types": "off",
-    "typescript/no-import-type-side-effects": "off",
     "typescript/no-inferrable-types": "off",
     "typescript/no-non-null-assertion": "off",
     "typescript/prefer-function-type": "off",
