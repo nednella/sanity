@@ -1,4 +1,4 @@
-import { db } from "@db/index";
+import { type Transaction, db } from "@db/index";
 
 import { recordAuditEntry } from "@/modules/audit/repository/record-audit-entry";
 import type { ActingAuth } from "@/modules/auth/hooks/authenticate";
@@ -25,10 +25,8 @@ export async function updateDiscordAccount({ account, displayName }: DiscordAcco
     if (matches.length > 1) return { member: null, outcome: "non-unique-display-name" as const };
 
     const summary = { displayName: member.displayName, id: member.id };
-    if (member.discordId === account.discordId) return { member: summary, outcome: "unchanged" as const };
-    if ((await findMemberIdByDiscordId(tx, account.discordId)) !== undefined) {
-      return { member: summary, outcome: "discord-id-taken" as const };
-    }
+    const refusal = await checkNewDiscordId(tx, member.discordId, account.discordId);
+    if (refusal) return { member: summary, outcome: refusal };
 
     await setDiscordAccount(tx, member.id, { avatarUrl: toAvatarUrl(account), discordId: account.discordId });
     await recordAuditEntry(tx, {
@@ -41,4 +39,9 @@ export async function updateDiscordAccount({ account, displayName }: DiscordAcco
 
     return { member: summary, outcome: "discord-account-changed" as const };
   });
+}
+
+async function checkNewDiscordId(tx: Transaction, currentId: bigint, newId: bigint) {
+  if (currentId === newId) return "unchanged" as const;
+  if ((await findMemberIdByDiscordId(tx, newId)) !== undefined) return "discord-id-taken" as const;
 }

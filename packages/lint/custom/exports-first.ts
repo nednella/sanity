@@ -33,18 +33,11 @@ export const exportsFirst = defineRule({
           const group = groupOf(statement);
           const name = declaredNames(statement).join(", ") || "default";
 
-          const isBelowFunctions = statements.slice(0, index).some((above) => groupOf(above) === "functions");
-          if (group === "values" && isBelowFunctions) {
+          const canStayAbove = isExport(statement, exportedNames) || neededAbove.has(statement);
+
+          if (group === "values" && isBelowFunctions(statements, index)) {
             context.report({ node: statement, messageId: "moveAboveFunctions", data: { name } });
-            continue;
-          }
-
-          if (isExport(statement, exportedNames) || neededAbove.has(statement)) continue;
-
-          const isAboveExport = statements
-            .slice(index + 1)
-            .some((below) => groupOf(below) === group && isExport(below, exportedNames));
-          if (isAboveExport) {
+          } else if (!canStayAbove && isAboveExport(statements, index, group, exportedNames)) {
             context.report({ node: statement, messageId: "moveBelowExports", data: { name, group } });
           }
         }
@@ -69,6 +62,19 @@ function groupOf(statement: TopLevelStatement): Group | undefined {
   if (!declaration || ("declare" in declaration && declaration.declare)) return;
   if (VALUE_TYPES.has(declaration.type)) return "values";
   if (FUNCTION_TYPES.has(declaration.type)) return "functions";
+}
+
+function isBelowFunctions(statements: TopLevelStatement[], index: number): boolean {
+  return statements.slice(0, index).some((above) => groupOf(above) === "functions");
+}
+
+function isAboveExport(
+  statements: TopLevelStatement[],
+  index: number,
+  group: Group | undefined,
+  exportedNames: Set<string>
+): boolean {
+  return statements.slice(index + 1).some((below) => groupOf(below) === group && isExport(below, exportedNames));
 }
 
 function isExport(statement: TopLevelStatement, exportedNames: Set<string>): boolean {

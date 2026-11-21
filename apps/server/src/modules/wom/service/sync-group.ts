@@ -19,8 +19,26 @@ import { changeMainRsn } from "./shared/change-main-rsn";
  */
 export async function syncGroup() {
   const entries = await wom.groups.getGroupBulkHiscores(Number(config.womGroupId));
-
   const memberFor = await loadMemberMatcher();
+  const { players, snapshots } = linkPlayersToMembers(entries, memberFor);
+
+  return db.transaction(async (tx) => {
+    await savePlayers(tx, players);
+    const saved = await saveSnapshots(tx, snapshots);
+
+    let renamed = 0;
+    for (const { memberId, player } of players) {
+      if (await changeMainRsn(tx, memberId, player.displayName)) renamed += 1;
+    }
+
+    return { linked: players.length, members: entries.length, renamed, saved };
+  });
+}
+
+type GroupEntry = Awaited<ReturnType<typeof wom.groups.getGroupBulkHiscores>>[number];
+type MemberMatcher = Awaited<ReturnType<typeof loadMemberMatcher>>;
+
+function linkPlayersToMembers(entries: GroupEntry[], memberFor: MemberMatcher) {
   const players: Parameters<typeof savePlayers>[1] = [];
   const snapshots: Parameters<typeof saveSnapshots>[1] = [];
   const linked = new Set<bigint>();
@@ -34,15 +52,5 @@ export async function syncGroup() {
     snapshots.push(data);
   }
 
-  return db.transaction(async (tx) => {
-    await savePlayers(tx, players);
-    const saved = await saveSnapshots(tx, snapshots);
-
-    let renamed = 0;
-    for (const { memberId, player } of players) {
-      if (await changeMainRsn(tx, memberId, player.displayName)) renamed += 1;
-    }
-
-    return { linked: players.length, members: entries.length, renamed, saved };
-  });
+  return { players, snapshots };
 }
