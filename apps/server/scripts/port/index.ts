@@ -63,7 +63,7 @@ await db.transaction(async (tx) => {
   await tx.execute(sql`
     truncate audit_log, audit_log_members, boss_uniques, discord_accounts, items, member_rank_delays,
              members, personal_best_participants, personal_bests, points,
-             points_timeline_events, ranks,
+             points_timeline_events, ranks, sessions,
              speedrun_content, speedrun_diary_rewards, speedrun_diary_tiers, speedrun_diary_times,
              submission_participants, submissions, wom_name_changes, wom_players,
              wom_snapshot_activities, wom_snapshot_bosses, wom_snapshot_computed, wom_snapshot_skills,
