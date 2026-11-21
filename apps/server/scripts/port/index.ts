@@ -1,5 +1,5 @@
 import { type InferInsertModel, and, eq, ne, sql } from "drizzle-orm";
-import { type PgTable } from "drizzle-orm/pg-core";
+import type { PgTable } from "drizzle-orm/pg-core";
 
 import { type Transaction, client, db } from "@db/index";
 import * as schema from "@db/schema";
