@@ -70,7 +70,7 @@
     "no-magic-numbers": "off",
     "no-plusplus": "off",
     "no-redeclare": "off",
-    "no-shadow": "off",
+    "no-shadow": ["error", { "allow": ["_"] }],
     "no-ternary": "off",
     "no-undefined": "off",
     "no-underscore-dangle": ["error", { "allow": ["_zod"] }],
