@@ -7,7 +7,10 @@ export function WikiInfobox({ title, image, caption, rows }: Readonly<WikiInfobo
     <aside
       aria-label={`${title} infobox`}
       className={cn(
-        "float-none mb-6 w-full overflow-hidden rounded-xs border border-base-300 bg-base-200 lg:float-right lg:mb-4 lg:ml-6",
+        `
+          float-none mb-6 w-full overflow-hidden rounded-xs border border-base-300 bg-base-200
+          lg:float-right lg:mb-4 lg:ml-6
+        `,
         wikiAsideWidth
       )}
     >

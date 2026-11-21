@@ -25,6 +25,7 @@
   },
   "sortPackageJson": false,
   "sortTailwindcss": {
+    "preserveWhitespace": true,
     "stylesheet": "./apps/web/src/main.css"
   },
   "ignorePatterns": [

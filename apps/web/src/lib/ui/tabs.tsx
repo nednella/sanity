@@ -25,8 +25,14 @@ function TabAnchor({ className, ...props }: Readonly<React.ComponentPropsWithRef
     <a
       className={cn(
         "-mb-px rounded-t-xs border border-b-0 border-transparent px-4 py-2 text-sm text-base-content/60",
-        "hover:text-base-content focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-primary",
-        "data-[status=active]:border-base-300 data-[status=active]:bg-base-100 data-[status=active]:font-semibold data-[status=active]:text-base-content",
+        `
+          hover:text-base-content
+          focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-primary
+        `,
+        `
+          data-[status=active]:border-base-300 data-[status=active]:bg-base-100 data-[status=active]:font-semibold
+          data-[status=active]:text-base-content
+        `,
         className
       )}
       {...props}

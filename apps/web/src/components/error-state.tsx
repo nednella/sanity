@@ -47,7 +47,12 @@ export function ErrorState({
                 {tag}
               </Badge>
             )}
-            <code className="max-w-2xl overflow-x-auto rounded-xs border border-error/40 bg-error/10 p-4 text-left text-xs whitespace-pre-wrap">
+            <code
+              className="
+                max-w-2xl overflow-x-auto rounded-xs border border-error/40 bg-error/10 p-4 text-left text-xs
+                whitespace-pre-wrap
+              "
+            >
               {details}
             </code>
           </div>

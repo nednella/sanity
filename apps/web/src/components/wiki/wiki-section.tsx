@@ -36,7 +36,12 @@ function Collapsible({ id, title, level: Heading, children }: Readonly<Collapsib
       className="group"
       open
     >
-      <summary className="mb-4 flex cursor-pointer list-none items-baseline justify-between gap-3 border-b border-base-300 pb-2 [&::-webkit-details-marker]:hidden">
+      <summary
+        className="
+          mb-4 flex cursor-pointer list-none items-baseline justify-between gap-3 border-b border-base-300 pb-2
+          [&::-webkit-details-marker]:hidden
+        "
+      >
         <Heading
           className={cn("scroll-mt-20", Heading === "h2" ? "text-2xl font-bold" : "text-lg font-bold")}
           id={id}
@@ -45,7 +50,10 @@ function Collapsible({ id, title, level: Heading, children }: Readonly<Collapsib
         </Heading>
         <ChevronDown
           aria-hidden="true"
-          className="size-4 shrink-0 rotate-180 self-center text-base-content/40 transition-transform group-open:rotate-0"
+          className="
+            size-4 shrink-0 rotate-180 self-center text-base-content/40 transition-transform
+            group-open:rotate-0
+          "
         />
       </summary>
       {children}

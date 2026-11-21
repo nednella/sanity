@@ -60,7 +60,14 @@ function Toolbar({ actions, children }: Readonly<ToolbarProps>) {
   return (
     <div className="flex flex-wrap items-center gap-3">
       {children}
-      <div className="flex flex-wrap items-center gap-3 md:ms-auto">{actions}</div>
+      <div
+        className="
+          flex flex-wrap items-center gap-3
+          md:ms-auto
+        "
+      >
+        {actions}
+      </div>
     </div>
   );
 }
@@ -138,7 +145,13 @@ type SortButtonProps = {
 function SortButton({ children, onClick, reverse = false, sorted }: Readonly<SortButtonProps>) {
   return (
     <button
-      className={cn("inline-flex items-center gap-1 hover:text-base-content", reverse && "flex-row-reverse")}
+      className={cn(
+        `
+          inline-flex items-center gap-1
+          hover:text-base-content
+        `,
+        reverse && "flex-row-reverse"
+      )}
       onClick={onClick}
       type="button"
     >
@@ -173,7 +186,10 @@ function Row({ className, cursor = "pointer", onSelect, ...props }: Readonly<Row
   return (
     <tr
       className={cn(
-        "h-12 bg-base-100 hover:bg-base-200",
+        `
+          h-12 bg-base-100
+          hover:bg-base-200
+        `,
         onSelect && cursors[cursor],
         onSelect && "focus-visible:outline focus-visible:-outline-offset-2 focus-visible:outline-primary",
         className
@@ -282,7 +298,10 @@ function Search({ onChange, placeholder = "Search", value }: Readonly<SearchProp
       {typed && (
         <button
           aria-label="Clear search"
-          className="cursor-pointer text-base-content/60 hover:text-base-content"
+          className="
+            cursor-pointer text-base-content/60
+            hover:text-base-content
+          "
           onClick={() => setTyped("")}
           type="button"
         >
