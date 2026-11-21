@@ -2,8 +2,10 @@ import type { FastifyRequest } from "fastify";
 
 import type { ApiClient, MemberRole } from "@db/enums";
 
+import { SESSION_COOKIE_NAME } from "@/modules/auth/constants";
 import { authErrors } from "@/modules/auth/errors";
 import { validateKey } from "@/modules/auth/repository/validate-key";
+import { validateSession } from "@/modules/auth/repository/validate-session";
 import { hashKey } from "@/modules/auth/service/keys";
 import { findMemberAccessByDiscordId, findMemberAccessById } from "@/modules/members/repository/find-member-access";
 import { parseAuthorizationHeader, parseXDiscordUserIdHeader } from "@/utils/headers";
@@ -17,6 +19,8 @@ export type Auth = {
   client: ApiClient;
   // Machine clients do not always have to act on behalf of a member!
   member?: AuthMember;
+  // Machine clients authenticate with a key, not a session.
+  sessionId?: number;
 };
 
 export type ActingAuth = {
@@ -24,16 +28,51 @@ export type ActingAuth = {
   member: AuthMember;
 };
 
+export type SessionAuth = {
+  client: ApiClient;
+  member: AuthMember;
+  sessionId: number;
+};
+
 export async function authenticate(request: FastifyRequest) {
   const token = parseAuthorizationHeader(request);
-  if (!token) throw authErrors.invalidApiKey();
+  if (token !== undefined) {
+    request.auth = await authenticateToken(request, token);
+    return;
+  }
 
+  const secret = request.cookies[SESSION_COOKIE_NAME];
+  if (secret !== undefined) {
+    request.auth = await authenticateSession(secret);
+    return;
+  }
+
+  throw authErrors.invalidApiKey();
+}
+
+async function authenticateToken(request: FastifyRequest, token: string): Promise<Auth> {
   const key = await validateKey(hashKey(token));
   if (!key) throw authErrors.invalidApiKey();
 
-  request.auth = {
+  return {
     client: key.client,
     member: await findRequestingMember(request, key)
+  };
+}
+
+async function authenticateSession(secret: string): Promise<SessionAuth> {
+  const session = await validateSession(hashKey(secret));
+  if (session === undefined) throw authErrors.invalidSession();
+
+  // Sessions are unique to an active member. If a valid member cannot be
+  // matched, then the session is invalid
+  const member = await findMemberAccessById(session.memberId);
+  if (member === undefined) throw authErrors.invalidSession();
+
+  return {
+    client: "web",
+    member,
+    sessionId: session.id
   };
 }
 
@@ -58,7 +97,7 @@ async function findRequestingMember(request: FastifyRequest, key: ApiKey): Promi
       return await findMemberAccessByDiscordId(discordId);
     }
     case "web": {
-      // Web client support not implemented yet
+      // Web client uses session cookies to authenticate.
       throw authErrors.forbidden();
     }
   }
