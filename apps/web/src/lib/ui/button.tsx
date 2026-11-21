@@ -39,6 +39,7 @@ export function Button({ className, variant, size, asChild = false, children, ..
   );
 
   if (asChild && isValidElement<{ className?: string }>(children)) {
+    // oxlint-disable-next-line react/no-clone-element -- the asChild pattern
     return cloneElement(children, { className: cn(classes, children.props.className) });
   }
 

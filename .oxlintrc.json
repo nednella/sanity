@@ -206,7 +206,6 @@
         "react/jsx-no-constructed-context-values": "off",
         "react/jsx-no-literals": "off",
         "react/jsx-props-no-spreading": "off",
-        "react/no-clone-element": "off",
         "react/no-multi-comp": "off",
         "react/no-object-type-as-default-prop": "off",
         "react/only-export-components": [
