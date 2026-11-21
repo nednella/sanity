@@ -68,7 +68,6 @@
     "no-await-in-loop": "off",
     "no-continue": "off",
     "no-eq-null": "off",
-    "no-inner-declarations": "off",
     "no-magic-numbers": "off",
     "no-nested-ternary": "off",
     "no-plusplus": "off",

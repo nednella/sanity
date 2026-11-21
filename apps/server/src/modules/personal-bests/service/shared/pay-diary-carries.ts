@@ -24,13 +24,10 @@ export async function payDiaryCarries(tx: Transaction, run: ApprovedRun, memberI
   for (const tier of tiers) {
     if (run.timeSeconds > tier.timeSeconds) continue;
 
-    function hasDiaryTier(memberId: bigint) {
-      return (bestTimes.get(memberId) ?? Infinity) <= tier.timeSeconds;
-    }
-
+    const holders = memberIds.filter((memberId) => (bestTimes.get(memberId) ?? Infinity) <= tier.timeSeconds);
     const awards = generateDiaryCarryAwards({
-      carried: memberIds.filter((memberId) => !hasDiaryTier(memberId)),
-      holders: memberIds.filter((memberId) => hasDiaryTier(memberId)),
+      carried: memberIds.filter((memberId) => !holders.includes(memberId)),
+      holders,
       tierId: tier.tierId
     });
 
