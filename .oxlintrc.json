@@ -86,7 +86,6 @@
     ],
     "no-use-before-define": "off",
     "no-useless-assignment": "error",
-    "no-useless-return": "off",
     "one-var": "off",
     "oxc/no-async-await": "off",
     "oxc/no-map-spread": "off",
