@@ -197,7 +197,6 @@
             "type": "natural"
           }
         ],
-        "react/exhaustive-deps": "warn",
         "react/forbid-component-props": "off",
         "react/incompatible-library": "warn",
         "react/jsx-curly-brace-presence": [
