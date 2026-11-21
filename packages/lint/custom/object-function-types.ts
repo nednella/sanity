@@ -1,4 +1,6 @@
-export const objectFunctionTypes = {
+import { defineRule } from "@oxlint/plugins";
+
+export const objectFunctionTypes = defineRule({
   meta: {
     type: "suggestion",
     docs: {
@@ -19,4 +21,4 @@ export const objectFunctionTypes = {
       }
     };
   }
-};
+});

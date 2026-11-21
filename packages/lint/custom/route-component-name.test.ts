@@ -1,7 +1,7 @@
 import { describe, it } from "node:test";
 import { RuleTester } from "oxlint/plugins-dev";
 
-import { routeComponentName } from "./route-component-name.js";
+import { routeComponentName } from "./route-component-name.ts";
 
 RuleTester.describe = describe;
 RuleTester.it = it;

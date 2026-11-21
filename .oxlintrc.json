@@ -263,9 +263,9 @@
     "valid-typeof": "error"
   },
   "overrides": [
-    // allow default exports for config files
+    // allow default exports for config files and packages
     {
-      "files": ["**/*.config.ts"],
+      "files": ["**/*.config.ts", "packages/lint/**/index.ts"],
       "rules": {
         "import/no-default-export": "off"
       }

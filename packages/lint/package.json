@@ -4,12 +4,17 @@
   "private": true,
   "type": "module",
   "exports": {
-    ".": "./index.js"
+    ".": "./index.ts"
   },
   "scripts": {
-    "test": "node --test"
+    "test": "node --test",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@oxlint/plugins": "^1.94.0"
   },
   "devDependencies": {
-    "oxlint": "^1.94.0"
+    "oxlint": "^1.94.0",
+    "typescript": "~6.0.3"
   }
 }
