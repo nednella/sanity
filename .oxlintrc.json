@@ -133,7 +133,6 @@
     "typescript/no-import-type-side-effects": "off",
     "typescript/no-inferrable-types": "off",
     "typescript/no-non-null-assertion": "off",
-    "typescript/parameter-properties": "off",
     "typescript/prefer-function-type": "off",
     "unicorn/no-null": "off",
     "unicorn/no-useless-iterator-to-array": "error",
