@@ -1,3 +1,4 @@
+// oxlint-disable max-lines -- one router file per module
 import { z } from "zod";
 
 import { rankedPersonalBest } from "@/modules/personal-bests/response";
