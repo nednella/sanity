@@ -5,12 +5,16 @@ import { members, points } from "@db/schema";
 
 import type { PointAward } from "@/modules/points/rules";
 
+type AwardOptions = {
+  awardedBy: bigint;
+  notes: string;
+  submissionId: number | null;
+};
+
 export async function awardPoints(
   tx: Transaction,
   awards: PointAward[],
-  awardedBy: bigint,
-  submissionId: number | null,
-  notes: string
+  { awardedBy, notes, submissionId }: AwardOptions
 ) {
   const earned = awards.filter(({ points: value }) => value !== 0);
   if (earned.length === 0) return 0;

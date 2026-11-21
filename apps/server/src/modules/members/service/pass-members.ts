@@ -37,7 +37,11 @@ export async function passMembers({ members, note }: MemberBatch, auth: ActingAu
       tx,
       changed.map(({ member }) => ({ memberId: member.id, rankId: rank.id }))
     );
-    await recordAuditEntries(tx, auth, "rank_changed", changed, () => note ?? `passed trial as ${rank.name}`);
+    await recordAuditEntries(tx, auth, {
+      action: "rank_changed",
+      changes: changed,
+      toNote: () => note ?? `passed trial as ${rank.name}`
+    });
 
     return { changed, skipped };
   });

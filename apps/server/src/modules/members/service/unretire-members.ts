@@ -40,7 +40,11 @@ export async function unretireMembers({ members, note }: MemberBatch, auth: Acti
       tx,
       changed.map(({ member, rank }) => ({ memberId: member.id, rankId: rank.id }))
     );
-    await recordAuditEntries(tx, auth, "rank_changed", changed, ({ rank }) => note ?? `unretired as ${rank.name}`);
+    await recordAuditEntries(tx, auth, {
+      action: "rank_changed",
+      changes: changed,
+      toNote: ({ rank }) => note ?? `unretired as ${rank.name}`
+    });
 
     return { changed, skipped };
   });

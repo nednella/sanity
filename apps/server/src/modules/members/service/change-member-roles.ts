@@ -36,13 +36,11 @@ export async function changeMemberRoles({ members, note, role }: RoleChange, aut
       changed.map(({ member }) => member.id),
       role
     );
-    await recordAuditEntries(
-      tx,
-      auth,
-      "role_changed",
-      changed,
-      ({ member }) => note ?? `${member.role ?? "member"} to ${role ?? "member"}`
-    );
+    await recordAuditEntries(tx, auth, {
+      action: "role_changed",
+      changes: changed,
+      toNote: ({ member }) => note ?? `${member.role ?? "member"} to ${role ?? "member"}`
+    });
 
     return { changed, skipped };
   });

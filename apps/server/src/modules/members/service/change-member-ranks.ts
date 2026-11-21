@@ -39,13 +39,11 @@ export async function changeMemberRanks({ members, note, rankId }: RankChange, a
       tx,
       changed.map(({ member }) => ({ memberId: member.id, rankId }))
     );
-    await recordAuditEntries(
-      tx,
-      auth,
-      "rank_changed",
-      changed,
-      ({ member }) => note ?? `${ranks.get(member.rankId)?.name ?? member.rankId} to ${rank.name}`
-    );
+    await recordAuditEntries(tx, auth, {
+      action: "rank_changed",
+      changes: changed,
+      toNote: ({ member }) => note ?? `${ranks.get(member.rankId)?.name ?? member.rankId} to ${rank.name}`
+    });
 
     return { changed, skipped };
   });

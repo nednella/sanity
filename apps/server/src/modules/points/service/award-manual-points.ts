@@ -12,7 +12,11 @@ export type ManualAward = {
 
 export async function awardManualPoints({ memberId, notes, points }: ManualAward, auth: ActingAuth) {
   return db.transaction(async (tx) => {
-    const awarded = await awardPoints(tx, [{ memberId, points }], auth.member.id, null, notes);
+    const awarded = await awardPoints(tx, [{ memberId, points }], {
+      awardedBy: auth.member.id,
+      notes,
+      submissionId: null
+    });
 
     await recordAuditEntry(tx, {
       actingMemberId: auth.member.id,
