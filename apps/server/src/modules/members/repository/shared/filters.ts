@@ -11,6 +11,6 @@ export function isActive(active: boolean | undefined) {
 export function matchesSearch(search: string | undefined) {
   if (!search) return;
 
-  const pattern = `%${search.replaceAll(/[%_]/g, String.raw`\$&`)}%`;
+  const pattern = `%${search.replaceAll(/[%_]/gu, String.raw`\$&`)}%`;
   return or(ilike(members.displayName, pattern), ilike(members.mainRsn, pattern), ilike(members.altRsn, pattern));
 }

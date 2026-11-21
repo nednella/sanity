@@ -9,7 +9,7 @@ export const NO_MEMBERS_TAGGED = {
   description: "Tag at least one member."
 };
 
-const MENTIONED_USER_ID = /(?<=<@!?)\d{17,20}(?=>)/g;
+const MENTIONED_USER_ID = /(?<=<@!?)\d{17,20}(?=>)/gu;
 
 export function membersOption(option: SlashCommandStringOption) {
   return option.setName("members").setDescription("Tag the members").setRequired(true);

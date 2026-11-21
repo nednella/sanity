@@ -67,7 +67,7 @@ export function toBoolean(value: Buffer | number | null) {
  * are pulled apart. Two of 5683 rows separate the hundredths with a colon.
  */
 export function clockToInterval(value: string) {
-  const parts = /^(\d+):(\d+)(?:[.:](\d+))?$/.exec(value.trim());
+  const parts = /^(\d+):(\d+)(?:[.:](\d+))?$/u.exec(value.trim());
   if (!parts) return null;
   const [, minutes, seconds, fraction = "0"] = parts;
   return `${minutes} minutes ${seconds}.${fraction} seconds`;

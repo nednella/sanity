@@ -9,7 +9,7 @@ export function escapeHtml(text: string) {
 }
 
 export function isCountryCode(text: string) {
-  return /^[a-z]{2}$/i.test(text);
+  return /^[A-Za-z]{2}$/u.test(text);
 }
 
 export function pad(value: number) {
@@ -21,5 +21,5 @@ export function pluralise(value: number, unit: string) {
 }
 
 export function titleCase(text: string) {
-  return text.replaceAll(/\b\w/g, (letter) => letter.toUpperCase());
+  return text.replaceAll(/\b\w/gu, (letter) => letter.toUpperCase());
 }
