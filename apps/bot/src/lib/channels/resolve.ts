@@ -19,13 +19,16 @@ import type { ChannelIntent } from "./channels";
  * - `no-access`: the bot lacks the permissions in `missingPermissions`.
  */
 export class ChannelUnavailableError extends Error {
-  constructor(
-    readonly intent: ChannelIntent,
-    readonly reason: "channel-not-set" | "missing" | "no-access",
-    readonly missingPermissions: string[] = []
-  ) {
+  readonly intent: ChannelIntent;
+  readonly missingPermissions: string[];
+  readonly reason: "channel-not-set" | "missing" | "no-access";
+
+  constructor(intent: ChannelIntent, reason: ChannelUnavailableError["reason"], missingPermissions: string[] = []) {
     super(`${intent} channel is ${reason}`);
     this.name = "ChannelUnavailableError";
+    this.intent = intent;
+    this.missingPermissions = missingPermissions;
+    this.reason = reason;
   }
 }
 
