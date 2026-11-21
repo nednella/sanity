@@ -82,8 +82,9 @@ function describeCommand(interaction: ChatInputCommandInteraction, command: Comm
       return (option.options ?? []).map((subcommand) => ({ ...subcommand, name: `${option.name} ${subcommand.name}` }));
     })
     .toSorted((a, b) => a.name.localeCompare(b.name));
-  if (subcommands.length === 0)
+  if (subcommands.length === 0) {
     return [`${commandMention(interaction, command)}${LIST_SEPARATOR}${command.description}`];
+  }
   return subcommands.map(
     (subcommand) => `${commandMention(interaction, command, subcommand.name)}${LIST_SEPARATOR}${subcommand.description}`
   );

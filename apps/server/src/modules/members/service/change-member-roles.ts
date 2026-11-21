@@ -26,11 +26,8 @@ export async function changeMemberRoles({ members, note, role }: RoleChange, aut
     const skipped: { error: ApplicationError; member: Member }[] = [];
 
     for (const member of found) {
-      if (!isRoleAbove(auth.member.role, member.role)) skipped.push({ member, error: memberErrors.roleTooHigh() });
-      else if (role === null && member.role === null) skipped.push({ member, error: memberErrors.hasNoRole() });
-      else if (role !== null && member.role === role)
-        skipped.push({ member, error: memberErrors.alreadyHasRole(role) });
-      else if (role !== null && member.rankId === QUIT_RANK_ID) skipped.push({ member, error: memberErrors.hasQuit() });
+      const error = findSkipReason(member, role, auth);
+      if (error) skipped.push({ member, error });
       else changed.push({ member });
     }
 
@@ -49,4 +46,11 @@ export async function changeMemberRoles({ members, note, role }: RoleChange, aut
 
     return { changed, skipped };
   });
+}
+
+function findSkipReason(member: Member, role: RoleChange["role"], auth: ActingAuth) {
+  if (!isRoleAbove(auth.member.role, member.role)) return memberErrors.roleTooHigh();
+  if (role === null && member.role === null) return memberErrors.hasNoRole();
+  if (role !== null && member.role === role) return memberErrors.alreadyHasRole(role);
+  if (role !== null && member.rankId === QUIT_RANK_ID) return memberErrors.hasQuit();
 }
