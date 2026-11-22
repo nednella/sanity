@@ -1,8 +1,8 @@
 import type { ReactNode } from "react";
 
 import { Card, CardContent, CardHeader } from "@/lib/ui/card";
+import { Empty, EmptyDescription } from "@/lib/ui/empty";
 import { H4 } from "@/lib/ui/typography/h4";
-import { Muted } from "@/lib/ui/typography/muted";
 
 type PanelProps = {
   children: ReactNode;
@@ -26,8 +26,8 @@ type PanelEmptyMessageProps = {
 
 export function PanelEmptyMessage({ children }: Readonly<PanelEmptyMessageProps>) {
   return (
-    <div className="flex flex-1 items-center justify-center">
-      <Muted className="text-center">{children}</Muted>
-    </div>
+    <Empty className="p-0">
+      <EmptyDescription className="text-sm">{children}</EmptyDescription>
+    </Empty>
   );
 }

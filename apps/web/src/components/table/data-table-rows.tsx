@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 
 import { type DataTableFeatures, cellLayoutClasses } from "@/components/table/table-features";
 import { Button } from "@/lib/ui/button";
+import { Empty, EmptyContent, EmptyDescription } from "@/lib/ui/empty";
 import { Skeleton } from "@/lib/ui/skeleton";
 import { TableCell, TableRow } from "@/lib/ui/table";
 
@@ -41,18 +42,11 @@ export function DataTableRows<TData extends RowData>({
 
   if (error) {
     return (
-      <MessageRow colSpan={columnCount}>
-        <p>{error.message}</p>
-        {onRetry && (
-          <Button
-            onClick={onRetry}
-            size="sm"
-            variant="outline"
-          >
-            Retry
-          </Button>
-        )}
-      </MessageRow>
+      <ErrorRow
+        colSpan={columnCount}
+        error={error}
+        onRetry={onRetry}
+      />
     );
   }
 
@@ -63,7 +57,13 @@ export function DataTableRows<TData extends RowData>({
   const pinned = pinRow ? rows.filter((row) => pinRow(row.original)).toSorted((a, b) => a.index - b.index) : [];
   const ordered = pinRow ? [...pinned, ...rows.filter((row) => !pinRow(row.original))] : rows;
 
-  if (ordered.length === 0) return <MessageRow colSpan={columnCount}>{emptyMessage}</MessageRow>;
+  if (ordered.length === 0) {
+    return (
+      <MessageRow colSpan={columnCount}>
+        <EmptyDescription className="text-sm">{emptyMessage}</EmptyDescription>
+      </MessageRow>
+    );
+  }
 
   return ordered.map((row) => {
     const select = onRowClick && (() => onRowClick(row.original));
@@ -117,6 +117,31 @@ function selectOnKey(event: React.KeyboardEvent, select: () => void) {
   select();
 }
 
+type ErrorRowProps = {
+  colSpan: number;
+  error: Error;
+  onRetry?: () => void;
+};
+
+function ErrorRow({ colSpan, error, onRetry }: Readonly<ErrorRowProps>) {
+  return (
+    <MessageRow colSpan={colSpan}>
+      <EmptyDescription className="text-sm">{error.message}</EmptyDescription>
+      {onRetry && (
+        <EmptyContent>
+          <Button
+            onClick={onRetry}
+            size="sm"
+            variant="outline"
+          >
+            Retry
+          </Button>
+        </EmptyContent>
+      )}
+    </MessageRow>
+  );
+}
+
 function SkeletonRows({ columnCount }: Readonly<{ columnCount: number }>) {
   return Array.from({ length: SKELETON_ROW_COUNT }, (_, row) => (
     <TableRow
@@ -141,10 +166,10 @@ function MessageRow({ children, colSpan }: Readonly<MessageRowProps>) {
   return (
     <TableRow className="hover:bg-transparent">
       <TableCell
-        className="py-10 text-center text-muted-foreground"
+        className="py-10"
         colSpan={colSpan}
       >
-        {children}
+        <Empty className="p-0">{children}</Empty>
       </TableCell>
     </TableRow>
   );

@@ -1,8 +1,7 @@
 import { Link } from "@tanstack/react-router";
-import { cn } from "cn";
 
 import { Button } from "@/lib/ui/button";
-import { Hero } from "@/lib/ui/hero";
+import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyTitle } from "@/lib/ui/empty";
 
 type NotFoundProps = {
   description?: string;
@@ -16,21 +15,21 @@ export function NotFound({
   title = "Page not found"
 }: Readonly<NotFoundProps>) {
   return (
-    <Hero
-      className={cn("flex items-center justify-center", fullScreen ? "min-h-screen" : "min-h-[60vh]")}
-      description={description}
-      reducedMotion
-      size="sm"
-      title={title}
-    >
-      <Button
-        nativeButton={false}
-        render={<Link to="/" />}
-        size="sm"
-        variant="outline"
-      >
-        Go back home
-      </Button>
-    </Hero>
+    <Empty className={fullScreen ? "min-h-screen" : "min-h-[60vh]"}>
+      <EmptyHeader>
+        <EmptyTitle className="text-2xl font-semibold">{title}</EmptyTitle>
+        <EmptyDescription className="text-base">{description}</EmptyDescription>
+      </EmptyHeader>
+      <EmptyContent>
+        <Button
+          nativeButton={false}
+          render={<Link to="/" />}
+          size="sm"
+          variant="outline"
+        >
+          Go back home
+        </Button>
+      </EmptyContent>
+    </Empty>
   );
 }

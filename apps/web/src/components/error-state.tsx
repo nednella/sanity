@@ -1,6 +1,6 @@
 import { Badge } from "@/lib/ui/badge";
 import { Button } from "@/lib/ui/button";
-import { Hero } from "@/lib/ui/hero";
+import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyTitle } from "@/lib/ui/empty";
 
 type ErrorStateProps = {
   description?: string;
@@ -21,14 +21,12 @@ export function ErrorState({
   const details = error instanceof Error ? (error.stack ?? error.message) : JSON.stringify(error);
 
   return (
-    <Hero
-      className="flex h-full items-center justify-center"
-      description={description}
-      reducedMotion
-      size="sm"
-      title={title}
-    >
-      <div className="flex flex-col items-center gap-8">
+    <Empty className="h-full">
+      <EmptyHeader>
+        <EmptyTitle className="text-2xl font-semibold">{title}</EmptyTitle>
+        <EmptyDescription className="text-base">{description}</EmptyDescription>
+      </EmptyHeader>
+      <EmptyContent>
         <Button
           onClick={onRetry ?? (() => location.reload())}
           size="sm"
@@ -36,21 +34,21 @@ export function ErrorState({
         >
           Try again
         </Button>
+      </EmptyContent>
 
-        {isDevelopment && error != null && (
-          <div className="flex flex-col items-start gap-2">
-            {tag && <Badge variant="destructive">{tag}</Badge>}
-            <code
-              className="
-                max-w-2xl overflow-x-auto border border-destructive/40 bg-destructive/10 p-4 text-left text-xs
-                whitespace-pre-wrap
-              "
-            >
-              {details}
-            </code>
-          </div>
-        )}
-      </div>
-    </Hero>
+      {isDevelopment && error != null && (
+        <div className="flex flex-col items-start gap-2">
+          {tag && <Badge variant="destructive">{tag}</Badge>}
+          <code
+            className="
+              max-w-2xl overflow-x-auto border border-destructive/40 bg-destructive/10 p-4 text-left text-xs
+              whitespace-pre-wrap
+            "
+          >
+            {details}
+          </code>
+        </div>
+      )}
+    </Empty>
   );
 }
