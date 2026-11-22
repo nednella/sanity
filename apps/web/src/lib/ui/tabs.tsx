@@ -1,7 +1,6 @@
 import { createLink } from "@tanstack/react-router";
+import { cn } from "cn";
 import type { ReactNode } from "react";
-
-import { cn } from "@/lib/ui/utils";
 
 // oxlint-disable-next-line react/only-export-components
 export const Tab = createLink(TabAnchor);

@@ -1,11 +1,11 @@
 import { Link } from "@tanstack/react-router";
+import { cn } from "cn";
 
 import { config } from "@config";
 
 import { Badge } from "@/lib/ui/badge";
 import { Button } from "@/lib/ui/button";
 import { Hero } from "@/lib/ui/hero";
-import { cn } from "@/lib/ui/utils";
 
 const buttonStyle = "rounded-none border-white/20 bg-black/40 text-white backdrop-blur-sm hover:bg-black/60";
 

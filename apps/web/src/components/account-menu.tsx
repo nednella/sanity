@@ -1,10 +1,11 @@
 import { Link } from "@tanstack/react-router";
+import { cn } from "cn";
 import type { MouseEvent, ReactNode } from "react";
 
 import { useAuth } from "@/lib/auth/use-auth";
 import { Avatar } from "@/lib/ui/avatar";
 import { Dropdown } from "@/lib/ui/dropdown";
-import { closeDropdown, cn } from "@/lib/ui/utils";
+import { closeDropdown } from "@/lib/ui/utils";
 
 type AccountMenuProps = {
   // Shown instead of the menu when no member is logged in.

@@ -1,6 +1,5 @@
+import { cn } from "cn";
 import { UserRound } from "lucide-react";
-
-import { cn } from "@/lib/ui/utils";
 
 const sizes = {
   md: {

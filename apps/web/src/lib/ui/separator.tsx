@@ -1,4 +1,4 @@
-import { cn } from "@/lib/ui/utils";
+import { cn } from "cn";
 
 type SeparatorProps = React.ComponentProps<"hr"> & {
   orientation?: "horizontal" | "vertical";
