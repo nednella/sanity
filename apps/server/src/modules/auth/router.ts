@@ -8,6 +8,7 @@ import { defineRoute } from "@/utils/define-route";
 import { authErrors } from "./errors";
 import { checkAuthorizationResponse } from "./hooks/check-authorization-response";
 import { redirectOAuthLoginError, redirectOAuthProviderSuccess, redirectToOAuthProvider } from "./http/login";
+import { sendLoggedOut } from "./http/logout";
 import { listKeys } from "./repository/list-keys";
 import { revokeKey } from "./repository/revoke-key";
 import { apiKeyParams, discordCallbackQuery } from "./request";
@@ -15,6 +16,8 @@ import { apiKey, botKey, pluginKey } from "./response";
 import { createBotKey } from "./service/create-bot-key";
 import { createPluginKey } from "./service/create-plugin-key";
 import { loginWithDiscord } from "./service/login-with-discord";
+import { logout } from "./service/logout";
+import { SESSION_COOKIE_NAME } from "./utils/cookies";
 import { generateOAuthState } from "./utils/oauth";
 
 export const authModule = defineModule([
@@ -114,6 +117,23 @@ export const authModule = defineModule([
       if (!revoked) throw authErrors.apiKeyNotFound(req.params.id);
 
       return reply.code(204).send();
+    }
+  }),
+
+  defineRoute({
+    method: "POST",
+    url: "/auth/logout",
+    config: {
+      access: "public"
+    },
+    schema: {
+      response: {
+        204: z.void()
+      }
+    },
+    handler: async (req, reply) => {
+      await logout(req.cookies[SESSION_COOKIE_NAME]);
+      return sendLoggedOut(reply);
     }
   }),
 
