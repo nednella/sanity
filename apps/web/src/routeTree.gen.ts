@@ -11,7 +11,6 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as siteLayoutRouteImport } from './routes/(site)/_layout'
-import { Route as siteLoginRouteImport } from './routes/(site)/login'
 import { Route as siteRecordsRouteImport } from './routes/(site)/records'
 import { Route as siteSubmissionsRouteImport } from './routes/(site)/submissions'
 import { Route as siteMembersIndexRouteImport } from './routes/(site)/members/index'
@@ -34,11 +33,6 @@ const IndexRoute = IndexRouteImport.update({
 const siteLayoutRoute = siteLayoutRouteImport.update({
   id: '/(site)',
   getParentRoute: () => rootRouteImport,
-} as any)
-const siteLoginRoute = siteLoginRouteImport.update({
-  id: '/login',
-  path: '/login',
-  getParentRoute: () => siteLayoutRoute,
 } as any)
 const siteRecordsRoute = siteRecordsRouteImport.update({
   id: '/records',
@@ -115,7 +109,6 @@ const siteWikiArticleDiscussionRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/login': typeof siteLoginRoute
   '/records': typeof siteRecordsRoute
   '/submissions': typeof siteSubmissionsRoute
   '/members/$memberId': typeof siteMembersMemberIdLayoutRouteWithChildren
@@ -132,7 +125,6 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/login': typeof siteLoginRoute
   '/records': typeof siteRecordsRoute
   '/submissions': typeof siteSubmissionsRoute
   '/members': typeof siteMembersIndexRoute
@@ -149,7 +141,6 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/(site)': typeof siteLayoutRouteWithChildren
-  '/(site)/login': typeof siteLoginRoute
   '/(site)/records': typeof siteRecordsRoute
   '/(site)/submissions': typeof siteSubmissionsRoute
   '/(site)/members/$memberId': typeof siteMembersMemberIdLayoutRouteWithChildren
@@ -168,7 +159,6 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/login'
     | '/records'
     | '/submissions'
     | '/members/$memberId'
@@ -185,7 +175,6 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/login'
     | '/records'
     | '/submissions'
     | '/members'
@@ -201,7 +190,6 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/(site)'
-    | '/(site)/login'
     | '/(site)/records'
     | '/(site)/submissions'
     | '/(site)/members/$memberId'
@@ -237,13 +225,6 @@ declare module '@tanstack/react-router' {
       fullPath: ''
       preLoaderRoute: typeof siteLayoutRouteImport
       parentRoute: typeof rootRouteImport
-    }
-    '/(site)/login': {
-      id: '/(site)/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof siteLoginRouteImport
-      parentRoute: typeof siteLayoutRoute
     }
     '/(site)/records': {
       id: '/(site)/records'
@@ -377,7 +358,6 @@ const siteWikiArticleLayoutRouteWithChildren =
   )
 
 interface siteLayoutRouteChildren {
-  siteLoginRoute: typeof siteLoginRoute
   siteRecordsRoute: typeof siteRecordsRoute
   siteSubmissionsRoute: typeof siteSubmissionsRoute
   siteMembersMemberIdLayoutRoute: typeof siteMembersMemberIdLayoutRouteWithChildren
@@ -387,7 +367,6 @@ interface siteLayoutRouteChildren {
 }
 
 const siteLayoutRouteChildren: siteLayoutRouteChildren = {
-  siteLoginRoute: siteLoginRoute,
   siteRecordsRoute: siteRecordsRoute,
   siteSubmissionsRoute: siteSubmissionsRoute,
   siteMembersMemberIdLayoutRoute: siteMembersMemberIdLayoutRouteWithChildren,

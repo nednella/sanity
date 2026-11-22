@@ -1,7 +1,7 @@
-import { Link } from "@tanstack/react-router";
 import { Menu } from "lucide-react";
 
 import { ThemeToggle } from "@/components/theme-toggle";
+import { useLoginDialog } from "@/lib/login/use-login-dialog";
 import { Button } from "@/lib/ui/button";
 
 type HeaderProps = {
@@ -9,6 +9,8 @@ type HeaderProps = {
 };
 
 export function Header({ drawerId }: Readonly<HeaderProps>) {
+  const { open } = useLoginDialog();
+
   return (
     <header
       className="
@@ -31,11 +33,11 @@ export function Header({ drawerId }: Readonly<HeaderProps>) {
       <div className="navbar-end gap-1">
         <ThemeToggle />
         <Button
-          asChild
+          onClick={open}
           size="sm"
           variant="ghost"
         >
-          <Link to="/login">Log in</Link>
+          Log in
         </Button>
       </div>
     </header>
