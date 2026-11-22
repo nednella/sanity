@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@sanity/urls": "workspace:*",
-    "@wise-old-man/utils": "^4.0.24"
+    "@wise-old-man/utils": "^4.0.28"
   },
   "devDependencies": {
     "typescript": "~6.0.3"

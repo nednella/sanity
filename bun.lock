@@ -47,7 +47,7 @@
         "@sanity/urls": "workspace:*",
         "@sanity/utils": "workspace:*",
         "@scalar/fastify-api-reference": "^1.73.0",
-        "@wise-old-man/utils": "^4.0.24",
+        "@wise-old-man/utils": "^4.0.28",
         "drizzle-orm": "^0.45.2",
         "fastify": "^5.12.4",
         "fastify-type-provider-zod": "^7.0.0",
@@ -139,7 +139,7 @@
       "version": "1.0.0",
       "dependencies": {
         "@sanity/urls": "workspace:*",
-        "@wise-old-man/utils": "^4.0.24",
+        "@wise-old-man/utils": "^4.0.28",
       },
       "devDependencies": {
         "typescript": "~6.0.3",
@@ -671,7 +671,7 @@
 
     "@vladfrangu/async_event_emitter": ["@vladfrangu/async_event_emitter@2.4.7", "", {}, "sha512-Xfe6rpCTxSxfbswi/W/Pz7zp1WWSNn4A0eW4mLkQUewCrXXtMj31lCg+iQyTkh/CkusZSq9eDflu7tjEDXUY6g=="],
 
-    "@wise-old-man/utils": ["@wise-old-man/utils@4.0.24", "", {}, "sha512-Fypgtm8n/zrt2U53F4dR6cbDsyr+tZsH5eNCbP6UkxiYWWudx5CGqvfKR02cLS7l5eRAowe2y2pjRrNT+woSsw=="],
+    "@wise-old-man/utils": ["@wise-old-man/utils@4.0.28", "", {}, "sha512-g0jM8Xw6fiMDXbDN4hENOR9U07Ctg6qkhy0ygrLcwjQvZ+BPASkhcMdXyTMWV1j4VTZduCvWn9WXNp8z8krDOw=="],
 
     "abstract-logging": ["abstract-logging@2.0.1", "", {}, "sha512-2BjRTZxTPvheOvGbBslFSYOUkr+SjPtOnrLP33f+VIWLzezQpZcqVg7ja3L4dBXmzzgwT+a029jRx5PCi3JuiA=="],
 
