@@ -15,8 +15,11 @@ const throwOnError: Middleware = {
   }
 };
 
-export function createApiClient(baseUrl: string) {
-  const client = createFetchClient<paths>({ baseUrl });
+export function createApiClient(baseUrl: string, credentials: RequestInit["credentials"] = "same-origin") {
+  const client = createFetchClient<paths>({
+    baseUrl,
+    credentials
+  });
   client.use(throwOnError);
   return client;
 }
