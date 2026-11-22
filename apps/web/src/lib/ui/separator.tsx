@@ -1,36 +1,22 @@
+import { Separator as SeparatorPrimitive } from "@base-ui/react/separator";
 import { cn } from "cn";
 
-type SeparatorProps = React.ComponentProps<"hr"> & {
-  orientation?: "horizontal" | "vertical";
-};
-
-export function Separator({ className, orientation = "horizontal", ...props }: Readonly<SeparatorProps>) {
+function Separator({ className, orientation = "horizontal", ...props }: SeparatorPrimitive.Props) {
   return (
-    <hr
-      aria-orientation={orientation}
-      className={cn("shrink-0 bg-border", orientation === "horizontal" ? "h-px w-full" : "h-full w-px", className)}
+    <SeparatorPrimitive
+      className={cn(
+        `
+          shrink-0 bg-border
+          data-horizontal:h-px data-horizontal:w-full
+          data-vertical:w-px data-vertical:self-stretch
+        `,
+        className
+      )}
+      data-slot="separator"
+      orientation={orientation}
       {...props}
     />
   );
 }
 
-type LabelledSeparatorProps = React.ComponentProps<"div"> & {
-  childrenClassName?: string;
-};
-
-export function LabelledSeparator({
-  className,
-  children,
-  childrenClassName,
-  ...props
-}: Readonly<LabelledSeparatorProps>) {
-  return (
-    <div
-      className={cn("divider", className)}
-      role="separator"
-      {...props}
-    >
-      {children && <span className={cn("text-sm", childrenClassName)}>{children}</span>}
-    </div>
-  );
-}
+export { Separator };
