@@ -2,6 +2,9 @@ import type { ReactTable, RowData } from "@tanstack/react-table";
 import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from "lucide-react";
 
 import type { DataTableFeatures } from "@/components/table/table-features";
+import { Button } from "@/lib/ui/button";
+import { ButtonGroup } from "@/lib/ui/button-group";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/lib/ui/select";
 
 type DataTablePaginationProps<TData extends RowData> = {
   pageSizeOptions: number[];
@@ -16,6 +19,14 @@ export function DataTablePagination<TData extends RowData>({
   const { pageIndex, pageSize } = table.state.pagination;
   const start = rowCount === 0 ? 0 : pageIndex * pageSize + 1;
   const end = Math.min(rowCount, (pageIndex + 1) * pageSize);
+  const items = pageSizeOptions.map((size) => ({
+    label: `${size} rows`,
+    value: size
+  }));
+
+  function handlePageSizeChange(size: number | null) {
+    if (size !== null) table.setPageSize(size);
+  }
 
   return (
     <div className="flex flex-wrap items-center justify-between gap-3 text-sm text-muted-foreground">
@@ -23,21 +34,28 @@ export function DataTablePagination<TData extends RowData>({
         Showing {start.toLocaleString()}–{end.toLocaleString()} of {rowCount.toLocaleString()}
       </span>
       <div className="flex items-center gap-3">
-        <select
-          aria-label="Rows per page"
-          className="select w-auto select-sm"
-          onChange={(event) => table.setPageSize(Number(event.target.value))}
+        <Select
+          items={items}
+          onValueChange={handlePageSizeChange}
           value={pageSize}
         >
-          {pageSizeOptions.map((size) => (
-            <option
-              key={size}
-              value={size}
-            >
-              {size} rows
-            </option>
-          ))}
-        </select>
+          <SelectTrigger
+            aria-label="Rows per page"
+            size="sm"
+          >
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            {items.map((item) => (
+              <SelectItem
+                key={item.value}
+                value={item.value}
+              >
+                {item.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
         <PageNavigation table={table} />
       </div>
     </div>
@@ -50,43 +68,43 @@ type PageNavigationProps<TData extends RowData> = {
 
 function PageNavigation<TData extends RowData>({ table }: Readonly<PageNavigationProps<TData>>) {
   return (
-    <div className="join">
-      <button
+    <ButtonGroup>
+      <Button
         aria-label="First page"
-        className="btn join-item btn-sm"
         disabled={!table.getCanPreviousPage()}
         onClick={() => table.firstPage()}
-        type="button"
+        size="icon-sm"
+        variant="outline"
       >
-        <ChevronsLeft className="size-4" />
-      </button>
-      <button
+        <ChevronsLeft />
+      </Button>
+      <Button
         aria-label="Previous page"
-        className="btn join-item btn-sm"
         disabled={!table.getCanPreviousPage()}
         onClick={() => table.previousPage()}
-        type="button"
+        size="icon-sm"
+        variant="outline"
       >
-        <ChevronLeft className="size-4" />
-      </button>
-      <button
+        <ChevronLeft />
+      </Button>
+      <Button
         aria-label="Next page"
-        className="btn join-item btn-sm"
         disabled={!table.getCanNextPage()}
         onClick={() => table.nextPage()}
-        type="button"
+        size="icon-sm"
+        variant="outline"
       >
-        <ChevronRight className="size-4" />
-      </button>
-      <button
+        <ChevronRight />
+      </Button>
+      <Button
         aria-label="Last page"
-        className="btn join-item btn-sm"
         disabled={!table.getCanNextPage()}
         onClick={() => table.lastPage()}
-        type="button"
+        size="icon-sm"
+        variant="outline"
       >
-        <ChevronsRight className="size-4" />
-      </button>
-    </div>
+        <ChevronsRight />
+      </Button>
+    </ButtonGroup>
   );
 }
