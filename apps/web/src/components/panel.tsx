@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 
+import { Card, CardContent, CardHeader } from "@/lib/ui/card";
 import { H4 } from "@/lib/ui/typography/h4";
 import { Muted } from "@/lib/ui/typography/muted";
 
@@ -10,10 +11,12 @@ type PanelProps = {
 
 export function Panel({ title, children }: Readonly<PanelProps>) {
   return (
-    <section className="flex flex-col gap-4 border p-4">
-      <H4>{title}</H4>
-      <div className="flex flex-1 flex-col">{children}</div>
-    </section>
+    <Card>
+      <CardHeader>
+        <H4>{title}</H4>
+      </CardHeader>
+      <CardContent className="flex flex-1 flex-col">{children}</CardContent>
+    </Card>
   );
 }
 
