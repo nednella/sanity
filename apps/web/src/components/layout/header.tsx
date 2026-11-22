@@ -1,5 +1,6 @@
 import { Menu } from "lucide-react";
 
+import { AccountMenu } from "@/components/account-menu";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { useLoginDialog } from "@/lib/login/use-login-dialog";
 import { Button } from "@/lib/ui/button";
@@ -32,13 +33,15 @@ export function Header({ drawerId }: Readonly<HeaderProps>) {
       </div>
       <div className="navbar-end gap-1">
         <ThemeToggle />
-        <Button
-          onClick={open}
-          size="sm"
-          variant="ghost"
-        >
-          Log in
-        </Button>
+        <AccountMenu>
+          <Button
+            onClick={open}
+            size="sm"
+            variant="ghost"
+          >
+            Log in
+          </Button>
+        </AccountMenu>
       </div>
     </header>
   );
