@@ -84,7 +84,7 @@ function ScaleButton({ value }: Readonly<{ value: number }>) {
       className="join-item"
       onClick={() => setScale(value)}
       size="sm"
-      variant={value === scale ? "default" : "custom"}
+      variant={value === scale ? "default" : "outline"}
     >
       {value}
     </Button>
