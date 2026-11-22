@@ -5,6 +5,7 @@ import { MetricIcon } from "@/components/members/profile/overview/metric-icon";
 import { PanelEmptyMessage } from "@/components/panel";
 import { useMediaStore } from "@/lib/media/media.store";
 import { screenshotAlt } from "@/lib/records/screenshot";
+import { Table, TableBody, TableCell, TableRow } from "@/lib/ui/table";
 import { Tooltip } from "@/lib/ui/tooltip";
 import { bossIconUrl, diaryTierIconUrl } from "@/utils/icons";
 
@@ -27,8 +28,8 @@ export function AchievementDiaryPanel({ diaries }: Readonly<AchievementDiaryPane
   }
 
   return (
-    <table className="table table-sm">
-      <tbody>
+    <Table>
+      <TableBody>
         {diaries.map((diary) => (
           <DiaryRow
             diary={diary}
@@ -36,8 +37,8 @@ export function AchievementDiaryPanel({ diaries }: Readonly<AchievementDiaryPane
             onOpenScreenshot={() => openScreenshot(diary)}
           />
         ))}
-      </tbody>
-    </table>
+      </TableBody>
+    </Table>
   );
 }
 
@@ -58,23 +59,20 @@ function DiaryRow({ diary, onOpenScreenshot }: Readonly<DiaryRowProps>) {
   }
 
   return (
-    <tr
-      className={hasScreenshot ? `
-        cursor-zoom-in
-        hover:bg-muted
-      ` : undefined}
+    <TableRow
+      className={hasScreenshot ? "cursor-zoom-in" : "hover:bg-transparent"}
       onClick={onOpenScreenshot}
       onKeyDown={openScreenshotOnKey}
       tabIndex={hasScreenshot ? 0 : undefined}
     >
-      <td>
+      <TableCell>
         <span className="inline-flex items-center gap-2">
           {content.metric && <MetricIcon src={bossIconUrl(content.metric)} />}
           {content.name}
           <span className="text-muted-foreground">{teamScale(scale)}</span>
         </span>
-      </td>
-      <td className="font-medium tabular-nums">
+      </TableCell>
+      <TableCell className="font-medium tabular-nums">
         {nextTier ? (
           <Tooltip tip={`${nextTier.name} at ${formatTickTime(nextTier.timeSeconds)}`}>
             {formatTickTime(pb?.timeSeconds)}
@@ -82,8 +80,8 @@ function DiaryRow({ diary, onOpenScreenshot }: Readonly<DiaryRowProps>) {
         ) : (
           formatTickTime(pb?.timeSeconds)
         )}
-      </td>
-      <td>
+      </TableCell>
+      <TableCell>
         {tier ? (
           <span className="inline-flex items-center gap-2">
             <MetricIcon src={diaryTierIconUrl(tier.name)} />
@@ -92,7 +90,7 @@ function DiaryRow({ diary, onOpenScreenshot }: Readonly<DiaryRowProps>) {
         ) : (
           DASH
         )}
-      </td>
-    </tr>
+      </TableCell>
+    </TableRow>
   );
 }

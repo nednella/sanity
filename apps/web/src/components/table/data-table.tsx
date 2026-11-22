@@ -11,12 +11,14 @@ import {
 } from "@tanstack/react-table";
 import type { ReactNode } from "react";
 
+import { DataTableColumnHeader, type Sorted } from "@/components/table/data-table-column-header";
 import { DataTableColumnToggle } from "@/components/table/data-table-column-toggle";
 import { DataTablePagination } from "@/components/table/data-table-pagination";
+import { DataTableRows } from "@/components/table/data-table-rows";
+import { DataTableSearch } from "@/components/table/data-table-search";
 import { type DataTableFeatures, dataTableFeatures } from "@/components/table/table-features";
 import { PAGE_SIZES } from "@/lib/table/search";
-import { Button } from "@/lib/ui/button";
-import { type Sorted, Table } from "@/lib/ui/table";
+import { Table, TableBody, TableHeader, TableRow } from "@/lib/ui/table";
 
 // Enough rows that a table the server doesn't paginate shows everything it was
 // given.
@@ -72,7 +74,7 @@ export function DataTable<TData extends RowData>({
   const table = useDataTable(tableOptions);
 
   return (
-    <Table.Shell>
+    <div className="flex flex-col gap-3">
       <DataTableToolbar
         filters={filters}
         search={search}
@@ -84,7 +86,7 @@ export function DataTable<TData extends RowData>({
         stickyHeader={stickyHeader}
         table={table}
       >
-        <Rows
+        <DataTableRows
           emptyMessage={emptyMessage}
           error={error}
           isLoading={isLoading}
@@ -102,7 +104,7 @@ export function DataTable<TData extends RowData>({
           table={table}
         />
       )}
-    </Table.Shell>
+    </div>
   );
 }
 
@@ -170,17 +172,19 @@ function DataTableToolbar<TData extends RowData>({
   if (!hasControls) return null;
 
   return (
-    <Table.Toolbar
-      actions={
-        <>
-          {toolbar}
-          {canToggleColumns && <DataTableColumnToggle table={table} />}
-        </>
-      }
-    >
-      {search && <Table.Search {...search} />}
+    <div className="flex flex-wrap items-center gap-3">
+      {search && <DataTableSearch {...search} />}
       {filters}
-    </Table.Toolbar>
+      <div
+        className="
+          flex flex-wrap items-center gap-3
+          md:ms-auto
+        "
+      >
+        {toolbar}
+        {canToggleColumns && <DataTableColumnToggle table={table} />}
+      </div>
+    </div>
   );
 }
 
@@ -198,98 +202,40 @@ function DataTableGrid<TData extends RowData>({ children, stickyHeader, table }:
   }
 
   return (
-    <Table scroll={!stickyHeader}>
-      <Table.Head>
-        {table.getHeaderGroups().map((headerGroup) => (
-          <Table.HeadRow key={headerGroup.id}>
-            {headerGroup.headers.map((header) => {
-              const sortable = header.column.getCanSort();
+    <div className="border">
+      <Table
+        className="text-sm [overflow-anchor:none]"
+        scroll={!stickyHeader}
+      >
+        <TableHeader>
+          {table.getHeaderGroups().map((headerGroup) => (
+            <TableRow
+              className="
+                bg-background
+                hover:bg-background
+              "
+              key={headerGroup.id}
+            >
+              {headerGroup.headers.map((header) => {
+                const sortable = header.column.getCanSort();
 
-              return (
-                <Table.HeadCell
-                  key={header.id}
-                  layout={header.column.columnDef.meta}
-                  onSort={sortable ? header.column.getToggleSortingHandler() : undefined}
-                  sorted={sortable ? sortedOf(header.column.id) : undefined}
-                  sticky={stickyHeader}
-                >
-                  <table.FlexRender header={header} />
-                </Table.HeadCell>
-              );
-            })}
-          </Table.HeadRow>
-        ))}
-      </Table.Head>
-      <Table.Body>{children}</Table.Body>
-    </Table>
+                return (
+                  <DataTableColumnHeader
+                    key={header.id}
+                    layout={header.column.columnDef.meta}
+                    onSort={sortable ? header.column.getToggleSortingHandler() : undefined}
+                    sorted={sortable ? sortedOf(header.column.id) : undefined}
+                    sticky={stickyHeader}
+                  >
+                    <table.FlexRender header={header} />
+                  </DataTableColumnHeader>
+                );
+              })}
+            </TableRow>
+          ))}
+        </TableHeader>
+        <TableBody>{children}</TableBody>
+      </Table>
+    </div>
   );
-}
-
-type RowsProps<TData extends RowData> = {
-  emptyMessage: string;
-  error: Error | null;
-  isLoading: boolean;
-  onRetry?: () => void;
-  onRowClick?: (row: TData) => void;
-  pinRow?: (row: TData) => boolean;
-  rowCursor?: "pointer" | "zoom-in";
-  table: ReactTable<DataTableFeatures, TData>;
-};
-
-function Rows<TData extends RowData>({
-  emptyMessage,
-  error,
-  isLoading,
-  onRetry,
-  onRowClick,
-  pinRow,
-  rowCursor,
-  table
-}: Readonly<RowsProps<TData>>) {
-  const columnCount = table.getVisibleLeafColumns().length;
-
-  if (isLoading) return <Table.Skeleton columnCount={columnCount} />;
-
-  if (error) {
-    return (
-      <Table.Message colSpan={columnCount}>
-        <p>{error.message}</p>
-        {onRetry && (
-          <Button
-            onClick={onRetry}
-            size="sm"
-            variant="outline"
-          >
-            Retry
-          </Button>
-        )}
-      </Table.Message>
-    );
-  }
-
-  const { rows } = table.getRowModel();
-  // Sorting only moves the loose rows. Pinned ones keep the order they arrived
-  // in, which row.index still holds after the sorted row model has reordered
-  // them.
-  const pinned = pinRow ? rows.filter((row) => pinRow(row.original)).toSorted((a, b) => a.index - b.index) : [];
-  const ordered = pinRow ? [...pinned, ...rows.filter((row) => !pinRow(row.original))] : rows;
-
-  if (ordered.length === 0) return <Table.Message colSpan={columnCount}>{emptyMessage}</Table.Message>;
-
-  return ordered.map((row) => (
-    <Table.Row
-      cursor={rowCursor}
-      key={row.id}
-      onSelect={onRowClick && (() => onRowClick(row.original))}
-    >
-      {row.getVisibleCells().map((cell) => (
-        <Table.Cell
-          key={cell.id}
-          layout={cell.column.columnDef.meta}
-        >
-          <table.FlexRender cell={cell} />
-        </Table.Cell>
-      ))}
-    </Table.Row>
-  ));
 }
