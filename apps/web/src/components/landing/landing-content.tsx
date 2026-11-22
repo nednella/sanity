@@ -1,4 +1,4 @@
-import { cn } from "@/lib/ui/utils";
+import { cn } from "cn";
 
 export function LandingContent() {
   return (

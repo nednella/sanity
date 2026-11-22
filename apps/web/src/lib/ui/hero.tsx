@@ -1,7 +1,6 @@
+import { cn } from "cn";
 import { type Variants, motion, useReducedMotion } from "motion/react";
 import type { ReactNode } from "react";
-
-import { cn } from "@/lib/ui/utils";
 
 const sizes = {
   lg: {

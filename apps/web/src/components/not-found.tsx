@@ -1,8 +1,8 @@
 import { Link } from "@tanstack/react-router";
+import { cn } from "cn";
 
 import { Button } from "@/lib/ui/button";
 import { Hero } from "@/lib/ui/hero";
-import { cn } from "@/lib/ui/utils";
 
 type NotFoundProps = {
   description?: string;

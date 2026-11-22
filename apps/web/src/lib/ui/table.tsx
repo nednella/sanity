@@ -1,7 +1,6 @@
+import { cn } from "cn";
 import { ArrowDown, ArrowUp, ChevronsUpDown, Search as SearchIcon, X } from "lucide-react";
 import { useEffect, useState } from "react";
-
-import { cn } from "@/lib/ui/utils";
 
 export type Sorted = "asc" | "desc" | false;
 

@@ -1,7 +1,7 @@
+import { cn } from "cn";
 import { useImperativeHandle, useRef } from "react";
 
 import { H3 } from "@/lib/ui/typography/h3";
-import { cn } from "@/lib/ui/utils";
 
 export type DialogHandle = {
   close: () => void;

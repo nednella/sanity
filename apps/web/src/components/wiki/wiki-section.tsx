@@ -1,7 +1,7 @@
+import { cn } from "cn";
 import { ChevronDown } from "lucide-react";
 
 import type { WikiSection, WikiSubsection } from "@/components/wiki/types";
-import { cn } from "@/lib/ui/utils";
 
 export function WikiSection({ section }: Readonly<{ section: WikiSection }>) {
   return (
