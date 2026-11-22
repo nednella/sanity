@@ -10,6 +10,7 @@ export const authErrors = {
   invalidApiKey: () => new ApplicationError("INVALID_API_KEY", 401, "A valid API key is required."),
   invalidSession: () => new ApplicationError("INVALID_SESSION", 401, "A valid session is required."),
   loginFailed: () => new ApplicationError("LOGIN_FAILED", 401, "The login attempt could not be completed."),
+  notAMember: () => new ApplicationError("NOT_A_MEMBER", 403, "Only active clan members can login."),
   pluginAccessRevoked: () =>
     new ApplicationError("PLUGIN_ACCESS_REVOKED", 403, "An admin has revoked your access to the plugin.")
 };
