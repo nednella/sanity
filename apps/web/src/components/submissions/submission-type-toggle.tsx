@@ -2,7 +2,7 @@ import { ArrowLeftRight } from "lucide-react";
 
 import type { SubmissionType } from "@/lib/submissions/search";
 import { Button } from "@/lib/ui/button";
-import { Tooltip } from "@/lib/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/lib/ui/tooltip";
 
 const labels: Record<SubmissionType, string> = {
   drops: "Drops",
@@ -20,15 +20,20 @@ export function SubmissionTypeToggle({ onChange, type }: Readonly<SubmissionType
   const next = type === "drops" ? "personalBests" : "drops";
 
   return (
-    <Tooltip tip={`Show ${labels[next].toLowerCase()}`}>
-      <Button
-        onClick={() => onChange(next)}
-        size="sm"
-        variant="outline"
+    <Tooltip>
+      <TooltipTrigger
+        render={
+          <Button
+            onClick={() => onChange(next)}
+            size="sm"
+            variant="outline"
+          />
+        }
       >
         <ArrowLeftRight className="size-4" />
         {labels[type]}
-      </Button>
+      </TooltipTrigger>
+      <TooltipContent>{`Show ${labels[next].toLowerCase()}`}</TooltipContent>
     </Tooltip>
   );
 }

@@ -6,7 +6,7 @@ import { PanelEmptyMessage } from "@/components/panel";
 import { useMediaStore } from "@/lib/media/media.store";
 import { screenshotAlt } from "@/lib/records/screenshot";
 import { Table, TableBody, TableCell, TableRow } from "@/lib/ui/table";
-import { Tooltip } from "@/lib/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/lib/ui/tooltip";
 import { bossIconUrl, diaryTierIconUrl } from "@/utils/icons";
 
 type AchievementDiaryPanelProps = {
@@ -74,8 +74,9 @@ function DiaryRow({ diary, onOpenScreenshot }: Readonly<DiaryRowProps>) {
       </TableCell>
       <TableCell className="font-medium tabular-nums">
         {nextTier ? (
-          <Tooltip tip={`${nextTier.name} at ${formatTickTime(nextTier.timeSeconds)}`}>
-            {formatTickTime(pb?.timeSeconds)}
+          <Tooltip>
+            <TooltipTrigger render={<span />}>{formatTickTime(pb?.timeSeconds)}</TooltipTrigger>
+            <TooltipContent>{`${nextTier.name} at ${formatTickTime(nextTier.timeSeconds)}`}</TooltipContent>
           </Tooltip>
         ) : (
           formatTickTime(pb?.timeSeconds)
