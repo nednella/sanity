@@ -1,5 +1,6 @@
 import { Search } from "lucide-react";
 
+import { InputGroup, InputGroupAddon, InputGroupInput } from "@/lib/ui/input-group";
 import { Tab, Tabs } from "@/lib/ui/tabs";
 
 type WikiTabsProps = {
@@ -10,14 +11,25 @@ export function WikiTabs({ article }: Readonly<WikiTabsProps>) {
   return (
     <Tabs
       actions={
-        <label className="input -mb-px h-9 rounded-b-none">
-          <Search className="size-3.5 opacity-50" />
-          <input
+        <InputGroup
+          className="
+            -mb-px h-9 w-80 border-border bg-background
+            dark:bg-background
+          "
+        >
+          <InputGroupAddon>
+            <Search className="size-3.5" />
+          </InputGroupAddon>
+          <InputGroupInput
             aria-label="Search the Sanity wiki"
+            className="
+              text-sm
+              md:text-sm
+            "
             placeholder="Search the Sanity wiki"
             type="search"
           />
-        </label>
+        </InputGroup>
       }
     >
       <Tab

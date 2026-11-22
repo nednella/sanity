@@ -2,6 +2,8 @@ import { cn } from "cn";
 import { ArrowDown, ArrowUp, ChevronsUpDown, Search as SearchIcon, X } from "lucide-react";
 import { useEffect, useState } from "react";
 
+import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from "@/lib/ui/input-group";
+
 export type Sorted = "asc" | "desc" | false;
 
 export type CellLayout = {
@@ -285,9 +287,11 @@ function Search({ onChange, placeholder = "Search", value }: Readonly<SearchProp
   }, [onChange, typed, value]);
 
   return (
-    <label className="input w-full max-w-64 input-sm">
-      <SearchIcon className="size-4 shrink-0 text-muted-foreground" />
-      <input
+    <InputGroup className="max-w-64">
+      <InputGroupAddon>
+        <SearchIcon />
+      </InputGroupAddon>
+      <InputGroupInput
         className="[&::-webkit-search-cancel-button]:appearance-none"
         onChange={(event) => setTyped(event.target.value)}
         placeholder={placeholder}
@@ -295,19 +299,17 @@ function Search({ onChange, placeholder = "Search", value }: Readonly<SearchProp
         value={typed}
       />
       {typed && (
-        <button
-          aria-label="Clear search"
-          className="
-            cursor-pointer text-muted-foreground
-            hover:text-foreground
-          "
-          onClick={() => setTyped("")}
-          type="button"
-        >
-          <X className="size-4" />
-        </button>
+        <InputGroupAddon align="inline-end">
+          <InputGroupButton
+            aria-label="Clear search"
+            onClick={() => setTyped("")}
+            size="icon-xs"
+          >
+            <X />
+          </InputGroupButton>
+        </InputGroupAddon>
       )}
-    </label>
+    </InputGroup>
   );
 }
 
