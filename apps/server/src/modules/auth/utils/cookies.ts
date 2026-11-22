@@ -5,6 +5,7 @@ import type { CookieSerializeOptions } from "@fastify/cookie";
 // https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Set-Cookie#cookie_prefixes
 export const SESSION_COOKIE_NAME = "__Host-sanity_session";
 export const OAUTH_STATE_COOKIE_NAME = "__Host-sanity_oauth_state";
+export const OAUTH_REDIRECT_COOKIE_NAME = "__Host-sanity_oauth_redirect";
 
 export const SESSION_IDLE_DAYS = 14;
 export const SESSION_LIFETIME_DAYS = 90;

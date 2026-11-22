@@ -51,7 +51,9 @@ export interface paths {
         };
         get: {
             parameters: {
-                query?: never;
+                query?: {
+                    redirect?: string;
+                };
                 header?: never;
                 path?: never;
                 cookie?: never;

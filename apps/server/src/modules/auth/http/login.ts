@@ -1,17 +1,15 @@
 import type { FastifyError, FastifyReply, FastifyRequest } from "fastify";
 
-import { config } from "@config";
-
 import type { ApplicationError } from "@/errors/error";
 import { toApplicationError } from "@/errors/handlers";
 import {
+  OAUTH_REDIRECT_COOKIE_NAME,
   OAUTH_STATE_COOKIE_NAME,
   SESSION_COOKIE_NAME,
   oauthStateCookieOptions,
   sessionCookieOptions
 } from "@/modules/auth/utils/cookies";
-
-const { webUrl } = config;
+import { authRedirectUrl } from "@/modules/auth/utils/redirect";
 
 /**
  * As defined by the OAuth 2.0 standard, RFC 6749, section 4.1:
@@ -24,26 +22,32 @@ const { webUrl } = config;
  *
  * see: https://www.rfc-editor.org/rfc/rfc6749#section-4.1
  */
-export function redirectToOAuthProvider(reply: FastifyReply, state: string, url: string) {
+export function redirectToOAuthProvider(reply: FastifyReply, state: string, url: string, redirect: string) {
   reply.setCookie(OAUTH_STATE_COOKIE_NAME, state, oauthStateCookieOptions);
+  reply.setCookie(OAUTH_REDIRECT_COOKIE_NAME, redirect, oauthStateCookieOptions);
   reply.redirect(url);
 }
 
 /**
  * Completes a granted authorization: drops the `state`, sets the new session
- * cookie and sends the user-agent back to the web client.
+ * cookie and sends the user-agent back to the page of the web client it came
+ * from.
  *
  * see: https://www.rfc-editor.org/rfc/rfc6749#section-4.1.2
  */
-export function redirectOAuthProviderSuccess(reply: FastifyReply, secret: string) {
+export function redirectOAuthProviderSuccess(reply: FastifyReply, secret: string, redirect: string | undefined) {
+  const url = authRedirectUrl(redirect);
+
   reply.clearCookie(OAUTH_STATE_COOKIE_NAME, oauthStateCookieOptions);
+  reply.clearCookie(OAUTH_REDIRECT_COOKIE_NAME, oauthStateCookieOptions);
   reply.setCookie(SESSION_COOKIE_NAME, secret, sessionCookieOptions);
-  reply.redirect(webUrl);
+  reply.redirect(url.href);
 }
 
 /**
  * Ends a failed authorization: drops the `state` and sends the user-agent back
- * to the web client with the error code in `?auth=failed&error=`. The callback
+ * to the page of the web client it came from, with the error code added as
+ * `auth=failed&error=`. The callback
  * route uses this as its error handler, so an error response, a `state` that
  * does not match and a server error all end here. As defined by the OAuth 2.0
  * standard, RFC 6749, section 4.1.2.1:
@@ -63,6 +67,11 @@ export function redirectOAuthLoginError(
   const { code, statusCode } = toApplicationError(error);
   if (statusCode >= 500) request.log.error({ err: error, message: "LOGIN FAILED!" });
 
+  const url = authRedirectUrl(request.cookies[OAUTH_REDIRECT_COOKIE_NAME]);
+  url.searchParams.set("auth", "failed");
+  url.searchParams.set("error", code);
+
   reply.clearCookie(OAUTH_STATE_COOKIE_NAME, oauthStateCookieOptions);
-  reply.redirect(`${webUrl}/?${new URLSearchParams({ auth: "failed", error: code })}`);
+  reply.clearCookie(OAUTH_REDIRECT_COOKIE_NAME, oauthStateCookieOptions);
+  reply.redirect(url.href);
 }
