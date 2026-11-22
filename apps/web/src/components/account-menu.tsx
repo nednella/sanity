@@ -1,9 +1,10 @@
 import { Link } from "@tanstack/react-router";
 import { cn } from "cn";
+import { UserRound } from "lucide-react";
 import type { MouseEvent, ReactNode } from "react";
 
 import { useAuth } from "@/lib/auth/use-auth";
-import { Avatar } from "@/lib/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/lib/ui/avatar";
 import { Dropdown } from "@/lib/ui/dropdown";
 import { closeDropdown } from "@/lib/ui/utils";
 
@@ -29,10 +30,12 @@ export function AccountMenu({ children, triggerClassName }: Readonly<AccountMenu
       align="end"
       label={
         <>
-          <Avatar
-            size="sm"
-            src={member.discord.avatarUrl}
-          />
+          <Avatar>
+            {member.discord.avatarUrl && <AvatarImage src={member.discord.avatarUrl} />}
+            <AvatarFallback>
+              <UserRound className="size-4" />
+            </AvatarFallback>
+          </Avatar>
           <span className="sr-only">Account menu</span>
         </>
       }
