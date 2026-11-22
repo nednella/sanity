@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { Dialog, DialogContent, DialogTitle } from "@/lib/ui/dialog";
 
 const VIDEO_EXTENSIONS = [".mp4", ".webm", ".mov"];
 
@@ -9,23 +9,22 @@ type MediaDialogProps = {
 };
 
 export function MediaDialog({ alt, onClose, src }: Readonly<MediaDialogProps>) {
-  const dialogRef = useRef<HTMLDialogElement>(null);
-
-  useEffect(() => {
-    const dialog = dialogRef.current;
-    if (!dialog) return;
-
-    if (src) dialog.showModal();
-    else dialog.close();
-  }, [src]);
+  function handleOpenChange(open: boolean) {
+    if (!open) onClose();
+  }
 
   return (
-    <dialog
-      className="modal"
-      onClose={onClose}
-      ref={dialogRef}
+    <Dialog
+      onOpenChange={handleOpenChange}
+      open={src !== null}
     >
-      <div className="modal-box max-w-4xl border bg-background p-2">
+      <DialogContent
+        className="
+          p-2
+          sm:max-w-4xl
+        "
+      >
+        <DialogTitle className="sr-only">{alt}</DialogTitle>
         {src &&
           (isVideo(src) ? (
             <video
@@ -42,14 +41,8 @@ export function MediaDialog({ alt, onClose, src }: Readonly<MediaDialogProps>) {
               src={src}
             />
           ))}
-      </div>
-      <form
-        className="modal-backdrop"
-        method="dialog"
-      >
-        <button type="submit">Close</button>
-      </form>
-    </dialog>
+      </DialogContent>
+    </Dialog>
   );
 }
 
