@@ -7,8 +7,15 @@ import {
   rowSortingFeature,
   tableFeatures
 } from "@tanstack/react-table";
+import { cn } from "cn";
 
-import type { CellLayout } from "@/lib/ui/table";
+export type CellLayout = {
+  align?: "left" | "right";
+  minWidth?: number;
+  numeric?: boolean;
+  // A pinned cell stays put while the table scrolls sideways.
+  pinned?: boolean;
+};
 
 // The column meta is the cell layout, so a column declares once how its cells
 // look.
@@ -24,3 +31,11 @@ export const dataTableFeatures = tableFeatures({
 });
 
 export type DataTableFeatures = typeof dataTableFeatures;
+
+export function cellLayoutClasses({ align, numeric, pinned }: CellLayout = {}) {
+  return cn(
+    numeric && "tabular-nums",
+    (numeric || align === "right") && "text-right",
+    pinned && "sticky left-0 border-r border-foreground/5 bg-inherit"
+  );
+}
