@@ -10,9 +10,18 @@ import { Dialog, type DialogHandle } from "@/lib/ui/dialog";
 import { ExternalLink } from "@/lib/ui/external-link";
 import { DiscordLogo } from "@/lib/ui/logos";
 
+const FALLBACK_MESSAGE = "Something went wrong. Try again.";
+
+const messages: Record<string, string> = {
+  ACCESS_DENIED: "Discord authorization flow was cancelled.",
+  NOT_A_MEMBER: "That Discord account isn't in the clan.",
+  RATE_LIMITED: "Too many tries. Try again in a minute."
+};
+
 export function LoginDialog() {
   const { close, login } = useLoginDialog();
   const dialog = useRef<DialogHandle>(null);
+  const error = login?.error;
   const loginUrl = `${config.apiUrl}/v1/auth/discord`;
 
   useEffect(() => {
@@ -53,6 +62,16 @@ export function LoginDialog() {
               Continue with Discord
             </a>
           </Button>
+          <div
+            className="min-h-7.5"
+            role="alert"
+          >
+            {error !== undefined && (
+              <p className="rounded-xs border border-error/40 bg-error/10 px-3 py-1.5 text-xs text-error">
+                {messages[error] ?? FALLBACK_MESSAGE}
+              </p>
+            )}
+          </div>
           <ExternalLink
             className="
               mt-1 self-center text-xs

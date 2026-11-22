@@ -1,6 +1,8 @@
 import { useLocation, useNavigate } from "@tanstack/react-router";
 
-export type LoginState = Record<string, never>;
+export type LoginState = {
+  error?: string;
+};
 
 /**
  * Opens and closes the login dialog through the history state, so the URL

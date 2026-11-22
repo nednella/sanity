@@ -5,12 +5,14 @@ import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 
 import { LoginDialog } from "@/components/login-dialog";
 import { NotFound } from "@/components/not-found";
+import { moveLoginErrorToState } from "@/lib/login/search";
 
 export interface RouterContext {
   queryClient: QueryClient;
 }
 
 export const Route = createRootRouteWithContext<RouterContext>()({
+  beforeLoad: ({ location }) => moveLoginErrorToState(location),
   component: Layout,
   notFoundComponent: () => <NotFound fullScreen />
 });
