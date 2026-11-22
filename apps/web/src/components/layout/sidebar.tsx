@@ -1,12 +1,23 @@
 import { Link, linkOptions } from "@tanstack/react-router";
+import { useState } from "react";
 
 import { SANITY_DISCORD_URL } from "@sanity/urls";
 
-import { Button } from "@/lib/ui/button";
 import { ExternalLink } from "@/lib/ui/external-link";
 import { DiscordLogo } from "@/lib/ui/logos";
+import { Sheet, SheetContent, SheetTitle } from "@/lib/ui/sheet";
+import {
+  SidebarContent,
+  SidebarGroup,
+  SidebarGroupLabel,
+  SidebarHeader,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  Sidebar as UISidebar,
+  useSidebar
+} from "@/lib/ui/sidebar";
 import { H2 } from "@/lib/ui/typography/h2";
-import { H4 } from "@/lib/ui/typography/h4";
 import { Overline } from "@/lib/ui/typography/overline";
 
 const wikiLinks = linkOptions([
@@ -63,54 +74,148 @@ const navigationGroups = [
   }
 ];
 
+// A collapsed sidebar is a rail with the brand mark only. A click on the rail
+// opens the full sidebar over the page, so the page keeps its width.
 export function Sidebar() {
+  const { isMobile, setOpenMobile, state } = useSidebar();
+  const [isPeeking, setIsPeeking] = useState(false);
+  const isRail = state === "collapsed" && !isMobile;
+
+  if (!isRail && isPeeking) setIsPeeking(false);
+
+  function closeOverlays() {
+    setOpenMobile(false);
+    setIsPeeking(false);
+  }
+
   return (
-    <div
-      className="
-        flex min-h-full w-60 flex-col gap-4 bg-background p-4
-        lg:sticky lg:top-0 lg:h-screen lg:overflow-y-auto
-      "
-    >
-      <Link
-        className="block px-2 py-1"
-        to="/"
+    <>
+      <UISidebar
+        className="group-data-[side=left]:border-r-0"
+        collapsible="icon"
       >
-        <H2 className="font-black">Sanity</H2>
-        <Overline>The Sanity Wiki</Overline>
-      </Link>
+        {isRail ? (
+          <button
+            aria-label="Open the sidebar"
+            className="
+              flex h-full flex-col items-center
+              hover:bg-sidebar-accent
+            "
+            onClick={() => setIsPeeking(true)}
+            type="button"
+          >
+            <span className="flex h-12 items-center text-xl font-black">S</span>
+          </button>
+        ) : (
+          <SidebarNavigation onNavigate={closeOverlays} />
+        )}
+      </UISidebar>
 
-      <Button
-        className="w-full"
-        nativeButton={false}
-        render={<ExternalLink href={SANITY_DISCORD_URL} />}
+      <Sheet
+        onOpenChange={setIsPeeking}
+        open={isPeeking}
       >
-        <DiscordLogo className="size-4 fill-current" />
-        Chat on Discord
-      </Button>
+        <SheetContent
+          className="
+            bg-sidebar p-0 text-sidebar-foreground
+            data-[side=left]:w-64
+          "
+          showCloseButton={false}
+          side="left"
+        >
+          <SheetTitle className="sr-only">Navigation</SheetTitle>
+          <SidebarNavigation onNavigate={closeOverlays} />
+        </SheetContent>
+      </Sheet>
+    </>
+  );
+}
 
-      <nav className="flex flex-col gap-5">
+type SidebarNavigationProps = {
+  onNavigate: () => void;
+};
+
+function SidebarNavigation({ onNavigate }: Readonly<SidebarNavigationProps>) {
+  return (
+    <>
+      <SidebarHeader className="gap-4 p-4">
+        <Link
+          className="block px-2 py-1"
+          onClick={onNavigate}
+          to="/"
+        >
+          <H2 className="font-black">Sanity</H2>
+          <Overline>The Sanity Wiki</Overline>
+        </Link>
+        <DiscordButton />
+      </SidebarHeader>
+
+      <SidebarContent className="px-2">
         {navigationGroups.map((group) => (
-          <div key={group.label}>
-            <H4 className="mb-1 px-2">{group.label}</H4>
-            <ul className="menu w-full p-0 text-[0.95rem]">
-              {group.links.map(({ title, ...link }) => (
-                <li key={title}>
-                  <Link
-                    {...link}
-                    activeOptions={{
-                      exact: true,
-                      includeSearch: false
-                    }}
-                    activeProps={{ className: "menu-active" }}
-                  >
-                    {title}
-                  </Link>
-                </li>
+          <SidebarGroup key={group.label}>
+            <SidebarGroupLabel className="font-semibold tracking-wide uppercase">{group.label}</SidebarGroupLabel>
+            <SidebarMenu>
+              {group.links.map((link) => (
+                <NavigationLink
+                  key={link.title}
+                  link={link}
+                  onNavigate={onNavigate}
+                />
               ))}
-            </ul>
-          </div>
+            </SidebarMenu>
+          </SidebarGroup>
         ))}
-      </nav>
-    </div>
+      </SidebarContent>
+    </>
+  );
+}
+
+type NavigationLinkProps = {
+  link: (typeof clanLinks)[number] | (typeof wikiLinks)[number];
+  onNavigate: () => void;
+};
+
+function NavigationLink({ link, onNavigate }: Readonly<NavigationLinkProps>) {
+  const { title, ...options } = link;
+
+  return (
+    <SidebarMenuItem>
+      <SidebarMenuButton
+        className="text-sm"
+        render={
+          <Link
+            {...options}
+            activeOptions={{
+              exact: true,
+              includeSearch: false
+            }}
+            activeProps={{ "data-active": "" }}
+            onClick={onNavigate}
+          />
+        }
+      >
+        {title}
+      </SidebarMenuButton>
+    </SidebarMenuItem>
+  );
+}
+
+function DiscordButton() {
+  return (
+    <SidebarMenu>
+      <SidebarMenuItem>
+        <SidebarMenuButton
+          className="
+            h-9 justify-center bg-primary text-sm font-medium text-primary-foreground
+            hover:bg-primary/80 hover:text-primary-foreground
+            active:bg-primary/80 active:text-primary-foreground
+          "
+          render={<ExternalLink href={SANITY_DISCORD_URL} />}
+        >
+          <DiscordLogo className="fill-current" />
+          Chat on Discord
+        </SidebarMenuButton>
+      </SidebarMenuItem>
+    </SidebarMenu>
   );
 }
