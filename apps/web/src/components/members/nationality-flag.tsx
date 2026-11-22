@@ -1,7 +1,7 @@
 import { CIRCLE_FLAG_CDN_URL, RECTANGLE_FLAG_CDN_URL } from "@sanity/urls";
 import { isCountryCode } from "@sanity/utils";
 
-import { Tooltip } from "@/lib/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/lib/ui/tooltip";
 
 const shapes = {
   circle: { className: "block size-full rounded-full", cdn: CIRCLE_FLAG_CDN_URL, height: 16 },
@@ -22,22 +22,19 @@ export function NationalityFlag({ className, countryCode, shape = "rectangle" }:
   const code = countryCode.toLowerCase();
   const { cdn, className: shapeClassName, height } = shapes[shape];
 
-  // The wrapper carries the placement: `.tooltip` is positioned, so anything
-  // absolute inside it would settle against the tooltip rather than against the
-  // avatar.
   return (
-    <Tooltip
-      className={className}
-      tip={countryCode.toUpperCase()}
-    >
-      <img
-        alt={countryCode.toUpperCase()}
-        className={shapeClassName}
-        height={height}
-        loading="lazy"
-        src={`${cdn}/${code}.svg`}
-        width={16}
-      />
+    <Tooltip>
+      <TooltipTrigger render={<span className={className} />}>
+        <img
+          alt={countryCode.toUpperCase()}
+          className={shapeClassName}
+          height={height}
+          loading="lazy"
+          src={`${cdn}/${code}.svg`}
+          width={16}
+        />
+      </TooltipTrigger>
+      <TooltipContent>{countryCode.toUpperCase()}</TooltipContent>
     </Tooltip>
   );
 }

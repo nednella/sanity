@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import type { MemberProfile } from "@sanity/api";
 import { DASH, formatNumber } from "@sanity/utils";
 
-import { Tooltip } from "@/lib/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/lib/ui/tooltip";
 import { diaryTierIconUrl, statIconUrl } from "@/utils/icons";
 
 type ProfileSummaryBarProps = {
@@ -102,7 +102,16 @@ function Stat({ icon, label, title, value }: Readonly<StatProps>) {
       <span className="flex size-5 shrink-0">{icon}</span>
       <div className="flex flex-col gap-0.5">
         <dt className="text-xs text-muted-foreground">{label}</dt>
-        <dd className="text-sm font-medium tabular-nums">{title ? <Tooltip tip={title}>{value}</Tooltip> : value}</dd>
+        <dd className="text-sm font-medium tabular-nums">
+          {title ? (
+            <Tooltip>
+              <TooltipTrigger render={<span />}>{value}</TooltipTrigger>
+              <TooltipContent>{title}</TooltipContent>
+            </Tooltip>
+          ) : (
+            value
+          )}
+        </dd>
       </div>
     </div>
   );
