@@ -3,6 +3,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Outlet, createRootRouteWithContext } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 
+import { LoginDialog } from "@/components/login-dialog";
 import { NotFound } from "@/components/not-found";
 
 export interface RouterContext {
@@ -20,6 +21,7 @@ function Layout() {
       <div className="isolate">
         <Outlet />
       </div>
+      <LoginDialog />
       <ReactQueryDevtools buttonPosition="bottom-left" />
       <TanStackRouterDevtools position="bottom-right" />
     </>
