@@ -2,6 +2,7 @@ import { SANITY_DISCORD_URL, SANITY_X_URL } from "@sanity/urls";
 
 import { config } from "@config";
 
+import { AccountMenu } from "@/components/account-menu";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { useLoginDialog } from "@/lib/login/use-login-dialog";
 import { Button } from "@/lib/ui/button";
@@ -43,14 +44,16 @@ export function FloatingActions() {
       </Button>
       <ThemeToggle className={buttonStyle} />
       {!config.isProduction && (
-        <Button
-          className={buttonStyle}
-          onClick={open}
-          size="lg"
-          variant="outline"
-        >
-          Log in
-        </Button>
+        <AccountMenu triggerClassName={buttonStyle}>
+          <Button
+            className={buttonStyle}
+            onClick={open}
+            size="lg"
+            variant="outline"
+          >
+            Log in
+          </Button>
+        </AccountMenu>
       )}
     </div>
   );
