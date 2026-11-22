@@ -2,17 +2,29 @@ import { UserRound } from "lucide-react";
 
 import { cn } from "@/lib/ui/utils";
 
+const sizes = {
+  md: {
+    frame: "size-16",
+    icon: "size-8"
+  },
+  sm: {
+    frame: "size-8",
+    icon: "size-4"
+  }
+};
+
 type AvatarProps = {
   className?: string;
+  size?: keyof typeof sizes;
   src: string | null;
 };
 
-export function Avatar({ className, src }: Readonly<AvatarProps>) {
+export function Avatar({ className, size = "md", src }: Readonly<AvatarProps>) {
   if (!src) {
     return (
       <div className={cn("avatar avatar-placeholder", className)}>
-        <div className="size-16 rounded-full bg-base-200 text-base-content/40">
-          <UserRound className="size-8" />
+        <div className={cn("rounded-full bg-base-200 text-base-content/40", sizes[size].frame)}>
+          <UserRound className={sizes[size].icon} />
         </div>
       </div>
     );
@@ -20,7 +32,7 @@ export function Avatar({ className, src }: Readonly<AvatarProps>) {
 
   return (
     <div className={cn("avatar", className)}>
-      <div className="size-16 rounded-full">
+      <div className={cn("rounded-full", sizes[size].frame)}>
         <img
           alt=""
           src={src}
