@@ -1,3 +1,4 @@
+import { useLocation } from "@tanstack/react-router";
 import { useEffect, useRef } from "react";
 
 import { SANITY_DISCORD_URL } from "@sanity/urls";
@@ -21,8 +22,9 @@ const messages: Record<string, string> = {
 export function LoginDialog() {
   const { close, login } = useLoginDialog();
   const dialog = useRef<DialogHandle>(null);
+  const redirect = useLocation({ select: (location) => location.href });
   const error = login?.error;
-  const loginUrl = `${config.apiUrl}/v1/auth/discord`;
+  const loginUrl = `${config.apiUrl}/v1/auth/discord?${new URLSearchParams({ redirect })}`;
 
   useEffect(() => {
     if (login === undefined) dialog.current?.close();
