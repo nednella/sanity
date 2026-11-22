@@ -24,7 +24,7 @@ export function LandingHero() {
     >
       {config.isProduction ? (
         <Badge
-          className={cn("badge-lg", buttonStyle)}
+          className={cn("h-7 px-3", buttonStyle)}
           variant="outline"
         >
           Coming soon

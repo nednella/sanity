@@ -39,14 +39,7 @@ export function ErrorState({
 
         {isDevelopment && error != null && (
           <div className="flex flex-col items-start gap-2">
-            {tag && (
-              <Badge
-                size="sm"
-                variant="error"
-              >
-                {tag}
-              </Badge>
-            )}
+            {tag && <Badge variant="destructive">{tag}</Badge>}
             <code
               className="
                 max-w-2xl overflow-x-auto border border-destructive/40 bg-destructive/10 p-4 text-left text-xs

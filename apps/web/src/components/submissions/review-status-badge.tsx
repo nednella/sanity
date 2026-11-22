@@ -14,7 +14,7 @@ const labels: Record<ReviewStatus, string> = {
 const variants: Record<ReviewStatus, React.ComponentProps<typeof Badge>["variant"]> = {
   approved: "success",
   approved_missing_member: "outline",
-  denied: "error",
+  denied: "destructive",
   deleted_by_user: "outline",
   pending: "warning",
   submitted: "warning"
@@ -25,12 +25,5 @@ type ReviewStatusBadgeProps = {
 };
 
 export function ReviewStatusBadge({ status }: Readonly<ReviewStatusBadgeProps>) {
-  return (
-    <Badge
-      size="sm"
-      variant={variants[status]}
-    >
-      {labels[status]}
-    </Badge>
-  );
+  return <Badge variant={variants[status]}>{labels[status]}</Badge>;
 }
