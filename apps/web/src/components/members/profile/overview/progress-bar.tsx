@@ -1,5 +1,7 @@
 import { formatNumber } from "@sanity/utils";
 
+import { Progress, ProgressLabel, ProgressValue } from "@/lib/ui/progress";
+
 type ProgressBarProps = {
   label: string;
   target: number;
@@ -8,18 +10,13 @@ type ProgressBarProps = {
 
 export function ProgressBar({ label, value, target }: Readonly<ProgressBarProps>) {
   return (
-    <div className="flex flex-col gap-1">
-      <div className="flex items-center justify-between text-xs text-muted-foreground">
-        <span>{label}</span>
-        <span className="tabular-nums">
-          {formatNumber(value)} / {formatNumber(target)}
-        </span>
-      </div>
-      <progress
-        className="progress h-1.5 progress-primary"
-        max={target}
-        value={Math.min(value, target)}
-      />
-    </div>
+    <Progress
+      className="gap-1"
+      max={target}
+      value={Math.min(value, target)}
+    >
+      <ProgressLabel className="text-muted-foreground">{label}</ProgressLabel>
+      <ProgressValue>{() => `${formatNumber(value)} / ${formatNumber(target)}`}</ProgressValue>
+    </Progress>
   );
 }
