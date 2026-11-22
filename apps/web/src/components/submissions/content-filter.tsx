@@ -6,6 +6,7 @@ import { teamScale } from "@sanity/utils";
 
 import { contentOptions } from "@/lib/api/queries/personal-bests";
 import { Dropdown } from "@/lib/ui/dropdown";
+import { closeDropdown } from "@/lib/ui/utils";
 
 export type ContentSelection = {
   contentId: number | undefined;
@@ -24,7 +25,7 @@ export function ContentFilter({ contentId, onChange, scale }: Readonly<ContentFi
 
   function handleSelect(selection: ContentSelection) {
     return (event: MouseEvent<HTMLElement>) => {
-      close(event);
+      closeDropdown(event);
       onChange(selection);
     };
   }
@@ -87,7 +88,7 @@ type ScaleFilterProps = {
 function ScaleFilter({ contentId, onChange, scale, scales }: Readonly<ScaleFilterProps>) {
   function handleSelect(selected: number | undefined) {
     return (event: MouseEvent<HTMLElement>) => {
-      close(event);
+      closeDropdown(event);
       onChange({
         contentId,
         scale: selected
@@ -125,10 +126,4 @@ function ScaleFilter({ contentId, onChange, scale, scales }: Readonly<ScaleFilte
       ))}
     </Dropdown>
   );
-}
-
-// A menu item is not a form control, so picking one has to dismiss the popover
-// it sits in.
-function close(event: MouseEvent<HTMLElement>) {
-  event.currentTarget.closest<HTMLElement>("[popover]")?.hidePopover();
 }
