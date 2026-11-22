@@ -1,6 +1,5 @@
 import { saveKey } from "@/modules/auth/repository/save-key";
-
-import { generateKey, hashKey } from "./keys";
+import { generateKey, hashKey } from "@/modules/auth/utils/keys";
 
 /**
  * Creates a bot key and returns it with its ID. The key is shown only once in

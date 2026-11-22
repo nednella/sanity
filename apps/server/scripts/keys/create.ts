@@ -4,7 +4,7 @@ import { apiClient } from "@db/enums";
 import { client } from "@db/index";
 
 import { saveKey } from "@/modules/auth/repository/save-key";
-import { generateKey, hashKey } from "@/modules/auth/service/keys";
+import { generateKey, hashKey } from "@/modules/auth/utils/keys";
 
 // A plugin key belongs to a member, and the web signs in through Discord, so
 // neither is made by hand.

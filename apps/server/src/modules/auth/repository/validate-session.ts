@@ -5,7 +5,7 @@ import { relativeDate } from "@sanity/utils";
 import { db } from "@db/index";
 import { sessions } from "@db/schema";
 
-import { SESSION_IDLE_DAYS, SESSION_LIFETIME_DAYS } from "@/modules/auth/constants";
+import { SESSION_IDLE_DAYS, SESSION_LIFETIME_DAYS } from "@/modules/auth/utils/cookies";
 
 /**
  * Finds the live session with the given hash, stamps its `last_used_at` and

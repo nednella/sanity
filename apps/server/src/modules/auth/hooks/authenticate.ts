@@ -2,11 +2,11 @@ import type { FastifyRequest } from "fastify";
 
 import type { ApiClient, MemberRole } from "@db/enums";
 
-import { SESSION_COOKIE_NAME } from "@/modules/auth/constants";
 import { authErrors } from "@/modules/auth/errors";
 import { validateKey } from "@/modules/auth/repository/validate-key";
 import { validateSession } from "@/modules/auth/repository/validate-session";
-import { hashKey } from "@/modules/auth/service/keys";
+import { SESSION_COOKIE_NAME } from "@/modules/auth/utils/cookies";
+import { hashKey } from "@/modules/auth/utils/keys";
 import { findMemberAccessByDiscordId, findMemberAccessById } from "@/modules/members/repository/find-member-access";
 import { parseAuthorizationHeader, parseXDiscordUserIdHeader } from "@/utils/headers";
 

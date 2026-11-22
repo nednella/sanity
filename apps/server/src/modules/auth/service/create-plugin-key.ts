@@ -1,8 +1,7 @@
 import { authErrors } from "@/modules/auth/errors";
 import type { ActingAuth } from "@/modules/auth/hooks/authenticate";
 import { replacePluginKey } from "@/modules/auth/repository/replace-plugin-key";
-
-import { generateKey, hashKey } from "./keys";
+import { generateKey, hashKey } from "@/modules/auth/utils/keys";
 
 /**
  * Creates a plugin key for the member who requested and returns it.
