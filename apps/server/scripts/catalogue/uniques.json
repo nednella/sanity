@@ -1307,6 +1307,36 @@
     ]
   },
   {
+    "boss": "The Fractured Archive",
+    "killsPerHour": 3.5,
+    "uniques": [
+      {
+        "name": "Ascension crossbows",
+        "dropRate": 315
+      },
+      {
+        "name": "Horn of Bran",
+        "dropRate": 210
+      },
+      {
+        "name": "Obligator (uncharged)",
+        "dropRate": 630
+      },
+      {
+        "name": "Orion",
+        "dropRate": 750
+      },
+      {
+        "name": "Rondache",
+        "dropRate": 126
+      },
+      {
+        "name": "Zorya's tome (uncharged)",
+        "dropRate": 158
+      }
+    ]
+  },
+  {
     "boss": "The Gauntlet",
     "uniques": [
       {
