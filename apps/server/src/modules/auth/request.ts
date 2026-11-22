@@ -18,4 +18,9 @@ export const authorizationResponseQuery = z.object({
   state: z.string()
 });
 
+export const discordCallbackQuery = z.object({
+  code: z.string(),
+  state: z.string()
+});
+
 export type AuthorizationErrorCode = z.infer<typeof authorizationErrorCode>;

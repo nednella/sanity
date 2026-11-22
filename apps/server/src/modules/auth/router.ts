@@ -1,16 +1,21 @@
 import { z } from "zod";
 
+import { discordAuthorizeUrl } from "@/integrations/discord";
 import { errorResponse } from "@/schema/common";
 import { defineModule } from "@/utils/define-module";
 import { defineRoute } from "@/utils/define-route";
 
 import { authErrors } from "./errors";
+import { checkAuthorizationResponse } from "./hooks/check-authorization-response";
+import { redirectOAuthLoginError, redirectOAuthProviderSuccess, redirectToOAuthProvider } from "./http/login";
 import { listKeys } from "./repository/list-keys";
 import { revokeKey } from "./repository/revoke-key";
-import { apiKeyParams } from "./request";
+import { apiKeyParams, discordCallbackQuery } from "./request";
 import { apiKey, botKey, pluginKey } from "./response";
 import { createBotKey } from "./service/create-bot-key";
 import { createPluginKey } from "./service/create-plugin-key";
+import { loginWithDiscord } from "./service/login-with-discord";
+import { generateOAuthState } from "./utils/oauth";
 
 export const authModule = defineModule([
   defineRoute({
@@ -30,6 +35,44 @@ export const authModule = defineModule([
     handler: async (_req, reply) => {
       const created = await createBotKey();
       return reply.code(201).send(created);
+    }
+  }),
+
+  defineRoute({
+    method: "GET",
+    url: "/auth/discord",
+    config: {
+      access: "public"
+    },
+    schema: {
+      response: {
+        302: z.void()
+      }
+    },
+    handler: (_req, reply) => {
+      const state = generateOAuthState();
+      const url = discordAuthorizeUrl(state);
+      return redirectToOAuthProvider(reply, state, url);
+    }
+  }),
+
+  defineRoute({
+    method: "GET",
+    url: "/auth/discord/callback",
+    config: {
+      access: "public"
+    },
+    schema: {
+      querystring: discordCallbackQuery,
+      response: {
+        302: z.void()
+      }
+    },
+    preValidation: checkAuthorizationResponse,
+    errorHandler: redirectOAuthLoginError,
+    handler: async (req, reply) => {
+      const secret = await loginWithDiscord(req.query.code, req.headers["user-agent"]);
+      return redirectOAuthProviderSuccess(reply, secret);
     }
   }),
 
