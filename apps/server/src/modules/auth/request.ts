@@ -23,4 +23,8 @@ export const discordCallbackQuery = z.object({
   state: z.string()
 });
 
+export const discordLoginQuery = z.object({
+  redirect: z.string().default("/")
+});
+
 export type AuthorizationErrorCode = z.infer<typeof authorizationErrorCode>;

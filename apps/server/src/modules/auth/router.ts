@@ -11,13 +11,13 @@ import { redirectOAuthLoginError, redirectOAuthProviderSuccess, redirectToOAuthP
 import { sendLoggedOut } from "./http/logout";
 import { listKeys } from "./repository/list-keys";
 import { revokeKey } from "./repository/revoke-key";
-import { apiKeyParams, discordCallbackQuery } from "./request";
+import { apiKeyParams, discordCallbackQuery, discordLoginQuery } from "./request";
 import { apiKey, botKey, pluginKey } from "./response";
 import { createBotKey } from "./service/create-bot-key";
 import { createPluginKey } from "./service/create-plugin-key";
 import { loginWithDiscord } from "./service/login-with-discord";
 import { logout } from "./service/logout";
-import { SESSION_COOKIE_NAME } from "./utils/cookies";
+import { OAUTH_REDIRECT_COOKIE_NAME, SESSION_COOKIE_NAME } from "./utils/cookies";
 import { generateOAuthState } from "./utils/oauth";
 
 export const authModule = defineModule([
@@ -48,14 +48,15 @@ export const authModule = defineModule([
       access: "public"
     },
     schema: {
+      querystring: discordLoginQuery,
       response: {
         302: z.void()
       }
     },
-    handler: (_req, reply) => {
+    handler: (req, reply) => {
       const state = generateOAuthState();
       const url = discordAuthorizeUrl(state);
-      return redirectToOAuthProvider(reply, state, url);
+      return redirectToOAuthProvider(reply, state, url, req.query.redirect);
     }
   }),
 
@@ -75,7 +76,7 @@ export const authModule = defineModule([
     errorHandler: redirectOAuthLoginError,
     handler: async (req, reply) => {
       const secret = await loginWithDiscord(req.query.code, req.headers["user-agent"]);
-      return redirectOAuthProviderSuccess(reply, secret);
+      return redirectOAuthProviderSuccess(reply, secret, req.cookies[OAUTH_REDIRECT_COOKIE_NAME]);
     }
   }),
 

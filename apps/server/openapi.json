@@ -3405,6 +3405,17 @@
     },
     "/v1/auth/discord": {
       "get": {
+        "parameters": [
+          {
+            "schema": {
+              "default": "/",
+              "type": "string"
+            },
+            "in": "query",
+            "name": "redirect",
+            "required": false
+          }
+        ],
         "responses": {
           "302": {
             "description": "Default Response",
