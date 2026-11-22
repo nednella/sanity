@@ -10,6 +10,7 @@ import { ParticipantList } from "@/components/shared/participant-list";
 import { useMediaStore } from "@/lib/media/media.store";
 import { screenshotAlt } from "@/lib/records/screenshot";
 import { Button } from "@/lib/ui/button";
+import { ButtonGroup } from "@/lib/ui/button-group";
 import { RelativeDate } from "@/lib/ui/relative-date";
 import { H3 } from "@/lib/ui/typography/h3";
 import { Overline } from "@/lib/ui/typography/overline";
@@ -71,7 +72,7 @@ function Header({ children, name }: Readonly<HeaderProps>) {
         <H3>{name}</H3>
       </div>
 
-      {children && <div className="join">{children}</div>}
+      {children && <ButtonGroup>{children}</ButtonGroup>}
     </header>
   );
 }
@@ -81,10 +82,9 @@ function ScaleButton({ value }: Readonly<{ value: number }>) {
 
   return (
     <Button
-      className="join-item"
       onClick={() => setScale(value)}
-      size="sm"
-      variant={value === scale ? "default" : "outline"}
+      size="icon-sm"
+      variant={value === scale ? "default" : "ghost"}
     >
       {value}
     </Button>
