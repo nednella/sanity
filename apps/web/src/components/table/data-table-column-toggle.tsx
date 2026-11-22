@@ -2,7 +2,13 @@ import type { ReactTable, RowData } from "@tanstack/react-table";
 import { Columns3 } from "lucide-react";
 
 import type { DataTableFeatures } from "@/components/table/table-features";
-import { Dropdown } from "@/lib/ui/dropdown";
+import { Button } from "@/lib/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuTrigger
+} from "@/lib/ui/dropdown-menu";
 
 type DataTableColumnToggleProps<TData extends RowData> = {
   table: ReactTable<DataTableFeatures, TData>;
@@ -12,28 +18,32 @@ export function DataTableColumnToggle<TData extends RowData>({ table }: Readonly
   const columns = table.getAllLeafColumns().filter((column) => column.getCanHide());
 
   return (
-    <Dropdown
-      align="end"
-      label={
-        <>
-          <Columns3 className="size-4" />
-          Columns
-        </>
-      }
-    >
-      {columns.map((column) => (
-        <li key={column.id}>
-          <label className="flex items-center gap-2">
-            <input
-              checked={column.getIsVisible()}
-              className="checkbox checkbox-sm"
-              onChange={column.getToggleVisibilityHandler()}
-              type="checkbox"
-            />
+    <DropdownMenu>
+      <DropdownMenuTrigger
+        render={
+          <Button
+            size="sm"
+            variant="outline"
+          />
+        }
+      >
+        <Columns3 />
+        Columns
+      </DropdownMenuTrigger>
+      <DropdownMenuContent
+        align="end"
+        className="w-56"
+      >
+        {columns.map((column) => (
+          <DropdownMenuCheckboxItem
+            checked={column.getIsVisible()}
+            key={column.id}
+            onCheckedChange={(checked) => column.toggleVisibility(checked)}
+          >
             {typeof column.columnDef.header === "string" ? column.columnDef.header : column.id}
-          </label>
-        </li>
-      ))}
-    </Dropdown>
+          </DropdownMenuCheckboxItem>
+        ))}
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }

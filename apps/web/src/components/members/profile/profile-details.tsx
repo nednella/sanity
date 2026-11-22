@@ -4,7 +4,15 @@ import { Fragment, type ReactNode } from "react";
 import type { MemberProfile } from "@sanity/api";
 import { formatDate, formatRsn } from "@sanity/utils";
 
-import { Dropdown } from "@/lib/ui/dropdown";
+import { Button } from "@/lib/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuTrigger
+} from "@/lib/ui/dropdown-menu";
 import { RelativeDate } from "@/lib/ui/relative-date";
 import { Muted } from "@/lib/ui/typography/muted";
 
@@ -58,26 +66,34 @@ function PreviousNames({ rsn }: Readonly<PreviousNamesProps>) {
   const remaining = rsn.previous.length - shown.length;
 
   return (
-    <Dropdown
-      className="w-64"
-      label={
-        <>
-          {name}
-          <ChevronDown className="size-3" />
-        </>
-      }
-      triggerClassName="btn-ghost h-auto min-h-0 gap-1 px-1 py-0 text-sm font-normal text-muted-foreground"
-    >
-      <li className="menu-title px-2 py-1">Previously</li>
-      {shown.map(({ name: previous, until }) => (
-        <li key={previous}>
-          <span className="flex justify-between gap-4">
-            {previous}
-            <span className="text-muted-foreground">{formatDate(until)}</span>
-          </span>
-        </li>
-      ))}
-      {remaining > 0 && <li className="px-2 py-1 text-muted-foreground">and {remaining} more</li>}
-    </Dropdown>
+    <DropdownMenu>
+      <DropdownMenuTrigger
+        render={
+          <Button
+            className="h-auto px-1 py-0 text-sm font-normal text-muted-foreground"
+            size="sm"
+            variant="ghost"
+          />
+        }
+      >
+        {name}
+        <ChevronDown className="size-3" />
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="w-64">
+        <DropdownMenuGroup>
+          <DropdownMenuLabel>Previously</DropdownMenuLabel>
+          {shown.map(({ name: previous, until }) => (
+            <DropdownMenuItem
+              className="justify-between gap-4"
+              key={previous}
+            >
+              {previous}
+              <span className="text-muted-foreground">{formatDate(until)}</span>
+            </DropdownMenuItem>
+          ))}
+          {remaining > 0 && <DropdownMenuLabel>and {remaining} more</DropdownMenuLabel>}
+        </DropdownMenuGroup>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }

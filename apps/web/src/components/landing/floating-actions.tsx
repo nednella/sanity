@@ -53,7 +53,7 @@ export function FloatingActions() {
       </Button>
       <ThemeToggle className={cn("size-10", buttonStyle)} />
       {!config.isProduction && (
-        <AccountMenu triggerClassName={buttonStyle}>
+        <AccountMenu triggerClassName={cn("rounded-none", buttonStyle)}>
           <Button
             className={cn("h-10 px-6", buttonStyle)}
             onClick={open}
