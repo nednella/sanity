@@ -10,7 +10,7 @@ type PanelProps = {
 
 export function Panel({ title, children }: Readonly<PanelProps>) {
   return (
-    <section className="flex flex-col gap-4 rounded-xs border border-base-300 p-4">
+    <section className="flex flex-col gap-4 border p-4">
       <H4>{title}</H4>
       <div className="flex flex-1 flex-col">{children}</div>
     </section>

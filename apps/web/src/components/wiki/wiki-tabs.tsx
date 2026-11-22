@@ -10,7 +10,7 @@ export function WikiTabs({ article }: Readonly<WikiTabsProps>) {
   return (
     <Tabs
       actions={
-        <label className="input -mb-px h-9 rounded-b-none border-base-300">
+        <label className="input -mb-px h-9 rounded-b-none">
           <Search className="size-3.5 opacity-50" />
           <input
             aria-label="Search the Sanity wiki"

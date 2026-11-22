@@ -98,10 +98,10 @@ type StatProps = {
 
 function Stat({ icon, label, title, value }: Readonly<StatProps>) {
   return (
-    <div className="flex items-center gap-x-2.5 rounded-xs border border-base-300 p-3">
+    <div className="flex items-center gap-x-2.5 border p-3">
       <span className="flex size-5 shrink-0">{icon}</span>
       <div className="flex flex-col gap-0.5">
-        <dt className="text-xs text-base-content/60">{label}</dt>
+        <dt className="text-xs text-muted-foreground">{label}</dt>
         <dd className="text-sm font-medium tabular-nums">{title ? <Tooltip tip={title}>{value}</Tooltip> : value}</dd>
       </div>
     </div>

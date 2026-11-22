@@ -31,7 +31,7 @@ export function Medal({ position }: Readonly<MedalProps>) {
           }}
         />
       ) : (
-        <span className="text-xs text-base-content/40 tabular-nums">{position}</span>
+        <span className="text-xs text-muted-foreground/70 tabular-nums">{position}</span>
       )}
     </span>
   );

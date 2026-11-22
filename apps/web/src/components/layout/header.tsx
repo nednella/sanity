@@ -15,7 +15,7 @@ export function Header({ drawerId }: Readonly<HeaderProps>) {
   return (
     <header
       className="
-        navbar sticky top-0 z-30 min-h-12 bg-base-100 px-4 py-1
+        navbar sticky top-0 z-30 min-h-12 bg-background px-4 py-1
         lg:px-8
       "
     >

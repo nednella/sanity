@@ -31,7 +31,7 @@ export function Dialog({ aside, ref, title, children, className, onClose }: Read
       onClose={onClose}
       ref={dialogRef}
     >
-      <div className={cn("modal-box rounded-xs border border-base-300", aside && "grid p-0", className)}>
+      <div className={cn("modal-box border", aside && "grid p-0", className)}>
         {aside}
         <div className={cn(aside && "flex flex-col p-8 text-center")}>
           <H3>{title}</H3>

@@ -19,12 +19,12 @@ export function ParticipantList({ memberId, participants }: Readonly<Participant
 
   function emphasis(id: string) {
     if (memberId === undefined) return "";
-    return id === memberId ? "font-medium" : "text-base-content/60";
+    return id === memberId ? "font-medium" : "text-muted-foreground";
   }
 
   return participants.map(({ displayName, id, points }, index) => (
     <Fragment key={id}>
-      {index > 0 && <span className="text-base-content/30">, </span>}
+      {index > 0 && <span className="text-muted-foreground/50">, </span>}
       <span className={emphasis(id)}>
         <Link
           className="link link-hover"

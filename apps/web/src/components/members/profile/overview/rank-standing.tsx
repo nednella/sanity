@@ -25,12 +25,12 @@ export function RankStanding({ celebrate = false, overline, rank }: Readonly<Ran
           aria-hidden="true"
           className="
             pointer-events-none absolute -inset-4
-            bg-[radial-gradient(circle_at_center,var(--color-base-300),transparent_65%)] opacity-50
+            bg-[radial-gradient(circle_at_center,var(--color-border),transparent_65%)] opacity-50
           "
         />
       )}
 
-      <div className="relative flex size-20 items-center justify-center rounded-full border border-base-300 bg-base-200/40">
+      <div className="relative flex size-20 items-center justify-center rounded-full border bg-muted/40">
         {celebrate && (
           <Sparkles
             aria-hidden="true"

@@ -12,7 +12,7 @@ type TabsProps = {
 
 export function Tabs({ actions, children }: Readonly<TabsProps>) {
   return (
-    <nav className="flex flex-wrap items-end justify-between gap-3 border-b border-base-300">
+    <nav className="flex flex-wrap items-end justify-between gap-3 border-b">
       <div className="flex flex-wrap">{children}</div>
       {actions}
     </nav>
@@ -23,14 +23,15 @@ function TabAnchor({ className, ...props }: Readonly<React.ComponentPropsWithRef
   return (
     <a
       className={cn(
-        "-mb-px rounded-t-xs border border-b-0 border-transparent px-4 py-2 text-sm text-base-content/60",
+        "-mb-px border border-b-0 border-transparent px-4 py-2 text-sm text-muted-foreground",
         `
-          hover:text-base-content
-          focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-primary
+          hover:text-foreground
+          outline-none
+          focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-inset
         `,
         `
-          data-[status=active]:border-base-300 data-[status=active]:bg-base-100 data-[status=active]:font-semibold
-          data-[status=active]:text-base-content
+          data-[status=active]:border-border data-[status=active]:bg-background data-[status=active]:font-semibold
+          data-[status=active]:text-foreground
         `,
         className
       )}

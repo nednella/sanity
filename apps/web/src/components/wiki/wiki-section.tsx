@@ -38,7 +38,7 @@ function Collapsible({ id, title, level: Heading, children }: Readonly<Collapsib
     >
       <summary
         className="
-          mb-4 flex cursor-pointer list-none items-baseline justify-between gap-3 border-b border-base-300 pb-2
+          mb-4 flex cursor-pointer list-none items-baseline justify-between gap-3 border-b pb-2
           [&::-webkit-details-marker]:hidden
         "
       >
@@ -51,7 +51,7 @@ function Collapsible({ id, title, level: Heading, children }: Readonly<Collapsib
         <ChevronDown
           aria-hidden="true"
           className="
-            size-4 shrink-0 rotate-180 self-center text-base-content/40 transition-transform
+            size-4 shrink-0 rotate-180 self-center text-muted-foreground/70 transition-transform
             group-open:rotate-0
           "
         />

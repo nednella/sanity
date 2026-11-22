@@ -25,7 +25,7 @@ export function MediaDialog({ alt, onClose, src }: Readonly<MediaDialogProps>) {
       onClose={onClose}
       ref={dialogRef}
     >
-      <div className="modal-box max-w-4xl rounded-xs border border-base-300 bg-base-100 p-2">
+      <div className="modal-box max-w-4xl border bg-background p-2">
         {src &&
           (isVideo(src) ? (
             <video

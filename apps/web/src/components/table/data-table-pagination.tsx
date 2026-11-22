@@ -18,7 +18,7 @@ export function DataTablePagination<TData extends RowData>({
   const end = Math.min(rowCount, (pageIndex + 1) * pageSize);
 
   return (
-    <div className="flex flex-wrap items-center justify-between gap-3 text-sm text-base-content/60">
+    <div className="flex flex-wrap items-center justify-between gap-3 text-sm text-muted-foreground">
       <span>
         Showing {start.toLocaleString()}–{end.toLocaleString()} of {rowCount.toLocaleString()}
       </span>

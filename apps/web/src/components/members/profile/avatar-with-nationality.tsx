@@ -12,7 +12,7 @@ export function AvatarWithNationality({ avatarUrl, countryCode }: Readonly<Avata
       <Avatar src={avatarUrl} />
       {countryCode && (
         <NationalityFlag
-          className="absolute -right-1 -bottom-1 size-6 rounded-full ring-2 ring-base-100"
+          className="absolute -right-1 -bottom-1 size-6 rounded-full ring-2 ring-background"
           countryCode={countryCode}
           shape="circle"
         />

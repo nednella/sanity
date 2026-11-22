@@ -32,9 +32,7 @@ export function Record({ children, defaultScale }: Readonly<RootProps>) {
 
   return (
     <ScaleContext value={{ scale, setScale }}>
-      <article className="relative isolate overflow-hidden rounded-xs border border-base-300 bg-base-100">
-        {children}
-      </article>
+      <article className="relative isolate overflow-hidden border bg-background">{children}</article>
     </ScaleContext>
   );
 }
@@ -67,7 +65,7 @@ function Header({ children, name }: Readonly<HeaderProps>) {
   const { scale } = useScale();
 
   return (
-    <header className="flex items-start justify-between gap-4 border-b border-base-300 p-4">
+    <header className="flex items-start justify-between gap-4 border-b p-4">
       <div>
         <Overline>{teamScale(scale)}</Overline>
         <H3>{name}</H3>
@@ -102,7 +100,7 @@ function List({ children, value }: Readonly<ListProps>) {
   const { scale } = useScale();
   if (value !== scale) return null;
 
-  return <ol className="divide-y divide-base-300">{children}</ol>;
+  return <ol className="divide-y divide-border">{children}</ol>;
 }
 
 function Item({ record }: Readonly<{ record: RankedPersonalBest }>) {
@@ -139,7 +137,7 @@ function Item({ record }: Readonly<{ record: RankedPersonalBest }>) {
         <ParticipantList participants={team} />
       </span>
       <span className="w-24 shrink-0 text-right font-medium tabular-nums">{time}</span>
-      <span className="w-28 shrink-0 text-right text-xs whitespace-nowrap text-base-content/50">
+      <span className="w-28 shrink-0 text-right text-xs whitespace-nowrap text-muted-foreground">
         <RelativeDate value={submittedAt} />
       </span>
     </li>
@@ -156,8 +154,8 @@ function More({ contentId, scale }: Readonly<MoreProps>) {
     <li>
       <Link
         className="
-          flex items-center justify-center gap-1 px-4 py-2.5 text-xs text-base-content/60
-          hover:text-base-content
+          flex items-center justify-center gap-1 px-4 py-2.5 text-xs text-muted-foreground
+          hover:text-foreground
         "
         search={{ contentId, order: "asc", scale, sort: "time", type: "personalBests" }}
         to="/submissions"

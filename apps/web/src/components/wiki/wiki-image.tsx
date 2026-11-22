@@ -18,16 +18,14 @@ type WikiImageProps = {
 
 export function WikiImage({ src, alt, caption, align = "right", className }: Readonly<WikiImageProps>) {
   return (
-    <figure
-      className={cn("mb-4 w-full rounded-xs border border-base-300 bg-base-200 p-2", alignments[align], className)}
-    >
+    <figure className={cn("mb-4 w-full border bg-muted/50 p-2", alignments[align], className)}>
       <img
         alt={alt}
-        className="max-h-96 w-full bg-base-100 object-contain"
+        className="max-h-96 w-full bg-background object-contain"
         loading="lazy"
         src={src}
       />
-      {caption && <figcaption className="mt-2 text-center text-xs text-base-content/60">{caption}</figcaption>}
+      {caption && <figcaption className="mt-2 text-center text-xs text-muted-foreground">{caption}</figcaption>}
     </figure>
   );
 }

@@ -22,7 +22,7 @@ export function Avatar({ className, size = "md", src }: Readonly<AvatarProps>) {
   if (!src) {
     return (
       <div className={cn("avatar avatar-placeholder", className)}>
-        <div className={cn("rounded-full bg-base-200 text-base-content/40", sizes[size].frame)}>
+        <div className={cn("rounded-full bg-muted text-muted-foreground/70", sizes[size].frame)}>
           <UserRound className={sizes[size].icon} />
         </div>
       </div>

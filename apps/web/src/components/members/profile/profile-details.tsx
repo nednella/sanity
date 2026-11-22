@@ -66,18 +66,18 @@ function PreviousNames({ rsn }: Readonly<PreviousNamesProps>) {
           <ChevronDown className="size-3" />
         </>
       }
-      triggerClassName="btn-ghost h-auto min-h-0 gap-1 px-1 py-0 text-sm font-normal text-base-content/60"
+      triggerClassName="btn-ghost h-auto min-h-0 gap-1 px-1 py-0 text-sm font-normal text-muted-foreground"
     >
       <li className="menu-title px-2 py-1">Previously</li>
       {shown.map(({ name: previous, until }) => (
         <li key={previous}>
           <span className="flex justify-between gap-4">
             {previous}
-            <span className="text-base-content/60">{formatDate(until)}</span>
+            <span className="text-muted-foreground">{formatDate(until)}</span>
           </span>
         </li>
       ))}
-      {remaining > 0 && <li className="px-2 py-1 text-base-content/60">and {remaining} more</li>}
+      {remaining > 0 && <li className="px-2 py-1 text-muted-foreground">and {remaining} more</li>}
     </Dropdown>
   );
 }

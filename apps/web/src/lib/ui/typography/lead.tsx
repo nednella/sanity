@@ -5,7 +5,7 @@ type Props = React.ComponentPropsWithRef<"p">;
 export function Lead({ ref, className, children }: Readonly<Props>) {
   return (
     <p
-      className={cn("text-xl text-base-content/60", className)}
+      className={cn("text-xl text-muted-foreground", className)}
       ref={ref}
     >
       {children}
