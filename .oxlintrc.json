@@ -225,9 +225,10 @@
     },
     // shadcn components stay as long as the registry writes them
     {
-      "files": ["apps/web/src/lib/ui/dropdown-menu.tsx"],
+      "files": ["apps/web/src/lib/ui/dropdown-menu.tsx", "apps/web/src/lib/ui/sidebar.tsx"],
       "rules": {
-        "max-lines": "off"
+        "max-lines": "off",
+        "max-lines-per-function": "off"
       }
     },
     // tanstack router

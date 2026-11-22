@@ -4,34 +4,32 @@ import { AccountMenu } from "@/components/account-menu";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { useLoginDialog } from "@/lib/login/use-login-dialog";
 import { Button } from "@/lib/ui/button";
+import { useSidebar } from "@/lib/ui/sidebar";
 
-type HeaderProps = {
-  drawerId: string;
-};
-
-export function Header({ drawerId }: Readonly<HeaderProps>) {
+export function Header() {
   const { open } = useLoginDialog();
+  const { toggleSidebar } = useSidebar();
 
   return (
     <header
       className="
-        navbar sticky top-0 z-30 min-h-12 bg-background px-4 py-1
+        sticky top-0 z-30 flex h-12 items-center gap-1 bg-background px-4
         lg:px-8
       "
     >
-      <div className="navbar-start">
-        <label
-          aria-label="Open sidebar"
-          className="
-            btn btn-square btn-ghost btn-sm
-            lg:hidden
-          "
-          htmlFor={drawerId}
-        >
-          <Menu className="size-5" />
-        </label>
-      </div>
-      <div className="navbar-end gap-1">
+      <Button
+        aria-label="Open the sidebar"
+        className="
+          -ml-1.5
+          md:hidden
+        "
+        onClick={toggleSidebar}
+        size="icon-sm"
+        variant="ghost"
+      >
+        <Menu className="size-5" />
+      </Button>
+      <div className="ms-auto flex items-center gap-1">
         <ThemeToggle />
         <AccountMenu>
           <Button
