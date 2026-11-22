@@ -24,11 +24,12 @@ export function NotFound({
       title={title}
     >
       <Button
-        asChild
+        nativeButton={false}
+        render={<Link to="/" />}
         size="sm"
         variant="outline"
       >
-        <Link to="/">Go back home</Link>
+        Go back home
       </Button>
     </Hero>
   );

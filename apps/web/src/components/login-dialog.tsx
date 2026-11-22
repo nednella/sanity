@@ -52,17 +52,15 @@ export function LoginDialog() {
         </p>
         <div className="flex flex-col gap-2">
           <Button
-            asChild
             className="
               w-full border-none bg-[#5865F2] text-white
               hover:bg-[#4752C4]
             "
-            variant="custom"
+            nativeButton={false}
+            render={<a href={loginUrl} />}
           >
-            <a href={loginUrl}>
-              <DiscordLogo className="size-4 fill-current" />
-              Continue with Discord
-            </a>
+            <DiscordLogo className="size-4 fill-current" />
+            Continue with Discord
           </Button>
           <div
             className="min-h-7.5"

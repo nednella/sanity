@@ -258,7 +258,7 @@ function Rows<TData extends RowData>({
           <Button
             onClick={onRetry}
             size="sm"
-            variant="custom"
+            variant="outline"
           >
             Retry
           </Button>

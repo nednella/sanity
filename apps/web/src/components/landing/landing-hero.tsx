@@ -7,7 +7,12 @@ import { Badge } from "@/lib/ui/badge";
 import { Button } from "@/lib/ui/button";
 import { Hero } from "@/lib/ui/hero";
 
-const buttonStyle = "rounded-none border-white/20 bg-black/40 text-white backdrop-blur-sm hover:bg-black/60";
+const buttonStyle = `
+  border-white/20 bg-black/40 text-sm text-white backdrop-blur-sm
+  hover:bg-black/60
+  dark:border-white/20 dark:bg-black/40
+  dark:hover:bg-black/60
+`;
 
 export function LandingHero() {
   return (
@@ -26,14 +31,13 @@ export function LandingHero() {
         </Badge>
       ) : (
         <Button
-          asChild
-          className={cn("w-full max-w-48", buttonStyle)}
+          className={cn("h-10 w-full max-w-48 px-6", buttonStyle)}
+          nativeButton={false}
+          render={<Link to="/wiki" />}
           size="lg"
           variant="outline"
         >
-          <Link to="/wiki">
-            <span>Enter</span>
-          </Link>
+          <span>Enter</span>
         </Button>
       )}
     </Hero>

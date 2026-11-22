@@ -80,13 +80,12 @@ export function Sidebar() {
       </Link>
 
       <Button
-        asChild
         className="w-full"
+        nativeButton={false}
+        render={<ExternalLink href={SANITY_DISCORD_URL} />}
       >
-        <ExternalLink href={SANITY_DISCORD_URL}>
-          <DiscordLogo className="size-4 fill-current" />
-          Chat on Discord
-        </ExternalLink>
+        <DiscordLogo className="size-4 fill-current" />
+        Chat on Discord
       </Button>
 
       <nav className="flex flex-col gap-5">

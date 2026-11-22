@@ -24,7 +24,7 @@ export function SubmissionTypeToggle({ onChange, type }: Readonly<SubmissionType
       <Button
         onClick={() => onChange(next)}
         size="sm"
-        variant="custom"
+        variant="outline"
       >
         <ArrowLeftRight className="size-4" />
         {labels[type]}
