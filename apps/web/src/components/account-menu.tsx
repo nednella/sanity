@@ -1,12 +1,20 @@
 import { Link } from "@tanstack/react-router";
 import { cn } from "cn";
-import { UserRound } from "lucide-react";
-import type { MouseEvent, ReactNode } from "react";
+import { LogOut, UserRound } from "lucide-react";
+import type { ReactNode } from "react";
 
 import { useAuth } from "@/lib/auth/use-auth";
 import { Avatar, AvatarFallback, AvatarImage } from "@/lib/ui/avatar";
-import { Dropdown } from "@/lib/ui/dropdown";
-import { closeDropdown } from "@/lib/ui/utils";
+import { Button } from "@/lib/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger
+} from "@/lib/ui/dropdown-menu";
 
 type AccountMenuProps = {
   // Shown instead of the menu when no member is logged in.
@@ -17,48 +25,65 @@ type AccountMenuProps = {
 export function AccountMenu({ children, triggerClassName }: Readonly<AccountMenuProps>) {
   const { logout, member, isLoading } = useAuth();
 
-  function handleLogout(event: MouseEvent<HTMLElement>) {
-    closeDropdown(event);
-    logout();
-  }
-
   if (isLoading) return null;
   if (member === undefined) return children;
 
   return (
-    <Dropdown
-      align="end"
-      label={
-        <>
-          <Avatar>
-            {member.discord.avatarUrl && <AvatarImage src={member.discord.avatarUrl} />}
-            <AvatarFallback>
-              <UserRound className="size-4" />
-            </AvatarFallback>
-          </Avatar>
-          <span className="sr-only">Account menu</span>
-        </>
-      }
-      triggerClassName={cn("btn-square btn-ghost size-10", triggerClassName)}
-    >
-      <li>
-        <Link
-          onClick={closeDropdown}
-          params={{ memberId: member.id }}
-          to="/members/$memberId"
+    <DropdownMenu>
+      <DropdownMenuTrigger
+        render={
+          <Button
+            className={cn("size-10 rounded-full", triggerClassName)}
+            size="icon"
+            variant="ghost"
+          />
+        }
+      >
+        <MemberAvatar url={member.discord.avatarUrl} />
+        <span className="sr-only">Account menu</span>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent
+        align="end"
+        className="w-56"
+      >
+        <DropdownMenuGroup>
+          <DropdownMenuLabel className="flex items-center gap-2 text-foreground">
+            <MemberAvatar url={member.discord.avatarUrl} />
+            <span className="grid leading-tight">
+              <span className="truncate font-medium">{member.displayName}</span>
+              {member.rsn.main && <span className="truncate text-muted-foreground">{member.rsn.main}</span>}
+            </span>
+          </DropdownMenuLabel>
+        </DropdownMenuGroup>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem
+          render={
+            <Link
+              params={{ memberId: member.id }}
+              to="/members/$memberId"
+            />
+          }
         >
+          <UserRound />
           Profile
-        </Link>
-      </li>
-      <li />
-      <li>
-        <button
-          onClick={handleLogout}
-          type="button"
-        >
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem onClick={logout}>
+          <LogOut />
           Log out
-        </button>
-      </li>
-    </Dropdown>
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
+
+function MemberAvatar({ url }: Readonly<{ url: string | null }>) {
+  return (
+    <Avatar>
+      {url && <AvatarImage src={url} />}
+      <AvatarFallback>
+        <UserRound className="size-4" />
+      </AvatarFallback>
+    </Avatar>
   );
 }

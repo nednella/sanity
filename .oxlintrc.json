@@ -223,6 +223,13 @@
         "react/react-in-jsx-scope": "off"
       }
     },
+    // shadcn components stay as long as the registry writes them
+    {
+      "files": ["apps/web/src/lib/ui/dropdown-menu.tsx"],
+      "rules": {
+        "max-lines": "off"
+      }
+    },
     // tanstack router
     {
       "files": ["apps/web/src/routes/**/*.tsx"],

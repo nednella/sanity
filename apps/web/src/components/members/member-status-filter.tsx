@@ -1,7 +1,13 @@
 import { Users } from "lucide-react";
 
 import type { MemberStatus } from "@/lib/members/status";
-import { Dropdown } from "@/lib/ui/dropdown";
+import { Button } from "@/lib/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuTrigger
+} from "@/lib/ui/dropdown-menu";
 
 const labels: Record<MemberStatus, string> = {
   active: "Active",
@@ -19,37 +25,33 @@ export function MemberStatusFilter({ status, onChange }: Readonly<MemberStatusFi
   const isInactive = status !== "active";
 
   return (
-    <Dropdown
-      label={
-        <>
-          <Users className="size-4" />
-          {labels[status]}
-        </>
-      }
-    >
-      <li>
-        <label className="flex items-center gap-2">
-          <input
-            checked={isActive}
-            className="checkbox checkbox-sm"
-            onChange={(event) => onChange(toStatus(event.target.checked, isInactive))}
-            type="checkbox"
+    <DropdownMenu>
+      <DropdownMenuTrigger
+        render={
+          <Button
+            size="sm"
+            variant="outline"
           />
+        }
+      >
+        <Users />
+        {labels[status]}
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="w-56">
+        <DropdownMenuCheckboxItem
+          checked={isActive}
+          onCheckedChange={(checked) => onChange(toStatus(checked, isInactive))}
+        >
           Active
-        </label>
-      </li>
-      <li>
-        <label className="flex items-center gap-2">
-          <input
-            checked={isInactive}
-            className="checkbox checkbox-sm"
-            onChange={(event) => onChange(toStatus(isActive, event.target.checked))}
-            type="checkbox"
-          />
+        </DropdownMenuCheckboxItem>
+        <DropdownMenuCheckboxItem
+          checked={isInactive}
+          onCheckedChange={(checked) => onChange(toStatus(isActive, checked))}
+        >
           Inactive
-        </label>
-      </li>
-    </Dropdown>
+        </DropdownMenuCheckboxItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }
 
