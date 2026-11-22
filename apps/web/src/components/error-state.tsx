@@ -49,7 +49,7 @@ export function ErrorState({
             )}
             <code
               className="
-                max-w-2xl overflow-x-auto rounded-xs border border-error/40 bg-error/10 p-4 text-left text-xs
+                max-w-2xl overflow-x-auto border border-destructive/40 bg-destructive/10 p-4 text-left text-xs
                 whitespace-pre-wrap
               "
             >

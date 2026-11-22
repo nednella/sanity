@@ -9,7 +9,7 @@ type ProgressBarProps = {
 export function ProgressBar({ label, value, target }: Readonly<ProgressBarProps>) {
   return (
     <div className="flex flex-col gap-1">
-      <div className="flex items-center justify-between text-xs text-base-content/60">
+      <div className="flex items-center justify-between text-xs text-muted-foreground">
         <span>{label}</span>
         <span className="tabular-nums">
           {formatNumber(value)} / {formatNumber(target)}

@@ -9,36 +9,40 @@ export function WikiInfobox({ title, image, caption, rows }: Readonly<WikiInfobo
       aria-label={`${title} infobox`}
       className={cn(
         `
-          float-none mb-6 w-full overflow-hidden rounded-xs border border-base-300 bg-base-200
+          float-none mb-6 w-full overflow-hidden border bg-muted/50
           lg:float-right lg:mb-4 lg:ml-6
         `,
         wikiAsideWidth
       )}
     >
-      <div className="bg-neutral py-2 text-center font-semibold text-neutral-content">{title}</div>
+      <div className="bg-infobox py-2 text-center font-semibold text-infobox-foreground">{title}</div>
       {image && (
         <img
           alt={image.alt}
-          className="mx-auto max-h-56 w-full bg-base-100 object-contain p-3"
+          className="mx-auto max-h-56 w-full bg-background object-contain p-3"
           loading="lazy"
           src={image.src}
         />
       )}
-      {caption && (
-        <p className="border-b border-base-300 px-3 py-2 text-center text-xs text-base-content/60">{caption}</p>
-      )}
+      {caption && <p className="border-b px-3 py-2 text-center text-xs text-muted-foreground">{caption}</p>}
       <div className="overflow-x-auto">
-        <table className="table table-sm">
+        <table className="w-full text-xs/normal">
           <tbody>
             {rows.map((row) => (
-              <tr key={row.label}>
+              <tr
+                className="
+                  border-b border-foreground/5
+                  last:border-0
+                "
+                key={row.label}
+              >
                 <th
-                  className="w-2/5 font-medium text-base-content/60"
+                  className="w-2/5 px-3 py-2 text-left font-medium text-muted-foreground"
                   scope="row"
                 >
                   {row.label}
                 </th>
-                <td className="font-semibold">{row.value}</td>
+                <td className="px-3 py-2 font-semibold">{row.value}</td>
               </tr>
             ))}
           </tbody>

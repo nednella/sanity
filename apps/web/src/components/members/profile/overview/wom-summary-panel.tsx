@@ -126,7 +126,7 @@ type FactRowProps = {
 function FactRow({ icon, label, value }: Readonly<FactRowProps>) {
   return (
     <div className="flex items-center justify-between gap-2 text-sm">
-      <span className="inline-flex items-center gap-2 text-base-content/60">
+      <span className="inline-flex items-center gap-2 text-muted-foreground">
         {icon}
         {label}
       </span>

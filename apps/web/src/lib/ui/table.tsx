@@ -27,7 +27,7 @@ type RootProps = React.ComponentPropsWithRef<"table"> & {
 
 export function Table({ className, scroll = true, ...props }: Readonly<RootProps>) {
   return (
-    <div className={cn("rounded-xs border border-base-300", scroll && "overflow-x-auto")}>
+    <div className={cn("border", scroll && "overflow-x-auto")}>
       <table
         className={cn("table min-w-full [overflow-anchor:none]", className)}
         {...props}
@@ -40,7 +40,7 @@ function layoutClasses({ align, numeric, pinned }: CellLayout = {}) {
   return cn(
     numeric && "tabular-nums",
     (numeric || align === "right") && "text-right",
-    pinned && "sticky left-0 border-r border-base-content/5 bg-inherit"
+    pinned && "sticky left-0 border-r border-foreground/5 bg-inherit"
   );
 }
 
@@ -78,7 +78,7 @@ function Head(props: Readonly<React.ComponentPropsWithRef<"thead">>) {
 function HeadRow({ className, ...props }: Readonly<React.ComponentPropsWithRef<"tr">>) {
   return (
     <tr
-      className={cn("bg-base-100", className)}
+      className={cn("bg-background", className)}
       {...props}
     />
   );
@@ -110,7 +110,7 @@ function HeadCell({ children, className, layout, onSort, sorted, sticky, ...prop
         "whitespace-nowrap",
         layoutClasses(layout),
         layout?.pinned && "z-20",
-        sticky && "sticky top-12 z-20 bg-base-100",
+        sticky && "sticky top-12 z-20 bg-background",
         className
       )}
       scope="col"
@@ -147,7 +147,7 @@ function SortButton({ children, onClick, reverse = false, sorted }: Readonly<Sor
       className={cn(
         `
           inline-flex items-center gap-1
-          hover:text-base-content
+          hover:text-foreground
         `,
         reverse && "flex-row-reverse"
       )}
@@ -161,7 +161,7 @@ function SortButton({ children, onClick, reverse = false, sorted }: Readonly<Sor
 }
 
 function SortIcon({ sorted }: Readonly<{ sorted: Sorted }>) {
-  if (!sorted) return <ChevronsUpDown className="size-3.5 shrink-0 text-base-content/30" />;
+  if (!sorted) return <ChevronsUpDown className="size-3.5 shrink-0 text-muted-foreground/50" />;
   if (sorted === "asc") return <ArrowUp className="size-3.5 shrink-0" />;
   return <ArrowDown className="size-3.5 shrink-0" />;
 }
@@ -186,8 +186,8 @@ function Row({ className, cursor = "pointer", onSelect, ...props }: Readonly<Row
     <tr
       className={cn(
         `
-          h-12 bg-base-100
-          hover:bg-base-200
+          h-12 bg-background
+          hover:bg-muted
         `,
         onSelect && cursors[cursor],
         onSelect && "focus-visible:outline focus-visible:-outline-offset-2 focus-visible:outline-primary",
@@ -232,7 +232,7 @@ function Message({ children, colSpan }: Readonly<MessageProps>) {
   return (
     <tr>
       <td
-        className="py-10 text-center text-base-content/60"
+        className="py-10 text-center text-muted-foreground"
         colSpan={colSpan}
       >
         {children}
@@ -285,8 +285,8 @@ function Search({ onChange, placeholder = "Search", value }: Readonly<SearchProp
   }, [onChange, typed, value]);
 
   return (
-    <label className="input w-full max-w-64 rounded-xs input-sm">
-      <SearchIcon className="size-4 shrink-0 text-base-content/60" />
+    <label className="input w-full max-w-64 input-sm">
+      <SearchIcon className="size-4 shrink-0 text-muted-foreground" />
       <input
         className="[&::-webkit-search-cancel-button]:appearance-none"
         onChange={(event) => setTyped(event.target.value)}
@@ -298,8 +298,8 @@ function Search({ onChange, placeholder = "Search", value }: Readonly<SearchProp
         <button
           aria-label="Clear search"
           className="
-            cursor-pointer text-base-content/60
-            hover:text-base-content
+            cursor-pointer text-muted-foreground
+            hover:text-foreground
           "
           onClick={() => setTyped("")}
           type="button"

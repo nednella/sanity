@@ -121,7 +121,7 @@ function NextRankCard({ title, nextRank, standing }: Readonly<NextRankCardProps>
   return (
     <div className="flex flex-col gap-2">
       <div className="flex items-center justify-between">
-        <span className="text-xs text-base-content/60">{title}</span>
+        <span className="text-xs text-muted-foreground">{title}</span>
         <Small>
           <RankBadge rank={nextRank} />
         </Small>
@@ -138,7 +138,7 @@ function NextRankCard({ title, nextRank, standing }: Readonly<NextRankCardProps>
       {eitherOr.length > 0 && (
         <>
           <Overline>and</Overline>
-          <div className="flex flex-col gap-2 border-l border-base-300 pl-3">
+          <div className="flex flex-col gap-2 border-l pl-3">
             {eitherOr.map((requirement, index) => (
               <Fragment key={requirement.label}>
                 {index > 0 && <Overline>or</Overline>}

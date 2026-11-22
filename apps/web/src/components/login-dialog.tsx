@@ -47,7 +47,7 @@ export function LoginDialog() {
       title="Welcome to Sanity"
     >
       <div className="flex h-full flex-col gap-6">
-        <p className="text-sm text-base-content/60">
+        <p className="text-sm text-muted-foreground">
           Log in with the Discord account that&apos;s linked to our platform.
         </p>
         <div className="flex flex-col gap-2">
@@ -69,7 +69,7 @@ export function LoginDialog() {
             role="alert"
           >
             {error !== undefined && (
-              <p className="rounded-xs border border-error/40 bg-error/10 px-3 py-1.5 text-xs text-error">
+              <p className="border border-destructive/40 bg-destructive/10 px-3 py-1.5 text-xs text-destructive">
                 {messages[error] ?? FALLBACK_MESSAGE}
               </p>
             )}

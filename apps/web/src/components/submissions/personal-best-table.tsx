@@ -80,7 +80,7 @@ function buildColumns(memberId?: string) {
         <span className="inline-flex items-center gap-2 font-medium">
           {getValue().metric && <MetricIcon src={bossIconUrl(getValue().metric!)} />}
           {getValue().name}
-          <span className="font-normal whitespace-nowrap text-base-content/60">{teamScale(row.original.scale)}</span>
+          <span className="font-normal whitespace-nowrap text-muted-foreground">{teamScale(row.original.scale)}</span>
         </span>
       )
     }),

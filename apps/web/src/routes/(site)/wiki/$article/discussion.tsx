@@ -5,5 +5,5 @@ export const Route = createFileRoute("/(site)/wiki/$article/discussion")({
 });
 
 function Page() {
-  return <div className="grid h-full place-items-center text-base-content/60">Discussion placeholder</div>;
+  return <div className="grid h-full place-items-center text-muted-foreground">Discussion placeholder</div>;
 }

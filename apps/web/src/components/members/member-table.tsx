@@ -40,7 +40,7 @@ const columns = columnHelper.columns([
             </Link>
             {nationality && <NationalityFlag countryCode={nationality} />}
           </span>
-          {rsnLine && <span className="text-xs text-base-content/60">{rsnLine}</span>}
+          {rsnLine && <span className="text-xs text-muted-foreground">{rsnLine}</span>}
         </div>
       );
     }

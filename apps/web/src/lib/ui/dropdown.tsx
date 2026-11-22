@@ -30,11 +30,7 @@ export function Dropdown({ align = "start", label, children, className, triggerC
         {label}
       </button>
       <ul
-        className={cn(
-          "menu dropdown w-56 rounded-xs border border-base-300 bg-base-100 p-2 shadow-sm",
-          alignments[align],
-          className
-        )}
+        className={cn("menu dropdown w-56 border bg-background p-2 shadow-sm", alignments[align], className)}
         id={id}
         popover=""
         style={{ positionAnchor: anchor } as React.CSSProperties}

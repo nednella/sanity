@@ -20,17 +20,17 @@ const PLACEHOLDER_ACTIVITY: PlaceholderEntry[] = [
 export function RecentActivity() {
   return (
     <div className="flex flex-col gap-3">
-      <p className="text-xs text-base-content/40">Placeholder data — an activity feed is coming soon.</p>
+      <p className="text-xs text-muted-foreground/70">Placeholder data — an activity feed is coming soon.</p>
 
-      <ul className="flex flex-col divide-y divide-base-content/5">
+      <ul className="flex flex-col divide-y divide-foreground/5">
         {PLACEHOLDER_ACTIVITY.map((entry) => (
           <li
             className="flex items-center gap-3 py-2 text-sm"
             key={entry.description}
           >
-            <entry.icon className="size-4 shrink-0 text-base-content/60" />
+            <entry.icon className="size-4 shrink-0 text-muted-foreground" />
             <span className="flex-1">{entry.description}</span>
-            <span className="text-xs text-base-content/40">{entry.timeAgo}</span>
+            <span className="text-xs text-muted-foreground/70">{entry.timeAgo}</span>
           </li>
         ))}
       </ul>

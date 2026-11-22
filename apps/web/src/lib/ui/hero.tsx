@@ -120,7 +120,7 @@ function HeroDescription({ children, hasActions, overlay, size, variants }: Read
   return (
     <motion.p
       className={cn(
-        "text-base-content/60",
+        "text-muted-foreground",
         scale.description,
         hasActions && scale.gap,
         overlay && "text-white/90 drop-shadow-md"

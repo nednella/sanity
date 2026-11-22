@@ -8,7 +8,7 @@ export function WikiArticle({ title, sections, infobox }: Readonly<WikiArticleDa
     <article className="pt-4">
       <h1 className="text-4xl font-bold tracking-tight">{title}</h1>
       <Muted className="mt-1 text-sm italic">From the Sanity wiki</Muted>
-      <hr className="mt-3 mb-6 border-base-300" />
+      <hr className="mt-3 mb-6" />
 
       {infobox && <WikiInfobox {...infobox} />}
 

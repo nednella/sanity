@@ -67,7 +67,7 @@ export function Sidebar() {
   return (
     <div
       className="
-        flex min-h-full w-60 flex-col gap-4 bg-base-100 p-4
+        flex min-h-full w-60 flex-col gap-4 bg-background p-4
         lg:sticky lg:top-0 lg:h-screen lg:overflow-y-auto
       "
     >

@@ -61,7 +61,7 @@ function DiaryRow({ diary, onOpenScreenshot }: Readonly<DiaryRowProps>) {
     <tr
       className={hasScreenshot ? `
         cursor-zoom-in
-        hover:bg-base-200
+        hover:bg-muted
       ` : undefined}
       onClick={onOpenScreenshot}
       onKeyDown={openScreenshotOnKey}
@@ -71,7 +71,7 @@ function DiaryRow({ diary, onOpenScreenshot }: Readonly<DiaryRowProps>) {
         <span className="inline-flex items-center gap-2">
           {content.metric && <MetricIcon src={bossIconUrl(content.metric)} />}
           {content.name}
-          <span className="text-base-content/60">{teamScale(scale)}</span>
+          <span className="text-muted-foreground">{teamScale(scale)}</span>
         </span>
       </td>
       <td className="font-medium tabular-nums">
