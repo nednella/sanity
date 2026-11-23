@@ -56,7 +56,7 @@ export const submissionsModule = defineModule([
     config: {
       access: {
         role: "reviewer",
-        clients: ["bot"]
+        clients: ["bot", "web"]
       }
     },
     schema: {

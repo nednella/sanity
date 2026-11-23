@@ -12,7 +12,7 @@ export const pointsModule = defineModule([
     config: {
       access: {
         role: "admin",
-        clients: ["bot"]
+        clients: ["bot", "web"]
       }
     },
     schema: {

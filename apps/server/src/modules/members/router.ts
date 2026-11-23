@@ -209,7 +209,7 @@ export const membersModule = defineModule([
     config: {
       access: {
         role: "admin",
-        clients: ["bot"]
+        clients: ["bot", "web"]
       }
     },
     schema: {
@@ -226,7 +226,7 @@ export const membersModule = defineModule([
     config: {
       access: {
         role: "superuser",
-        clients: ["bot"]
+        clients: ["bot", "web"]
       }
     },
     schema: {
@@ -244,7 +244,7 @@ export const membersModule = defineModule([
     config: {
       access: {
         role: "superuser",
-        clients: ["bot"]
+        clients: ["bot", "web"]
       }
     },
     schema: {
@@ -262,7 +262,7 @@ export const membersModule = defineModule([
     config: {
       access: {
         role: "admin",
-        clients: ["bot"]
+        clients: ["bot", "web"]
       }
     },
     schema: {
@@ -280,7 +280,7 @@ export const membersModule = defineModule([
     config: {
       access: {
         role: "admin",
-        clients: ["bot"]
+        clients: ["bot", "web"]
       }
     },
     schema: {
@@ -298,7 +298,7 @@ export const membersModule = defineModule([
     config: {
       access: {
         role: "admin",
-        clients: ["bot"]
+        clients: ["bot", "web"]
       }
     },
     schema: {
@@ -316,7 +316,7 @@ export const membersModule = defineModule([
     config: {
       access: {
         role: "admin",
-        clients: ["bot"]
+        clients: ["bot", "web"]
       }
     },
     schema: {
@@ -334,7 +334,7 @@ export const membersModule = defineModule([
     config: {
       access: {
         role: "admin",
-        clients: ["bot"]
+        clients: ["bot", "web"]
       }
     },
     schema: {
@@ -352,7 +352,7 @@ export const membersModule = defineModule([
     config: {
       access: {
         role: "admin",
-        clients: ["bot"]
+        clients: ["bot", "web"]
       }
     },
     schema: {
@@ -370,7 +370,7 @@ export const membersModule = defineModule([
     config: {
       access: {
         role: "admin",
-        clients: ["bot"]
+        clients: ["bot", "web"]
       }
     },
     schema: {
@@ -388,7 +388,7 @@ export const membersModule = defineModule([
     config: {
       access: {
         role: "admin",
-        clients: ["bot"]
+        clients: ["bot", "web"]
       }
     },
     schema: {
@@ -424,7 +424,7 @@ export const membersModule = defineModule([
     config: {
       access: {
         role: "admin",
-        clients: ["bot"]
+        clients: ["bot", "web"]
       }
     },
     schema: {
