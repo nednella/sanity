@@ -6,7 +6,7 @@ sanity: website, API and Discord bot for the Sanity OSRS clan. A Bun workspace: 
 installs the packages and runs every app and tool.
 
 `apps/server` Fastify + Zod + Drizzle on Postgres (`docker-compose.yaml`) · `apps/web` Vite +
-React + TanStack Router/Query + daisyUI, deployed to Vercel · `apps/bot` discord.js 14 ·
+React + TanStack Router/Query + shadcn (Base UI), deployed to Vercel · `apps/bot` discord.js 14 ·
 `packages/api` the typed API client, generated from the server's OpenAPI spec ·
 `packages/urls` every URL constant.
 
