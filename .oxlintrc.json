@@ -21,7 +21,13 @@
       "entryPoint": "src/main.css"
     }
   },
-  "ignorePatterns": ["**/*.js", "**/dist", "apps/web/src/routeTree.gen.ts", "packages/api/src/v1.d.ts"],
+  "ignorePatterns": [
+    ".claude/skills/**",
+    "**/*.js",
+    "**/dist",
+    "apps/web/src/routeTree.gen.ts",
+    "packages/api/src/v1.d.ts"
+  ],
   "rules": {
     "@stylistic/max-len": [
       "error",
