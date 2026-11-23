@@ -1,3 +1,5 @@
+import { LucideProvider } from "lucide-react";
+
 import { AuthProvider } from "@/lib/auth/auth-provider";
 import { MediaProvider } from "@/lib/media/media-provider";
 import { ThemeProvider } from "@/lib/theme/theme-provider";
@@ -11,13 +13,15 @@ interface Props {
 
 export function AppProvider({ children }: Readonly<Props>) {
   return (
-    <ApiProvider>
-      <AuthProvider>
-        <TooltipProvider>{children}</TooltipProvider>
-      </AuthProvider>
-      <MediaProvider />
-      <ThemeProvider />
-      <ToastProvider />
-    </ApiProvider>
+    <LucideProvider strokeWidth={1.5}>
+      <ApiProvider>
+        <AuthProvider>
+          <TooltipProvider>{children}</TooltipProvider>
+        </AuthProvider>
+        <MediaProvider />
+        <ThemeProvider />
+        <ToastProvider />
+      </ApiProvider>
+    </LucideProvider>
   );
 }
