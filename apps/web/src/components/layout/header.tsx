@@ -37,7 +37,7 @@ export function Header() {
             size="sm"
             variant="ghost"
           >
-            Log in
+            Login
           </Button>
         </AccountMenu>
       </div>

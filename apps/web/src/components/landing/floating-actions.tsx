@@ -60,7 +60,7 @@ export function FloatingActions() {
             size="lg"
             variant="outline"
           >
-            Log in
+            Login
           </Button>
         </AccountMenu>
       )}
