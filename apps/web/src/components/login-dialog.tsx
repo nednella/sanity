@@ -43,7 +43,7 @@ export function LoginDialog() {
         <div className="flex flex-col p-8 text-center">
           <DialogTitle className="text-lg font-semibold tracking-tight">Welcome to Sanity</DialogTitle>
           <DialogDescription className="mt-4 text-sm">
-            Log in with the Discord account that&apos;s linked to our platform.
+            Login with the Discord account that&apos;s linked to our platform.
           </DialogDescription>
           <div className="mt-6 flex flex-col gap-2">
             <Button
