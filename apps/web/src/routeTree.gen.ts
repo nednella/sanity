@@ -11,8 +11,13 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as siteLayoutRouteImport } from './routes/(site)/_layout'
+import { Route as siteAdminLayoutRouteImport } from './routes/(site)/admin/_layout'
 import { Route as siteRecordsRouteImport } from './routes/(site)/records'
 import { Route as siteSubmissionsRouteImport } from './routes/(site)/submissions'
+import { Route as siteAdminIndexRouteImport } from './routes/(site)/admin/index'
+import { Route as siteAdminMembersRouteImport } from './routes/(site)/admin/members'
+import { Route as siteAdminPointsRouteImport } from './routes/(site)/admin/points'
+import { Route as siteAdminReviewRouteImport } from './routes/(site)/admin/review'
 import { Route as siteMembersIndexRouteImport } from './routes/(site)/members/index'
 import { Route as siteMembersMemberIdLayoutRouteImport } from './routes/(site)/members/$memberId/_layout'
 import { Route as siteWikiIndexRouteImport } from './routes/(site)/wiki/index'
@@ -34,6 +39,11 @@ const siteLayoutRoute = siteLayoutRouteImport.update({
   id: '/(site)',
   getParentRoute: () => rootRouteImport,
 } as any)
+const siteAdminLayoutRoute = siteAdminLayoutRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => siteLayoutRoute,
+} as any)
 const siteRecordsRoute = siteRecordsRouteImport.update({
   id: '/records',
   path: '/records',
@@ -43,6 +53,26 @@ const siteSubmissionsRoute = siteSubmissionsRouteImport.update({
   id: '/submissions',
   path: '/submissions',
   getParentRoute: () => siteLayoutRoute,
+} as any)
+const siteAdminIndexRoute = siteAdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => siteAdminLayoutRoute,
+} as any)
+const siteAdminMembersRoute = siteAdminMembersRouteImport.update({
+  id: '/members',
+  path: '/members',
+  getParentRoute: () => siteAdminLayoutRoute,
+} as any)
+const siteAdminPointsRoute = siteAdminPointsRouteImport.update({
+  id: '/points',
+  path: '/points',
+  getParentRoute: () => siteAdminLayoutRoute,
+} as any)
+const siteAdminReviewRoute = siteAdminReviewRouteImport.update({
+  id: '/review',
+  path: '/review',
+  getParentRoute: () => siteAdminLayoutRoute,
 } as any)
 const siteMembersIndexRoute = siteMembersIndexRouteImport.update({
   id: '/members/',
@@ -109,10 +139,15 @@ const siteWikiArticleDiscussionRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof siteAdminLayoutRouteWithChildren
   '/records': typeof siteRecordsRoute
   '/submissions': typeof siteSubmissionsRoute
   '/members/$memberId': typeof siteMembersMemberIdLayoutRouteWithChildren
   '/wiki/$article': typeof siteWikiArticleLayoutRouteWithChildren
+  '/admin/members': typeof siteAdminMembersRoute
+  '/admin/points': typeof siteAdminPointsRoute
+  '/admin/review': typeof siteAdminReviewRoute
+  '/admin/': typeof siteAdminIndexRoute
   '/members/': typeof siteMembersIndexRoute
   '/wiki/': typeof siteWikiIndexRoute
   '/members/$memberId/activities': typeof siteMembersMemberIdActivitiesRoute
@@ -127,6 +162,10 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/records': typeof siteRecordsRoute
   '/submissions': typeof siteSubmissionsRoute
+  '/admin/members': typeof siteAdminMembersRoute
+  '/admin/points': typeof siteAdminPointsRoute
+  '/admin/review': typeof siteAdminReviewRoute
+  '/admin': typeof siteAdminIndexRoute
   '/members': typeof siteMembersIndexRoute
   '/wiki': typeof siteWikiIndexRoute
   '/members/$memberId/activities': typeof siteMembersMemberIdActivitiesRoute
@@ -141,10 +180,15 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/(site)': typeof siteLayoutRouteWithChildren
+  '/(site)/admin': typeof siteAdminLayoutRouteWithChildren
   '/(site)/records': typeof siteRecordsRoute
   '/(site)/submissions': typeof siteSubmissionsRoute
   '/(site)/members/$memberId': typeof siteMembersMemberIdLayoutRouteWithChildren
   '/(site)/wiki/$article': typeof siteWikiArticleLayoutRouteWithChildren
+  '/(site)/admin/members': typeof siteAdminMembersRoute
+  '/(site)/admin/points': typeof siteAdminPointsRoute
+  '/(site)/admin/review': typeof siteAdminReviewRoute
+  '/(site)/admin/': typeof siteAdminIndexRoute
   '/(site)/members/': typeof siteMembersIndexRoute
   '/(site)/wiki/': typeof siteWikiIndexRoute
   '/(site)/members/$memberId/activities': typeof siteMembersMemberIdActivitiesRoute
@@ -159,10 +203,15 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/admin'
     | '/records'
     | '/submissions'
     | '/members/$memberId'
     | '/wiki/$article'
+    | '/admin/members'
+    | '/admin/points'
+    | '/admin/review'
+    | '/admin/'
     | '/members/'
     | '/wiki/'
     | '/members/$memberId/activities'
@@ -177,6 +226,10 @@ export interface FileRouteTypes {
     | '/'
     | '/records'
     | '/submissions'
+    | '/admin/members'
+    | '/admin/points'
+    | '/admin/review'
+    | '/admin'
     | '/members'
     | '/wiki'
     | '/members/$memberId/activities'
@@ -190,10 +243,15 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/(site)'
+    | '/(site)/admin'
     | '/(site)/records'
     | '/(site)/submissions'
     | '/(site)/members/$memberId'
     | '/(site)/wiki/$article'
+    | '/(site)/admin/members'
+    | '/(site)/admin/points'
+    | '/(site)/admin/review'
+    | '/(site)/admin/'
     | '/(site)/members/'
     | '/(site)/wiki/'
     | '/(site)/members/$memberId/activities'
@@ -226,6 +284,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof siteLayoutRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/(site)/admin': {
+      id: '/(site)/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof siteAdminLayoutRouteImport
+      parentRoute: typeof siteLayoutRoute
+    }
     '/(site)/records': {
       id: '/(site)/records'
       path: '/records'
@@ -239,6 +304,34 @@ declare module '@tanstack/react-router' {
       fullPath: '/submissions'
       preLoaderRoute: typeof siteSubmissionsRouteImport
       parentRoute: typeof siteLayoutRoute
+    }
+    '/(site)/admin/': {
+      id: '/(site)/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof siteAdminIndexRouteImport
+      parentRoute: typeof siteAdminLayoutRoute
+    }
+    '/(site)/admin/members': {
+      id: '/(site)/admin/members'
+      path: '/members'
+      fullPath: '/admin/members'
+      preLoaderRoute: typeof siteAdminMembersRouteImport
+      parentRoute: typeof siteAdminLayoutRoute
+    }
+    '/(site)/admin/points': {
+      id: '/(site)/admin/points'
+      path: '/points'
+      fullPath: '/admin/points'
+      preLoaderRoute: typeof siteAdminPointsRouteImport
+      parentRoute: typeof siteAdminLayoutRoute
+    }
+    '/(site)/admin/review': {
+      id: '/(site)/admin/review'
+      path: '/review'
+      fullPath: '/admin/review'
+      preLoaderRoute: typeof siteAdminReviewRouteImport
+      parentRoute: typeof siteAdminLayoutRoute
     }
     '/(site)/members/': {
       id: '/(site)/members/'
@@ -320,6 +413,24 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface siteAdminLayoutRouteChildren {
+  siteAdminMembersRoute: typeof siteAdminMembersRoute
+  siteAdminPointsRoute: typeof siteAdminPointsRoute
+  siteAdminReviewRoute: typeof siteAdminReviewRoute
+  siteAdminIndexRoute: typeof siteAdminIndexRoute
+}
+
+const siteAdminLayoutRouteChildren: siteAdminLayoutRouteChildren = {
+  siteAdminMembersRoute: siteAdminMembersRoute,
+  siteAdminPointsRoute: siteAdminPointsRoute,
+  siteAdminReviewRoute: siteAdminReviewRoute,
+  siteAdminIndexRoute: siteAdminIndexRoute,
+}
+
+const siteAdminLayoutRouteWithChildren = siteAdminLayoutRoute._addFileChildren(
+  siteAdminLayoutRouteChildren,
+)
+
 interface siteMembersMemberIdLayoutRouteChildren {
   siteMembersMemberIdActivitiesRoute: typeof siteMembersMemberIdActivitiesRoute
   siteMembersMemberIdBossesRoute: typeof siteMembersMemberIdBossesRoute
@@ -358,6 +469,7 @@ const siteWikiArticleLayoutRouteWithChildren =
   )
 
 interface siteLayoutRouteChildren {
+  siteAdminLayoutRoute: typeof siteAdminLayoutRouteWithChildren
   siteRecordsRoute: typeof siteRecordsRoute
   siteSubmissionsRoute: typeof siteSubmissionsRoute
   siteMembersMemberIdLayoutRoute: typeof siteMembersMemberIdLayoutRouteWithChildren
@@ -367,6 +479,7 @@ interface siteLayoutRouteChildren {
 }
 
 const siteLayoutRouteChildren: siteLayoutRouteChildren = {
+  siteAdminLayoutRoute: siteAdminLayoutRouteWithChildren,
   siteRecordsRoute: siteRecordsRoute,
   siteSubmissionsRoute: siteSubmissionsRoute,
   siteMembersMemberIdLayoutRoute: siteMembersMemberIdLayoutRouteWithChildren,
