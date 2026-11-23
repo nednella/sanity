@@ -17,7 +17,7 @@ const buttonStyle = `
 export function LandingHero() {
   return (
     <Hero
-      className="relative flex min-h-screen items-start justify-center overflow-hidden pt-[12vh]"
+      className="relative flex min-h-dvh items-start justify-center overflow-hidden pt-[12vh]"
       description="an elite Old School RuneScape PvM clan home to some of the best players in the game"
       overlay
       title="Welcome to Sanity"

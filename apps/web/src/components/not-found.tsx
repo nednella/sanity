@@ -15,7 +15,7 @@ export function NotFound({
   title = "Page not found"
 }: Readonly<NotFoundProps>) {
   return (
-    <Empty className={fullScreen ? "min-h-screen" : "min-h-[60vh]"}>
+    <Empty className={fullScreen ? "min-h-dvh" : "min-h-[60vh]"}>
       <EmptyHeader>
         <EmptyTitle className="text-2xl font-semibold">{title}</EmptyTitle>
         <EmptyDescription className="text-base">{description}</EmptyDescription>

@@ -17,7 +17,7 @@ export function SiteLayout({ children }: Readonly<SiteLayoutProps>) {
     <SiteLayoutContext.Provider value={setOptions}>
       <SidebarProvider open={!options.hiddenSidebar}>
         <Sidebar />
-        <SidebarInset className="min-h-screen">
+        <SidebarInset className="min-h-dvh">
           <Header />
           <div
             className="
