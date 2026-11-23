@@ -12,11 +12,13 @@ type SiteLayoutProps = {
 
 export function SiteLayout({ children }: Readonly<SiteLayoutProps>) {
   const [options, setOptions] = useState<SiteLayoutOptions>({});
+  const SecondarySidebar = options.secondarySidebar;
 
   return (
     <SiteLayoutContext.Provider value={setOptions}>
       <SidebarProvider open={!options.hiddenSidebar}>
         <Sidebar />
+        {SecondarySidebar && <SecondarySidebar />}
         <SidebarInset className="min-h-dvh">
           <Header />
           <div
