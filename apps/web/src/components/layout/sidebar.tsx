@@ -63,6 +63,13 @@ const clanLinks = linkOptions([
   }
 ]);
 
+const adminLinks = linkOptions([
+  {
+    to: "/admin",
+    title: "Dashboard"
+  }
+]);
+
 const navigationGroups = [
   {
     label: "Wiki",
@@ -71,6 +78,10 @@ const navigationGroups = [
   {
     label: "Clan",
     links: clanLinks
+  },
+  {
+    label: "Admin",
+    links: adminLinks
   }
 ];
 
@@ -171,7 +182,7 @@ function SidebarNavigation({ onNavigate }: Readonly<SidebarNavigationProps>) {
 }
 
 type NavigationLinkProps = {
-  link: (typeof clanLinks)[number] | (typeof wikiLinks)[number];
+  link: (typeof adminLinks)[number] | (typeof clanLinks)[number] | (typeof wikiLinks)[number];
   onNavigate: () => void;
 };
 
