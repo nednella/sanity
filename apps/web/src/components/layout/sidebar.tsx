@@ -115,7 +115,7 @@ export function Sidebar() {
             onClick={() => setIsPeeking(true)}
             type="button"
           >
-            <span className="flex h-12 items-center text-xl font-black">S</span>
+            <span className="pt-5 text-xl font-black">S</span>
           </button>
         ) : (
           <SidebarNavigation onNavigate={closeOverlays} />
