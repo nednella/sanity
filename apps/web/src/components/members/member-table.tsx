@@ -32,7 +32,7 @@ const columns = columnHelper.columns([
         <div className="flex flex-col gap-0.5 py-1">
           <span className="inline-flex items-center gap-2 font-medium">
             <Link
-              className="link link-hover"
+              className="hover:underline"
               params={{ memberId: id }}
               to="/members/$memberId"
             >

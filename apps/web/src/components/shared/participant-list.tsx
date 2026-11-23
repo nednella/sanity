@@ -27,7 +27,7 @@ export function ParticipantList({ memberId, participants }: Readonly<Participant
       {index > 0 && <span className="text-muted-foreground/50">, </span>}
       <span className={emphasis(id)}>
         <Link
-          className="link link-hover"
+          className="hover:underline"
           params={{ memberId: id }}
           to="/members/$memberId"
         >
