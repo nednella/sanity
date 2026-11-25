@@ -61,7 +61,7 @@ await db.transaction(async (tx) => {
   // told to cascade, which reaches the Wise Old Man tables this script never
   // refills; without it, a table we forget is an error rather than silent loss.
   await tx.execute(sql`
-    truncate audit_log, audit_log_members, auth_sessions, boss_uniques, discord_accounts, items,
+    truncate audit_log, audit_log_members, auth_keys, auth_sessions, boss_uniques, discord_accounts, items,
              member_rank_delays, members, personal_best_participants, personal_bests, points,
              points_timeline_events, ranks,
              speedrun_content, speedrun_diary_rewards, speedrun_diary_tiers, speedrun_diary_times,
