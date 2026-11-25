@@ -1,7 +1,7 @@
 import { eq } from "drizzle-orm";
 
 import { db } from "@db/index";
-import { apiKeys, members } from "@db/schema";
+import { authKeys, members } from "@db/schema";
 
 import { revokePluginKeys } from "./revoke-plugin-keys";
 
@@ -30,7 +30,7 @@ export function replacePluginKey(memberId: bigint, keyHash: string) {
     if (member?.pluginAccessRevokedAt) return false;
 
     await revokePluginKeys(tx, [memberId]);
-    await tx.insert(apiKeys).values({
+    await tx.insert(authKeys).values({
       client: "plugin",
       keyHash,
       memberId

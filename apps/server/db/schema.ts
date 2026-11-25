@@ -24,24 +24,6 @@ import { apiClient, auditAction, auditSource, memberRole, reviewStatus, submissi
 
 const citext = customType<{ data: string }>({ dataType: () => "citext" });
 
-export const apiKeys = pgTable(
-  "api_keys",
-  {
-    id: integer().generatedAlwaysAsIdentity().primaryKey(),
-    client: apiClient().notNull(),
-    memberId: bigint({ mode: "bigint" }).references(() => members.id, { onDelete: "cascade" }),
-    keyHash: text().notNull().unique("api_keys_key_hash_unique"),
-    createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
-    lastUsedAt: timestamp({ withTimezone: true }),
-    revokedAt: timestamp({ withTimezone: true })
-  },
-  (table) => [
-    // Plugin keys must be associated with a member ID
-    check("api_keys_member_key", sql`(${table.client} = 'plugin') = (${table.memberId} is not null)`),
-    index().on(table.memberId)
-  ]
-);
-
 export const auditLog = pgTable(
   "audit_log",
   {
@@ -66,6 +48,40 @@ export const auditLogMembers = pgTable(
       .references(() => members.id, { onDelete: "restrict" })
   },
   (table) => [primaryKey({ columns: [table.auditLogId, table.memberId] }), index().on(table.memberId)]
+);
+
+export const authKeys = pgTable(
+  "auth_keys",
+  {
+    id: integer().generatedAlwaysAsIdentity().primaryKey(),
+    client: apiClient().notNull(),
+    memberId: bigint({ mode: "bigint" }).references(() => members.id, { onDelete: "cascade" }),
+    keyHash: text().notNull().unique("auth_keys_key_hash_unique"),
+    createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
+    lastUsedAt: timestamp({ withTimezone: true }),
+    revokedAt: timestamp({ withTimezone: true })
+  },
+  (table) => [
+    // Plugin keys must be associated with a member ID
+    check("auth_keys_member_key", sql`(${table.client} = 'plugin') = (${table.memberId} is not null)`),
+    index().on(table.memberId)
+  ]
+);
+
+export const authSessions = pgTable(
+  "auth_sessions",
+  {
+    id: integer().generatedAlwaysAsIdentity().primaryKey(),
+    memberId: bigint({ mode: "bigint" })
+      .notNull()
+      .references(() => members.id, { onDelete: "cascade" }),
+    secretHash: text().notNull().unique("auth_sessions_secret_hash_unique"),
+    userAgent: text(),
+    createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
+    lastUsedAt: timestamp({ withTimezone: true }),
+    expiresAt: timestamp({ withTimezone: true }).notNull()
+  },
+  (table) => [index().on(table.memberId)]
 );
 
 export const bosses = pgTable("bosses", {
@@ -204,22 +220,6 @@ export const ranks = pgTable("ranks", {
   diaryPointRequirement: integer().notNull().default(0),
   masterDiaryRequirement: integer().notNull().default(0)
 });
-
-export const sessions = pgTable(
-  "sessions",
-  {
-    id: integer().generatedAlwaysAsIdentity().primaryKey(),
-    memberId: bigint({ mode: "bigint" })
-      .notNull()
-      .references(() => members.id, { onDelete: "cascade" }),
-    secretHash: text().notNull().unique("sessions_secret_hash_unique"),
-    userAgent: text(),
-    createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
-    lastUsedAt: timestamp({ withTimezone: true }),
-    expiresAt: timestamp({ withTimezone: true }).notNull()
-  },
-  (table) => [index().on(table.memberId)]
-);
 
 export const speedrunContent = pgTable("speedrun_content", {
   id: integer().generatedByDefaultAsIdentity().primaryKey(),

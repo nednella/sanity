@@ -232,6 +232,13 @@
       "when": 1795125721575,
       "tag": "0032_exotic_bishop",
       "breakpoints": true
+    },
+    {
+      "idx": 33,
+      "version": "7",
+      "when": 1795636437694,
+      "tag": "0033_rename_auth_tables",
+      "breakpoints": true
     }
   ]
 }
