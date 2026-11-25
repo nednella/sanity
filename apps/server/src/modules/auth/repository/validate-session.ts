@@ -3,7 +3,7 @@ import { and, eq, gt } from "drizzle-orm";
 import { relativeDate } from "@sanity/utils";
 
 import { db } from "@db/index";
-import { sessions } from "@db/schema";
+import { authSessions } from "@db/schema";
 
 import { SESSION_IDLE_DAYS, SESSION_LIFETIME_DAYS } from "@/modules/auth/utils/cookies";
 
@@ -19,21 +19,21 @@ export async function validateSession(secretHash: string) {
   const now = new Date();
 
   const [session] = await db
-    .update(sessions)
+    .update(authSessions)
     .set({
       lastUsedAt: now,
       expiresAt: relativeDate({ days: SESSION_IDLE_DAYS }, now)
     })
     .where(
       and(
-        eq(sessions.secretHash, secretHash),
-        gt(sessions.expiresAt, now),
-        gt(sessions.createdAt, relativeDate({ days: -SESSION_LIFETIME_DAYS }, now))
+        eq(authSessions.secretHash, secretHash),
+        gt(authSessions.expiresAt, now),
+        gt(authSessions.createdAt, relativeDate({ days: -SESSION_LIFETIME_DAYS }, now))
       )
     )
     .returning({
-      id: sessions.id,
-      memberId: sessions.memberId
+      id: authSessions.id,
+      memberId: authSessions.memberId
     });
 
   return session;

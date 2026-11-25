@@ -1,11 +1,11 @@
 import { and, eq, inArray, isNull } from "drizzle-orm";
 
 import type { Transaction } from "@db/index";
-import { apiKeys } from "@db/schema";
+import { authKeys } from "@db/schema";
 
 export async function revokePluginKeys(tx: Transaction, memberIds: bigint[]) {
   await tx
-    .update(apiKeys)
+    .update(authKeys)
     .set({ revokedAt: new Date() })
-    .where(and(eq(apiKeys.client, "plugin"), inArray(apiKeys.memberId, memberIds), isNull(apiKeys.revokedAt)));
+    .where(and(eq(authKeys.client, "plugin"), inArray(authKeys.memberId, memberIds), isNull(authKeys.revokedAt)));
 }

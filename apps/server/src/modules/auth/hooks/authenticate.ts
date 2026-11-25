@@ -76,9 +76,9 @@ async function authenticateSession(secret: string): Promise<SessionAuth> {
   };
 }
 
-type ApiKey = NonNullable<Awaited<ReturnType<typeof validateKey>>>;
+type AuthKey = NonNullable<Awaited<ReturnType<typeof validateKey>>>;
 
-async function findRequestingMember(request: FastifyRequest, key: ApiKey): Promise<AuthMember | undefined> {
+async function findRequestingMember(request: FastifyRequest, key: AuthKey): Promise<AuthMember | undefined> {
   switch (key.client) {
     case "plugin": {
       // Plugin keys are unique to an active member. If a valid member cannot

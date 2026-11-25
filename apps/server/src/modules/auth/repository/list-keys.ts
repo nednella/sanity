@@ -1,7 +1,7 @@
 import { asc } from "drizzle-orm";
 
 import { db } from "@db/index";
-import { apiKeys } from "@db/schema";
+import { authKeys } from "@db/schema";
 
 /**
  * Lists every API key, oldest first, WITHOUT hash.
@@ -9,13 +9,13 @@ import { apiKeys } from "@db/schema";
 export function listKeys() {
   return db
     .select({
-      id: apiKeys.id,
-      client: apiKeys.client,
-      memberId: apiKeys.memberId,
-      createdAt: apiKeys.createdAt,
-      lastUsedAt: apiKeys.lastUsedAt,
-      revokedAt: apiKeys.revokedAt
+      id: authKeys.id,
+      client: authKeys.client,
+      memberId: authKeys.memberId,
+      createdAt: authKeys.createdAt,
+      lastUsedAt: authKeys.lastUsedAt,
+      revokedAt: authKeys.revokedAt
     })
-    .from(apiKeys)
-    .orderBy(asc(apiKeys.id));
+    .from(authKeys)
+    .orderBy(asc(authKeys.id));
 }
